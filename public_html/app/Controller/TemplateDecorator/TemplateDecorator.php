@@ -3,7 +3,7 @@
  * @category WS patches 
  * @package  WS
  */
-namespace WS;
+namespace WS\Controller\TemplateDecorator;
 use \Template as OpenCartTemplate;
 use WS\Helper\RouteHelper as RouteHelper;
 
@@ -19,14 +19,14 @@ use WS\Helper\RouteHelper as RouteHelper;
  */
 class TemplateDecorator
 {
-    const DECORATOR_INTERFACE = 'WS\\IDecorator';
+    const DECORATOR_INTERFACE = 'WS\\Controller\\TemplateDecorator\\IDecorator';
 
     const TEMPLATE_DIR_PATTERN = '/template/';
     
-    /** @var \Template Original OCs' template bridge */
+    /** @var \Template Original OCs' template class */
     private $wrapee;
 
-    /** @var WS\IDecorator|null Concrete data decorator */
+    /** @var WS\TemplateDecorator\IDecorator|null Concrete data decorator */
     private $decorator = null;
 
     /** @var string|null */
@@ -59,7 +59,6 @@ class TemplateDecorator
      * Рендеринг шаблона с установленными переменными
      *  
      * @param string $template - шаблон 
-     *        ( во внутреннем формате OC <маршрут>.tpl )
      * @return string
      */
     public function render($template)
@@ -97,13 +96,18 @@ class TemplateDecorator
 
     private function dispatchRouteFromTemplate($template)
     {
-        $buf = str_replace('.tpl', '', $template); 
-        $startPos = strpos($template, self::TEMPLATE_DIR_PATTERN);
-        if( false === $startPos ) {
-            throw new Exception ("Wrong template path given, cant dispatch programmatical route");
+        $opencartRoute = str_replace('.tpl', '', $template);
+        
+        if ( RouteHelper::getPageContext() === RouteHelper::SITE_CONTEXT ) {
+            $startPos = strpos($template, self::TEMPLATE_DIR_PATTERN);
+            if( false === $startPos ) {
+                throw new \Exception ("Wrong template path given, cant dispatch programmatical route [" . $template . "]");
+            }
+            $startPos += strlen(self::TEMPLATE_DIR_PATTERN);
+            $opencartRoute = substr($opencartRoute, $startPos);
         }
-        $startPos += strlen(self::TEMPLATE_DIR_PATTERN);
-        return substr($buf, $startPos);
+
+        return $opencartRoute;
     }
 
     private function checkDecorator($className)

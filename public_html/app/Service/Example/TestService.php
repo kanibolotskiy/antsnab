@@ -11,7 +11,7 @@
 */
 namespace WS\Service\Example;
 
-class TestService extends \WS\Service
+class TestService extends \WS\Service\Service
 {
     public function doSomething()
     {

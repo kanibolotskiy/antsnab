@@ -13,7 +13,7 @@
 
 namespace WS\Controller\Site\Common;
 
-class HomeController extends ControllerCommonHome
+class HomeController extends \ControllerCommonHome
 {
-    //public function 
+    //
 }

@@ -1,13 +1,12 @@
 <?php
 /**
- * Декоратор шаблона product\category
  * @category WS patches 
  * @package  WS
  */
 
 namespace WS\Controller\TemplateDecorator\Site\Product;
 
-use WS\IDecorator as IDecorator;
+use WS\Controller\TemplateDecorator\IDecorator as IDecorator;
 
 /**
  * Декоратор шаблона product\category

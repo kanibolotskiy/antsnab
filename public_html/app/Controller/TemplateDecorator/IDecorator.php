@@ -6,8 +6,6 @@
 
 namespace WS;
 
-//put your use statements here
-
 /**
  * Интерфейс конкретного декоратора \Template
  * @see WS\TemplateDecorator 
@@ -16,7 +14,7 @@ namespace WS;
  * @copyright  Copyright (c) 2018 AntSnab. (https://www.ant-snab.ru)
  * @author     Sergey Lapshin (http://vk.com/wslapshin) 
  */
-namespace WS;
+namespace WS\Controller\TemplateDecorator;
 
 interface IDecorator
 {
