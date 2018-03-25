@@ -1,0 +1,64 @@
+@startuml
+
+class Category {
+    -$parentId:;int
+}
+class Product {
+}
+class ProductCategory {
+    -$categoryId:;int
+    -$productId:;int
+    -$mainCategory:;boolean
+}
+
+class Property {
+    -$propertyTemplateId;:int
+    -$name;:string
+    -$unit;:string
+    -$default;:string
+    -$sortOrder;:int
+    -$useInReport;:boolean
+    __construct($data)
+}
+class PropertyConstructor {
+    -$templateId
+    -$categoryId;:int
+    -$name;:string
+    -$properties;:Property[]
+
+    -$needSummary;:boolean
+    __construct($templateId)
+    +{static} getInstance($categoryId):\nPropertyConstructor | null
+    ..
+    +getId():int
+    +getCategoryId():int
+    +getName():string
+    +getProperties():Property[]
+    +isNeedSummary():boolean
+    ..
+}
+class Characteristic {
+    -$productId;:int
+    -$property;:Property
+    -$value;:string|null
+    '-$useInReport;:boolean
+
+    +{static} getCharacteristics($productId):\nCharacteristic[] 
+}
+
+
+Property "0..m" <-- "1..1" PropertyConstructor
+PropertyConstructor "0..1" -- "0..1" Category
+note right on link: Эта связь - отличие \n property от аттрибутов OC 
+
+Product "0..m" -- "0..1" Category
+ProductCategory . (Category, Product)
+note "Силу связи от Category к Product \n ослабляем до 1..m \n но для обратной совместимости \n пишем так же в таблицу смежности \n с mainCategory = true всегда" as N2 
+ProductCategory .. N2
+Category .. N2
+
+Characteristic "m" -l->  "1" Product
+Characteristic "m" o-r-> "1" Property
+
+
+@enduml

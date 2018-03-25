@@ -19,9 +19,10 @@ namespace WS\Controller\TemplateDecorator;
 interface IDecorator
 {
     /**
-     * Воркер декоратора. Модифицирует переменные шаблона 
+     * Воркер декоратора. Модифицирует/добавляет переменные шаблона 
      * @param array $data - переменные шаблона из контроллера
-     * @return array;
+     * @param \Registry - реестр OpenCart
+     * @return array $data;
      */
-    public function process($data);
+    public function process($data, $registry);
 }

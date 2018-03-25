@@ -19,9 +19,13 @@ use WS\Helper\RouteHelper as RouteHelper;
  */
 class TemplateDecorator
 {
+
     const DECORATOR_INTERFACE = 'WS\\Controller\\TemplateDecorator\\IDecorator';
 
     const TEMPLATE_DIR_PATTERN = '/template/';
+
+    /** @var \Registry - регистр OpenCart */
+    static public $registry;
     
     /** @var \Template Original OCs' template class */
     private $wrapee;
@@ -71,7 +75,7 @@ class TemplateDecorator
         }
 
         if( null !== $this->decorator ) {
-            $modifiedData = $this->decorator->process($this->data);
+            $modifiedData = $this->decorator->process($this->data, self::$registry);
             $this->setDataArray($modifiedData);
         }
 

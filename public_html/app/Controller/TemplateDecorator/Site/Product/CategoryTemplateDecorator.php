@@ -16,7 +16,7 @@ use WS\Controller\TemplateDecorator\IDecorator as IDecorator;
  */
 class CategoryTemplateDecorator implements IDecorator
 {
-    public function process($data)
+    public function process($data, $registry)
     {
         $data['always_here'] = 'Hello world';        
         return $data;
