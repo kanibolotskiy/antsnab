@@ -1,4 +1,5 @@
 <?php
+//@task перевести факс в админке
 // Locale
 $_['code']                  = 'ru';
 $_['direction']             = 'ltr';

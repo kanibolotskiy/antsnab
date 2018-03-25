@@ -113,7 +113,7 @@ trait Loader
 		}
 		
 		if (!$output) {
-            //@todo - think better place for initializing registry in decorator. 
+            //@task - think better place for initializing registry in decorator. 
             //registry need for concrete decorators
             Template::$registry = $this->registry;
 			$template = new Template($this->registry->get('config')->get('template_type'));

@@ -22,7 +22,7 @@ class HeaderTemplateDecorator implements IDecorator
         $config = $registry->get('config');
         $data['telephone2'] = $config->get('config_fax'); 
 
-        //@ToDo _WS XSS attack posibble. change css and markup later. now used '<p>sometext</p>' 
+        /*@task  XSS attack posibble. change css and markup later. now used '<p>sometext</p>' */ 
         $data['worktime'] = htmlspecialchars_decode($config->get('config_open')); 
         return $data;
     }

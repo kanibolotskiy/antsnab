@@ -31,6 +31,7 @@
         <?php foreach ($links as $link) { ?>
             <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
         <?php } ?>
+        <!-- @task Добавить поддержку иконок для телефонов -->
         <?php foreach ($scripts as $script) { ?>
             <script src="<?php echo $script; ?>" type="text/javascript"></script>
         <?php } ?>
@@ -40,12 +41,13 @@
         <a href="" class="up"></a>
         <header class="header container">
             <strong class="logo">
+                <!-- @task переверстать лого (убрать background, растянуть изображение -->
                 <?php if ($logo) { ?>
                     <?php if ($home == $og_url) { ?>
-                        <img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>"/>
+                        <img width="100%" src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>"/>
                     <?php } else { ?>
                         <a href="<?php echo $home; ?>">
-                            <img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>"/>
+                            <img width="100%" src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>"/>
                         </a>
                     <?php } ?>
                 <?php } else { ?>

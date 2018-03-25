@@ -69,6 +69,6 @@
 <?php foreach ($analytics as $analytic) { ?>
     <?php echo $analytic; ?>
 <?php } ?>
-
+<!-- @task Счетчики, виджеты (comagic) -->
 </body>
 </html>
