@@ -1,5 +1,6 @@
 <?php
 $_['action_event'] = array(
-    'view/common/home/before'    => 'event/compatibility/beforeModel'
+    //we dont need event/theme hook. View dispatching done by patch
+    'view/*/before' => '',
 );
 

@@ -20,6 +20,9 @@ trait Config
     /** @var array Loaded config files stack * */
     private $loaded = array();
 
+    /** @var array Loaded app config variables */
+    private $wsPatchConfigData = array();
+
     /** @var string Filename * */
     protected static $PATCH_CONFIG_FILENAME = 'app';
 
@@ -45,6 +48,9 @@ trait Config
             require(modification($file));
 
             $this->data = array_merge($this->data, $_);
+
+            /** patchs' config (app) has the most priority (overrides other) */
+            $this->data = array_replace_recursive($this->data, $this->wsPatchConfigData);
             $this->loaded[] = $filename;
         } elseif ( !file_exists ($file) ) {
             trigger_error('Error: Could not load config ' . $filename . '!');
@@ -60,6 +66,8 @@ trait Config
     private function loadPatchConfig()
     {
         $this->load(self::$PATCH_CONFIG_FILENAME);
+        $this->wsPatchConfigData = $this->data;
+        $this->data = array();
     }
 
 }

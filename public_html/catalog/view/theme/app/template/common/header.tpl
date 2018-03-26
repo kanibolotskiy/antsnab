@@ -76,9 +76,26 @@
         </header>
         <div class="container container-nav">
             <nav class="nav">
-
                 <ul>
-                    <li><a class="active" href="">Главная</a></li>
+                <!-- @task исправить верстку (левый край выравн) -->
+                <?php foreach ($top_menu as $item) : ?>
+                    <?php if (isset($item['target']) && trim($item['target']) != "") { ?>
+                        <li>
+                            <a class="active" href="<?php echo $item['href']; ?>" target="<?php echo $item['target']; ?>"><?php echo $item['name']; ?></a>
+                        </li>
+                    <?php } else { ?>
+                        <li>
+                            <a href="<?php echo $item['href']; ?>">
+                                <?php echo $item['name']; ?>
+                            </a>
+                        </li>
+                    <?php } ?>
+                <?php endforeach; ?>
+                </ul>
+
+
+                <!--<ul>
+                    <li><a  href="">Главная</a></li>
                     <li class="separator"></li>
                     <li><a href="">О компании</a></li>
                     <li class="separator"></li>
@@ -91,7 +108,7 @@
                     <li><a href="">Отзывы</a></li>
                     <li class="separator"></li>
                     <li><a href="">Контакты</a></li>
-                </ul>
+                </ul>-->
             </nav>
         </div>
 

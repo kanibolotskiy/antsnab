@@ -23,7 +23,34 @@ class HeaderTemplateDecorator implements IDecorator
         $data['telephone2'] = $config->get('config_fax'); 
 
         /*@task  XSS attack posibble. change css and markup later. now used '<p>sometext</p>' */ 
-        $data['worktime'] = htmlspecialchars_decode($config->get('config_open')); 
+        $data['worktime'] = htmlspecialchars_decode($config->get('config_open'));
+
+        // gun88 menu_editor module
+        if ($config->get('menu_editor_enabled') == 1) {
+            $pre_menu = array();
+            $post_menu = array();
+            $menu_editor_entries = $config->get('menu_editor_entries');
+            
+            foreach ($menu_editor_entries as $menu_editor_entry) {
+                if ($menu_editor_entry['position'] == 0) {
+                    $pre_menu[] = array('name' => $menu_editor_entry['names'][$config->get('config_language_id')],
+                        'children' => array(),
+                        'column' => 1,
+                        'href' => $menu_editor_entry['href'],
+                        'target' => $menu_editor_entry['target']);
+                } else {
+                    $post_menu[] = array('name' => $menu_editor_entry['names'][$config->get('config_language_id')],
+                        'children' => array(),
+                        'column' => 1,
+                        'href' => $menu_editor_entry['href'],
+                        'target' => $menu_editor_entry['target']);
+                }
+               
+            }
+            $data['top_menu'] = array_merge($pre_menu, $post_menu);
+            
+        }
+
         return $data;
     }
 

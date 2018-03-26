@@ -101,6 +101,7 @@ class TemplateDecorator
     private function dispatchRouteFromTemplate($template)
     {
         $opencartRoute = str_replace('.tpl', '', $template);
+        $opencartRoute = str_replace('.twig', '', $opencartRoute);
         
         if ( RouteHelper::getPageContext() === RouteHelper::SITE_CONTEXT ) {
             $startPos = strpos($template, self::TEMPLATE_DIR_PATTERN);

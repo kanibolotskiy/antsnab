@@ -1,6 +1,7 @@
 # wspatch
 /.uml/*.png
 /.delete/*
+composer.json
 
 # Config and Htaccess Files
 /public_html/.htaccess
