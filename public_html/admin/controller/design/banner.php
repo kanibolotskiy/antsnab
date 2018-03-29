@@ -382,12 +382,16 @@ class ControllerDesignBanner extends Controller {
 				$data['banner_images'][$key][] = array(
 					'title'      => $banner_image['title'],
 					'link'       => $banner_image['link'],
+                //@task IMPLEMENT with wspatch
+                    'descr'      => $banner_image['descr'],
 					'image'      => $image,
 					'thumb'      => $this->model_tool_image->resize($thumb, 100, 100),
 					'sort_order' => $banner_image['sort_order']
 				);
 			}
 		}
+//@task IMPLEMENT with wspatch
+        $data['entry_descr'] = $this->language->get('entry_descr');
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 

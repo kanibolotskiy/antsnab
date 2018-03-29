@@ -1,3 +1,4 @@
+//@task - look errors in console, smth wrong
 var html = document.documentElement,
 	body = document.body,
 	isTouchDevice = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;

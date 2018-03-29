@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>wspatch</name>
+    <id>wspatch</id>
+    <code>wspatch</code>
+    <version>1.0.0</version>
+    <author>wslapshin</author>
+    <link>http://vk.com/wslapshin</link>
+
+    <file path="system/library/config.php">
+        <operation>
+           <search><![CDATA[class Config {]]></search>
+           <add position="after"><![CDATA[
+               use \WS\Traits\System\Library\Config;
+           ]]></add>
+        </operation>
+
+        <operation>
+           <search><![CDATA[function load]]></search>
+           <add position="replace"><![CDATA[
+               function __wspatch_overrided_load
+           ]]></add>
+        </operation>
+    </file>
+
+    <file path="system/engine/action.php">
+        <operation>
+            <search><![CDATA[class Action {]]></search>
+           <add position="after"><![CDATA[
+               use \WS\Traits\System\Engine\Action;
+           ]]></add>
+        </operation>
+
+        <operation>
+           <search><![CDATA[function __construct]]></search>
+           <add position="replace"><![CDATA[
+               function __wspatch_overrided___construct
+           ]]></add>
+        </operation>
+
+        <operation>
+           <search><![CDATA[function execute]]></search>
+           <add position="replace"><![CDATA[
+               function __wspatch_overrided_execute
+           ]]></add>
+        </operation>
+    </file>
+    
+    <file path="system/engine/loader.php">
+        <operation>
+           <search><![CDATA[class Loader {]]></search>
+           <add position="after"><![CDATA[
+               use \WS\Traits\System\Engine\Loader;
+           ]]></add>
+        </operation>
+
+        <operation>
+           <search><![CDATA[function view]]></search>
+           <add position="replace"><![CDATA[
+               function __wspatch_overrided_view
+           ]]></add>
+        </operation>
+
+        <operation>
+           <search><![CDATA[function model]></search>
+           <add position="replace"><![CDATA[
+               function __wspatch_overrided_model
+           ]]></add>
+        </operation>
+
+    </file>
+
+    <file path="system/engine/controller.php">
+<operation>
+           <search><![CDATA[abstract class Controller {]]></search>
+           <add position="before"><![CDATA[
+               use WS\Controller\IDEAutocompleteController as IDEAutocompleteController;
+           ]]></add>
+        </operation>
+
+        <operation>
+           <search><![CDATA[abstract class Controller {]]></search>
+           <add position="replace"><![CDATA[
+               abstract class Controller extends IDEAutocompleteController {
+           ]]></add>
+        </operation>
+    </file>
+</modification>

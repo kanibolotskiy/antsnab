@@ -61,6 +61,20 @@
            ]]></add>
         </operation>
 
+        <operation>
+           <search><![CDATA[function model]]></search>
+           <add position="replace"><![CDATA[
+               function __wspatch_overrided_model
+           ]]></add>
+        </operation>
+
+        <operation>
+           <search><![CDATA[function callback]]></search>
+           <add position="replace"><![CDATA[
+               function __wspatch_overrided_callback
+           ]]></add>
+        </operation>
+
     </file>
 
     <file path="system/engine/controller.php">

@@ -79,13 +79,14 @@
                 <ul>
                 <!-- @task исправить верстку (левый край выравн) -->
                 <?php foreach ($top_menu as $item) : ?>
+                    <?php $active = ($item['isactive'])?'class="active"':""; ?>
                     <?php if (isset($item['target']) && trim($item['target']) != "") { ?>
                         <li>
-                            <a class="active" href="<?php echo $item['href']; ?>" target="<?php echo $item['target']; ?>"><?php echo $item['name']; ?></a>
+                            <a <?=$active?> href="<?php echo $item['href']; ?>" target="<?php echo $item['target']; ?>"><?php echo $item['name']; ?></a>
                         </li>
                     <?php } else { ?>
                         <li>
-                            <a href="<?php echo $item['href']; ?>">
+                            <a <?=$active?> href="<?php echo $item['href']; ?>">
                                 <?php echo $item['name']; ?>
                             </a>
                         </li>
