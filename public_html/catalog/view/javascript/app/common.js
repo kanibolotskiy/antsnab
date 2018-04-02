@@ -1883,7 +1883,7 @@ function initTabs() {
 ======================================================================================
 */
 
-(function ($) {
+/*(function ($) {
     $.fn.SpinnerControl = function (options) {
 
         // set default options
@@ -2041,8 +2041,9 @@ function initTabs() {
         // return the selected input control for the chainability
         return inputControl;
     };
-})(jQuery);
+})(jQuery); */
 // page init
+/* @task - выпилить может весь?
 function initPage(){
 	initInputs();
 }
@@ -2062,10 +2063,10 @@ function initInputs() {
 		getParentByClass: false,
 		placeholderAttr: 'value'
 	});
-}
+}*/
 
 // placeholder class
-;(function(){
+/*;(function(){
 	var placeholderCollection = [];
 	PlaceholderInput = function() {
 		this.options = {
@@ -2319,7 +2320,7 @@ function initInputs() {
 }());
 
 if(window.addEventListener) window.addEventListener('load', initPage, false);
-else if(window.attachEvent) window.attachEvent('onload', initPage);
+else if(window.attachEvent) window.attachEvent('onload', initPage);*/
 /*
      _ _      _       _
  ___| (_) ___| | __  (_)___
@@ -2551,7 +2552,7 @@ jcf.lib.domReady(function(){
 
 
 $(function () {
-    $("#txtDefault").SpinnerControl();
+    /*$("#txtDefault").SpinnerControl();
     $("#txtDefault2").SpinnerControl();
     $("#txtDefault3").SpinnerControl();
     $("#txtDefault4").SpinnerControl();
@@ -2566,7 +2567,7 @@ $(function () {
     $("#txtDefault13").SpinnerControl();
     $("#txtDefault14").SpinnerControl();
     $("#txtDefault15").SpinnerControl();
-    $("pre.javascript").snippet("javascript", { showNum: false, transparent: false, style: "zellner" });
+    $("pre.javascript").snippet("javascript", { showNum: false, transparent: false, style: "zellner" });*/
 })
 
 
@@ -2616,8 +2617,10 @@ $('.multiple-items').slick({
 
 (function(){
     var a = document.querySelector('.top-table'), b = null, P = 0;
-    window.addEventListener('scroll', Ascroll, false);
-    document.body.addEventListener('scroll', Ascroll, false);
+    if( null !== a ) {
+        window.addEventListener('scroll', Ascroll, false);
+        document.body.addEventListener('scroll', Ascroll, false);
+    }
     function Ascroll() {
         if (b == null) {
             var Sa = getComputedStyle(a, ''), s = '';

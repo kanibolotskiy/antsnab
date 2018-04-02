@@ -10,6 +10,33 @@ class ModelCatalogReview extends Model {
 		return $review_id;
 	}
 
+    //@task - move to overrideds
+    public function afterAddReview($data, $output)
+    {
+       $review_id = $output;
+       $this->afterEditReview($review_id, $data, $output);
+       return $output;
+    }
+
+    public function afterEditReview($review_id, $data, $output)
+    {
+        $reviewAboutField = $this->db->escape($data['about']);
+        $reviewAnswerField = $this->db->escape($data['answer']);
+        $reviewModeratorField = $this->db->escape($data['moderator']);
+        $reviewCompanyField = $this->db->escape($data['company']);
+        $reviewEmailField = $this->db->escape($data['email']);
+        $this->db->query("UPDATE " . DB_PREFIX . "review SET ". 
+            "about = '" . $reviewAboutField . "', ". 
+            "answer = '" . $reviewAnswerField . "', ". 
+            "moderator = '" . $reviewModeratorField . "', ". 
+            "company = '" . $reviewCompanyField . "', ". 
+            "email = '" . $reviewEmailField . "' ". 
+            "where review_id = " . $review_id);
+
+        $this->cache->delete('product');
+    }
+
+
 	public function editReview($review_id, $data) {
 		$this->db->query("UPDATE " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = '" . $this->db->escape($data['date_added']) . "', date_modified = NOW() WHERE review_id = '" . (int)$review_id . "'");
 
@@ -29,7 +56,10 @@ class ModelCatalogReview extends Model {
 	}
 
 	public function getReviews($data = array()) {
-		$sql = "SELECT r.review_id, pd.name, r.author, r.rating, r.status, r.date_added FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "product_description pd ON (r.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+        //@task to wspatch
+		/*$sql = "SELECT r.review_id, pd.name, r.author, r.rating, r.status, r.date_added FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "product_description pd ON (r.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";*/
+
+        $sql = "SELECT r.review_id, pd.name, r.author, r.email, r.company, r.rating, r.status, r.date_added, r.about, r.moderator, r.answer FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "product_description pd ON (r.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' or pd.language_id is NULL";
 
 		if (!empty($data['filter_product'])) {
 			$sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_product']) . "%'";
@@ -37,6 +67,18 @@ class ModelCatalogReview extends Model {
 
 		if (!empty($data['filter_author'])) {
 			$sql .= " AND r.author LIKE '" . $this->db->escape($data['filter_author']) . "%'";
+		}
+
+        if (!empty($data['filter_about'])) {
+			$sql .= " AND r.about LIKE '" . $this->db->escape($data['filter_about']) . "%'";
+		}
+
+        if (!empty($data['filter_moderator'])) {
+			$sql .= " AND r.moderator LIKE '" . $this->db->escape($data['filter_moderator']) . "%'";
+		}
+
+        if (!empty($data['moderator_author'])) {
+			$sql .= " AND r.moderator LIKE '" . $this->db->escape($data['filter_moderator']) . "%'";
 		}
 
 		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {

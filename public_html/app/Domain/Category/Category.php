@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * -------------------------------------------------------
@@ -30,21 +31,29 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class Category extends ADomain
 {
-    public $category_id;   // KEY ATTR. WITH AUTOINCREMENT
-    public $image;
-    public $top;
-    public $column;
-    public $sort_order;
-    public $status;
-    public $date_added;
-    public $date_modified;
 
-    public $categories; 
-    public $parCategory;
+    protected $category_id;   // KEY ATTR. WITH AUTOINCREMENT
+    protected $image;
+    protected $top;
+    protected $column;
+    protected $sort_order;
+    protected $status;
 
-    public function __construct($valueAr)
+    protected $date_added;
+    protected $date_modified;
+    protected $language_id;
+    protected $name;
+    protected $description;
+    protected $meta_title;
+    protected $meta_h1;
+    protected $meta_description;
+    protected $meta_keyword;
+
+    protected $categories;
+    protected $parCategory;
+
+    public function __construct()
     {
-        parent::__construct($valueAr);
         $this->categories = new ArrayCollection();
     }
 
@@ -53,7 +62,7 @@ class Category extends ADomain
     {
         $parts = array();
         $current = $this;
-        while( null !== $current ) {
+        while (null !== $current) {
             $parts[] = $current->category_id;
             $current = $current->parCategory;
         }
@@ -61,6 +70,10 @@ class Category extends ADomain
         return $url->link('product/category', 'path=' . implode('_', $parts));
     }
 
+    public function getImageUrl( $imageTool, $width, $height ) 
+    {
+       return $imageTool->resize($this->get('image'), $width, $height);
+    }
 
     public function getMetaData()
     {

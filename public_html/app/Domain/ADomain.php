@@ -4,6 +4,7 @@
  * @category WS patches 
  * @package  
  */
+
 namespace WS\Domain;
 
 use WS\ORM\IDomain;
@@ -17,21 +18,28 @@ use WS\ORM\IDomain;
  */
 abstract class ADomain implements IDomain
 {
-   public function __construct($valueAr)
-   {
-      foreach($valueAr as $key=>$value) {
-          $this->set($key, $value);
-      }
-   }
+    //@task эти методы не помогают в наследниках, если свойства приватные. а мы хотим приватные*/
+    public function set($key, $value)
+    {
+        if( property_exists($this, $key) ) {
+            $this->{$key} = $value;
+        }
+    }
 
-   //@task эти методы не помогают в наследниках, если свойства приватные. а мы хотим приватные*/
-   public function set($key, $value)
-   {
-       $this->{$key} = $value;
-   }
+    public function get($key)
+    {
+        if ( property_exists($this, $key) ) {
+            return $this->{$key};
+        }
 
-   public function get($key)
-   {
-       return (isset( $this->{$key} ) )?$this->{$key}:null;
-   }
+        throw new \Exception("Field '".  $key . "' is not exsists");
+    }
+
+    public function fillData($valueAr)
+    {
+        foreach ($valueAr as $key => $value) {
+            $this->set($key, $value);
+        }
+    }
+
 }

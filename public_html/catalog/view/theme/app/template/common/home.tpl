@@ -13,7 +13,7 @@
                     <div class="production-block">
                         <a href="<?=$category->getHref($url)?>">
                             <div class="img-production">
-                                <img src="<?=$category->get('realImage')?>" alt="img">
+                                <img src="<?=$category->getImageUrl($imageTool, $width, $height)?>" alt="img">
                             </div>
                             <span><?=$category->get('name')?></span>
                         </a>

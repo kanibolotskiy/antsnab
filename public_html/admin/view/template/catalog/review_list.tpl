@@ -40,6 +40,14 @@
                 <label class="control-label" for="input-author"><?php echo $entry_author; ?></label>
                 <input type="text" name="filter_author" value="<?php echo $filter_author; ?>" placeholder="<?php echo $entry_author; ?>" id="input-author" class="form-control" />
               </div>
+              <div class="form-group">
+                <label class="control-label" for="input-about"><?php echo $entry_about; ?></label>
+                <input type="text" name="filter_about" value="<?php echo $filter_about; ?>" placeholder="<?php echo $entry_about; ?>" id="input-about" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-moderator"><?php echo $entry_moderator; ?></label>
+                <input type="text" name="filter_moderator" value="<?php echo $filter_moderator; ?>" placeholder="<?php echo $entry_moderator; ?>" id="input-moderator" class="form-control" />
+              </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
@@ -86,6 +94,18 @@
                     <?php } else { ?>
                     <a href="<?php echo $sort_author; ?>"><?php echo $column_author; ?></a>
                     <?php } ?></td>
+                  <td><?=$column_company?></td>
+                  <td><?=$column_email?></td>
+                  <td class="text-left"><?php if ($sort == 'r.moderator') { ?>
+                    <a href="<?php echo $sort_moderator; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_moderator; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_moderator ?>"><?php echo $column_moderator; ?></a>
+                    <?php } ?></td>
+                  <td class="text-left"><?php if ($sort == 'r.about') { ?>
+                    <a href="<?php echo $sort_about; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_about; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_about ?>"><?php echo $column_about; ?></a>
+                    <?php } ?></td>
                   <td class="text-right"><?php if ($sort == 'r.rating') { ?>
                     <a href="<?php echo $sort_rating; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_rating; ?></a>
                     <?php } else { ?>
@@ -115,6 +135,10 @@
                     <?php } ?></td>
                   <td class="text-left"><?php echo $review['name']; ?></td>
                   <td class="text-left"><?php echo $review['author']; ?></td>
+                  <td class="text-left"><?php echo $review['company']; ?></td>
+                  <td class="text-left"><?php echo $review['email']; ?></td>
+                  <td class="text-left"><?php echo $review['moderator']; ?></td>
+                  <td class="text-left"><?php echo $review['about']; ?></td>
                   <td class="text-right"><?php echo $review['rating']; ?></td>
                   <td class="text-left"><?php echo $review['status']; ?></td>
                   <td class="text-left"><?php echo $review['date_added']; ?></td>
@@ -151,6 +175,18 @@ $('#button-filter').on('click', function() {
 	
 	if (filter_author) {
 		url += '&filter_author=' + encodeURIComponent(filter_author);
+	}
+
+    var filter_about = $('input[name=\'filter_about\']').val();
+	
+	if (filter_about) {
+		url += '&filter_about=' + encodeURIComponent(filter_about);
+	}
+
+    var filter_moderator = $('input[name=\'filter_moderator\']').val();
+
+	if (filter_moderator) {
+		url += '&filter_moderator=' + encodeURIComponent(filter_moderator);
 	}
 	
 	var filter_status = $('select[name=\'filter_status\']').val();

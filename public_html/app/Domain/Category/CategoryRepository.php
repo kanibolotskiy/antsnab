@@ -34,8 +34,8 @@ class CategoryRepository extends ABaseRepository
         $collection = new ArrayCollection();
 
         foreach ($resultSet[0] as $topCat) {
-            $parent = new Category($topCat);
-            $parent->set('parCategory',null);
+            $parent = new Category();
+            $parent->fillData($topCat);
             if (isset($resultSet[$parent->get('category_id')])) {
                 $this->recursiveFindAllHelper($parent, $resultSet[$parent->get('category_id')], $resultSet);    
             }
@@ -48,8 +48,9 @@ class CategoryRepository extends ABaseRepository
     private function recursiveFindAllHelper(&$parentObj, $relArray, $resultSet)
     {
         foreach ($relArray as $childCat) {
-            $child = new Category($childCat);
-            $parentObj->categories->add($child);
+            $child = new Category();
+            $child->fillData($childCat);
+            $parentObj->get('categories')->add($child);
             $child->set('parCategory', $parentObj);
             if( isset($resultSet[$child->get('category_id')]) ) {
                 $this->recursiveFindAllHelper($child, $resultSet[$child->get('category_id')], $resultSet);

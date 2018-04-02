@@ -187,6 +187,7 @@ class ControllerExtensionExtensionModule extends Controller {
 
 		$sort_order = array();
 
+
 		foreach ($data['extensions'] as $key => $value) {
 			$sort_order[$key] = $value['name'];
 		}
