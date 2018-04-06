@@ -10,6 +10,7 @@ namespace WS\Traits\System\Engine;
 
 use WS\Helper\RouteHelper as RouteHelper;
 use WS\Override\Controller\TemplateDecorator as Template;
+
 /**
  * 1. Вместо нативного \Template используется декоратор @see WS\TemplateDecorator & here 11, 116 lines
  * 2. Добавлена возможность подгрузки сервисов через Load::service('<path1>/<path2>/...');
@@ -162,6 +163,9 @@ trait Loader
 
     private function loadModelRespectingBaseDir($basedir, $route, $key, $namespace = '\\')
     {
+        if ($route == 'model/extension/module') {
+            xdebug_break();
+        }
         $file = $basedir . 'model/' . $route . '.php';
         $class = $namespace . 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
 
@@ -379,15 +383,15 @@ trait Loader
             $callable = array($model[$key . $route], $method);
 
             if (!is_callable($callable)) {
-                throw new \Exception('Error: Could not call model/' . $key . '.' .$route . '!');
+                throw new \Exception('Error: Could not call model/' . $key . '.' . $route . '!');
             }
-            
+
             $output = call_user_func_array($callable, $args);
 
 
             //embedded hook
             $afterCallable = array($model[$key . $route], 'after' . ucfirst($method));
-            if(is_callable($afterCallable)){
+            if (is_callable($afterCallable)) {
                 $args[] = $output;
                 $output = call_user_func_array($afterCallable, $args);
             }
@@ -402,5 +406,5 @@ trait Loader
             return $output;
         };
     }
+
 }
-    

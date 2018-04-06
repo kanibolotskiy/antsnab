@@ -1,43 +1,19 @@
+<!-- @task visible isnt' used -->
 <div class="reviews">
-    <div class="title">Отзывы наших клиентов</div>
+    <div class="title"><?=$heading_title?></div>
     <div class="slider responsive">
+        <?php foreach( $reviews as $r):?>
         <div class="slick-slide">
             <div class="slick-slide-block">
-                <div class="top">
-                    <span><strong>Алексей</strong> о <b>“Продукции”</b></span>
-                    <p>14.03.2016</p>
+                <div class="slick__review">
+                    <div class="top">
+                        <span><strong><?=$r['author']?></strong> о <b><?=$r['about']?></b></span>
+                        <p><?= date_format(date_create($r['date_added']), 'd.m.Y') ?></p>
+                    </div>
+                    <em><?=$r['text']?></em>
                 </div>
-                <em>Порадовало отношение к покупателю: надёжность, ответственность и, при этом, доля юмора - вот моё впечатление о работе с компанией Ант-Снаб!</em>
             </div>
         </div>
-        <div class="slick-slide">
-            <div class="slick-slide-block">
-                <div class="top">
-                    <span><strong>Елена</strong> о <b>“Сервисе”</b></span>
-                    <p>14.03.2016</p>
-                </div>
-                <em>Алексей, спасибо за лестный отзыв. Мы всегда стараемся окружить любовью и заботой наших покупателей.
-                    С наступающим!</em>
-            </div>
-        </div>
-        <div class="slick-slide">
-            <div class="slick-slide-block">
-                <div class="top">
-                    <span><strong>Алексей</strong> о <b>“Продукции”</b></span>
-                    <p>14.03.2016</p>
-                </div>
-                <em>Порадовало отношение к покупателю: надёжность, ответственность и, при этом, доля юмора - вот моё впечатление о работе с компанией Ант-Снаб!</em>
-            </div>
-        </div>
-        <div class="slick-slide">
-            <div class="slick-slide-block">
-                <div class="top">
-                    <span><strong>Елена</strong> о <b>“Сервисе”</b></span>
-                    <p>14.03.2016</p>
-                </div>
-                <em>Алексей, спасибо за лестный отзыв. Мы всегда стараемся окружить любовью и заботой наших покупателей.
-                    С наступающим!</em>
-            </div>
-        </div>
+        <?php endforeach;?>
     </div>
 </div>

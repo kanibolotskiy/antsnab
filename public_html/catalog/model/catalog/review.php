@@ -115,4 +115,22 @@ class ModelCatalogReview extends Model
         return $query->row['total'];
     }
 
+    //@task move to modules' model maybe
+    public function getRandReviews($count = 2)
+    {
+        $result = array();
+        
+        $c = 0;
+        $total = $this->getCompanyReviewsTotal();
+        
+        while( $c < $count) {
+            $offset = random_int(0, $total-1);
+            $query = $this->db->query("select * from " . DB_PREFIX . "review limit $offset,1" );
+            $result[] = $query->row;
+            $c++;
+        }
+
+        return $result;
+    }
+
 }

@@ -1,8 +1,0 @@
-@startuml
-    Product ..> Characteristic:has many
-    Category ..> Product:has many
-    Category ..> Template:has one or zero
-    Template ..> Property:has many
-    'Characteristic ..> Property:has one
-    Property *--> Characteristic:has many
-@enduml

@@ -1,0 +1,55 @@
+.tile,
+#menu > li.active > a,
+#menu > li > a:hover,
+#menu li li a:hover
+{
+    background: #d3a06d;
+}
+.tile-heading {
+    background-color: #ba7d3f;
+}
+
+.tile-footer {
+    background-color:#eebb87;     
+}
+
+#column-left {
+    background-color: #ba7d3f;
+}
+
+#menu > li > ul {
+    background-color: #ba7d3f; 
+}
+
+#menu > li > a {
+    color: #fff;
+}
+
+#menu  li  a {
+    border-bottom: 1px solid #d3a06d;
+}
+
+#menu li li a {
+    color: #fff;
+}
+
+#menu li.active li a {
+    color: #fff;
+}
+
+#menu li li.active > a:last-child {
+    color: black;
+}
+
+#header #button-menu + .navbar-brand {
+    padding: 5px;
+}
+
+#header #button-menu + .navbar-brand > img {
+    width: 33px;
+}
+
+.breadcrumb li:last-child a {
+    color: #ba7d3f;
+}
+

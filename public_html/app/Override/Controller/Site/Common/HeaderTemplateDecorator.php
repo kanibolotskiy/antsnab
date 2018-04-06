@@ -6,7 +6,6 @@
  */
 
 namespace WS\Override\Controller\Site\Common;
-         
 
 use WS\Override\Controller\IDecorator;
 
@@ -26,50 +25,35 @@ class HeaderTemplateDecorator implements IDecorator
         $data['telephone2'] = $config->get('config_fax');
 
         /* @task  XSS attack posibble. change css and markup later. now used '<p>sometext</p>' */
-        $data['worktime'] = htmlspecialchars_decode($config->get('config_open'));
+        $data['worktime'] = nl2br($config->get('config_open')); 
+
+        //callback form
+        $data['captcha_key'] = $registry->get('config')->get('google_captcha_key');
+        $data['redirect'] = $_SERVER['REQUEST_URI'];
+        $data['action'] = $registry->get('url')->link('extension/module/callform');
+        $data['thank_you'] = false;
+        $data['form_errors'] = array();
+        $callform['data'] = array();
+        $session = $registry->get('session');
+        if (isset($session->data['callform'])) {
+            $callform = $session->data['callform'];
+            $data['form_errors'] = $callform['errors'];
+            $data['thank_you'] = $callform['show_thankyou'];
+            unset($session->data['callform']);
+        }
+        $data['form_data']['name'] = isset($callform['data']['name']) ? $callform['data']['name'] : '';
+        $data['form_data']['phone'] = isset($callform['data']['phone']) ? $callform['data']['phone'] : '';
+        $data['form_data']['text'] = isset($callform['data']['text']) ? $callform['data']['text'] : '';
+
 
         // gun88 menu_editor module
+        $data['top_menu'] = array();
         if ($config->get('menu_editor_enabled') == 1) {
-            $pre_menu = array();
-            $post_menu = array();
-            $menu_editor_entries = $config->get('menu_editor_entries');
-
-            foreach ($menu_editor_entries as $menu_editor_entry) {
-                if ($menu_editor_entry['position'] == 0) {
-                    $pre_menu[] = array('name' => $menu_editor_entry['names'][$config->get('config_language_id')],
-                        'children' => array(),
-                        'column' => 1,
-                        'href' => $menu_editor_entry['href'],
-                        'isactive' => $this->isUrlActive($menu_editor_entry['href']),
-                        'target' => $menu_editor_entry['target']);
-                } else {
-                    $post_menu[] = array('name' => $menu_editor_entry['names'][$config->get('config_language_id')],
-                        'children' => array(),
-                        'column' => 1,
-                        'href' => $menu_editor_entry['href'],
-                        'isactive' => $this->isUrlActive($menu_editor_entry['href']),
-                        'target' => $menu_editor_entry['target']);
-                }
-            }
-            $data['top_menu'] = array_merge($pre_menu, $post_menu);
+            $registry->get('load')->model('extension/module/menueditor');
+            $data['top_menu'] = $registry->get('model_extension_module_menueditor')->getEntries();
         }
 
         return $data;
-    }
-
-    private function isUrlActive($url)
-    {
-
-        //clean from special
-        $url = html_entity_decode($url);
-        //clean the given url from domain and protocol without afterward slash
-        $pattern = "~^(https?:\/\/|www\.)" . $_SERVER['HTTP_HOST'] . "~";
-        $url = preg_replace($pattern, "", $url);
-
-        //we need exactly one leading slash 
-        $url = preg_replace("/^\/*/", "/", $url);
-
-        return $url === $_SERVER['REQUEST_URI'];
     }
 
 }

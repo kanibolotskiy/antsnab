@@ -9,6 +9,7 @@ $(document).ready(function() {
 		}
 		
 		$(element).summernote({
+            tableClassName: 'table table-striped table-bordered',
 			disableDragAndDrop: true,
 			height: 300,
 			lang: lang,

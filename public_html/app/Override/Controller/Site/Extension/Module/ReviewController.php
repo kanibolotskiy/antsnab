@@ -20,28 +20,13 @@ class ReviewController extends \Controller
 {
     public function index()
     {
-        /*$dm = DomainManager::create($this->registry);
-        $this->load->language('extension/module/category');
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$parts = array();
-        $data['category_id'] = 0;
-        $data['child_id'] = 0;
-        if (isset($this->request->get['path'])) {
-			$parts = explode('_', (string)$this->request->get['path']);
-		} 
-
-		if (isset($parts[0])) {
-			$data['category_id'] = $parts[0];
-		}
-
-		if (count($parts) > 2) {
-			$data['child_id'] = array_pop($parts); 
-		}
-
-        $data['url' ] = $this->url;
-        $data['categories'] = $dm->getRepository('Category')->findAll();*/
         $data = [];
+        $this->load->language('extension/module/review');
+        $data['heading_title'] = $this->language->get('heading_title');
+        $data['visible'] = $this->config->get('review_visible');
+        $data['count'] = $this->config->get('review_count');
+        $this->load->model('catalog/review');
+        $data['reviews'] = $this->model_catalog_review->getRandReviews($data['count']);
         return $this->load->view('extension/module/review', $data);
     }    
 

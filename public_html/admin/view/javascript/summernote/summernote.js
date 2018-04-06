@@ -3703,12 +3703,17 @@
         trs.push('<tr>' + tdHTML + '</tr>');
       }
       trHTML = trs.join('');
-      var $table = $('<table>' + trHTML + '</table>');
+      //@task minify
+      var $table = $('<table>' + trHTML + '</table>'),
+          $wrapee = $('<div class="table-responsive"></div>');
+
       if (options && options.tableClassName) {
         $table.addClass(options.tableClassName);
       }
+      $wrapee.append($table);
 
-      return $table[0];
+      //return $table[0];
+      return $wrapee[0];
     };
   };
 

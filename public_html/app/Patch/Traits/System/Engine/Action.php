@@ -38,9 +38,7 @@ trait Action
         // Break apart the route
 		while ($parts) {
 			$file = DIR_APPLICATION . 'controller/' . implode('/', $parts) . '.php';
-            if( $route == 'extension/module/category' ) {
-                xdebug_break();
-            }
+
             $override = RouteHelper::routeToFullFilePath(implode('/', $parts), RouteHelper::CONTROLLER_OVERRIDE_PROGRAMM_LAYER);
 
 			if (is_file($file) || is_file($override) ) {

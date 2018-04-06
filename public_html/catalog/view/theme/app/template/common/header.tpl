@@ -37,6 +37,73 @@
         <?php } ?>
     </head>
     <body>
+        <?php if (true === $thank_you): ?>
+            <!-- Thank you form -->
+            <div class="popup thank-you visible" >
+                <div class="close"></div>
+                <div class="popup-block">
+                    <div class="popup-content">
+                        <div class="close2"></div>
+                        <span>Благодарим вас за обращение!</span>
+                        <!--@task to css-->
+                        <p style="text-align: center">Мы свяжемся с вами в ближайшее время!</p>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <?php $visible = (!empty($form_errors) ) ? 'visible' : ''; ?>
+        <div class="popup <?= $visible ?>">
+            <div class="close"></div>
+            <div class="popup-block">
+                <div class="popup-content">
+                    <div class="close2"></div>
+                    <form id="call_form" action="<?= $action ?>" method="post">
+                        <input type="hidden" name="redirect" value="<?= $redirect ?>"/>
+
+                        <span>Оставьте свои данные и сообщение, мы свяжемся с Вами в ближайшее время</span>
+
+                        <?php if (isset($form_errors['name'])): ?>
+                            <i class="error"><?= $form_errors['name'] ?></i>
+                            <input value="<?= $form_data['name'] ?>" class="error" name="name" type="text" placeholder="Имя"/>
+                        <?php else: ?>    
+                            <input value="<?= $form_data['name'] ?>" name="name" type="text" placeholder="Имя"/>
+                        <?php endif; ?>
+
+                        <?php if (isset($form_errors['phone'])): ?>
+                            <i class="error"><?= $form_errors['phone'] ?></i>
+                            <input value="<?= $form_data['phone'] ?>" class="error" name="phone" type="text" placeholder="Телефон"/>
+                        <?php else: ?>    
+                            <input  value="<?= $form_data['phone'] ?>" name="phone" type="text" placeholder="Телефон"/>
+                        <?php endif; ?>
+
+                        <?php if (isset($form_errors['text'])): ?>
+                            <i class="error"><?= $form_errors['text'] ?></i>
+                            <textarea placeholder="Сообщение" class="error" name="text"><?= $form_data['text'] ?></textarea>
+                        <?php else: ?>    
+                            <textarea placeholder="Сообщение" name="text"><?= $form_data['text'] ?></textarea>
+                        <?php endif; ?>
+
+                        <input
+                            type ="submit"
+                            class="g-recaptcha"
+                            data-sitekey="<?= $captcha_key ?>"
+                            data-callback="submitCallForm" value="Отправить"/>
+                    </form>
+                    <script type="text/javascript">
+                        function submitCallForm()
+                        {
+                            $('#call_form').submit();
+                        }
+                        window.onload = function () {
+                            var phoneInput = $('input[name="phone"]', '#call_form');
+                            var im = new Inputmask({"mask": "(999) 999-9999"});
+                            im.mask(phoneInput);
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
 
         <a href="" class="up"></a>
         <header class="header container">
@@ -56,13 +123,15 @@
             </strong>
             <div class="tel">
                 <a href="tel:<?php echo $telephone; ?>"><?php echo $telephone; ?></a>
-                <a href="tel:8 (800) 775-28-31"><?= $telephone2 ?></a>
+                <a href="tel:<?= $telephone2 ?>"><?= $telephone2 ?></a>
                 <a class="btn-request-call">Заказать звонок</a>
             </div>
             <div class="line"></div>
             <div class="schedule">
                 <span>Мы работем:</span>
-                <?= $worktime ?>
+                <p>
+                    <?= $worktime ?>
+                </p>
             </div>
             <a class="btn-request-call">Заказать звонок</a>
             <?= $cart ?>
@@ -77,39 +146,21 @@
         <div class="container container-nav">
             <nav class="nav">
                 <ul>
-                <!-- @task исправить верстку (левый край выравн) -->
-                <?php foreach ($top_menu as $item) : ?>
-                    <?php $active = ($item['isactive'])?'class="active"':""; ?>
-                    <?php if (isset($item['target']) && trim($item['target']) != "") { ?>
-                        <li>
-                            <a <?=$active?> href="<?php echo $item['href']; ?>" target="<?php echo $item['target']; ?>"><?php echo $item['name']; ?></a>
-                        </li>
-                    <?php } else { ?>
-                        <li>
-                            <a <?=$active?> href="<?php echo $item['href']; ?>">
-                                <?php echo $item['name']; ?>
-                            </a>
-                        </li>
-                    <?php } ?>
-                <?php endforeach; ?>
+                    <?php foreach ($top_menu as $item) : ?>
+                        <?php $active = ($item['isactive']) ? 'class="active"' : ""; ?>
+                        <?php if (isset($item['target']) && trim($item['target']) != "") { ?>
+                            <li>
+                                <a <?= $active ?> href="<?php echo $item['href']; ?>" target="<?php echo $item['target']; ?>"><?php echo $item['name']; ?></a>
+                            </li>
+                        <?php } else { ?>
+                            <li>
+                                <a <?= $active ?> href="<?php echo $item['href']; ?>">
+                                    <?php echo $item['name']; ?>
+                                </a>
+                            </li>
+                        <?php } ?>
+                    <?php endforeach; ?>
                 </ul>
-
-
-                <!--<ul>
-                    <li><a  href="">Главная</a></li>
-                    <li class="separator"></li>
-                    <li><a href="">О компании</a></li>
-                    <li class="separator"></li>
-                    <li><a href="">Прайс-лист</a></li>
-                    <li class="separator"></li>
-                    <li><a href="">Статьи</a></li>
-                    <li class="separator"></li>
-                    <li><a href="">Новости</a></li>
-                    <li class="separator"></li>
-                    <li><a href="">Отзывы</a></li>
-                    <li class="separator"></li>
-                    <li><a href="">Контакты</a></li>
-                </ul>-->
             </nav>
         </div>
 

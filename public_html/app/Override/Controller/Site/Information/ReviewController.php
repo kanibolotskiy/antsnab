@@ -55,6 +55,7 @@ class ReviewController extends \Controller
         $this->document->setKeywords($meta_info['review_meta_keyword']);
 
         $data['heading_title'] = $meta_info['heading_title'];
+        $data['rules'] = $this->url->link('information/information', 'information_id=5');
 
         //seo route
         if (isset($this->request->get['route'])) {
@@ -114,13 +115,14 @@ class ReviewController extends \Controller
         // new review
         $p = ( $page == 1 ) ? '' : '&page=' . $page;
         $data['action'] = $this->url->link('information/review', $p);
-        $this->document->addScript('https://www.google.com/recaptcha/api.js', 'footer');
+        
         $this->error = array();
         $data['entry_author'] = isset($this->request->post['author']) ? $this->request->post['author'] : '';
         $data['entry_email'] = isset($this->request->post['email']) ? $this->request->post['email'] : '';
         $data['entry_company'] = isset($this->request->post['company']) ? $this->request->post['company'] : '';
         $data['entry_text'] = isset($this->request->post['text']) ? $this->request->post['text'] : '';
         $data['show_popup'] = false;
+        $data['captcha_key'] = $this->config->get('google_captcha_key');
         if ($this->request->server['REQUEST_METHOD'] == 'POST') {
             if ($this->validateForm($this->request->post)) {
                 $newData = $this->request->post;
@@ -146,7 +148,6 @@ class ReviewController extends \Controller
 
     protected function validateForm($request)
     {
-
         if ((utf8_strlen($this->request->post['author']) < 3) || (utf8_strlen($this->request->post['author']) > 64)) {
             $this->error['author'] = $this->language->get('error_author');
         }

@@ -26,14 +26,3 @@
         </div>
     </div>
 </div>
-<!--@task to scss-->
-<style>
-   .gallery-holder a.btn-prev, .gallery-holder a.btn-next,
-   .gallery-holder a.btn-prev, .gallery-holder a.btn-prev {
-       bottom: 12px;
-   }
-
-   .gallery-holder .pagination {
-       bottom: 62px;
-   }
-</style>

@@ -1,17 +1,5 @@
 <?= $header ?>
-<!--//@task to css-->
-<style>
-    i.error {
-        display: inline-block;
-        margin-left: 10px;
-        font-size: 10px;
-        font-style: italic;
-        color: red;
-    }
-    input.error {
-        border: 1px solid red;
-    }
-</style>
+
 <div class="container main">
     <?= $column_left ?>
     <div class="content">
@@ -30,7 +18,6 @@
         </div>
         <?php echo $content_top; ?>
         <div class = "reviews-container">
-            <div class = "title"><?= $heading_title ?></div>
             <div class = "give-feedback">
                 <div class = "title-give-feedback">Оставить отзыв</div>
                 <form id="review_form" action = "<?= $action ?>" method="post">
@@ -86,7 +73,7 @@
                     <div class = "agreement">
                         <input name="agree" class="error" type = "checkbox" id = "agree" value="1"/>
                         <label for = "agree" id="agreeLabel">
-                            Я согласен с <a href = "">правилами</a>
+                            Я согласен с <a target="_blank" href = "<?=$rules?>">правилами</a>
                             <?php if (isset($errors['agree'])): ?>
                                 <i class="error"><?= $errors['agree'] ?></i>
                             <?php endif; ?>
@@ -95,20 +82,19 @@
                     <input
                         type ="submit"
                         class="g-recaptcha"
-                        data-sitekey="6Lf3WFAUAAAAAOpZAYRIERdMkiuMjZ4K50B9f_2A"
-                        data-callback="submitForm" value="Добавить отзыв"/>
+                        data-sitekey="<?= $captcha_key ?>"
+                        data-callback="submitReviewForm" value="Добавить отзыв"/>
                     <script type="text/javascript">
-                        function submitForm()
+                        function submitReviewForm()
                         {
-                            //$('input', '#review_form').attr('placeholder', '');
                             $('#review_form').submit();
                         }
                         window.onload = function ()
                         {
-                            $('#agreeeLabel').on('click', function(e){
+                            $('#agreeeLabel').on('click', function (e) {
                                 var ischecked = $('#agree').prop('checked');
                                 $('#agree').prop('checked', !ischecked);
-                            }); 
+                            });
                         }
                     </script>
                 </form>
@@ -135,8 +121,8 @@
             <div class="page-navigation page-navigation2">
                 <?php echo $pagination; ?>
             </div>
-            <?php echo $content_bottom; ?>
         </div>
+        <?php echo $content_bottom; ?>
     </div>
 </div>
 <!--@task to css-->
@@ -145,17 +131,17 @@
         top:120px;
     }
 </style>
-<?php if( $show_popup ):?>
-<div class="popup thank-you" style="display: block;">
-    <div class="close"></div>
-    <div class="popup-block">
-        <div class="popup-content">
-            <div class="close2"></div>
-            <span>Благодарим вас за отзыв!</span>
-            <!--@task to css-->
-            <p style="text-align: center">Отзыв появится на сайте в ближайшее время</p>
+<?php if ($show_popup): ?>
+    <div class="popup thank-you visible" style="display: block;">
+        <div class="close"></div>
+        <div class="popup-block">
+            <div class="popup-content">
+                <div class="close2"></div>
+                <span>Благодарим вас за отзыв!</span>
+                <!--@task to css-->
+                <p style="text-align: center">Отзыв появится на сайте в ближайшее время</p>
+            </div>
         </div>
     </div>
-</div>
-<?php endif;?>
+<?php endif; ?>
 <?= $footer ?>
