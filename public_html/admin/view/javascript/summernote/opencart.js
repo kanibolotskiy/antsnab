@@ -16,7 +16,7 @@ $(document).ready(function() {
 			emptyPara: '',
 			toolbar: [
 				['style', ['style']],
-				['font', ['bold', 'underline', 'clear']],
+				['font', ['bold', 'underline', 'clear','italic']],
 				['fontname', ['fontname']],
 				['color', ['color']],
 				['para', ['ul', 'ol', 'paragraph']],

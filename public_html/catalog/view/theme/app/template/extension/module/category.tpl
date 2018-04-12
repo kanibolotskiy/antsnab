@@ -43,7 +43,7 @@
         <?php } ?>
     </ul>
 </div>
-<div class="catalog-product catalog-product2">
+<div class="catalog-product catalog-product_mobile catalog-product2">
     <a class="catalog-btn">Каталог продукции</a>
     <ul class="accordion simple-accordion">
         <?php foreach ($categories->toArray() as $parent) { ?>

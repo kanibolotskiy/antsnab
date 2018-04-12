@@ -7,8 +7,11 @@ class Pagination {
 	public $url = '';
 	public $text_first = '|&lt;';
 	public $text_last = '&gt;|';
-	public $text_next = '&gt;';
-	public $text_prev = '&lt;';
+/*	public $text_next = '&gt;';
+	public $text_prev = '&lt;';*/
+
+	public $text_next = 'nxt';
+	public $text_prev = 'prv';
 
 	public function render() {
 		$total = $this->total;

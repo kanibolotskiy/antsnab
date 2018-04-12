@@ -2389,11 +2389,39 @@ d.slice(e-c+1,e+c+2).addClass("slick-active").attr("aria-hidden","false")),0===a
 
 
 
+/* @task refactor here Catalog Menu*/
+function mobileMenuPreconfig() {
+    var bottomMargin = 25,
+        mostHeight = 280,
+        maxHeight = $(window).height() - $('.catalog-product_mobile .catalog-btn').height() - bottomMargin;
+    maxHeight = ( maxHeight <= mostHeight )? maxHeight: mostHeight;
+    $('.catalog-product_mobile .accordion').css('max-height', maxHeight);
+}
+function toggleMenu($accordion) {
+    $accordion.slideToggle("slow");
+}
+function menuHandler(e){
+    e.stopPropagation();
+    var $button = $(this),
+        $accordion = $button.next('.accordion'),
+        $container = $button.parents('.catalog-product');
 
-$(".catalog-btn").click(function () {
-    $(".accordion").slideToggle("slow");
-});
+    if( $container.hasClass("catalog-product_mobile") ){
+        mobileMenuPreconfig();
+    }
 
+    toggleMenu($accordion);
+}
+$(".catalog-btn").on('click', menuHandler); 
+$('body').on('click', function(e) { 
+    var $button=$('.catalog-product_mobile .catalog-btn');
+    if( $button.next('.accordion').css('display') == 'block') { 
+        menuHandler.call($button[0], e);  
+    }
+}); 
+$('.catalog-product .accordion').on('click', function(e){ e.stopPropagation(); });
+$(window).on('resize', mobileMenuPreconfig);
+    
 
 
 $('.responsive').slick({

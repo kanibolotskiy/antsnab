@@ -34,6 +34,7 @@ class ContactTemplateDecorator implements IDecorator
        }
 
        $data['yamap'] = 'https://api-maps.yandex.ru/2.1/?lang=ru_RU';
+       $data['rekviziti'] = $registry->get('url')->link('information/information', 'information_id=4' ) . "#rekvizit";
        
        return $data; 
     }

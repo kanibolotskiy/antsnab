@@ -7,7 +7,7 @@
 
 namespace WS\Override\Controller\Site\Information;
 
-use WS\Patch\Helper\Pagination;
+use WS\Patch\Helper\PaginationHelper;
 
 /**
  * Описание класса 
@@ -46,7 +46,7 @@ class ReviewController extends \Controller
             'review_meta_description' => 'Some description',
             'review_meta_keyword' => 'Some keywords',
         );
-        $reviewsLimit = 20;
+        $reviewsLimit = 2;
         $defaultRaiting = 5;
         //$this->config->get($this->config->get('config_theme') . '_product_limit')
 
@@ -89,28 +89,11 @@ class ReviewController extends \Controller
         }
 
         //pagination
-        $pagination = new Pagination();
         $reviewsTotal = $this->model_catalog_review->getCompanyReviewsTotal();
-        $pagination->total = $reviewsTotal;
-        $pagination->page = $page;
-        $pagination->limit = $limit;
-        $pagination->url = $this->url->link('information/review', '&page={page}');
-
-        $data['pagination'] = $pagination->render();
-
-
-        // http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
-        if ($page == 1) {
-            $this->document->addLink($this->url->link('information/review', '', true), 'canonical');
-        } elseif ($page == 2) {
-            $this->document->addLink($this->url->link('information/review', '', true), 'prev');
-        } else {
-            $this->document->addLink($this->url->link('information/review', '&page=' . ($page - 1), true), 'prev');
-        }
-
-        if ($limit && ceil($reviewsTotal / $limit) > $page) {
-            $this->document->addLink($this->url->link('information/review', '&page=' . ($page + 1), true), 'next');
-        }
+        $meta[PaginationHelper::BASE_URL_META_INDEX] = $this->url->link('information/review');
+        $paginationModel = PaginationHelper::getPaginationModel($reviewsTotal, $limit, (int)$page, $reviews , $meta);
+        PaginationHelper::setDocumentLinks($this->document, $paginationModel);    
+        $data['pagination'] = PaginationHelper::render($this->load, $paginationModel);
 
         // new review
         $p = ( $page == 1 ) ? '' : '&page=' . $page;

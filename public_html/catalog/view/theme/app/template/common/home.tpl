@@ -22,9 +22,7 @@
                 <?php endforeach ?>
             </ul>
         </div>
-        <!-- @task как управлять из админки? двойная нагрузка на сервер -->
-        <?php echo $content_news_mobile ?>
-        <?php echo $content_articles_mobile ?>
+        <!-- @task как управлять мобильными из админки? - только кэш или переверстывать двойная нагрузка на сервер -->
         <?php echo $content_bottom; ?>
     </div>
 </div>

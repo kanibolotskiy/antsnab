@@ -24,18 +24,24 @@ class ModelNewsBlogArticle extends Model {
 		}
 	}
 
+    //@task added category info, move to override
 	public function getArticle($article_id) {
-		$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image,
-		p.sort_order
+		$query = $this->db->query("SELECT DISTINCT *, pd.*, p.image,
+		p.sort_order, cd.name as cat_name, p2c.category_id as main_catid
 
 		FROM " . DB_PREFIX . "newsblog_article p
 		LEFT JOIN " . DB_PREFIX . "newsblog_article_description pd ON (p.article_id = pd.article_id)
 		LEFT JOIN " . DB_PREFIX . "newsblog_article_to_store p2s ON (p.article_id = p2s.article_id)
+        
+        LEFT JOIN " . DB_PREFIX . "newsblog_article_to_category as p2c ON (p2c.article_id = p.article_id)
+        LEFT JOIN " . DB_PREFIX . "newsblog_category_description as cd on (p2c.category_id = cd.category_id)
 
 		WHERE p.article_id = '" . (int)$article_id . "' AND
 		pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND
 		p.status = '1' AND
 		p.date_available <= NOW() AND
+        p2c.main_category = 1 AND
+        cd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND
 		p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
 		if ($query->num_rows) {
@@ -55,6 +61,9 @@ class ModelNewsBlogArticle extends Model {
 				'status'           => $query->row['status'],
 				'date_modified'    => $query->row['date_modified'],
 				'viewed'           => $query->row['viewed'],
+                //@added
+                'cat_name'         => $query->row['cat_name'],
+                'main_catid'       => $query->row['main_catid'],
 				'attributes'	   => $this->getArticleAttributes($article_id)
 			);
 		} else {
@@ -101,6 +110,11 @@ class ModelNewsBlogArticle extends Model {
 				$sql .= " AND a2c.category_id in (" . implode(',',$data['filter_categories']) . ")";
 			}
 		}
+
+        /**@task move to override*/
+        if(!empty($data['filter_year'])) {
+            $sql .= " AND year(a.date_available) = " . (int)$data['filter_year'];
+        }
 
 		$sql .= " GROUP BY a.article_id";
 
@@ -440,11 +454,27 @@ class ModelNewsBlogArticle extends Model {
 			$sql .= ")";
 		}
 
+        /**@task move to override*/
+        if(!empty($data['filter_year'])) {
+            $sql .= " AND year(p.date_available) = " . (int)$data['filter_year'];
+        }
 
 		$query = $this->db->query($sql);
 
 		return $query->row['total'];
 	}
+
+    /**@task move to override*/
+    public function getYears($category_id)
+    {
+        $sql = "select year(date_available) as yr from ".DB_PREFIX."newsblog_article left join ".DB_PREFIX."newsblog_article_to_category on ".DB_PREFIX."newsblog_article.article_id=".DB_PREFIX."newsblog_article_to_category.article_id where ".DB_PREFIX."newsblog_article_to_category.category_id = ".$this->db->escape($category_id)." group by yr order by yr DESC";
+        $res =  $this->db->query($sql);
+        $result = array();
+        foreach( $res->rows as $row) {
+            $result[] = $row['yr'];
+        }
+        return $result;
+    }
 
 	public function getProfile($article_id, $recurring_id) {
 		return $this->db->query("SELECT * FROM `" . DB_PREFIX . "recurring` `p` JOIN `" . DB_PREFIX . "newsblog_article_recurring` `pp` ON `pp`.`recurring_id` = `p`.`recurring_id` AND `pp`.`article_id` = " . (int)$article_id . " WHERE `pp`.`recurring_id` = " . (int)$recurring_id . " AND `status` = 1 AND `pp`.`customer_group_id` = " . (int)$this->config->get('config_customer_group_id'))->row;
