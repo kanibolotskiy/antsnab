@@ -2398,7 +2398,7 @@ function mobileMenuPreconfig() {
     $('.catalog-product_mobile .accordion').css('max-height', maxHeight);
 }
 function toggleMenu($accordion) {
-    $accordion.slideToggle("slow");
+    $accordion.slideToggle();
 }
 function menuHandler(e){
     e.stopPropagation();
@@ -2413,12 +2413,12 @@ function menuHandler(e){
     toggleMenu($accordion);
 }
 $(".catalog-btn").on('click', menuHandler); 
-$('body').on('click', function(e) { 
+/*$('body').on('click', function(e) { 
     var $button=$('.catalog-product_mobile .catalog-btn');
     if( $button.next('.accordion').css('display') == 'block') { 
         menuHandler.call($button[0], e);  
     }
-}); 
+});*/ 
 $('.catalog-product .accordion').on('click', function(e){ e.stopPropagation(); });
 $(window).on('resize', mobileMenuPreconfig);
     
