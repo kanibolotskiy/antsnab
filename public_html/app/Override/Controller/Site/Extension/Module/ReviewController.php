@@ -7,8 +7,6 @@
 
 namespace WS\Override\Controller\Site\Extension\Module;
 
-use WS\ORM\DomainManager;
-
 /**
  * Описание класса 
  * 

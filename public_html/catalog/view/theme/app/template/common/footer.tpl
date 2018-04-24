@@ -69,13 +69,13 @@
 <script src="/catalog/view/javascript/app/common.js"></script>
 <script src="/catalog/view/javascript/app/inputmask.min.js"></script>
 <script src="/catalog/view/javascript/app/inputmask.phone.extensions.js"></script>
-<script src="https://www.google.com/recaptcha/api.js"></script>
 <?php foreach ($scripts as $script) { ?>
     <script src="<?php echo $script; ?>" type="text/javascript"></script>
 <?php } ?>
 <?php foreach ($analytics as $analytic) { ?>
     <?php echo $analytic; ?>
 <?php } ?>
+<!-- <script src="https://www.google.com/recaptcha/api.js"></script>-->
 <!-- @task Счетчики, виджеты (comagic) -->
 </body>
 </html>

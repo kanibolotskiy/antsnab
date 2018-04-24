@@ -1491,8 +1491,8 @@ ul.tabset li:last-child a.active {
                         display: none;
                     }
                     .tags{
-                        height:116px;
-                        max-height: 1000px;
+                        max-height:116px;
+                        /*max-height: 1000px;*/
                         position: relative;
                         display: block;
                         &:after{
@@ -1703,14 +1703,14 @@ ul.tabset li:last-child a.active {
     }
 }
 .tab-block3 .quantity-buy{
-    position: absolute;
+    //position: absolute;
     bottom: 20px;
     left: 0;
     padding: 0 20px;
     width: 100%;
 }
 .tab-block2 ul li .catalog-block{
-    padding-bottom: 120px;
+    padding-bottom: 60px;
 }
 .tab-block2 ul li .catalog-block .catalog-description{
     padding-bottom: 0;

@@ -40,7 +40,6 @@
             text: "very veryverylong text pushedhere huuuuuurrrrraa"
         });*/
  function renderBreadCrumbs() {
-    console.log('start');
 
     var template = $('#breadcrumbTemplate').html(),
         homeIconTemplate = $('#homeIconTemplate').html(), 
@@ -93,8 +92,6 @@
     var maxWidth = $wrapee.width(),
         gap = 5,
         currentWidth = $container.width();
-    console.log(currentWidth);    
-    console.log('max:' + maxWidth);
 
     //try replace
     if( currentWidth >= (maxWidth-gap) ) {
@@ -125,7 +122,6 @@
            }
 
            currentWidth = $container.width();
-           console.log(currentWidth);
            if ( currentWidth <= (maxWidth-gap) ) {
                break;
            } 

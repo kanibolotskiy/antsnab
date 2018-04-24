@@ -100,6 +100,50 @@
                 </div>
               </div>
               <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-isfinal">
+                    <span data-toggle="tooltip">
+                        <?php echo $entry_isfinal; ?>
+                    </span>
+                </label>
+                <div class="col-sm-1">
+                  <div class="checkbox">
+                    <label>
+                      <?php if ($isfinal) { ?>
+                      <input  type="checkbox" name="isfinal" value="1" checked="checked" id="input-isfinal" />
+                      <?php } else { ?>
+                      <input type="checkbox" name="isfinal" value="1" id="input-isfinal" />
+                      <?php } ?>
+                      &nbsp; </label>
+                  </div>
+                </div>
+                <div class="col-sm-9">
+                    <?php if ($isfinal) : ?>
+                       <a target="_blank" id="category_prodproperties_link" href="<?=$category_prodproperties?>">
+                        <?=$entry_category_prodproperties?>
+                       </a>
+                    <?php else: ?>
+                       <a target="_blank" style="display:none" id="category_prodproperties_link" href="<?=$category_prodproperties?>">
+                        <?=$entry_category_prodproperties?>
+                       </a>
+                    <?php endif ?>
+                </div>
+                    <script type="text/javascript">
+                        $(window).on('load', function(){
+                            $('#input-isfinal').on('change', function(){
+                                var $el = $(this),
+                                    state = $el.prop("checked"),
+                                    $link = $('#category_prodproperties_link');
+
+                                if( true === state ) {
+                                    $link.css('display', 'block');
+                                } else {
+                                    $link.css('display', 'none');
+                                }
+                            });
+                        });
+                    </script>
+              </div>  
+              <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-filter"><span data-toggle="tooltip" title="<?php echo $help_filter; ?>"><?php echo $entry_filter; ?></span></label>
                 <div class="col-sm-10">
                   <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />

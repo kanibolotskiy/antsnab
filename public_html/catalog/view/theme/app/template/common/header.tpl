@@ -95,6 +95,7 @@
                         {
                             $('#call_form').submit();
                         }
+                        /*@task переделать на documentOnLoaded*/
                         window.onload = function () {
                             var phoneInput = $('input[name="phone"]', '#call_form');
                             var im = new Inputmask({"mask": "(999) 999-9999"});
