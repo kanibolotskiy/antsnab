@@ -53,6 +53,7 @@ class ProdPropertiesController extends \Controller
             $filter_data['filter_path_name'] = $this->request->get['filter_name'];
         }
 
+        $filter_data['filter_isfinal'] = true;
 
         $this->data['categories'] = $this->model_catalog_category->getCategories($filter_data);
         //Send the output
@@ -82,8 +83,7 @@ class ProdPropertiesController extends \Controller
         $this->data['edit'] = $this->url->link('extension/module/prodproperties/getform', 'token=' . $this->session->data['token'] . '&category_id=' . $category_id, 'SSL');
         $this->data['delete'] = $this->url->link('extension/module/prodproperties/delete', 'token=' . $this->session->data['token'] . '&category_id=' . $category_id, 'SSL');
         $this->data['cancel'] = $this->url->link('extension/module/prodproperties', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['filter'] = $this->url->link('extension/module/prodproperties/getlist', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['markfinal'] = $this->url->link('extension/module/prodproperties/markCategoryFinal', 'token=' . $this->session->data['token'], 'SSL');
+        
 
         //specific data
         $this->load->model('catalog/category');

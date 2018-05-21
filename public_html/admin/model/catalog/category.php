@@ -241,7 +241,7 @@ class ModelCatalogCategory extends Model
         return $query->rows;
     }
 
-    //@task move to override, isactive added, pathname filter added
+    //@task move to override, isfinal added, pathname filter, isfinal filter added
     public function getCategories($data = array())
     {
         $sql = "SELECT c1.isfinal, cp.category_id AS category_id, GROUP_CONCAT(cd1.name ORDER BY cp.level SEPARATOR '&nbsp;&nbsp;&gt;&nbsp;&nbsp;') AS name, c1.parent_id, c1.sort_order, c1.status,(select count(product_id) as product_count from " . DB_PREFIX . "product_to_category pc where pc.category_id = c1.category_id) as product_count FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "category c1 ON (cp.category_id = c1.category_id) LEFT JOIN " . DB_PREFIX . "category c2 ON (cp.path_id = c2.category_id) LEFT JOIN " . DB_PREFIX . "category_description cd1 ON (cp.path_id = cd1.category_id) LEFT JOIN " . DB_PREFIX . "category_description cd2 ON (cp.category_id = cd2.category_id) WHERE cd1.language_id = '" . (int) $this->config->get('config_language_id') . "' AND cd2.language_id = '" . (int) $this->config->get('config_language_id') . "'";
@@ -250,7 +250,9 @@ class ModelCatalogCategory extends Model
             $sql .= " AND cd2.name LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
         }
 
-
+        if ( isset($data['filter_isfinal']) && true === $data['filter_isfinal'] ) {
+            $sql .= " AND c1.isfinal = 1 "; 
+        }
 
         $sql .= " GROUP BY cp.category_id";
 
@@ -291,7 +293,6 @@ class ModelCatalogCategory extends Model
 
             $sql .= " LIMIT " . (int) $data['start'] . "," . (int) $data['limit'];
         }
-
         $query = $this->db->query($sql);
 
         return $query->rows;

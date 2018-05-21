@@ -46,6 +46,7 @@ if ((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTP
 }
 
 // Modification Override
+//@task этого не нужно уже,каж-ся
 function modification($filename) {
 	if (defined('DIR_CATALOG')) {
 		$file = DIR_MODIFICATION . 'admin/' .  substr($filename, strlen(DIR_APPLICATION));

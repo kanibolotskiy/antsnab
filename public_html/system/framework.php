@@ -98,7 +98,6 @@ if ($config->has('action_pre_action')) {
 		$controller->addPreAction(new Action($value));
 	}
 }
-
 // Dispatch
 $controller->dispatch(new Action($config->get('action_router')), new Action($config->get('action_error')));
 

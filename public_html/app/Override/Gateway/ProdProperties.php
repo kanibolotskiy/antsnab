@@ -1,7 +1,6 @@
 <?php
 namespace WS\Override\Gateway;
 
-use PDO;
 /**
  * Описание класса 
  * 

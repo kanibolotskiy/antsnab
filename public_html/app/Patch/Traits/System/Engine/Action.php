@@ -34,7 +34,7 @@ trait Action
 		$this->id = $route;
 
         $parts = explode('/', preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route));
-
+        
         // Break apart the route
 		while ($parts) {
 			$file = DIR_APPLICATION . 'controller/' . implode('/', $parts) . '.php';
@@ -49,7 +49,7 @@ trait Action
 				$this->method = array_pop($parts);
 			}
 		}
-        
+
 	    $this->override = ( is_file($override) )?$override:null;
         $this->file = ( is_file($file) )?$file:null; 
 
