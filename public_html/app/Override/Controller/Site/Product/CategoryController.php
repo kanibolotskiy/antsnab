@@ -197,9 +197,9 @@ class CategoryController extends \Controller
 
         foreach ($results as $result) {
             if ($result['image']) {
-                $image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_thumb_width'), $this->config->get($this->config->get('config_theme') . '_image_thumb_height'));
+                $image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_category_width'), $this->config->get($this->config->get('config_theme') . '_image_category_height'));
             } else {
-                $image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_thumb_width'), $this->config->get($this->config->get('config_theme') . '_image_thumb_height'));
+                $image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_category_width'), $this->config->get($this->config->get('config_theme') . '_image_category_height'));
             }
 
             if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
@@ -237,7 +237,6 @@ class CategoryController extends \Controller
                     );
                 }
             }
-
 
             $this->data['products'][] = array(
                 'product_id' => $result['product_id'],

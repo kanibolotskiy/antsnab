@@ -298,9 +298,19 @@ class ProdUnitsController extends \Controller
         (new UnitsAjaxController($this->registry))->changeBase();    
     }
 
+    /** AJAX for strings @task move to certain classes, need to refactor OC*/
     public function generatestrings()
     {
         (new StringsAjaxController($this->registry))->generate();
     }
 
+    public function saveAll()
+    {
+        (new StringsAjaxController($this->registry))->saveAll();
+    }
+
+    public function getStrings()
+    {
+       (new StringsAjaxController($this->registry))->getAll(); 
+    }
 }

@@ -12,7 +12,26 @@ $(window).on('load', function () {
         },
 
         loadData: function() {
-            
+          var token = $('#token').val(),
+                    url = '/admin/index.php?route=extension/module/produnits/getStrings&token=' + token,
+                    params = {
+                        data: {templateId: $('#templateId').val() },
+                        method: 'POST',
+                        dataType: 'json',
+                        url: url 
+                    },
+                    self = this;
+                $.ajax(params)
+                    .done(function(data){
+                        if( data.result ) {
+                            $.each(data.result, function(index, string){
+                                string.error = {};
+                                $('#' + self.insertId).append( self.renderRow(string) );
+                            });
+                            return;
+                        }
+                        console.warn(data.error);
+                    });    
         },
 
         generate: function() {
@@ -42,26 +61,68 @@ $(window).on('load', function () {
                 string.error = {};
                 $('#' + self.insertId).append( self.renderRow(string) );
             });
+            this.activeSaveButtonState(); 
         },
 
         /*VIEW*/
         renderRow: function(data) {
             var row = $('<div/>').html( this.tmpl(this.templateId, data )).contents();
+            $('input', row).change(this.activeSaveButtonState);
             return row;
+        },
+
+        activeSaveButtonState:function () {
+           $('#saveStringsBut').prop("disabled", false);    
+        },
+
+        inactiveSaveButtonState: function() {
+           $('#saveStringsBut').prop("disabled", true);  
+        },
+
+        deleteRow: function(el){
+           var $row = $(el).parents('tr');
+           $row.remove();
+           this.activeSaveButtonState();
+        },
+
+        addRow: function(){
+             $('#' + this.insertId).append( this.renderRow({error:{}}) );
         },
 
         /*CRUD*/
         saveAll: function(){
-            
-        },
+            var saveData = [];
 
-        deleteRow: function(){
-            
-        },
+            $('#strings > tr').each(function(index){
+                var $row = $(this),
+                    obj = {
+                        description: $('input[data-name="description"]', $row).val(),
+                        value:  $('input[data-name="value"]', $row).val(), 
+                        sortOrder:  $('input[data-name="sortOrder"]', $row).val() 
+                    };
+                saveData.push(obj); 
+            });
 
-        addRow: function(){
-            
-        },
+            var token = $('#token').val(),
+                url = '/admin/index.php?route=extension/module/produnits/saveAll&token=' + token,
+                params = {
+                    data: {templateId: $('#templateId').val(), data: saveData },
+                    method: 'POST',
+                    dataType: 'json',
+                    url: url 
+                },
+                self = this;
+            $.ajax(params)
+                   .done(function(data){
+                        if( data.result ) {
+                            self.inactiveSaveButtonState();
+                            return;
+                        }
+                        console.warn(data.error);
+                   });     
+        }
+
+        
     },
 
     window.unitForm = {
@@ -73,7 +134,6 @@ $(window).on('load', function () {
             /*INIT*/
             init: function (tmpl) {
                 this.tmpl = tmpl;
-
                 this.tmpl(this.templateId);
                 $('[data-baseselect]').on('change', this.onBaseChange);
                 this.loadData();
@@ -276,18 +336,6 @@ $(window).on('load', function () {
             stringForm.init(window.tmpl);
         }
 
-        /*$(window).on('load', function(e){
-            $('#form-units').on('submit',function(){
-                //before saving template data we should save units and strings
-                //@task mark already saved units to prevent overheading requests
-                console.log('form_submit');
-                //units
-                $('.saveBut').each(function(index){
-                    window.saveRow(this);
-                    console.log('save invoked' + $(this).attr('data-id')); 
-                });
-                e.preventDefault();
-            });    
-        });*/
+    
 });
 

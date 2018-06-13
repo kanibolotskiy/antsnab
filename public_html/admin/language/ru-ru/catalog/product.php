@@ -17,10 +17,11 @@ $_['text_amount']         	 	= 'Фиксированная сумма';
 
 // Column
 $_['column_name']          		= 'Наименование товара';
-$_['column_model']          	= 'Модель';
+$_['column_model']          	= '1C id';
 $_['column_image']          	= 'Изображение';
 $_['column_category']         = 'Категория';
-$_['column_price']          	= 'Цена на сайте';
+$_['column_price']          	= 'Цена розничная';
+$_['column_price_wholesale']          	= 'Цена оптовая';
 $_['column_quantity']          	= 'Количество';
 $_['column_status']          	= 'Статус';
 $_['column_action']          	= 'Действие';
@@ -29,13 +30,14 @@ $_['column_action']          	= 'Действие';
 $_['entry_main_category']       = 'Главная категория:';
 $_['entry_name']          		= 'Наименование:';
 $_['entry_description']         = 'Описание:';
+$_['entry_description_mini']         = 'Мини описание:';
 $_['entry_meta_title']          = 'HTML-тег Title';
 $_['entry_meta_h1']             = 'HTML-тег H1';
 $_['entry_meta_keyword']        = 'Мета-тег Keywords:';
 $_['entry_meta_description']    = 'Мета-тег Description:';
 $_['entry_keyword']          	= 'SEO URL:';
-$_['entry_model']          		= 'Модель:';
-$_['entry_sku']          		= 'Артикул:';
+$_['entry_model']          		= '1C id:';
+$_['entry_sku']          		= 'ТУ:';
 $_['entry_upc']          		= 'UPC:';
 $_['entry_ean']          		= 'EAN:';
 $_['entry_jan']          		= 'JAN:';
@@ -49,7 +51,9 @@ $_['entry_date_available']      = 'Дата поступления:';
 $_['entry_quantity']          	= 'Количество:';
 $_['entry_minimum']          	= 'Минимальное количество:';
 $_['entry_stock_status']        = 'Отсутствие на складе:';
-$_['entry_price']          		= 'Цена:';
+$_['entry_price']          		= 'Цена розничная: (для одной базовой еденицы цены)';
+$_['entry_price_wholesale']          		= 'Цена оптовая:(для одной базовой еденицы цены)';
+$_['entry_wholesale_threshold']          		= 'Порог опта (в базовых еденицах для цены)';
 $_['entry_tax_class']          	= 'Налог:';
 $_['entry_points']          	= 'Баллы:';
 $_['entry_option_points']       = 'Баллы:';
@@ -84,6 +88,7 @@ $_['entry_reward']          	= 'Бонусные баллы:';
 $_['entry_layout']          	= 'Переопределить макет:';
 $_['entry_recurring']          	= 'Профили с регулярными платежами';
 $_['entry_showInSummary']       = 'Показывать продукт в сводной таблице';
+$_['entry_produnit_template_id'] = 'Набор едениц измерения';
 
 // Help
 $_['help_keyword']          	= 'Замените пробелы на тире. Должно быть уникальным на всю систему.';
@@ -113,6 +118,8 @@ $_['error_keyword']             = 'ВНИМАНИЕ: SEO keyword уже испо
 
 //Tabs
 $_['tab_prodproperties'] = 'Свойства продукта';
+$_['tab_tabs'] = 'Вкладки';
+$_['tab_prices'] = 'Цены';
 
 //ProdProperties
 $_['property_helptext'] = 'Если поле "значение" оставить незаполненным - будет использоватья значение по умолчанию.<br/>'
@@ -131,4 +138,20 @@ $_['property_column_hide'] = 'Скрыть';
 
 $_['yes'] = '<i class="fa fa-plus"></i>';
 $_['no'] = '<i class="fa fa-minus"></i>';
+
+
+//ProdTabs
+$_['tab_helptext'] = 'Если поле "текст" оставить незаполненным - будет использоватья значение по умолчанию.<br/>'
+    . ' Заполненное значение затирает текст по умолчанию. <br/> '
+    . ' Аналогично с порядком сортировки <br/>'
+    . 'Галочка "скрыть" - скрывает отображение вкладки для данного продукта ';
+
+$_['tab_column_sortorder'] = '№<br/>п/п';
+$_['tab_column_showInSummary'] = 'Сводная таблица';
+$_['tab_column_name'] = 'Название';
+$_['tab_column_defval'] = 'Текст по умолч.';
+$_['tab_column_val'] = 'Текст';
+$_['tab_column_hide'] = 'Скрыть';
+$_['tab_entry_linkto_tabmanagement'] = 'Изменить на уровне категории';
+
 

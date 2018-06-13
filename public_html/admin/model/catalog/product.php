@@ -1,18 +1,20 @@
 <?php
+use WS\Override\Gateway\ProdTabs;
 
 class ModelCatalogProduct extends Model
 {
-
     //@task move to override
     public function afterAddProduct($data, $product_id)
     {
-        $this->setIsShowInSummary($product_id, $data);   
+        $this->setIsShowInSummary($product_id, $data);
+        $this->updateCustomFields($product_id, $data);
     }
 
     //@task move to override 
     public function afterEditProduct($product_id, $data)
     {
-        $this->setIsShowInSummary($product_id, $data);   
+        $this->setIsShowInSummary($product_id, $data);
+        $this->updateCustomFields($product_id, $data);
 
         if (isset($data['prodproperties'])) {
             $sql = "delete from product_prodproperty where product_id = :id";
@@ -33,6 +35,26 @@ class ModelCatalogProduct extends Model
                 }
             }
         }
+
+        if (isset($data['prodtabs'])) {
+            $sql = "delete from product_prodtab where product_id = :id";
+            $this->db->query($sql, [':id' => $product_id]);
+
+            foreach ($data['prodtabs'] as $k => $p) {
+                if ('' !== ProdTabs::trimHelper($p['val']) || '' !== trim($p['sortOrder']) || isset($p['hide'])) {
+                    $sql = "insert into product_prodtab  (category_prodtab_id, product_id, val, sortOrder, hide) values "
+                        . "(:category_prodtab_id, :product_id, :val, :sortOrder, :hide) ";
+
+                    $this->db->query($sql, [
+                        ':category_prodtab_id' => $k,
+                        ':product_id' => $product_id,
+                        ':val' => ( '' === trim($p['val']) ) ? null : $p['val'],
+                        ':sortOrder' => ( '' === trim($p['sortOrder']) ) ? null : (int) $p['sortOrder'],
+                        ':hide' => ( isset($p['hide']) ) ? $p['hide'] : 0
+                    ]);
+                }
+            }
+        }
     }
 
     private function setIsShowInSummary($product_id, $data)
@@ -44,6 +66,73 @@ class ModelCatalogProduct extends Model
         $sql = "update " . DB_PREFIX . "product set showInSummary = :isShowInSummary where product_id = :id"; 
         $res = $this->db->query($sql, [':id'=>$product_id, ':isShowInSummary' =>$isShowInSummary ]);
         return $res;
+    }
+
+
+    private function updateCustomFields($product_id, $data)
+    {
+        $price_wholesale = 0.0000;
+        if( !empty( $data['price_wholesale'] ) ) {
+            $price_wholesale = (float)$data['price_wholesale'];
+        }
+
+        $wholesale_threshold = 0.0000;
+        if( !empty( $data['wholesale_threshold'] ) ) {
+            $wholesale_threshold = (float)$data['wholesale_threshold'];
+        }
+
+        $produnit_template_id = null;
+        if( !empty( $data['produnit_template_id'] ) ) {
+            $produnit_template_id = (int)$data['produnit_template_id'];
+        }
+
+        $description_mini = '';
+        if( isset( $data['description_mini']) ) {
+            $description_mini = $this->db->escape( $data['description_mini'] );
+        }
+
+
+        $sql = "update " . DB_PREFIX . "product set price_wholesale = :price_wholesale, wholesale_threshold=:wholesale_threshold, produnit_template_id=:produnit_template_id where product_id = :id"; 
+        $res = $this->db->query($sql, [
+            ':price_wholesale' => $price_wholesale,
+            ':wholesale_threshold' => $wholesale_threshold,
+            ':produnit_template_id' => $produnit_template_id,
+            ':id' => $product_id
+        ]);
+
+        foreach ($data['product_description_mini'] as $language_id => $value) {
+            $sql = "update " . DB_PREFIX . "product_description set description_mini = :description_mini where product_id = :id and language_id = :language_id";
+            $res = $this->db->query($sql, [
+                ':description_mini' => $value,
+                ':id' => $product_id,
+                ':language_id' => $language_id
+            ]);
+        }
+        
+        return true; //@task - что возвращать то?
+    }
+
+    /*@task move to override added description_mini*/
+    public function getProductDescriptions($product_id)
+    {
+        $product_description_data = array();
+
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_description WHERE product_id = '" . (int) $product_id . "'");
+
+        foreach ($query->rows as $result) {
+            $product_description_data[$result['language_id']] = array(
+                'name' => $result['name'],
+                'description' => $result['description'],
+                'description_mini' => $result['description_mini'],
+                'meta_title' => $result['meta_title'],
+                'meta_h1' => $result['meta_h1'],
+                'meta_description' => $result['meta_description'],
+                'meta_keyword' => $result['meta_keyword'],
+                'tag' => $result['tag']
+            );
+        }
+
+        return $product_description_data;
     }
 
     public function addProduct($data)
@@ -498,26 +587,6 @@ class ModelCatalogProduct extends Model
         return $query->rows;
     }
 
-    public function getProductDescriptions($product_id)
-    {
-        $product_description_data = array();
-
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_description WHERE product_id = '" . (int) $product_id . "'");
-
-        foreach ($query->rows as $result) {
-            $product_description_data[$result['language_id']] = array(
-                'name' => $result['name'],
-                'description' => $result['description'],
-                'meta_title' => $result['meta_title'],
-                'meta_h1' => $result['meta_h1'],
-                'meta_description' => $result['meta_description'],
-                'meta_keyword' => $result['meta_keyword'],
-                'tag' => $result['tag']
-            );
-        }
-
-        return $product_description_data;
-    }
 
     public function getProductCategories($product_id)
     {

@@ -850,6 +850,7 @@ h1,
     }
 }
 .img-production{
+    display:block;
     height: 175px;
     position: relative;
     img{
@@ -1388,6 +1389,7 @@ ul.tabset li:last-child a.active {
                     position: relative;
                     top:50%;
                     margin: 0 auto;
+                    max-width: 90%;
                     -webkit-transform: translate(0, -50%);
                     -moz-transform: translate(0, -50%);
                     -ms-transform: translate(0, -50%);
@@ -1694,13 +1696,6 @@ ul.tabset li:last-child a.active {
 .quantity-buy{
     display: flex;
     flex-wrap: wrap;
-    span{
-        display: block;
-        line-height: 40px;
-        color: #444444;
-        font-size: 13px;
-        margin-right: 20px;
-    }
 }
 .tab-block3 .quantity-buy{
     //position: absolute;
@@ -1719,13 +1714,13 @@ ul.tabset li:last-child a.active {
 /*spinnercontrol*/
 .SpinnerControl
 {
-    overflow:hidden;
     border: 1px solid #EAE7E4;
     width: 80px;
     height: 40px;
     display: flex;
     margin-right: 9px;
     justify-content: space-between;
+    position: relative;
 }
 .SpinnerControl .LeftButton
 {
@@ -1740,7 +1735,6 @@ ul.tabset li:last-child a.active {
 }
 .SpinnerControl .ValueDisplay
 {
-    width:20px;
     min-width: 1px !important;
     height: 38px;
     overflow:hidden;
@@ -1761,6 +1755,15 @@ ul.tabset li:last-child a.active {
 
     cursor:pointer;
 }
+
+.SpinnerName{
+    color: #444444;
+    font-size: 13px;
+}
+.spinner {
+    display:none;
+}
+
 a.buy{
     display: block;
     text-decoration: none;
@@ -1911,6 +1914,8 @@ a.show-more{
 
 .OutputContainer{
     margin-bottom: 13px;
+    display:flex;
+    align-items:center;
 }
 
 .img-article{
@@ -2942,8 +2947,7 @@ a.show-more{
         .description-price{
             overflow: hidden;
             width: 100%;
-            p{
-                display: block;
+            .description-mini {
                 font-size: 14px;
                 color: #000000;
                 line-height: 20px;
@@ -3017,7 +3021,7 @@ a.show-more{
             span{
                 display: block;
                 margin-bottom: 15px;
-                font-size: 16px;
+                font-size: 14px;
                 color: #666666;
             }
             p{
@@ -3033,7 +3037,7 @@ a.show-more{
     width: 100%;
     height:17px;
 }
-.fade{
+/*.fade{
     border: 2px solid #EFEEEC;
     overflow: hidden;
     button{
@@ -3052,120 +3056,127 @@ a.show-more{
             }
         }
     }
-}
-.slider-nav{
+}*/
+.thumb__nav{
     width: 51%;
     margin: 0;
-    .slick-list{
+    .thumb__list{
         margin: 0 -5px;
-    }
-    button{
-        display: none !important;
-    }
-    .slick-track{
+
         &:after{
             content:'';
             display:block;
             clear:both;
         }
-        .slide{
+
+        .thumb__item{
+
             width: 25% !important;
             float: left;
             padding: 0 5px;
             cursor: pointer;
-            .img{
-                border: 2px solid #EFEEEC;
-                img{
-                    display: block;
-                    width: 100%;
-                    height:auto;
-                }
-            }
+
         }
     }
 }
+
+
+.thumb__link{
+    border: 2px solid #EFEEEC;
+    display: block;
+
+    img{
+        display: block;
+        height:auto;
+        margin: auto;
+    }
+}
+
 .wholesale{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     .wholesale-price{
-        position: relative;
         strong{
-            display: block;
+            display: inline-block;
             position: relative;
-            font-weight: 600;
-            color: #000000;
-            font-size: 26px;
-            margin-bottom: 5px;
         }
         span{
             display: block;
             color: #666666;
             font-size: 13px;
         }
-        b{
-            position: absolute;
-            top: -9px;
-            right: -15px;
-            color: #666666;
-            font-size: 12px;
-            text-align: center;
-            width: 21px;
-            height: 21px;
-            -webkit-border-radius: 100px;
-            -moz-border-radius: 100px;
-            border-radius: 100px;
-            background-color: #EFEEEC;
-            line-height: 21px;
-            overflow: hidden;
-            cursor: pointer;
-            @include transition;
-            em{
-                position: absolute;
-                top:30px;
-                z-index: 5555;
-                left: 50%;
-                -webkit-transform: translate(-50%,0);
-                -moz-transform: translate(-50%,0);
-                -ms-transform: translate(-50%,0);
-                -o-transform: translate(-50%,0);
-                transform: translate(-50%,0);
-                border: 1px solid #DFDDD9;
-                background-color: #fff;
-                color: #666;
-                font-size: 12px;
-                line-height: 16px;
-                font-weight: normal;
-                display: block;
-                min-width: 240px;
-                padding: 10px;
-                &:after{
-                    content:'';
-                    display:block;
-                    clear:both;
-                    position: absolute;
-                    top:-9px;
-                    left: 50%;
-                    width: 16px;
-                    height: 10px;
-                    margin-left: -8px;
-                    background: url(../img/icon22.png) no-repeat;
-                }
-                &:hover{
-                    display: none;
-                }
-            }
-            &:hover{
-                overflow: inherit;
-                @include transition;
-            }
-        }
+        
     }
     p{
         display: block;
         color: #666666;
         font-size: 13px;
+    }
+}
+
+#wholesalePrice {
+    color: #000000;
+    font-size: 26px;
+    margin-bottom: 5px;
+}
+
+.help_question{
+    position: absolute;
+    top: -9px;
+    right: -24px;
+    color: #666666;
+    font-size: 12px;
+    text-align: center;
+    width: 21px;
+    height: 21px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
+    background-color: #EFEEEC;
+    line-height: 21px;
+    overflow: hidden;
+    cursor: pointer;
+    @include transition;
+    em{
+        position: absolute;
+        top:30px;
+        z-index: 5555;
+        left: 50%;
+        -webkit-transform: translate(-50%,0);
+        -moz-transform: translate(-50%,0);
+        -ms-transform: translate(-50%,0);
+        -o-transform: translate(-50%,0);
+        transform: translate(-50%,0);
+        border: 1px solid #DFDDD9;
+        background-color: #fff;
+        color: #666;
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: normal;
+        display: block;
+        min-width: 240px;
+        padding: 10px;
+        &:after{
+            content:'';
+            display:block;
+            clear:both;
+            position: absolute;
+            top:-9px;
+            left: 50%;
+            width: 16px;
+            height: 10px;
+            margin-left: -8px;
+            background: url(../img/icon22.png) no-repeat;
+        }
+        &:hover{
+            display: none;
+        }
+    }
+    &:hover{
+        overflow: inherit;
+        @include transition;
     }
 }
 .wholesale2{

@@ -31,10 +31,6 @@
         <?php foreach ($links as $link) { ?>
             <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
         <?php } ?>
-        <!-- @task Добавить поддержку иконок для телефонов -->
-        <?php foreach ($scripts as $script) { ?>
-            <script src="<?php echo $script; ?>" type="text/javascript"></script>
-        <?php } ?>
     </head>
     <body>
         <?php if (true === $thank_you): ?>
@@ -95,12 +91,11 @@
                         {
                             $('#call_form').submit();
                         }
-                        /*@task переделать на documentOnLoaded*/
-                        window.onload = function () {
-                            var phoneInput = $('input[name="phone"]', '#call_form');
-                            var im = new Inputmask({"mask": "(999) 999-9999"});
+                        document.addEventListener("DOMContentLoaded", function () {
+                            var phoneInput = $('input[name="phone"]', '#call_form'),
+                                im = new Inputmask({"mask": "(999) 999-9999"});
                             im.mask(phoneInput);
-                        }
+                        });
                     </script>
                 </div>
             </div>

@@ -53,6 +53,9 @@ class HeaderTemplateDecorator implements IDecorator
             $data['top_menu'] = $registry->get('model_extension_module_menueditor')->getEntries();
         }
 
+        // no scripts in header
+        $data['scripts'] = [];
+
         return $data;
     }
 

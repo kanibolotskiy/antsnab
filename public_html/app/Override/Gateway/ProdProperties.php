@@ -7,6 +7,7 @@ namespace WS\Override\Gateway;
  * @version    1.0, Apr 19, 2018  4:38:22 PM 
  * @copyright  Copyright (c) 2018 AntSnab. (https://www.ant-snab.ru)
  * @author     Sergey Lapshin (http://vk.com/wslapshin) 
+ * @task Проверить где используются showInProdTab и type_id и убрать их нафиг 
  */
 class ProdProperties extends \Model
 {
@@ -77,10 +78,7 @@ class ProdProperties extends \Model
             ':showInProdTab' => $data['showInProdTab'],
             ':sortorder' => $data['sortOrder']
         ]);
-        if( $res->num_rows == 0 ) {
-            return false;
-        }
-
+       
         return true;
     }
 

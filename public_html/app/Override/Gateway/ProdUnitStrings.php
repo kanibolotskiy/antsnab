@@ -30,13 +30,13 @@ class ProdUnitStrings extends \Model
           if($pair['quant']) {
               $strings[] = [
                  'description' => 'Упаковка',
-                 'value' => $pair['lname'] . ', ' . $pair['quant'] . ' ' . $pair['rname_plural'],
+                 'value' => $pair['lname'] . ', ' . (float)$pair['quant'] . ' ' . $pair['rname_plural'],
                  'sortOrder'=> $sortorder 
               ];
               $sortorder++;
               $strings[] = [
                  'description' => $pair['lname_in_package'] . ': ',
-                 'value' =>  $pair['quant'] . ' ' . $pair['rname_plural'],
+                 'value' =>  (float)$pair['quant'] . ' ' . $pair['rname_plural'],
                  'sortOrder'=> $sortorder 
               ];
               $sortorder++;
@@ -45,7 +45,7 @@ class ProdUnitStrings extends \Model
           if( $pair['weight'] ) { 
               $strings[] = [
                      'description' => 'Вес' . ' ' . $pair['lname_package_dimension'] . ': ',
-                     'value' =>  $pair['weight']. 'кг',
+                     'value' =>  (float)$pair['weight']. 'кг',
                      'sortOrder'=> $sortorder 
               ];
               $sortorder++;
@@ -72,5 +72,35 @@ class ProdUnitStrings extends \Model
 
        return $strings;
         
+    }
+
+    public function saveAll($templateId, $data)
+    {
+       $delQuery = "delete from produnit_packagestr where produnit_template_id = :id";
+       $this->db->query($delQuery, [':id'=>$templateId]); 
+
+       $insQuery = "insert into produnit_packagestr (produnit_template_id, description, `value`, sortOrder) values ";
+
+       $dataStr = '';
+       foreach( $data as $row) {
+           $dataStr .= '(' . (int)$templateId . ",'" . $this->db->escape($row['description']) . "','" .                $this->db->escape($row['value']) . "'," . (int)$row['sortOrder'] . '),';
+       }
+       $dataStr = substr($dataStr, 0, -1);
+       $insQuery .= $dataStr;
+
+       return $this->db->query($insQuery);
+    }
+
+    public function getAll($templateId, $order = null)
+    {
+        $sql = 'SELECT  u.*  FROM produnit_packagestr as u ' . 
+               'where u.produnit_template_id = :tplid ';
+        if ( null !== $order ) {
+            $sql .= " " . $order;
+        }
+
+        $res =  $this->db->query($sql, [':tplid'=>$templateId] );
+
+        return $res->rows;
     }
 }

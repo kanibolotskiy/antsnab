@@ -12,7 +12,7 @@ use WS\Override\Gateway\ProdProperties;
  * @author     Sergey Lapshin (http://vk.com/wslapshin) 
  * @author     https://github.com/iMateo/generator-opencart-module
  */
-class ProdPropertiesController extends \Controller
+class ProdpropertiesController extends \Controller
 {
 
     private $error = array();

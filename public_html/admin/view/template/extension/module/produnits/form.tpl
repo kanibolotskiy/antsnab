@@ -209,6 +209,7 @@
                         <div class="tab-pane" id="tab-strings">
                             <div class="row">
                                 <div class="col-xs-12">
+                                    <!--@task language hardcoded-->
                                     Генерировать строки: 
                                     <button type="button" 
                                             onclick="stringForm.generate()" 
@@ -216,7 +217,17 @@
                                             class="btn btn-primary" 
                                             data-original-title="Генерировать">
                                                 <i class="fa fa-plus-circle"></i>
-                                            </button> 
+                                     </button>
+                                    Сохранить:
+                                    <button id ="saveStringsBut"
+                                            disabled = "disabled"
+                                            type="button" 
+                                            onclick="stringForm.saveAll()" 
+                                            data-toggle="tooltip" title="" 
+                                            class="btn btn-primary" 
+                                            data-original-title="Сохранить">
+                                                <i class="fa fa-save"></i>
+                                     </button> 
                                 </div>
                             </div>
                             <table id="stringstable" class="table table-bordered table-hover">

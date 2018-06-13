@@ -12,7 +12,7 @@ namespace WS\Override\Gateway;
 
 class ProdUnitTemplates extends \Model
 {
-    public function getTemplates($order)
+    public function getTemplates($order = null)
     {
         $sql = 'SELECT *  FROM produnit_template as u ' ; 
 
