@@ -14,6 +14,8 @@ class ModelCatalogProduct extends Model {
                 //@task move to override
                 'description_mini' => $query->row['description_mini'],
                 'produnit_template_id' => $query->row['produnit_template_id'],
+                'price_wholesale' => $query->row['price_wholesale'],
+                'wholesale_threshold' => $query->row['wholesale_threshold'],
                 //
 				'meta_title'       => $query->row['meta_title'],
 				'meta_h1'          => $query->row['meta_h1'],

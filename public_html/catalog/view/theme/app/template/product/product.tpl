@@ -1,5 +1,26 @@
 <?php echo $header; ?>
 <div class="container main">
+    <?php /*@task move to css, ниже в скрипте + плохо что не видно текущее число товара в корзине*/ ?>
+    <style>
+        .notify {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            top: -121px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ff8001;
+            visibility: hidden;
+        }
+        .notify.active {
+            visibility: visible;
+        }
+        .container.main {
+            position:relative;
+        }
+    </style>
+    <div class="notify">Товар добавлен в корзину</div>
+    <input type="hidden" id="product_id" value="<?=$product_id?>"/>
     <?= $column_left ?>
     <div class="content">
         <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
@@ -107,7 +128,7 @@
                                            data-factInterval="<?=$firstPriceMeta['salePackageStep']?>" 
                                            data-visualInterval="<?=$firstPriceMeta['visualStep']?>"
                                            data-name="<?=$firstPriceMeta['name_plural']?>"
-                                           class="spinner" type="text"  name="name" value=" ">
+                                           class="spinner" type="text"  name="name" value="0">
                                 </div>
                             </div>
                             <script>
@@ -115,7 +136,7 @@
                                     $('.spinner').SpinnerControl();
                                 });
                             </script>
-                            <a href="" class="buy">Купить</a>
+                            <a data-loading-text="Добавление..." id="button-cart" href="#" class="buy">Купить</a>
                         </div>
                     <?php endif;?>
                 </div>
@@ -448,8 +469,46 @@
             delegate: 'a',
             gallery: {
                 enabled:true
-        }
-});
+            }
+        });
+
+        $('#button-cart').on('click', function(e) {
+            e.preventDefault();
+            var quantityInPackages = $('.spinner').SpinnerControl('getFactValue'),
+                toPriceQuantityKoef = _antSnabMeta.priceMeta[_antSnabMeta.bases.sale ].toPriceUnitsKoef,
+                quantityInPriceUnits = quantityInPackages*toPriceQuantityKoef;
+            $.ajax({
+                url:  'index.php?route=checkout/cart/add',
+                type: 'post',
+                data: {
+                           quantity: quantityInPriceUnits,
+                           product_id: $('#product_id').val(), 
+                      },
+                dataType: 'json',
+                beforeSend: function() {
+                    $('#button-cart').button('loading');
+                },
+                complete: function() {
+                    $('#button-cart').button('reset');
+                },
+                success: function(json) {
+                    //@task - сбросить таймаут
+
+                    if (json['success']) {
+                        $('.notify').html(json['success']);
+                        $('.basket').html(json['total']);
+                        $('html, body').animate({ scrollTop: 0 }, 'slow');
+                        //добавить норм анимацию
+                        $('.notify').addClass('active');
+                        setTimeout(function() { $('.notify').removeClass('active') }, 3000 );
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+        });
     });
 </script>
+
 <?= $footer ?>

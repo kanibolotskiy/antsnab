@@ -198,7 +198,7 @@ class Mail {
 				}
 
 				if (substr($reply, 0, 3) != 250) {
-					throw new \Exception('Error: EHLO not accepted from server!');
+					throw new \Exception("Error: EHLO not accepted from server!");
 				}
 
 				if (substr($this->smtp_hostname, 0, 3) == 'tls') {

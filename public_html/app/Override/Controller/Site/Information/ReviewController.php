@@ -18,7 +18,6 @@ use WS\Patch\Helper\PaginationHelper;
  */
 class ReviewController extends \Controller
 {
-
     protected $error;
 
     public function index()

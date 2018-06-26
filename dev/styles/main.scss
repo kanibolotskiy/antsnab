@@ -2665,6 +2665,7 @@ a.show-more{
             flex-wrap: nowrap;
             justify-content: space-between;
             li{
+                align-self: center;
                 &:first-child{
                     width: 122px;
                 }
@@ -2672,14 +2673,14 @@ a.show-more{
                     width: 240px;
                 }
                 &:nth-child(3) {
-                    width: 60px;
-                    padding-top: 4px;
+                    width: 95px;
+                    text-align:center;
                     span{
-                        margin-bottom: 22px;
+                        margin-bottom: 15px;
                     }
                 }
                 &:nth-child(4) {
-                    width: 80px;
+                    width:107px;
                     text-align: center;
                     padding-top: 4px;
                     .OutputContainer{
@@ -2687,15 +2688,14 @@ a.show-more{
                     }
                 }
                 &:nth-child(5) {
-                    width: 60px;
-                    padding-top: 4px;
+                    width: 95px;
+                    text-align:center;
                     span{
-                        margin-bottom: 22px;
+                        margin-bottom: 15px;
                     }
                 }
                 &:nth-child(6) {
                     width: 19px;
-                    padding-top: 36px;
                 }
                 img{
                     display: block;
@@ -2707,10 +2707,12 @@ a.show-more{
                     color: #000000;
                     font-size: 15px;
                     line-height: 18px;
-                    margin-bottom: 10px;
                     &:hover{
                         text-decoration: underline;
                     }
+                }
+                .prod-name {
+                    margin-bottom: 10px;
                 }
                 p{
                     display: block;
@@ -2727,19 +2729,24 @@ a.show-more{
                 }
                 strong{
                     display: block;
-                    font-size: 15px;
+                    font-size: 14px;
                     color: #000000;
                 }
-                a.delete{
-                    margin: 0;
-                    background: url(../img/close2.png) no-repeat;
+                a.actionbut{
                     width: 19px;
                     height:19px;
+                    background-color: #d3a06d;
+                    border-radius: 10px;
+                    color:#fff;
+                    text-align:center;
                     @include transition;
                     &:hover{
                         opacity: 0.7;
                         @include transition;
                     }
+                }
+                a.delete {
+                    margin-bottom: 5px;
                 }
             }
         }
@@ -2777,6 +2784,14 @@ a.show-more{
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
+            .form-group {
+                width: 31.5%;
+                position: relative;
+                i.error {
+                    position: absolute;
+                    top: -14px;
+                }
+            }
             input[type="text"] {
                 display: block;
                 border: 1px solid #E8E5E2;
@@ -2786,7 +2801,7 @@ a.show-more{
                 color: #666666;
                 font-size: 13px;
                 font-family: 'Open Sans', sans-serif;
-                width: 31.5%;
+                width:100%;
             }
             .delivery{
                 width: 31.5%;

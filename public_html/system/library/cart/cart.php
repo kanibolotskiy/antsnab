@@ -30,6 +30,8 @@ class Cart {
 		}
 	}
 
+    //@task здесь тоже были изменения
+    //подумай о реализации оптовой цены штатными средставми(скидка - discount)
 	public function getProducts() {
 		$product_data = array();
 
@@ -163,7 +165,10 @@ class Cart {
 					}
 				}
 
+                //@added
 				$price = $product_query->row['price'];
+                $price_wholesale = $product_query->row['price_wholesale'];
+                $whole_saleThreshold = $product_query->row['wholesale_threshold'];
 
 				// Product Discounts
 				$discount_quantity = 0;
@@ -248,8 +253,12 @@ class Cart {
 					'minimum'         => $product_query->row['minimum'],
 					'subtract'        => $product_query->row['subtract'],
 					'stock'           => $stock,
+                    //@added
 					'price'           => ($price + $option_price),
+                    'price_wholesale' => ($price_wholesale + $option_price),
+                    'wholesale_threshold' => $whole_saleThreshold,
 					'total'           => ($price + $option_price) * $cart['quantity'],
+					'total_wholesale'           => ($price_wholesale + $option_price) * $cart['quantity'],
 					'reward'          => $reward * $cart['quantity'],
 					'points'          => ($product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $cart['quantity'] : 0),
 					'tax_class_id'    => $product_query->row['tax_class_id'],
@@ -359,6 +368,24 @@ class Cart {
 		$query = $this->db->query("SELECT SUM(quantity) as total FROM " . DB_PREFIX . "cart WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
 		return $query->row['total'];
 	}
+
+    //@task
+    public function countProduct($productId)
+    {
+		$query = $this->db->query("SELECT SUM(quantity) as total FROM " . DB_PREFIX . "cart WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "' AND product_id=" .  (int)$productId );
+		return $query->row['total'];
+    }
+
+    //@task подумать,как удобнее переопределять классы,подключаемые ядром есть какой то штатный способ
+    /**
+     * Считает количество товаров в корзине не по их количеству,
+     * а по количеству товарных позиций 
+     */
+    public function countProductTypes()
+    {
+		$query = $this->db->query("SELECT count(product_id) as total FROM " . DB_PREFIX . "cart WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
+		return $query->row['total'];
+    }
 
 	public function hasProducts() {
 		return $this->countProducts();

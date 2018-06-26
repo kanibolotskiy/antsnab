@@ -22,7 +22,8 @@ class CartTemplateDecorator implements IDecorator
         $language = $registry->get('language');
         $session = $registry->get('session');
         $currency = $registry->get('currency');
-        $data['text_empty'] = sprintf($language->get('text_empty'), $currency->format(0, $session->data['currency']));   
+        $data['text_empty'] = sprintf($language->get('text_empty'), $currency->format(0, $session->data['currency']));
+        
         return $data;
     }
 }

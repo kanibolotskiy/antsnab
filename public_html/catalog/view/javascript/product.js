@@ -25,13 +25,16 @@
             init: function (options) {
 
                 function convertFactToVisual(opt, factValue) {
-                    var tD = opt.typedata;
-                    if (tD.visualInterval === 1 && tD.factInterval === 1) {
-                        return factValue;
-                    } else if (tD.visualInterval === 1) { //прибавляемая через кнопки + - единица измерения СОДЕРЖИТ кратные упаковки
-                        return +(factValue / tD.factInterval).toFixed(tD.decimalplaces);
-                    } else if (tD.factInterval === 1) { //прибавляемая через кнопки + - единица измерения СОДЕРЖИТСЯ В кратной упаковке
-                        return +(factValue * tD.visualInterval).toFixed(tD.decimalplaces);
+                    var tD = opt.typedata,
+                        koef = 1;
+                    if (tD.visualInterval === tD.factInterval) {
+                        return +factValue;
+                    } else if (tD.visualInterval < tD.factInterval ) { //прибавляемая через кнопки + - единица измерения СОДЕРЖИТ кратные упаковки
+                        koef = tD.factInterval/tD.visualInterval;
+                        return +(factValue / koef).toFixed(tD.decimalplaces);
+                    } else if (tD.factInterval < tD.visualInterval ) { //прибавляемая через кнопки + - единица измерения СОДЕРЖИТСЯ В кратной упаковке
+                        koef = tD.visualInterval / tD.factInterval;
+                        return +(factValue * koef).toFixed(tD.decimalplaces);
                     } else {
                         console.warn("cant convert fact value " + factValue + " to visual value, because one of intervals either factInterval or visualInterval should be equal to 1");
                         return 0;
@@ -39,13 +42,16 @@
                 };
 
                 function convertVisualToFact(opt, visualValue) {
-                    var tD = opt.typedata;
-                    if (tD.visualInterval === 1 && tD.factInterval === 1) {
-                        return factValue;
-                    } else if (tD.visualInterval === 1) { //прибавляемая через кнопки + - единица измерения СОДЕРЖИТ кратные упаковки
-                        return +(visualValue * tD.factInterval).toFixed(tD.decimalplaces);
-                    } else if (tD.factInterval === 1) { //прибавляемая через кнопки + - единица измерения СОДЕРЖИТСЯ В кратной упаковке
-                        return +(visualValue / tD.visualInterval).toFixed(tD.decimalplaces);
+                    var tD = opt.typedata,
+                        koef = 1;
+                    if (tD.visualInterval === tD.factInterval) {
+                        return visualValue;
+                    } else if (tD.visualInterval < tD.factInterval) { //прибавляемая через кнопки + - единица измерения СОДЕРЖИТ кратные упаковки
+                        koef = tD.factInterval/tD.visualInterval;
+                        return +(visualValue * koef).toFixed(tD.decimalplaces);
+                    } else if (tD.factInterval < tD.visualInterval) { //прибавляемая через кнопки + - единица измерения СОДЕРЖИТСЯ В кратной упаковке
+                        koef = tD.visualInterval / tD.factInterval; 
+                        return +(visualValue / koef).toFixed(tD.decimalplaces);
                     } else {
                         console.warn("cant convert visual value " + visualValue + " to visual value, because one of intervals either factInterval or visualInterval should be equal to 1");
                         return 0;
@@ -66,7 +72,8 @@
 
                 var otypedata
                 dataVisualInterval = this.attr('data-visualInterval'),
-                        dataFactInterval = this.attr('data-factInterval');
+                dataFactInterval = this.attr('data-factInterval'),
+                dataStartFactVal = +this.val(),
                 dataSpinName = this.attr('data-name');
 
                 if (options != null && options.typedata != null) {
@@ -76,7 +83,7 @@
                         visualInterval: +dataVisualInterval,
                         factInterval: +dataFactInterval,
                         spinname: dataSpinName,
-                        startFactVal: 0,
+                        startFactVal: dataStartFactVal,
                         decimalplaces: 0
                     }, options.typedata);
                 } else {
@@ -86,13 +93,12 @@
                         visualInterval: +dataVisualInterval,
                         factInterval: +dataFactInterval,
                         spinname: dataSpinName,
-                        startFactVal: 0,
+                        startFactVal: dataStartFactVal,
                         decimalplaces: 0
                     });
                 }
                 otypedata.min = 0;
                 otypedata.max = 1E6;
-
                 opt.typedata = otypedata;
 
                 var inputControl = this;
@@ -129,9 +135,11 @@
                 switch (opt.type) {
                     case 'range':
                         if (opt.typedata.startFactVal !== 0) {
+                            factValue = opt.typedata.startFactVal;
                             opt.defaultVal = convertFactToVisual(opt, opt.typedata.startFactVal);
                         } else {
                             opt.defaultVal = 0;
+                            factValue = 0;
                         }
 
                         // set default value;
@@ -145,8 +153,8 @@
                         inputControl.val(opt.defaultVal.toFixed(opt.typedata.decimalplaces));
                         ($("div.ValueDisplay", objContainerDiv)).html(opt.defaultVal.toFixed(opt.typedata.decimalplaces));
 
-                        var selectedValue = opt.defaultVal;
-                        factValue = convertVisualToFact(opt, selectedValue);
+                        var selectedValue = opt.defaultVal,
+                            self = this;
 
                         if ((opt.typedata.max - opt.typedata.min) > opt.typedata.visualInterval) {
                             // attach events;
@@ -163,6 +171,7 @@
 
                                     ($("div.ValueDisplay", objContainerDiv)).html(valueData);
                                     inputControl.val(valueData);
+                                    self.trigger('spinnerPlus');
                                 }
                                 return false;
                             });
@@ -179,6 +188,7 @@
 
                                     ($("div.ValueDisplay", objContainerDiv)).html(valueData);
                                     inputControl.val(valueData);
+                                    self.trigger('spinnerMinus'); 
                                 }
                                 return false;
                             });
@@ -237,7 +247,8 @@
                 // return the selected input control for the chainability
                 return inputControl;
             },
-
+            
+            /**Получить текущее количество в еденицах кратной упаковки*/ 
             getFactValue: function () {
                 return factValue;
             }

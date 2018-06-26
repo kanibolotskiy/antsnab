@@ -29,16 +29,21 @@ class ProdUnits extends \Model
         return $res->rows;
     }
 
-    public function getPriceMetaForProduct($productId)
+    public function getUnitsByProduct($productId)
     {
-        $meta = [];
-
         $sql = "select p.price, p.price_wholesale, p.wholesale_threshold, u.* from oc_product as p
     left join produnit_unit as u on u.produnit_template_id = p.produnit_template_id 
 where p.product_id = :id order by u.switchSortOrder";
 
         $res = $this->db->query($sql, [':id' => $productId]);
-        $units = $res->rows;
+        return $res->rows;
+    }
+
+    public function getPriceMetaForProduct($productId)
+    {
+        $meta = [];
+
+        $units = $this->getUnitsByProduct($productId); 
 
         //параметры взятые из продукта. Можем взять первую строку
         $priceBase = $units[0]['price'];
@@ -63,8 +68,8 @@ where p.product_id = :id order by u.switchSortOrder";
                 }
                 $meta[$unitName]['price'] = $priceBase*$priceKoef;
                 $meta[$unitName]['price_wholesale'] = $priceWholesaleBase*$priceKoef;
-
                 $meta[$unitName]['wholesale_threshold'] = $thresholdBase/$priceKoef;
+                $meta[$unitName]['toPriceUnitsKoef'] = $priceKoef;
 
                 //fill sale step (кратность покупки)
                 if ($unit['isSaleBase'] == 1) {
@@ -72,14 +77,18 @@ where p.product_id = :id order by u.switchSortOrder";
 
                     //сколько данной единицы в упаковке (которую продают, не путать с isPackageBase)
                     $salePackageStep = 1; //шаг фактического увеличения в модели блока + -
+
+                    $toSaleUnitsKoef = 1; //на что умножить эти единицы,чтобы получить кол-во в кратных упаковках (кратность продаже)
                 } else {
                     $howMuchThisUnitInSalePackage = $this->getKoef($units, $unit['unit_id'], 'SaleBase',false);
+                    $toSaleUnitsKoef =$this->getKoef($units, $unit['unit_id'], 'SaleBase'); 
                     $visualStep = ( $howMuchThisUnitInSalePackage >= 1 )?$howMuchThisUnitInSalePackage:1;
-                    $salePackageStep = ( $howMuchThisUnitInSalePackage >=1 )?1:$this->getKoef($units, $unit['unit_id'], 'SaleBase');
+                    $salePackageStep = ( $howMuchThisUnitInSalePackage >=1 )?1:$toSaleUnitsKoef;
                 }
 
                 $meta[$unitName]['visualStep'] = $visualStep;
                 $meta[$unitName]['salePackageStep'] = $salePackageStep;
+                $meta[$unitName]['toSaleUnitsKoef'] = $toSaleUnitsKoef;
             } catch (Exception $e) {
                 echo $e->getMessage();//to variable
                 return [];
