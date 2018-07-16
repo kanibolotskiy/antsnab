@@ -7,6 +7,8 @@
                 <?php } else { ?>
                 <li>
                 <?php } ?>
+
+
                 <?php if ($parent->get('categories')->isEmpty()) { ?>
                     <!--@task to scss-->
                     <span style="cursor:pointer" href="" class="opener"><?php echo $parent->get('name'); ?></span>

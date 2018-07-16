@@ -163,9 +163,7 @@ trait Loader
 
     private function loadModelRespectingBaseDir($basedir, $route, $key, $namespace = '\\')
     {
-        if ($route == 'model/extension/module') {
-            xdebug_break();
-        }
+
         $file = $basedir . 'model/' . $route . '.php';
         $class = $namespace . 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
 

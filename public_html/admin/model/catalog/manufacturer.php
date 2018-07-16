@@ -1,7 +1,6 @@
 <?php
 class ModelCatalogManufacturer extends Model {
 	public function addManufacturer($data) {
-
 		$this->load->model('localisation/language');
 		$language_info = $this->model_localisation_language->getLanguageByCode($this->config->get('config_language'));
     $front_language_id = $language_info['language_id'];

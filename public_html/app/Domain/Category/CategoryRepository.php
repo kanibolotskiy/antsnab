@@ -32,8 +32,7 @@ class CategoryRepository extends ABaseRepository
         $OCDAO = $this->getOCDAO('catalog/category', RouteHelper::ADMIN_CONTEXT);
         $resultSet = $OCDAO->getAllCategories();
         $collection = new ArrayCollection();
-
-        foreach ($resultSet[0] as $topCat) {
+        foreach ($resultSet[71] as $topCat) {
             $parent = new Category();
             $parent->fillData($topCat);
             if (isset($resultSet[$parent->get('category_id')])) {

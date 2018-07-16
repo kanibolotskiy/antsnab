@@ -1,7 +1,8 @@
 <?php
 class ModelNewsBlogArticle extends Model {
 	public function addArticle($data) {
-
+        var_dump($data);
+        die();
 		$this->db->query("INSERT INTO " . DB_PREFIX . "newsblog_article SET date_available = '" . $this->db->escape($data['date_available']) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_added = NOW()");
 
 		$article_id = $this->db->getLastId();

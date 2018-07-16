@@ -202,7 +202,10 @@ class ModelCatalogProduct extends Model
 
         if (isset($data['product_image'])) {
             foreach ($data['product_image'] as $product_image) {
-                $this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int) $product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int) $product_image['sort_order'] . "'");
+                //@task move to override
+                $alt = isset($product_image['alt'])?$product_image['alt']:'';
+                $this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int) $product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int) $product_image['sort_order'] . "', alt='".$this->db->escape($alt)."'");
+                 /* $this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int) $product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int) $product_image['sort_order'] . "'");*/
             }
         }
 
@@ -347,7 +350,11 @@ class ModelCatalogProduct extends Model
 
         if (isset($data['product_image'])) {
             foreach ($data['product_image'] as $product_image) {
-                $this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int) $product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int) $product_image['sort_order'] . "'");
+                //@task move to override
+                $alt = isset($product_image['alt'])?$product_image['alt']:'';
+                $this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int) $product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int) $product_image['sort_order'] . "', alt='".$this->db->escape($alt)."'");
+
+                /*$this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int) $product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int) $product_image['sort_order'] . "'");*/
             }
         }
 

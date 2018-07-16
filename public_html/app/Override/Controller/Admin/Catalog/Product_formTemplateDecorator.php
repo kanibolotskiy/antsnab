@@ -126,6 +126,15 @@ class Product_formTemplateDecorator implements IDecorator
         $prodUnits = new ProdUnitTemplates($registry);
         $data['produnitTemplates'] = $prodUnits->getTemplates();
 
+        //не вычитаем со склада по-умолчанию
+   		if (isset($registry->get('request')->post['subtract'])) {
+			$data['subtract'] = $registry->get('request')->post['subtract'];
+		} elseif (!empty($product_info)) {
+			$data['subtract'] = $product_info['subtract'];
+		} else {
+			$data['subtract'] = 0;
+		}
+
         return $data;
     }
 

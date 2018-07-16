@@ -1,0 +1,11 @@
+Поверх 2018-07-07.clean.sql
+
+В след. последоват:
+beforeCategories.sql
+категории
+производители
+beforeProducts.sql
+продукты
+beforeArtCategories.sql
+artcategories.php
+newscategories.php

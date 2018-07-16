@@ -1,7 +1,6 @@
 <?php
 class ModelNewsBlogCategory extends Model {
 	public function addCategory($data,$settings) {
-
 		$this->db->query("INSERT INTO " . DB_PREFIX . "newsblog_category SET parent_id = '" . (int)$data['parent_id'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_added = NOW(), date_modified = NOW(), `settings` = '" . $this->db->escape($settings) . "'");
 
 		$category_id = $this->db->getLastId();
