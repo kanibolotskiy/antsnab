@@ -1,8 +1,6 @@
 <?php
 class ModelNewsBlogArticle extends Model {
 	public function addArticle($data) {
-        var_dump($data);
-        die();
 		$this->db->query("INSERT INTO " . DB_PREFIX . "newsblog_article SET date_available = '" . $this->db->escape($data['date_available']) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_added = NOW()");
 
 		$article_id = $this->db->getLastId();
@@ -60,11 +58,12 @@ class ModelNewsBlogArticle extends Model {
 		}
 
 		if (isset($data['article_related_products'])) {
+            //@task move to override
 			foreach ($data['article_related_products'] as $related_id) {
 				$this->db->query("DELETE FROM " . DB_PREFIX . "newsblog_article_related WHERE article_id = '" . (int)$article_id . "' AND related_id = '" . (int)$related_id . "' AND type=2");
 				$this->db->query("INSERT INTO " . DB_PREFIX . "newsblog_article_related SET article_id = '" . (int)$article_id . "', related_id = '" . (int)$related_id . "', type=2");
-				$this->db->query("DELETE FROM " . DB_PREFIX . "newsblog_article_related WHERE article_id = '" . (int)$related_id . "' AND related_id = '" . (int)$article_id . "' AND type=2");
-				$this->db->query("INSERT INTO " . DB_PREFIX . "newsblog_article_related SET article_id = '" . (int)$related_id . "', related_id = '" . (int)$article_id . "', type=2");
+				/*$this->db->query("DELETE FROM " . DB_PREFIX . "newsblog_article_related WHERE article_id = '" . (int)$related_id . "' AND related_id = '" . (int)$article_id . "' AND type=2");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "newsblog_article_related SET article_id = '" . (int)$related_id . "', related_id = '" . (int)$article_id . "', type=2");*/
 			}
 		}
 

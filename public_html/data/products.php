@@ -56,14 +56,27 @@ function getMetaKeyword($keywords, $keyword)
 }
 
 //@todo @ask
-function getMiniDescription($full_text_itemprop)
+function getMiniDescription($product)
 {
-    //???? то ли full_text_itemprop в категории то ли в товаре то ли вообще pr_text
+    if(!empty($product['prodOrigin']['pr_text'])) {
+        return $product['prodOrigin']['pr_text'];
+    }
+
+    if(!empty($product['catOrigin']['full_text'])) {
+       return(firstParagraph($product['catOrigin']['full_text']));
+    }
 }
 
 function firstParagraph($text)
 {
-    
+   $textTagged = html_entity_decode($text);
+   preg_match('/^(<p>)((.|\s)+)(<\/p>)/Ui', $textTagged, $matches);
+   if( isset($matches[2]) ) {
+       return $matches[2];
+   }
+   else {
+       return $textTagged;
+   }
 }
 
 global $productsInCategoryCount;
@@ -136,6 +149,8 @@ function getProducts()
         }
 
         $product = array_merge($row, $srcParentClean, $srcSelfClean);
+        $product['catOrigin'] = $srcParentClean;
+        $product['prodOrigin'] = $srcSelfClean;
         $products[] = $product;
     }
 
@@ -205,8 +220,8 @@ global $productsMapping;
 $productsMapping = [];
 foreach ($products as $srcData) {
 
-    //?? $productDescriptionMini = getMiniDescription($srcData[$dataDescriptionMapping['product_description_mini']]);
-    $productDescriptionMini = $srcData[$dataDescriptionMapping['product_description_mini']];
+    $productDescriptionMini = getMiniDescription($srcData);
+    //$productDescriptionMini = $srcData[$dataDescriptionMapping['product_description_mini']];
     $dstData = [
         'product_description' => [
             DST_DEFAULT_LANGUAGE_ID => []
@@ -351,22 +366,22 @@ foreach ($products as $product) {
     foreach ($dstRecomendsAndAnalogs as $related_id) {
         $dstDB->query("DELETE FROM oc_product_related WHERE product_id = '" . (int) $product_id . "' AND related_id = '" . (int) $related_id . "'");
         $dstDB->query("INSERT INTO oc_product_related SET product_id = '" . (int) $product_id . "', related_id = '" . (int) $related_id . "'");
-        $dstDB->query("DELETE FROM oc_product_related WHERE product_id = '" . (int) $related_id . "' AND related_id = '" . (int) $product_id . "'");
-        $dstDB->query("INSERT INTO oc_product_related SET product_id = '" . (int) $related_id . "', related_id = '" . (int) $product_id . "'");
+        /*$dstDB->query("DELETE FROM oc_product_related WHERE product_id = '" . (int) $related_id . "' AND related_id = '" . (int) $product_id . "'");
+        $dstDB->query("INSERT INTO oc_product_related SET product_id = '" . (int) $related_id . "', related_id = '" . (int) $product_id . "'");*/
     }
 
     foreach ($dstAnalogs as $related_id) {
         $dstDB->query("DELETE FROM oc_product_analogs WHERE product_id = '" . (int) $product_id . "' AND related_id = '" . (int) $related_id . "'");
         $dstDB->query("INSERT INTO oc_product_analogs SET product_id = '" . (int) $product_id . "', related_id = '" . (int) $related_id . "'");
-        $dstDB->query("DELETE FROM oc_product_analogs WHERE product_id = '" . (int) $related_id . "' AND related_id = '" . (int) $product_id . "'");
-        $dstDB->query("INSERT INTO oc_product_analogs SET product_id = '" . (int) $related_id . "', related_id = '" . (int) $product_id . "'");
+        /*$dstDB->query("DELETE FROM oc_product_analogs WHERE product_id = '" . (int) $related_id . "' AND related_id = '" . (int) $product_id . "'");
+        $dstDB->query("INSERT INTO oc_product_analogs SET product_id = '" . (int) $related_id . "', related_id = '" . (int) $product_id . "'");*/
     }
 
     foreach ($dstRecomends as $related_id) {
         $dstDB->query("DELETE FROM oc_product_recomends WHERE product_id = '" . (int) $product_id . "' AND related_id = '" . (int) $related_id . "'");
         $dstDB->query("INSERT INTO oc_product_recomends SET product_id = '" . (int) $product_id . "', related_id = '" . (int) $related_id . "'");
-        $dstDB->query("DELETE FROM oc_product_recomends WHERE product_id = '" . (int) $related_id . "' AND related_id = '" . (int) $product_id . "'");
-        $dstDB->query("INSERT INTO oc_product_recomends SET product_id = '" . (int) $related_id . "', related_id = '" . (int) $product_id . "'");
+        /*$dstDB->query("DELETE FROM oc_product_recomends WHERE product_id = '" . (int) $related_id . "' AND related_id = '" . (int) $product_id . "'");
+        $dstDB->query("INSERT INTO oc_product_recomends SET product_id = '" . (int) $related_id . "', related_id = '" . (int) $product_id . "'");*/
     }
 
 

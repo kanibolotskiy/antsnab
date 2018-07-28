@@ -6,7 +6,7 @@ SELECT * FROM documents where document_type = 259;
 SELECT * FROM documents where document_url like '%loading-rates-mastics%'; 
 -- 259
 
-SELECT * FROM documents where document_url like '%obnovlenie-kataloga-produkcii%'; 
+SELECT * FROM documents where document_url like '%gidroizolyaciya-fundamenta-bitumnoj-mastikoj%'; 
 -- 275, 2583
 
 select distinct(document_type) from documents where document_url like '%news%'; 
@@ -25,3 +25,5 @@ select * from oc_category_description;
 -- drop database antsnab;
 
 -- create database antsnab charset utf8 collate utf8_general_ci;
+
+select product_id, model from oc_product;

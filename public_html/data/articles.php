@@ -21,7 +21,7 @@ function getDstParentId($srcParentId)
 {
     global $dstDB;
 
-    $rows = $dstDB->query("select category_id from oc_category where srcId = $srcParentId ")->rows;
+    $rows = $dstDB->query("select category_id from oc_newsblog_category where srcId = $srcParentId ")->rows;
     if (count($rows) == 0) {
         throw new Exception("Cant find parent with srcId: " . $srcParentId);
     } elseif (count($rows) > 1) {
@@ -44,18 +44,7 @@ function getImagePath($srcImage)
     return 'catalog' . trim($srcImage);
 }
 
-function getMetaKeyword($keywords, $keyword)
-{
-    if (is_string($keywords) && !empty($keywords)) {
-        return trim($keywords);
-    } elseif (is_string($keyword) && !empty($keyword)) {
-        return trim($keyword);
-    } else {
-        return '';
-    }
-}
-
-function getProducts()
+function getArticles()
 {
     global $srcDB;
     global $SRC_PRODUCT_DOCUMENT_TYPES;
@@ -102,94 +91,60 @@ function getProducts()
     return $products;
 }
 
+/* @todo */
 
-
+function getPubTime($timestamp)
+{
+    if( !$timestamp ) {
+        return date('Y-m-d H:i:s'); 
+    }
+    return date('Y-m-d H:i:s', $timestamp);
+}
 
 $dataConst = [
-    'upc' => '',
-    'ean' => '',
-    'jan' => '',
-    'isbn' => '',
-    'mpn' => '',
-    'tax_class_id' => '0',
-    'quantity' => '1',
-    'minimum' => '1',
-    'subtract' => '0',
-    'stock_status_id' => '7',
-    'shipping' => '1',
-    'date_available' => date('Y-m-d'),
-    'length' => '',
-    'width' => '',
-    'height' => '',
-    'length_class_id' => '1',
-    'weight' => '',
-    'weight_class_id' => '1',
     'status' => '1',
-    'produnit_template_id' => '',
-    'filter' => '',
-    'product_store' => ['0'],
-    'points' => '',
-    'product_reward' => ['1' => ['points' => '']],
-    'product_layout' => [''],
-    'download' => '',
+    'article_store' => ['0'],
     'related' => '',
-    'option' => '',
-    'wholesale_threshold' => null,
+    'article_layout' => [''],
+    'related_products' => '',
+    'article_related' => [],
+    'article_related_products' => [],
 ];
 
 $dataMapping = [
-    'model' => 'document_id',
-    'sku' => 'tu_code',
-    'location' => 'preview_text',
+    'date_available' => 'pub_time',
+    'image' => 'img_art',
     'keyword' => 'document_url',
-    'sort_order' => 'document_sort',
-    'price' => 'price',
-    'price_wholesale' => 'price_opt',
-    'wholesale_threshold' => 'opt_size',
     'main_category_id' => 'document_parent_id',
-    'image' => 'img_part',
-    'manufacturer_id' => 'item_production',
 ];
 
 $dataDescriptionMapping = [
-    'name' => 'short_name',
-    'description' => 'full_text_itemprop',
+    'name' => 'caption',
+    'preview' => 'pre_txt',
+    'description' => 'text',
     'meta_title' => 'title',
-    'meta_h1' => 'document_name',
+    'meta_h1' => 'caption',
     'meta_description' => 'description',
-    'meta_keyword' => 'keyword',
-    'product_description_mini' => 'pr_text' // ??
+    'meta_keyword' => 'keywords',
 ];
 
-$products = getProducts();
+$articles = getArticles();
 $counter = 0;
 
-global $productsMapping;
-$productsMapping = [];
-foreach ($products as $srcData) {
+global $articlesMapping;
+$articlesMapping = [];
 
-    //?? $productDescriptionMini = getMiniDescription($srcData[$dataDescriptionMapping['product_description_mini']]);
-    $productDescriptionMini = $srcData[$dataDescriptionMapping['product_description_mini']];
+foreach ($articles as $srcData) {
     $dstData = [
-        'product_description' => [
+        'article_description' => [
             DST_DEFAULT_LANGUAGE_ID => []
         ],
-        'product_description_mini' => [
-            DST_DEFAULT_LANGUAGE_ID => $productDescriptionMini,
-        ],
-        'product_image' => [],
     ];
 
-    $dstData['product_description'][DST_DEFAULT_LANGUAGE_ID]['tag'] = '';
+    $dstData['article_description'][DST_DEFAULT_LANGUAGE_ID]['tag'] = '';
 
     foreach ($dataDescriptionMapping as $key => $srcKey) {
-        if ($key == 'tag' || $key == 'product_description_mini') {
-            continue;
-        } elseif ($key == 'meta_keyword') {
-            $dstData['product_description'][DST_DEFAULT_LANGUAGE_ID][$key] = getMetaKeyword($srcData['keywords'], $srcData['keyword']);
-        } else {
-            $dstData['product_description'][DST_DEFAULT_LANGUAGE_ID][$key] = trim($srcData[$srcKey]);
-        }
+        $dstData['article_description'][DST_DEFAULT_LANGUAGE_ID][$key] = trim($srcData[$srcKey]);
     }
 
     foreach ($dataConst as $key => $value) {
@@ -203,76 +158,24 @@ foreach ($products as $srcData) {
             $dstData[$key] = getDstSeoKeword($srcData[$srcKey]);
         } elseif ($key == 'image') {
             $dstData[$key] = getImagePath($srcData[$srcKey]);
-        } elseif ($key == 'manufacturer_id') {
-            @$dstData[$key] = getManufacturerId($srcData[$srcKey]);
+        } elseif ($key == 'date_available') {
+            @$dstData[$key] = getPubTime($srcData[$srcKey]);
         } else {
             @$dstData[$key] = trim($srcData[$srcKey]);
         }
     }
 
-    $dstData['showInSummary'] = getShowInSummary($dstData['main_category_id']);
-
-    //additional images
-    if (isset($srcData['full_img_1'])) {
-        $dstData['product_image'][] = [
-            'image' => getImagePath($srcData['full_img_1']),
-            'sort_order' => 1,
-            'alt' => isset($srcData['alt_1']) ? $srcData['alt_1'] : '',
-        ];
-    }
-    if (isset($srcData['full_img_2'])) {
-        $dstData['product_image'][] = [
-            'image' => getImagePath($srcData['full_img_2']),
-            'sort_order' => 2,
-            'alt' => isset($srcData['alt_2']) ? $srcData['alt_2'] : '',
-        ];
-    }
-    if (isset($srcData['full_img_3'])) {
-        $dstData['product_image'][] = [
-            'image' => getImagePath($srcData['full_img_3']),
-            'sort_order' => 3,
-            'alt' => isset($srcData['alt_3']) ? $srcData['alt_3'] : '',
-        ];
-    }
-    if (isset($srcData['full_img_4'])) {
-        $dstData['product_image'][] = [
-            'image' => getImagePath($srcData['full_img_4']),
-            'sort_order' => 4,
-            'alt' => isset($srcData['alt_4']) ? $srcData['alt_4'] : '',
-        ];
-    }
-    if (isset($srcData['full_img_5'])) {
-        $dstData['product_image'][] = [
-            'image' => getImagePath($srcData['full_img_5']),
-            'sort_order' => 5,
-            'alt' => isset($srcData['alt_5']) ? $srcData['alt_5'] : '',
-        ];
-    }
-    if (isset($srcData['full_img_6'])) {
-        $dstData['product_image'][] = [
-            'image' => getImagePath($srcData['full_img_6']),
-            'sort_order' => 6,
-            'alt' => isset($srcData['alt_6']) ? $srcData['alt_6'] : '',
-        ];
-    }
-    if (isset($srcData['full_img_7'])) {
-        $dstData['product_image'][] = [
-            'image' => getImagePath($srcData['full_img_7']),
-            'sort_order' => 7,
-            'alt' => isset($srcData['alt_7']) ? $srcData['alt_7'] : '',
-        ];
-    }
-
-    $prodModel = new ModelCatalogProduct($registry);
-    $productId = $prodModel->addProduct($dstData);
-    $prodModel->afterAddProduct($dstData, $productId);
-
-    //product mapping, we will need it later
-    $srcId = $srcData['document_id'];
-    $productsMapping['src_' . $srcId] = $productId;
-
     $counter++;
-    echo "\n migrated " . $counter . " products ";
+    $dstData['sort_order'] = $counter;
+
+    $prodModel = new ModelNewsBlogArticle($registry);
+    $productId = $prodModel->addArticle($dstData);
+
+    //articles mapping, we will need it later
+    $srcId = $srcData['document_id'];
+    $articlesMapping['src_' . $srcId] = $productId;
+
+    echo "\n migrated " . $counter . " articles ";
 
     /*if ($counter > 30) {
         break;
@@ -281,68 +184,63 @@ foreach ($products as $srcData) {
 
 //analogs and recomendations
 $counter = 0;
-function getDstRelatedProduct($srcId) {
-    global $productsMapping;
-    return (int) $productsMapping['src_' . $srcId];
+
+function getDstRelatedArticle($srcId)
+{
+    global $articlesMapping;
+    return (int) $articlesMapping['src_' . $srcId];
     //return $srcId;
 }
-foreach ($products as $product) {
-    $product_id = getDstRelatedProduct($product['document_id']);
-    $srcAnalogs = [];
-    $dstAnalogs = [];
-    
-    if( !empty( $product['analogs'] ) && is_string($product['analogs']) ) {
-        $srcAnalogs = explode(',', $product['analogs']);
+
+global $productsMapping;
+$productsMapping = null;
+
+function getDstRelatedProduct($productSrcId)
+{
+    global $productsMapping, $dstDB;
+    if (null === $productsMapping) {
+        $result = $dstDB->query("select product_id, model from oc_product");
+        $rows = $result->rows;
+        foreach ($rows as $row) {
+            $productsMapping['src_' . $row['model']] = $row['product_id'];
+        }
+    }
+    if (isset($productsMapping['src_' . $productSrcId])){
+       return (int) $productsMapping['src_' . $productSrcId];
+    }
+    else return null;
+}
+
+foreach ($articles as $article) {
+    $article_id = getDstRelatedArticle($article['document_id']);
+    $dstMentionedProducts = [];
+
+    if (!empty($article['item_in_this_article']) && is_string($article['item_in_this_article'])) {
+        $srcMentionedProducts = explode(',', $article['item_in_this_article']);
         $dstAnalogs = [];
-        foreach ($srcAnalogs as $srcAnalog) {
-            $dstAnalogs[] = getDstRelatedProduct($srcAnalog); 
+        foreach ($srcMentionedProducts as $mentioned) {
+            $dstMentioned = getDstRelatedProduct($mentioned);
+            if (!empty($dstMentioned)) {
+                $dstMentionedProducts[] = $dstMentioned;
+            }
         }
     }
-
-    if( !empty( $product['recomend'] ) && is_string($product['recomend']) ) {
-        $srcRecomends = explode(',' , $product['recomend']);
-        $dstRecomends = [];
-        foreach ($srcRecomends as $srcRecomend) {
-            $dstRecomends[] = getDstRelatedProduct($srcRecomend); 
-        }
-    }
-
-    $dstRecomendsAndAnalogs = array_merge($dstAnalogs, $dstRecomends);
 
     global $dstDB;
-
-    foreach ($dstRecomendsAndAnalogs as $related_id) {
-        $dstDB->query("DELETE FROM oc_product_related WHERE product_id = '" . (int) $product_id . "' AND related_id = '" . (int) $related_id . "'");
-        $dstDB->query("INSERT INTO oc_product_related SET product_id = '" . (int) $product_id . "', related_id = '" . (int) $related_id . "'");
-        $dstDB->query("DELETE FROM oc_product_related WHERE product_id = '" . (int) $related_id . "' AND related_id = '" . (int) $product_id . "'");
-        $dstDB->query("INSERT INTO oc_product_related SET product_id = '" . (int) $related_id . "', related_id = '" . (int) $product_id . "'");
+    foreach ($dstMentionedProducts as $related_id) {
+        $dstDB->query("DELETE FROM " . DB_PREFIX . "newsblog_article_related WHERE article_id = '" . (int) $article_id . "' AND related_id = '" . (int) $related_id . "' AND type=2");
+        $dstDB->query("INSERT INTO " . DB_PREFIX . "newsblog_article_related SET article_id = '" . (int) $article_id . "', related_id = '" . (int) $related_id . "', type=2");
     }
-
-    foreach ($dstAnalogs as $related_id) {
-        $dstDB->query("DELETE FROM oc_product_analogs WHERE product_id = '" . (int) $product_id . "' AND related_id = '" . (int) $related_id . "'");
-        $dstDB->query("INSERT INTO oc_product_analogs SET product_id = '" . (int) $product_id . "', related_id = '" . (int) $related_id . "'");
-        $dstDB->query("DELETE FROM oc_product_analogs WHERE product_id = '" . (int) $related_id . "' AND related_id = '" . (int) $product_id . "'");
-        $dstDB->query("INSERT INTO oc_product_analogs SET product_id = '" . (int) $related_id . "', related_id = '" . (int) $product_id . "'");
-    }
-
-    foreach ($dstRecomends as $related_id) {
-        $dstDB->query("DELETE FROM oc_product_recomends WHERE product_id = '" . (int) $product_id . "' AND related_id = '" . (int) $related_id . "'");
-        $dstDB->query("INSERT INTO oc_product_recomends SET product_id = '" . (int) $product_id . "', related_id = '" . (int) $related_id . "'");
-        $dstDB->query("DELETE FROM oc_product_recomends WHERE product_id = '" . (int) $related_id . "' AND related_id = '" . (int) $product_id . "'");
-        $dstDB->query("INSERT INTO oc_product_recomends SET product_id = '" . (int) $related_id . "', related_id = '" . (int) $product_id . "'");
-    }
-
 
     $counter++;
-    echo "\n migrated " . $counter . " analogs and recomends for products ";
+    echo "\n migrated " . $counter . " related products for articles ";
 
     /*if ($counter > 30) {
         break;
     }*/
 }
-    $dstDB->query("DELETE FROM oc_product_recomends where product_id = 0 or related_id = 0");
-    $dstDB->query("DELETE FROM oc_product_analogs where product_id = 0 or related_id = 0");
-    $dstDB->query("DELETE FROM oc_product_related where product_id = 0 or related_id = 0");
+
+$dstDB->query("DELETE FROM oc_newsblog_article_related where article_id = 0 or related_id = 0");
 
 
 

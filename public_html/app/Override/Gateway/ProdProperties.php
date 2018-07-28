@@ -138,9 +138,12 @@ $query = "select showInSummary from " . DB_PREFIX . "product where product_id = 
         $summaryHeader = array();
 
         //use following products:
-        $sql = "SELECT p.product_id, p.model FROM oc_product as p
+        $sql = "SELECT p.product_id, p.model, p2d.name FROM oc_product as p
+left join oc_product_description p2d on p2d.product_id = p.product_id
 left join oc_product_to_category as p2c on p2c.product_id = p.product_id
-where p2c.category_id = :id and p2c.main_category = 1 and p.showInSummary = 1 order by model ASC";
+where p2c.category_id = :id and p2c.main_category = 1 and p.showInSummary = 1
+and p2d.language_id = '" . (int)$this->config->get('config_language_id') . "'
+order by p.sort_order ASC";
 
         $products = $this->db->query($sql, [':id'=>$category_id])->rows;
         foreach( $products as $product ) {
@@ -166,17 +169,19 @@ where p2c.category_id = :id and p2c.main_category = 1 and p.showInSummary = 1 or
                 if( !$propertyRow['prod_hide'] ) {
                     $summaryRows[ $propertyIndex ]['products'][$productIndex] = [
                         'model' => $product['model'],
+                        'name'  => $product['name'],
                         'product_id' => $product['product_id'],
                         'val' =>$propertyRow['val']
                     ]; 
                 }
                 $summaryHeader[ $productIndex ] = [
                         'model' => $product['model'],
+                        'name'  => $product['name'],
                         'product_id' => $product['product_id'],
                  ];
             }
         }
-
+            var_dump( ['header'=> $summaryHeader,  'rows'=> $summaryRows]);
         return ['header'=> $summaryHeader,  'rows'=> $summaryRows];
     }
 }

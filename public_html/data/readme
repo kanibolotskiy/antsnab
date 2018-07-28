@@ -9,3 +9,7 @@ beforeProducts.sql
 beforeArtCategories.sql
 artcategories.php
 newscategories.php
+articles.php
+news.php
+props.php
+вручную повыключать то, что не выводится в таблицу

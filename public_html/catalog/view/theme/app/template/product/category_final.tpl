@@ -140,7 +140,7 @@
                         </tr>
                         <tr>
                             <?php foreach ($summary['header'] as $h): ?>
-                                <th class="grey"><?= $h['model'] ?></th>
+                                <th class="grey"><?= $h['name'] ?></th>
                             <?php endforeach; ?>
                         </tr>
                     </thead>

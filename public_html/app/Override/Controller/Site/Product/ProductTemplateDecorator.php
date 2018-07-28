@@ -97,7 +97,7 @@ class ProductTemplateDecorator implements IDecorator
         $properties = $prodPropertiesGateway->getPropertiesWithProductValues($product_id, 'order by sortOrder ASC');
         $data['properties'] = [];
         foreach($properties as $p) {
-           if( $p['showInSummary'] && !$p['prod_hide'] ) {
+           if(  !$p['prod_hide'] ) {
                $data['properties'][] = [
                    'name' => $p['cat_name'],
                    'val' => $p['val'],
