@@ -14,11 +14,11 @@ class ProdUnitStrings extends \Model
 {
     public function generate($templateId)
     {
-       $query = "select L.name as lname, L.name_plural as lname_plural, L.name_package_dimension as lname_package_dimension, L.name_in_package as lname_in_package, L.calcKoef as quant, L.weight as weight, L.package_length as lpackage_length, L.package_width as lpackage_width, L.package_height as lpackage_height, "
+       $query = "select L.name as lname, L.isSaleBase as lsalebase, L.switchSortOrder as lswitchSortOrder, L.name_plural as lname_plural, L.name_package_dimension as lname_package_dimension, L.name_in_package as lname_in_package, L.calcKoef as quant, L.weight as weight, L.package_length as lpackage_length, L.package_width as lpackage_width, L.package_height as lpackage_height, "
            . " R.name as rname, R.name_plural as rname_plural, R.name_package_dimension as rname_package_dimension, R.name_in_package as rname_in_package"
            . " from produnit_unit as L "
            . "left join produnit_unit as R on R.unit_id = L.calcRel "
-           . "where L.produnit_template_id = :id";
+           . "where L.produnit_template_id = :id order by lsalebase desc, lswitchSortOrder";
        $res = $this->db->query($query, [':id'=>$templateId]);
        $pairs = $res->rows;
 
@@ -29,7 +29,7 @@ class ProdUnitStrings extends \Model
        foreach( $pairs as $pair ) {
           if($pair['quant']) {
               $strings[] = [
-                 'description' => 'Упаковка',
+                 'description' => 'Упаковка:',
                  'value' => $pair['lname'] . ', ' . (float)$pair['quant'] . ' ' . $pair['rname_plural'],
                  'sortOrder'=> $sortorder 
               ];
@@ -45,7 +45,7 @@ class ProdUnitStrings extends \Model
           if( $pair['weight'] ) { 
               $strings[] = [
                      'description' => 'Вес' . ' ' . $pair['lname_package_dimension'] . ': ',
-                     'value' =>  (float)$pair['weight']. 'кг',
+                     'value' =>  (float)$pair['weight']. ' кг',
                      'sortOrder'=> $sortorder 
               ];
               $sortorder++;

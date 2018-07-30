@@ -1,0 +1,361 @@
+<!--Cat-->
+<root>
+    <alt_1>Эластоизол Премиум производится на Рязанском Картонно-Рубероидном заводе</alt_1>
+    <alt_2>Эластоизол Премиум выпускается в рулонах по 10 м&lt;sup&gt;2&lt;/sup&gt;</alt_2>
+    <alt_3>Эластоизол Премиум - наплавляемый битумно-полимерный кровельный и гидроизоляционный материал</alt_3>
+    <alt_4>Нижние слои Эластоизола Премиум имеют покрытие из битумно-полимерного вяжущего и применяются для гидроизоляции, а также устройства нижнего слоя кровельного ковра</alt_4>
+    <alt_5>Верхние слои Эластоизола Премиум покрыты сланцевой посыпкой серого цвета, используются для устройства и ремонта плоских кровель</alt_5>
+    <caption_part>Эластоизол Премиум</caption_part>
+    <constructor>2526,2527,2528</constructor>
+    <constructor_spec>2280,2281,2282,2283</constructor_spec>
+    <constructor_spec:text>Эластоизол Премиум ЭКП-5,0,Эластоизол-Премиум ЭПП-4,6,Эластоизол-Премиум ТКП-5,0,Эластоизол-Премиум ТПП-4,0</constructor_spec:text>
+    <description>Битумные наплавляемые кровельные материалы Рязанского КРЗ, одного из старейших заводов России. Купить все материалы для гидроизоляции фундаментов и плоской кровли можно оптом с доставкой в Москву в компании Ант-Снаб. (495) 255-01-37 или 8-800 775-28-31
+    </description>
+    <doc1>/docs/2076/Elastoizol-Premium_info.pdf</doc1>
+    <doc1:atime>1486308806</doc1:atime>
+    <doc1:ctime>1516002943</doc1:ctime>
+    <doc1:ext>pdf</doc1:ext>
+    <doc1:mtime>1516002943</doc1:mtime>
+    <doc1:size>137021</doc1:size>
+    <doc1:type>file</doc1:type>
+    <doc2>/docs/2076/Elastoizol-Premium_cert.pdf</doc2>
+    <doc2:atime>1486308806</doc2:atime>
+    <doc2:ctime>1516002944</doc2:ctime>
+    <doc2:ext>pdf</doc2:ext>
+    <doc2:mtime>1516002944</doc2:mtime>
+    <doc2:size>902201</doc2:size>
+    <doc2:type>file</doc2:type>
+    <dostavka_1>6500</dostavka_1>
+    <dostavka_2>6500</dostavka_2>
+    <dostavka_3>9000</dostavka_3>
+    <dostavka_4>10000</dostavka_4>
+    <dostavka_5>15000</dostavka_5>
+    <dostavka_6>17000</dostavka_6>
+    <ed_izm>м&lt;sup&gt;2&lt;/sup&gt;</ed_izm>
+    <ed_izm2>рулон</ed_izm2>
+    <full_img_1>/images/products/Elastoizol-Premium_2076_b1.jpg</full_img_1>
+    <full_img_1:atime>1480597949</full_img_1:atime>
+    <full_img_1:ctime>1480597949</full_img_1:ctime>
+    <full_img_1:ext>jpg</full_img_1:ext>
+    <full_img_1:height>750</full_img_1:height>
+    <full_img_1:mtime>1480597949</full_img_1:mtime>
+    <full_img_1:size>282552</full_img_1:size>
+    <full_img_1:type>jpeg</full_img_1:type>
+    <full_img_1:width>1000</full_img_1:width>
+    <full_img_2>/images/products/Elastoizol-Premium_2076_b2.jpg</full_img_2>
+    <full_img_2:atime>1480597950</full_img_2:atime>
+    <full_img_2:ctime>1480597950</full_img_2:ctime>
+    <full_img_2:ext>jpg</full_img_2:ext>
+    <full_img_2:height>750</full_img_2:height>
+    <full_img_2:mtime>1480597950</full_img_2:mtime>
+    <full_img_2:size>93709</full_img_2:size>
+    <full_img_2:type>jpeg</full_img_2:type>
+    <full_img_2:width>1000</full_img_2:width>
+    <full_img_3>/images/products/Elastoizol-Premium_2076_b3.jpg</full_img_3>
+    <full_img_3:atime>1480597951</full_img_3:atime>
+    <full_img_3:ctime>1480597951</full_img_3:ctime>
+    <full_img_3:ext>jpg</full_img_3:ext>
+    <full_img_3:height>750</full_img_3:height>
+    <full_img_3:mtime>1480597951</full_img_3:mtime>
+    <full_img_3:size>202040</full_img_3:size>
+    <full_img_3:type>jpeg</full_img_3:type>
+    <full_img_3:width>1000</full_img_3:width>
+    <full_img_4>/images/products/Elastoizol-Premium_2076_b4.jpg</full_img_4>
+    <full_img_4:atime>1480597952</full_img_4:atime>
+    <full_img_4:ctime>1480597952</full_img_4:ctime>
+    <full_img_4:ext>jpg</full_img_4:ext>
+    <full_img_4:height>750</full_img_4:height>
+    <full_img_4:mtime>1480597952</full_img_4:mtime>
+    <full_img_4:size>94341</full_img_4:size>
+    <full_img_4:type>jpeg</full_img_4:type>
+    <full_img_4:width>1000</full_img_4:width>
+    <full_img_5>/images/products/Elastoizol-Premium_2076_b5.jpg</full_img_5>
+    <full_img_5:atime>1480597954</full_img_5:atime>
+    <full_img_5:ctime>1480597954</full_img_5:ctime>
+    <full_img_5:ext>jpg</full_img_5:ext>
+    <full_img_5:height>750</full_img_5:height>
+    <full_img_5:mtime>1480597954</full_img_5:mtime>
+    <full_img_5:size>290233</full_img_5:size>
+    <full_img_5:type>jpeg</full_img_5:type>
+    <full_img_5:width>1000</full_img_5:width>
+    <full_text>&lt;p&gt;Современный битумно-полимерный СБС-модифицированный наплавляемый кровельный
+        и гидроизоляционный материал.&lt;/p&gt;
+&lt;p&gt;Эластоизол Премиум производится путем нанесения модифицированного битумного
+        вяжущего на основу: стеклохолст, стеклоткань или полиэстер. Благодаря
+        добавлению СБС-модификатора в битумное вяжущее, с материалом можно работать при
+        температуре от -25°С до +100°С.&lt;/p&gt;</full_text>
+    <hranenie>&lt;p&gt;Хранение и транспортировка материала Эластоизол Премиум допускается только в
+        вертикальном положении. Гарантийный срок хранения – 12 месяцев.&lt;/p&gt;</hranenie>
+    <img_part>/images/products/Elastoizol-Premium_2076.jpg</img_part>
+    <img_part:atime>1516002942</img_part:atime>
+    <img_part:ctime>1516002942</img_part:ctime>
+    <img_part:ext>jpg</img_part:ext>
+    <img_part:height>284</img_part:height>
+    <img_part:mtime>1516002942</img_part:mtime>
+    <img_part:size>12921</img_part:size>
+    <img_part:type>jpeg</img_part:type>
+    <img_part:width>284</img_part:width>
+    <item_production>Рязанский КРЗ</item_production>
+    <keyword>Эластоизол-Премиум - отличный рулонный битумно-полимерный материал для плоской кровли и гидроизоляции строительных конструкций. Эластоизол полный аналог Техноэласта, Рубитекса и Филизола. Гибкость на брусе -25&amp;deg;С, теплостойкость +100&amp;deg;С</keyword>
+    <keywords>Битумные, кровельные, рулонные, наплавляемые, гидроизоляционные, материалы, для крыши, плоская кровля, фундамент, гидроизоляция, крз, ркрз, рязанский, рязань, завод, производитель, купить, цена, у дилера, представителя, оптом, с доставкой, интернет-магазин, Ант-Снаб
+    </keywords>
+    <list_sklad>613</list_sklad>
+    <list_sklad:text>Рязань</list_sklad:text>
+    <norm_ed_izm_1>м&lt;sup&gt;2&lt;/sup&gt;</norm_ed_izm_1>
+    <norm_ed_izm_2>рулонов</norm_ed_izm_2>
+    <opt_size>500</opt_size>
+    <pack_price>2</pack_price>
+    <pack_price:text>Цена 2</pack_price:text>
+    <pr_img_1>/images/products/Elastoizol-Premium_2076_m1.jpg</pr_img_1>
+    <pr_img_1:atime>1480597947</pr_img_1:atime>
+    <pr_img_1:ctime>1480597947</pr_img_1:ctime>
+    <pr_img_1:ext>jpg</pr_img_1:ext>
+    <pr_img_1:height>184</pr_img_1:height>
+    <pr_img_1:mtime>1480597947</pr_img_1:mtime>
+    <pr_img_1:size>24868</pr_img_1:size>
+    <pr_img_1:type>jpeg</pr_img_1:type>
+    <pr_img_1:width>270</pr_img_1:width>
+    <pr_img_2>/images/products/Elastoizol-Premium_2076_m2.jpg</pr_img_2>
+    <pr_img_2:atime>1480597949</pr_img_2:atime>
+    <pr_img_2:ctime>1480597949</pr_img_2:ctime>
+    <pr_img_2:ext>jpg</pr_img_2:ext>
+    <pr_img_2:height>184</pr_img_2:height>
+    <pr_img_2:mtime>1480597949</pr_img_2:mtime>
+    <pr_img_2:size>7866</pr_img_2:size>
+    <pr_img_2:type>jpeg</pr_img_2:type>
+    <pr_img_2:width>200</pr_img_2:width>
+    <pr_img_3>/images/products/Elastoizol-Premium_2076_m3.jpg</pr_img_3>
+    <pr_img_3:atime>1480597950</pr_img_3:atime>
+    <pr_img_3:ctime>1480597950</pr_img_3:ctime>
+    <pr_img_3:ext>jpg</pr_img_3:ext>
+    <pr_img_3:height>184</pr_img_3:height>
+    <pr_img_3:mtime>1480597950</pr_img_3:mtime>
+    <pr_img_3:size>16596</pr_img_3:size>
+    <pr_img_3:type>jpeg</pr_img_3:type>
+    <pr_img_3:width>270</pr_img_3:width>
+    <pr_img_4>/images/products/Elastoizol-Premium_2076_m4.jpg</pr_img_4>
+    <pr_img_4:atime>1480597952</pr_img_4:atime>
+    <pr_img_4:ctime>1480597952</pr_img_4:ctime>
+    <pr_img_4:ext>jpg</pr_img_4:ext>
+    <pr_img_4:height>184</pr_img_4:height>
+    <pr_img_4:mtime>1480597952</pr_img_4:mtime>
+    <pr_img_4:size>11588</pr_img_4:size>
+    <pr_img_4:type>jpeg</pr_img_4:type>
+    <pr_img_4:width>380</pr_img_4:width>
+    <pr_img_5>/images/products/Elastoizol-Premium_2076_m5.jpg</pr_img_5>
+    <pr_img_5:atime>1480597953</pr_img_5:atime>
+    <pr_img_5:ctime>1480597953</pr_img_5:ctime>
+    <pr_img_5:ext>jpg</pr_img_5:ext>
+    <pr_img_5:height>184</pr_img_5:height>
+    <pr_img_5:mtime>1480597953</pr_img_5:mtime>
+    <pr_img_5:size>32112</pr_img_5:size>
+    <pr_img_5:type>jpeg</pr_img_5:type>
+    <pr_img_5:width>380</pr_img_5:width>
+    <pr_text>&lt;p&gt;Битумно-полимерный СБС-модифицированный наплавляемый кровельный и
+        гидроизоляционный материал премиум-класса.&lt;br&gt;
+        Гибкость на брусе -25&lt;sup&gt;о&lt;/sup&gt;С, теплостойкость +100&lt;sup&gt;о&lt;/sup&gt;С.&lt;/p&gt;</pr_text>
+    <price2_action>u</price2_action>
+    <primenenie>&lt;p&gt;Материал&amp;nbsp;приклеивается на подготовленное основание путем оплавления
+        покровного слоя с нижней стороны методом сваривания внахлест свободно лежащего
+        материала. Наплавление производится газовыми или другими горелками.&lt;/p&gt;
+&lt;p&gt;Устройство кровли возможно в любое время года, кроме дождливой и снежной
+        погоды.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;h3 class="subtitle"&gt;Показатели пожарной опасности&lt;/h3&gt;
+&lt;p&gt;&lt;font color="#41737E"&gt;●&lt;/font&gt; Группа горючести Г4 по ГОСТ 30244&lt;br&gt;
+&lt;font color="#41737E"&gt;●&lt;/font&gt; Группа воспламеняемости В3 по ГОСТ 30402&lt;br&gt;
+&lt;font color="#41737E"&gt;●&lt;/font&gt; Группа распространения пламени РП4 по ГОСТ Р
+        51032&lt;/p&gt;</primenenie>
+    <rashod>1,1</rashod>
+    <sale>&lt;p&gt;Оптовые цены&amp;nbsp;на Эластоизол Премиум действительны при единоразовой
+        оплате 5 000 м&lt;sup&gt;2&lt;/sup&gt;.&lt;br&gt;
+        Если же&amp;nbsp;ваш заказ более 10 000 м&lt;sup&gt;2&lt;/sup&gt;, обращайтесь к нашим
+&lt;a href="djem://238"&gt;менеджерам&lt;/a&gt;, подобный объем достоин особых условий.&lt;/p&gt;</sale>
+    <title>Рулонные материалы Рязанского КРЗ – купить оптом в Москве, интернет-магазин Ант-Снаб</title>
+    <tu_code>ТУ 5774-012-00287912-2007</tu_code>
+    <txt_bottom>&lt;p&gt;Эластоизол Премиум&amp;nbsp;может применяться для устройства кровельного ковра
+        зданий и сооружений всех типов, подойдет для гидроизоляции любых строительных
+        конструкций.&lt;/p&gt;
+&lt;p&gt;Верхний слой – с крупнозернистой сланцевой посыпкой серого цвета с лицевой
+        стороны и полимерной пленкой с нижней стороны полотна.&lt;/p&gt;
+&lt;p&gt;Нижний слой – с полимерной пленкой с двух сторон полотна.&lt;/p&gt;</txt_bottom>
+    <vopros>Оптовая цена на Эластоизол Премиум действует при единовременной оплате 5 000 м&lt;sup&gt;2&lt;/sup&gt;</vopros>
+</root>
+<!--PROD-->
+<root>
+    <alt_1>Эластоизол-Премиум ЭПП-4,6 - наплавляемый битумно-полимерный гидроизоляционный и кровельный материал</alt_1>
+    <alt_2>Эластоизол-Премиум ЭПП-4,6 поставляется в рулонах по 10 м&lt;sup&gt;2&lt;/sup&gt;</alt_2>
+    <alt_3>С нижней стороны рулон Эластоизол-Премиум ЭПП-4,6 покрыт легкооплавляемой пленкой</alt_3>
+    <alt_4>С верхней стороны рулона Эластоизол-Премиум ЭПП-4,6 нанесено битумно-полимерное вяжущее</alt_4>
+    <alt_5>Эластоизол-Премиум ЭПП-4,6 применяется для гидроизоляции и устройства нижних слоев плоских крыш</alt_5>
+    <analogs>2377,2264,2268,2272</analogs>
+    <depth>3,8</depth>
+    <description>Эластоизол Премиум ЭПП-4,6 – современный СБС-модифицированный битумный материал на основе полиэстера. Применяется для устройства гидроизяоляции. Купить его по выгодной цене с доставкой на объект всегда можно в компании Ант-Снаб, (495) 255-01-37, 8-800 775-28-31</description>
+    <doc1></doc1>
+    <doc1:atime>1475674115</doc1:atime>
+    <doc1:ctime>1475851062</doc1:ctime>
+    <doc1:ext>ru/</doc1:ext>
+    <doc1:mtime>1475851062</doc1:mtime>
+    <doc1:size>4096</doc1:size>
+    <doc2></doc2>
+    <doc2:atime>1475674115</doc2:atime>
+    <doc2:ctime>1475851062</doc2:ctime>
+    <doc2:ext>ru/</doc2:ext>
+    <doc2:mtime>1475851062</doc2:mtime>
+    <doc2:size>4096</doc2:size>
+    <full_img_1>/images/products/Elastoizol-Premium-EPP-4-6_2281_b1.jpg</full_img_1>
+    <full_img_1:atime>1480506392</full_img_1:atime>
+    <full_img_1:ctime>1480506392</full_img_1:ctime>
+    <full_img_1:ext>jpg</full_img_1:ext>
+    <full_img_1:height>750</full_img_1:height>
+    <full_img_1:mtime>1480506392</full_img_1:mtime>
+    <full_img_1:size>202040</full_img_1:size>
+    <full_img_1:type>jpeg</full_img_1:type>
+    <full_img_1:width>1000</full_img_1:width>
+    <full_img_2>/images/products/Elastoizol-Premium-EPP-4-6_2281_b2.jpg</full_img_2>
+    <full_img_2:atime>1480506393</full_img_2:atime>
+    <full_img_2:ctime>1480506393</full_img_2:ctime>
+    <full_img_2:ext>jpg</full_img_2:ext>
+    <full_img_2:height>750</full_img_2:height>
+    <full_img_2:mtime>1480506393</full_img_2:mtime>
+    <full_img_2:size>93709</full_img_2:size>
+    <full_img_2:type>jpeg</full_img_2:type>
+    <full_img_2:width>1000</full_img_2:width>
+    <full_img_3>/images/products/Elastoizol-Premium-EPP-4-6_2281_b3.jpg</full_img_3>
+    <full_img_3:atime>1480506395</full_img_3:atime>
+    <full_img_3:ctime>1480506395</full_img_3:ctime>
+    <full_img_3:ext>jpg</full_img_3:ext>
+    <full_img_3:height>750</full_img_3:height>
+    <full_img_3:mtime>1480506395</full_img_3:mtime>
+    <full_img_3:size>274777</full_img_3:size>
+    <full_img_3:type>jpeg</full_img_3:type>
+    <full_img_3:width>1000</full_img_3:width>
+    <full_img_4>/images/products/Elastoizol-Premium-EPP-4-6_2281_b4.jpg</full_img_4>
+    <full_img_4:atime>1480506395</full_img_4:atime>
+    <full_img_4:ctime>1480506395</full_img_4:ctime>
+    <full_img_4:ext>jpg</full_img_4:ext>
+    <full_img_4:height>750</full_img_4:height>
+    <full_img_4:mtime>1480506395</full_img_4:mtime>
+    <full_img_4:size>94341</full_img_4:size>
+    <full_img_4:type>jpeg</full_img_4:type>
+    <full_img_4:width>1000</full_img_4:width>
+    <full_img_5>/images/products/Elastoizol-Premium-EPP-4-6_2281_b5.jpg</full_img_5>
+    <full_img_5:atime>1480506397</full_img_5:atime>
+    <full_img_5:ctime>1480506397</full_img_5:ctime>
+    <full_img_5:ext>jpg</full_img_5:ext>
+    <full_img_5:height>750</full_img_5:height>
+    <full_img_5:mtime>1480506397</full_img_5:mtime>
+    <full_img_5:size>229032</full_img_5:size>
+    <full_img_5:type>jpeg</full_img_5:type>
+    <full_img_5:width>1000</full_img_5:width>
+    <full_text_itemprop>&lt;p&gt;Эластоизол Премиум ЭПП-4,6&amp;nbsp;– это&amp;nbsp;нижний слой материала на основе
+        полиэстера.&amp;nbsp;Применяется для устройства гидроизоляции строительных
+        конструкций, зданий и сооружений.&lt;/p&gt;
+&lt;p&gt;&lt;u&gt;Стандартная упаковка&lt;/u&gt; – рулон,&amp;nbsp;10 м&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;</full_text_itemprop>
+    <h1>Масса 1 м&lt;sup&gt;2&lt;/sup&gt;, не менее</h1>
+    <h2>Масса вяжущего с наплавляемой стороны, не менее</h2>
+    <h3>Гибкость на брусе R=10 мм, на лицевой поверхности образца не должно быть трещин, при температуре не выше</h3>
+    <h4>Температура хрупкости вяжущего, не выше</h4>
+    <h5>Теплостойкость в течение 2 часов, не должно быть сползания посыпки, вздутий и других дефектов, при температуре</h5>
+    <h6>Разрывная сила при растяжении в продольном/поперечном направлении, не менее</h6>
+    <h7></h7>
+    <h8>Водопоглощение в течение 24 часов, по массе, не более</h8>
+    <h9>Размеры рулона (длина х ширина)</h9>
+    <he1>кг</he1>
+    <he2>кг/м&lt;sup&gt;2&lt;/sup&gt;</he2>
+    <he3>&lt;sup&gt;о&lt;/sup&gt;С</he3>
+    <he4>&lt;sup&gt;о&lt;/sup&gt;С</he4>
+    <he5>&lt;sup&gt;о&lt;/sup&gt;С</he5>
+    <he6>Н (кгс)</he6>
+    <he7></he7>
+    <he8>%</he8>
+    <he9>м</he9>
+    <hv1>4,6</hv1>
+    <hv2>2,0</hv2>
+    <hv3>-25</hv3>
+    <hv4>-35</hv4>
+    <hv5>+100</hv5>
+    <hv6>800 (82) / 700 (71)</hv6>
+    <hv7></hv7>
+    <hv8>1,0</hv8>
+    <hv9>10х1</hv9>
+    <img_part>/images/products/Elastoizol-Premium-EPP-4-6.jpg</img_part>
+    <img_part:atime>1474458743</img_part:atime>
+    <img_part:ctime>1474458743</img_part:ctime>
+    <img_part:ext>jpg</img_part:ext>
+    <img_part:height>284</img_part:height>
+    <img_part:mtime>1474458743</img_part:mtime>
+    <img_part:size>35738</img_part:size>
+    <img_part:type>jpeg</img_part:type>
+    <img_part:width>284</img_part:width>
+    <in_roll>10</in_roll>
+    <item_production>Рязанский КРЗ</item_production>
+    <keyword>Эластоизол, Премиум, полимерный, сбс, модифицированный, 10м2, 10, м2, кв м, ЭПП, 4.6, 4, 6, полиэстер, нижний слой, рулонный, битумный, наплавляемый, гидроизоляционный, кровельный, материал, купить, цена, заказать, с доставкой, интернет-магазин, Ант-Снаб</keyword>
+    <list_sklad></list_sklad>
+    <list_sklad:text>нет</list_sklad:text>
+    <listov></listov>
+    <material>Пленка</material>
+    <na_pallete>20</na_pallete>
+    <osnova>Полиэстер</osnova>
+    <pack>рулон, 10 м&lt;sup&gt;2&lt;/sup&gt;</pack>
+    <pr_img_1>/images/products/Elastoizol-Premium-EPP-4-6_2281_m1.jpg</pr_img_1>
+    <pr_img_1:atime>1480506391</pr_img_1:atime>
+    <pr_img_1:ctime>1480506391</pr_img_1:ctime>
+    <pr_img_1:ext>jpg</pr_img_1:ext>
+    <pr_img_1:height>184</pr_img_1:height>
+    <pr_img_1:mtime>1480506391</pr_img_1:mtime>
+    <pr_img_1:size>16596</pr_img_1:size>
+    <pr_img_1:type>jpeg</pr_img_1:type>
+    <pr_img_1:width>270</pr_img_1:width>
+    <pr_img_2>/images/products/Elastoizol-Premium-EPP-4-6_2281_m2.jpg</pr_img_2>
+    <pr_img_2:atime>1480506391</pr_img_2:atime>
+    <pr_img_2:ctime>1480506391</pr_img_2:ctime>
+    <pr_img_2:ext>jpg</pr_img_2:ext>
+    <pr_img_2:height>184</pr_img_2:height>
+    <pr_img_2:mtime>1480506391</pr_img_2:mtime>
+    <pr_img_2:size>7829</pr_img_2:size>
+    <pr_img_2:type>jpeg</pr_img_2:type>
+    <pr_img_2:width>200</pr_img_2:width>
+    <pr_img_3>/images/products/Elastoizol-Premium-EPP-4-6_2281_m3.jpg</pr_img_3>
+    <pr_img_3:atime>1480506391</pr_img_3:atime>
+    <pr_img_3:ctime>1480506391</pr_img_3:ctime>
+    <pr_img_3:ext>jpg</pr_img_3:ext>
+    <pr_img_3:height>184</pr_img_3:height>
+    <pr_img_3:mtime>1480506391</pr_img_3:mtime>
+    <pr_img_3:size>14373</pr_img_3:size>
+    <pr_img_3:type>jpeg</pr_img_3:type>
+    <pr_img_3:width>270</pr_img_3:width>
+    <pr_img_4>/images/products/Elastoizol-Premium-EPP-4-6_2281_m4.jpg</pr_img_4>
+    <pr_img_4:atime>1480506395</pr_img_4:atime>
+    <pr_img_4:ctime>1480506395</pr_img_4:ctime>
+    <pr_img_4:ext>jpg</pr_img_4:ext>
+    <pr_img_4:height>184</pr_img_4:height>
+    <pr_img_4:mtime>1480506395</pr_img_4:mtime>
+    <pr_img_4:size>11588</pr_img_4:size>
+    <pr_img_4:type>jpeg</pr_img_4:type>
+    <pr_img_4:width>380</pr_img_4:width>
+    <pr_img_5>/images/products/Elastoizol-Premium-EPP-4-6_2281_m5.jpg</pr_img_5>
+    <pr_img_5:atime>1480506396</pr_img_5:atime>
+    <pr_img_5:ctime>1480506396</pr_img_5:ctime>
+    <pr_img_5:ext>jpg</pr_img_5:ext>
+    <pr_img_5:height>184</pr_img_5:height>
+    <pr_img_5:mtime>1480506396</pr_img_5:mtime>
+    <pr_img_5:size>25188</pr_img_5:size>
+    <pr_img_5:type>jpeg</pr_img_5:type>
+    <pr_img_5:width>380</pr_img_5:width>
+    <preview_text>Нижний слой для устройства гидроизоляционного ковра</preview_text>
+    <price>142.65</price>
+    <price_2>1426.50</price_2>
+    <price_opt>135.98</price_opt>
+    <price_opt_2>1359.80</price_opt_2>
+    <rashod>1,1</rashod>
+    <recomend>2109,2127,2110,2128</recomend>
+    <roll_size>10 м х 1 м</roll_size>
+    <roll_weight>46</roll_weight>
+    <short_name>ЭПП-4,6</short_name>
+    <show_linked_photos></show_linked_photos>
+    <show_linked_photos:text></show_linked_photos:text>
+    <title>Эластоизол Премиум ЭПП-4,6 – купить по низкой цене с доставкой на объект в интернет-магазине Ант-Снаб</title>
+    <tu_code>ТУ 5774-012-00287912-2007</tu_code>
+    <weight>4,6</weight>
+</root>

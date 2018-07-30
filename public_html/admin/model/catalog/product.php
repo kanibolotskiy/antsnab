@@ -1,8 +1,10 @@
 <?php
+
 use WS\Override\Gateway\ProdTabs;
 
 class ModelCatalogProduct extends Model
 {
+
     //@task move to override
     public function afterAddProduct($data, $product_id)
     {
@@ -15,26 +17,8 @@ class ModelCatalogProduct extends Model
     {
         $this->setIsShowInSummary($product_id, $data);
         $this->updateCustomFields($product_id, $data);
+        $this->updateProperties($product_id, $data);
 
-        if (isset($data['prodproperties'])) {
-            $sql = "delete from product_prodproperty where product_id = :id";
-            $this->db->query($sql, [':id' => $product_id]);
-
-            foreach ($data['prodproperties'] as $k => $p) {
-                if ('' !== trim($p['val']) || '' !== trim($p['sortOrder']) || isset($p['hide'])) {
-                    $sql = "insert into product_prodproperty  (category_prodproperty_id, product_id, val, sortOrder, hide) values "
-                        . "(:category_prodproperty_id, :product_id, :val, :sortOrder, :hide) ";
-
-                    $this->db->query($sql, [
-                        ':category_prodproperty_id' => $k,
-                        ':product_id' => $product_id,
-                        ':val' => ( '' === trim($p['val']) ) ? null : $p['val'],
-                        ':sortOrder' => ( '' === trim($p['sortOrder']) ) ? null : (int) $p['sortOrder'],
-                        ':hide' => ( isset($p['hide']) ) ? $p['hide'] : 0
-                    ]);
-                }
-            }
-        }
 
         if (isset($data['prodtabs'])) {
             $sql = "delete from product_prodtab where product_id = :id";
@@ -57,42 +41,64 @@ class ModelCatalogProduct extends Model
         }
     }
 
+    public function updateProperties($product_id, $data)
+    {
+        if (isset($data['prodproperties'])) {
+            $sql = "delete from product_prodproperty where product_id = :id";
+            $this->db->query($sql, [':id' => $product_id]);
+
+            foreach ($data['prodproperties'] as $k => $p) {
+                if ('' !== trim($p['val']) || '' !== trim($p['sortOrder']) || isset($p['hide'])) {
+                    $sql = "insert into product_prodproperty  (category_prodproperty_id, product_id, val, sortOrder, hide) values "
+                        . "(:category_prodproperty_id, :product_id, :val, :sortOrder, :hide) ";
+
+                    $this->db->query($sql, [
+                        ':category_prodproperty_id' => $k,
+                        ':product_id' => $product_id,
+                        ':val' => ( '' === trim($p['val']) ) ? null : $p['val'],
+                        ':sortOrder' => ( '' === trim($p['sortOrder']) ) ? null : (int) $p['sortOrder'],
+                        ':hide' => ( isset($p['hide']) ) ? $p['hide'] : 0
+                    ]);
+                }
+            }
+        }
+    }
+
     private function setIsShowInSummary($product_id, $data)
     {
         $isShowInSummary = false;
-        if( isset( $data['showInSummary'] ) ) {
-            $isShowInSummary = (boolean)$data['showInSummary'];
+        if (isset($data['showInSummary'])) {
+            $isShowInSummary = (boolean) $data['showInSummary'];
         }
-        $sql = "update " . DB_PREFIX . "product set showInSummary = :isShowInSummary where product_id = :id"; 
-        $res = $this->db->query($sql, [':id'=>$product_id, ':isShowInSummary' =>$isShowInSummary ]);
+        $sql = "update " . DB_PREFIX . "product set showInSummary = :isShowInSummary where product_id = :id";
+        $res = $this->db->query($sql, [':id' => $product_id, ':isShowInSummary' => $isShowInSummary]);
         return $res;
     }
-
 
     private function updateCustomFields($product_id, $data)
     {
         $price_wholesale = 0.0000;
-        if( !empty( $data['price_wholesale'] ) ) {
-            $price_wholesale = (float)$data['price_wholesale'];
+        if (!empty($data['price_wholesale'])) {
+            $price_wholesale = (float) $data['price_wholesale'];
         }
 
         $wholesale_threshold = 0.0000;
-        if( !empty( $data['wholesale_threshold'] ) ) {
-            $wholesale_threshold = (float)$data['wholesale_threshold'];
+        if (!empty($data['wholesale_threshold'])) {
+            $wholesale_threshold = (float) $data['wholesale_threshold'];
         }
 
         $produnit_template_id = null;
-        if( !empty( $data['produnit_template_id'] ) ) {
-            $produnit_template_id = (int)$data['produnit_template_id'];
+        if (!empty($data['produnit_template_id'])) {
+            $produnit_template_id = (int) $data['produnit_template_id'];
         }
 
         $description_mini = '';
-        if( isset( $data['description_mini']) ) {
-            $description_mini = $this->db->escape( $data['description_mini'] );
+        if (isset($data['description_mini'])) {
+            $description_mini = $this->db->escape($data['description_mini']);
         }
 
 
-        $sql = "update " . DB_PREFIX . "product set price_wholesale = :price_wholesale, wholesale_threshold=:wholesale_threshold, produnit_template_id=:produnit_template_id where product_id = :id"; 
+        $sql = "update " . DB_PREFIX . "product set price_wholesale = :price_wholesale, wholesale_threshold=:wholesale_threshold, produnit_template_id=:produnit_template_id where product_id = :id";
         $res = $this->db->query($sql, [
             ':price_wholesale' => $price_wholesale,
             ':wholesale_threshold' => $wholesale_threshold,
@@ -108,11 +114,12 @@ class ModelCatalogProduct extends Model
                 ':language_id' => $language_id
             ]);
         }
-        
+
         return true; //@task - что возвращать то?
     }
 
-    /*@task move to override added description_mini*/
+    /* @task move to override added description_mini */
+
     public function getProductDescriptions($product_id)
     {
         $product_description_data = array();
@@ -203,9 +210,9 @@ class ModelCatalogProduct extends Model
         if (isset($data['product_image'])) {
             foreach ($data['product_image'] as $product_image) {
                 //@task move to override
-                $alt = isset($product_image['alt'])?$product_image['alt']:'';
-                $this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int) $product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int) $product_image['sort_order'] . "', alt='".$this->db->escape($alt)."'");
-                 /* $this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int) $product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int) $product_image['sort_order'] . "'");*/
+                $alt = isset($product_image['alt']) ? $product_image['alt'] : '';
+                $this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int) $product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int) $product_image['sort_order'] . "', alt='" . $this->db->escape($alt) . "'");
+                /* $this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int) $product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int) $product_image['sort_order'] . "'"); */
             }
         }
 
@@ -239,8 +246,8 @@ class ModelCatalogProduct extends Model
             foreach ($data['product_related'] as $related_id) {
                 $this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int) $product_id . "' AND related_id = '" . (int) $related_id . "'");
                 $this->db->query("INSERT INTO " . DB_PREFIX . "product_related SET product_id = '" . (int) $product_id . "', related_id = '" . (int) $related_id . "'");
-                /*$this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int) $related_id . "' AND related_id = '" . (int) $product_id . "'");
-                $this->db->query("INSERT INTO " . DB_PREFIX . "product_related SET product_id = '" . (int) $related_id . "', related_id = '" . (int) $product_id . "'");*/
+                /* $this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int) $related_id . "' AND related_id = '" . (int) $product_id . "'");
+                  $this->db->query("INSERT INTO " . DB_PREFIX . "product_related SET product_id = '" . (int) $related_id . "', related_id = '" . (int) $product_id . "'"); */
             }
         }
 
@@ -352,10 +359,10 @@ class ModelCatalogProduct extends Model
         if (isset($data['product_image'])) {
             foreach ($data['product_image'] as $product_image) {
                 //@task move to override
-                $alt = isset($product_image['alt'])?$product_image['alt']:'';
-                $this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int) $product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int) $product_image['sort_order'] . "', alt='".$this->db->escape($alt)."'");
+                $alt = isset($product_image['alt']) ? $product_image['alt'] : '';
+                $this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int) $product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int) $product_image['sort_order'] . "', alt='" . $this->db->escape($alt) . "'");
 
-                /*$this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int) $product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int) $product_image['sort_order'] . "'");*/
+                /* $this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int) $product_id . "', image = '" . $this->db->escape($product_image['image']) . "', sort_order = '" . (int) $product_image['sort_order'] . "'"); */
             }
         }
 
@@ -398,8 +405,8 @@ class ModelCatalogProduct extends Model
             foreach ($data['product_related'] as $related_id) {
                 $this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int) $product_id . "' AND related_id = '" . (int) $related_id . "'");
                 $this->db->query("INSERT INTO " . DB_PREFIX . "product_related SET product_id = '" . (int) $product_id . "', related_id = '" . (int) $related_id . "'");
-               /* $this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int) $related_id . "' AND related_id = '" . (int) $product_id . "'");
-                $this->db->query("INSERT INTO " . DB_PREFIX . "product_related SET product_id = '" . (int) $related_id . "', related_id = '" . (int) $product_id . "'");*/
+                /* $this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int) $related_id . "' AND related_id = '" . (int) $product_id . "'");
+                  $this->db->query("INSERT INTO " . DB_PREFIX . "product_related SET product_id = '" . (int) $related_id . "', related_id = '" . (int) $product_id . "'"); */
             }
         }
 
@@ -437,7 +444,6 @@ class ModelCatalogProduct extends Model
 
         $this->cache->delete('product');
     }
-
 
     public function copyProduct($product_id)
     {
@@ -595,7 +601,6 @@ class ModelCatalogProduct extends Model
 
         return $query->rows;
     }
-
 
     public function getProductCategories($product_id)
     {

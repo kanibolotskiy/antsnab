@@ -61,24 +61,18 @@
                             <input type="hidden" id="currencySymb" value="<?=$currencySymb?>"/>
                             <span>Цена за:</span>
                             <ul>
-                                <?php $cnt = 0 ?>
-                                <?php foreach($priceMeta as $unitName => $unit):?>
-                                    <?php $cnt++?>
-                                    <?php if( $cnt == 1 ):?>
                                         <li>
-                                            <a data-unit="<?=$unitName?>" class="active" href="#">
-                                                <?= $unit['name_price'] ?>
+                                            <a data-unit="<?=$firstPriceMeta['name']?>" class="active" href="#">
+                                                <?= $firstPriceMeta['name_price'] ?>
                                             </a>
                                         </li>
-                                    <?php else: ?>
+                                        <?php if($secondPriceMeta['name_price']):?>
                                         <li>
-                                            <a data-unit="<?=$unitName?>" href="">
-                                                <?= $unit['name_price']?>
+                                            <a data-unit="<?=$secondPriceMeta['name']?>" href="#">
+                                                <?= $secondPriceMeta['name_price'] ?>
                                             </a>
                                         </li>
-                                    <?php endif;?>
-                                    <?php if( $cnt == 2) { break; } ?>
-                                <?php endforeach ?>
+                                        <?php endif;?>
                             </ul>
                         </div>
                     </div>
@@ -95,7 +89,7 @@
                                 <b class="help_question">?
                                     <em>
                                         <?php if( $basePriceMeta): ?>
-                                            Оптовая цена на мастику действительна при единовременной оплате <?=$basePriceMeta['wholesale_threshold']. ' ' . $basePriceMeta['name_plural'] ?>
+                                            Оптовая цена действительна при единовременной оплате <?=$basePriceMeta['wholesale_threshold']. ' ' . $basePriceMeta['name_plural'] ?>
                                         <?php endif;?>
                                     </em>
                                 </b>
@@ -127,7 +121,7 @@
                                     <input 
                                            data-factInterval="<?=$firstPriceMeta['salePackageStep']?>" 
                                            data-visualInterval="<?=$firstPriceMeta['visualStep']?>"
-                                           data-name="<?=$firstPriceMeta['name_plural']?>"
+                                           data-name="<?=$firstPriceMeta['name_price']?>"
                                            class="spinner" type="text"  name="name" value="0">
                                 </div>
                             </div>

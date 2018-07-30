@@ -181,7 +181,6 @@ order by p.sort_order ASC";
                  ];
             }
         }
-            var_dump( ['header'=> $summaryHeader,  'rows'=> $summaryRows]);
         return ['header'=> $summaryHeader,  'rows'=> $summaryRows];
     }
 }

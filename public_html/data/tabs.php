@@ -1,6 +1,6 @@
 <?php
 
-use WS\Override\Gateway\ProdProperties;
+use WS\Override\Gateway\ProdTabs;
 
 include_once __DIR__ . '/bootstrap.php';
 include_once 'admin/model/newsblog/article.php';
@@ -25,8 +25,8 @@ $previewProps = [
     'p2' => 'Плотность'
 ];
 
-$dstDB->query("delete from product_prodproperty");
-$dstDB->query("delete from category_prodproperty");
+$dstDB->query("delete from product_prodtab");
+$dstDB->query("delete from category_prodtab");
 
 function getXMLVal($data, $key)
 {
@@ -38,6 +38,29 @@ function getXMLVal($data, $key)
     return '';
 }
 
+function specialMerge($catData, $prodData)
+{
+    //clean data from empty values
+    $srcSelfClean = [];
+    $srcParentClean = [];
+    foreach ($prodData as $key => $val) {
+        if (is_string($val) && !empty($val)) {
+            $srcSelfClean[$key] = $val;
+        }
+    }
+    foreach ($catData as $key => $val) {
+        if (is_string($val) && !empty($val)) {
+            $srcParentClean[$key] = $val;
+        }
+    }
+
+    $product = array_merge($prodData, $srcParentClean, $srcSelfClean);
+    $product['catOrigin'] = $srcParentClean;
+    $product['prodOrigin'] = $srcSelfClean;
+
+    return $product;
+}
+
 $counter = 0;
 foreach ($dstFinalCategories as $dstFinalCategory) {
     $categorySrcId = $dstFinalCategory['srcId'];
@@ -46,13 +69,13 @@ foreach ($dstFinalCategories as $dstFinalCategory) {
     $rows = $srcDB->query($query2)->rows;
     $srcFinalCategory = $rows[0];
 
-    /* @$XML_PARENT = new SimpleXMLElement($srcFinalCategory['document_content']);
-      $srcFinalCategoryData = json_decode(
-      json_encode(
-      $XML_PARENT
-      ), 1
-      );
-      $srcFinalProducts = []; */
+    @$XML_PARENT = new SimpleXMLElement($srcFinalCategory['document_content']);
+    $srcFinalCategoryData = json_decode(
+        json_encode(
+            $XML_PARENT
+        ), 1
+    );
+    $srcFinalProducts = [];
 
     $dstFinalCatProperties = [];
     $query3 = "select document_id, document_content, document_name from documents where document_parent_id = " . $srcFinalCategory['document_id'];
@@ -67,92 +90,83 @@ foreach ($dstFinalCategories as $dstFinalCategory) {
             ), 1
         );
 
+        $srcFinalProductData = specialMerge($srcFinalCategoryData, $srcFinalProductData);
+
         $srcId = $srcFinalProduct['document_id'];
         $srcName = $srcFinalProduct['document_name'];
-        $i = 1;
-        //свойства для сводных таблиц
-        while (!empty($srcFinalProductData['h' . $i])) {
-            $propertyName = $srcFinalProductData['h' . $i];
-            $propertyUnit = !empty($srcFinalProductData['he' . $i]) ? $srcFinalProductData['he' . $i] : '';
-            $propertyValue = !empty($srcFinalProductData['hv' . $i]) ? $srcFinalProductData['hv' . $i] : '';
 
-            //заполним родительскую категорию первыми попавшимися значениями
+        //применение
+        $propertyName = 'Применение'; 
+        @$propertyValue = $srcFinalProductData['primenenie'];
+        if( !empty($propertyValue) ) {
             if (!isset($dstFinalCatProperties[$propertyName])) {
                 $dstFinalCatProperties[$propertyName] = [
                     'name' => $propertyName,
                     'category_id' => $categoryDstId,
-                    'type_id' => 1,
-                    'showInProdTab' => 0,
-                    'unit' => '',
-                    'default' => '',
-                    'showInProdPreview' => 0, //????
-                    'showInSummary' => 1,
-                    'sortOrder' => $i,
+                    'default' => $propertyValue,
+                    'sortOrder' => 0,
                 ];
             }
-            if (empty($dstFinalCatProperties[$propertyName]['unit']) && !empty($propertyUnit)) {
-                $dstFinalCatProperties[$propertyName]['unit'] = $propertyUnit;
-            }
-            if (empty($dstFinalCatProperties[$propertyName]['default']) && !empty($propertyValue)) {
-                $dstFinalCatProperties[$propertyName]['default'] = $propertyValue;
-            }
-            
-            if( $propertyValue != $dstFinalCatProperties[$propertyName]['default']) { 
+
+            if ($propertyValue != $dstFinalCatProperties[$propertyName]['default']) {
                 $dstFinaProdProperties[$srcId][$propertyName] = [
                     'val' => $propertyValue,
-                    'sortOrder' => $i,
-                    'hide' => 0, 
-                ];
-            }
-
-            $i++;
-        }
-
-        $previewPropsData = array_intersect_key($srcFinalProductData, $previewProps);
-        foreach ($previewPropsData as $propertyKey => $propertyValue) {
-            $propertyName = $previewProps[$propertyKey];
-            $propertyUnit = '';
-            if ($propertyKey == 'p2') {
-                $propertyUnit = 'г/м<sup>2</sup>';//не работает с тегами хз почему
-            }
-
-            //заполним родительскую категорию первыми попавшимися значениями
-            if (!isset($dstFinalCatProperties[$propertyName])) {
-                $dstFinalCatProperties[$propertyName] = [
-                    'name' => $propertyName,
-                    'category_id' => $categoryDstId,
-                    'type_id' => 1,
-                    'showInProdTab' => 0,
-                    'unit' => '',
-                    'default' => '',
-                    'showInProdPreview' => 1,
-                    'showInSummary' => 0,
-                    'sortOrder' => $i,
-                ];
-            }
-            if (empty($dstFinalCatProperties[$propertyName]['unit']) && !empty($propertyUnit)) {
-                $dstFinalCatProperties[$propertyName]['unit'] = $propertyUnit;
-            }
-            if (empty($dstFinalCatProperties[$propertyName]['default']) && !empty($propertyValue)) {
-                $dstFinalCatProperties[$propertyName]['default'] = $propertyValue;
-            }
-
-            if( $propertyValue != $dstFinalCatProperties[$propertyName]['default']) { 
-                $dstFinaProdProperties[$srcId][$propertyName] = [
-                    'val' => $propertyValue,
-                    'sortOrder' => $i,
+                    'sortOrder' => 0,
                     'hide' => 0,
                 ];
             }
+        }
 
-            $i++;
+        //хранение
+        $propertyName = 'Хранение'; 
+        @$propertyValue = $srcFinalProductData['hranenie'];
+        if( !empty($propertyValue) ) {
+            if (!isset($dstFinalCatProperties[$propertyName])) {
+                $dstFinalCatProperties[$propertyName] = [
+                    'name' => $propertyName,
+                    'category_id' => $categoryDstId,
+                    'default' => $propertyValue,
+                    'sortOrder' => 1,
+                ];
+            }
+
+            if ($propertyValue != $dstFinalCatProperties[$propertyName]['default']) {
+                $dstFinaProdProperties[$srcId][$propertyName] = [
+                    'val' => $propertyValue,
+                    'sortOrder' => 1,
+                    'hide' => 0,
+                ];
+            }
+        }
+
+        //скидки
+        $propertyName = 'Скидки'; 
+        @$propertyValue = $srcFinalProductData['sale'];
+        if( !empty($propertyValue) ) {
+            if (!isset($dstFinalCatProperties[$propertyName])) {
+                $dstFinalCatProperties[$propertyName] = [
+                    'name' => $propertyName,
+                    'category_id' => $categoryDstId,
+                    'default' => $propertyValue,
+                    'sortOrder' => 2,
+                ];
+            }
+
+            if ($propertyValue != $dstFinalCatProperties[$propertyName]['default']) {
+                $dstFinaProdProperties[$srcId][$propertyName] = [
+                    'val' => $propertyValue,
+                    'sortOrder' => 2,
+                    'hide' => 0,
+                ];
+            }
         }
     }
 
     //запишем свойства категории
-    $propModel = new ProdProperties($registry);
+    $propModel = new ProdTabs($registry);
     foreach ($dstFinalCatProperties as $propName => $prop) {
-        $propId = $propModel->addProperty($prop);
+        $propId = $propModel->addTab($prop); 
+
         foreach ($dstFinaProdProperties as $model => $productProps) {
             if (!isset($productProps[$propName])) {
                 continue;
@@ -163,7 +177,7 @@ foreach ($dstFinalCategories as $dstFinalCategory) {
             $hide = $productProps[$propName]['hide'];
 
 
-            $sql = "insert into product_prodproperty  (category_prodproperty_id, product_id, val, sortOrder, hide) values "
+            $sql = "insert into product_prodtab  (category_prodtab_id, product_id, val, sortOrder, hide) values "
                 . "(:category_prodproperty_id, (select product_id from oc_product where model=:model), :val, :sortOrder, :hide) ";
 
             $dstDB->query($sql, [
@@ -176,17 +190,6 @@ foreach ($dstFinalCategories as $dstFinalCategory) {
         }
     }
 
-    echo "\n migrated " . $counter . " final categories ";
+    echo "\n migrated " . $counter . " tabs in final categories ";
     $counter++;
-    /* echo('<h1>Category:</h2>');
-      echo('<pre>');
-      print_r($dstFinalCatProperties);
-      echo('</pre>');
-      echo('<h2>Products start, total:'.count($dstFinaProdProperties).'</h2>');
-      echo('<pre>');
-      print_r($dstFinaProdProperties);
-      echo('</pre>');
-      if ( $counter > 10 ) {
-      die();
-      } */
 }

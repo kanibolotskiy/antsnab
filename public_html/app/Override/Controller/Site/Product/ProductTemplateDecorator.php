@@ -74,12 +74,27 @@ class ProductTemplateDecorator implements IDecorator
                 }
             }
 
-            //цена, отображаемая первой ($data['priceMeta'] отсортирован по switchSortOrder - порядок в переключателе цен
-            reset($data['priceMeta']);
-            $data['firstPriceMeta']= current($data['priceMeta']);
+            //$data['priceMeta'] отсортирован по switchSortOrder - порядок в переключателе цен
+            foreach($data['priceMeta'] as $uName => $uData) {
+                //switchSortOrder = 0 не отображаем
+                if($uData['switchSortOrder']==0){
+                    continue;
+                }
 
-            //цена,отображаемая второй
-           $data['secondPriceMeta'] = next($data['priceMeta']);
+                //цена, отображаемая первой
+                if(null == $data['firstPriceMeta']) {
+                    $data['firstPriceMeta'] = $uData;
+                    continue;
+                }
+
+                //цена,отображаемая второй
+                if(null == $data['secondPriceMeta']) {
+                    $data['secondPriceMeta'] = $uData;
+                    continue;
+                }
+                break;
+            }
+
         }
 
         $data['priceMetaJSON'] = json_encode($data['priceMetaJSON'], JSON_UNESCAPED_UNICODE & JSON_HEX_APOS & JSON_HEX_QUOT);

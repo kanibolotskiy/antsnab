@@ -52,14 +52,14 @@ class Hierarhy extends Model
             . "where language_id = :language_id order by c.category_id ASC ";
         $categoryRows = $this->db->query($sql, [':language_id' => $language_id])->rows;
         
-        var_dump($sql);
-        var_dump($categoryRows);
+        //var_dump($sql);
+        //var_dump($categoryRows);
 
         foreach($categoryRows as $cat) {
             $category = new Category();
             $category->setName($cat['name']);
             $category->setId($cat['category_id']);
-            var_dump( serialize($category) );
+            //var_dump( serialize($category) );
             $this->cache->set(static::CATEGORY_PREFIX . $cat['category_id'], serialize($category) );
         }
 

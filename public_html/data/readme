@@ -11,5 +11,7 @@ artcategories.php
 newscategories.php
 articles.php
 news.php
+удалить свойства которые забиты
 props.php
 вручную повыключать то, что не выводится в таблицу
+tabs.php
