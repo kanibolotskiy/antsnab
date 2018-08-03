@@ -1,7 +1,6 @@
 # wspatch
 /.uml/*.png
 /.delete/*
-composer.json
 /node_modules/*
 
 # Config and Htaccess Files
