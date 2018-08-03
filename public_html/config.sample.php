@@ -21,8 +21,8 @@ define('DIR_UPLOAD', '/srv/http/ant-snab/public_html/system/storage/upload/');
 // DB
 define('DB_DRIVER', 'mpdo');
 define('DB_HOSTNAME', 'localhost.localdomain');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', 'sapsan');
-define('DB_DATABASE', 'antsnab');
+define('DB_USERNAME', '');
+define('DB_PASSWORD', '');
+define('DB_DATABASE', '');
 define('DB_PORT', '3306');
 define('DB_PREFIX', 'oc_');
