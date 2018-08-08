@@ -5596,13 +5596,13 @@ class ModelExtensionExchange1c extends Model {
 	private function getProductIdByCode($code) {
 
 		// Определим product_id
-		$query = $this->query("SELECT `product_id` FROM `" . DB_PREFIX . "product` WHERE `product_id` = " . (int)$code);
+		$query = $this->query("SELECT `product_id` FROM `" . DB_PREFIX . "product` WHERE `model` = " . (int)$code);
 		$product_id = isset($query->row['product_id']) ? $query->row['product_id'] : 0;
 
 		if ($product_id) {
-			$this->log("Найден товар по <Код>, product_id = " . $product_id, 2);
+			$this->log("Найден товар по <Артиклу>, product_id = " . $product_id, 2);
 		} else {
-			$this->log("Не найден товар по <Код>, code = " . $code, 2);
+			$this->log("Не найден товар по <Артиклу>, code = " . $code, 2);
 		}
 
 		return $product_id;
@@ -6051,7 +6051,7 @@ class ModelExtensionExchange1c extends Model {
 			}
 
 			// Есть ли связь Ид с товаром в таблице product_to_1c
-			$product_id = $this->getProductIdByGuid($data['product_guid']);
+			$product_id = $this->getProductIdByCode($offer->Артикул);
 
 			// Если товар не найден
 			if (!$product_id) {
