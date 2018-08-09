@@ -1651,6 +1651,13 @@ class ModelExtensionExchange1c extends Model {
 
         if (count($data_old)) {
 
+            foreach ($data_new['prices'] as $k => $v) {
+
+                if ($v['guid'] == '3e0fd774-6b0b-11e8-8279-74d435e94a83') {
+                    $result['price_wholesale'] = $v['price'];
+                }
+            }
+
 			foreach($data_old as $field => $value) {
 
 				if (!isset($data_new[$field])) {
@@ -1681,12 +1688,7 @@ class ModelExtensionExchange1c extends Model {
 				}
 			}
 		}
-		foreach ($data_new['prices'] as $k => $v) {
 
-            if ($v['guid'] == '3e0fd774-6b0b-11e8-8279-74d435e94a83') {
-                $result['price_wholesale'] = $v['price'];
-            }
-        }
 
 
 		return $result;
