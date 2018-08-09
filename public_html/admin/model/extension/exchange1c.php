@@ -1678,7 +1678,6 @@ class ModelExtensionExchange1c extends Model {
 
 
 				if ($value != $data_new[$field]) {
-                    $result['price_wholesale'] = 0;
 					$result[$field] = $this->db->escape($data_new[$field]);
 					$this->log("[i] Отличается поле '" . $field . "', старое: " . $value . ", новое: " . $data_new[$field], 2);
 
