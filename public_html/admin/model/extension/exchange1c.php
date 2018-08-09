@@ -1490,7 +1490,9 @@ class ModelExtensionExchange1c extends Model {
 	 		$sql[] = $mode == 'set'		? "`shipping` = '" .			(int)$data['shipping'] . "'"						: "`shipping`";
 		if (isset($data['price']))
 	 		$sql[] = $mode == 'set'		? "`price` = '" .				(float)$data['price'] . "'"							: "`price`";
-		if (isset($data['points']))
+        if (isset($data['price_wholesale']))
+            $sql[] = $mode == 'set'		? "`price_wholesale` = '" .		(float)$data['price_wholesale'] . "'"				: "`price_wholesale`";
+        if (isset($data['points']))
 	 		$sql[] = $mode == 'set'		? "`points` = '" .				(int)$data['points'] . "'"							: "`points`";
 		if (isset($data['length']))
 	 		$sql[] = $mode == 'set'		? "`length` = '" .				(float)$data['length'] . "'"						: "`length`";
@@ -1647,7 +1649,7 @@ class ModelExtensionExchange1c extends Model {
 		//$this->log($data_old, 2);
 		$result = array();
 
-		if (count($data_old)) {
+        if (count($data_old)) {
 
 			foreach($data_old as $field => $value) {
 
@@ -1667,8 +1669,9 @@ class ModelExtensionExchange1c extends Model {
 					}
 				}
 
-				if ($value != $data_new[$field]) {
 
+				if ($value != $data_new[$field]) {
+                    $result['price_wholesale'] = 0;
 					$result[$field] = $this->db->escape($data_new[$field]);
 					$this->log("[i] Отличается поле '" . $field . "', старое: " . $value . ", новое: " . $data_new[$field], 2);
 
@@ -1678,6 +1681,14 @@ class ModelExtensionExchange1c extends Model {
 				}
 			}
 		}
+		foreach ($data_new['prices'] as $k => $v) {
+
+            if ($v['guid'] == '3e0fd774-6b0b-11e8-8279-74d435e94a83') {
+                $result['price_wholesale'] = $v['price'];
+            }
+        }
+
+
 		return $result;
 
 	} // compareArraysData()
@@ -2677,6 +2688,9 @@ class ModelExtensionExchange1c extends Model {
 	 * ver 20
 	 * update 2018-06-17
 	 * Обновляет товар в базе поля в таблице product
+     * В $data храняться все цены
+     * В $old_data старые данные
+     *
 	 * Если есть характеристики, тогда получает общий остаток по уже загруженным характеристикам прибавляет текущий и обновляет в таблице product
 	 */
 	private function updateOffers($product_id, $data, $old_data) {
@@ -6110,8 +6124,11 @@ class ModelExtensionExchange1c extends Model {
 			}
 
 			// ЦЕНЫ
+
 			if ($offer->Цены && $this->config->get('exchange1c_product_price_no_import') != 1) {
 				$data['prices'] = $this->parsePrice($offer->Цены);
+				$this->log('Проверка данных', 2);
+				$this->log($data, 2);
 				if ($this->ERROR) return false;
 			}
 
