@@ -15,6 +15,35 @@ class ProdUnits extends \Model
 
     const MAX_UNITS_IN_PRICE_SWITCH = 2;
 
+    public function rollProducts()
+    {
+        $res = array();
+
+        $sql = 'SELECT ps.product_id, ps.price, ps.price_wholesale, p.calcKoef FROM `oc_product` ps
+                INNER JOIN `produnit_unit` p
+                ON p.produnit_template_id = ps.produnit_template_id and p.isPackageBase = 1;';
+
+        $result = $this->db->query($sql);
+
+        foreach ($result->rows as $k => $v) {
+
+            $sql = 'SELECT meta_h1 FROM oc_product_description WHERE product_id = ' . $v['product_id'];
+
+            $datas = $this->db->query($sql);
+
+            foreach ($datas->rows as $data) {
+
+                $res[] = array('name' => $data['meta_h1'], 'price' => $v['price'], 'price_wholesale' => $v['price_wholesale'], 'calcKoef' => $v['calcKoef']);
+
+            }
+
+
+        }
+
+        return $res;
+
+    }
+
     public function getUnits($templateId, $order = null)
     {
         $sql = 'SELECT u.unit_id as id, u.*  FROM produnit_unit as u ' .

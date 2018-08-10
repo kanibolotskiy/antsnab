@@ -7,6 +7,9 @@
 
 namespace WS\Override\Controller\Site\Product;
 
+use WS\Override\Gateway\ProdUnits;
+
+
 /**
  * Описание класса 
  * 
@@ -33,6 +36,10 @@ class PriceController extends \Controller
         );
 
         $data['heading_title'] = $this->language->get('heading_title');
+
+        $prodUnits = new ProdUnits($this->registry);
+
+        $data['products'] = $prodUnits->rollProducts();
 
         //common
         $data['column_left'] = $this->load->controller('common/column_left');
