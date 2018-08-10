@@ -7,12 +7,12 @@
         <div class="content">
             <div class="bread-crumbs">
                 <ul>
-                    <li class="home"><a href=""><i class="material-icons">home</i></a></li>
+                   <!-- <li class="home"><a href=""><i class="material-icons">home</i></a></li> -->
+                    <?php foreach($breadcrumbs as $b) { ?>
                     <li>
-                        <a href="">Главная</a>
+                        <a href="<?php echo $b['fref']; ?>"><?php echo $b['text']; ?></a>
                     </li>
-                    <li class="interval">...</li>
-                    <li>Прайс-лист</li>
+                    <?php } ?>
                 </ul>
             </div>
             <div class="price-list">
