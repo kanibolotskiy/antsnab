@@ -2,24 +2,6 @@
 <div class="container main">
     <?= $column_left ?>
     <div class="container container-nav">
-        <nav class="nav">
-
-            <ul>
-                <li><a class="active" href="">Главная</a></li>
-                <li class="separator"></li>
-                <li><a href="">О компании</a></li>
-                <li class="separator"></li>
-                <li><a href="">Прайс-лист</a></li>
-                <li class="separator"></li>
-                <li><a href="">Статьи</a></li>
-                <li class="separator"></li>
-                <li><a href="">Новости</a></li>
-                <li class="separator"></li>
-                <li><a href="">Отзывы</a></li>
-                <li class="separator"></li>
-                <li><a href="">Контакты</a></li>
-            </ul>
-        </nav>
     </div>
     <div class="container main">
         <div class="content">
