@@ -108,7 +108,7 @@
                         <?php foreach ($products as $product) {  ?>
                         <tr>
                             <td><a href="/products/roll/krz/elastoizol-premium/ekp-50/" class="no-formated"><?php echo $product['name']; ?></a></td>
-                            <td class="hide_on_mobile">рулон, <?php echo number_format($product['calcKoef'], 2, ',', ''); ?> м<sup>2</sup></td>
+                            <td class="hide_on_mobile"><?php echo $product['nameI'] . ' ' . number_format($product['calcKoef'], 2, ',', '') . ' ' . $product['nameR']; ?></td>
                             <td class="column-price column-price-1" style="display: table-cell;"><?php echo number_format($product['price'], 2, ',', ''); ?> р.</td>
                             <td class="column-price column-price-1" style="display: table-cell;"><?php echo number_format($product['price_wholesale'], 2, ',', ''); ?> р.</td>
                             <td class="column-price column-price-2" style="display: none;">1 466.60 р.</td>

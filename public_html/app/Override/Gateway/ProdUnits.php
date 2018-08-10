@@ -19,7 +19,7 @@ class ProdUnits extends \Model
     {
         $res = array();
 
-        $sql = 'SELECT ps.product_id, ps.price, ps.price_wholesale, p.calcKoef FROM `oc_product` ps
+        $sql = 'SELECT ps.product_id, ps.product_id, ps.price, ps.price_wholesale, p.calcKoef, p.calcRel, p.name FROM `oc_product` ps
                 INNER JOIN `produnit_unit` p
                 ON ps.produnit_template_id = p.produnit_template_id and p.isPackageBase = 1';
 
@@ -28,18 +28,26 @@ class ProdUnits extends \Model
         foreach ($result->rows as $k => $v) {
 
             $sql = 'SELECT meta_h1 FROM oc_product_description WHERE product_id = ' . $v['product_id'];
+            $sqlUnit = 'SELECT * FROM produnit_unit WHERE unit_id = ' . $v['calcRel'];
 
             $datas = $this->db->query($sql);
+            $dataUnit = $this->db->query($sqlUnit);
 
             foreach ($datas->rows as $data) {
 
-                $res[] = array('name' => $data['meta_h1'], 'price' => $v['price'], 'price_wholesale' => $v['price_wholesale'], 'calcKoef' => $v['calcKoef']);
+                foreach ($dataUnit->rows as $dataU) {
+
+                    $res[] = array('id' => $v['product_id'],
+                        'name' => $data['meta_h1'], 'price' => $v['price'],
+                        'price_wholesale' => $v['price_wholesale'], 'calcKoef' => $v['calcKoef'],
+                        'nameI' => $v['name'], 'nameR' => $dataU['name'],
+                    );
+                }
 
             }
 
 
         }
-
         return $res;
 
     }
