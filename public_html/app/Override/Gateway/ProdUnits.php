@@ -21,7 +21,7 @@ class ProdUnits extends \Model
 
         $sql = 'SELECT ps.product_id, ps.price, ps.price_wholesale, p.calcKoef FROM `oc_product` ps
                 INNER JOIN `produnit_unit` p
-                ON p.produnit_template_id = ps.produnit_template_id and p.isPackageBase = 1;';
+                ON ps.produnit_template_id = p.produnit_template_id and p.isPackageBase = 1';
 
         $result = $this->db->query($sql);
 
