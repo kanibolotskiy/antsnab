@@ -504,7 +504,8 @@ $_['desc_prices']										= 'Таблица соответствия типов
 $_['text_config_price_type']							= 'Название типа цены в ТС';
 $_['text_config_price_id_cml']							= 'Ид цены в ТС';
 $_['text_table']										= 'Таблица';
-$_['text_table_product']								= 'Товар';
+$_['text_table_product']								= 'Розничкная цена (Товар)';
+$_['text_table_price_wholesale']                        = 'Оптовая цена';
 $_['text_table_discount']								= 'Скидки';
 $_['text_table_special']								= 'Акции';
 

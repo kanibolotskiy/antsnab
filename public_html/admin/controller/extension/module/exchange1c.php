@@ -584,6 +584,10 @@ class ControllerExtensionModuleExchange1c extends Controller {
 			'name'    		=> 'product',
 			'desc'			=> $this->language->get('text_table_product')
 		);
+        $list_table_prices[] = array(
+			'name'    		=> 'price_wholesale',
+			'desc'			=> $this->language->get('text_table_price_wholesale')
+		);
 		$list_table_prices[] = array(
 			'name'    		=> 'discount',
 			'desc'			=> $this->language->get('text_table_discount')

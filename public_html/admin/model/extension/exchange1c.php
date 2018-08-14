@@ -1651,12 +1651,11 @@ class ModelExtensionExchange1c extends Model {
 
         if (count($data_old)) {
 
-            foreach ($data_new['prices'] as $k => $v) {
-
+            /*foreach ($data_new['prices'] as $k => $v) {
                 if ($v['guid'] == '3e0fd774-6b0b-11e8-8279-74d435e94a83') {
                     $result['price_wholesale'] = $v['price'];
                 }
-            }
+            }*/
 
 			foreach($data_old as $field => $value) {
 
@@ -2689,8 +2688,6 @@ class ModelExtensionExchange1c extends Model {
 	 * ver 20
 	 * update 2018-06-17
 	 * Обновляет товар в базе поля в таблице product
-     * В $data храняться все цены
-     * В $old_data старые данные
      *
 	 * Если есть характеристики, тогда получает общий остаток по уже загруженным характеристикам прибавляет текущий и обновляет в таблице product
 	 */
@@ -2727,6 +2724,9 @@ class ModelExtensionExchange1c extends Model {
 						$data['price'] = $data_price['price'];
 						$this->log("Цена товара '" . $data_price['keyword'] . "' = " . $data['price']);
 
+                    } elseif( $data_price['table_price'] == 'price_wholesale' ) {
+						$data['price_wholesale'] = $data_price['price'];
+						$this->log("Оптовая Цена товара '" . $data_price['keyword'] . "' = " . $data['price_wholesale']);
 					} else {
 						// Скидки и Акции
 						$this->setProductPrice($data_price, $product_id, $prices_old, $delete_prices);
@@ -5603,26 +5603,45 @@ class ModelExtensionExchange1c extends Model {
 
 	} // getProductIdByGuid()
 
-
-	/**
+    /**
 	 * Проверка существования товара по product_id
 	 * НЕИСПОЛЬЗУЕТСЯ!
 	 */
 	private function getProductIdByCode($code) {
-
 		// Определим product_id
-		$query = $this->query("SELECT `product_id` FROM `" . DB_PREFIX . "product` WHERE `model` = " . (int)$code);
+		$query = $this->query("SELECT `product_id` FROM `" . DB_PREFIX . "product` WHERE `product_id` = " . (int)$code);
 		$product_id = isset($query->row['product_id']) ? $query->row['product_id'] : 0;
 
 		if ($product_id) {
-			$this->log("Найден товар по <Артиклу>, product_id = " . $product_id, 2);
+			$this->log("Найден товар по <Код>, product_id = " . $product_id, 2);
 		} else {
-			$this->log("Не найден товар по <Артиклу>, code = " . $code, 2);
+			$this->log("Не найден товар по <Код>, code = " . $code, 2);
 		}
 
 		return $product_id;
 
 	} // getProductIdByCode()
+
+	/**
+     * Поиск по модели продукта. в Проекте антснаб, в поле модели содержится артикул
+     * @param string $model - артикул продукта 
+	 * @added by cdev for ant-snab
+	 */
+	private function getProductIdByModel($model) {
+
+		// Определим product_id
+		$query = $this->query("SELECT `product_id` FROM `" . DB_PREFIX . "product` WHERE `model` = " . (int)$model);
+		$product_id = isset($query->row['product_id']) ? $query->row['product_id'] : 0;
+
+		if ($product_id) {
+			$this->log("Найден товар по <Артиклу>, product_id = " . $product_id, 2);
+		} else {
+			$this->log("Не найден товар по <Артиклу>, code = " . $model, 2);
+		}
+
+		return $product_id;
+
+	} 
 
 
 	/**
@@ -6064,9 +6083,19 @@ class ModelExtensionExchange1c extends Model {
 			} else {
 				$data['feature_guid'] = '';
 			}
+            
+            /* @added for antsnab */
+			// Есть ли связь с товаром по артикулу
+			$product_id = $this->getProductIdByModel($offer->Артикул);
 
-			// Есть ли связь Ид с товаром в таблице product_to_1c
-			$product_id = $this->getProductIdByCode($offer->Артикул);
+            // Есть ли связь с товаром по guid
+            if(!$product_id) {
+                $product_id = $this->getProductIdByModel($data['product_guid']);
+            }
+
+            // Есть ли связь Ид с товаром в таблице product_to_1c
+            // Original behaviour
+			// $product_id = $this->getProductIdByGuid($data['product_guid']);
 
 			// Если товар не найден
 			if (!$product_id) {
@@ -6125,7 +6154,6 @@ class ModelExtensionExchange1c extends Model {
 			}
 
 			// ЦЕНЫ
-
 			if ($offer->Цены && $this->config->get('exchange1c_product_price_no_import') != 1) {
 				$data['prices'] = $this->parsePrice($offer->Цены);
 				$this->log('Проверка данных', 2);
