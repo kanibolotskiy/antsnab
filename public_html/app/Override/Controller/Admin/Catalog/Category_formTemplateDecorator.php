@@ -8,7 +8,7 @@
 namespace WS\Override\Controller\Admin\Catalog;
 
 use WS\Override\Controller\IDecorator;
-use WS\Override\Gateway\ProdProperties;
+use WS\Override\Gateway\FinalCategory;
 
 /**
  * Описание класса 
@@ -31,7 +31,7 @@ class Category_formTemplateDecorator implements IDecorator
 
         if (isset($request->get['category_id'])){
             $category_id = $request->get['category_id'];
-            $gateway = new ProdProperties($registry);
+            $gateway = new FinalCategory($registry);
             $data['isfinal'] = $gateway->isCategoryFinal($category_id);
             $data['category_prodproperties'] = $url->link('extension/module/prodproperties/getlist', 'token=' . $session->data['token'] . '&category_id=' . $category_id, 'SSL');
         } else {

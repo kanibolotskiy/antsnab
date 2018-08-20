@@ -1,28 +1,14 @@
 <?= $header ?>
 <div class="container main">
     <?= $column_left ?>
-    <div class="container container-nav">
-    </div>
-    <div class="container main">
-        <div class="content">
-            <div class="bread-crumbs">
-                <ul>
-                   <!-- <li class="home"><a href=""><i class="material-icons">home</i></a></li> -->
-                    <?php foreach($breadcrumbs as $b) { ?>
-                    <li>
-                        <a href="<?php echo $b['fref']; ?>"><?php echo $b['text']; ?></a>
-                    </li>
-                    <?php } ?>
-                </ul>
-            </div>
-            <div class="price-list">
-                <div class="title">Прайс-лист</div>
-                <p>На этой странице можно посмотреть или скачать свежий прайс-лист ООО «ТК Ант-Снаб».
-
-                    Цены на сайте всегда актуальны. Обновление происходит, как правило, в пятницу.</p>
+    <div class="content">
+        <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
+        <?php echo $content_top; ?>
+        <div class="price-list">
+             <div class="title"><?=$heading_title?></div>
+                <?= $description ?>
                 <div class="download download3">
-						<span>Скачать прайс-лист:
-</span>
+						<span>Скачать прайс-лист:</span>
                     <ul>
                         <li>
                             <a href=""></a>
@@ -34,38 +20,69 @@
                 </div>
                 <div class="select-list">
                     <ul>
-                        <li>
-                            <strong>Выберите категорию:</strong>
-                            <select id="seldef50" title="Выберите категорию:">
-                                <option>Выберите категорию:</option>
+                        <li id="firstActive">
+                            <strong><?=$select_category_text?></strong>
+                            <select class="catSelector" >
+                                <?php if( !empty($selectors['l1']) ):?>
+                                    <?php foreach($selectors['l1'] as $catName  => $catId ):?>
+                                        <?php if( $catId == $selectors['active'][0] ):?>
+                                        <option selected="selected" value="<?=$catId?>"><?=$catName?></option>
+                                        <?php else: ?>
+                                        <option value="<?=$catId?>"><?=$catName?></option>
+                                        <?php endif;?>
+                                    <?php endforeach;?>
+                                <?php endif;?>
                             </select>
                         </li>
-                        <li>
-                            <strong>Выберите товар:</strong>
-                            <select id="seldef51" title="Выберите товар:">
-                                <option>Выберите товар:</option>
+                        <li id="secondActive">
+                            <strong><?=$select_subcategory_text?></strong>
+                            <select  class="catSelector" >
+                                <?php if( !empty($selectors['l2']) ):?>
+                                    <?php foreach($selectors['l2'] as $catName  => $catId ):?>
+                                        <?php if( isset($selectors['active'][1]) && $catId == $selectors['active'][1] ):?>
+                                        <option selected="selected" value="<?=$catId?>"><?=$catName?></option>
+                                        <?php else: ?>
+                                        <option value="<?=$catId?>"><?=$catName?></option>
+                                        <?php endif;?>
+                                    <?php endforeach;?>
+                                <?php endif;?>
                             </select>
                         </li>
-                        <li>
-                            <strong>Выберите цену:</strong>
-                            <select id="seldef52" title="Выберите цену:">
-                                <option>Выберите цену:</option>
+                        <?php if( empty($selectors['l3']) ):?>
+                        <li id="thirdActive" style="visibility:hidden">
+                            <strong><?=$select_product_text?></strong>
+                        </li>
+                        <?php else: ?>
+                        <li id="thirdActive">
+                            <strong><?=$select_product_text?></strong>
+                            <select  class="catSelector" >
+                                <?php if( !empty($selectors['l3']) ):?>
+                                    <?php foreach($selectors['l3'] as $catName  => $catId ):?>
+                                        <?php if( isset($selectors['active'][2]) && $catId == $selectors['active'][2] ):?>
+                                        <option selected="selected" value="<?=$catId?>"><?=$catName?></option>
+                                        <?php else: ?>
+                                        <option value="<?=$catId?>"><?=$catName?></option>
+                                        <?php endif;?>
+                                    <?php endforeach;?>
+                                <?php endif;?>
                             </select>
                         </li>
+                        <?php endif;?>
                     </ul>
                 </div>
-                <div class="dop-title">Битумные рулонные материалы > Рязанский КРЗ</div>
+                <div class="dop-title"></div>
                 <div class="table table4">
                     <div class="top-table">
                         <div class="top-table-block">
                             <table>
                                 <thead>
                                 <tr>
-                                    <th>Продукт</th>
-                                    <th class="hide_on_mobile">Упаковка</th>			                    <th class="column-price column-price-1" style="display: table-cell;">Цена за м<sup>2</sup></th>
-                                    <th class="column-price column-price-1" style="display: table-cell;">Оптовая цена<br>за м<sup>2</sup><b>? <em>Оптовая цена на мастику действительна при единовременной оплате 100 шт</em></b></th>
-                                    <th class="column-price column-price-2" style="display: none;">Цена за рулон</th>
-                                    <th class="column-price column-price-2" style="display: none;">Оптовая цена<br>за рулон<b>? <em>Оптовая цена на мастику действительна при единовременной оплате 100 шт</em></b></th>
+                                    <th><?=$product_text?></th>
+                                    <th class="hide_on_mobile"><?=$package_text?></th>
+                                    <th class="column-price column-price-1" style="display: table-cell;"><?=$price_text?></sup></th>
+                                    <th class="column-price column-price-1" style="display: table-cell;"><?=$price_wholesale_text?></th>
+                                    <th class="column-price column-price-2" style="display: none;"><?=$price_text?></th>
+                                    <th class="column-price column-price-2" style="display: none;"><?=$price_wholesale_text?></th>
                                 </tr>
                                 </thead>
                             </table>
@@ -74,83 +91,123 @@
                     <table class="fix-header">
                         <thead>
                         <tr>
-                            <th>Продукт</th>
-                            <th class="hide_on_mobile">Упаковка</th>			                    <th class="column-price column-price-1" style="display: table-cell;">Цена за м<sup>2</sup></th>
-                            <th class="column-price column-price-1" style="display: table-cell;">Оптовая цена<br>за м<sup>2</sup><b>? <em>Оптовая цена на мастику действительна при единовременной оплате 100 шт</em></b></th>
-                            <th class="column-price column-price-2" style="display: none;">Цена за рулон</th>
-                            <th class="column-price column-price-2" style="display: none;">Оптовая цена<br>за рулон<b>? <em>Оптовая цена на мастику действительна при единовременной оплате 100 шт</em></b></th>
+                            <th><?=$product_text?></th>
+                            <th class="hide_on_mobile"><?=$package_text?></th>
+                            <th class="column-price column-price-1" style="display: table-cell;"><?=$price_text?></th>
+                            <th class="column-price column-price-1" style="display: table-cell;"><?=$price_wholesale_text?></th>
+                            <th class="column-price column-price-2" style="display: none;"><?=$price_text?></th>
+                            <th class="column-price column-price-2" style="display: none;"><?=$price_wholesale_text?></th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td colspan="4" class="text-row">
-                                <h3><a href="/products/roll/krz/elastoizol-premium/">Эластоизол Премиум</a></h3>
-                            </td>
-                        </tr>
-                        <?php foreach ($products as $product) {  ?>
-                        <tr>
-                            <td><a href="/products/roll/krz/elastoizol-premium/ekp-50/" class="no-formated"><?php echo $product['name']; ?></a></td>
-                            <td class="hide_on_mobile"><?php echo $product['nameI'] . ' ' . number_format($product['calcKoef'], 2, ',', '') . ' ' . $product['nameR']; ?></td>
-                            <td class="column-price column-price-1" style="display: table-cell;"><?php echo number_format($product['price'], 2, ',', ''); ?> р.</td>
-                            <td class="column-price column-price-1" style="display: table-cell;"><?php echo number_format($product['price_wholesale'], 2, ',', ''); ?> р.</td>
-                            <td class="column-price column-price-2" style="display: none;">1 466.60 р.</td>
-                            <td class="column-price column-price-2" style="display: none;">1 398.10 р.</td>
-                        </tr>
-                        <?php } ?>
+                        <tbody id="priceTableContent">
+                        <?=$priceTableContent?>
                         </tbody>
                     </table>
                 </div>
                 <div class="discounts">
-                    <span>С 3 февраля 2016 года снизились цены на рулонные кровельные материалы ТехноНиколь:</span>
-                    <ul>
-                        <li>Цены на рулонные материалы Рязанского КРЗ указаны в рублях с учетом НДС;</li>
-                        <li>Цены указаны с учетом самовывоза с завода в г. Рязань. Стоимость доставки уточняйте у менеджеров;</li>
-                        <li>Оптовые цены действительны только при 100% предоплате;</li>
-                        <li>Возможно производство наплавляемых материалов с посыпкой различных цветов;</li>
-                        <li>Некоторые позиции производятся под заказ, наличие и актуальность цен уточняйте в офисе.</li>
-                    </ul>
+                    <?= $description_down?>
                 </div>
-            </div>
-            <div class="news news2">
-                <div class="title-news">Свежие новости</div>
-                <ul>
-                    <li>
-                        <a href="">Снизились цены на гидроизол
-                            и OSB</a>
-                        <img src="img/img1.jpg" alt="img">
-                        <div class="news-text">
-                            <span>14.03.2016</span>
-                            <p>С 1 февраля на
-                                рулонные кровельные
-                                материалы
-                                действовали скидки.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="">Снизились цены на фанеру</a>
-                        <img src="img/img2.jpg" alt="img">
-                        <div class="news-text">
-                            <span>26.02.2016</span>
-                            <p>Новость сегодня
-                                неоднозначная.
-                                Наверняка, по
-                                картинке все уже...</p>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="">Снижение цен на рулонные
-                            кровельные материалы</a>
-                        <img src="img/img3.jpg" alt="img">
-                        <div class="news-text">
-                            <span>14.03.2016</span>
-                            <p>С 1 февраля на
-                                рулонные кровельные
-                                материалы
-                                действовали скидки.</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
         </div>
+        <?php echo $content_bottom; ?>
     </div>
+</div>
+<script>
+   document.addEventListener("DOMContentLoaded", function(){
+      function redrawSelector(id, options, currentValue) {
+              var $container = $('#' + id),
+                  $jcf = $('.select-area', $container),
+                  $selector = $container.find('select');
+              $selector.remove();
+              $selector = $(document.createElement('select'));
+              $selector.addClass('catSelector');
+              $.each(options, function(text, val) {
+                var $option = $(document.createElement('option'));
+                    $option.attr('value', val);
+                    $option.text(text);
+                    $selector.append($option);    
+              });
+              $selector.val(currentValue);
+              $jcf.remove();
+              $container.append($selector);
+              jcf.customForms.replaceAll(); 
+      }
+
+       function redrawBreadcrumbs(){
+            var $breadcrumbs = $('.dop-title'),
+                       string = $('#firstActive > select > option:selected').text(); 
+
+                   if( "<?=$SHOW_ALL_OPTION_VALUE?>" !== $('#secondActive > select').val() ) {
+                       string += ' > ' + $('#secondActive > select > option:selected').text(); 
+                   } 
+
+                   if( undefined !== $('#thirdActive > select').val() &&
+                       "<?=$SHOW_ALL_OPTION_VALUE?>" !== $('#thirdActive > select').val() ) {
+
+                       string += ' > ' + $('#thirdActive > select > option:selected').text(); 
+                   }
+
+                   $breadcrumbs.text(string);     
+       }
+
+       redrawBreadcrumbs();
+
+       $('body').delegate('.catSelector', 'change', function(){
+           var postData = {
+                firstActive: $('#firstActive > select').val()    
+           };
+
+           var changedId = $(this).parent('li').attr('id'); 
+           
+           if( "<?=$SHOW_ALL_OPTION_VALUE?>" !== $('#secondActive > select').val() && 
+               changedId !== 'firstActive' 
+             ) {
+               postData.secondActive = $('#secondActive > select').val();
+           }
+
+           if( undefined !== $('#thirdActive > select').val() 
+                   && "<?=$SHOW_ALL_OPTION_VALUE?>" !== $('#thirdActive > select').val()
+                   && changedId !=='secondActive'
+                   && changedId !=='firstActive' ) {
+               postData.thirdActive = $('#thirdActive > select ').val();
+           }
+
+           $.ajax({
+               url: 'index.php?route=product/price/ajaxRefresh',
+               method: 'POST',
+               data: postData,
+               dataType: 'json',
+               error: function(){
+                   alert('Error while request');
+               },
+               success: function(data) {
+                   console.warn(data);
+                   
+                   //Selectors
+                   var firstActive = data.selectors.active[0];
+                   redrawSelector('firstActive', data.selectors.l1, firstActive);
+
+                   var secondActive = data.selectors.active[1] || "<?=$SHOW_ALL_OPTION_VALUE?>";
+                   redrawSelector('secondActive', data.selectors.l2, secondActive);
+
+                   if( undefined === data.selectors.l3 ) {
+                        $('#thirdActive > select').remove();
+                        $('#thirdActive > .select-area').remove();
+                        $('#thirdActive').css("visibility", "hidden"); 
+                   } else {
+                       var thirdActive = data.selectors.active[2] || "<?=$SHOW_ALL_OPTION_VALUE?>";
+                       redrawSelector('thirdActive', data.selectors.l3, thirdActive);
+                       $('#thirdActive').css("visibility", "visible");
+                   }
+
+                   //Breadcrumbs
+                   redrawBreadcrumbs();
+
+                   //Table
+                   $('#priceTableContent').html(data.table);
+                   
+               }
+           });
+       }); 
+   }); 
+</script>
 <?= $footer ?>

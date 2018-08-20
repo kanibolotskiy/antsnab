@@ -2,9 +2,12 @@
 
 namespace WS\Override\Gateway;
 use Exception;
+use WS\Patch\Helper\QueryHelper;
 
 /**
- * Описание класса 
+ * Каждый продукт может исчисляться в разных единицах измерения.
+ * Для присвоения продукту единиц - к нему устанавливается шаблон единиц измерения;
+ * Единица измерения может иметь тип. И быть базой для различных расчетов
  * 
  * @version    1.0, May 9, 2018  7:39:20 AM 
  * @copyright  Copyright (c) 2018 AntSnab. (https://www.ant-snab.ru)
@@ -15,44 +18,79 @@ class ProdUnits extends \Model
 
     const MAX_UNITS_IN_PRICE_SWITCH = 2;
 
-    public function rollProducts()
+    /** 
+     * Допустимые имена полей-флагов в бд, характеризующие единицу измерения
+     * isPriceBase - в этой еденице ведется учет в 1С и осуществляется продажа
+     * isSaleBase - в этой еденице расчитывается кратность продажи (упаковки)
+     * isPackageBase - в этой еденице расчитывается загрузка в машину
+     */
+    static $ALLOWED_BASES = [
+        'isPriceBase', 'isSaleBase', 'isPackageBase'
+    ];
+    
+    /**
+     * Возвращает список продуктов с их единицами измерения продажи (т.е. кратными упаковками) 
+     * @task эта операция по сути является частным случаем для getPriceMetaForProduct() но
+     * на множестве продуктов. Подумать, вероятно есть смысл отрефакторить
+     * 
+     * @param $unitType - тип единицы измерения (базой чего является) 
+     */
+    public function getProductsWithUnit($product_id, $unitType)
     {
         $res = array();
+        if( !in_array($unitType, static::$ALLOWED_BASES) ) {
+            return $res;
+        }
 
-        $sql = 'SELECT ps.product_id, ps.product_id, ps.price, ps.price_wholesale, p.calcKoef, p.calcRel, p.name FROM `oc_product` ps
-                INNER JOIN `produnit_unit` p
-                ON ps.produnit_template_id = p.produnit_template_id and p.isPackageBase = 1';
+        $product_id = QueryHelper::paramToArray($product_id);
 
-        $result = $this->db->query($sql);
+        $sql = "SELECT 
+               p.product_id, 
+               pd.name as product_name,
+               u.produnit_template_id,
+               u.name,
+               u.switchSortOrder,
+               u.loadingSortOrder,
+               u.isPriceBase,
+               u.isSaleBase,
+               u.isPackageBase,
+               u.name_price,
+               u.name_plural,
+               u.name_in_package, 
+               u.calcKoef, 
+               u.calcRel,
+               u2.name as to_name,
+               u2.name_price as to_name_price,
+               u2.name_plural as to_name_plural,
+               u2.name_in_package as to_name_in_package,  
+               u.weight,
+               u.package_width,
+               u.package_length,
+               u.package_height
+        FROM `" . DB_PREFIX . "product` p
+            LEFT JOIN " . DB_PREFIX . "product_description pd 
+                ON (p.product_id = pd.product_id) 
+            LEFT JOIN `produnit_unit` u
+                ON p.produnit_template_id = u.produnit_template_id
+            LEFT JOIN `produnit_unit` u2
+                ON u2.unit_id = u.calcRel
+        WHERE " . QueryHelper::paramToEqualSqlCondition('p.product_id', $product_id) . " AND u." . $unitType . "=1";
 
-        foreach ($result->rows as $k => $v) {
+        $result = $this->db->query($sql)->rows;
 
-            $sql = 'SELECT meta_h1 FROM oc_product_description WHERE product_id = ' . $v['product_id'];
-            $sqlUnit = 'SELECT * FROM produnit_unit WHERE unit_id = ' . $v['calcRel'];
-
-            $datas = $this->db->query($sql);
-            $dataUnit = $this->db->query($sqlUnit);
-
-            foreach ($datas->rows as $data) {
-
-                foreach ($dataUnit->rows as $dataU) {
-
-                    $res[] = array('id' => $v['product_id'],
-                        'name' => $data['meta_h1'], 'price' => $v['price'],
-                        'price_wholesale' => $v['price_wholesale'], 'calcKoef' => $v['calcKoef'],
-                        'nameI' => $v['name'], 'nameR' => $dataU['name'],
-                    );
-                }
-
-            }
-
-
+        foreach ($result as $row) {
+            $res[$row['product_id']] = $row;
         }
         return $res;
-
     }
 
-    public function getUnits($templateId, $order = null)
+    /**
+     * Получить список едениц измерения шаблона единиц 
+     * @param type $templateId
+     * @param type $order
+     * @return type
+     */
+    public function getUnitsByTemplate($templateId, $order = null)
     {
         $sql = 'SELECT u.unit_id as id, u.*  FROM produnit_unit as u ' .
             'where u.produnit_template_id = :tplid ';
@@ -66,6 +104,11 @@ class ProdUnits extends \Model
         return $res->rows;
     }
 
+    /**
+     * Получить список единиц измерения продукта 
+     * @param type $productId
+     * @return type
+     */
     public function getUnitsByProduct($productId)
     {
         $sql = "select p.price, p.price_wholesale, p.wholesale_threshold, u.* from oc_product as p
@@ -76,6 +119,13 @@ where p.product_id = :id order by u.switchSortOrder";
         return $res->rows;
     }
 
+    /**
+     * Возвращает массив единиц измерения для продукта, содержащий всю информацию по
+     * единице измерения касаемо пересчитанных относительно нее цен, коэффициентов пересчета в
+     * другие единицы, данные для логики js - шаги покупки и пр.. 
+     * @param type $productId
+     * @return type
+     */
     public function getPriceMetaForProduct($productId)
     {
         $meta = [];
@@ -266,6 +316,8 @@ where p.product_id = :id order by u.switchSortOrder";
         return null; 
     }
 
+    /****UNITS CRUD*****/
+
     public function saveUnit($data)
     {
         $calcKoef = ($data['calcKoef'] === '') ? null : (float) str_replace(',', '.', $data['calcKoef']);
@@ -348,6 +400,14 @@ where p.product_id = :id order by u.switchSortOrder";
         return ($this->db->query($sql, [':id' => $id])) ? true : false;
     }
 
+    public function getUnit($id)
+    {
+        $query = 'SELECT u.unit_id as id, u.*  FROM produnit_unit as u ' .
+            'where u.unit_id = :id limit 1';
+        $res = $this->db->query($query, [':id' => $id]);
+        return $res->row;
+    }
+
     /**
      * 
      * @param string $name - имя поля базового флага
@@ -384,12 +444,6 @@ where p.product_id = :id order by u.switchSortOrder";
         return ($res->num_rows === 1) ? $res->row : null;
     }
 
-    public function getUnit($id)
-    {
-        $query = 'SELECT u.unit_id as id, u.*  FROM produnit_unit as u ' .
-            'where u.unit_id = :id limit 1';
-        $res = $this->db->query($query, [':id' => $id]);
-        return $res->row;
-    }
+    
 
 }

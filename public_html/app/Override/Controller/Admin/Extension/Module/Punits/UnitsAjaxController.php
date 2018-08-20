@@ -23,7 +23,7 @@ class UnitsAjaxController extends \Controller
         if (!isset($this->request->post['templateId'])) {
             $error = ['templateId is mandatory'];
         } else {
-            $result = $gateWay->getUnits($this->request->post['templateId'], 'order by switchSortOrder ASC');
+            $result = $gateWay->getUnitsByTemplate($this->request->post['templateId'], 'order by switchSortOrder ASC');
         }
         $json = ['result' => $result, 'error' => $error];
         $this->response->addHeader('Content-Type: application/json');

@@ -102,19 +102,4 @@ class ProdTabs extends \Model
         return $res->rows;
     }
 
-    /**
-     * @param type $category_id
-     * @return boolean | null
-     * @task DRY ProdProperties - move to override categories model 
-     */
-    public function isCategoryFinal($category_id)
-    {
-       $query = "select isfinal from " . DB_PREFIX . "category where category_id = :id limit 1";
-        $res = $this->db->query($query, [':id' => $category_id] );
-        if( $res->num_rows == 0 ) {
-            return null;
-        } 
-
-        return (boolean)$res->row['isfinal'];
-    }
 }

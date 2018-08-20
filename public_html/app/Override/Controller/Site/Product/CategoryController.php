@@ -9,8 +9,8 @@
 namespace WS\Override\Controller\Site\Product;
 
 use WS\Override\Gateway\ProdProperties;
+use WS\Override\Gateway\FinalCategory;
 use WS\Patch\Helper\PaginationHelper;
-use WS\Override\Gateway\Hierarhy;
 
 /**
  * Описание класса 
@@ -68,7 +68,7 @@ class CategoryController extends \Controller
             $category_id = 0;
         }
 
-        $gateway = new ProdProperties($this->registry);
+        $gateway = new FinalCategory($this->registry);
         $isCategoryFinal = $gateway->isCategoryFinal($category_id);
 
         $category_info = $this->model_catalog_category->getCategory($category_id);

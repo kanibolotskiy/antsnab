@@ -32,9 +32,7 @@ class SlideshowController extends \Controller
 				$data['banners'][] = array(
 					'title' => $result['title'],
 					'link'  => $result['link'],
-                                        //@impl WITH PATCH
-                    'descr' => $result['descr'],
-
+                    'descr' => html_entity_decode($result['descr']),
 					'image' => $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height'])
 				);
 			}

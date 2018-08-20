@@ -5,6 +5,7 @@ create table produnit_template (
     description varchar(1000) not null default ''
 ) engine=MyIsam, collate=utf8_general_ci;
 
+
 drop table produnit_unit;
 create table produnit_unit (
     unit_id int(10) not null auto_increment primary key,

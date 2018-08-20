@@ -41,6 +41,10 @@ q:before, q:after {
     content: '';
     content: none;
 }
+sup {
+    vertical-align: super;
+    font-size: smaller;
+}
 /**Bootstrap tables*/
 table {
     border-collapse: collapse;
@@ -754,7 +758,7 @@ a.btn-nav{
     top:0;
     left: 40px;
     padding:50px 20px 0 39px;
-    width: 280px;
+    width: 360px;
     background-color: rgba(0,0,0, 0.3);
     -webkit-background-color: rgba(0,0,0, 0.3);
     -moz-background-color: rgba(0,0,0, 0.3);
@@ -771,12 +775,16 @@ a.btn-nav{
             color: #d3a06d;
         }
     }
-    p{
+    p,ul {
         display: block;
         font-weight: 600;
         font-size: 15px;
         color: #ffffff;
         line-height: 22px;
+        margin-top: 10px;
+    }
+    ul {
+        list-style: inside;
     }
 }
 h1,
@@ -3945,6 +3953,7 @@ a.print{
                     font-weight: bold;
                     font-size: 14px;
                     border-left: 1px solid #fff;
+                    text-align:center;
                     &:first-child{
                         text-align: left;
                         border: none;
@@ -3953,10 +3962,10 @@ a.print{
                         width: 130px;
                     }
                     &:nth-child(3) {
-                        width: 130px;
+                        width: 167px;
                     }
                     &:nth-child(4) {
-                        width: 140px;
+                        width: 167px;
                     }
                     sup{
                         vertical-align: super;
@@ -4015,6 +4024,10 @@ a.print{
     h3{
         font-weight: bold;
     }
+}
+
+.catSelector {
+    display:none; //из-за jcf плагина - мигают если не скрыть
 }
 .table table tr td:nth-child(4) {
     border-left: 1px solid #E8E5E2;
@@ -4885,3 +4898,5 @@ html, body{
 .ya-share2 {
     float:right;
 }
+
+

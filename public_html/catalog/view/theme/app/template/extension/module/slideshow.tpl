@@ -5,14 +5,20 @@
             <a class="btn-next" href="#">&gt;</a>
             <div class="gmask">
                 <div class="slideset">
+                    <?php $counter = 0; ?>
                     <?php foreach ($banners as $banner) { ?>
-                    <div class="slide c1 active">
-                        <img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>">
-                        <div class="slide-block">
-                            <span><?php echo $banner['title']; ?></span>
-                            <p><?=$banner['descr']?></p>
+                    <?php $counter++; ?>
+                        <?php if( 1 == $counter): ?>
+                        <div class="slide c1 active">
+                        <?php else: ?>
+                        <div class="slide c<?=$counter?>">
+                        <?php endif;?>
+                            <img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>">
+                            <div class="slide-block">
+                                <span><?php echo $banner['title']; ?></span>
+                                <?=$banner['descr'];?>
+                            </div>
                         </div>
-                    </div>
                     <?php } ?>
                 </div>
             </div>
