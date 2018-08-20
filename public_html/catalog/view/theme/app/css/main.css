@@ -195,7 +195,7 @@ a.btn-nav { display: none; cursor: pointer; }
 
 .gallery-holder a.btn-prev, .gallery-holder a.btn-next { bottom: 12px; }
 
-.slide-block { position: absolute; top: 0; left: 40px; padding: 50px 20px 0 39px; width: 280px; background-color: rgba(0, 0, 0, 0.3); -webkit-background-color: rgba(0, 0, 0, 0.3); -moz-background-color: rgba(0, 0, 0, 0.3); z-index: 2; height: 100%; }
+.slide-block { position: absolute; top: 0; left: 40px; padding: 50px 20px 0 39px; width: 360px; background-color: rgba(0, 0, 0, 0.3); -webkit-background-color: rgba(0, 0, 0, 0.3); -moz-background-color: rgba(0, 0, 0, 0.3); z-index: 2; height: 100%; }
 .slide-block span { display: block; font-weight: 800; font-size: 34px; color: #ffffff; line-height: 40px; margin-bottom: 22px; }
 .slide-block span b { color: #d3a06d; }
 .slide-block p, .slide-block ul { display: block; font-weight: 600; font-size: 15px; color: #ffffff; line-height: 22px; margin-top: 10px; }
