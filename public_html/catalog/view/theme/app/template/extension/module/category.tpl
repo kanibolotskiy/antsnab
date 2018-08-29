@@ -87,5 +87,5 @@
         <?php } ?>
     </ul>
 </div>
-
+<div id="empty_block_catalog_helper" class="empty_block_catalog_helper"></div>
 

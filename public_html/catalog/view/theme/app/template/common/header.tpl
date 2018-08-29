@@ -103,20 +103,29 @@
 
         <a href="" class="up"></a>
         <header class="header container">
+
+
+            <!-- @task переверстать лого (убрать background, растянуть изображение -->
+            <!--переверстано, убран background, если в админке указан файл логотипа-->
             <strong class="logo">
-                <!-- @task переверстать лого (убрать background, растянуть изображение -->
                 <?php if ($logo) { ?>
                     <?php if ($home == $og_url) { ?>
-                        <img width="100%" src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>"/>
+                        <img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" />
                     <?php } else { ?>
-                        <a href="<?php echo $home; ?>">
-                            <img width="100%" src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>"/>
+                        <a href="<?php echo $home; ?>" title="<?php echo $name; ?>">
+                            <img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" />
                         </a>
                     <?php } ?>
+
                 <?php } else { ?>
-                    <h1><a href="<?php echo $home; ?>"><?php echo $name; ?></a></h1>
+                    <?php if ($home == $og_url) { ?>
+                        <div class="logo_bg"></div>
+                    <?php } else { ?>
+                        <a href="<?php echo $home; ?>"><div class="logo_bg"></div></a>
+                    <?php } ?>
                 <?php } ?>
             </strong>
+
             <div class="tel">
                 <a href="tel:<?php echo $telephone; ?>"><?php echo $telephone; ?></a>
                 <a href="tel:<?= $telephone2 ?>"><?= $telephone2 ?></a>

@@ -665,7 +665,7 @@ jcf.lib = {
 			if (e.isFixed) {
 				return e;
 			}
-			e.isFixed = true; 
+			e.isFixed = true;
 			e.preventDefault = e.preventDefault || function(){this.returnValue = false}
 			e.stopPropagation = e.stopPropagaton || function(){this.cancelBubble = true}
 			if (!e.target) {
@@ -2379,11 +2379,20 @@ $('.btn-nav').click(function(eventObject){
 
 
 $(function(){
-    var topPos = $('.catalog-product2').offset().top; //topPos - это значение от верха блока до окна браузера
+    //var topPos = $('.catalog-product2').offset().top; //topPos - это значение от верха блока до окна браузера
+    var topPos = $('.catalog-product2').position().top;
+
     $(window).scroll(function() {
         var top = $(document).scrollTop();
-        if (top > topPos) $('.catalog-product2').addClass('fixed');
-        else $('.catalog-product2').removeClass('fixed');
+        if (top > topPos) {
+            $('.catalog-product2').addClass('fixed');
+            var height_block=$('.catalog-product2').outerHeight();
+            $('#empty_block_catalog_helper').css({"height":height_block});
+        }
+        else {
+            $('.catalog-product2').removeClass('fixed');
+            $('#empty_block_catalog_helper').css({"height":0});
+        }
     });
 });
 
