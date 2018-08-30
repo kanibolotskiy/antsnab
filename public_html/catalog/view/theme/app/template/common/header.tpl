@@ -133,7 +133,7 @@
             </div>
             <div class="line"></div>
             <div class="schedule">
-                <span>Мы работем:</span>
+                <span>Мы работаем:</span>
                 <p>
                     <?= $worktime ?>
                 </p>
@@ -151,6 +151,7 @@
         <div class="container container-nav">
             <nav class="nav">
                 <ul>
+                    <?php $cnt = 0; $ttl = count($top_menu);?>
                     <?php foreach ($top_menu as $item) : ?>
                         <?php $active = ($item['isactive']) ? 'class="active"' : ""; ?>
                         <?php if (isset($item['target']) && trim($item['target']) != "") { ?>
@@ -164,6 +165,10 @@
                                 </a>
                             </li>
                         <?php } ?>
+                        <?php $cnt++;?>
+                        <?php if( $cnt != $ttl): ?>
+                        <li class="separator"></li>
+                        <?php endif;?>
                     <?php endforeach; ?>
                 </ul>
             </nav>
