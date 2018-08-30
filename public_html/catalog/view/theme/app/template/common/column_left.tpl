@@ -1,7 +1,7 @@
 <div class="sidebar">
     <div class="search-form">
         <form action="<?=$search_link?>" method="post">
-            <input type="text" name="search" placeholder="Поиск по сайту...">
+            <input type="text" name="search" placeholder="Поиск по каталогу...">
             <input type="submit" value="">
         </form>
     </div>
