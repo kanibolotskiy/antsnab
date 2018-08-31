@@ -1,0 +1,14 @@
+
+<script src="/catalog/view/javascript/app/common.js"></script>
+<script src="/catalog/view/javascript/app/easyResponsiveTabs.js"></script>
+<script src="/catalog/view/javascript/app/inputmask.min.js"></script>
+<script src="/catalog/view/javascript/app/inputmask.phone.extensions.js"></script>
+
+    <script src="catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js" type="text/javascript"></script>
+    <script src="catalog/view/javascript/jquery/datetimepicker/moment.js" type="text/javascript"></script>
+    <script src="catalog/view/javascript/jquery/datetimepicker/locale/ru-ru.js" type="text/javascript"></script>
+    <script src="catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+    <script src="catalog/view/javascript/product.js" type="text/javascript"></script>
+
+
+    <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
