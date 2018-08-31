@@ -2376,8 +2376,6 @@ $('.btn-nav').click(function(eventObject){
 
 
 
-
-
 $(function(){
     /*added kanibolotskiy*/
     $(".article").find("table").each(function(){
@@ -2386,6 +2384,7 @@ $(function(){
     $(".nav a.active").click(function(e){
         e.preventDefault();
     });
+    $('#demoTab').easyResponsiveTabs({ tabidentify: 'vert' });
     /*-------------------*/
     //var topPos = $('.catalog-product2').offset().top; //topPos - это значение от верха блока до окна браузера
     var topPos = $('.catalog-product2').position().top;

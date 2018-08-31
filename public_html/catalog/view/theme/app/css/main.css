@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&subset=cyrillic-ext");
+@import 'vendor/easy-responsive-tabs.css';
 aside, nav, footer, header, section, article {
   display: block;
 }
@@ -5486,7 +5487,7 @@ html:focus, body:focus {
 
 @media screen and (max-width: 568px) {
   .table table {
-    width: auto;
+    width: 100%;
   }
 
   .top-table-block {
@@ -5496,6 +5497,23 @@ html:focus, body:focus {
   .table table tr td {
     padding: 8px 10px;
   }
+}
+.resp-tabs-list {
+  border-bottom: 2px solid #EFEEEC;
+  position: relative;
+  overflow: hidden;
+}
+
+.resp-tab-active {
+  border: 0 !important;
+  color: #fff;
+  background-color: #d3a06d !important;
+}
+
+.resp-tab-content {
+  border: 0 !important;
+  margin-top: 24px;
+  padding: 0;
 }
 
 /*# sourceMappingURL=main.css.map */
