@@ -78,11 +78,12 @@
                                 <thead>
                                 <tr>
                                     <th><?=$product_text?></th>
-                                    <th class="hide_on_mobile"><?=$package_text?></th>
+                                    <th class="hide_on_mobile_"><?=$package_text?></th>
                                     <th class="column-price column-price-1" style="display: table-cell;"><?=$price_text?></sup></th>
                                     <th class="column-price column-price-1" style="display: table-cell;"><?=$price_wholesale_text?></th>
-                                    <th class="column-price column-price-2" style="display: none;"><?=$price_text?></th>
+                                    <!--<th class="column-price column-price-2" style="display: none;"><?=$price_text?></th>
                                     <th class="column-price column-price-2" style="display: none;"><?=$price_wholesale_text?></th>
+                                    -->
                                 </tr>
                                 </thead>
                             </table>
@@ -92,11 +93,12 @@
                         <thead>
                         <tr>
                             <th><?=$product_text?></th>
-                            <th class="hide_on_mobile"><?=$package_text?></th>
+                            <th class="hide_on_mobile_"><?=$package_text?></th>
                             <th class="column-price column-price-1" style="display: table-cell;"><?=$price_text?></th>
                             <th class="column-price column-price-1" style="display: table-cell;"><?=$price_wholesale_text?></th>
-                            <th class="column-price column-price-2" style="display: none;"><?=$price_text?></th>
+                            <!--<th class="column-price column-price-2" style="display: none;"><?=$price_text?></th>
                             <th class="column-price column-price-2" style="display: none;"><?=$price_wholesale_text?></th>
+                            -->
                         </tr>
                         </thead>
                         <tbody id="priceTableContent">

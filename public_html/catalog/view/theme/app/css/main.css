@@ -5417,6 +5417,11 @@ html:focus, body:focus {
   white-space: nowrap;
 }
 
+.wrapper_adaptive_table {
+  max-width: 100%;
+  overflow: auto;
+}
+
 @media screen and (max-width: 1200px) {
   .price-list .select-list ul li {
     width: 49.5%;
@@ -5473,6 +5478,24 @@ html:focus, body:focus {
 .ordering form .row i.error {
   position: absolute;
   top: -14px;
+}
+
+.table-responsive {
+  max-width: 100%;
+}
+
+@media screen and (max-width: 568px) {
+  .table table {
+    width: auto;
+  }
+
+  .top-table-block {
+    display: none;
+  }
+
+  .table table tr td {
+    padding: 8px 10px;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

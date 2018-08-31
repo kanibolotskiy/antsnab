@@ -73,7 +73,7 @@ class ControllerNewsBlogArticle extends Controller {
 		$this->load->model('newsblog/article');
 
 		$article_info = $this->model_newsblog_article->getArticle($newsblog_article_id);
-        
+
 		if ($article_info) {
 			$url = '';
 
@@ -189,7 +189,7 @@ class ControllerNewsBlogArticle extends Controller {
 						'article_id'  		=> $result['article_id'],
 						'original'			=> $original,
 						'thumb'       		=> $thumb,
-						'name'        		=> $result['name'],
+						'name'        		=> "ok".$result['name'],
 						'preview'     		=> html_entity_decode($result['preview'], ENT_QUOTES, 'UTF-8'),
 						'attributes'  		=> $result['attributes'],
 						'href'        		=> $this->url->link('newsblog/article', 'newsblog_path=' . $mainCategoryId . '&newsblog_article_id=' . $result['article_id']),

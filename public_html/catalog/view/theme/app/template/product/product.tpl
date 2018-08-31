@@ -175,7 +175,9 @@
         <div class="contacts-tabs card-product-tabs">
             <div id="mtab1" class="tab">
                 <ul class="tabset multi-tabset">
-                    <li><a href="#m1tab1" class="active">Описание</a></li>
+                    <li>
+                        <a href="#m1tab1" class="active">Описание</a>
+                    </li>
                     <li><a href="#m1tab2">Упаковка</a></li>
                     <li><a href="#m1tab3">Калькулятор</a></li>
                     
@@ -184,6 +186,7 @@
                     <?php endforeach;?>
                     <li><a href="#m1tab7">Отзывы</a></li>
                 </ul>
+
                 <div class="tab-list">
                     <!--Описание-->
                     <div id="m1tab1">

@@ -2380,11 +2380,13 @@ $('.btn-nav').click(function(eventObject){
 
 $(function(){
     /*added kanibolotskiy*/
-
+    $(".article").find("table").each(function(){
+        $(this).wrap('<div class="table-responsive"></div>')
+    });
     $(".nav a.active").click(function(e){
         e.preventDefault();
     });
-
+    /*-------------------*/
     //var topPos = $('.catalog-product2').offset().top; //topPos - это значение от верха блока до окна браузера
     var topPos = $('.catalog-product2').position().top;
 

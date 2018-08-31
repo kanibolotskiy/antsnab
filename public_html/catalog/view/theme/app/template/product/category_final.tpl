@@ -132,36 +132,38 @@
                         background-color: #f9f9f9;
                     }
                 </style>
-                <table class="summary table table-bordered table-striped table-responsive">
-                    <thead>
-                        <tr>
-                            <th rowspan="2">Показатель</th>
-                            <th colspan="<?= count($summary['header']) ?>">Значение</th>
-                            <th rowspan="2">Единица измерения</th>
-                        </tr>
-                        <tr>
-                            <?php foreach ($summary['header'] as $h): ?>
-                                <th class="grey"><?= $h['name'] ?></th>
-                            <?php endforeach; ?>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr></tr>
-                        <?php foreach ($summary['rows'] as $row): ?>
+                <div class="wrapper_adaptive_table">
+                    <table class="summary table table-bordered table-striped table-responsive">
+                        <thead>
                             <tr>
-                                <td class="left"><?= $row['name'] ?></td>
-                                <?php foreach ($summary['header'] as $prodKey => $h): ?>
-                                    <?php if (isset($row['products'][$prodKey])): ?>
-                                        <td><?= $row['products'][$prodKey]['val'] ?></td>
-                                    <?php else: ?>
-                                        <td>--</td>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                                <td><?= $row['unit'] ?></td>
+                                <th rowspan="2">Показатель</th>
+                                <th colspan="<?= count($summary['header']) ?>">Значение</th>
+                                <th rowspan="2">Единица измерения</th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                            <tr>
+                                <?php foreach ($summary['header'] as $h): ?>
+                                    <th class="grey"><?= $h['name'] ?></th>
+                                <?php endforeach; ?>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr></tr>
+                            <?php foreach ($summary['rows'] as $row): ?>
+                                <tr>
+                                    <td class="left"><?= $row['name'] ?></td>
+                                    <?php foreach ($summary['header'] as $prodKey => $h): ?>
+                                        <?php if (isset($row['products'][$prodKey])): ?>
+                                            <td><?= $row['products'][$prodKey]['val'] ?></td>
+                                        <?php else: ?>
+                                            <td>--</td>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                    <td><?= $row['unit'] ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         <?php else: ?>
             <h1>Товаров не найдено</h1>
