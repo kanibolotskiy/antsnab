@@ -1,26 +1,9 @@
 <?php echo $header; ?>
+
+<script>
+    window._antSnabMeta = <?=$priceMetaJSON?>;
+</script>
 <div class="container main">
-    <?php /*@task move to css, ниже в скрипте + плохо что не видно текущее число товара в корзине*/ ?>
-    <style>
-        .notify {
-            /*position: absolute;
-            width: 100%;top: -121px;*/
-
-            text-align: center;
-
-            font-size: 16px;
-            font-weight: bold;
-            color: #ff8001;
-            visibility: hidden;
-        }
-        .notify.active {
-            visibility: visible;
-        }
-        .container.main {
-            position:relative;
-        }
-    </style>
-
     <input type="hidden" id="product_id" value="<?=$product_id?>"/>
     <?= $column_left ?>
     <div class="content">
@@ -49,11 +32,7 @@
                     </div>
                 </div>
                 <div class="right">
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function(){
-                            window._antSnabMeta = $.parseJSON('<?php echo $priceMetaJSON?>');
-                        });
-                    </script>
+                    
                     <div class="description-price">
                         <div class="description-mini">
                             <?=$description_mini?>
@@ -126,11 +105,7 @@
                                            class="spinner" type="text"  name="name" value="0">
                                 </div>
                             </div>
-                            <script>
-                                document.addEventListener("DOMContentLoaded", function(){
-                                    $('.spinner').SpinnerControl();
-                                });
-                            </script>
+                           
                             <a data-loading-text="Добавление..." id="button-cart" href="#" class="buy">Купить</a>
                         </div>
                     <?php endif;?>
@@ -516,6 +491,9 @@
     </div>
 </div>
 <script>
+    document.addEventListener("DOMContentLoaded", function(){
+        $('.spinner').SpinnerControl();
+    });
     document.addEventListener("DOMContentLoaded", function(){
         $('.thumb__list').magnificPopup({
             type:'image',

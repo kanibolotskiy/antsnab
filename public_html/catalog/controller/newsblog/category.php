@@ -169,7 +169,7 @@ class ControllerNewsBlogCategory extends Controller {
 						'article_id'  		=> $result['article_id'],
 						'original'			=> $original,
 						'thumb'       		=> $thumb,
-						'name'        		=> $result['name'],
+						'name'        		=> result['name'],
 						'preview'     		=> html_entity_decode($result['preview'], ENT_QUOTES, 'UTF-8'),
 						'attributes'  		=> $result['attributes'],
 						'href'        		=> $this->url->link('newsblog/article', 'newsblog_path=' . $this->request->get['newsblog_path'] . '&newsblog_article_id=' . $result['article_id']),
