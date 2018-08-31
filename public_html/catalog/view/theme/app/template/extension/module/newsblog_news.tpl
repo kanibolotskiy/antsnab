@@ -5,6 +5,7 @@
         </a>
     <?php } ?>
     <ul>
+        
         <?php foreach ($articles as $article) : ?>
             <li>
                 <a href="<?php echo $article['href']; ?>">

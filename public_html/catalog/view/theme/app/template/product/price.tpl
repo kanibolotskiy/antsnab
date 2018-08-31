@@ -11,10 +11,10 @@
 						<span>Скачать прайс-лист:</span>
                     <ul>
                         <li>
-                            <a href=""></a>
+                            <a target="_blank" href="/system/storage/antsnab/Price_Ant-Snab.xlsx" title="Прайс xlsx"></a>
                         </li>
                         <li>
-                            <a href=""></a>
+                            <a target="_blank" href="/system/storage/antsnab/Price_Ant-Snab.pdf" title="Прайс pdf"></a>
                         </li>
                     </ul>
                 </div>

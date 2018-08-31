@@ -2288,8 +2288,9 @@ a.show-more{
                         a.title-news{
                             height: 39px;
                             overflow: hidden;
-                            display: flex;
+                            /*display: flex;
                             align-items: center;
+                            */
                         }
                         p{
                             height: 98px;
@@ -4941,8 +4942,13 @@ html, body{
     }
     .ordering form .row .form-group{width:100%;margin-bottom:20px;}
     .ordering form .row .file .file-block{width:100%;}
+}
+@media screen and (max-width: 568px){
+    .staty-container .staty-list ul li .news-block .news-description a.title-news{height:auto!important;}
+    .staty-container .staty-list ul li .news-block .news-description p{height:auto!important;}
 
 }
+
 .thumb__link{display:flex;}
 .thumb__link img{max-width:100%;max-height:100%;}
 

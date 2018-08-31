@@ -73,7 +73,7 @@ class ControllerNewsBlogArticle extends Controller {
 		$this->load->model('newsblog/article');
 
 		$article_info = $this->model_newsblog_article->getArticle($newsblog_article_id);
-
+        
 		if ($article_info) {
 			$url = '';
 

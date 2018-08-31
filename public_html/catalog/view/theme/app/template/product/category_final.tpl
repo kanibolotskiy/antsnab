@@ -74,16 +74,16 @@
                             <div class="tab-block">
                                 <ul>
                                     <?php foreach ($products as $p): ?>
-                                        <li>
+                                        <li itemscope itemtype="http://schema.org/Offer">
                                             <div class="catalog-block">
                                                 <div class="catalog-img">
-                                                    <img src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>">
+                                                    <img src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" itemprop="image">
                                                 </div>
                                                 <div class="catalog-description">
-                                                    <a class="title-product" href="<?= $p['href'] ?>">
+                                                    <a class="title-product" href="<?= $p['href'] ?>" itemprop="name">
                                                         <?= $p['name'] ?>
                                                     </a>
-                                                    <p><?= $p['descriptionPreview'] ?></p>
+                                                    <div itemprop="description"><p><?= $p['descriptionPreview'] ?></p></div>
                                                     <div class="complement">
                                                         <?php foreach ($p['properties'] as $prop): ?>
                                                             <span>
@@ -92,8 +92,9 @@
                                                         <?php endforeach ?>
                                                     </div>
                                                     <div class="price">
-                                                        <span>Цена от <strong></strong></span>
+                                                        <span>Цена от <strong itemprop="price"></strong></span>
                                                     </div>
+                                                    <meta itemprop="priceCurrency" content="RUB">
                                                     <div class="quantity-buy">
                                                         <div class="OutputContainer">
                                                             <input type="text" class="spinner" class="spinner" name="name" value=" ">

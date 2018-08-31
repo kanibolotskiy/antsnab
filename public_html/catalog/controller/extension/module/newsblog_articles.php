@@ -33,13 +33,19 @@ class ControllerExtensionModuleNewsBlogArticles extends Controller {
 					'start'              => 0,
 					'limit'              => $setting['limit']
 		);
+        //echo "!".print_r($show_categories)."!";
+        $template='newsblog_articles.tpl';
+        if ($setting['template']) $template=$setting['template'];
 
+        if($template=='newsblog_articles.tpl'){
+            $filter_data['sort']='rand()';
+        }
 		$data['link_to_category']=false;
 		if (count($show_categories)==1) $data['link_to_category']=$this->url->link('newsblog/category', 'newsblog_path=' . $show_categories[0]);
 
 		$results = $this->model_newsblog_article->getArticles($filter_data);
-
 		$this->load->model('tool/image');
+
 
 		foreach ($results as $result) {
 			if ($result['image']) {
@@ -64,10 +70,11 @@ class ControllerExtensionModuleNewsBlogArticles extends Controller {
 				'date_modified'   	=> ($date_format ? date($date_format, strtotime($result['date_modified'])) : false),
 				'viewed' 			=> sprintf($this->language->get('text_viewed'), $result['viewed']),
 			);
+
+
 		}
 
-		$template='newsblog_articles.tpl';
-		if ($setting['template']) $template=$setting['template'];
+
 
 		return $this->load->view('extension/module/'.$template, $data);
 

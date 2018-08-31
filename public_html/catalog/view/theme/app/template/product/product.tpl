@@ -3,10 +3,11 @@
     <?php /*@task move to css, ниже в скрипте + плохо что не видно текущее число товара в корзине*/ ?>
     <style>
         .notify {
-            position: absolute;
-            width: 100%;
+            /*position: absolute;
+            width: 100%;top: -121px;*/
+
             text-align: center;
-            top: -121px;
+
             font-size: 16px;
             font-weight: bold;
             color: #ff8001;
@@ -19,20 +20,20 @@
             position:relative;
         }
     </style>
-    <div class="notify">Товар добавлен в корзину</div>
+
     <input type="hidden" id="product_id" value="<?=$product_id?>"/>
     <?= $column_left ?>
     <div class="content">
         <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
         <?php echo $content_top; ?>
-        <div class="card-product">
-            <div class="title"><?=$heading_title?></div>
+        <div class="card-product"  itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+            <div class="title" itemprop="name"><?=$heading_title?></div>
             <div class="card-product-container">
                 <div class="left">
                     <div class="manufacturer">
                         <span>ТУ/ГОСТ&nbsp;<?=$sku?></span>
                         <?php if ($manufacturer) { ?>
-                        <p><?php echo $manufacturer; ?></p>
+                        <p itemprop="seller"><?php echo $manufacturer; ?></p>
                         <?php } ?>
                     </div>
                     <div class="fade thumb__list">
@@ -40,8 +41,8 @@
                             <a class="thumbnail thumb__link" 
                                href="<?php echo $popup; ?>" 
                                title="<?php echo $heading_title; ?>">
-                                <img src="<?php echo $thumb; ?>" 
-                                     title="<?php echo $heading_title; ?>" 
+                                <img itemprop="image" src="<?php echo $thumb; ?>"
+                                     title="<?php echo $heading_title; ?>"
                                      alt="<?php echo $heading_title; ?>" />
                             </a>
                         <?php } ?>
@@ -133,7 +134,9 @@
                             <a data-loading-text="Добавление..." id="button-cart" href="#" class="buy">Купить</a>
                         </div>
                     <?php endif;?>
+                    <div class="notify">Товар добавлен в корзину</div>
                 </div>
+
                 <div class="space"></div>
                 <div class="thumb__nav">
                     <?php if ($images) { ?>
@@ -353,6 +356,45 @@
                     </div>
                     <?php endforeach;?>
 
+                    <div class="popup2">
+                        <div class="close3"></div>
+                        <div class="popup-block2">
+                            <div class="popup-content2">
+                                <div class="close4"></div>
+                                <span>Склад Алтуфьево</span>
+                                <p><b>Адрес:</b> г. Москва, Высоковольтный проезд, дом 1, строение 43</p>
+                                <p><b>График работы:</b> с 8.30 до 18.30 с понедельника по пятницу</p>
+                                <p><b>Без обеда</b></p>
+                                <p>Для вашего удобства можете <a href="">скачать подробную схему проезда</a></p>
+                                <div id="map">
+                                    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A0f697f340e451a2655a9f6348161cf5b312de4f5fd7d29cd06dcfbb8856e845d&amp;width=100%25&amp;height=400&amp;lang=ru_RU&amp;scroll=false"></script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="popup3">
+                        <div class="close5"></div>
+                        <div class="popup-block3">
+                            <div class="popup-content3">
+                                <div class="close6"></div>
+                                <span>Склад Щелково</span>
+                                <p><b>Адрес:</b> Московская область, г. Щелково, ул. Заводская, д. 2, территория завода "Щелково Агрохим"</p>
+                                <p><b>График работы:</b> с 8.30 до 18.30 с понедельника по пятницу</p>
+                                <p><b>Без обеда</b></p>
+                                <p>Для вашего удобства можете <a href="">скачать подробную схему проезда</a></p>
+                                <div id="map2">
+                                    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A8b8d059edfefdc578640ce1901d9addd8bec5873733b011f3c403a3b0a01eb1c&amp;width=100%25&amp;height=400&amp;lang=ru_RU&amp;scroll=false"></script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div id="m1tab7">
                         <div class="reviews-container reviews-container2">
                             <div class="review-block">
@@ -442,7 +484,7 @@
                 <li>
                     <div class="products-block">
                         <a href="<?=$p['href']?>" class="img-production">
-                            <img src="<?=$p['thumb']?>" alt="img">
+                            <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
                         </a>
                         <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
                         <strong><?=$p['price']?></strong>

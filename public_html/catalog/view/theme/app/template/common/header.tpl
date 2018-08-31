@@ -17,7 +17,8 @@
             <meta name="keywords" content= "<?php echo $keywords; ?>" />
         <?php } ?>
         <meta property="og:title" content="<?php echo $title; ?>" />
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
+        <meta property="og:locale" content="ru_RU" />
         <meta property="og:url" content="<?php echo $og_url; ?>" />
         <?php if ($og_image) { ?>
             <meta property="og:image" content="<?php echo $og_image; ?>" />
@@ -127,8 +128,8 @@
             </strong>
 
             <div class="tel">
-                <a href="tel:<?php echo $telephone; ?>"><?php echo $telephone; ?></a>
-                <a href="tel:<?= $telephone2 ?>"><?= $telephone2 ?></a>
+                <a rel="nofollow" href="tel:<?php echo $telephone; ?>"><?php echo $telephone; ?></a>
+                <a rel="nofollow" href="tel:<?= $telephone2 ?>"><?= $telephone2 ?></a>
                 <a class="btn-request-call">Заказать звонок</a>
             </div>
             <div class="line"></div>

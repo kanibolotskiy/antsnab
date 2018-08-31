@@ -2241,16 +2241,16 @@ function menuHandler(e){
 
     toggleMenu($accordion);
 }
-$(".catalog-btn").on('click', menuHandler); 
-/*$('body').on('click', function(e) { 
+$(".catalog-btn").on('click', menuHandler);
+/*$('body').on('click', function(e) {
     var $button=$('.catalog-product_mobile .catalog-btn');
-    if( $button.next('.accordion').css('display') == 'block') { 
-        menuHandler.call($button[0], e);  
+    if( $button.next('.accordion').css('display') == 'block') {
+        menuHandler.call($button[0], e);
     }
-});*/ 
+});*/
 $('.catalog-product .accordion').on('click', function(e){ e.stopPropagation(); });
 $(window).on('resize', mobileMenuPreconfig);
-    
+
 
 
 $('.responsive').slick({
@@ -2379,6 +2379,12 @@ $('.btn-nav').click(function(eventObject){
 
 
 $(function(){
+    /*added kanibolotskiy*/
+
+    $(".nav a.active").click(function(e){
+        e.preventDefault();
+    });
+
     //var topPos = $('.catalog-product2').offset().top; //topPos - это значение от верха блока до окна браузера
     var topPos = $('.catalog-product2').position().top;
 

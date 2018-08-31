@@ -5,17 +5,17 @@
                 <span>Мы в соцсетях:</span>
                 <ul>
                     <li>
-                        <a target="_blank" href="https://vk.com/antsnab">
+                        <a target="_blank" href="https://vk.com/antsnab" rel="nofollow">
                             <img src="/catalog/view/theme/app/img/soc1.png" alt="img">
                         </a>
                     </li>
                     <li>
-                        <a target="_blank" href="https://www.facebook.com/antsnab.tk">
+                        <a target="_blank" href="https://www.facebook.com/antsnab.tk" rel="nofollow">
                             <img src="/catalog/view/theme/app/img/soc2.png" alt="img">
                         </a>
                     </li>
                     <li>
-                        <a target="_blank" href="https://twitter.com/antsnab">
+                        <a target="_blank" href="https://twitter.com/antsnab" rel="nofollow">
                             <img src="/catalog/view/theme/app/img/soc3.png" alt="img">
                         </a>
                     </li>
@@ -51,16 +51,16 @@
                 <p class="address"><?= $address ?></p>
                 <div class="call-us">
                     <span>позвоните нам:</span>
-                    <a href="tel:<?= $telephone ?>"><?= $telephone ?></a>
+                    <a rel="nofollow" href="tel:<?= $telephone ?>"><?= $telephone ?></a>
                 </div>
                 <div class="line"></div>
                 <?php if( !empty($telephone2) ):?>
                 <div class="call-us call-us2">
                     <span>бесплатный звонок по России</span>
-                    <a href="tel:<?= $telephone2 ?>"><?= $telephone2 ?></a>
+                    <a rel="nofollow" href="tel:<?= $telephone2 ?>"><?= $telephone2 ?></a>
                 </div>
                 <?php endif;?>
-                <a href="mailto:<?= $email ?>" class="mail"><?= $email ?></a>
+                <a rel="nofollow" href="mailto:<?= $email ?>" class="mail"><?= $email ?></a>
             </div>
         </div>
     </div>

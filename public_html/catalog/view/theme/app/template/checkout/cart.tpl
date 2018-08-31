@@ -82,7 +82,7 @@
             <?php endforeach; ?>
             <div class="ordering">
                 <form id="order_form" method="post" enctype="multipart/form-data" >
-                    <p>Нажимая на кнопку Заказать, я даю <a href="">согласие на обработку персональных данных</a></p>
+                    <p>Нажимая на кнопку Заказать, я даю <a target="_blank" href="index.php?route=information/information&information_id=3">согласие на обработку персональных данных</a></p>
                     <div class="row">
                         <div class="form-group">
                             <?php if (isset($form_errors['name'])): ?>
