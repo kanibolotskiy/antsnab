@@ -83,7 +83,7 @@ gulp.task('conc', function() {
 			cfg.scriptsPath + '/vendor/*.js',
 			cfg.scriptsPath + '/_last.js'
 		])
-		.pipe(concat('common.js'))
+                .pipe(concat('common.js'))
 		.pipe(gulp.dest(cfg.scriptsDestPath));
 });
 
