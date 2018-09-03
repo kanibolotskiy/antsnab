@@ -1,3 +1,5 @@
+import '../styles/app.scss';
+
 import './mobile_class';
 //import './breadcrumbs';
 import './category_sidebar';
@@ -10,5 +12,6 @@ import './top_button';
 import './popup';
 import './responsive_tabs_tables';
 import './lib/opencart_product';
+import 'magnific-popup';
 //import './quantity_inputs';
 // import './price';

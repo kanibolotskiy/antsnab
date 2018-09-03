@@ -8,7 +8,7 @@
         <title><?php echo $title; ?></title>
         <base href="<?php echo $base; ?>" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="/catalog/view/theme/app/css/main.css" rel="stylesheet">
+        <link href="/catalog/view/theme/app/bundle/app.css" rel="stylesheet">
 
         <?php if ($description) { ?>
             <meta name="description" ontent="<?php echo $description; ?>" />

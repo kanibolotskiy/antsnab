@@ -135,9 +135,6 @@ class ProductTemplateDecorator implements IDecorator
             }
         }
 
-        //spinner.js add
-        $registry->get('document')->addScript('catalog/view/javascript/product.js');
-        $registry->get('document')->addScript('catalog/view/javascript/bootstrap/js/bootstrap.min.js');
         $data['footer'] = $registry->get('load')->controller('common/footer');
 
         return $data;

@@ -102,8 +102,8 @@ class ControllerNewsBlogArticle extends Controller {
 			$data['canonical']=$this->url->link('newsblog/article', 'newsblog_path=' . $mainCategoryId . '&newsblog_article_id=' . $newsblog_article_id);
             $this->document->addLink($data['canonical'], 'canonical');
 
-			$this->document->addScript('catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
-			$this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific-popup.css');
+			//$this->document->addScript('catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
+			//$this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific-popup.css');
 
 			if ($article_info['meta_h1']) {
 				$data['heading_title'] = $article_info['meta_h1'];

@@ -65,7 +65,7 @@
         </div>
     </div>
 </footer>
-<script src="/catalog/view/javascript/app/app.js"></script>
+<script src="/catalog/view/theme/app/bundle/app.js"></script>
 
 <?php foreach ($scripts as $script) { ?>
     <script src="<?php echo $script; ?>" type="text/javascript"></script>

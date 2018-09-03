@@ -430,6 +430,7 @@
             </div>
         </div>
         -->
+        <!-- @task refactor here hardcoded -->
         <div class="popup2">
             <div class="close3"></div>
             <div class="popup-block2">
@@ -446,10 +447,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
 
         <div class="popup3">
             <div class="close5"></div>
@@ -491,7 +488,7 @@
     </div>
 </div>
 <script>
-    window.addEventListener("onload", function(){
+    window.addEventListener("load", function(){
         $('.thumb__list').magnificPopup({
             type:'image',
             delegate: 'a',
