@@ -1,14 +1,8 @@
 import 'slick-carousel';
 
 /* Slick слайдеры */
-$('.slider-nav').slick({
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    asNavFor: '.fade',
-    dots: false,
-    focusOnSelect: true
-});
 
+/* Картинки категории - пока не реализованы в шаблоне*/
 $('.multiple-items').slick({
     infinite: true,
     slidesToShow: 3,
@@ -29,40 +23,7 @@ $('.multiple-items').slick({
     ]
 });
 
-$('.screenshots-carousel').slick({
-    centerMode: true,
-    centerPadding: '60px',
-    slidesToShow: 3,
-    responsive: [
-        {
-            breakpoint: 768,
-            settings: {
-                arrows: false,
-                centerMode: true,
-                centerPadding: '40px',
-                slidesToShow: 3
-            }
-        },
-        {
-            breakpoint: 480,
-            settings: {
-                arrows: false,
-                centerMode: true,
-                centerPadding: '40px',
-                slidesToShow: 1
-            }
-        }
-    ]
-});
-
-$('.feedback-carousel').slick({
-    dots: true,
-    infinite: true,
-    speed: 300,
-    slidesToShow: 1,
-    adaptiveHeight: true
-});
-
+/* Отзывы на главной */
 $('.responsive').slick({
     infinite: true,
     speed: 700,
