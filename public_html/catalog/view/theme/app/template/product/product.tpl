@@ -491,10 +491,7 @@
     </div>
 </div>
 <script>
-    document.addEventListener("DOMContentLoaded", function(){
-        $('.spinner').SpinnerControl();
-    });
-    document.addEventListener("DOMContentLoaded", function(){
+    window.addEventListener("onload", function(){
         $('.thumb__list').magnificPopup({
             type:'image',
             delegate: 'a',
@@ -541,5 +538,4 @@
         });
     });
 </script>
-
 <?= $footer ?>

@@ -123,7 +123,6 @@ class ArticleController extends \Controller
             $mainCategoryId = $this->model_newsblog_article->getArticleMainCategoryId($newsblog_article_id);
             $data['canonical'] = $this->url->link('newsblog/article', 'newsblog_path=' . $mainCategoryId . '&newsblog_article_id=' . $newsblog_article_id);
             $this->document->addLink($data['canonical'], 'canonical');
-
             $this->document->addScript('catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
             $this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific-popup.css');
 

@@ -65,10 +65,7 @@
         </div>
     </div>
 </footer>
-<script src="/catalog/view/javascript/app/common.js"></script>
-<script src="/catalog/view/javascript/app/easyResponsiveTabs.js"></script>
-<script src="/catalog/view/javascript/app/inputmask.min.js"></script>
-<script src="/catalog/view/javascript/app/inputmask.phone.extensions.js"></script>
+<script src="/catalog/view/javascript/app/app.js"></script>
 
 <?php foreach ($scripts as $script) { ?>
     <script src="<?php echo $script; ?>" type="text/javascript"></script>

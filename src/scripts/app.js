@@ -1,0 +1,13 @@
+import './mobile_class';
+//import './breadcrumbs';
+import './lib/opencart23';
+import './popup';
+import './top_button';
+import './nav';
+import './category_sidebar';
+import './responsive_tabs_tables';
+import './slick_sliders';
+import './main_slider';
+//import './ui_styling';
+//import './quantity_inputs';
+// import './price';

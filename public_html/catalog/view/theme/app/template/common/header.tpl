@@ -92,11 +92,6 @@
                         {
                             $('#call_form').submit();
                         }
-                        document.addEventListener("DOMContentLoaded", function () {
-                            var phoneInput = $('input[name="phone"]', '#call_form'),
-                                im = new Inputmask({"mask": "(999) 999-9999"});
-                            im.mask(phoneInput);
-                        });
                     </script>
                 </div>
             </div>

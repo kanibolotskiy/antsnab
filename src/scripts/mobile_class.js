@@ -1,3 +1,4 @@
+/** стиль html ноды в зависимости от типа устройства*/
 var html = document.documentElement,
 	body = document.body,
 	isTouchDevice = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
@@ -11,3 +12,4 @@ if(isTouchDevice) {
 else {
 	html.className += ' no-touch';
 }
+

@@ -1,3 +1,6 @@
+/*document.addEventListener("DOMContentLoaded", function(){
+        $('.spinner').SpinnerControl();
+    });*/
 /*
  ======================================================================================
  ==  Product         : jQuery Spinner Control

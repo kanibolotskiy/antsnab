@@ -213,9 +213,6 @@
             var filename = this.files[0].name;
             $('#filename').html(filename);
         });
-        var phoneInput = $('input[name="phone"]', '#order_form'),
-            im = new Inputmask({"mask": "(999) 999-9999"});
-        im.mask(phoneInput);
     });
 </script>
 <?= $footer ?>
