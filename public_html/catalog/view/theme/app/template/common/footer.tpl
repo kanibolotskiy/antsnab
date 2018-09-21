@@ -74,6 +74,6 @@
     <?php echo $analytic; ?>
 <?php } ?>
 <!-- <script src="https://www.google.com/recaptcha/api.js"></script>-->
-<!-- @task Счетчики, виджеты (comagic) -->
+<!-- @task1 Счетчики, виджеты (comagic) -->
 </body>
 </html>

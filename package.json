@@ -7,7 +7,10 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode=production",
+    "dev-watch" : "webpack --mode=development --watch" ,
+    "dev": "webpack --mode=development"
   },
   "repository": {
     "type": "git",
@@ -21,15 +24,12 @@
   },
   "homepage": "https://github.com/wsLapshin/antsnab#readme",
   "devDependencies": {
-    "clean-css": "^4.2.1",
-    "clean-css-loader": "^1.0.1",
+    "browser-sync": "^2.24.7",
+    "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^1.0.0",
     "expose-loader": "^0.7.5",
     "mini-css-extract-plugin": "^0.4.2",
     "node-sass": "^4.9.3",
-    "optimize-css-assets-webpack-plugin": "^5.0.1",
-    "raw-loader": "^0.5.1",
-    "resolve-url-loader": "^2.3.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
     "webpack": "^4.17.1",

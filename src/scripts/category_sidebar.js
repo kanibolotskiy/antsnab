@@ -1,39 +1,126 @@
 import './lib/jquery.accordion';
+import 'jquery-touchswipe';
 
-function mobileMenuPreconfig() {
-    var bottomMargin = 25,
-        mostHeight = 280,
-        maxHeight = $(window).height() - $('.catalog-product_mobile .catalog-btn').height() - bottomMargin;
-    maxHeight = ( maxHeight <= mostHeight )? maxHeight: mostHeight;
-    $('.catalog-product_mobile .accordion').css('max-height', maxHeight);
+/* Навигация в сайдбаре */
+(function($){
+
+   const  slideDuration = 300,
+          stickBreakpoint = 800,
+          freezeClass = 'freeze',
+          stickClass = 'fixed-nav'; 
+
+   var  $header = $('.catalog-product'),
+        $container = $header.parents('.container.main'),
+        $accordeon = $header.find('.accordion'),
+        $accordeonInner = $accordeon.find('.simple-accordion'),
+        $accordeonToggleButton = $(".catalog-btn"),
+        $collapseButton = $(".collapse");
+
+    $header.data('stickVerticalBreakPoint', $header.offset().top);
+          
+
+   var  toggleStickHeader = function() {
+            
+            if( 
+                !isHeaderSticked() && 
+                $(window).scrollTop() >= $header.offset().top && 
+                window.innerWidth <= stickBreakpoint 
+            ) {
+                $header.data('stickVerticalBreakPoint', $header.offset().top);
+                $container.addClass(stickClass);
+
+            } else if ( 
+                window.innerWidth > stickBreakpoint ||
+                $(window).scrollTop() < $header.data('stickVerticalBreakPoint')
+            ) {
+                $container.removeClass(stickClass);
+                $header.data('stickVerticalBreakPoint', $header.offset().top);
+            }
+        },
+
+        isHeaderSticked = function() {
+            return $container.hasClass(stickClass);
+        },
+   
+        toggleAccordeon = function(complete) {
+            $accordeon.slideToggle(slideDuration, complete);
+        },
+
+        isAccordeonOpened = function () {
+            return !($accordeon.css('display') === 'none');        
+        },
+
+        toggleFreezeBody = function() {
+            if( isAccordeonOpened() && isHeaderSticked() ) {
+                $('body').addClass(freezeClass);
+                $accordeon.css('height', window.innerHeight-$accordeonToggleButton.height() );
+            } else {
+                $('body').removeClass(freezeClass);
+                $accordeon.css('height', 'auto');
+            } 
+        },
+
+        isBodyFreezed = function() {
+            return $('body').hasClass(freezeClass);
+        },
+
+        /** @see https://stackoverflow.com/questions/986763/jquery-how-to-determine-that-a-div-is-scrolled-down user2226623*/ 
+        isScrolledBottom = function() {
+            var totalHeight = $accordeon[0].scrollHeight,
+                scrollPosition = $accordeon.height() + $accordeon.scrollTop();
+            return (totalHeight == scrollPosition);
+        },
+
+        registerEvents = function() {
+
+            //toggle accordeon
+            $accordeonToggleButton.on('click', function(e){
+                toggleAccordeon(toggleFreezeBody);
+            });
+
+            $collapseButton.on('click', function(){
+                toggleAccordeon(toggleFreezeBody);
+            });
+            
+            //scroll
+            $(window).on('scroll resize load', function(){
+                toggleStickHeader();
+                toggleFreezeBody();
+                if( $(window).width() > stickBreakpoint && !isAccordeonOpened() ) {
+                    toggleAccordeon();
+                }
+            });
+
+            $accordeon.on('scroll', function() {
+                if( isScrolledBottom() ) {
+                    //console.log('bottom');
+                }
+            });
+        };
+  registerEvents();
+})($);
+
+
+// page init
+jQuery(function(){
+	initAccordion();
+});
+
+// inner accordions in menu
+function initAccordion() {
+	jQuery('ul.simple-accordion').slideAccordion({
+		opener:'>a.opener',
+		slider:'>div.slide',
+		collapsible:true,
+		animSpeed: 300,
+        afterOpenHandler: function(options, $item) {
+            var accordion = this,
+                accordionCont = accordion.parent('div');
+            if($item.position().top < 0) {
+                accordionCont.scrollTop( accordionCont.scrollTop()+$item.position().top );
+            } 
+        }
+	});
 }
-function toggleMenu($accordion) {
-    $accordion.slideToggle();
-}
-function menuHandler(e){
-    e.stopPropagation();
-    var $button = $(this),
-        $accordion = $button.next('.accordion'),
-        $container = $button.parents('.catalog-product');
 
-    if( $container.hasClass("catalog-product_mobile") ){
-        mobileMenuPreconfig();
-    }
 
-    toggleMenu($accordion);
-}
-
-$(".catalog-btn").on('click', menuHandler);
-/*$('body').on('click', function(e) {
-    var $button=$('.catalog-product_mobile .catalog-btn');
-    if( $button.next('.accordion').css('display') == 'block') {
-        menuHandler.call($button[0], e);
-    }
-});*/
-$('.catalog-product .accordion').on('click', function(e){ e.stopPropagation(); });
-$(window).on('resize', mobileMenuPreconfig);
-
-/*
-$(".catalog-btn").click(function () {
-    $(".accordion").slideToggle("slow");
-});*/

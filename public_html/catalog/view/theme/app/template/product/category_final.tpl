@@ -113,7 +113,7 @@
                 </div>
                 <?php echo $pagination; ?>
                 <?php //include __DIR__ . '/../partial/lazyload.tpl' ?>
-                <!--@task move to css-->
+                <!--@task1 move to css-->
                 <style>
                     .summary tr th {
                         color: #000;

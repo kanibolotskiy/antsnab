@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title><?php echo $title; ?></title>
-        <base href="<?php echo $base; ?>" />
+        <?php /*<base href="<?php echo $base; ?>" /> */ ?>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="/catalog/view/theme/app/bundle/app.css" rel="stylesheet">
 
@@ -42,7 +42,7 @@
                     <div class="popup-content">
                         <div class="close2"></div>
                         <span>Благодарим вас за обращение!</span>
-                        <!--@task to css-->
+                        <!--@task1 to css-->
                         <p style="text-align: center">Мы свяжемся с вами в ближайшее время!</p>
                     </div>
                 </div>
@@ -100,9 +100,6 @@
         <a href="" class="up"></a>
         <header class="header container">
 
-
-            <!-- @task переверстать лого (убрать background, растянуть изображение -->
-            <!--переверстано, убран background, если в админке указан файл логотипа-->
             <strong class="logo">
                 <?php if ($logo) { ?>
                     <?php if ($home == $og_url) { ?>

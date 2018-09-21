@@ -185,7 +185,7 @@
                         </table>
                     </div>
                 </div>
-                <!--@task скачивания-->
+                <!--@task1 скачивания-->
                 <!--<div class="download">
                     <ul>
                         <li>
@@ -430,7 +430,7 @@
             </div>
         </div>
         -->
-        <!-- @task refactor here hardcoded -->
+        <!-- @task1 refactor here hardcoded -->
         <div class="popup2">
             <div class="close3"></div>
             <div class="popup-block2">
@@ -517,7 +517,7 @@
                     $('#button-cart').button('reset');
                 },
                 success: function(json) {
-                    //@task - сбросить таймаут
+                    //@task1 - сбросить таймаут
 
                     if (json['success']) {
                         $('.notify').html(json['success']);

@@ -38,7 +38,7 @@ class ReviewController extends \Controller
         );
 
         //seo meta
-        //@task get meta somewhere
+        //@task1 get meta somewhere
         $meta_info = array(
             'heading_title' => 'Отзывы о работе компании Ант-Снаб',
             'review_meta_title' => 'Отзывы о работе компании Ант-Снаб',

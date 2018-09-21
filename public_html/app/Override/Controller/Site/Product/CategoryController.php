@@ -108,7 +108,7 @@ class CategoryController extends \Controller
                 $image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_category_width'), $this->config->get($this->config->get('config_theme') . '_image_category_height'));
             }
 
-            //@task important!!! очень высокая нагрузка на базу - исправить
+            //@task1 important!!! очень высокая нагрузка на базу - исправить
             $sub = array();
             if( $result['isfinal'] ) {
                 $subRes = $this->model_catalog_product->getProducts(

@@ -1,0 +1,137 @@
+/* Stick Nav */
+.container.main {
+    /*for right calculation of .offset in js*/
+    position:relative;
+}
+
+.collapse {
+    text-align: center;
+}
+.collapse svg {
+    fill: #d3a06d;
+}
+
+.container.main.fixed-nav {
+    padding-top:82px;
+
+    .catalog-product{
+        position: fixed;
+        z-index: 2222;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+
+    .catalog-product {  
+        .accordion{
+            background-color: #fff;
+            overflow-y: scroll;
+        }
+    }
+}
+
+body.freeze {
+    /*for scrolling proposes*/
+    overflow:hidden;
+}
+
+
+
+/*accordion*/
+.example-list {
+    overflow: hidden;
+    margin: 0;
+    width: 100%;
+}
+.accordion {
+
+    margin:0;
+    list-style:none;
+    /* need for calculation proposes in js for stick*/
+    position:relative;
+    height:auto;
+}
+.simple-accordion {
+    padding:27px 0 27px 0;
+}
+
+.accordion li {
+    margin : 0 0 24px 0;
+    padding-left: 28px;
+}
+.accordion .opener {
+    display:block;
+    color:#000000;
+    text-decoration:underline;
+    font-size: 16px;
+    line-height: 20px;
+    position: relative;
+    padding-right: 55px;
+    &:after{
+        content:'';
+        display:block;
+        clear:both;
+        position: absolute;
+        top: 50%;
+        right: 35px;
+        margin-top: -4.5px;
+        background: url(../img/icon3.png) no-repeat;
+        width: 12px;
+        height: 9px;
+    }
+    &:hover{
+        text-decoration: none;
+    }
+}
+.accordion li.active .opener{
+    &:after{
+        content:'';
+        display:block;
+        clear:both;
+        position: absolute;
+        top: 50%;
+        right: 35px;
+        margin-top: -6px;
+        background: url(../img/icon4.png) no-repeat;
+        width: 9px;
+        height: 12px;
+    }
+}
+.accordion .slide{
+    ul{
+        padding-top: 28px;
+        padding-bottom: 5px;
+        li{
+            padding: 0;
+            margin-bottom: 21px;
+            &:last-child{
+                margin: 0;
+            }
+            a{
+                font-size: 13px;
+                color: #666666;
+                text-decoration: none;
+                padding-left: 18px;
+                position: relative;
+                &:hover{
+                    text-decoration: underline;
+                }
+                &:after{
+                    content:'';
+                    display:block;
+                    clear:both;
+                    position: absolute;
+                    top:50%;
+                    left: 0;
+                    width: 4px;
+                    height:4px;
+                    margin-top: -2px;
+                    -webkit-border-radius: 100px;
+                    -moz-border-radius: 100px;
+                    border-radius: 100px;
+                    background-color: #d3a06d;
+                }
+            }
+        }
+    }
+}

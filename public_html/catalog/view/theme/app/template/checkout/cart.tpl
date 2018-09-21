@@ -74,7 +74,7 @@
                     <?php } ?>
                 </div>
             </form>
-            <?php //@task to css ?>
+            <?php //@task1 to css ?>
             <!--<a style="float:right; margin-bottom:18px" href="<?= $action ?>" class="buy">Пересчитать</a>
             <div style="clear:both"></div>-->            
             <?php foreach ($totals as $total): ?>

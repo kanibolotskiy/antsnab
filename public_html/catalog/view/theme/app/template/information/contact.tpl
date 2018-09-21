@@ -46,7 +46,7 @@
                                 <?php $cnt++ ?>
                             <?php endforeach; ?>
                         </ul>
-                        <!-- @task to css replace #map -->
+                        <!-- @task1 to css replace #map -->
                         <style>
                             .map {
                                 border: 2px solid #EFEEEC;
@@ -83,7 +83,7 @@
                                                 });
                                             </script>
                                         <?php endif; ?>
-                                        <!-- @task hardcoded -->
+                                        <!-- @task1 hardcoded -->
                                         <a target="_blank" href="/system/storage/download/sklad-a-plan.pdf.JDa4QZE4AmF8uHtfdkmwjUdNYVGJGEAd" class="download-map">Скачать подробную карту</a>
                                     </div>
                                 </div>

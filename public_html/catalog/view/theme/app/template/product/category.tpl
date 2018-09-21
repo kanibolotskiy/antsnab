@@ -11,7 +11,7 @@
                 <?= $description ?>
             </div>
             <div class="catalog-tab">
-                <!--@task move to css-->
+                <!--@task1 move to css-->
                 <style>
                     #mtab1 {
                         min-height: 30px;

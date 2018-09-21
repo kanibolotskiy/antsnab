@@ -519,7 +519,7 @@
                             </div>
                         </div>
                         
-                        <!-- @task move somewhere styles-->
+                        <!-- @task1 move somewhere styles-->
                         <style>
                             #tab-prodproperties input,
                             #tab-tabs input {

@@ -113,7 +113,7 @@
         <?php echo $content_bottom; ?>
     </div>
 </div>
-<!--@task to css-->
+<!--@task1 to css-->
 <style>
     .popup .popup-block {
         top:120px;
@@ -126,7 +126,7 @@
             <div class="popup-content">
                 <div class="close2"></div>
                 <span>Благодарим вас за отзыв!</span>
-                <!--@task to css-->
+                <!--@task1 to css-->
                 <p style="text-align: center">Отзыв появится на сайте в ближайшее время</p>
             </div>
         </div>

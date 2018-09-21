@@ -1,23 +1,4 @@
-// page init
-jQuery(function(){
-	initAccordion();
-});
 
-// accordion init
-function initAccordion() {
-	jQuery('ul.simple-accordion').slideAccordion({
-		opener:'>a.opener',
-		slider:'>div.slide',
-		collapsible:true,
-		animSpeed: 300
-	});
-	jQuery('ul.multilevel-accordion').slideAccordion({
-		opener:'>a.opener',
-		slider:'>div.slide',
-		collapsible:true,
-		animSpeed: 300
-	});
-}
 
 /*
  * jQuery Accordion plugin
@@ -32,19 +13,21 @@ function initAccordion() {
 			slider:'.slide',
 			animSpeed: 300,
 			collapsible:true,
-			event:'click'
+			event:'click',
+            afterOpenHandler: null
 		},opt);
 
 		return this.each(function(){
 			// options
 			var accordion = $(this);
+            var self = $(this);
 			var items = accordion.find(':has('+options.slider+')');
 
 			items.each(function(){
 				var item = $(this);
 				var opener = item.find(options.opener);
 				var slider = item.find(options.slider);
-				opener.bind(options.event, function(e){
+				opener.on(options.event, function(e){
 					if(!slider.is(':animated')) {
 						if(item.hasClass(options.activeClass)) {
 							if(options.collapsible) {
@@ -54,17 +37,27 @@ function initAccordion() {
 								});
 							}
 						} else {
-							// show active
-							var levelItems = item.siblings('.'+options.activeClass);
-							var sliderElements = levelItems.find(options.slider);
-							item.addClass(options.activeClass);
-							showSlide(slider).hide().slideDown(options.animSpeed);
-						
-							// collapse others
-							sliderElements.slideUp(options.animSpeed, function(){
-								levelItems.removeClass(options.activeClass);
-								hideSlide(sliderElements);
-							});
+                            var levelItems = item.siblings('.'+options.activeClass);
+                            var sliderElements = levelItems.find(options.slider);
+                            
+                            function processToggle() {
+                                    // show active
+                                    item.addClass(options.activeClass);
+                                    showSlide(slider).hide().slideDown(options.animSpeed);
+                                    
+                                    // collapse others
+                                    return sliderElements.slideUp(options.animSpeed, function(){
+                                        levelItems.removeClass(options.activeClass);
+                                        hideSlide(sliderElements);
+                                    });
+                            }
+
+                            $.when(processToggle()).done(function(){                                                                        if( null !== options.afterOpenHandler && 
+                                   typeof options.afterOpenHandler === 'function') 
+                               {
+                                   options.afterOpenHandler.call(self, options, item); 
+                               }
+                            });
 						}
 					}
 					e.preventDefault();

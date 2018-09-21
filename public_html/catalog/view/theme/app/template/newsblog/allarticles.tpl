@@ -1,4 +1,4 @@
-<!--@task to css move-->
+<!--@task1 to css move-->
 <style>
     .staty-container .staty-list ul li .news-block .news-description a.title-news {
         height: 62px !important;

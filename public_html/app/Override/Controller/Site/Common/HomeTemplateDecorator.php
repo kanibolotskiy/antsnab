@@ -43,7 +43,7 @@ class HomeTemplateDecorator implements IDecorator
         $data['allCategories'] = $allCategories;
 
         //mobile articles and news
-        //@task двойная нагрузка, невозможность управления из админки, хардкод idшников модулей
+        //@task1 двойная нагрузка, невозможность управления из админки, хардкод idшников модулей
         $loader = $registry->get('load');
         $loader->model('extension/module');
 
