@@ -22,7 +22,7 @@
                 </ul>
             </div>
             <p>© ООО "Ант-Снаб", 2012-2018.</p>
-            <a href="">Карта сайта</a>
+            <a href="<?=$sitemap?>">Карта сайта</a>
             <a href="<?=$confidence?>">Политика конфиденциальности</a>
         </div>
         <div class="footer-right">
