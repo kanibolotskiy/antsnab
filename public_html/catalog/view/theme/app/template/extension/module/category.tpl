@@ -1,44 +1,51 @@
 <div class="catalog-product">
-    <a class="catalog-btn">Каталог продукции</a>
+    <a class="catalog-btn"><?=$heading_title?></a>
     <div class="accordion">
         <ul class="simple-accordion">
-        <?php foreach ($categories->toArray() as $parent) { ?>
-            <?php if ($category_id == $parent->get('category_id')) { ?>
+
+        <?php foreach ($categories as $parent) { ?>
+                <?php if ( in_array($parent['category_id'], $openeditems) ) { ?>
                 <li class="active">
                 <?php } else { ?>
                 <li>
                 <?php } ?>
-                <a href="#" class="opener"><?php echo $parent->get('name'); ?></a>
-                <?php if (!$parent->get('categories')->isEmpty()) { ?>
+                <a href="#" class="opener"><?php echo $parent['name']; ?></a>
+
+                <?php if (!empty($parent['child'])) { ?>
                     <div class="slide">
                         <ul>
-                            <?php foreach ($parent->get('categories')->toArray() as $child) { ?>
-                                <?php if ($category_id == $child->get('category_id')) { ?>
-                                    <li class="active">
-                                    <?php } else { ?>
+                            <?php foreach ($parent['child'] as $child) { ?>
                                     <li>
+
+                                    <?php if ($category_id == $child['category_id']) { ?>
+                                    <a class="active" href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a>
+                                    <?php } else { ?>
+                                    <a href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a>
                                     <?php } ?>
-                                    <a href="<?php echo $child->getHref($url); ?>"><?php echo $child->get('name'); ?></a>
+
                                     <!-- @task1 to scss remove -->
-                                    <?php if (!$child->get('categories')->isEmpty()) : ?>
+                                    <?php if (!empty($child['child'])) : ?>
                                         <ul style="margin-left:20px">
-                                            <?php foreach ($child->get('categories')->toArray() as $sub) : ?>
-                                                <?php if ($category_id == $child->get('category_id')) { ?>
-                                                    <li class="active">
+                                            <?php foreach ($child['child'] as $sub) : ?>
+                                                <li>
+                                                    <?php if ($category_id == $sub['category_id']) { ?>
+                                                    <a class="active" href="<?php echo $sub['href']; ?>"><?php echo $sub['name']; ?></a>
                                                     <?php } else { ?>
-                                                    <li>
+                                                    <a href="<?php echo $sub['href']; ?>"><?php echo $sub['name']; ?></a>
                                                     <?php } ?>
-                                                    <a href="<?php echo $sub->getHref($url); ?>"><?php echo $sub->get('name'); ?></a>
-                                                <?php endforeach ?>
+                                                </li>
+                                            <?php endforeach ?>
                                         </ul>
                                     <?php endif; ?>
+
                                 </li>
                             <?php } ?>
                         </ul>
                     </div>
                 <?php } ?>
-            </li>
+                </li>
         <?php } ?>
+
         </ul>
         <div class="collapse">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" 

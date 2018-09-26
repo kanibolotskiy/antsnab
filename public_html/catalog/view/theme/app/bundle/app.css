@@ -620,6 +620,13 @@ a.show-more:hover { background-color: #EFEEEC; -webkit-transition: 0.4s; -moz-tr
 
 .article img { max-width: 100%; }
 
+.article_columns { column-count: 2; -webkit-column-count: 2; -moz-column-count: 2; column-rule: 1px solid #EFEEEC; -webkit-column-rule: 1px solid #EFEEEC; -moz-column-rule: 1px solid #EFEEEC; column-gap: 120px; -webkit-column-gap: 120px; -moz-column-gap: 120px; }
+
+.article_columns h2:first-child { margin-top: 0; }
+
+@media screen and (max-width: 550px) { .article_columns { column-count: 1; column-gap: 0; column-rule: none; -moz-column-count: 1; -moz-column-gap: 0; -moz-column-rule: none; -webkit-column-count: 1; -webkit-column-gap: 0; -webkit-column-rule: none; }
+  .article_columns h2:first-child { margin-top: inherit; } }
+
 .discounts { margin: 0 0 40px; }
 
 .discounts span { display: block; margin-bottom: 15px; color: #000000; font-size: 14px; }
@@ -1455,7 +1462,7 @@ html:focus, body:focus { background: none; -webkit-tap-highlight-color: rgba(0, 
 /* Stick Nav */
 .container.main { /*for right calculation of .offset in js*/ position: relative; }
 
-.collapse { text-align: center; }
+.collapse { text-align: center; display: none; }
 
 .collapse svg { fill: #d3a06d; }
 
@@ -1464,6 +1471,8 @@ html:focus, body:focus { background: none; -webkit-tap-highlight-color: rgba(0, 
 .container.main.fixed-nav .catalog-product { position: fixed; z-index: 2222; top: 0; left: 0; width: 100%; }
 
 .container.main.fixed-nav .catalog-product .accordion { background-color: #fff; overflow-y: scroll; }
+
+.container.main.fixed-nav .catalog-product .accordion .collapse { display: block; }
 
 body.freeze { /*for scrolling proposes*/ overflow: hidden; }
 
@@ -1492,7 +1501,7 @@ body.freeze { /*for scrolling proposes*/ overflow: hidden; }
 
 .accordion .slide ul li a { font-size: 13px; color: #666666; text-decoration: none; padding-left: 18px; position: relative; }
 
-.accordion .slide ul li a:hover { text-decoration: underline; }
+.accordion .slide ul li a:hover, .accordion .slide ul li a.active { text-decoration: underline; }
 
 .accordion .slide ul li a:after { content: ''; display: block; clear: both; position: absolute; top: 50%; left: 0; width: 4px; height: 4px; margin-top: -2px; -webkit-border-radius: 100px; -moz-border-radius: 100px; border-radius: 100px; background-color: #d3a06d; }
 

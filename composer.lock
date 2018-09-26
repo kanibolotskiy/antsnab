@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "52dacab7c02b9aba3c076873fd9c9a1f",
+    "content-hash": "7b849377bffe70653ba1587b8bf7c241",
     "packages": [
         {
             "name": "ashleydawson/simple-pagination",
@@ -55,6 +55,51 @@
                 "universal"
             ],
             "time": "2018-01-25T21:02:21+00:00"
+        },
+        {
+            "name": "bluem/tree",
+            "version": "2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BlueM/Tree.git",
+                "reference": "f730e944be161664d6b0119b5b334751c339d85f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BlueM/Tree/zipball/f730e944be161664d6b0119b5b334751c339d85f",
+                "reference": "f730e944be161664d6b0119b5b334751c339d85f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "doctrine/instantiator": "1.0.*",
+                "phpunit/phpunit": "6.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BlueM\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Carsten Blüm",
+                    "email": "carsten@bluem.net"
+                }
+            ],
+            "description": "Library for handling tree structures based on parent IDs, e.g. a self-joined database table",
+            "homepage": "https://github.com/BlueM/Tree",
+            "keywords": [
+                "hierarchical",
+                "tree"
+            ],
+            "time": "2018-02-04T17:35:27+00:00"
         },
         {
             "name": "braintree/braintree_php",
@@ -1071,7 +1116,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4.0"
+        "php": ">=7.0"
     },
     "platform-dev": []
 }

@@ -210,7 +210,7 @@ class ModelCatalogCategory extends Model
         return $query->row;
     }
 
-    //@task move to override
+    //@task move to override??? а по кэшу у меня в конфиге событие,может в конфиге лучше?
   
     public function afterAddCategory($data, $category_id)
     {

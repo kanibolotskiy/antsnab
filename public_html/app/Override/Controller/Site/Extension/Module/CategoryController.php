@@ -1,13 +1,8 @@
 <?php
-
-/**
- * @category WS patches 
- * @package  WS\Controller\TemplateDecorator\Site\Extension\Module
- */
-
 namespace WS\Override\Controller\Site\Extension\Module;
 
 use WS\ORM\DomainManager;
+use BlueM\Tree\Node as Node;
 
 /**
  * Описание класса 
@@ -18,6 +13,7 @@ use WS\ORM\DomainManager;
  */
 class CategoryController extends \Controller
 {
+    private static $openedItems;
 
     public function index()
     {
@@ -25,24 +21,39 @@ class CategoryController extends \Controller
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$parts = array();
-        $data['category_id'] = 0;
-        $data['child_id'] = 0;
+        $data['category_id'] = ROOT_CATEGORY_ID;
+
         if (isset($this->request->get['path'])) {
 			$parts = explode('_', (string)$this->request->get['path']);
-		} 
-
-		if (isset($parts[0])) {
-			$data['category_id'] = $parts[0];
+			$data['category_id'] = array_pop($parts); 
 		}
 
-		if (count($parts) > 2) {
-			$data['child_id'] = array_pop($parts); 
-		}
+        $data['openeditems'] = self::$openedItems = $parts;
 
-        $dm = DomainManager::create($this->registry);
-        $data['categories'] = $dm->getRepository('Category')->findAll();
-        $data['url' ] = $this->url;
+        $data['categories'] = [];
+        foreach(  $this->hierarhy->getRootNodes() as $node ) {
+            $item = $node->toArray();
+            $item['href'] = $this->url->link('product/category', 'path=' . $this->hierarhy->getPath($node->getId())); 
+            $item['child'] = $this->recursiveGetItems($node);        
+            $data['categories'][] = $item;
+        }
+
         return $this->load->view('extension/module/category', $data);
-    }    
+    }
+
+    private function recursiveGetItems(Node $rootNode)
+    {
+        $categories = [];
+        foreach( $rootNode->getChildren() as $node ) {
+            $item = $node->toArray();
+            $item['href'] = $this->url->link('product/category', 'path=' . $this->hierarhy->getPath($node->getId()));
+            if( in_array($node->getId(), self::$openedItems) ) {
+                $item['child'] = $this->recursiveGetItems($node);    
+            }
+            $categories[] = $item;   
+        }
+                
+        return $categories;
+    }
 
 }

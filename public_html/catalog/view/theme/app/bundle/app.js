@@ -14330,11 +14330,20 @@ function initAccordion() {
 		slider:'>div.slide',
 		collapsible:true,
 		animSpeed: 300,
+
+        /*Подтягиваем вьюпорт под пункты меню если нужно*/
         afterOpenHandler: function(options, $item) {
             var accordion = this,
                 accordionCont = accordion.parent('div');
+
+            //in sticked mode
             if($item.position().top < 0) {
-                accordionCont.scrollTop( accordionCont.scrollTop()+$item.position().top );
+                //accordionCont.scrollTop( accordionCont.scrollTop()+$item.position().top );
+                accordionCont.animate({scrollTop: accordionCont.scrollTop()+$item.position().top}, "slow");
+
+            //in desktop mode
+            /*} else if( $(window).scrollTop() > $item.offset().top ) {
+                $(window).animate( {scrollTop: $item.offset().top} );*/
             } 
         }
 	});

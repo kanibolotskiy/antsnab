@@ -5,7 +5,7 @@
  */
 
 namespace WS\Override\Controller;
-
+use BlueM\Tree as Tree;
 /**
  * Метакласс для поддержки автодополнения классов из registry
  * От него наследуется нативный \Controller
@@ -107,7 +107,8 @@ namespace WS\Override\Controller;
  * @property ModelToolBackup $model_tool_backup
  * @property ModelUserApi $model_user_api
  * @property ModelUserUser $model_user_user
- * @property ModelUserUserGroup $model_user_user_group 
+ * @property ModelUserUserGroup $model_user_user_group
+ * @property Tree $hierarhy 
  */
 class IDEAutocompleteController
 {

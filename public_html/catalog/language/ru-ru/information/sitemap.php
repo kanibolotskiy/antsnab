@@ -15,3 +15,6 @@ $_['text_checkout']    = 'Оформление заказа';
 $_['text_search']      = 'Поиск';
 $_['text_information'] = 'Информация';
 $_['text_contact']     = 'Связаться с нами';
+$_['heading_categories'] = 'Категории';
+$_['heading_news'] = 'Новости';
+$_['heading_articles'] = 'Статьи';

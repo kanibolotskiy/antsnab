@@ -1,4 +1,10 @@
 <?php
+use BlueM\Tree as Tree;
+/**
+ * @task move to override
+ * @property Tree $hierarhy 
+ */
+
 abstract class Model {
 	protected $registry;
 

@@ -25,7 +25,7 @@
                             <option value="<?=$sc['href']?>">
                                 <a href="<?=$sc['href']?>"><?=$sc['name']?></a>
                             </option>
-                        <?endif;?>
+                        <?php endif;?>
                     <?php endforeach;?>
                 </select>
                 <script>

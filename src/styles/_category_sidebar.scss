@@ -6,6 +6,7 @@
 
 .collapse {
     text-align: center;
+    display:none;
 }
 .collapse svg {
     fill: #d3a06d;
@@ -26,6 +27,9 @@
         .accordion{
             background-color: #fff;
             overflow-y: scroll;
+            .collapse {
+                display:block;
+            }
         }
     }
 }
@@ -101,6 +105,7 @@ body.freeze {
     ul{
         padding-top: 28px;
         padding-bottom: 5px;
+
         li{
             padding: 0;
             margin-bottom: 21px;
@@ -108,14 +113,14 @@ body.freeze {
                 margin: 0;
             }
             a{
+                &:hover, &.active {
+                    text-decoration: underline; 
+                }
                 font-size: 13px;
                 color: #666666;
                 text-decoration: none;
                 padding-left: 18px;
                 position: relative;
-                &:hover{
-                    text-decoration: underline;
-                }
                 &:after{
                     content:'';
                     display:block;

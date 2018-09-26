@@ -34,7 +34,7 @@ $_['mail_parameter']       = '';
 
 // Cache
 $_['cache_type']           = 'file'; // apc, file or mem
-$_['cache_expire']         = 3600;
+$_['cache_expire']         = 10800;
 
 // Session
 $_['session_autostart']    = true;

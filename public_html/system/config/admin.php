@@ -22,7 +22,8 @@ $_['action_pre_action'] = array(
 	'startup/event',
 	'startup/sass',
 	'startup/login',
-	'startup/permission'
+	'startup/permission',
+
 );
 
 // Actions
@@ -50,5 +51,14 @@ $_['action_event'] = array(
 	'view/recurring/*/before'                 => 'event/compatibility/view',
 	'view/shipping/*/before'                  => 'event/compatibility/view',
 	'view/theme/*/before'                     => 'event/compatibility/view',
-	'view/total/*/before'                     => 'event/compatibility/view'
+	'view/total/*/before'                     => 'event/compatibility/view',
+
+    'model/catalog/category/addCategory/after'                 => 'event/hierarhy/refresh',
+    'model/catalog/category/deleteCategory/after'                 => 'event/hierarhy/refresh',
+    'model/catalog/category/editCategory/after'                 => 'event/hierarhy/refresh',
+    'model/catalog/category/repairCategory/after'                 => 'event/hierarhy/refresh',
+    'model/catalog/product/addProduct/after'                 => 'event/hierarhy/refresh',
+    'model/catalog/product/copyProduct/after'                 => 'event/hierarhy/refresh',
+    'model/catalog/product/deleteProduct/after'                 => 'event/hierarhy/refresh',
+    'model/catalog/product/editProduct/after'                 => 'event/hierarhy/refresh',
 );

@@ -89,7 +89,6 @@ class CategoryController extends \Controller
 
     private function showCategories($category_id)
     {
-
         $this->data['categories'] = array();
         $results = $this->model_catalog_category->getCategories($category_id);
 
@@ -97,42 +96,35 @@ class CategoryController extends \Controller
         $url = '';
 
         foreach ($results as $result) {
-            $filter_data = array(
-                'filter_category_id' => $result['category_id'],
-                'filter_sub_category' => true
-            );
-
-             if ($result['image']) {
+            if ($result['image']) {
                 $image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_category_width'), $this->config->get($this->config->get('config_theme') . '_image_category_height'));
             } else {
                 $image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_category_width'), $this->config->get($this->config->get('config_theme') . '_image_category_height'));
             }
 
-            //@task1 important!!! очень высокая нагрузка на базу - исправить
             $sub = array();
+            $path = $this->hierarhy->getPath($result['category_id']);
             if( $result['isfinal'] ) {
-                $subRes = $this->model_catalog_product->getProducts(
-                    ['filter_category_id' => $result['category_id'] ]   
-                );
-                foreach ($subRes as $s) {
+                $subRes = $this->hierarhy->getNodeById($result['category_id'])->get('products');
+                foreach ($subRes as $p) {
                     $sub[] = array(
-                        'name' => $s['model'],
-                        'href' => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $s['product_id'])
+                        'name' => $p['name'],
+                        'href' => $this->url->link('product/product', 'path=' . $path .  '&product_id=' . $p['product_id'])
                     );
                 }
             } else {
-                $subRes = $this->model_catalog_category->getCategories( $result['category_id'] );
-                foreach ($subRes as $s) {
+                $subRes = $this->hierarhy->getNodeById($result['category_id'])->getChildren(); 
+                foreach ($subRes as $c) {
                     $sub[] = array (
-                        'name' => $s['name'],
-                        'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $s['category_id'] . $url)
+                        'name' => $c->get('name'),
+                        'href' => $this->url->link('product/category', 'path=' . $path . $url)
                     );
                 }
             }
             
 
             $this->data['categories'][] = array(
-                'name' => $result['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
+                'name' => $result['name'],
                 'thumb' => $image,
                 'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
                 'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url),
