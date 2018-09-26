@@ -27,6 +27,7 @@ class FooterTemplateDecorator implements IDecorator
         $data['address'] = nl2br( $config->get('config_address') );
         $data['email'] = $config->get('config_email');
         $data['confidence'] = $registry->get('url')->link('information/information', 'information_id=3');
+        $data['sitemap'] = $registry->get('url')->link('information/sitemap');
 
         // Analytics
 		$registry->get('load')->model('extension/extension');
