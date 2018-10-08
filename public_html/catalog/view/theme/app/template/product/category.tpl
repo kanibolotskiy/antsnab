@@ -33,7 +33,7 @@
                                         <li>
                                             <div class="catalog-block">
                                                 <div class="catalog-img">
-                                                    <img src="<?= $c['thumb'] ?>" alt="img">
+                                                    <a href="<?= $c['href'] ?>"><img src="<?= $c['thumb'] ?>" alt="img"></a>
                                                 </div>
                                                 <div class="catalog-description">
                                                     <a class="title-product" href="<?= $c['href'] ?>">
@@ -69,7 +69,7 @@
                                         <li>
                                             <div class="catalog-block">
                                                 <div class="catalog-img">
-                                                    <img src="<?= $c['thumb'] ?>" alt="<?=$c['name']?>">
+                                                    <a href="<?= $c['href'] ?>"><img src="<?= $c['thumb'] ?>" alt="<?=$c['name']?>"></a>
                                                 </div>
                                                 <div class="catalog-description">
                                                     <a class="title-product" href="<?= $c['href'] ?>">

@@ -80,12 +80,17 @@
                         <?php else: ?>    
                             <textarea placeholder="Сообщение" name="text"><?= $form_data['text'] ?></textarea>
                         <?php endif; ?>
-
+                         <input
+                            type ="submit"
+                            
+                            data-callback="submitCallForm" value="Отправить"/>
+                        <!--
                         <input
                             type ="submit"
                             class="g-recaptcha"
                             data-sitekey="<?= $captcha_key ?>"
                             data-callback="submitCallForm" value="Отправить"/>
+                        -->
                     </form>
                     <script type="text/javascript">
                         function submitCallForm()

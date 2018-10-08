@@ -11,7 +11,7 @@
                         <li>
                             <div class="catalog-block">
                                 <div class="catalog-img">
-                                    <img src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>">
+                                    <a href="<?= $p['href'] ?>"><img src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>"></a>
                                 </div>
                                 <div class="catalog-description">
                                     <a class="title-product" href="<?= $p['href'] ?>">
@@ -48,7 +48,7 @@
                         <li itemscope itemtype="http://schema.org/Offer">
                             <div class="catalog-block">
                                 <div class="catalog-img">
-                                    <img src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" itemprop="image">
+                                    <a href="<?= $p['href'] ?>"><img src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" itemprop="image"></a>
                                 </div>
                                 <div class="catalog-description">
                                     <a class="title-product" href="<?= $p['href'] ?>" itemprop="name">
