@@ -309,11 +309,15 @@ class ControllerProductProduct extends Controller {
 
 			$results = $this->model_catalog_product->getProductImages($this->request->get['product_id']);
 
+			$count_images=0;
 			foreach ($results as $result) {
-				$data['images'][] = array(
-					'popup' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_popup_width'), $this->config->get($this->config->get('config_theme') . '_image_popup_height')),
-					'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_additional_width'), $this->config->get($this->config->get('config_theme') . '_image_additional_height'))
-				);
+				if($count_images<4){
+					$data['images'][] = array(
+						'popup' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_popup_width'), $this->config->get($this->config->get('config_theme') . '_image_popup_height')),
+						'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_additional_width'), $this->config->get($this->config->get('config_theme') . '_image_additional_height'))
+					);
+				}
+				$count_images++;
 			}
 
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
