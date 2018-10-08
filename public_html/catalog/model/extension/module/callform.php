@@ -39,8 +39,22 @@ class ModelExtensionModuleCallform extends Model
             $subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
             //@task make from language variables or tpl 
-            $message = 'Вы оставили обращение';
-
+            $message = '<p>Заказ звонка</p>
+            <table style="border-collapse:collapse;">
+            <tr>
+                <td style="padding:4px 10px;border:1px solid #ccc;"><b>Имя:</b></td>
+                <td style="padding:4px 10px;border:1px solid #ccc;">'.$data["name"].'</td>
+            </tr>
+            <tr>
+                <td style="padding:4px 10px;border:1px solid #ccc;"><b>Телефон:</b></td>
+                <td style="padding:4px 10px;border:1px solid #ccc;">'.$data["phone"].'</td>
+            </tr>
+            <tr>
+                <td style="padding:4px 10px;border:1px solid #ccc;"><b>Сообщение:</b></td>
+                <td style="padding:4px 10px;border:1px solid #ccc;">'.$data["text"].'</td>
+            </tr>
+            </table>';
+ 
             $mail = new Mail();
             $mail->protocol = $this->config->get('config_mail_protocol');
             $mail->parameter = $this->config->get('config_mail_parameter');
@@ -54,7 +68,7 @@ class ModelExtensionModuleCallform extends Model
             $mail->setFrom($this->config->get('config_email'));
             $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
             $mail->setSubject($subject);
-            $mail->setText($message);
+            $mail->setHTML($message);
             $mail->send();
 
             // Send to additional alert emails

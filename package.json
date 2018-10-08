@@ -1,7 +1,6 @@
 {
   "name": "ant-snab",
   "version": "1.0.0",
-  "description": "",
   "main": "gulpfile.js",
   "directories": {
     "test": "tests"
@@ -9,7 +8,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode=production",
-    "dev-watch" : "webpack --mode=development --watch" ,
+    "dev-watch": "webpack --mode=development --watch",
     "dev": "webpack --mode=development"
   },
   "repository": {
@@ -42,5 +41,6 @@
     "jquery-touchswipe": "^1.6.18",
     "magnific-popup": "^1.1.0",
     "slick-carousel": "^1.6.0"
-  }
+  },
+  "description": ""
 }
