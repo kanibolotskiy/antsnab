@@ -42,9 +42,9 @@ $_['action_pre_action'] = array(
 	'startup/error',
 	'startup/event',
 	'startup/maintenance',
+    'startup/hierarhy',
     'startup/'.$seo_type,
 
-    'startup/hierarhy',
 );
 
 // Action Events

@@ -4,18 +4,17 @@
     <div class="content">
         <?php echo $content_top; ?>
 
-
         <div class="our-production">
-            <div class="title">Наша продукция</div>
+            <h1 >Наша продукция</h1>
             <ul>
-                <?php foreach ($allCategories->toArray() as $category): ?>
+                <?php foreach ($rootCategories as $category): ?>
                     <li>
                         <div class="production-block">
-                            <a href="<?= $category->getHref($url) ?>">
+                            <a href="<?= $category['href'] ?>">
                                 <div class="img-production">
-                                    <img src="<?= $category->getImageUrl($imageTool, $width, $height) ?>" alt="<?= $category->get('name') ?>" title="<?= $category->get('name') ?>" />
+                                    <img src="<?= $category['image'] ?>" alt="<?= $category['name'] ?>" title="<?= $category['name'] ?>" />
                                 </div>
-                                <span><?= $category->get('name') ?></span>
+                                <span><?= $category['name'] ?></span>
                             </a>
                         </div>
                     </li>

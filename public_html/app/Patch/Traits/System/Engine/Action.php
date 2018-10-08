@@ -52,8 +52,8 @@ trait Action
 
 	    $this->override = ( is_file($override) )?$override:null;
         $this->file = ( is_file($file) )?$file:null; 
-
-
+        
+            
         if( null === $this->override && null === $this->file ) {
             return new \Exception('Error: Could not find class file for: ' . $this->route . '/' . $this->method . '!'); 
         }

@@ -445,7 +445,7 @@ a.btn-nav{
         font-family: 'Open Sans', sans-serif;
         width: 100%;
     }
-    input[type="submit"] {
+    button {
         cursor: pointer;
         border: none;
         background: url(../img/lupa.png) no-repeat;
@@ -569,6 +569,9 @@ a.btn-nav{
 }
 .content{
     overflow: hidden;
+}
+.content_inner {
+    padding-left:25px;
 }
 /* example gallery styles */
 .gallery-holder {
@@ -702,9 +705,21 @@ h1,
     font-weight: bold;
     color: black;
 }
-.about-us{
+.title {
+    position:relative;
+}
+.title:after {
+    content:'';
+    display:block;
+    position:absolute;
+    height:40px;
+    width:15px;
+    top:0px;
+    left:-25px;
     background: url(../img/icon7.png) no-repeat 0 4px;
-    padding-left: 41px;
+}
+
+.about-us{
     padding-right: 15px;
     margin-bottom: 40px;
     .title{
@@ -729,7 +744,7 @@ h1,
 }
 .our-production{
     margin: 0 0 24px;
-    .title{
+    h1{
         margin-bottom: 27px;
     }
     ul{
@@ -1063,7 +1078,7 @@ a.mail{
     .popup-block{
         padding: 0;
         position: absolute;
-        top:25px;
+        top:120px;
         left: 50%;
         margin-left: -300px;
         width: 600px;
@@ -1143,6 +1158,9 @@ a.mail{
             }
         }
     }
+}
+.popup-block_text {
+    text-align: center;
 }
 .popup.visible {
     display: block;
@@ -1878,13 +1896,19 @@ a.show-more{
         margin-bottom: 10px;
     }
     ul {
-        list-style: disc outside;
-        padding-left: 20px;
+        list-style: none;
         margin-left: 10px;
     }
 
     ul>li {
         margin-top:5px;
+        padding-left:10px;
+    }
+    ul>li:before {
+        content:'\25CF';
+        color: #d3a06d;
+        display:inline;
+        margin-right:10px;
     }
     i, em {
         font-style: italic;
@@ -2546,7 +2570,7 @@ a.show-more{
                 background: url(../img/check4.png) no-repeat 0% 50%;
             }
         }
-        input[type="submit"] {
+        button {
             display: block;
             text-decoration: none;
             cursor: pointer;

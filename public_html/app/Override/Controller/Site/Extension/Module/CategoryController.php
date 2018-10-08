@@ -1,7 +1,5 @@
 <?php
 namespace WS\Override\Controller\Site\Extension\Module;
-
-use WS\ORM\DomainManager;
 use BlueM\Tree\Node as Node;
 
 /**
@@ -38,7 +36,7 @@ class CategoryController extends \Controller
             $data['categories'][] = $item;
         }
 
-        return $this->load->view('extension/module/category', $data);
+        return $this->load->view('extension/module/app/category', $data);
     }
 
     private function recursiveGetItems(Node $rootNode)

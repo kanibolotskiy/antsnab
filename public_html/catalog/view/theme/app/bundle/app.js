@@ -14180,8 +14180,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _responsive_tabs_tables__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./responsive_tabs_tables */ "./src/scripts/responsive_tabs_tables.js");
 /* harmony import */ var _lib_opencart_product__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./lib/opencart_product */ "./src/scripts/lib/opencart_product.js");
 /* harmony import */ var _lib_opencart_product__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_lib_opencart_product__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var magnific_popup__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! magnific-popup */ "./node_modules/magnific-popup/dist/jquery.magnific-popup.js");
-/* harmony import */ var magnific_popup__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(magnific_popup__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _lib_opencart_search__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./lib/opencart_search */ "./src/scripts/lib/opencart_search.js");
+/* harmony import */ var _lib_opencart_search__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_lib_opencart_search__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var magnific_popup__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! magnific-popup */ "./node_modules/magnific-popup/dist/jquery.magnific-popup.js");
+/* harmony import */ var magnific_popup__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(magnific_popup__WEBPACK_IMPORTED_MODULE_12__);
 
 
 
@@ -14197,8 +14199,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 //import './quantity_inputs';
-// import './price';
 
 /***/ }),
 
@@ -15516,6 +15518,38 @@ var compare = {
 	}
 };
 
+
+/***/ }),
+
+/***/ "./src/scripts/lib/opencart_search.js":
+/*!********************************************!*\
+  !*** ./src/scripts/lib/opencart_search.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {/* Search */
+$('#search input[name=\'search\']').parent().find('button').on('click', function (e) {
+    e.preventDefault();
+    var url = $(this).attr('data-search-url');
+
+    var value = $('#search input[name=\'search\']').val();
+
+    if (value) {
+        url += '&search=' + encodeURIComponent(value);
+    }
+
+    location = url;
+});
+
+$('#search input[name=\'search\']').on('keydown', function (e) {
+    if (e.keyCode == 13) {
+        $('#search input[name=\'search\']').parent().find('button').trigger('click');
+    }
+});
+
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js-exposed")))
 
 /***/ }),
 

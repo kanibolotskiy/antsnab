@@ -25,7 +25,7 @@ class ReviewController extends \Controller
         $data['count'] = $this->config->get('review_count');
         $this->load->model('catalog/review');
         $data['reviews'] = $this->model_catalog_review->getRandReviews($data['count']);
-        return $this->load->view('extension/module/review', $data);
+        return $this->load->view('extension/module/app/review', $data);
     }    
 
 }

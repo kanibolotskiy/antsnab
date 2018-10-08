@@ -32,18 +32,35 @@ class HomeTemplateDecorator implements IDecorator
         $width = $config->get($config->get('config_theme') . '_image_category_width');
         $height = $config->get($config->get('config_theme') . '_image_category_height');
 
-        $dm = DomainManager::create($registry);
-        $allCategories = $dm->getRepository('Category')->findAll();
-        $rootCategories = $allCategories->toArray();
-
-        $data['url'] = $registry->get('url');
-        $data['imageTool'] = $imageTool;
-        $data['width'] = $width;
-        $data['height'] = $height;
-        $data['allCategories'] = $allCategories;
+        $data['rootCategories'] = [];
+        $categoryNodes = $registry->get('hierarhy')->getRootNodes();
+        $registry->get('load')->model('tool/image');
+        $model_tool_image = $registry->get('model_tool_image');
+        $config = $registry->get('config');
+        foreach( $categoryNodes as $node ) {
+            $href = $registry->get('url')->link('product/category', 'path=' . $registry->get('hierarhy')->getPath($node->getId()));
+            if (!empty( $node->get('image') ) ) {
+                $resizedImage = $model_tool_image->resize(
+                    $node->get('image'),
+                    $config->get($config->get('config_theme') . '_image_category_width'), 
+                    $config->get($config->get('config_theme') . '_image_category_height')
+                );
+            } else {
+                $resizedImage = $model_tool_image->resize(
+                    'placeholder.png', 
+                    $config->get($config->get('config_theme') . '_image_category_width'), 
+                    $config->get($config->get('config_theme') . '_image_category_height')
+                );
+            }
+            $data['rootCategories'][] = [
+                'name' => $node->get('name'),
+                'href' => $href,
+                'image' => $resizedImage
+            ];
+        }
 
         //mobile articles and news
-        //@task1 двойная нагрузка, невозможность управления из админки, хардкод idшников модулей
+        /** @todo двойная нагрузка, невозможность управления из админки, хардкод idшников модулей*/
         $loader = $registry->get('load');
         $loader->model('extension/module');
 

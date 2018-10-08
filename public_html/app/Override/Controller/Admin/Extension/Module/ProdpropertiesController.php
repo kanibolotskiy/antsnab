@@ -1,5 +1,4 @@
 <?php
-
 namespace WS\Override\Controller\Admin\Extension\Module;
 
 use WS\Override\Gateway\ProdProperties;

@@ -1,16 +1,8 @@
 <?php
-
-/**
- * @category WS patches 
- * @package  WS\Controller\Admin\Catalog
- */
-
 namespace WS\Override\Controller\Admin\Catalog;
 
-//put your use statements here
-
 /**
- * Описание класса 
+ * Управление отзывами в админ-панели 
  * 
  * @version    1.0, Mar 30, 2018  5:36:34 PM 
  * @copyright  Copyright (c) 2018 AntSnab. (https://www.ant-snab.ru)

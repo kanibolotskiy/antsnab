@@ -76,20 +76,7 @@ class Hierarhy extends \Model
             $resultRows[$catRow['category_id']] =  $catRow;
             $catRow['image'] = ( empty($catRow['image']) )?'':$catRow['image'];
             $resultRows[$catRow['category_id']]['image'] = $catRow['image'];
-            /*
-            if (!empty( $catRow['image']) ) {
-                $resizedImage = $this->model_tool_image->resize(
-                    $catRow['image'], 
-                    $this->config->get($this->config->get('config_theme') . '_image_category_width'), 
-                    $this->config->get($this->config->get('config_theme') . '_image_category_height')
-                );
-            } else {
-                $resizedImage = $this->model_tool_image->resize(
-                    'placeholder.png', 
-                    $this->config->get($this->config->get('config_theme') . '_image_category_width'), 
-                    $this->config->get($this->config->get('config_theme') . '_image_category_height')
-                );
-            }*/
+            
         }
 
         foreach($productRows as $prodRow) {

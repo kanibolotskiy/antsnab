@@ -115,7 +115,6 @@ class ModelCatalogReview extends Model
         return $query->row['total'];
     }
 
-    //@task move to modules' model maybe
     public function getRandReviews($count = 2)
     {
         $result = array();

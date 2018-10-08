@@ -20,7 +20,7 @@ class Column_leftTemplateDecorator implements IDecorator
 {
     public function process($data, $registry)
     {
-       $data['search_link'] = $registry->get('url')->link('product/search');
+       $data['search'] = $registry->get('load')->controller('common/search');
        return $data; 
     }
 

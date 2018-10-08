@@ -4,8 +4,8 @@
     <div class="content">
         <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
         <?php echo $content_top; ?>
-        <div class="article">
-            <h1><?php echo $heading_title; ?></h1>
+        <div class="article content_inner">
+            <h1 class="title"><?php echo $heading_title; ?></h1>
             <?php echo $description; ?>
         </div>
         <?php echo $content_bottom; ?>

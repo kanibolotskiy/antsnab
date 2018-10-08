@@ -40,7 +40,7 @@ class SlideshowController extends \Controller
 
 		$data['module'] = $module++;
 
-		return $this->load->view('extension/module/slideshow', $data);
+		return $this->load->view('extension/module/app/slideshow', $data);
 	}
 
 }

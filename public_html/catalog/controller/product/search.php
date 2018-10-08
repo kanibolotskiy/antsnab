@@ -1,4 +1,7 @@
 <?php
+use WS\Patch\Helper\ProductListHelper;
+use WS\Patch\Helper\PaginationHelper;
+
 class ControllerProductSearch extends Controller {
 	public function index() {
 		$this->load->language('product/search');
@@ -79,7 +82,7 @@ class ControllerProductSearch extends Controller {
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
 		);
-
+        
 		$url = '';
 
 		if (isset($this->request->get['search'])) {
@@ -211,8 +214,17 @@ class ControllerProductSearch extends Controller {
 
 			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
-			$results = $this->model_catalog_product->getProducts($filter_data);
+            /** @task move to override */
+            
+            //products
+            $productsHelper = new ProductListHelper($this->registry);
+            $results = $productsHelper->getProducts($filter_data);
+            $data['products'] = $productsHelper->render($results);
+            
+            /** @task delete and move to override */
 
+            /*
+			$results = $this->model_catalog_product->getProducts($filter_data);
 			foreach ($results as $result) {
 				if ($result['image']) {
 					$image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_product_width'), $this->config->get($this->config->get('config_theme') . '_image_product_height'));
@@ -258,6 +270,7 @@ class ControllerProductSearch extends Controller {
 				);
 			}
 
+            */
 			$url = '';
 
 			if (isset($this->request->get['search'])) {
@@ -420,6 +433,14 @@ class ControllerProductSearch extends Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
+            //pagination
+            $meta[PaginationHelper::BASE_URL_META_INDEX] = $this->url->link('product/search', 'page=' . $page);
+            $paginationModel = PaginationHelper::getPaginationModel($product_total, (int)$limit, (int)$page, $results , $meta);
+            PaginationHelper::setDocumentLinks($this->document, $paginationModel);    
+            $data['pagination'] = PaginationHelper::render($this->load, $paginationModel);
+            
+            /* @task move to override */
+            /*
 			$pagination = new Pagination();
 			$pagination->total = $product_total;
 			$pagination->page = $page;
@@ -441,7 +462,7 @@ class ControllerProductSearch extends Controller {
 
 			if ($limit && ceil($product_total / $limit) > $page) {
 			    $this->document->addLink($this->url->link('product/search', $url . '&page='. ($page + 1), true), 'next');
-			}
+			}*/
 
 			if (isset($this->request->get['search']) && $this->config->get('config_customer_search')) {
 				$this->load->model('account/search');
