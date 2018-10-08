@@ -57,3 +57,5 @@
 
 # IDE Project files
 /.idea
+/nbproject/private/
+/antcss/node_modules/
