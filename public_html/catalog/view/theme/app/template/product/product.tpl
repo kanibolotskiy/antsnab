@@ -469,13 +469,14 @@
             <?php if( $products):?>
             <div class="title">Аналоги и сопутствующие товары</div>
             <ul>
+            
                 <?php foreach( $products as $p):?>
                 <li>
                     <div class="products-block">
                         <a href="<?=$p['href']?>" class="img-production">
-                            <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+                            <img src="<?=$p['thumb']?>" alt="<?=$p['meta_h1']?>" title="<?=$p['meta_h1']?>">
                         </a>
-                        <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
+                        <a href="<?=$p['href']?>" class="title-product"><?=$p['meta_h1']?></a>
                         <strong><?=$p['price']?></strong>
                         <a href="<?=$p['href']?>" class="order-btn">Купить</a>
                     </div>

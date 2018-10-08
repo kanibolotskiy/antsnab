@@ -18,6 +18,7 @@ class ModelCatalogProduct extends Model {
             ."WHERE p.product_id = '" . (int)$product_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
         
 		if ($query->num_rows) {
+
 			return array(
 				'product_id'       => $query->row['product_id'],
 				'name'             => $query->row['name'],
@@ -407,10 +408,32 @@ class ModelCatalogProduct extends Model {
 		return $query->rows;
 	}
 
-	public function getProductRelated($product_id) {
+	public function getProductRelated($product_id, $rand=0) {
 		$product_data = array();
+		$order_rand="";
+		if($rand){
+			$order_rand="ORDER BY RAND() LIMIT ".$rand;
+		}
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_related pr LEFT JOIN " . DB_PREFIX . "product p ON (pr.related_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pr.product_id = '" . (int)$product_id . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ".$order_rand);
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_related pr LEFT JOIN " . DB_PREFIX . "product p ON (pr.related_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pr.product_id = '" . (int)$product_id . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
+		foreach ($query->rows as $result) {
+			$product_data[$result['related_id']] = $this->getProduct($result['related_id']);
+		}
+
+		return $product_data;
+	}
+	public function getProductRecommend($product_id, $rand=0, $used_ids) {
+		//print_r($used_ids);
+		if(is_array($used_ids)){
+			$added_sql=" AND p.product_id NOT IN(".implode(",",$used_ids).")";
+		}
+		$product_data = array();
+		$order_rand="";
+		if($rand){
+			$order_rand="ORDER BY RAND() LIMIT ".$rand;
+		}
+		//echo "SELECT * FROM " . DB_PREFIX . "product_recomends pr LEFT JOIN " . DB_PREFIX . "product p ON (pr.related_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pr.product_id = '" . (int)$product_id . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ".$added_sql." ".$order_rand;
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_recomends pr LEFT JOIN " . DB_PREFIX . "product p ON (pr.related_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pr.product_id = '" . (int)$product_id . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ".$added_sql." ".$order_rand);
 
 		foreach ($query->rows as $result) {
 			$product_data[$result['related_id']] = $this->getProduct($result['related_id']);

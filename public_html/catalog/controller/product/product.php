@@ -419,8 +419,14 @@ class ControllerProductProduct extends Controller {
 			$data['attribute_groups'] = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
 
 			$data['products'] = array();
+			
+			//Добавлен второй параметр - количество возвращаемых результатов (и RAND)
+			$results_related = $this->model_catalog_product->getProductRelated($this->request->get['product_id'],2);
+			$used_ids=array_keys($results_related);
+			
+			$results_recommends = $this->model_catalog_product->getProductRecommend($this->request->get['product_id'],4-count($results_related),$used_ids);
 
-			$results = $this->model_catalog_product->getProductRelated($this->request->get['product_id']);
+			$results=array_merge ($results_related, $results_recommends);
 
 			foreach ($results as $result) {
 				if ($result['image']) {
@@ -452,11 +458,12 @@ class ControllerProductProduct extends Controller {
 				} else {
 					$rating = false;
 				}
-
+				
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
+					'meta_h1'        => $result['meta_h1'],
 					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
 					'price'       => $price,
 					'special'     => $special,
@@ -466,6 +473,7 @@ class ControllerProductProduct extends Controller {
 					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 				);
 			}
+
 
 			$data['tags'] = array();
 

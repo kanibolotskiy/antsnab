@@ -659,7 +659,7 @@ a.show-more:hover { background-color: #EFEEEC; -webkit-transition: 0.4s; -moz-tr
 
 .mentioned-products ul li { width: 25%; padding: 0 10px; margin-bottom: 20px; }
 
-.mentioned-products ul li .products-block { border: 2px solid #EFEEEC; padding: 0 8px 20px 8px; height: 100%; overflow: hidden; min-height: 350px; position: relative; }
+.mentioned-products ul li .products-block { border: 2px solid #EFEEEC; padding: 0 8px 20px 8px; /*height: 100%;*/ overflow: hidden; min-height: 350px; position: relative; }
 
 .mentioned-products ul li .products-block .img-production { height: 180px; }
 
@@ -1230,8 +1230,7 @@ a.print:hover { -webkit-transition: 0.4s; -moz-transition: 0.4s; -ms-transition:
   .tab-block ul li .catalog-description { padding-left: 195px; }
   .tab-block ul li .catalog-img { width: 180px; }
   .tab-block2 ul li { width: 50%; }
-  .mentioned-products ul li { width: 33.333333333%; }
-  .mentioned-products ul li:last-child { display: none; }
+  .mentioned-products ul li { position: relative; width: 33.333333333%; /* &:last-child{ display: none; } */ }
   .basket-block { padding: 0 10px; }
   .basket-block .basket-row ul li:first-child { width: 110px; }
   .ordering { border: 2px solid #EFEEEC; padding: 15px 10px; }
