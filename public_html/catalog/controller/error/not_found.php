@@ -49,7 +49,8 @@ class ControllerErrorNotFound extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 
 		$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
-
+//print_r($data)
 		$this->response->setOutput($this->load->view('error/not_found', $data));
+		//$this->response->setOutput($this->load->view('information/information', $data));
 	}
 }

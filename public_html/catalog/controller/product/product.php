@@ -689,7 +689,7 @@ class ControllerProductProduct extends Controller {
 		$json = array();
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			if ((utf8_strlen($this->request->post['author']) < 3) || (utf8_strlen($this->request->post['author']) > 25)) {
-				$json['error']['author'] = $this->language->get('error_author');
+				$json['error']['author'] = $this->language->get('error_name');
 			}
 
 			if ((utf8_strlen($this->request->post['text']) < 25) || (utf8_strlen($this->request->post['text']) > 1000)) {
