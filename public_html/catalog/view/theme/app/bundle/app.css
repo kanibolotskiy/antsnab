@@ -799,7 +799,9 @@ a.show-more:hover { background-color: #EFEEEC; -webkit-transition: 0.4s; -moz-tr
 
 .reviews-container .title { margin-bottom: 33px; }
 
-.review-block { margin-bottom: 36px; }
+.review-block { margin-bottom: 36px; position: relative; }
+
+.review-block .answer-review:before { content: ''; display: block; clear: both; position: absolute; top: -9px; left: -40px; background: url(../img/icon20.png) no-repeat; width: 20px; height: 15px; }
 
 .review-block .review { border: 2px solid #EFEEEC; position: relative; padding: 30px 29px 9px; }
 
@@ -815,13 +817,9 @@ a.show-more:hover { background-color: #EFEEEC; -webkit-transition: 0.4s; -moz-tr
 
 .review-block .review .top p { display: block; font-size: 13px; color: #666666; }
 
-.review-block .review em { display: block; font-style: italic; color: #333333; font-size: 15px; line-height: 24px; overflow: hidden; padding-bottom: 23px; position: relative; }
-
-.review-block .review em:after { content: ''; display: block; clear: both; position: absolute; bottom: 0px; left: 0; background: url(../img/icon20.png) no-repeat; width: 20px; height: 15px; }
+.review-block .review em { display: block; font-style: italic; color: #333333; font-size: 15px; line-height: 24px; overflow: hidden; padding-bottom: 23px; position: relative; /* &:after{ content: ''; display: block; clear: both; position: absolute; bottom: 0px; left: 0; background: url(../img/icon20.png) no-repeat; width: 20px; height: 15px; } */ }
 
 .review-block .answer-review { background-color: #FBFAF9; margin: -19px 30px 0 69px; padding: 22px 26px 2px 26px; }
-
-.review-block .answer-review:after { display: none; }
 
 .review-block .answer-review .top { margin-bottom: 14px; }
 
@@ -1639,7 +1637,7 @@ body.freeze { /*for scrolling proposes*/ overflow: hidden; }
 
 .popup2 .close3 { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); -webkit-background-color: rgba(0, 0, 0, 0.7); -moz-background-color: rgba(0, 0, 0, 0.7); cursor: pointer; }
 
-.popup2 .popup-block2 { /*width: 850px;*/ position: relative; margin: 20px auto; padding: 0 20px; z-index: 2; }
+.popup2 .popup-block2 { /*width: 850px;*/ max-width: 850px; width: 100%; position: relative; margin: 20px auto; padding: 0 20px; z-index: 2; }
 
 .popup2 .popup-block2 .popup-content2 { width: 100%; background-color: #fff; position: relative; padding: 30px 20px; }
 
@@ -1661,7 +1659,7 @@ body.freeze { /*for scrolling proposes*/ overflow: hidden; }
 
 .popup3 .close5 { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); -webkit-background-color: rgba(0, 0, 0, 0.7); -moz-background-color: rgba(0, 0, 0, 0.7); cursor: pointer; }
 
-.popup3 .popup-block3 { width: 850px; position: relative; margin: 20px auto; padding: 0 20px; z-index: 2; }
+.popup3 .popup-block3 { max-width: 850px; width: 100%; position: relative; margin: 20px auto; padding: 0 20px; z-index: 2; }
 
 .popup3 .popup-block3 .popup-content3 { width: 100%; background-color: #fff; position: relative; padding: 30px 20px; }
 

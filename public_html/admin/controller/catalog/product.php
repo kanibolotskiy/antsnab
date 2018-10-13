@@ -10,6 +10,9 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('catalog/product');
 
 		$this->getList();
+		
+
+		
 	}
 
 	public function add() {

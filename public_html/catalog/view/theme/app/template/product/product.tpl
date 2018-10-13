@@ -333,80 +333,133 @@
                 <?php endforeach;?>
                 <div>
                     <div class="reviews-container reviews-container2">
-                        <div class="review-block">
-                            <div class="review">
-                                <div class="top">
-                                    <span><strong>Алексей</strong> о <b>“Продукции”</b></span>
-                                    <p>14.03.2016</p>
+                        <?php foreach ($reviews as $r): ?>
+                            <div class = "review-block">
+                                <div class = "review">
+                                    <div class = "top">
+                                        <span><strong><?= $r['author'] ?></strong> о <b><?= $r['about'] ?></b></span>
+                                        <p><?= $r['date'] ?></p>
+                                    </div>
+                                    <em><?= $r['text'] ?></em>
                                 </div>
-                                <em>Порадовало отношение к покупателю: надёжность, ответственность и, при этом, доля юмора - вот моё впечатление о работе с компанией Ант-Снаб!</em>
+                                <?php if (!empty($r['answer'])): ?>
+                                    <div class = "review answer-review">
+                                        <div class = "top">
+                                            <span><strong><?= $r['moderator'] ?></strong></span>
+                                        </div>
+                                        <em><?= $r['answer'] ?></em>
+                                    </div>
+                                <?php endif; ?>
                             </div>
-                            <div class="review answer-review">
-                                <div class="top">
-                                    <span><strong>Ирина Дмитриева
-                                        </strong></span>
-                                </div>
-                                <em>Надежда, спасибо Вам за хороший отзыв, надеемся на продолжение сотрудничества!</em>
-                            </div>
+                        <?php endforeach; ?>
+                        <div class="page-navigation page-navigation2">
+                            <?php echo $pagination; ?>
                         </div>
-                        <div class="review-block">
-                            <div class="review">
-                                <div class="top">
-                                    <span><strong>Елена</strong> о <b>“Сервисе”</b></span>
-                                    <p>14.03.2016</p>
-                                </div>
-                                <em>Продукция хорошего качества.Хочется отметить оперативность обработки заявок,а также своевремменое поступление документов. Надеюсь на дальнейшее взаимовыгодное</em>
-                            </div>
-                            <div class="review answer-review">
-                                <div class="top">
-                                    <span><strong>Ант-Снаб
-                                        </strong></span>
-                                </div>
-                                <em>Азиз, большое спасибо за отзыв. Постараемся и в наступающем году удерживать планку на заданной высоте!</em>
-                            </div>
-                        </div>
-                        <div class="review-block">
-                            <div class="review">
-                                <div class="top">
-                                    <span><strong>Алексей</strong> о <b>“Продукции”</b></span>
-                                    <p>14.03.2016</p>
-                                </div>
-                                <em>Порадовало отношение к покупателю: надёжность, ответственность и, при этом, доля юмора - вот моё впечатление о работе с компанией Ант-Снаб!</em>
-                            </div>
-                            <div class="review answer-review">
-                                <div class="top">
-                                    <span><strong>Латипов Олег
-                                        </strong></span>
-                                </div>
-                                <em>Алексей, спасибо за лестный отзыв. Мы всегда стараемся окружить любовью и заботой наших покупателей.</em>
-                            </div>
-                        </div>
+
                         <div class="give-feedback">
                             <div class="title-give-feedback">Оставить отзыв</div>
-                            <form action="">
-                                <div class="row">
-                                    <span>Имя:</span>
-                                    <input type="text" value="Ведите Ваше имя">
+                            <form id="form-review" action = "<?= $action ?>" method="post">
+                                <div class = "row">
+                                    <span>Имя: 
+                                        <i id="error_author" class="error"></i>
+                                    </span>
+                                    <input name="author" type = "text" placeholder="<?= $entry_author ?>" value="">
                                 </div>
-                                <div class="row">
-                                    <span>E-mail:</span>
-                                    <input type="text" value="Введите Ваш e-mail">
+                                <div class = "row">
+                                    <span>
+                                        e-mail:
+                                        <i id="error_email" class="error"></i>
+                                    </span>
+                                    <input value="" type = "text" name="email" placeholder="<?= $entry_email ?>">
                                 </div>
-                                <div class="row">
-                                    <span>Организация:</span>
-                                    <input type="text" value="Введите название организации">
+                                <div class = "row">
+                                    <span>Организация:
+                                        <i id="error_company" class="error"></i>
+                                    </span>
+                                    <input value="" type = "text" name="company" placeholder="<?= $entry_company ?>">
                                 </div>
-                                <div class="row">
-                                    <span>Отзыв:</span>
-                                    <textarea>Напишите Ваш отзыв</textarea>
+                                <div class = "row">
+                                    <span>Отзыв:
+                                        <i id="error_text" class="error"></i>
+                                    </span>
+                                    <textarea  placeholder="<?= $entry_text ?>" name="text"></textarea>
                                 </div>
-                                <div class="agreement">
-                                    <input type="checkbox" id="1" value="Я согласен с правилами">
-                                    <label for="1">Я согласен с <a href="">правилами</a></label>
+                                <div class = "agreement">
+                                    <input name="agree" type = "checkbox" id = "agree" value="1"/>
+                                    <label for = "agree" id="agreeLabel">
+                                        Я согласен с <a target="_blank" href = "<?=$rules?>">правилами</a>
+                                        <i id="error_agree" class="error"></i>
+                                    </label>
                                 </div>
-                                <input type="submit" value="Добавить отзыв">
+                                <!--
+                                <button id="button-review"
+                                    type="submit" data-callback="submitReviewForm" >Добавить отзыв</button>
+                                -->
+                                <button id="button-review"
+                                    type="submit"
+                                    form="review_form"
+                                    class="g-recaptcha"
+                                    data-sitekey="<?= $captcha_key ?>"
+                                    data-callback="submitReviewForm" >Добавить отзыв</button>
+                                    
+                                
                             </form>
+                            <script type="text/javascript">
+                                    function submitReviewForm()
+                                    {
+                                        $("#form-review .error").html("");
+
+                                        $.ajax({
+                                        url: 'index.php?route=product/product/write&product_id=<?php echo $product_id; ?>',
+                                        type: 'post',
+                                        dataType: 'json',
+                                        data: $("#form-review").serialize(),
+                                        /*
+                                        beforeSend: function() {
+                                            $('#button-review').button('loading');
+                                        },
+                                        complete: function() {
+                                            $('#button-review').button('reset');
+                                        },*/
+                                        success: function(json) {
+                                            $('.alert-success, .alert-danger').remove();
+
+                                            if (json['error']) {
+                                                //$('#review').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+                                                console.log(json['error']['name'])
+                                                for(err in json['error']){
+                                                    $("#error_"+err).html(json['error'][err]);
+                                                }
+                                            }else{
+                                                $(".popup.thank-you").addClass("visible");
+                                                $("#form-review").trigger("reset");
+                                                grecaptcha.reset();
+                                            }
+                                        }
+                                        
+                                        });
+                                        
+                                        //$("#form-review").reset();
+                                        //grecaptcha.reset();
+                                        //console.warn('here');
+                                        //$('#review_form').submit();
+                                        //e.preventDefault();
+                                        //console.log($('#review_form').serialize());
+                                        
+                                    }
+                                    
+                                    window.onload = function ()
+                                    {
+                                        
+                                        $('#agreeeLabel').on('click', function (e) {
+                                            var ischecked = $('#agree').prop('checked');
+                                            $('#agree').prop('checked', !ischecked);
+                                        });
+                                    }
+                            </script>
+                            
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -536,4 +589,14 @@
         });
     });
 </script>
+<div class="popup thank-you">
+    <div class="close"></div>
+    <div class="popup-block">
+        <div class="popup-content">
+            <div class="close2"></div>
+            <span><?=$text_thankyou_header?></span>
+            <p class="popup-block_text"><?=$text_thankyou?></p>
+        </div>
+    </div>
+</div>
 <?= $footer ?>

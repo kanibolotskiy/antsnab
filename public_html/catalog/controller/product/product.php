@@ -4,6 +4,7 @@ class ControllerProductProduct extends Controller {
 
 	public function index() {
 		$this->load->language('product/product');
+		$this->load->language('catalog/review');
 
 		$data['breadcrumbs'] = array();
 
@@ -13,6 +14,7 @@ class ControllerProductProduct extends Controller {
 		);
 
 		$this->load->model('catalog/category');
+		$this->load->model('catalog/review');
 
 		if (isset($this->request->get['path'])) {
 			$path = '';
@@ -414,6 +416,66 @@ class ControllerProductProduct extends Controller {
 				$data['captcha'] = '';
 			}
 
+			//Отзывы
+			$results=$this->model_catalog_review->getReviewsByProductId($data['product_id']);
+			$review_total=$this->model_catalog_review->getTotalReviewsByProductId($data['product_id']);
+			$data['captcha_key'] = $this->config->get('google_captcha_key');
+			
+			$data['reviews']=[];
+			foreach ($results as $result) {
+				$data['reviews'][] = array(
+					'review_id'  => $result['review_id'],
+					'name'       => $result['name'],
+					'text'       => $result['text'],
+					'about'      => $result['name'],
+					'date'       => $result['date_added'],
+					'answer'     => $result['answer'],
+					'author'     => $result['author'],
+					'moderator'  => $result['moderator'],
+					'rating'     => $result['rating'],
+					'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+					'edit'       => $this->url->link('catalog/review/edit', 'token=' . $this->session->data['token'] . '&review_id=' . $result['review_id'] . $url, true)
+				);
+			}
+
+			//current page
+			if (isset($this->request->get['page'])) {
+				$page = $this->request->get['page'];
+			} else {
+				$page = 1;
+			}
+			//$reviewsLimit = (int)$this->config->get(AdminModule::CONFIG_KEY_COUNT);
+			//$defaultRaiting = (int)$this->config->get(AdminModule::CONFIG_KEY_RAITING);
+		
+			$limit = 10;
+			$start = ($page - 1) * $limit;
+	
+			// new review
+			$p = ( $page == 1 ) ? '' : '&page=' . $page;
+
+			$url="index.php?route=product/product&path=73_86_129&product_id=165";
+			$data['action'] = $url . $p; 
+
+
+			
+			$data['entry_author'] = $this->language->get('entry_author');
+			$data['entry_email'] = $this->language->get('entry_email');
+			$data['entry_company'] = $this->language->get('entry_company');
+			$data['entry_text'] = $this->language->get('entry_text');
+			
+			
+
+			$pagination = new Pagination();
+			$pagination->total = $review_total;
+			$pagination->page = $page;
+			$pagination->limit = $this->config->get('config_limit_admin');
+			$pagination->url = $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+	
+			$data['pagination'] = $pagination->render();
+
+			/**Отзывы */
+			$data['text_thankyou_header'] = $this->language->get('text_thankyou_header');
+        	$data['text_thankyou'] = $this->language->get('text_thankyou');
 			$data['share'] = $this->url->link('product/product', 'product_id=' . (int)$this->request->get['product_id']);
 
 			$data['attribute_groups'] = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
@@ -622,30 +684,44 @@ class ControllerProductProduct extends Controller {
 
 	public function write() {
 		$this->load->language('product/product');
-
+		
+//print_r($this->request->post);
 		$json = array();
-
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-			if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 25)) {
-				$json['error'] = $this->language->get('error_name');
+			if ((utf8_strlen($this->request->post['author']) < 3) || (utf8_strlen($this->request->post['author']) > 25)) {
+				$json['error']['author'] = $this->language->get('error_author');
 			}
 
 			if ((utf8_strlen($this->request->post['text']) < 25) || (utf8_strlen($this->request->post['text']) > 1000)) {
-				$json['error'] = $this->language->get('error_text');
+				$json['error']['text'] = $this->language->get('error_text');
 			}
 
+			if (!isset($this->request->post['agree']))  {
+				$json['error']['agree'] = $this->language->get('error_agree');
+			}
+			if (isset($this->request->post['email']))  {
+				if(!$this->request->post['email']){
+					$json['error']['email'] = $this->language->get('error_email');
+				}
+				if (!preg_match("/^(?:[a-z0-9]+(?:[-_.]?[a-z0-9]+)?@[a-z0-9_.-]+(?:\.?[a-z0-9]+)?\.[a-z]{2,5})$/i", $this->request->post['email'])) {
+					$json['error']['email'] = $this->language->get('error_email');
+				}
+			}
+
+/*
 			if (empty($this->request->post['rating']) || $this->request->post['rating'] < 0 || $this->request->post['rating'] > 5) {
 				$json['error'] = $this->language->get('error_rating');
 			}
-
+*/
 			// Captcha
 			if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('review', (array)$this->config->get('config_captcha_page'))) {
 				$captcha = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha') . '/validate');
 
 				if ($captcha) {
-					$json['error'] = $captcha;
+					$json['error']['captcha'] = $captcha;
 				}
 			}
+			//echo $json['error'];
 
 			if (!isset($json['error'])) {
 				$this->load->model('catalog/review');
@@ -655,7 +731,7 @@ class ControllerProductProduct extends Controller {
 				$json['success'] = $this->language->get('text_success');
 			}
 		}
-
+		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

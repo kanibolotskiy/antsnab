@@ -2419,6 +2419,20 @@ a.show-more{
 }
 .review-block{
     margin-bottom: 36px;
+    position:relative;
+    .answer-review{
+        &:before{
+            content: '';
+            display: block;
+            clear: both;
+            position: absolute;
+            top: -9px;
+            left: -40px;
+            background: url(../img/icon20.png) no-repeat;
+            width: 20px;
+            height: 15px;
+        }
+    }
     .review{
         border: 2px solid #EFEEEC;
         position: relative;
@@ -2465,6 +2479,7 @@ a.show-more{
             overflow: hidden;
             padding-bottom: 23px;
             position: relative;
+            /*
             &:after{
                 content: '';
                 display: block;
@@ -2476,15 +2491,13 @@ a.show-more{
                 width: 20px;
                 height: 15px;
             }
+            */
         }
     }
     .answer-review{
         background-color: #FBFAF9;
         margin: -19px 30px 0 69px;
         padding: 22px 26px 2px 26px;
-        &:after{
-            display: none;
-        }
         .top{
             margin-bottom: 14px;
         }

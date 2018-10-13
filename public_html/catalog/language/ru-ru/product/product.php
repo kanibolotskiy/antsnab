@@ -48,3 +48,21 @@ $_['tab_review']                              = 'Отзывы (%s)';
 $_['error_name']                              = 'Имя должно быть от 3 до 25 символов!';
 $_['error_text']                              = 'Текст отзыва должен быть от 25 до 1000 символов!';
 $_['error_rating']                            = 'Пожалуйста поставьте оценку!';
+$_['error_agree']                             = 'Необходимо подтвердить';
+$_['error_email']                             = 'Неверный Email';
+
+$_['text_thankyou_header'] = 'Благодарим вас за отзыв!';
+$_['text_thankyou'] = 'Отзыв появится на сайте в ближайшее время';
+
+// Entry
+$_['entry_product']         = 'Товар:';
+$_['entry_author']          = 'Автор:';
+$_['entry_about']          = 'О чём?';
+$_['entry_moderator']          = 'Модератор';
+$_['entry_answer']          = 'Ответ';
+$_['entry_email']          = 'email';
+$_['entry_company']          = 'Компания';
+$_['entry_rating']          = 'Рейтинг:';
+$_['entry_status']          = 'Статус:';
+$_['entry_text']          	= 'Текст:';
+$_['entry_date_added']      = 'Дата добавления';

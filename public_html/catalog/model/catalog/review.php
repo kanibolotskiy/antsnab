@@ -20,8 +20,8 @@ class ModelCatalogReview extends Model
 
             $message = $this->language->get('text_waiting') . "\n";
             $message .= sprintf($this->language->get('text_product'), html_entity_decode($product_info['name'], ENT_QUOTES, 'UTF-8')) . "\n";
-            $message .= sprintf($this->language->get('text_reviewer'), html_entity_decode($data['name'], ENT_QUOTES, 'UTF-8')) . "\n";
-            $message .= sprintf($this->language->get('text_rating'), $data['rating']) . "\n";
+            $message .= sprintf($this->language->get('text_reviewer'), html_entity_decode($data['author'], ENT_QUOTES, 'UTF-8')) . "\n";
+            //$message .= sprintf($this->language->get('text_rating'), $data['rating']) . "\n";
             $message .= $this->language->get('text_review') . "\n";
             $message .= html_entity_decode($data['text'], ENT_QUOTES, 'UTF-8') . "\n\n";
 
@@ -62,7 +62,7 @@ class ModelCatalogReview extends Model
     {
        /* $this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['name']) . "', customer_id = '" . (int) $this->customer->getId() . "', product_id = '" . (int) $product_id . "', text = '" . $this->db->escape($data['text']) . "', rating = '" . (int) $data['rating'] . "', date_added = NOW()");*/
 
-         $this->db->query("INSERT INTO " . DB_PREFIX . "review SET company ='" . $this->db->escape($data['company']) . "', email = '" . $this->db->escape($data['email']) . "', author = '" . $this->db->escape($data['author']) . "', customer_id = '" . (int) $this->customer->getId() . "', product_id = '" . (int) $product_id . "', text = '" . $this->db->escape($data['text']) . "', rating = '" . (int) $data['rating'] . "', date_added = NOW()");
+         $this->db->query("INSERT INTO " . DB_PREFIX . "review SET company ='" . $this->db->escape($data['company']) . "', email = '" . $this->db->escape($data['email']) . "', author = '" . $this->db->escape($data['author']) . "', customer_id = '" . (int) $this->customer->getId() . "', product_id = '" . (int) $product_id . "', text = '" . $this->db->escape($data['text']) . "', date_added = NOW()");
 
 
         $review_id = $this->db->getLastId();
@@ -103,7 +103,6 @@ class ModelCatalogReview extends Model
         /*         * $query = $this->db->query("SELECT r.review_id, r.author, r.rating, r.text, p.product_id, pd.name, p.price, p.image, r.date_added FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "product p ON (r.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p.product_id = '" . (int)$product_id . "' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY r.date_added DESC LIMIT " . (int)$start . "," . (int)$limit); */
 
         $query = $this->db->query("SELECT r.review_id, r.about, r.moderator, r.answer, r.author, r.rating, r.text, p.product_id, pd.name, p.price, p.image, r.date_added FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "product p ON (r.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE r.product_id = '" . (int) $product_id . "' AND (p.date_available <= NOW() or p.date_available is NULL) AND (p.status = '1' or p.status is NULL) AND r.status = '1' AND (pd.language_id = '" . (int) $this->config->get('config_language_id') . "' or pd.language_id is NULL) ORDER BY r.date_added DESC LIMIT " . (int) $start . "," . (int) $limit);
-
         return $query->rows;
     }
 
