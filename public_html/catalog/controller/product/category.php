@@ -141,6 +141,8 @@ class ControllerProductCategory extends Controller {
 			$data['description'] = html_entity_decode($category_info['description'], ENT_QUOTES, 'UTF-8');
 			$data['compare'] = $this->url->link('product/compare');
 
+		
+
 			$url = '';
 
 			if (isset($this->request->get['filter'])) {
@@ -236,7 +238,7 @@ class ControllerProductCategory extends Controller {
 			}
 
 			$url = '';
-
+			$data['bottom_text'] = 'test';
 			if (isset($this->request->get['filter'])) {
 				$url .= '&filter=' . $this->request->get['filter'];
 			}
@@ -382,6 +384,7 @@ class ControllerProductCategory extends Controller {
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
+			
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 

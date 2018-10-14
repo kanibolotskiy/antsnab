@@ -106,6 +106,9 @@
         <?php endif; ?>
 
         <?php echo $content_bottom; ?>
+        
+        
+
     </div>
 </div>
 <?= $footer ?>

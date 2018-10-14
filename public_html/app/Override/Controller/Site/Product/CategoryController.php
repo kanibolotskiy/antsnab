@@ -38,7 +38,7 @@ class CategoryController extends \Controller
             'text' => $this->language->get('text_home'),
             'href' => $this->url->link('common/home')
         );
-
+        
         if (isset($this->request->get['path'])) {
             //@removed
             $url = '';
@@ -64,7 +64,12 @@ class CategoryController extends \Controller
                         'href' => $this->url->link('product/category', 'path=' . $path . $url)
                     );
                 }
+                
+                
             }
+            
+            $category_final_info = $this->model_catalog_category->getCategory($category_id);
+            $this->data['bottom_text'] = $category_final_info["bottom_text"];
         } else {
             $category_id = 0;
         }

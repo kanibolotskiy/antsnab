@@ -210,7 +210,8 @@ class ControllerNewsBlogCategory extends Controller {
 			$data['comments_vk'] = false;
 			$data['comments_fb'] = false;
 			$data['comments_dq'] = false;
-			if ($settings && isset($settings['show_comments_vk_id'])) {				if ($settings && $settings['show_comments_vk_id'] && $settings['show_comments_vk_category']) {
+			if ($settings && isset($settings['show_comments_vk_id'])) {
+				if ($settings && $settings['show_comments_vk_id'] && $settings['show_comments_vk_category']) {
 		            $data['comments_vk'] = $settings['show_comments_vk_id'];
 		            $this->document->addScript('//vk.com/js/api/openapi.js');
 	            }

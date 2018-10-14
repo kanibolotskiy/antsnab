@@ -82,6 +82,9 @@
                     </table>
                 </div>
             </div>
+            <div class="bottom_text">
+                <?php echo $bottom_text; ?>
+            </div>
         <?php else: ?>
             <h1>Товаров не найдено</h1>
         <?php endif; ?>

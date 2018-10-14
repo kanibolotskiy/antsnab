@@ -548,6 +548,7 @@ $('#review').delegate('.pagination a', 'click', function(e) {
 $('#review').load('index.php?route=product/product/review&product_id=<?php echo $product_id; ?>');
 
 $('#button-review').on('click', function() {
+  
 	$.ajax({
 		url: 'index.php?route=product/product/write&product_id=<?php echo $product_id; ?>',
 		type: 'post',
