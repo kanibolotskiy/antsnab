@@ -453,7 +453,6 @@ class ControllerProductProduct extends Controller {
 			// new review
 			$p = ( $page == 1 ) ? '' : '&page=' . $page;
 
-			$url="index.php?route=product/product&path=73_86_129&product_id=165";
 			$data['action'] = $url . $p; 
 
 

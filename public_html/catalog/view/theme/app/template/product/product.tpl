@@ -433,7 +433,7 @@
                                             }else{
                                                 $(".popup.thank-you").addClass("visible");
                                                 $("#form-review").trigger("reset");
-                                                grecaptcha.reset();
+                                                //grecaptcha.reset();
                                             }
                                         }
                                         
