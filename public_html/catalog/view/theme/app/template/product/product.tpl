@@ -357,6 +357,20 @@
                         </div>
 
                         <div class="give-feedback">
+                            <div id="ajax_loader" class="ajax_loader">
+                                <div class="loader-classic">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
                             <div class="title-give-feedback">Оставить отзыв</div>
                             <form id="form-review" action = "<?= $action ?>" method="post">
                                 <div class = "row">
@@ -406,7 +420,9 @@
                             </form>
                             <script type="text/javascript">
                                     function submitReviewForm()
-                                    {
+                                    {   
+                                        $("#ajax_loader").fadeIn(200);
+                                        
                                         $("#form-review .error").html("");
 
                                         $.ajax({
@@ -430,11 +446,13 @@
                                                 for(err in json['error']){
                                                     $("#error_"+err).html(json['error'][err]);
                                                 }
+                                                grecaptcha.reset();
                                             }else{
                                                 $(".popup.thank-you").addClass("visible");
                                                 $("#form-review").trigger("reset");
-                                                //grecaptcha.reset();
+                                                grecaptcha.reset();
                                             }
+                                            $("#ajax_loader").fadeOut(200);
                                         }
                                         
                                         });
