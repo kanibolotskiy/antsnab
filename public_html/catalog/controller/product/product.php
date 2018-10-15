@@ -468,7 +468,7 @@ class ControllerProductProduct extends Controller {
 			$pagination->total = $review_total;
 			$pagination->page = $page;
 			$pagination->limit = $this->config->get('config_limit_admin');
-			$pagination->url = $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+			$pagination->url = $this->url->link('catalog/review',  $url . '&page={page}', true);
 	
 			$data['pagination'] = $pagination->render();
 
