@@ -434,7 +434,7 @@ class ControllerProductProduct extends Controller {
 					'moderator'  => $result['moderator'],
 					'rating'     => $result['rating'],
 					'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-					'edit'       => $this->url->link('catalog/review/edit', 'token=' . $this->session->data['token'] . '&review_id=' . $result['review_id'] . $url, true)
+					//'edit'       => $this->url->link('catalog/review/edit',  '&review_id=' . $result['review_id'] . $url, true)
 				);
 			}
 
