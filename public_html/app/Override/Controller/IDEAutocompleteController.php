@@ -108,6 +108,7 @@ use BlueM\Tree as Tree;
  * @property ModelUserApi $model_user_api
  * @property ModelUserUser $model_user_user
  * @property ModelUserUserGroup $model_user_user_group
+ * @property ModelExtensionModuleCallform $model_extension_module_callform
  * @property Tree $hierarhy 
  */
 class IDEAutocompleteController

@@ -8,8 +8,19 @@
  * @author     Sergey Lapshin (http://vk.com/wslapshin) 
  */
 
-namespace WS\Override\Gateway;
+namespace WS\Override\Gateway\ProdUnits;
 
+
+/**
+ * Каждый продукт может исчисляться в разных единицах измерения.
+ * Для присвоения продукту единиц - к нему устанавливается шаблон единиц измерения;
+ * шаблон содержит текстовые характеристики едениц и словарь для генерации строк упаковок
+ * данный класс для CRUD шаблонов едениц измерения (для модуля в админке) 
+ * 
+ * @version    1.0, May 9, 2018  7:39:20 AM 
+ * @copyright  Copyright (c) 2018 AntSnab. (https://www.ant-snab.ru)
+ * @author     Sergey Lapshin (http://vk.com/wslapshin) 
+ */
 class ProdUnitTemplates extends \Model
 {
     public function getTemplates($order = null)

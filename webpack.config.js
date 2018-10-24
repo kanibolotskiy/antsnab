@@ -5,7 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = (env, options) => {
     return {
-        mode:"development",
+        mode: "development",
         watchOptions: {
             ignored: /node_modules/
         },
@@ -31,55 +31,66 @@ module.exports = (env, options) => {
         module: {
             noParse: function (content) {
                 if (options.mode === 'development') {
-                    return /jquery$|jcf.*|inputmask.*|opencart_product|easyResponsiveTabs/.test(content);
+                    return /jquery$|jcf.*|opencart_product|easyResponsiveTabs/.test(content);
                 }
                 return false;
             },
             rules: [
                 {
+                    test: /\.es6\.js$/,
+                    exclude: /(node_modules|bower_components)/,
+                    use: {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['@babel/preset-env'],
+                            plugins: ['@babel/plugin-proposal-class-properties']
+                        }
+                    }
+                },
+                {
                     test: require.resolve('jquery'),
                     use:
-                    [
-                        {
-                            loader: 'expose-loader',
-                            options: 'jQuery'
-                        },
-                        {
-                            loader: 'expose-loader',
-                            options: '$'
-                        }
-                    ]
+                        [
+                            {
+                                loader: 'expose-loader',
+                                options: 'jQuery'
+                            },
+                            {
+                                loader: 'expose-loader',
+                                options: '$'
+                            }
+                        ]
                 },
                 {
                     test: /(\.scss|\.css)$/,
                     use:
-                    [
-                        //просто формирует один файл из предыдущей цепочки лоадеров
-                        MiniCssExtractPlugin.loader,
-                        //"style-loader",
+                        [
+                            //просто формирует один файл из предыдущей цепочки лоадеров
+                            MiniCssExtractPlugin.loader,
+                            //"style-loader",
 
-                        //загружает css в style ноды, это шаг нужен для MiniCssExtractPlugin
-                        //https://github.com/webpack-contrib/sass-loader#source-maps
-                        {
-                            loader: "css-loader",
-                            options: {
-                                url: false,
-                                sourceMap: true
-                            }
-                        },
+                            //загружает css в style ноды, это шаг нужен для MiniCssExtractPlugin
+                            //https://github.com/webpack-contrib/sass-loader#source-maps
+                            {
+                                loader: "css-loader",
+                                options: {
+                                    url: false,
+                                    sourceMap: true
+                                }
+                            },
 
-                        // compiles Sass to CSS, using Node Sass by default
-                        {
-                            loader: "sass-loader",
-                            options: {
-                                sourceMap: true,
-                                outputStyle: (options.mode === 'development') ? "compact" : "compressed"
+                            // compiles Sass to CSS, using Node Sass by default
+                            {
+                                loader: "sass-loader",
+                                options: {
+                                    sourceMap: true,
+                                    outputStyle: (options.mode === 'development') ? "compact" : "compressed"
+                                }
                             }
-                        }
-                    ]
+                        ]
                 }
             ]
         }
     };
 };
-    
+

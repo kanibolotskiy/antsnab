@@ -1,8 +1,4 @@
 <?php echo $header; ?>
-
-<script>
-    window._antSnabMeta = <?=$priceMetaJSON?>;
-</script>
 <div class="container main">
     <input type="hidden" id="product_id" value="<?=$product_id?>"/>
     <?= $column_left ?>
@@ -37,78 +33,91 @@
                         <div class="description-mini">
                             <?=$description_mini?>
                         </div>
+
                         <div class="price-for">
-                            <input type="hidden" id="currencySymb" value="<?=$currencySymb?>"/>
                             <span>Цена за:</span>
-                            <ul>
-                                        <li>
-                                            <a data-unit="<?=$firstPriceMeta['name']?>" class="active" href="#">
-                                                <?= $firstPriceMeta['name_price'] ?>
-                                            </a>
-                                        </li>
-                                        <?php if($secondPriceMeta['name_price']):?>
-                                        <li>
-                                            <a data-unit="<?=$secondPriceMeta['name']?>" href="#">
-                                                <?= $secondPriceMeta['name_price'] ?>
-                                            </a>
-                                        </li>
-                                        <?php endif;?>
-                            </ul>
+                            
+                            <!--Переключатель цен-->
+                            <?php if($pUnitsErrors):?>
+                                <?= $pUnitsErrors ?>
+                            <?php else: ?>
+                                <ul id="priceSwitcher"
+                                    data-currency_symbol="<?=$currencySymb?>" 
+                                    data-sale_to_price_koef="<?=$sale_to_price_koef?>">
+
+                                    <li data-sale_to_ui_koef="<?=$pUnits[1]['sale_to_ui_koef']?>" 
+                                        data-ui_descr="<?=$pUnits[1]['relStr']?>" class="active">
+                                        <a href="#"><?= $pUnits[1]['showName']?></a>
+                                    </li>
+
+                                    <?php if($pUnits[2]):?>
+                                    <li data-sale_to_ui_koef="<?=$pUnits[2]['sale_to_ui_koef']?>"
+                                        data-ui_descr="<?=$pUnits[2]['relStr']?>">
+                                        <a href="#"><?= $pUnits[2]['showName']?></a>
+                                    </li>
+                                    <?php endif;?>
+
+                                </ul>
+                            <?php endif;?>
+                            <!-- // -->
+
                         </div>
+
                     </div>
                     <div class="border"></div>
                     
+                    <!-- Оптовая цена -->
                     <div class="wholesale">
                         <div class="wholesale-price">
-                            <?php if( $firstPriceMeta):?>
+                            <?php if($pUnitsErrors):?>
+                                 HAS ERRORS, SEE ABOVE
+                            <?php else: ?>
                             <strong> 
-                                <span id="wholesalePrice">
-                                <?=$firstPriceMeta['price_wholesale_str']?>
+                                <span id="wholesale_price" data-value="<?=$price_wholesale?>">
                                 </span>
 
-                                <b class="help_question">?
-                                    <em>
-                                        <?php if( $basePriceMeta): ?>
-                                            Оптовая цена действительна при единовременной оплате <?=$basePriceMeta['wholesale_threshold']. ' ' . $basePriceMeta['name_plural'] ?>
-                                        <?php endif;?>
-                                    </em>
+                                <b class="help_question">?<em>Оптовая цена действительна при единовременной оплате 
+                                        <span id="wholesale_threshold" data-value="<?=$wholesale_threshold?>">
+                                        </span>&nbsp;
+                                        <span id="wholesale_unit" data-value="<?=$priceUnit['name_plural']?>">
+                                        </span></em>
                                 </b>
                                 
                             </strong>
                             <span id="priceWholesaleDescr">
-                                    <?=$firstPriceMeta['name']?>
-                                    <?php if( $firstPriceMeta['calcKoef'] != null && $firstPriceMeta['calcRelString'] != null ):?>
-                                        <?php echo ', ' . (int)$firstPriceMeta['calcKoef'] . ' ' . $firstPriceMeta['calcRelString'];?>
-                                    <?php endif;?>
                             </span>
-                            
                             <?php endif;?>
                         </div>
                         <p>Оптом</p>
-                    </div>
+                    </div> 
+                    <!-- // -->
+
                     <div class="border"></div>
-                    <?php if($firstPriceMeta):?>
-                        <div class="wholesale wholesale2">
+
+                    <?php if($pUnitsErrors):?>
+                            HAS ERRORS, SEE ABOVE
+                    <?php else: ?>
+
+                         <!-- Розничная цена -->
+                         <div class="wholesale wholesale2">
                                 <div class="wholesale-price">
-                                    <strong id="price"><?=$firstPriceMeta['price_str']?></strong>
-                                    <span id="priceDescr"><?=$firstPriceMeta['name']?></span>
+                                    <strong id="price"  data-value="<?=$price?>"></strong>
+                                    <span id="priceDescr"></span>
                                 </div>
                             <p>В розницу</p>
                         </div>
+                        <!-- // -->
+
                         <div class="quantity-buy">
                             <div class="quantity-buy-block">
-                                <div class="OutputContainer">
-                                    <input 
-                                           data-factInterval="<?=$firstPriceMeta['salePackageStep']?>" 
-                                           data-visualInterval="<?=$firstPriceMeta['visualStep']?>"
-                                           data-name="<?=$firstPriceMeta['name_price']?>"
-                                           class="spinner" type="text"  name="name" value="0">
+                                <div class="qnt-container-spec">
                                 </div>
                             </div>
-                           
                             <a data-loading-text="Добавление..." id="button-cart" href="#" class="buy">Купить</a>
                         </div>
+
                     <?php endif;?>
+
                     <div class="notify">Товар добавлен в корзину</div>
                 </div>
 

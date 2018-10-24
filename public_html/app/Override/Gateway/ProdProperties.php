@@ -2,7 +2,7 @@
 namespace WS\Override\Gateway;
 
 /**
- * Описание класса 
+ * Класс для управления свойствами продукта, наследуемым из категории 
  * 
  * @version    1.0, Apr 19, 2018  4:38:22 PM 
  * @copyright  Copyright (c) 2018 AntSnab. (https://www.ant-snab.ru)

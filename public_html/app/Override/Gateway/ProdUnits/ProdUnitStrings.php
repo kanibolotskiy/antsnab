@@ -8,7 +8,20 @@
  * @author     Sergey Rapshin (http://vk.com/wslapshin) 
  */
 
-namespace WS\Override\Gateway;
+namespace WS\Override\Gateway\ProdUnits;
+
+/**
+ * Каждый продукт может исчисляться в разных единицах измерения.
+ * Для присвоения продукту единиц - к нему устанавливается шаблон единиц измерения;
+ * шаблон содержит текстовые характеристики едениц и словарь для генерации строк упаковок
+ * т.е. на основе словаря - система помогает сформулировать строки для фронтенда
+ * и сохраняет эти строки в отдельную таблицу (в привязке к шаблону)
+ * данный класс для CRUD сгенерированных строк внутри шаблона едениц измерения
+ * 
+ * @version    1.0, May 9, 2018  7:39:20 AM 
+ * @copyright  Copyright (c) 2018 AntSnab. (https://www.ant-snab.ru)
+ * @author     Sergey Lapshin (http://vk.com/wslapshin) 
+ */
 
 class ProdUnitStrings extends \Model
 {

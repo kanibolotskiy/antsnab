@@ -1,8 +1,8 @@
 <?php
 
-use WS\Override\Gateway\ProdUnitTemplates;
-use WS\Override\Gateway\ProdUnits;
-use WS\Override\Gateway\ProdUnitStrings;
+use WS\Override\Gateway\ProdUnits\ProdUnitTemplates;
+use WS\Override\Gateway\ProdUnits\ProdUnits;
+use WS\Override\Gateway\ProdUnits\ProdUnitStrings;
 
 include_once __DIR__ . '/bootstrap.php';
 include_once 'admin/model/newsblog/article.php';

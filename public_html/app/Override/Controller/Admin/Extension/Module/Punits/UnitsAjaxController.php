@@ -10,7 +10,7 @@
 
 namespace WS\Override\Controller\Admin\Extension\Module\Punits;
 
-use WS\Override\Gateway\ProdUnits;
+use WS\Override\Gateway\ProdUnits\ProdUnits;
 
 class UnitsAjaxController extends \Controller
 {

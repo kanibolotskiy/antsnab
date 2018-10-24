@@ -1,7 +1,7 @@
 <?php
 namespace WS\Override\Controller\Site\Extension\Module;
 
-use WS\Override\Gateway\ProdUnits;
+use WS\Override\Gateway\ProdUnits\ProdUnits;
 use WS\Override\Gateway\FinalCategory;
 use WS\Override\Controller\Admin\Extension\Module\PriceController as AdminModule;
 

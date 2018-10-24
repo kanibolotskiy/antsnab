@@ -9,7 +9,7 @@
 
 namespace WS\Override\Controller\Site\Checkout;
 
-use WS\Override\Gateway\ProdUnits;
+use WS\Override\Gateway\ProdUnits\ProdUnits;
 
 //@task вынужден писать в оверрайд из за одной строчки вконце add, где меняется способ вывода количества
 //количество - это не сумма едениц (напр. м2, а кол-во видов товара в корзине,товарных позиций
@@ -335,7 +335,7 @@ class CartController extends \ControllerCheckoutCart
 
                 //@added units price meta
                 $prodUnits = new ProdUnits($this->registry);
-                $meta = $prodUnits->getPriceMetaForProduct($product['product_id']);
+                //@deprecated $meta = $prodUnits->getPriceMetaForProduct($product['product_id']);
 
                 /* Определяем в каких еденицах измерения продаем(цена) */
                 foreach ($meta as $unitName => $unitChars) {

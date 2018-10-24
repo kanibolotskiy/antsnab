@@ -1658,56 +1658,38 @@ ul.tabset li:last-child a.active {
 }
 
 /*spinnercontrol*/
-.SpinnerControl
+.qnt-widget
 {
     border: 1px solid #EAE7E4;
     width: 80px;
     height: 40px;
-    display: flex;
     margin-right: 9px;
-    justify-content: space-between;
     position: relative;
 }
-.SpinnerControl .LeftButton
+.qnt-widget .LeftButton
 {
     width:28px;
     height: 38px;
     background: url(../img/minus.png) no-repeat 50% 50%;
     cursor:pointer;
 }
-.SpinnerControl .LeftButton:hover
-{
 
-}
-.SpinnerControl .ValueDisplay
+.qnt-widget input[name=qnt]
 {
-    min-width: 1px !important;
     height: 38px;
-    overflow:hidden;
-    font-size:13px;
+    overflow: hidden;
+    font-size: 13px;
     color: #444444;
-    line-height:38px;
     text-align:center;
+    border:none;
+    width:41px;
 }
-.SpinnerControl .RightButton
+.qnt-widget .RightButton
 {
     width:28px;
     height: 38px;
     background: url(../img/plus.png) no-repeat 50% 50%;
     cursor:pointer;
-}
-.SpinnerControl .RightButton:hover
-{
-
-    cursor:pointer;
-}
-
-.SpinnerName{
-    color: #444444;
-    font-size: 13px;
-}
-.spinner {
-    display:none;
 }
 
 a.buy{

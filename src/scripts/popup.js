@@ -1,3 +1,9 @@
+import Inputmask from "inputmask/dist/inputmask/inputmask.phone.extensions";
+
+var selector = $('input[name="phone"')[0],
+    im = new Inputmask("(999)999-99-99");
+im.mask(selector);
+
 /**Попапы*/
 $(".btn-request-call").click(function () {
     $(".popup").css("display", "block");

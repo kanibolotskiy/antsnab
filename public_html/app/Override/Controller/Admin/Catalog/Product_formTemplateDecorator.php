@@ -5,7 +5,7 @@ namespace WS\Override\Controller\Admin\Catalog;
 use WS\Override\Controller\IDecorator;
 use WS\Override\Gateway\ProdProperties;
 use WS\Override\Gateway\ProdTabs;
-use WS\Override\Gateway\ProdUnitTemplates;
+use WS\Override\Gateway\ProdUnits\ProdUnitTemplates;
 
 /**
  * Описание класса 

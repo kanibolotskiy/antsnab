@@ -14,4 +14,4 @@ import './responsive_tabs_tables';
 import './lib/opencart_product';
 import './lib/opencart_search';
 import 'magnific-popup';
-//import './quantity_inputs';
+import './produnits.js';

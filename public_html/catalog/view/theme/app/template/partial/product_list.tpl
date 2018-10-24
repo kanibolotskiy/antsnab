@@ -28,8 +28,10 @@
                                         <span>Цена от <strong></strong></span>
                                     </div>
                                     <div class="quantity-buy">
-                                        <div class="OutputContainer">
+                                        <!--<div class="OutputContainer">
                                             <input type="text" class="spinner" name="name" value=" ">
+                                        </div>-->
+                                        <div data-minimum="3" data-step="5" class="qnt-container">
                                         </div>
                                         <span>коробка</span>
                                         <a href="" class="buy">Купить</a>
@@ -67,8 +69,9 @@
                                     </div>
                                     <meta itemprop="priceCurrency" content="RUB">
                                     <div class="quantity-buy">
-                                        <div class="OutputContainer">
-                                            <input type="text" class="spinner" class="spinner" name="name" value=" ">
+                                        <div data-sale_to_ui_koef="20" 
+                                             data-sale_to_price_koef="10" 
+                                             class="qnt-container">
                                         </div>
                                         <span>коробка</span>
                                         <a href="" class="buy">Купить</a>

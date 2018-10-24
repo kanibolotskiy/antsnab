@@ -52,11 +52,14 @@
                             width: 70px;
 
                         }
-                        a.active{
-                            border: 1px solid #85F567;
-                            background-color: #85F567;
+                        &.active {
+                          a {
+                                border: 1px solid #85F567;
+                                background-color: #85F567;
+                            }
                         }
                     }
+                    
                 }
             }
         }

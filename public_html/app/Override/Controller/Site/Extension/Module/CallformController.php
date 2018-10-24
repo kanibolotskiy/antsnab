@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @category WS patches 
  * @package  WS\Override\Controller\Site\Common
@@ -65,7 +64,6 @@ class CallformController extends \Controller
         if (utf8_strlen($this->request->post['text']) > 2000) {
             $this->formError['text']  = $this->language->get('error_text');
         }
-           
         // Captcha
         $pageName = 'contact';
         

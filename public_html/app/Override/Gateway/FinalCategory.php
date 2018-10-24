@@ -1,7 +1,8 @@
 <?php
 
 /**
- * FinalCategories Description 
+ * Финальная категория - та, которая содержит только продукты.
+ * И в ней возможно построение смежной таблицы свойств ( по свойствам, наследуемым из этой категории) 
  * 
  * @version    0.1, Aug 14, 2018  6:49:41 PM 
  * @copyright  Copyright (c) 2018 pinstudio. (https://www.pinstudio.ru)

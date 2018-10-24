@@ -310,6 +310,17 @@ class ProdtabsController extends \Controller
         $this->getList();
     }
 
+    /** Necessary for module methods */
+    public function install()
+    {
+
+    }
+
+    public function uninstall()
+    {
+
+    }
+
     /*
      *
      * Check that user actions are authorized

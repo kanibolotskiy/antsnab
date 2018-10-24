@@ -1,13 +1,13 @@
 <?php
 namespace WS\Override\Controller\Admin\Extension\Module;
 
-use WS\Override\Gateway\ProdUnits;
-use WS\Override\Gateway\ProdUnitTemplates;
+use WS\Override\Gateway\ProdUnits\ProdUnits;
+use WS\Override\Gateway\ProdUnits\ProdUnitTemplates;
 use WS\Override\Controller\Admin\Extension\Module\Punits\UnitsAjaxController;
 use WS\Override\Controller\Admin\Extension\Module\Punits\StringsAjaxController;
 
 /**
- * Описание класса 
+ * Модуль управления единицами измерения 
  * 
  * @version    1.0, Mar 28, 2018  2:00:25 AM 
  * @copyright  Copyright (c) 2018 AntSnab. (https://www.ant-snab.ru)
@@ -275,6 +275,17 @@ class ProdUnitsController extends \Controller
         );
 
         return $this;
+    }
+
+    /** Necessary for module methods */
+    public function install()
+    {
+
+    }
+
+    public function uninstall()
+    {
+
     }
 
     /** AJAX for produnits @task move to certain classes, need to refactor OC*/
