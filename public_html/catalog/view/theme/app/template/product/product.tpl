@@ -7,14 +7,16 @@
         <?php echo $content_top; ?>
         <div class="card-product"  itemprop="offers" itemscope itemtype="http://schema.org/Offer">
             <div class="title" itemprop="name"><?=$heading_title?></div>
+            <div class="manufacturer">
+                <p itemprop="seller">
+                    <span>ТУ/ГОСТ&nbsp;<?=$sku?></span>
+                    <?php if ($manufacturer) { ?>
+                        <span><?php echo $manufacturer; ?></span>
+                    <?php } ?>
+                </p>
+            </div>
             <div class="card-product-container">
                 <div class="left">
-                    <div class="manufacturer">
-                        <span>ТУ/ГОСТ&nbsp;<?=$sku?></span>
-                        <?php if ($manufacturer) { ?>
-                        <p itemprop="seller"><?php echo $manufacturer; ?></p>
-                        <?php } ?>
-                    </div>
                     <div class="fade thumb__list">
                         <?php if ($thumb) { ?>
                             <a class="thumbnail thumb__link" 
@@ -26,130 +28,139 @@
                             </a>
                         <?php } ?>
                     </div>
-                </div>
-                <div class="right">
-                    
-                    <div class="description-price">
-                        <div class="description-mini">
-                            <?=$description_mini?>
-                        </div>
-
-                        <div class="price-for">
-                            <span>Цена за:</span>
-                            
-                            <!--Переключатель цен-->
-                            <?php if($pUnitsErrors):?>
-                                <?= $pUnitsErrors ?>
-                            <?php else: ?>
-                                <ul id="priceSwitcher"
-                                    data-currency_symbol="<?=$currencySymb?>" 
-                                    data-sale_to_price_koef="<?=$sale_to_price_koef?>">
-
-                                    <li data-sale_to_ui_koef="<?=$pUnits[1]['sale_to_ui_koef']?>" 
-                                        data-ui_descr="<?=$pUnits[1]['relStr']?>" class="active">
-                                        <a href="#"><?= $pUnits[1]['showName']?></a>
-                                    </li>
-
-                                    <?php if($pUnits[2]):?>
-                                    <li data-sale_to_ui_koef="<?=$pUnits[2]['sale_to_ui_koef']?>"
-                                        data-ui_descr="<?=$pUnits[2]['relStr']?>">
-                                        <a href="#"><?= $pUnits[2]['showName']?></a>
-                                    </li>
-                                    <?php endif;?>
-
-                                </ul>
-                            <?php endif;?>
-                            <!-- // -->
-
-                        </div>
-
-                    </div>
-                    <div class="border"></div>
-                    
-                    <!-- Оптовая цена -->
-                    <div class="wholesale">
-                        <div class="wholesale-price">
-                            <?php if($pUnitsErrors):?>
-                                 HAS ERRORS, SEE ABOVE
-                            <?php else: ?>
-                            <strong> 
-                                <span id="wholesale_price" data-value="<?=$price_wholesale?>">
-                                </span>
-
-                                <b class="help_question">?<em>Оптовая цена действительна при единовременной оплате 
-                                        <span id="wholesale_threshold" data-value="<?=$wholesale_threshold?>">
-                                        </span>&nbsp;
-                                        <span id="wholesale_unit" data-value="<?=$priceUnit['name_plural']?>">
-                                        </span></em>
-                                </b>
-                                
-                            </strong>
-                            <span id="priceWholesaleDescr">
-                            </span>
-                            <?php endif;?>
-                        </div>
-                        <p>Оптом</p>
-                    </div> 
-                    <!-- // -->
-
-                    <div class="border"></div>
-
-                    <?php if($pUnitsErrors):?>
-                            HAS ERRORS, SEE ABOVE
-                    <?php else: ?>
-
-                         <!-- Розничная цена -->
-                         <div class="wholesale wholesale2">
-                                <div class="wholesale-price">
-                                    <strong id="price"  data-value="<?=$price?>"></strong>
-                                    <span id="priceDescr"></span>
+                    <div class="thumb__nav">
+                        <?php if ($images) { ?>
+                        <div class="thumb__list">
+                            <?php foreach ($images as $image) { ?>
+                                <div class="thumb__item">
+                                    <a class="thumb__link" 
+                                    href="<?php echo $image['popup']; ?>" 
+                                    title="<?php echo $heading_title; ?>">
+                                            <img src="<?php echo $image['thumb']; ?>" 
+                                                title="<?php echo $heading_title; ?>" 
+                                                alt="<?php echo $heading_title; ?>" />
+                                    </a>
                                 </div>
-                            <p>В розницу</p>
+                            <?php } ?>
                         </div>
+                        <?php }?>
+                    </div>
+                </div>
+
+                <div class="right" id="prodRight">
+                        <div class="description-price">
+                            <div class="description-mini">
+                                <?=$description_mini?>
+                            </div>
+
+                            <div class="price-for">
+                                <span>Цена за:</span>
+                                
+                                <!--Переключатель цен-->
+                                <?php if($pUnitsErrors):?>
+                                    <?= $pUnitsErrors ?>
+                                <?php else: ?>
+                                    <ul id="priceSwitcher"
+                                        data-currency_symbol="<?=$currencySymb?>" 
+                                        data-sale_to_price_koef="<?=$sale_to_price_koef?>">
+
+                                        <li data-sale_to_ui_koef="<?=$pUnits[1]['sale_to_ui_koef']?>" 
+                                            <?php if($pUnits[1]['force_step_by_one'] == 1):?>
+                                            data-ui_minimum = "1"
+                                            data-ui_step = "1"
+                                            <?php endif; ?>
+                                            data-ui_name = "<?=$pUnits[1]['name']?>"
+                                            data-ui_descr="<?=$pUnits[1]['relStr']?>" class="active">
+                                            <a href="#"><?= $pUnits[1]['showName']?></a>
+                                        </li>
+
+                                        <?php if(isset($pUnits[2])):?>
+                                        <li data-sale_to_ui_koef="<?=$pUnits[2]['sale_to_ui_koef']?>"
+                                            <?php if($pUnits[2]['force_step_by_one'] == 1):?>
+                                            data-ui_minimum = "1"
+                                            data-ui_step = "1"
+                                            <?php endif; ?>
+                                            data-ui_name = "<?=$pUnits[2]['name']?>"
+                                            data-ui_descr="<?=$pUnits[2]['relStr']?>">
+                                            <a href="#"><?= $pUnits[2]['showName']?></a>
+                                        </li>
+                                        <?php endif;?>
+
+                                    </ul>
+                                <?php endif;?>
+                                <!-- // -->
+
+                            </div>
+
+                        </div>
+                        <div class="border"></div>
+                        
+                        <!-- Оптовая цена -->
+                        <div class="wholesale">
+                            <div class="wholesale-price">
+                                <?php if($pUnitsErrors):?>
+                                    HAS ERRORS, SEE ABOVE
+                                <?php else: ?>
+                                <div class="help_cont"> 
+                                    <strong id="wholesale_price" data-value="<?=$price_wholesale?>">
+                                    </strong>
+
+                                    <b class="help_question">?<em>Оптовая цена действительна при единовременной оплате <span id="wholesale_threshold" data-value="<?=$wholesale_threshold?>"><?=$wholesale_threshold?></span>&nbsp;<span id="wholesale_unit" data-value="<?=$saleUnit['name_plural']?>"><?=$saleUnit['name_plural']?></span></em></b>
+                                    
+                                </div>
+                                <span id="priceWholesaleDescr">
+                                </span>
+                                <?php endif;?>
+                            </div>
+                            <p>Оптом</p>
+                        </div> 
                         <!-- // -->
 
-                        <div class="quantity-buy">
-                            <div class="quantity-buy-block">
-                                <div class="qnt-container-spec">
+                        <div class="border"></div>
+
+                        <?php if($pUnitsErrors):?>
+                                HAS ERRORS, SEE ABOVE
+                        <?php else: ?>
+
+                            <!-- Розничная цена -->
+                            <div class="wholesale wholesale2">
+                                    <div class="wholesale-price">
+                                        <strong id="price"  data-value="<?=$price?>">
+                                        </strong>
+                                        <span id="priceDescr">
+                                        </span>
+                                    </div>
+                                <p>В розницу</p>
+                            </div>
+                            <!-- // -->
+
+                            <div class="quantity-buy">
+                                <div class="quantity-buy-block">
+                                    <div class="qnt-container-spec">
+                                    </div>
                                 </div>
+                                <a data-loading-text="Добавление..." id="button-cart" href="#" class="buy">Купить</a>
                             </div>
-                            <a data-loading-text="Добавление..." id="button-cart" href="#" class="buy">Купить</a>
-                        </div>
 
-                    <?php endif;?>
+                        <?php endif;?>
+                    <!--</div>--> 
 
-                    <div class="notify">Товар добавлен в корзину</div>
-                </div>
-
-                <div class="space"></div>
-                <div class="thumb__nav">
-                    <?php if ($images) { ?>
-                    <div class="thumb__list">
-                        <?php foreach ($images as $image) { ?>
-                            <div class="thumb__item">
-                                <a class="thumb__link" 
-                                   href="<?php echo $image['popup']; ?>" 
-                                   title="<?php echo $heading_title; ?>">
-                                        <img src="<?php echo $image['thumb']; ?>" 
-                                             title="<?php echo $heading_title; ?>" 
-                                             alt="<?php echo $heading_title; ?>" />
-                                </a>
-                            </div>
-                        <?php } ?>
-                    <?php }?>
+                    <div class="in-stock" style="height:79px;">
+                        <span>Товар в наличии</span>
+                        <ul>
+                            <?php if(isset($locations[0])):?>
+                                <li class="stock1">
+                                <?=$locations[0]['name'];?> 
+                                </li>
+                            <?php endif;?>
+                            <?php if(isset($locations[1])):?>
+                                <li class="stock2">
+                                <?=$locations[1]['name'];?> 
+                                </li>
+                            <?php endif;?>
+                        </ul>
                     </div>
-                </div>
-                <div class="in-stock">
-                    <span>Товар в наличии</span>
-                    <ul>
-                        <li class="stock1">
-                            Алтуфьево
-                        </li>
-                        <li class="stock2">
-                            Щелково
 
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -159,9 +170,13 @@
 
         <div id="demoTab">
             <ul class="resp-tabs-list vert">
+
+                <?php if(!empty($properties)): ?>
                 <li>
                     Описание
                 </li>
+                <?php endif;?>
+
                 <li>Упаковка</li>
                 <li>Калькулятор</li>
 
@@ -172,6 +187,7 @@
             </ul>
 
             <div class="resp-tabs-container vert">
+                <?php if(!empty($properties)): ?>
                 <div>
                     <div class="table">
                         <table>
@@ -194,6 +210,7 @@
                         </table>
                     </div>
                 </div>
+                <?php endif;?>
                 <!--@task1 скачивания-->
                 <!--<div class="download">
                     <ul>
@@ -279,7 +296,7 @@
                 </div>
                 <div>
                     <div class="calculator">
-                        <div class="title">Калькулятор кровельных материалов</div>
+                        <div class="title">Калькулятор загрузки</div>
                         <p>В разработке</p>
 <!--
                         <p>Чтобы узнать сколько материала Эластоизол Премиум ЭКП-5,0 вам понадобится введите площадь изолируемой поверхности в квадратных метрах:</p>
@@ -349,7 +366,7 @@
                                         <span><strong><?= $r['author'] ?></strong> о <b><?= $r['about'] ?></b></span>
                                         <p><?= $r['date'] ?></p>
                                     </div>
-                                    <em><?= $r['text'] ?></em>
+                                    <?= $r['text'] ?>
                                 </div>
                                 <?php if (!empty($r['answer'])): ?>
                                     <div class = "review answer-review">
@@ -366,22 +383,8 @@
                         </div>
 
                         <div class="give-feedback">
-                            <div id="ajax_loader" class="ajax_loader">
-                                <div class="loader-classic">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div>
-                            </div>
                             <div class="title-give-feedback">Оставить отзыв</div>
-                            <form id="form-review" action = "<?= $action ?>" method="post">
+                            <form id="form-review" method="post">
                                 <div class = "row">
                                     <span>Имя: 
                                         <i id="error_author" class="error"></i>
@@ -414,136 +417,79 @@
                                         <i id="error_agree" class="error"></i>
                                     </label>
                                 </div>
-                                <!--
-                                <button id="button-review"
-                                    type="submit" data-callback="submitReviewForm" >Добавить отзыв</button>
-                                -->
-                                <button id="button-review"
-                                    type="submit"
-                                    form="review_form"
-                                    class="g-recaptcha"
-                                    data-sitekey="<?= $captcha_key ?>"
-                                    data-callback="submitReviewForm" >Добавить отзыв</button>
+                                <div id="ajax_loader" class="ajax_loader">
+                                    <div class="loader-classic">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </div> 
                                     
+                                <button 
+                                    id="button-review"
+                                    data-product_id="<?=$product_id?>"
+                                    type="button"
+                                    > Добавить отзыв</button>
                                 
                             </form>
-                            <script type="text/javascript">
-                                    function submitReviewForm()
-                                    {   
-                                        $("#ajax_loader").fadeIn(200);
-                                        
-                                        $("#form-review .error").html("");
-
-                                        $.ajax({
-                                        url: 'index.php?route=product/product/write&product_id=<?php echo $product_id; ?>',
-                                        type: 'post',
-                                        dataType: 'json',
-                                        data: $("#form-review").serialize(),
-                                        /*
-                                        beforeSend: function() {
-                                            $('#button-review').button('loading');
-                                        },
-                                        complete: function() {
-                                            $('#button-review').button('reset');
-                                        },*/
-                                        success: function(json) {
-                                            $('.alert-success, .alert-danger').remove();
-
-                                            if (json['error']) {
-                                                //$('#review').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
-                                                console.log(json['error']['name'])
-                                                for(err in json['error']){
-                                                    $("#error_"+err).html(json['error'][err]);
-                                                }
-                                                grecaptcha.reset();
-                                            }else{
-                                                $(".popup.thank-you").addClass("visible");
-                                                $("#form-review").trigger("reset");
-                                                grecaptcha.reset();
-                                            }
-                                            $("#ajax_loader").fadeOut(200);
-                                        }
-                                        
-                                        });
-                                        
-                                        //$("#form-review").reset();
-                                        //grecaptcha.reset();
-                                        //console.warn('here');
-                                        //$('#review_form').submit();
-                                        //e.preventDefault();
-                                        //console.log($('#review_form').serialize());
-                                        
-                                    }
-                                    
-                                    window.onload = function ()
-                                    {
-                                        
-                                        $('#agreeeLabel').on('click', function (e) {
-                                            var ischecked = $('#agree').prop('checked');
-                                            $('#agree').prop('checked', !ischecked);
-                                        });
-                                    }
-                            </script>
-                            
                         </div>
                         
                     </div>
                 </div>
             </div>
         </div>
-        <!--
-        <div class="contacts-tabs card-product-tabs">
-            <div id="mtab1" class="tab">
-                <ul class="tabset multi-tabset">
-                    <li>
-                        <a href="#m1tab1" class="active">Описание</a>
-                    </li>
-                    <li><a href="#m1tab2">Упаковка</a></li>
-                    <li><a href="#m1tab3">Калькулятор</a></li>
-
-                    <?php foreach($tabs as $t): ?>
-                    <li><a href="#m1tab_<?=$t['id']?>"><?=$t['name']?></a></li>
-                    <?php endforeach;?>
-                    <li><a href="#m1tab7">Отзывы</a></li>
-                </ul>
-
-            </div>
-        </div>
-        -->
-        <!-- @task1 refactor here hardcoded -->
-        <div class="popup2">
-            <div class="close3"></div>
-            <div class="popup-block2">
-                <div class="popup-content2">
-                    <div class="close4"></div>
-                    <span>Склад Алтуфьево</span>
-                    <p><b>Адрес:</b> г. Москва, Высоковольтный проезд, дом 1, строение 43</p>
-                    <p><b>График работы:</b> с 8.30 до 18.30 с понедельника по пятницу</p>
-                    <p><b>Без обеда</b></p>
-                    <p>Для вашего удобства можете <a href="">скачать подробную схему проезда</a></p>
-                    <div id="map">
-                        <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A0f697f340e451a2655a9f6348161cf5b312de4f5fd7d29cd06dcfbb8856e845d&amp;width=100%25&amp;height=400&amp;lang=ru_RU&amp;scroll=false"></script>
+        <?php if(isset($locations[0])):?>
+            <?php $l = $locations[0]?>
+            <div class="popup2">
+                <div class="close3"></div>
+                <div class="popup-block2">
+                    <div class="popup-content2">
+                        <div class="close4"></div>
+                        <span><?=$l['name']?></span>
+                        <p><?=$l['address']?></p>
+                        <p><?=$l['open']?></p>
+                        <p><?=$l['comment']?></p>
+                        <p>Для вашего удобства можете <a href="#">скачать подробную схему проезда</a></p>
+                        <div id="prodmap2" 
+                             class="map map-container prodmap"
+                             data-longitude="<?=$l['longitude']?>"
+                             data-latitude="<?=$l['latitude']?>"
+                             data-name="<?=$l['name']?>" >
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php endif;?>
 
-        <div class="popup3">
-            <div class="close5"></div>
-            <div class="popup-block3">
-                <div class="popup-content3">
-                    <div class="close6"></div>
-                    <span>Склад Щелково</span>
-                    <p><b>Адрес:</b> Московская область, г. Щелково, ул. Заводская, д. 2, территория завода "Щелково Агрохим"</p>
-                    <p><b>График работы:</b> с 8.30 до 18.30 с понедельника по пятницу</p>
-                    <p><b>Без обеда</b></p>
-                    <p>Для вашего удобства можете <a href="">скачать подробную схему проезда</a></p>
-                    <div id="map2">
-                        <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A8b8d059edfefdc578640ce1901d9addd8bec5873733b011f3c403a3b0a01eb1c&amp;width=100%25&amp;height=400&amp;lang=ru_RU&amp;scroll=false"></script>
+        <?php if(isset($locations[1])):?>
+            <?php $l = $locations[1]?>
+            <div class="popup3">
+                <div class="close5"></div>
+                <div class="popup-block3">
+                    <div class="popup-content3">
+                        <div class="close6"></div>
+                        <span><?=$l['name']?></span>
+                        <p><?=$l['address']?></p>
+                        <p><?=$l['open']?></p>
+                        <p><?=$l['comment']?></p>
+                        <p>Для вашего удобства можете <a href="">скачать подробную схему проезда</a></p>
+                        <div id="prodmap3" 
+                             class="map map-container prodmap"
+                             data-longitude="<?=$l['longitude']?>"
+                             data-latitude="<?=$l['latitude']?>"
+                             data-name="<?=$l['name']?>" >
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php endif;?>
 
         <div class="mentioned-products mentioned-products2">
             <?php if( $products):?>

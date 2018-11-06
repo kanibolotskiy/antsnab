@@ -481,13 +481,13 @@ class ControllerProductProduct extends Controller {
 
 			$data['products'] = array();
 			
+			/** @task move to override */
 			//Добавлен второй параметр - количество возвращаемых результатов (и RAND)
 			$results_related = $this->model_catalog_product->getProductRelated($this->request->get['product_id'],2);
-			$used_ids=array_keys($results_related);
 			
-			$results_recommends = $this->model_catalog_product->getProductRecommend($this->request->get['product_id'],4-count($results_related),$used_ids);
+			$results_recommends = $this->model_catalog_product->getProductRecommend($this->request->get['product_id'],2);
 
-			$results=array_merge ($results_related, $results_recommends);
+			$results=array_merge($results_related, $results_recommends);
 
 			foreach ($results as $result) {
 				if ($result['image']) {

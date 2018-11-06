@@ -2,87 +2,71 @@
 <div class = "reviews-container">
     <div class = "give-feedback">
         <div class = "title-give-feedback">Оставить отзыв</div>
-        <form id="review_form" action = "<?= $action ?>" method="post">
+        <form id="review_form">
+
+
             <div class = "row">
                 <span>Имя: 
-                    <?php if (isset($errors['author'])): ?>
-                        <i class="error"><?= $errors['author'] ?></i>
-                    <?php endif; ?>
+                    <i id="error_author" class="error"></i>
                 </span>
-                <?php if (isset($errors['author'])): ?>
-                    <input class="error" name="author" type = "text" placeholder="Ведите Ваше имя" value="<?= $entry_author ?>">
-                <?php else: ?>
-                    <input name="author" type = "text" placeholder="Ведите Ваше имя" value="<?= $entry_author ?>">
-                <?php endif; ?>
+                <input name="author" type = "text" placeholder="Ведите Ваше имя" value="<?= $entry_author ?>" />
             </div>
             <div class = "row">
                 <span>
                     e-mail:
-                    <?php if (isset($errors['email'])): ?>
-                        <i class="error"><?= $errors['email'] ?></i>
-                    <?php endif; ?>
+                    <i id="error_email" class="error"></i>
                 </span>
-                <?php if (isset($errors['email'])): ?>
-                    <input value="<?= $entry_email ?>" type = "text" class="error" name="email" placeholder="Введите Ваш e-mail">
-                <?php else: ?>
-                    <input value="<?= $entry_email ?>" type = "text" name="email" placeholder="Введите Ваш e-mail">
-                <?php endif; ?>
+                <input value="<?= $entry_email ?>" type = "text" name="email" placeholder="Введите Ваш e-mail"/>
             </div>
             <div class = "row">
                 <span>Организация:
-                    <?php if (isset($errors['company'])): ?>
-                        <i class="error"><?= $errors['company'] ?></i>
-                    <?php endif; ?>
                 </span>
-                <?php if (isset($errors['company'])): ?>
-                    <input value="<?= $entry_company ?>"  class="error" type = "text" name="company" placeholder="Введите название организации">
-                <?php else: ?>
-                    <input value="<?= $entry_company ?>" type = "text" name="company" placeholder="Введите название организации">
-                <?php endif; ?>
+                <input value="<?= $entry_company ?>" type = "text" name="company" placeholder="Введите название организации"/>
             </div>
             <div class = "row">
                 <span>Отзыв:
-                    <?php if (isset($errors['text'])): ?>
-                        <i class="error"><?= $errors['text'] ?></i>
-                    <?php endif; ?>
+                    <i id="error_text" class="error"></i>
                 </span>
-                <?php if (isset($errors['text'])): ?>
-                    <textarea  class="error" name="text"><?= $entry_text ?></textarea>
-                <?php else: ?>
                     <textarea  name="text"><?= $entry_text ?></textarea>
-                <?php endif; ?>
             </div>
             <div class = "agreement">
                 <input name="agree" class="error" type = "checkbox" id = "agree" value="1"/>
                 <label for = "agree" id="agreeLabel">
                     Я согласен с <a target="_blank" href = "<?=$rules?>">правилами</a>
-                    <?php if (isset($errors['agree'])): ?>
-                        <i class="error"><?= $errors['agree'] ?></i>
-                    <?php endif; ?>
+                    <i id="error_agree" class="error"></i>
                 </label>
             </div>
-            <button
+
+            <div id="ajax_loader" class="ajax_loader">
+                <div class="loader-classic">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div> 
+
+            <button 
+                id="button-review_page"
+                data-action="<?= $action ?>"
+                type="button"
+                > Добавить отзыв
+            </button>
+
+            <?php /* captcha is disabled now <button
                 type="submit"
                 form="review_form"
                 class="g-recaptcha"
                 data-sitekey="<?= $captcha_key ?>"
-                data-callback="submitReviewForm" >Добавить отзыв</button>
+                data-callback="submitReviewForm" >Добавить отзыв</button>*/?>
             
         </form>
-        <script type="text/javascript">
-                function submitReviewForm()
-                {
-                    console.warn('here');
-                    $('#review_form').submit();
-                }
-                window.onload = function ()
-                {
-                    $('#agreeeLabel').on('click', function (e) {
-                        var ischecked = $('#agree').prop('checked');
-                        $('#agree').prop('checked', !ischecked);
-                    });
-                }
-        </script>
     </div>
     <?php foreach ($reviews as $r): ?>
         <div class = "review-block">
@@ -91,7 +75,7 @@
                     <span><strong><?= $r['author'] ?></strong> о <b><?= $r['about'] ?></b></span>
                     <p><?= $r['date'] ?></p>
                 </div>
-                <em><?= $r['text'] ?></em>
+                <?= $r['text'] ?>
             </div>
             <?php if (!empty($r['answer'])): ?>
                 <div class = "review answer-review">
@@ -108,8 +92,7 @@
     </div>
 </div>
 
-<?php if ($show_popup): ?>
-    <div class="popup thank-you visible" style="display: block;">
+    <div class="popup thank-you"> 
         <div class="close"></div>
         <div class="popup-block">
             <div class="popup-content">
@@ -119,4 +102,4 @@
             </div>
         </div>
     </div>
-<?php endif; ?>
+

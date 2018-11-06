@@ -125,7 +125,8 @@ class ContactpageController extends \Controller
             }
         }
 
-        $yamap = 'https://api-maps.yandex.ru/2.1/?lang=ru_RU';
+        $yamap = 'https://api-maps.yandex.ru/2.0/?lang=ru_RU&load=package.standard';
+        //$this->document->addScript($yamap, 'footer');
         $this->document->addScript($yamap, 'header');
         $data['rekviziti'] = $this->url->link(AdminModule::CONF_REKVIZITI_LINK) . "#rekvizit";
 

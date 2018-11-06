@@ -14,9 +14,12 @@ use WS\Override\Gateway\ProdUnits\ProdUnitStrings;
 use WS\Override\Gateway\ProdProperties;
 use WS\Override\Gateway\ProdTabs;
 use WS\Override\Gateway\ProdUnits\ProdUnitsCalc;
+use WS\Override\Controller\Admin\Extension\Module\ReviewpageController as ReviewAdminModule;
 
 class ProductTemplateDecorator implements IDecorator
 {
+    const RULES_INFORMATION_ID = 5;
+
     public function process($data, $registry)
     {
         $request = $registry->get('request');
@@ -42,7 +45,7 @@ class ProductTemplateDecorator implements IDecorator
         }
 
         $data['currencySymb'] = $registry->get('currency')->getSymbolRight($registry->get('session')->data['currency']);
-        $data['wholesale_threshold'] = $product_info['wholesale_threshold'];
+        $data['wholesale_threshold'] = (int)$product_info['wholesale_threshold'];
 
         //описание вверху карточки
         $data['description_mini'] = html_entity_decode($product_info['description_mini']);
@@ -57,10 +60,12 @@ class ProductTemplateDecorator implements IDecorator
         $pUnits = [];
         $pUnitsErrors = null;
         $priceUnit = null;
+        $saleUnit = null;
         $saleToPriceKoef = null;
 
         try {
             foreach ($prodUnits as $unit_id => $unit) {
+                /** единицы измерения с sortorder <> 0 участвуют в отображении в шаблоне */
                 if (0 != $unit['switchSortOrder']) {
                     $key = (int)$unit['switchSortOrder'];
                     $pUnits[ $key ] = $unit;
@@ -72,27 +77,38 @@ class ProductTemplateDecorator implements IDecorator
                     //текстовые строки
                     $pUnits[$key]['showName'] = ($unit['name_price'])?$unit['name_price']:$unit['name'];
                     $pUnits[$key]['name_plural'] =($unit['name_plural'])?$unit['name_plural']:$unit['name'];
- 
+
+                    //строка описания цен. Например: "ведро, 16 кг"
                     if ($unit['calcKoef'] &&
                         $unit['calcRel'] &&
                         $unit['to_name_plural']) {
                         if ($unit['calcRel'] > 1) {
-                            $relStr = htmlspecialchars($unit['name'] . ', ' . (int)$unit['calcKoef'] . ' ' . $unit['to_name_plural']);
+                            $relStr = htmlspecialchars($unit['name'] . ', ' . (float)$unit['calcKoef'] . ' ' . $unit['to_name_plural']);
                         }
                     } else {
                         $relStr = htmlspecialchars($unit['name']);
                     }
                         
                     $pUnits[$key]['relStr'] = $relStr;
-                    //параллельно ищем $priceUnit - нужна как отдельная переменная
 
-                    if ($unit['isPriceBase'] == 1 && !$priceUnit) {
-                        $priceUnit = $pUnits[$key];
-                        //коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
-                        $saleToPriceKoef = $saleToUIKoef;
-                    } elseif ($unit['isPriceBase'] == 1) {
-                        throw new \Exception('Too many price bases for product ' . $product_id);
-                    }
+                }
+
+                //параллельно ищем $priceUnit (базовая единица цен) - нужна как отдельная переменная
+                //для передачи стоимостей в корзину
+                if ($unit['isPriceBase'] == 1 && !$priceUnit) {
+                    $priceUnit = $unit; 
+                    //коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
+                    $saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($product_id, 'isSaleBase', $unit_id);
+
+                } elseif ($unit['isPriceBase'] == 1) {
+                    throw new \Exception('Too many price bases for product ' . $product_id);
+                }
+
+                if ($unit['isSaleBase'] == 1 && !$saleUnit) {
+                    $saleUnit = $unit; 
+
+                } elseif ($unit['isSaleBase'] == 1) {
+                    throw new \Exception('Too many price bases for product ' . $product_id);
                 }
             }
 
@@ -104,12 +120,18 @@ class ProductTemplateDecorator implements IDecorator
                 throw new \Exception('Price base wasnt found for product ' . $product_id);
             }
 
+            if (!$saleUnit) {
+                throw new \Exception('Sale base wasnt found for product ' . $product_id);
+            }
+
         } catch (\Exception $e) {
             $pUnitsErrors = $e->getMessage();
         }
+
         $data['pUnits'] = $pUnits;
         $data['pUnitsErrors'] = $pUnitsErrors;
         $data['priceUnit'] = $priceUnit;
+        $data['saleUnit'] = $saleUnit;
         $data['sale_to_price_koef'] = $saleToPriceKoef;
 
 
@@ -147,8 +169,55 @@ class ProductTemplateDecorator implements IDecorator
             }
         }
 
+        //яндекс карты во всплывающем модале
+        $registry->get('document')->addScript('https://api-maps.yandex.ru/2.0/?lang=ru_RU&load=package.standard','header');
+
+        $data['locations'] = array();
+
+        $registry->get('load')->model('localisation/location');
+
+        foreach ((array)$registry->get('config')->get('config_location') as $location_id) {
+            $location_info = $registry->get('model_localisation_location')->getLocation($location_id);
+
+            if ($location_info) {
+                if ($location_info['image']) {
+                    $image = $this->model_tool_image->resize($location_info['image'], $this->config->get($this->config->get('config_theme') . '_image_location_width'), $this->config->get($this->config->get('config_theme') . '_image_location_height'));
+                } else {
+                    $image = false;
+                }
+
+                $data['locations'][] = array(
+                    'location_id' => $location_info['location_id'],
+                    'name'        => $location_info['name'],
+                    'address'     => nl2br($location_info['address']),
+                    'geocode'     => $location_info['geocode'],
+                    'telephone'   => $location_info['telephone'],
+                    'fax'         => $location_info['fax'],
+                    'image'       => $image,
+                    'open'        => nl2br($location_info['open']),
+                    'comment'     => $location_info['comment']
+                );
+            }
+        }
+
+        foreach ($data['locations'] as &$location) {
+            $geocode = str_replace(' ', '', $location['geocode']);
+            $parts = explode(',', $geocode);
+            if (count($parts) >=2) {
+                $location['latitude'] = $parts[0];
+                $location['longitude'] = $parts[1];
+            } else {
+                $location['latitude'] = '';
+                $location['longitude'] = '';
+            }
+        }
+
         $data['footer'] = $registry->get('load')->controller('common/footer');
 
+        $ruleId = $registry->get('config')->get(ReviewAdminModule::CONFIG_KEY_RULE_ID);
+        $data['rules'] = $registry->get('url')->link('information/information', 'information_id=' . $ruleId);
+
         return $data;
+
     }
 }

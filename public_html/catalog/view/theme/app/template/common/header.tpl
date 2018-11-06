@@ -7,9 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title><?php echo $title; ?></title>
         <?php /*<base href="<?php echo $base; ?>" /> */ ?>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="/catalog/view/theme/app/bundle/app.css" rel="stylesheet">
-_
         <?php if ($description) { ?>
             <meta name="description" ontent="<?php echo $description; ?>" />
         <?php } ?>
@@ -48,7 +46,6 @@ _
                 </div>
             </div>
         <?php endif; ?>
-
         <?php $visible = (!empty($form_errors) ) ? 'visible' : ''; ?>
         <div class="popup <?= $visible ?>">
             <div class="close"></div>

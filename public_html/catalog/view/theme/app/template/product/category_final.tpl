@@ -49,6 +49,7 @@
                         background-color: #f9f9f9;
                     }
                 </style>
+                <?php if(!empty($summary['rows'])): ?>
                 <div class="wrapper_adaptive_table">
                     <table class="summary table table-bordered table-striped table-responsive">
                         <thead>
@@ -81,6 +82,7 @@
                         </tbody>
                     </table>
                 </div>
+                <?php endif;?>
             </div>
             <div class="bottom_text">
                 <?php echo $bottom_text; ?>

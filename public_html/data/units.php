@@ -1,5 +1,5 @@
 <?php
-
+//ssee 008.sql
 use WS\Override\Gateway\ProdUnits\ProdUnitTemplates;
 use WS\Override\Gateway\ProdUnits\ProdUnits;
 use WS\Override\Gateway\ProdUnits\ProdUnitStrings;
@@ -478,7 +478,7 @@ function process2547($product, $registry)
         $match = preg_match('/\d./', $product['upakovka'], $matches);
         if ($match) {
             $dstUnitData['templateId'] = $tplId;
-            $dstUnitData['name'] = 'Упаковка';
+            $dstUnitData['name'] = 'упаковка';
 
             $dstUnitData['isBasePrice'] = 0;
             $dstUnitData['switchSortOrder'] = 0;
@@ -1577,8 +1577,8 @@ function process2555($product, $registry)
 }
 
 $dstDB->query("update produnit_packagestr set description='Толщина:' where description like 'Толщина%'");
-$dstDB->query("delete from produnit_packagestr where description like 'Упаковка%' and `value` like '%аллет%'");
-$dstDB->query("delete from produnit_packagestr where description like 'Упаковка%' and `value` like '%короб%'");
-$dstDB->query("delete from produnit_packagestr where description like 'Упаковка%' and `value` like '%Упаковка%'");
-$dstDB->query("delete from produnit_packagestr where description like 'Упаковка%' and `value` like '%м<sup>3</sup>%'");
+$dstDB->query("delete from produnit_packagestr where description like 'упаковка%' and `value` like '%аллет%'");
+$dstDB->query("delete from produnit_packagestr where description like 'упаковка%' and `value` like '%короб%'");
+$dstDB->query("delete from produnit_packagestr where description like 'упаковка%' and `value` like '%Упаковка%'");
+$dstDB->query("delete from produnit_packagestr where description like 'упаковка%' and `value` like '%м<sup>3</sup>%'");
 $dstDB->query("delete from produnit_packagestr where description like 'В ведре%' or description like 'В мешке%' or description like 'В брикете%' or description like 'В бочке%' or description like 'В рулоне%' or description like 'В картридже%' or description like 'В колбасе%' or description like 'В баллоне%' or description like 'В пачке%' or description like 'В канистре%'");

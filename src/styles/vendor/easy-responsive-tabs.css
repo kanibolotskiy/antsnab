@@ -8,7 +8,7 @@ ul.resp-tabs-list, p {
     font-size: 13px;
     display: inline-block;
     padding: 13px 15px;
-    margin: 0 4px 0 0;
+    margin: 4px 4px 0 0;
     list-style: none;
     cursor: pointer;
     float: left;
@@ -28,7 +28,7 @@ h2.resp-accordion {
 
 .resp-tab-content {
     display: none;
-    padding: 15px;
+    padding: 15px 0;
 }
 
 .resp-tab-active {
@@ -60,13 +60,13 @@ h2.resp-accordion {
     border: 1px solid #c1c1c1;
     border-top: 0px solid #c1c1c1;
     margin: 0px;
-    padding: 10px 15px;
+    padding: 15px 15px;
 }
 
 h2.resp-tab-active {
     border-bottom: 0px solid #c1c1c1 !important;
     margin-bottom: 0px !important;
-    padding: 10px 15px !important;
+    padding: 15px 15px !important;
 }
 
 h2.resp-tab-title:last-child {
@@ -123,14 +123,14 @@ border-right: 1px #FFF solid !important;
     margin-top: 3px;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-top: 12px solid #c1c1c1;
+    border-top: 12px solid #d3a06d;
 }
 
 h2.resp-tab-active span.resp-arrow {
     border: none;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-bottom: 12px solid #9B9797;
+    border-bottom: 12px solid #fff;
 }
 
 /*-----------Accordion styles-----------*/

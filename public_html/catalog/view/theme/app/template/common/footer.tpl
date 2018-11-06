@@ -66,14 +66,14 @@
     </div>
 </footer>
 <script src="/catalog/view/theme/app/bundle/app.js"></script>
-<script src="https://www.google.com/recaptcha/api.js"></script>
+<!--<script src="https://www.google.com/recaptcha/api.js"></script>-->
 
+    <!-- @task1 Счетчики, виджеты (comagic) -->
 <?php foreach ($scripts as $script) { ?>
     <script src="<?php echo $script; ?>" type="text/javascript"></script>
 <?php } ?>
 <?php foreach ($analytics as $analytic) { ?>
     <?php echo $analytic; ?>
 <?php } ?>
-<!-- @task1 Счетчики, виджеты (comagic) -->
 </body>
 </html>

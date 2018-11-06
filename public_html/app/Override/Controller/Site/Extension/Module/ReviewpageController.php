@@ -19,9 +19,28 @@ class ReviewpageController extends \Controller
     {
         $this->load->language('extension/module/reviewpage');
         $this->load->model('catalog/review');
+        $defaultRaiting = (int)$this->config->get(AdminModule::CONFIG_KEY_RAITING);
+
+        if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+            $json = array();
+            if ($this->validateForm($this->request->post)) {
+                $newData = $this->request->post;
+                $newData['rating'] = $defaultRaiting;
+                $result = $this->model_catalog_review->addCompanyReview($newData);
+                if($result) {
+                    $json['success'] = "Отзыв сохранен";
+                } else {
+                    $json['error'] = 'Server error';
+                }
+
+            } else {
+                $json['error'] = $this->error;
+            }
+            $this->response->addHeader('Content-Type: application/json');
+            exit(json_encode($json));
+        }
 
         $reviewsLimit = (int)$this->config->get(AdminModule::CONFIG_KEY_COUNT);
-        $defaultRaiting = (int)$this->config->get(AdminModule::CONFIG_KEY_RAITING);
         $ruleId = $this->config->get(AdminModule::CONFIG_KEY_RULE_ID);
         
         $data['rules'] = $this->url->link('information/information', 'information_id=' . $ruleId);
@@ -76,17 +95,6 @@ class ReviewpageController extends \Controller
         $data['entry_text'] = isset($this->request->post['text']) ? $this->request->post['text'] : '';
         $data['show_popup'] = false;
         $data['captcha_key'] = $this->config->get('google_captcha_key');
-        if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-            if ($this->validateForm($this->request->post)) {
-                $newData = $this->request->post;
-                $newData['rating'] = $defaultRaiting;
-                $result = $this->model_catalog_review->addCompanyReview($newData);
-                if($result) {
-                    $data['show_popup'] = true;
-                }
-            }
-        }
-        $data['errors'] = $this->error;
 
         return $this->load->view('extension/module/app/reviewpage', $data);
     }

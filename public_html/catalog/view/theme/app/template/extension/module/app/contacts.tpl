@@ -42,16 +42,6 @@
                                 <?php $cnt++ ?>
                             <?php endforeach; ?>
                         </ul>
-                        <!-- @task1 to css replace #map -->
-                        <style>
-                            .map {
-                                border: 2px solid #EFEEEC;
-                                margin-top: 24px;
-                                width: 100%;
-                                height: 400px;
-                                margin-bottom: 30px;
-                            }
-                        </style>
                         <div class="tab-list">
                             <?php $cnt = 0; ?>
                             <?php foreach ($locations as $l): ?>
@@ -60,24 +50,11 @@
                                         <p><?= $l['address'] ?></p>
                                         <p><?= $l['open'] ?></p>
                                         <?php if (!empty($l['latitude']) && !empty($l['longitude'])): ?>
-                                            <div id="map<?= $cnt ?>" class="map">
+                                            <div data-latitude="<?=$l['latitude']?>" 
+                                                 data-longitude="<?=$l['longitude']?>" 
+                                                 data-name="<?=l['name']?>" id="map<?= $cnt ?>" 
+                                                 class="map map-container">
                                             </div>
-                                            <script>
-                                                document.addEventListener("DOMContentLoaded", function () {
-                                                    ymaps.ready(init);
-                                                    function init() {
-                                                        var map = new ymaps.Map("map<?= $cnt ?>", {
-                                                            center: [<?= $l['latitude'] ?>, <?= $l['longitude'] ?>],
-                                                            zoom: 15
-                                                        });
-                                                        var myPlacemark = new ymaps.Placemark(
-                                                                [<?= $l['latitude'] ?>,<?= $l['longitude'] ?>],
-                                                                {hintContent: "<?=$l['name']?>"}
-                                                        );
-                                                        map.geoObjects.add(myPlacemark);
-                                                    }
-                                                });
-                                            </script>
                                         <?php endif; ?>
                                         <!-- @task1 hardcoded -->
                                         <a target="_blank" href="/system/storage/download/sklad-a-plan.pdf.JDa4QZE4AmF8uHtfdkmwjUdNYVGJGEAd" class="download-map">Скачать подробную карту</a>

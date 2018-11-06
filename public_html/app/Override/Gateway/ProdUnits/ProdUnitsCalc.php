@@ -3,6 +3,7 @@ namespace WS\Override\Gateway\ProdUnits;
 
 use WS\Override\Gateway\ProdUnits\ProdUnits;
 use \Exception;
+use Phospr\Fraction;
 
 /**
  * Каждый продукт может исчисляться в разных единицах измерения.
@@ -30,6 +31,7 @@ class ProdUnitsCalc extends \Model
         * @param array $product_id - id продукта, для которого осуществляется анализ
         * @param string $base  'PriceBase' || 'SaleBase'
         * @param int $toId - id целевой единицы измерения
+        * @return Fraction - коэффициент
         */
     public function getBaseToUnitKoef($product_id, $base, $toId)
     {
@@ -54,7 +56,7 @@ class ProdUnitsCalc extends \Model
         }
 
         if ($toId == $baseUnitId) {
-            return 1;
+            return Fraction::fromFloat(1.0);
         }
 
         /** 
@@ -66,7 +68,8 @@ class ProdUnitsCalc extends \Model
          */  
         $koef = $this->unitToUnit($units, $baseUnitId, $toId);
         if (null === $koef) {
-            $koef =  1 / $this->unitToUnit($units, $toId, $baseUnitId);
+            $koef = Fraction::fromFloat(1.0);
+            $koef =  $koef->divide($this->unitToUnit($units, $toId, $baseUnitId));
         }
 
         if (null === $koef) {
@@ -81,7 +84,7 @@ class ProdUnitsCalc extends \Model
     {
         $checkedIds = [];
         $continue = true;
-        $koef = 1;
+        $koef = Fraction::fromFloat(1.0);
         $entryId = $fromId;
         while ($continue) {
             $entryUnit = $units[$entryId];
@@ -90,7 +93,7 @@ class ProdUnitsCalc extends \Model
                 return null;
             }
 
-            $koef = $koef*$entryUnit['calcKoef'];
+            $koef = $koef->multiply(Fraction::fromFloat((float)$entryUnit['calcKoef'])); 
             if ($entryUnit['calcRel'] == $toId) {
                 return $koef;
             }

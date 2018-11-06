@@ -1,3 +1,6 @@
+import './decimalRound.js';
+var Fraction = require('fraction.js');
+
 class Quantity {
     static init(selector, opts) {
         if (undefined === opts) {
@@ -11,21 +14,30 @@ class Quantity {
         });
 
     }
-
+    
     constructor(view, opts) {
-
         this._options = {
-            'minimum_sale': parseInt(opts.minimum_sale) || 1,
-            'sale_to_ui_koef': parseFloat(opts.sale_to_ui_koef) || 1,
-            'sale_to_price_koef': parseFloat(opts.sale_to_price_koef) || 1
-        };
+            /** SaleQuantity options */
+            'sale_step': opts.sale_step? parseFloat(opts.sale_step) : 1,
+            'sale_minimum': opts.sale_minimum? parseFloat(opts.sale_minimum) : 1,
 
+            /** Injected uis' quantity options */
+            'sale_to_ui_koef': opts.sale_to_ui_koef ? new Fraction(opts.sale_to_ui_koef) : new Fraction(1),
+            'ui_minimum': opts.ui_minimum ? parseFloat(opts.ui_minimum) : null, 
+            'ui_step': opts.ui_step ? parseFloat(opts.ui_step) : null,
+            'ui_name': opts.ui_name || ''
+
+            //'sale_to_price_koef': new Fraction(opts.sale_to_price_koef) || new Fraction(1),
+        };
+        
         this.view = view;
-        this.model = new SaleQuantityModel(this._options.minimum_sale);
-        this.model.setUiModel(this._options.sale_to_ui_koef);
+        this.model = new SaleQuantityModel(this._options.sale_minimum, this._options.sale_step) ;
+        this.model.setUiModel(this._options.sale_to_ui_koef, this._options.ui_minimum, this._options.ui_step);
 
         this._registerEvents();
-        this.view.$input = this.model.uiQuantity;
+        this.view.$input = this.getQuantityInUiUnits(); 
+        this.view.$uName = this._options.ui_name;
+
         this.view.render();
 
         return this;
@@ -33,31 +45,45 @@ class Quantity {
 
 
     /**
+     * Получить количество в выбранных пользователем единицах
+     * Только для отображения! Не исползовать для расчетов цен
+     */
+    getQuantityInUiUnits() {
+        return Math.round10(this.model.uiQuantity.valueOf(), -3);
+    }
+
+    /**
      * Получить текущее количество в кратных единицах.
-     * Всегда округляем в большую сторону.
      */
     getQuantityInSaleUnits() {
-        return Math.ceil(this.model.explicitQuantity);
+        return this.model.saleQuantity.valueOf();
     }
 
     /**
      * Получить текущее количество в единицах, в которых
      * ведется учет (для передачи в корзину и расчета сумм)
      */
-    getQuantityInPriceUnits() {
-        let quantityInSaleUnits = this.getQuantityInSaleUnits(),
+    /*getQuantityInPriceUnits() {
+        let quantityInSaleUnits = this.model.saleQuantity,
             saleToPriceKoef = this._options.sale_to_price_koef;
-        return quantityInSaleUnits * saleToPriceKoef;
-    }
+        return saleToPriceKoef.mul(quantityInSaleUnits).valueOf();
+    }*/
 
     /**
      * Переключить режим представления 
-     * @param {int} sale_to_ui_koef - коэффициент пересчета из
-     * единицы кратности в новую пользовательскую единицу
+     * @param {string} sale_to_ui_koef - коэффициент пересчета из
+     * единицы кратности в новую пользовательскую единицу (дробь-строковое представление)
+     * @param {string} ui_name - отображаемое имя
      */
-    switch(sale_to_ui_koef) {
-        this.model.setUiModel(sale_to_ui_koef);
-        this.view.$input = this.model.uiQuantity;    
+    switch(sale_to_ui_koef, ui_minimum, ui_step, ui_name) {
+        ui_minimum = ui_minimum ? parseFloat(ui_minimum) : null;
+        ui_step = ui_step ? new Fraction(ui_step) : null;
+        if( !sale_to_ui_koef ) {
+            console.warn('You should set the koef for converting this value to your sale unit value');
+        }
+        this.model.setUiModel(new Fraction(sale_to_ui_koef), ui_minimum, ui_step);
+        this.view.$input = this.getQuantityInUiUnits(); 
+        this.view.$uName = ui_name;
     }
 
     _registerEvents() {
@@ -68,19 +94,20 @@ class Quantity {
 
     _handleUp() {
         this.model.up(1);
-        this.view.$input = this.model.uiQuantity;
+        this.view.$input = this.getQuantityInUiUnits(); 
+
     }
 
     _hadleDown() {
         this.model.down(1);
-        this.view.$input = this.model.uiQuantity;
+        this.view.$input = this.getQuantityInUiUnits(); 
     }
 
     _changeHandler(e) {
-        this.model.uiQuantity = this.view.$input.val();
+        this.model.uiQuantity = new Fraction(this.view.$input.val());
 
-        /** Количество автоматически округляется, возвращаем пользователю актуальное значение */
-        this.view.$input = this.model.uiQuantity;
+        /** Количество автоматически при установке до шага кратности, возвращаем в инпут актуальное значение */
+        this.view.$input = this.getQuantityInUiUnits(); 
     }
 }
 
@@ -93,23 +120,24 @@ class Quantity {
  * пользователь работает в пользовательском интерфейсе
  */
 class SaleQuantityModel {
-    /** Продаем всегда c шагом штука в единицах кратности*/
-    static step = 1;
 
     /**
      * @param {int} minimum - начальное значение (от..)
      */
-    constructor(minimum) {
-        this._minimum = minimum;
-        this._quantity = minimum;
-        this._uiKoef = 1;
-        this.setUiModel(this._uiKoef);
+    constructor(minimum, step) {
+        this._saleMinimum = minimum;
+        this._quantity = Fraction(minimum);
+        this._saleStep = Fraction(step);
+        this._uiKoef = Fraction(1);
+
+        this.setUiModel(this._uiKoef, this._saleMinimum, this._saleStep);
     }
 
     /**
-     * Получить текущее неокругленное значение в единицах кратности 
+     * Получить текущее значение в единицах кратности 
+     * @return Fraction
      */
-    get explicitQuantity() {
+    get saleQuantity() {
         return this._quantity;
     }
 
@@ -117,13 +145,16 @@ class SaleQuantityModel {
      * Множитель перевода из кратных едениц в текущую пользовательскую
      * (sale_to_ui option), например, в рулоне 20м2 Продаем рулонами
      * uiKoef = 20 (перевести рулоны в м2 - нужно умножить на 20) 
+     * @return Fraction
      */
     get uiKoef() {
         return this._uiKoef;
     }
 
-    /**
-      * Получить текущее целое (округленное) значение в пользовательских единицах
+
+     /**
+      * Получить текущее значение в пользовательских единицах
+      * @return Fraction 
       */
     get uiQuantity() {
         return this._uiModel.value;
@@ -132,12 +163,11 @@ class SaleQuantityModel {
     /**
      * Установить новое количество в пользовательских единицах
      * Количество кратных единиц пересчитывается автоматически
-     * @param {*} uiQuantity 
+     * @param {Fraction} uiQuantity 
      */
     set uiQuantity(uiQuantity) {
-        /** Геттер uiModel автоматически округляет до целых единиц в большую сторону */
-        this._uiModel.value = parseFloat(uiQuantity);
-        /** Нужно пересчитать актуальное значение */
+        this._uiModel.value = uiQuantity;
+        /** Нужно пересчитать актуальное значение в единицах кратности*/
         this._refresh();
     }
 
@@ -161,24 +191,49 @@ class SaleQuantityModel {
         this._refresh();
     }
 
+    /** При изменении значений uiModel сама делает подгонку (округление) в соответствии со свои step. Родительскую модель надо рефрешить */
+    _refresh() {
+        this._quantity = this._uiModel.value.div(this._uiKoef);
+    }
+
     /**
      * Устанавливаем модель, поверх которой работает
      * пользователь в данный момент  
-     * @param {int} koef - множитель перевода из кратной еденицы в пользовательскую 
+     * @param {Fraction} koef - множитель перевода из кратной еденицы в пользовательскую 
+     * @param {float} minium - минимальный порог пользовательской единицы (не может быть меньше sale unit)
+     * @param {Fraction} step - шаг пользовательской модели (не может быть меньше шага sale unit)
      */
-    setUiModel(koef) {
-        this._uiKoef = parseFloat(koef);
+    setUiModel(koef, minimum, step) {
+        let uiStep, uiMinimum;
+        
+        if(!minimum) {
+            uiMinimum = koef.mul(this._saleMinimum ); 
+        } else {
+            if( Fraction(minimum).div(koef).compare(this._saleMinimum) >= 0) { //given minimum is bigger or equal than sale minimum
+                uiMinimum = new Fraction(minimum);
+            } else {
+                uiMinimum = koef.mul(this._saleMinimum );
+                console.warn('ui units minimum cant be less that its related sale unit'); 
+            }
+        }
+        
+        if(!step) {
+            uiStep = koef;
+        } else {
+            if( step.div(koef).compare(this._saleStep) >= 0 ) { //given step is bigger than sale step
+                uiStep = step;
+                //@todo - step должен содержать целое число sale steps
+            } else {
+                uiStep = koef;                
+                console.warn('ui units step cant be less that its related sale unit');
+            }
+        }
 
-        //округление шага в большую сторону для ситуаций, когда пользовательская ед. больше чем кратная
-        //например в 1м3 = 0.сколько-то листов. Продаем в листах. Значит шаг м3 = 1 
-        let uiStep = Math.ceil(SaleQuantityModel.step * this._uiKoef),
-            uiMinimum = Math.ceil(this._minimum * this._uiKoef);
         this._uiModel = new UiQuantityModel(uiStep, uiMinimum);
-        this.uiQuantity = this.explicitQuantity * this._uiKoef;
-    }
+        this._uiModel.value = koef.mul(this._quantity);
+        this._uiKoef = koef;
 
-    _refresh() {
-        this._quantity = this._uiModel.value / this._uiKoef;
+        this._refresh();
     }
 
 }
@@ -188,21 +243,25 @@ class SaleQuantityModel {
  * в пользовательских (выбранных) единицах продажи
  * 
  * Не используется без фасада SaleQuantityModel
+ * 
+ * @param Fraction step
+ * @param Fraction minimum
  */
 class UiQuantityModel {
 
     constructor(step, minimum) {
-        this.minimum = parseInt(minimum);
-        this._value = this.minimum;
-        this.step = parseInt(step);
+        this._step = step;
+        this._minimum = minimum;
+        this._value = this._minimum;
     }
 
     get value() {
         return this._value;
     }
 
+    /** Округляет переданный nval под ровное количество шагов для данной UiUnit! */
     set value(nval) {
-        let steps = parseInt(Math.ceil((nval - this._value) / this.step));
+        let steps = Math.round(nval.sub(this._value).div(this._step).valueOf());
         if (steps >= 0) {
             this.up(steps);
         } else {
@@ -215,7 +274,7 @@ class UiQuantityModel {
             console.warn("up step cant be negative do nothing");
             return;
         }
-        this._value = this._value + this.step * steps;
+        this._value = this._value.add(this._step.mul(steps));
     }
 
     down(steps) {
@@ -223,9 +282,9 @@ class UiQuantityModel {
             console.warn("up step cant be negative do nothing");
             return;
         }
-        this._value = this._value - this.step * steps;
-        if (this._value < this.minimum) {
-            this._value = this.minimum;
+        this._value = this._value.sub(this._step.mul(steps));
+        if ( this._value.compare(this._minimum) < 0 )  { // < miniumum
+            this._value = this._minimum;
         }
     }
 }
@@ -235,6 +294,7 @@ class QuantityView {
     static minusButClass = 'LeftButton';
     static plusButClass = 'RightButton';
     static inputName = 'qnt';
+    static unameClass = 'unameVal'
 
     constructor(container) {
         this.$container = $(container);
@@ -242,9 +302,11 @@ class QuantityView {
         this.$el = $(this.el);
         this.$el.css('display', 'flex');
         this.$el.css('justify-content', 'space-between');
+        this.$el.css('align-items', 'center');
 
         this.$el.html('<div class="' + QuantityView.minusButClass + '"></div>\
-             <input type="text" name="qnt"/>\
+             <input type="text" name="qnt" />\
+             <span class="' + QuantityView.unameClass + '"></span>\
              <div class="'+ QuantityView.plusButClass + '"></div>');
     }
 
@@ -254,6 +316,14 @@ class QuantityView {
 
     get $plusButton() {
         return $('.' + QuantityView.plusButClass, this.$el);
+    }
+
+    get $uName() {
+        return $('.' + QuantityView.unameClass, this.$el);
+    }
+
+    set $uName(value) {
+        $('.' + QuantityView.unameClass, this.$el).html(value);
     }
 
     get $input() {
@@ -270,4 +340,4 @@ class QuantityView {
     }
 }
 
-export default Quantity;
+export {Quantity};
