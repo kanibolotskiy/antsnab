@@ -163,6 +163,41 @@ i.error {
     font-style: italic;
     color: red;
 }
+select {
+    display:none;
+}
+.nice-select {
+    float:none;
+    display:inline-block;
+    border: 1px solid #EAE7E4;
+    height: 42px;
+    padding-right: 45px;
+    border-radius:0;
+    max-width: 100%;
+
+    .list {
+        border-radius:0;
+    }
+    &:after {
+        border-bottom: 2px solid #d3a06d;
+        border-right: 2px solid #d3a06d;
+    }
+}
+.nice-select:active, .nice-select.open, .nice-select:focus {
+    border-color: #d3a06d;
+}
+.news-container .nice-select {
+    width: 250px;
+}
+
+@media screen and (max-width:390px) {
+    .news-container .nice-select {
+        width: 100%;
+        position: relative; 
+        top:-15px;
+    }
+}
+
 body {
     margin:0;
     color:#000;
@@ -1535,10 +1570,6 @@ ul.tabset li:last-child a.active {
     left: -9999px !important; /* change to right: -9999px on RTL sites */
 }
 
-/* custom select styles */
-#seldef1 {
-    display:none;
-}
 
 .select-area {
     border: 1px solid #EAE7E4;
@@ -1643,13 +1674,19 @@ ul.tabset li:last-child a.active {
 }
 .tab-block3 .quantity-buy{
     //position: absolute;
-    bottom: 20px;
-    left: 0;
+    //bottom: 20px;
+    //left: 0;
     padding: 0 20px;
     width: 100%;
+    margin-top:20px;
 }
+.tab-block3 .quantity-buy .qnt-widget {
+    width: 100%;
+    margin-right: 0;
+}
+
 .tab-block2 ul li .catalog-block{
-    padding-bottom: 60px;
+    padding-bottom: 30px;
 }
 .tab-block2 ul li .catalog-block .catalog-description{
     padding-bottom: 0;
@@ -1677,7 +1714,7 @@ ul.tabset li:last-child a.active {
    max-width:48px;
 }
 
-.qnt-widget input[name=qnt]
+.qnt-widget input.qnt
 {
     width:40px;
     overflow: hidden;
@@ -1806,9 +1843,10 @@ a.show-more{
             .catalog-block{
                 .catalog-description{
                     a.title-product{
-                        margin-bottom: 11px;
+                        margin-bottom: 20px;
                         height: 40px;
                         overflow: hidden;
+                        text-align: center;
                     }
                     p{
                         display: block;
@@ -1830,6 +1868,7 @@ a.show-more{
                     }
                     a.buy{
                         width: 100%;
+                        margin-top:10px;
                     }
                     .quantity-buy{
                         span{
@@ -2685,9 +2724,7 @@ a.show-more{
                 }
                 span{
                     display: block;
-                    font-size: 12px;
                     color: #666666;
-                    margin-bottom: 10px;
                 }
                 strong{
                     display: block;
@@ -3381,12 +3418,7 @@ a.print{
 .select-list{
     margin-bottom: 10px;
     ul{
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
         li{
-            width: 32.5%;
-            margin-bottom: 20px;
             strong{
                 display: block;
                 font-weight: bold;
@@ -3415,6 +3447,19 @@ a.print{
             }
         }
     }
+    .nice-select {
+        width:100%;
+        font-size:13px;
+    }
+}
+.select-list>ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.select-list>ul>li{
+    width: 32.5%;
+    margin-bottom: 20px;
 }
 
 .table a{
@@ -3516,9 +3561,6 @@ a.print{
     }
 }
 
-.catSelector {
-    display:none; //из-за jcf плагина - мигают если не скрыть
-}
 .table table tr td:nth-child(4) {
     border-left: 1px solid #E8E5E2;
 }
@@ -4358,6 +4400,7 @@ html, body{
     height: 100%;
     top:0;left:0;
     display:none;
+    z-index: 1000;
 }
 
 /* Classic */
@@ -4411,4 +4454,12 @@ html, body{
     line-height: 24px;
     margin-top: 24px;
     letter-spacing: 0.12px;}
+
+    #noty_layout__topRight {
+        top: 37px;
+    }
+
+.resp-tab-content {
+    padding:10px;
+}
     

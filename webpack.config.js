@@ -21,8 +21,11 @@ module.exports = (env, options) => {
         plugins: [
             new CleanWebpackPlugin(['public_html/catalog/view/theme/app/bundle']),
             new webpack.ProvidePlugin({
-                $: 'jquery',
-                jQuery: 'jquery'
+                '$': 'jquery',
+                jQuery: 'jquery',
+                jquery: 'jquery',
+                'window.jQuery':'jquery',
+                'window.jquery':'jquery'
             }),
             new MiniCssExtractPlugin({
                 filename: 'app.css'

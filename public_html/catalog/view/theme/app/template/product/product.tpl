@@ -16,6 +16,20 @@
                 </p>
             </div>
             <div class="card-product-container">
+                <div id="cart_preloader" class="ajax_loader">
+                    <div class="loader-classic">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div> 
                 <div class="left">
                     <div class="fade thumb__list">
                         <?php if ($thumb) { ?>
@@ -61,8 +75,7 @@
                                     <?= $pUnitsErrors ?>
                                 <?php else: ?>
                                     <ul id="priceSwitcher"
-                                        data-currency_symbol="<?=$currencySymb?>" 
-                                        data-sale_to_price_koef="<?=$sale_to_price_koef?>">
+                                        data-currency_symbol="<?=$currencySymb?>"> 
 
                                         <li data-sale_to_ui_koef="<?=$pUnits[1]['sale_to_ui_koef']?>" 
                                             <?php if($pUnits[1]['force_step_by_one'] == 1):?>
@@ -126,7 +139,7 @@
                             <div class="wholesale wholesale2">
                                     <div class="wholesale-price">
                                         <strong id="price"  data-value="<?=$price?>">
-                                        </strong>
+                                        </strong><br/>
                                         <span id="priceDescr">
                                         </span>
                                     </div>
@@ -139,7 +152,14 @@
                                     <div class="qnt-container-spec">
                                     </div>
                                 </div>
-                                <a data-loading-text="Добавление..." id="button-cart" href="#" class="buy">Купить</a>
+                                <a data-loading-text="Добавление..." 
+                                   id="button-cart" 
+                                   href="#" 
+                                   data-product_id="<?=$product_id?>"
+                                   data-sale_to_price_koef="<?=$sale_to_price_koef?>"
+                                   class="buy">
+                                   Купить
+                                </a>
                             </div>
 
                         <?php endif;?>
@@ -522,43 +542,6 @@
             gallery: {
                 enabled:true
             }
-        });
-
-        $('#button-cart').on('click', function(e) {
-            e.preventDefault();
-            var quantityInPackages = $('.spinner').SpinnerControl('getFactValue'),
-                toPriceQuantityKoef = _antSnabMeta.priceMeta[_antSnabMeta.bases.sale ].toPriceUnitsKoef,
-                quantityInPriceUnits = quantityInPackages*toPriceQuantityKoef;
-            $.ajax({
-                url:  'index.php?route=checkout/cart/add',
-                type: 'post',
-                data: {
-                           quantity: quantityInPriceUnits,
-                           product_id: $('#product_id').val(), 
-                      },
-                dataType: 'json',
-                beforeSend: function() {
-                    $('#button-cart').button('loading');
-                },
-                complete: function() {
-                    $('#button-cart').button('reset');
-                },
-                success: function(json) {
-                    //@task1 - сбросить таймаут
-
-                    if (json['success']) {
-                        $('.notify').html(json['success']);
-                        $('.basket').html(json['total']);
-                        $('html, body').animate({ scrollTop: 0 }, 'slow');
-                        //добавить норм анимацию
-                        $('.notify').addClass('active');
-                        setTimeout(function() { $('.notify').removeClass('active') }, 3000 );
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                }
-            });
         });
     });
 </script>

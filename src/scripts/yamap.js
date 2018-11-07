@@ -1,3 +1,4 @@
+/** @task этот гребаный яндекс тормозит всю карточку и не работает основной функционал */
 document.addEventListener("DOMContentLoaded", function () {
     if( undefined !== window.ymaps ) {
         ymaps.ready(init);

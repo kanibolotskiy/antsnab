@@ -183,6 +183,8 @@ class CategoryController extends \Controller
             'start' => ($page - 1) * $limit,
             'limit' => $limit
         );
+
+        
         
         //products
         $productsHelper = new ProductListHelper($this->registry);

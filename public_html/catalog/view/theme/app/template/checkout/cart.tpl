@@ -25,13 +25,12 @@
                                 </li>
                                 <li>
                                     <a class="prod-name" href="<?php echo $product['href']; ?>">
-                                        <?php echo $product['name']; ?>
+                                        <?php echo $product['meta_h1']; ?>
                                     </a>
-                                    <p>Для гидроизоляционных,
-                                        обмазочных и кровельных работ.</p>
+                                    <p><?=$product['location']?></p>
                                 </li>
                                 <li>
-                                    <?php if ($product['quantity'] >= $product['wholesale_threshold']): ?>
+                                    <?php if ($product['isWholesale']): ?>
                                         <span>Цена опт</span>
                                         <strong><?= $product['price_wholesale']; ?></strong>
                                     <?php else: ?>
@@ -40,15 +39,13 @@
                                     <?php endif; ?>
                                 </li>
                                 <li>
-                                    <div class="OutputContainer">
-                                        <input 
-                                            data-factInterval="<?= $step ?>" 
-                                            data-visualInterval="<?= $step ?>"
-                                            data-name="<?= $priceUnit ?>"
-                                            class="spinner" 
-                                            type="text"  
-                                            name="quantity[<?php echo $product['cart_id']; ?>]" 
-                                            value="<?php echo $product['quantity']; ?>"/>
+                                    <?php /* inited in cart.js  @task - нужно обновление страницы при смене инпута*/ ?>
+                                    <div 
+                                        class="qnt-container-cart"
+                                        data-el_name="quantity[<?php echo $product['cart_id']; ?>]"
+                                        data-sale_to_price_koef="<?=$product['saleToPriceKoef']?>" 
+                                        data-ui_name="<?=$product['priceUnit']['name']?>"
+                                        data-price_quantity="<?php echo $product['quantity']; ?>">
                                     </div>
                                 </li>
                                 <li>
@@ -74,12 +71,11 @@
                     <?php } ?>
                 </div>
             </form>
-            <?php //@task1 to css ?>
-            <!--<a style="float:right; margin-bottom:18px" href="<?= $action ?>" class="buy">Пересчитать</a>
-            <div style="clear:both"></div>-->            
+
             <?php foreach ($totals as $total): ?>
                 <strong class="recalc intotal"><?php echo $total['title']; ?>: <?php echo $total['text']; ?></strong>
             <?php endforeach; ?>
+
             <div class="ordering">
                 <form id="order_form" method="post" enctype="multipart/form-data" >
                     <p>Нажимая на кнопку Заказать, я даю <a target="_blank" href="index.php?route=information/information&information_id=3">согласие на обработку персональных данных</a></p>
@@ -197,10 +193,6 @@
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        $('.spinner').SpinnerControl();
-        /*$('.spinner').on('spinnerMinus spinnerPlus', function() {
-         $('.recalc').html('--');
-         });*/
         $('.delete').on('click', function (e) {
             e.preventDefault();
             cart.remove($(this).attr('data-cartid'));

@@ -96,12 +96,13 @@ var cart = {
 			type: 'post',
 			data: 'key=' + key,
 			dataType: 'json',
-			beforeSend: function() {
+			/** @task Do via our preloade later */
+			/*beforeSend: function() {
 				$('#cart > button').button('loading');
 			},
 			complete: function() {
 				$('#cart > button').button('reset');
-			},
+			},*/
 			success: function(json) {
 				// Need to set timeout otherwise it wont update the total
 				setTimeout(function () {
@@ -122,6 +123,7 @@ var cart = {
 		});
 	}
 };
+window.cart = cart;
 
 var voucher = {
 	'add': function() {

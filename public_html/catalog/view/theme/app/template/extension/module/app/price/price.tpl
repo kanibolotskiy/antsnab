@@ -86,21 +86,27 @@
    document.addEventListener("DOMContentLoaded", function(){
       function redrawSelector(id, options, currentValue) {
               var $container = $('#' + id),
-                  $jcf = $('.select-area', $container),
-                  $selector = $container.find('select');
-              $selector.remove();
-              $selector = $(document.createElement('select'));
-              $selector.addClass('catSelector');
+                  $selector = $container.find('select'),
+                  $newSelector;
+
+              
+              console.warn(id);
+              console.warn(options);
+              console.warn(currentValue);
+              $newSelector = $(document.createElement('select'));
+              $newSelector.addClass('catSelector');
               $.each(options, function(text, val) {
-                var $option = $(document.createElement('option'));
-                    $option.attr('value', val);
-                    $option.text(text);
-                    $selector.append($option);    
-              });
-              $selector.val(currentValue);
-              $jcf.remove();
-              $container.append($selector);
-              jcf.customForms.replaceAll(); 
+                  var $option = $(document.createElement('option'));
+                  $option.attr('value', val);
+                  $option.text(text);
+                  $newSelector.append($option);    
+                });
+              $newSelector.val(currentValue);
+              $container.append($newSelector);
+
+              /*$selector.niceSelect('destroy');
+              $newSelector.niceSelect();
+              $selector.remove();*/
       }
 
        function redrawBreadcrumbs(){
@@ -143,7 +149,7 @@
            }
 
            $.ajax({
-               url: 'index.php?route=product/price/ajaxRefresh',
+               url: 'index.php?route=extension/module/price/ajaxRefresh',
                method: 'POST',
                data: postData,
                dataType: 'json',
@@ -151,8 +157,7 @@
                    alert('Error while request');
                },
                success: function(data) {
-                   console.warn(data);
-                   
+                   console.error(data);
                    //Selectors
                    var firstActive = data.selectors.active[0];
                    redrawSelector('firstActive', data.selectors.l1, firstActive);

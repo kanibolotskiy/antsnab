@@ -87,6 +87,8 @@ class ModelNewsBlogArticle extends Model {
 			$sql .= " FROM " . DB_PREFIX . "newsblog_article a";
 		}
 
+		
+
 		$sql .= " LEFT JOIN " . DB_PREFIX . "newsblog_article_description ad ON (a.article_id = ad.article_id)
 		LEFT JOIN " . DB_PREFIX . "newsblog_article_to_store a2s ON (a.article_id = a2s.article_id)
 

@@ -9,7 +9,9 @@
 
 namespace WS\Override\Controller\Site\Checkout;
 
+use Phospr\Fraction;
 use WS\Override\Gateway\ProdUnits\ProdUnits;
+use WS\Override\Gateway\ProdUnits\ProdUnitsCalc;
 
 //@task вынужден писать в оверрайд из за одной строчки вконце add, где меняется способ вывода количества
 //количество - это не сумма едениц (напр. м2, а кол-во видов товара в корзине,товарных позиций
@@ -81,7 +83,7 @@ class CartController extends \ControllerCheckoutCart
                 $this->cart->add($this->request->post['product_id'], $quantity, $option, $recurring_id);
 
                 //modified
-                $json['success'] = sprintf($this->language->get('text_success'), $product_info['name'], $this->url->link('checkout/cart'));
+                $json['success'] = sprintf($this->language->get('text_success'), $product_info['meta_h1'], $this->url->link('checkout/cart'));
 
                 // Unset all shipping and payment methods
                 unset($this->session->data['shipping_method']);
@@ -248,10 +250,12 @@ class CartController extends \ControllerCheckoutCart
 
             $products = $this->cart->getProducts();
 
+            $orderSumTotal = 0;
             foreach ($products as $product) {
                 $product_total = 0;
 
-                foreach ($products as $product_2) {
+                /** ANTSNAB deleted check total quantity minimum */
+                /*foreach ($products as $product_2) {
                     if ($product_2['product_id'] == $product['product_id']) {
                         $product_total += $product_2['quantity'];
                     }
@@ -259,7 +263,7 @@ class CartController extends \ControllerCheckoutCart
 
                 if ($product['minimum'] > $product_total) {
                     $data['error_warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
-                }
+                }*/
 
                 if ($product['image']) {
                     $image = $this->model_tool_image->resize($product['image'], $this->config->get($this->config->get('config_theme') . '_image_cart_width'), $this->config->get($this->config->get('config_theme') . '_image_cart_height'));
@@ -288,23 +292,55 @@ class CartController extends \ControllerCheckoutCart
                     );
                 }
 
+                /** 
+                 * В корзине используем saleUnits (единицы измерения продажи), но нам до сих пор нужен коэффициент для
+                 * пересчета wholesale threshold, тк он в еденицах кратности. А так же нам нужна saleunit для 
+                 * опеределения минимального количества и шага в переключателях
+                 * @task переосмыслить вместе с ProductTemplateDecorator - и вынести в отдельный метод
+                 */
+                $produnitsGateway = new ProdUnits($this->registry);
+                $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
+                $prodUnits = $produnitsGateway->getUnitsByProduct($product['product_id']);
+                $priceUnit = null;
+                foreach ($prodUnits as $unit_id => $unit) {
+                    if ($unit['isPriceBase'] == 1 && !$priceUnit) {
+                        $priceUnit = $unit;
+                        //коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
+                        $saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($product['product_id'], 'isSaleBase', $unit_id);
+                    } elseif ($unit['isPriceBase'] == 1) {
+                        throw new \Exception('Too many price bases for product ' . $product['product_id']);
+                    }
+                }
+                if (!$priceUnit) {
+                    throw new \Exception('Price base wasnt found for product ' . $product['product_id']);
+                }
+
+                $wholesale_threshold_in_saleUnits = Fraction::fromFloat((float)$product['wholesale_threshold']); 
+                $wholesale_threshold = $wholesale_threshold_in_saleUnits->multiply($saleToPriceKoef)->toFloat(); 
+
                 // Display prices
                 if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-                    $unit_price = $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
+                    
+                    $saleUnit_price = (float)$this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
+                    $price = $this->currency->format($saleUnit_price, $this->session->data['currency']);
+
+                    $saleUnit_price_wholesale = (float)$this->tax->calculate($product['price_wholesale'], $product['tax_class_id'], $this->config->get('config_tax'));
+                    $price_wholesale = $this->currency->format($saleUnit_price_wholesale, $this->session->data['currency']);
+
+
                     //@added @task
-                    $unit_price_wholesale = $this->tax->calculate($product['price_wholesale'], $product['tax_class_id'], $this->config->get('config_tax'));
-                    $wholesale_threshold = $product['wholesale_threshold'];
-
-                    $price = $this->currency->format($unit_price, $this->session->data['currency']);
-                    //@added
-                    $price_wholesale = $this->currency->format($unit_price_wholesale, $this->session->data['currency']);
-
-
-                    if ($product['quantity'] >= $wholesale_threshold) {
-                        $total = $this->currency->format($unit_price_wholesale * $product['quantity'], $this->session->data['currency']);
+                    $prodQuantity =(float)$product['quantity'];
+                    if ($prodQuantity >= $wholesale_threshold) {
+                        $rowTotal = $saleUnit_price_wholesale * $prodQuantity; 
+                        $isWholesale = true;
+                        $total = $this->currency->format($rowTotal, $this->session->data['currency']);
                     } else {
-                        $total = $this->currency->format($unit_price * $product['quantity'], $this->session->data['currency']);
+                        $rowTotal = $saleUnit_price * $prodQuantity; 
+                        $isWholesale = false;
+                        $total = $this->currency->format($rowTotal, $this->session->data['currency']);
                     }
+                    $orderSumTotal += $rowTotal;
+
                 } else {
                     $price = false;
                     $total = false;
@@ -312,7 +348,8 @@ class CartController extends \ControllerCheckoutCart
 
                 $recurring = '';
 
-                if ($product['recurring']) {
+                /** AntSnab Deleted */
+                /*if ($product['recurring']) {
                     $frequencies = array(
                         'day' => $this->language->get('text_day'),
                         'week' => $this->language->get('text_week'),
@@ -330,40 +367,34 @@ class CartController extends \ControllerCheckoutCart
                     } else {
                         $recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
                     }
-                }
+                }*/
 
 
-                //@added units price meta
-                $prodUnits = new ProdUnits($this->registry);
-                //@deprecated $meta = $prodUnits->getPriceMetaForProduct($product['product_id']);
-
-                /* Определяем в каких еденицах измерения продаем(цена) */
-                foreach ($meta as $unitName => $unitChars) {
-                    if ($unitChars['isPriceBase'] == 1) {
-                        $priceBase = $unitName;
-                    }
-                    if ($unitChars['isSaleBase'] == 1) {
-                        $saleBase = $unitName;
-                    }
-                }
-
-                $data['priceUnit'] = $meta[$priceBase]['name_price'];
-                $data['step'] = ( $meta[$saleBase]['toPriceUnitsKoef'] > 1 ) ? $meta[$saleBase]['toPriceUnitsKoef'] : 1;
 
                 $data['products'][] = array(
                     'cart_id' => $product['cart_id'],
                     'thumb' => $image,
                     'name' => $product['name'],
+
+                    /** @added */
+                    'meta_h1' => $product['meta_h1'],
                     'model' => $product['model'],
                     'option' => $option_data,
                     'recurring' => $recurring,
                     'quantity' => $product['quantity'],
                     'stock' => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
                     'reward' => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
+
+                    /** @added */
                     'price' => $price,
                     'price_wholesale' => $price_wholesale,
+                    'isWholesale' => $isWholesale,
                     'wholesale_threshold' => $product['wholesale_threshold'],
                     'total' => $total,
+                    'priceUnit'=> $priceUnit,
+                    'saleToPriceKoef' => $saleToPriceKoef,
+                    'location' => $product['location'],
+
                     'href' => $this->url->link('product/product', 'product_id=' . $product['product_id'])
                 );
             }
@@ -371,7 +402,8 @@ class CartController extends \ControllerCheckoutCart
             // Gift Voucher
             $data['vouchers'] = array();
 
-            if (!empty($this->session->data['vouchers'])) {
+            /** ANTSNAB DELETED */
+            /*if (!empty($this->session->data['vouchers'])) {
                 foreach ($this->session->data['vouchers'] as $key => $voucher) {
                     $data['vouchers'][] = array(
                         'key' => $key,
@@ -380,8 +412,15 @@ class CartController extends \ControllerCheckoutCart
                         'remove' => $this->url->link('checkout/cart', 'remove=' . $key)
                     );
                 }
-            }
+            }*/
 
+            /** @task - сделать в будущем нормально через некий оптовый модуль, кстати в заказе это как то работает!!!!!!  */
+            $data['totals'][] = array(
+                'title' => 'Итого', 
+                'text' => $this->currency->format($orderSumTotal, $this->session->data['currency'])
+            );
+
+/*
             // Totals
             $this->load->model('extension/extension');
 
@@ -437,9 +476,9 @@ class CartController extends \ControllerCheckoutCart
                     );
                 }
             }
+*/
 
             $data['continue'] = $this->url->link('common/home');
-
             $data['checkout'] = $this->url->link('checkout/checkout', '', true);
 
             $this->load->model('extension/extension');

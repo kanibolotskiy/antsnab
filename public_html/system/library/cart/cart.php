@@ -168,7 +168,6 @@ class Cart {
                 //@added
 				$price = $product_query->row['price'];
                 $price_wholesale = $product_query->row['price_wholesale'];
-                $whole_saleThreshold = $product_query->row['wholesale_threshold'];
 
 				// Product Discounts
 				$discount_quantity = 0;
@@ -244,6 +243,8 @@ class Cart {
 					'cart_id'         => $cart['cart_id'],
 					'product_id'      => $product_query->row['product_id'],
 					'name'            => $product_query->row['name'],
+					/** @added */
+					'meta_h1'         => $product_query->row['meta_h1'],
 					'model'           => $product_query->row['model'],
 					'shipping'        => $product_query->row['shipping'],
 					'image'           => $product_query->row['image'],
@@ -256,9 +257,11 @@ class Cart {
                     //@added
 					'price'           => ($price + $option_price),
                     'price_wholesale' => ($price_wholesale + $option_price),
-                    'wholesale_threshold' => $whole_saleThreshold,
+                    'wholesale_threshold' => $product_query->row['wholesale_threshold'],
 					'total'           => ($price + $option_price) * $cart['quantity'],
 					'total_wholesale'           => ($price_wholesale + $option_price) * $cart['quantity'],
+					'location' => $product_query->row['location'], //превью назначение (для категорий используется и в корзине)
+
 					'reward'          => $reward * $cart['quantity'],
 					'points'          => ($product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $cart['quantity'] : 0),
 					'tax_class_id'    => $product_query->row['tax_class_id'],

@@ -1,5 +1,7 @@
 import {Quantity} from './lib/quantity.es6.js';
+var Fraction = require('fraction.js');
 import './lib/formsubmit.js';
+var Noty = require('noty');
 
 /** Карточка */
 /** init switching ui in specification (product) page */
@@ -58,7 +60,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                 price = parseFloat($price.attr('data-value')),
                 $wholeSalePrice = $('#wholesale_price'),
                 wholeSalePrice = parseFloat($wholeSalePrice.attr('data-value')),
-                saleToPriceKoef = new Fraction($('#priceSwitcher').attr('data-sale_to_price_koef')),
+                saleToPriceKoef = new Fraction($('#button-cart').attr('data-sale_to_price_koef')),
                 saleToUiKoef = new Fraction($activeEl.attr('data-sale_to_ui_koef')),
                 uiPrice = saleToPriceKoef.div(saleToUiKoef).mul(price),
                 uiWholeSalePrice = saleToPriceKoef.div(saleToUiKoef).mul(wholeSalePrice),
@@ -73,6 +75,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
 
 if( $('.in-stock').length > 0) {
     /** Авторесайз блока со складами под размер ноготков фоото */
+    /** @task - если отсутствуют ноготки - схлопывается при ресайзе */
     window.addEventListener('resize', function(){
         var thumbNav = document.getElementsByClassName('thumb__nav')[0], 
             thumbNavHeight = thumbNav.offsetHeight,
@@ -104,4 +107,48 @@ $('#button-review').formSubmit({
         }
     },
     error: function(data){},
+});
+
+/** add to cart */
+$(window).on('load', function () {
+    $('.buy').on('click', function(e){
+        e.preventDefault();
+        var $container = $(this).parents('.quantity-buy'),
+            qntController = $container.find('.qnt-widget').data('quantity'), 
+            quantityInSaleUnits = qntController.getQuantityInSaleUnits(), 
+            toPriceQuantityKoef = new Fraction( $(this).attr('data-sale_to_price_koef') ), 
+            quantityInPriceUnits = toPriceQuantityKoef.mul(quantityInSaleUnits); 
+
+        $.ajax({
+            url:  'index.php?route=checkout/cart/add',
+            type: 'post',
+            data: {
+                quantity: quantityInPriceUnits.valueOf(),
+                product_id: $(this).attr('data-product_id'), 
+            },
+            dataType: 'json',
+            beforeSend: function() {
+                $('#cart_preloader').fadeIn(200);
+            },
+            complete: function() {
+                $('#cart_preloader').fadeOut(200);
+            },
+            success: function(json) {
+                if (json['success']) {
+                    $('.basket').html(json['total']);
+                    $('html, body').animate({ scrollTop: 0 }, 'slow');
+
+                    new Noty({
+                        text: json['success'],
+                        type: 'warning',
+                        theme: 'relax',
+                        timeout: 3000, 
+                    }).show();
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
 });

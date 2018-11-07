@@ -179,6 +179,7 @@ class CategoryController extends \Controller
 
                 $filter_data = array(
                     'filter_category_id' => $category_id,
+                    'filter_sub_category' => true,
                     'sort' => $sort,
                     'order' => $order,
                     'start' => ($page - 1) * $limit,
@@ -339,13 +340,13 @@ class CategoryController extends \Controller
 
         $filter_data = array(
             'filter_category_id' => $category_id,
+            'filter_sub_category' => true,
             'sort' => $category_info['sort_by'],
             'order' => $category_info['sort_direction'],
             'start' => ($page - 1) * $limit,
             'limit' => $limit,
             'filter_year' => $filter_year
         );
-
         $articles = $this->collectArticles($filter_data, $articles_image_size, $date_format, $top_category_id );
         $article_total = $this->model_newsblog_article->getTotalArticles($filter_data);
 

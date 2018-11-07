@@ -7,8 +7,11 @@ class Quantity {
             opts = {};
         }
 
-        $(selector).each(function () {
-            let view = new QuantityView(this),
+        var $els = (selector instanceof jQuery)?selector:$(selector),
+            elName = (opts.el_name)?opts.el_name:null;
+
+        $els.each(function () {
+            let view = new QuantityView(this, elName),
                 controller = new Quantity(view, opts);
             $(this).data('quantity', controller);
         });
@@ -53,21 +56,23 @@ class Quantity {
     }
 
     /**
+     * Установить новое значение, в отображаемых единицах 
+     * @param {*} value 
+     */
+    setQuantityInUiUnits(value) {
+        /** @task Здесь необходима проверка value - например на 1.09.01 - fraction отваливается */
+        this.model.uiQuantity = new Fraction(value);
+
+        /** Количество автоматически округляется до шага кратности, возвращаем в инпут актуальное значение */
+        this.view.$input = this.getQuantityInUiUnits(); 
+    }
+
+    /**
      * Получить текущее количество в кратных единицах.
      */
     getQuantityInSaleUnits() {
         return this.model.saleQuantity.valueOf();
     }
-
-    /**
-     * Получить текущее количество в единицах, в которых
-     * ведется учет (для передачи в корзину и расчета сумм)
-     */
-    /*getQuantityInPriceUnits() {
-        let quantityInSaleUnits = this.model.saleQuantity,
-            saleToPriceKoef = this._options.sale_to_price_koef;
-        return saleToPriceKoef.mul(quantityInSaleUnits).valueOf();
-    }*/
 
     /**
      * Переключить режим представления 
@@ -104,11 +109,19 @@ class Quantity {
     }
 
     _changeHandler(e) {
-        this.model.uiQuantity = new Fraction(this.view.$input.val());
-
-        /** Количество автоматически при установке до шага кратности, возвращаем в инпут актуальное значение */
-        this.view.$input = this.getQuantityInUiUnits(); 
+        this.setQuantityInUiUnits(this.view.$input.val());
     }
+
+    /**
+     * Получить текущее количество в единицах, в которых
+     * ведется учет (для передачи в корзину и расчета сумм)
+     * @deprecated
+     */
+    /*getQuantityInPriceUnits() {
+        let quantityInSaleUnits = this.model.saleQuantity,
+            saleToPriceKoef = this._options.sale_to_price_koef;
+        return saleToPriceKoef.mul(quantityInSaleUnits).valueOf();
+    }*/
 }
 
 /**
@@ -296,7 +309,7 @@ class QuantityView {
     static inputName = 'qnt';
     static unameClass = 'unameVal'
 
-    constructor(container) {
+    constructor(container, name) {
         this.$container = $(container);
         this.el = document.createElement('DIV');
         this.$el = $(this.el);
@@ -304,8 +317,11 @@ class QuantityView {
         this.$el.css('justify-content', 'space-between');
         this.$el.css('align-items', 'center');
 
+        var elName = (name)?name:QuantityView.inputName + Math.random();
+        this._elName = elName;
+
         this.$el.html('<div class="' + QuantityView.minusButClass + '"></div>\
-             <input type="text" name="qnt" />\
+             <input class="qnt" type="text" name="' + elName + '" />\
              <span class="' + QuantityView.unameClass + '"></span>\
              <div class="'+ QuantityView.plusButClass + '"></div>');
     }
@@ -327,11 +343,11 @@ class QuantityView {
     }
 
     get $input() {
-        return $('input[name="' + QuantityView.inputName + '"]', this.$el);
+        return $('input[name="' + this._elName  + '"]', this.$el);
     }
 
     set $input(value) {
-        $('input[name="' + QuantityView.inputName + '"]', this.$el).val(value);
+        $('input[name="' + this._elName + '"]', this.$el).val(value);
     }
 
     render() {
