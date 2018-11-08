@@ -190,6 +190,7 @@ class CategoryController extends \Controller
                 $data['years'] = array();
                 $data['current_year'] = null;
 
+                /** @task pitflows: если опубликовано в 2019 году, а размещено в категорию 2018 - не отображает. Сменить категорию (убрать 2018 - не дает!!!) и проверь запрос - наспех делелось */
                 if ($top_category_id == static::NEWS_CATEGORY_ID) {
                     $this->load->model('newsblog/article');
                     $yearsRaw = $this->model_newsblog_article->getYears($top_category_id);
@@ -217,7 +218,6 @@ class CategoryController extends \Controller
                         }
                     }
                 }
-
 
                 //@changed get articles, pagination construction
                 $article_total = $this->model_newsblog_article->getTotalArticles($filter_data);

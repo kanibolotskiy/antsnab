@@ -44,13 +44,12 @@ class PriceController extends \Controller
 
     public function ajaxRefresh()
     {
-        $finalsParent = $this->config->get(AdminModule::CONFIG_KEY_START_CATEGORY_PARENT_ID); 
 
-        $firstActive = null;
+        $firstActive = $this->config->get(AdminModule::CONFIG_KEY_START_CATEGORY_ID);
         if( isset($this->request->post['firstActive']) ) {
             $firstActive = $this->request->post['firstActive'];
-            $finalsParent = $firstActive;
         }
+        $finalsParent = $firstActive;
 
         $secondActive = null;
         if( isset($this->request->post['secondActive']) ) {
@@ -64,9 +63,9 @@ class PriceController extends \Controller
             $finalsParent = $thirdActive;
         }
         
-        $startCat = $this->config->get(AdminModule::CONFIG_KEY_START_CATEGORY_ID);
+        $rootCat = $this->config->get(AdminModule::CONFIG_KEY_START_CATEGORY_PARENT_ID);
         $result = [
-            'selectors' => $this->getPriceSelectors($startCat, $firstActive, $secondActive, $thirdActive),
+            'selectors' => $this->getPriceSelectors($rootCat, $firstActive, $secondActive, $thirdActive),
             'table' => $this->getPriceTableContentHTML($finalsParent)
         ];
 

@@ -44,6 +44,7 @@ sup {
     vertical-align: super;
     font-size: smaller;
 }
+
 /**Bootstrap tables*/
 table {
     border-collapse: collapse;
@@ -54,24 +55,55 @@ table {
     display:table;
 }
 
-.table-bordered {
-    border: 1px solid #ddd;
-}
-.table-responsive {
-    min-height: .01%;
-    overflow-x: auto;
-}
-
-.table-striped>tbody>tr:nth-of-type(odd) {
-    background-color: #f9f9f9;
-}
-
 td, th {
     padding: 0;
 }
 
 th {
     text-align: left;
+}
+
+/** styles of table inside news or article */
+.article-content {
+    .table-responsive  {
+        clear:both;
+    }
+    
+    table td,
+    table th {
+        padding: 8px;
+        line-height: 1.42857143;
+        vertical-align: top;
+        border: 1px solid #ddd;
+        border-bottom-width: 2px;
+    }
+
+    table>caption+thead>tr:first-child>td, 
+    table>caption+thead>tr:first-child>th, 
+    table>colgroup+thead>tr:first-child>td, 
+    table>colgroup+thead>tr:first-child>th, 
+    table>thead:first-child>tr:first-child>td, 
+    table>thead:first-child>tr:first-child>th {
+        border-top: 0;
+    }
+
+    table>tbody>tr:nth-of-type(odd) {
+        background-color: #f9f9f9;
+    }
+}
+
+.table-bordered {
+    border: 1px solid #ddd;
+}
+
+.table-responsive {
+    min-height: .01%;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
 }
 
 .table>tbody>tr>td, 
@@ -737,17 +769,20 @@ a.btn-nav{
         opacity:1;
     }
 }
+
 h1,
-.title{
+div.title{
     display: block;
-    font-size: 24px;
     font-weight: bold;
     color: black;
+    font-size: 24px;
+    line-height: 28px;
+    margin-bottom: 24px;
 }
-.title {
+div.title {
     position:relative;
 }
-.title:after {
+div.title:after {
     content:'';
     display:block;
     position:absolute;
@@ -1925,10 +1960,6 @@ a.show-more{
     color: #444444;
     line-height: 24px;
 
-    .title, h1{
-        line-height: 28px;
-        margin-bottom: 24px;
-    }
     p{
         display: block;
         margin-bottom: 10px;
@@ -4380,7 +4411,6 @@ html, body{
     position: absolute;
     top: -14px;
 }
-.table-responsive{max-width:100%;}
 
 @media screen and (max-width: 568px){
     .table table {width:100%;}

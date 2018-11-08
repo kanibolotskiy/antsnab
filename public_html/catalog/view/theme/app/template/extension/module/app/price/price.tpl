@@ -104,9 +104,9 @@
               $newSelector.val(currentValue);
               $container.append($newSelector);
 
-              /*$selector.niceSelect('destroy');
+              $selector.niceSelect('destroy');
               $newSelector.niceSelect();
-              $selector.remove();*/
+              $selector.remove();
       }
 
        function redrawBreadcrumbs(){
@@ -166,8 +166,8 @@
                    redrawSelector('secondActive', data.selectors.l2, secondActive);
 
                    if( undefined === data.selectors.l3 ) {
+                        $('#thirdActive > select').niceSelect('destroy');
                         $('#thirdActive > select').remove();
-                        $('#thirdActive > .select-area').remove();
                         $('#thirdActive').css("visibility", "hidden"); 
                    } else {
                        var thirdActive = data.selectors.active[2] || "<?=$SHOW_ALL_OPTION_VALUE?>";

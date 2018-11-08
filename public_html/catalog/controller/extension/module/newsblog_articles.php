@@ -41,7 +41,13 @@ class ControllerExtensionModuleNewsBlogArticles extends Controller {
             $filter_data['sort']='rand()';
         }
 		$data['link_to_category']=false;
-		if (count($show_categories)==1) $data['link_to_category']=$this->url->link('newsblog/category', 'newsblog_path=' . $show_categories[0]);
+		/** @task нихера не понятно как она формируется - переосмыслить */
+		//if (count($show_categories)==1) $data['link_to_category']=$this->url->link('newsblog/category', 'newsblog_path=' . $show_categories[0]);
+		if( $template == 'newsblog_articles.tpl' ) {
+			$data['link_to_category']=$this->url->link('newsblog/category', 'newsblog_path=2');
+		} else {
+			$data['link_to_category']=$this->url->link('newsblog/category', 'newsblog_path=1');
+		}
 
 		$results = $this->model_newsblog_article->getArticles($filter_data);
 		$this->load->model('tool/image');

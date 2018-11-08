@@ -352,15 +352,26 @@ class ModelNewsBlogArticle extends Model {
 		return $article_data;
 	}
 
-	public function getArticleRelatedProducts($article_id) {
+	/** @task move to override $limit, $rand added */
+	public function getArticleRelatedProducts($article_id, $limit = null, $rand=false) {
 		$product_data = array();
 
-		$query = $this->db->query("SELECT p.product_id FROM " . DB_PREFIX . "newsblog_article_related pr
+		$query = "SELECT p.product_id FROM " . DB_PREFIX . "newsblog_article_related pr
 		LEFT JOIN " . DB_PREFIX . "product p ON (pr.related_id = p.product_id)
 		LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id)
-		WHERE pr.article_id = '" . (int)$article_id . "' AND pr.type=2 AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
+		WHERE pr.article_id = '" . (int)$article_id . "' AND pr.type=2 AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'";
 
-		foreach ($query->rows as $result) {
+		if( $rand ) {
+			$query .= " ORDER BY RAND() ";
+		}
+		if( null !== $limit ) {
+			$query .= " LIMIT 0," . $limit;
+		}
+
+
+		$product_data = [];
+		$results = $this->db->query($query);
+		foreach ($results->rows as $result) {
 			$product_data[$result['product_id']] = $this->model_catalog_product->getProduct($result['product_id']);
 		}
 
@@ -388,7 +399,7 @@ class ModelNewsBlogArticle extends Model {
 
 		if (!empty($data['filter_category_id'])) {
 			if (!empty($data['filter_sub_category'])) {
-				$sql .= " FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "newsblog_article_to_category p2c ON (cp.category_id = p2c.category_id)";
+				$sql .= " FROM " . DB_PREFIX . "newsblog_category_path  cp LEFT JOIN " . DB_PREFIX . "newsblog_article_to_category p2c ON (cp.category_id = p2c.category_id)";
 			} else {
 				$sql .= " FROM " . DB_PREFIX . "newsblog_article_to_category p2c";
 			}
@@ -460,7 +471,6 @@ class ModelNewsBlogArticle extends Model {
         if(!empty($data['filter_year'])) {
             $sql .= " AND year(p.date_available) = " . (int)$data['filter_year'];
         }
-
 		$query = $this->db->query($sql);
 
 		return $query->row['total'];
@@ -469,7 +479,11 @@ class ModelNewsBlogArticle extends Model {
     /**@task move to override*/
     public function getYears($category_id)
     {
-        $sql = "select year(date_available) as yr from ".DB_PREFIX."newsblog_article left join ".DB_PREFIX."newsblog_article_to_category on ".DB_PREFIX."newsblog_article.article_id=".DB_PREFIX."newsblog_article_to_category.article_id where ".DB_PREFIX."newsblog_article_to_category.category_id = ".$this->db->escape($category_id)." group by yr order by yr DESC";
+		/*$sql = "select year(date_available) as yr from ".DB_PREFIX."newsblog_article left join ".DB_PREFIX."newsblog_article_to_category on ".DB_PREFIX."newsblog_article.article_id=".DB_PREFIX."newsblog_article_to_category.article_id where ".DB_PREFIX."newsblog_article_to_category.category_id = ".$this->db->escape($category_id)." group by yr order by yr DESC";*/
+
+	$sql = "select year(date_available) as yr from ".DB_PREFIX."newsblog_article left join oc_newsblog_article_to_category on oc_newsblog_article.article_id=oc_newsblog_article_to_category.article_id
+	left join ".DB_PREFIX."newsblog_category_path on ".DB_PREFIX."newsblog_category_path.category_id = oc_newsblog_article_to_category.category_id where oc_newsblog_category_path.path_id=".$this->db->escape($category_id)." group by yr order by yr desc";	
+
         $res =  $this->db->query($sql);
         $result = array();
         foreach( $res->rows as $row) {

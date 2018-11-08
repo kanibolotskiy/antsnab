@@ -398,9 +398,10 @@
                                 <?php endif; ?>
                             </div>
                         <?php endforeach; ?>
+                        <?php /* Во вкладке нахуй пагинацию*/ /*
                         <div class="page-navigation page-navigation2">
                             <?php echo $pagination; ?>
-                        </div>
+                        </div>*/ ?>
 
                         <div class="give-feedback">
                             <div class="title-give-feedback">Оставить отзыв</div>
