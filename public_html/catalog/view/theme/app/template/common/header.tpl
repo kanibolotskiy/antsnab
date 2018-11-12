@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title><?php echo $title; ?></title>
         <?php /*<base href="<?php echo $base; ?>" /> */ ?>
-        <link href="/catalog/view/theme/app/bundle/app.css" rel="stylesheet">
+        <link href="/catalog/view/theme/app/bundle/app2.css" rel="stylesheet">
         <?php if ($description) { ?>
             <meta name="description" ontent="<?php echo $description; ?>" />
         <?php } ?>

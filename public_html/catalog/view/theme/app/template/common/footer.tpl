@@ -65,7 +65,7 @@
         </div>
     </div>
 </footer>
-<script src="/catalog/view/theme/app/bundle/app.js"></script>
+<script src="/catalog/view/theme/app/bundle/app2.js"></script>
 <!--<script src="https://www.google.com/recaptcha/api.js"></script>-->
 
     <!-- @task1 Счетчики, виджеты (comagic) -->

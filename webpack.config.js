@@ -15,7 +15,7 @@ module.exports = (env, options) => {
         devtool: (options.mode === 'development') ? "source-map" : false,
         entry: './src/scripts/app.js',
         output: {
-            filename: 'app.js',
+            filename: 'app2.js',
             path: path.resolve(__dirname, 'public_html/catalog/view/theme/app/bundle')
         },
         plugins: [
@@ -28,7 +28,7 @@ module.exports = (env, options) => {
                 'window.jquery':'jquery'
             }),
             new MiniCssExtractPlugin({
-                filename: 'app.css'
+                filename: 'app2.css'
             })
         ],
         module: {
