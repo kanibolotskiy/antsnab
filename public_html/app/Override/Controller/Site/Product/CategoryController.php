@@ -123,7 +123,7 @@ class CategoryController extends \Controller
                 foreach ($subRes as $c) {
                     $sub[] = array (
                         'name' => $c->get('name'),
-                        'href' => $this->url->link('product/category', 'path=' . $path . $url)
+                        'href' => $this->url->link('product/category', 'path=' . $path . '_' . $c->get('category_id') . $url)
                     );
                 }
             }

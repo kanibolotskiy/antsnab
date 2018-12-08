@@ -27,6 +27,7 @@ class CategoryController extends \Controller
     //@task move to Model. Be accurac, used in ArticleController
     const NEWS_CATEGORY_ID = 1;
     const ARTICLES_CATEGORY_ID = 2;
+    const PREVIEW_SYMBOLS_COUNT = 80;
 
     public function index()
     {
@@ -84,8 +85,6 @@ class CategoryController extends \Controller
         $category_info = $this->model_newsblog_category->getCategory($category_id);
 
         if ($category_info) {
-
-            
 
             //for no errors with versions < 20160920
             $articles_image_size = array($this->config->get($this->config->get('config_theme') . '_image_product_width'), $this->config->get($this->config->get('config_theme') . '_image_product_height'));
@@ -383,6 +382,11 @@ class CategoryController extends \Controller
                 $original = '';
                 $thumb = ''; //or use 'placeholder.png' if you need
             }
+
+            $preview = html_entity_decode($result['preview'], ENT_QUOTES, 'UTF-8');
+            $preview = strip_tags($preview);
+            $preview = mb_substr($preview, 0, static::PREVIEW_SYMBOLS_COUNT ) . '...';
+
             $articles[] = array(
                 'article_id' => $result['article_id'],
                 'original' => $original,
@@ -391,7 +395,7 @@ class CategoryController extends \Controller
                 //@added
                 'cat_name' => $result['cat_name'],
                 'main_catid' =>  $result['main_catid'],
-                'preview' => strip_tags(html_entity_decode($result['preview'], ENT_QUOTES, 'UTF-8')),
+                'preview' => $preview, 
                 'attributes' => $result['attributes'],
                 'href' => $this->url->link('newsblog/article', 'newsblog_path=' . $category_path . '&newsblog_article_id=' . $result['article_id']),
                 'date' => ($date_format ? date($date_format, strtotime($result['date_available'])) : false),

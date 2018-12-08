@@ -149,6 +149,7 @@
            }
 
            $.ajax({
+            //    url: '<?=$priceUrl?>', 'index.php?route=extension/module/price/ajaxRefresh',
                url: 'index.php?route=extension/module/price/ajaxRefresh',
                method: 'POST',
                data: postData,

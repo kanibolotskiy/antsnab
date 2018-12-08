@@ -69,7 +69,7 @@ class ControllerExtensionModuleNewsBlogArticles extends Controller {
 				'original' 			=> $original,
 				'thumb' 			=> $thumb,
 				'name'        		=> $result['name'],
-				'preview'  			=> utf8_substr(strip_tags(html_entity_decode($result['preview'], ENT_QUOTES, 'UTF-8')), 0, $setting['desc_limit']),
+				'preview'  			=> mb_substr(strip_tags(html_entity_decode($result['preview'], ENT_QUOTES, 'UTF-8')), 0, $setting['desc_limit']) . '...',
 				'attributes'  		=> $result['attributes'],
 				'href'         		=> $this->url->link('newsblog/article', 'newsblog_path=' . $mainCategoryId . '&newsblog_article_id=' . $result['article_id']),
 				'date'   			=> ($date_format ? date($date_format, strtotime($result['date_available'])) : false),

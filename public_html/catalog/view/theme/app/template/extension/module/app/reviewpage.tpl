@@ -9,7 +9,7 @@
                 <span>Имя: 
                     <i id="error_author" class="error"></i>
                 </span>
-                <input name="author" type = "text" placeholder="Ведите Ваше имя" value="<?= $entry_author ?>" />
+                <input name="author" type = "text" placeholder="Введите Ваше имя" value="<?= $entry_author ?>" />
             </div>
             <div class = "row">
                 <span>
@@ -27,7 +27,7 @@
                 <span>Отзыв:
                     <i id="error_text" class="error"></i>
                 </span>
-                    <textarea  name="text"><?= $entry_text ?></textarea>
+                    <textarea  placeholder="Напишите Ваше мнение о нашей компании" name="text"><?= $entry_text ?></textarea>
             </div>
             <div class = "agreement">
                 <input name="agree" class="error" type = "checkbox" id = "agree" value="1"/>

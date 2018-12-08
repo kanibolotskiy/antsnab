@@ -22,6 +22,7 @@ class ModelExtensionModuleMenueditor extends Model
                 $pre_menu[] = array('name' => $menu_editor_entry['names'][$config->get('config_language_id')],
                     'children' => array(),
                     'column' => 1,
+                    // 'href' => $this->url->link($menu_editor_entry['href']),
                     'href' => $menu_editor_entry['href'],
                     'isactive' => $this->isUrlActive($menu_editor_entry['href']),
                     'target' => $menu_editor_entry['target']);
@@ -29,6 +30,7 @@ class ModelExtensionModuleMenueditor extends Model
                 $post_menu[] = array('name' => $menu_editor_entry['names'][$config->get('config_language_id')],
                     'children' => array(),
                     'column' => 1,
+                    // 'href' => $this->url->link($menu_editor_entry['href']),
                     'href' => $menu_editor_entry['href'],
                     'isactive' => $this->isUrlActive($menu_editor_entry['href']),
                     'target' => $menu_editor_entry['target']);
@@ -47,6 +49,8 @@ class ModelExtensionModuleMenueditor extends Model
 
         //we need exactly one leading slash 
         $url = preg_replace("/^\/*/", "/", $url);
+        /*var_dump($url);
+        var_dump($_SERVER['REQUEST_URI']);*/
 
         return $url === $_SERVER['REQUEST_URI'];
     }

@@ -19,8 +19,8 @@
                 </style>
                 <div id="mtab1" class="tab">
                     <ul class="tabset multi-tabset">
-                        <li><a href="#m1tab1"></a></li>
-                        <li><a href="#m1tab2" class="active"></a></li>
+                        <li><a href="#m1tab1" class="active"></a></li>
+                        <li><a href="#m1tab2"></a></li>
                     </ul>
                     <div class="tab-list">
                         <div id="m1tab1">
@@ -46,8 +46,8 @@
                                                             </a>
                                                         <?php endforeach;?>
                                                     </div> 
-                                                    <a href="<?= $c['href'] ?>" class="more">Подробнее</a> 
                                                 </div> 
+                                                <a href="<?= $c['href'] ?>" class="more">Подробнее</a> 
                                             </div> 
                                         </li>
                                     <?php endforeach; ?>
@@ -85,8 +85,8 @@
                                                             </a>
                                                         <?php endforeach;?>
                                                     </div> 
-                                                    <a href="<?= $c['href'] ?>" class="more">Подробнее</a> 
                                                 </div> 
+                                                <a href="<?= $c['href'] ?>" class="more">Подробнее</a> 
                                             </div> 
                                         </li>
                                     <?php endforeach; ?>

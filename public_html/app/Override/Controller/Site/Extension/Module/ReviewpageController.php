@@ -109,9 +109,23 @@ class ReviewpageController extends \Controller
             $this->error['company'] = $this->language->get('error_company');
         }
 
-        if (1 != preg_match('~^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$~', $this->request->post['email'])) {
+        /*
+            можно было бы использовать закомментированную регулярку. но с кириллицей и @ не работает
+            так же не работает часть {2,6} видимо из-за многобайтовой кодировки
+        */
+        $emailAr = explode('@', $this->request->post['email']);
+        if( count($emailAr) != 2 ) {
             $this->error['email'] = $this->language->get('error_email');
+        } else {
+            $leftValid = preg_match('~([А-Яа-яA-Za-z0-9_-]+\.)*[А-Яа-яA-Za-z0-9_-]+~', $emailAr[0]) ; 
+            $rightValid = preg_match('~[А-Яа-яA-Za-z0-9_-]+(\.[А-Яа-яA-Za-z0-9_-]+)*\.[А-Яа-яA-Za-z]~', $emailAr[1]);
+            if( !($leftValid && $rightValid) ) {
+                $this->error['email'] = $this->language->get('error_email');
+            } 
         }
+        /*if (1 != preg_match('~^([А-Яа-яA-Za-z0-9_-]+\.)*[А-Яа-яA-Za-z0-9_-]+@[А-Яа-яA-Za-z0-9_-]+(\.[А-Яа-яA-Za-z0-9_-]+)*\.[А-Яа-яA-Za-z]{2,6}$~', $this->request->post['email'])) {
+            $this->error['email'] = $this->language->get('error_email');
+        }*/
 
         if (utf8_strlen($this->request->post['text']) < 1) {
             $this->error['text'] = $this->language->get('error_text');

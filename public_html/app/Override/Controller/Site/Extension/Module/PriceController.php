@@ -138,8 +138,9 @@ class PriceController extends \Controller
         $fCategoryGateway = new FinalCategory($this->registry);
         $data['categories'] = $fCategoryGateway->getFinalCategoriesWithProducts(
             $finalsParent,
-            'LCASE(cd.name)', //categories order
-            ['sort'=>'pd.name'] //products order in categories
+            'c.parent_id, c.sort_order', //categories order
+            /*'LCASE(cd.name)',*/ //categories order
+            ['sort'=>'pd.name'] //products order in categories*/
         );
 
         $productIds = [];

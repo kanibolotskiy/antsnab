@@ -12,14 +12,24 @@
                 </a>
             </td>
             <td class="hide_on_mobile">
-                <?php if(isset($saleUnits[$prodData['product_id']])):?>
-                    <?php $package = $saleUnits[$prodData['product_id']]['name'] . ', '
-                                   . number_format($saleUnits[$prodData['product_id']]['calcKoef'], 0, ',', ' ')
-                                   . $saleUnits[$prodData['product_id']]['to_name_plural'];
-                    ?>
-                <?php else: ?>
-                    <?php $package = '' ?>;
-                <?php endif;?>
+                <?php
+                    $package = '';
+                    if( isset($saleUnits[$prodData['product_id']]) ){
+                        $saleUnit = $saleUnits[$prodData['product_id']];
+                        $package = $saleUnit['name'];
+                        if( isset($saleUnit['calcKoef']) && isset($saleUnit['to_name_plural']) ){
+                            $packageStr = \WS\Override\Gateway\ProdUnits\ProdUnitStrings::packageString(
+                                $saleUnit['calcKoef'],
+                                [
+                                    'pluralGenitive' => $saleUnit['to_name_plural'],
+                                    'single' => $saleUnit['to_name'],
+                                    'genitive' => $saleUnit['to_name_genitive']??null
+                                ]
+                            );
+                            $package .= ', ' . $packageStr;
+                        }
+                    }
+                ?>
                 <?=$package?>
             </td>
 

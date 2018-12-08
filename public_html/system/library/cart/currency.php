@@ -33,10 +33,17 @@ class Currency {
 		$amount = $value ? (float)$number * $value : (float)$number;
 		
 		$amount = round($amount, (int)$decimal_place);
-		
+
 		if (!$format) {
 			return $amount;
 		}
+
+		/** @added Ant-Snab - нулевые копейки обрезаем */
+		if( ($amount - (int)$amount) == 0 ) {
+			$decimal_place = 0;
+		} else {
+			$decimal_place = (int)$decimal_place;
+		} 
 
 		$string = '';
 
@@ -44,7 +51,8 @@ class Currency {
 			$string .= $symbol_left;
 		}
 
-		$string .= number_format($amount, (int)$decimal_place, $this->language->get('decimal_point'), $this->language->get('thousand_point'));
+		$string .= number_format($amount, $decimal_place, $this->language->get('decimal_point'), $this->language->get('thousand_point'));
+		// $string .= number_format($amount, (int)$decimal_place, $this->language->get('decimal_point'), $this->language->get('thousand_point'));
 
 		if ($symbol_right) {
 			$string .= $symbol_right;

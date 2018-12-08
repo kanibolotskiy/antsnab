@@ -1,7 +1,7 @@
 <div id="mtab1" class="tab">
     <ul class="tabset multi-tabset">
-        <li><a href="#m1tab1"></a></li>
-        <li><a href="#m1tab2" class="active"></a></li>
+        <li><a href="#m1tab1" class="active"></a></li>
+        <li><a href="#m1tab2"></a></li>
     </ul>
     <div class="tab-list">
         <div id="m1tab1">

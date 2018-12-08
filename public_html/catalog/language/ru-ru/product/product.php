@@ -56,13 +56,13 @@ $_['text_thankyou'] = 'Отзыв появится на сайте в ближа
 
 // Entry
 $_['entry_product']         = 'Товар:';
-$_['entry_author']          = 'Автор:';
+$_['entry_author']          = 'Введите Ваше имя:';
 $_['entry_about']          = 'О чём?';
 $_['entry_moderator']          = 'Модератор';
 $_['entry_answer']          = 'Ответ';
-$_['entry_email']          = 'email';
-$_['entry_company']          = 'Компания';
+$_['entry_email']          = 'Введите Ваш e-mail:';
+$_['entry_company']          = 'Введите название организации (необязательно):';
 $_['entry_rating']          = 'Рейтинг:';
 $_['entry_status']          = 'Статус:';
-$_['entry_text']          	= 'Текст:';
+$_['entry_text']          	= 'Поделитесь своим мнение о товаре:';
 $_['entry_date_added']      = 'Дата добавления';

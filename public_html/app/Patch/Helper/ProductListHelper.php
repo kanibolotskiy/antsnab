@@ -83,20 +83,20 @@ class ProductListHelper extends \Model
                     //коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
                     $saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($result['product_id'], 'isSaleBase', $unit_id);
                 } elseif ($unit['isPriceBase'] == 1) {
-                    throw new \Exception('Too many price bases for product ' . $product['product_id']);
+                    throw new \Exception('Too many price bases for product ' . $result['product_id']);
                 }
 
                 if ($unit['isSaleBase'] == 1 && !$saleUnit) {
                     $saleUnit = $unit;
                 } elseif ($unit['isSaleBase'] == 1) {
-                    throw new \Exception('Too many sale bases for product ' . $product['product_id']);
+                    throw new \Exception('Too many sale bases for product ' . $result['product_id']);
                 }
             }
             if (!$priceUnit) {
-                throw new \Exception('Price base wasnt found for product ' . $product['product_id']);
+                throw new \Exception('Price base wasnt found for product ' . $result['product_id']);
             }
             if (!$saleUnit) {
-                throw new \Exception('Sale base wasnt found for product ' . $product['product_id']);
+                throw new \Exception('Sale base wasnt found for product ' . $result['product_id']);
             }
 
             //@task - сделать цена от...

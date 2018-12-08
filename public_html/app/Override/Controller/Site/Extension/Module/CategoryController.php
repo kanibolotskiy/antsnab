@@ -20,6 +20,7 @@ class CategoryController extends \Controller
 
 		$parts = array();
         $data['category_id'] = ROOT_CATEGORY_ID;
+        $data['root'] = $this->url->link('product/category', 'path=' . ROOT_CATEGORY_ID);
 
         if (isset($this->request->get['path'])) {
 			$parts = explode('_', (string)$this->request->get['path']);

@@ -1,5 +1,8 @@
 <div class="catalog-product">
-    <a class="catalog-btn"><?=$heading_title?></a>
+    <a href="<?=$root?>" class="catalog-btn">
+        <?=$heading_title?>
+        <span class="catalog-opener"></span>
+    </a>
     <div class="accordion">
         <ul class="simple-accordion">
 
