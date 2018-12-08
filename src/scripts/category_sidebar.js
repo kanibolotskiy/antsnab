@@ -13,7 +13,8 @@ import 'jquery-touchswipe';
         $container = $header.parents('.container.main'),
         $accordeon = $header.find('.accordion'),
         $accordeonInner = $accordeon.find('.simple-accordion'),
-        $accordeonToggleButton = $(".catalog-btn"),
+        $accordeonHeader = $(".catalog-btn"),
+        $accordeonToggleButton = $(".catalog-opener"),
         $collapseButton = $(".collapse");
 
     $header.data('stickVerticalBreakPoint', $header.offset().top);
@@ -53,7 +54,7 @@ import 'jquery-touchswipe';
         toggleFreezeBody = function() {
             if( isAccordeonOpened() && isHeaderSticked() ) {
                 $('body').addClass(freezeClass);
-                $accordeon.css('height', window.innerHeight-$accordeonToggleButton.height() );
+                $accordeon.css('height', window.innerHeight-$accordeonHeader.height() );
             } else {
                 $('body').removeClass(freezeClass);
                 $accordeon.css('height', 'auto');
@@ -75,6 +76,8 @@ import 'jquery-touchswipe';
 
             //toggle accordeon
             $accordeonToggleButton.on('click', function(e){
+                e.preventDefault();
+                e.stopPropagation();
                 toggleAccordeon(toggleFreezeBody);
             });
 

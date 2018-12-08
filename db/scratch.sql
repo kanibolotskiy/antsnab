@@ -1,3 +1,9 @@
+use antsnab;
+
+show columns from oc_category;
+
+show columns from produnit_unit;
+
 select * from oc_category_description where category_id=73;
 
 SELECT p.product_id FROM oc_newsblog_article_related pr

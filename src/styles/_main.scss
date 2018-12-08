@@ -233,7 +233,7 @@ select {
 body {
     margin:0;
     color:#000;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans Antsnab', sans-serif;
     font-size:13px;
     background:#fff;
     min-width:320px;
@@ -358,7 +358,7 @@ body {
     text-decoration: none;
     @include transition;
     .left{
-        display: block;
+        display: inline;
         background: url(../img/icon1.png) no-repeat 0 50%;
         min-height: 42px;
         padding-left: 57px;
@@ -366,6 +366,7 @@ body {
         color: #666666;
         line-height: 15px;
         margin-right: 20px;
+        padding-top: 4px;
         @include transition;
     }
     .right{
@@ -374,7 +375,7 @@ body {
         padding-left: 21px;
         color: #000000;
         font-size: 18px;
-        font-weight: 600;
+        /*font-weight: 600;*/
         line-height: 40px;
     }
     &:hover .left{
@@ -528,30 +529,27 @@ a.btn-nav{
     margin-bottom: 30px;
     a.catalog-btn{
         display: block;
-        text-decoration: none;
-        height: 70px;
         background: #EFEEEC;
         line-height: 68px;
-        color: black;
         font-size: 16px;
         font-weight: bold;
         padding-left: 28px;
         cursor: pointer;
-        position: relative;
-
-        &:after{
-            content:'';
+        position:relative;
+        text-decoration:none;
+        color:#000;
+    }
+    .catalog-opener{
             display:block;
             clear:both;
             position: absolute;
             top: 50%;
-            right: 30px;
-            margin-top: -4px;
-            background: url(../img/icon5.png) no-repeat;
-            width: 20px;
-            height: 10px;
-        }
-    }
+            transform: translateY(-50%);
+            right: 16px;
+            background: url(../img/icon5.png) center no-repeat;
+            width: 50px;
+            height: 50px;
+   }
 }
 
 .news{
@@ -603,14 +601,14 @@ a.btn-nav{
             }
             a{
                 display: block;
-                text-decoration: underline;
+                text-decoration: none;
                 font-size: 14px;
                 color: #000;
                 line-height: 20px;
                 font-weight: 600;
                 margin-bottom: 17px;
                 &:hover{
-                    text-decoration: none;
+                    text-decoration: underline;
                 }
             }
             img{
@@ -1198,7 +1196,7 @@ a.mail{
             color: #666666;
             display: block;
             font-size: 13px;
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'Open Sans Antsnab', sans-serif;
             width: 100%;
             margin-bottom: 15px;
         }
@@ -1212,7 +1210,7 @@ a.mail{
             display: block;
             font-size: 13px;
             margin-bottom: 20px;
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'Open Sans Antsnab', sans-serif;
             width: 100%;
         }
         input[type="submit"] {
@@ -1311,7 +1309,7 @@ a.mail{
         font-size: 14px;
         color: #444444;
         line-height: 24px;
-        margin-bottom: 24px;
+        margin-bottom: 10px;
         letter-spacing: 0.12px;
     }
 }
@@ -1413,7 +1411,7 @@ ul.tabset li:last-child a.active {
             }
             .catalog-description{
                 overflow: hidden;
-                padding:23px 15px 24px 227px;
+                padding:23px 15px 40px 227px;
                 a.title-product{
                     display: block;
                     text-decoration: underline;
@@ -1450,23 +1448,32 @@ ul.tabset li:last-child a.active {
                         }
                     }
                 }
-                a.more{
+                
+            }
+            a.more{
                     display: block;
                     text-decoration: none;
                     color: #666666;
                     font-size: 13px;
-                    float: left;
+                    /*float: left;*/
                     background: url(../img/btn.png) no-repeat 100% 50%;
                     min-height: 20px;
                     line-height: 20px;
                     padding-right: 30px;
+                    position:absolute;
+                    bottom: 30px;
+                    left: 20px;
                     &:hover{
                         text-decoration: underline;
                     }
                 }
-            }
         }
     }
+}
+#m1tab2 .tab-block ul li a.more {
+    right:15px;
+    bottom:15px;
+    left:auto;
 }
 .tab-block2{
     ul{
@@ -1511,7 +1518,7 @@ ul.tabset li:last-child a.active {
                         /*max-height: 1000px;*/
                         position: relative;
                         display: block;
-                        &:after{
+                        /*&:after{
                             content:'';
                             display:block;
                             clear:both;
@@ -1520,10 +1527,10 @@ ul.tabset li:last-child a.active {
                             left: 0;
                             width: 100%;
                             height: 38px;
-                            background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
-                            background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
-                            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-                        }
+                            background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%); 
+                            background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); 
+                            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); 
+                        }*/
                         a{
                             width: 100%;
                             margin-right: 0;
@@ -1721,7 +1728,7 @@ ul.tabset li:last-child a.active {
 }
 
 .tab-block2 ul li .catalog-block{
-    padding-bottom: 30px;
+    padding-bottom: 60px;
 }
 .tab-block2 ul li .catalog-block .catalog-description{
     padding-bottom: 0;
@@ -2356,7 +2363,7 @@ a.show-more{
             justify-content: center;
             p{
                 display: block;
-                font-size: 13px;
+                font-size: 14px;
                 color: #666666;
                 line-height: 16px;
             }
@@ -2585,7 +2592,7 @@ a.show-more{
                 background-color: transparent;
                 color: #666666;
                 font-size: 13px;
-                font-family: 'Open Sans', sans-serif;
+                font-family: 'Open Sans Antsnab', sans-serif;
                 width: 100%;
             }
             textarea {
@@ -2596,7 +2603,7 @@ a.show-more{
                 background-color: transparent;
                 color: #666666;
                 font-size: 13px;
-                font-family: 'Open Sans', sans-serif;
+                font-family: 'Open Sans Antsnab', sans-serif;
                 width: 100%;
             }
         }
@@ -2830,7 +2837,7 @@ a.show-more{
                 background-color: transparent;
                 color: #666666;
                 font-size: 13px;
-                font-family: 'Open Sans', sans-serif;
+                font-family: 'Open Sans Antsnab', sans-serif;
                 width:100%;
             }
             .delivery{
@@ -3002,6 +3009,7 @@ a.show-more{
                 }
                 &:nth-child(2) {
                     border-left: 1px solid #E8E5E2;
+                    font-size:11px;
                 }
                 &:nth-child(3) {
                     border-left: 1px solid #E8E5E2;
@@ -3339,7 +3347,7 @@ a.show-more{
             background-color: transparent;
             color: #666666;
             font-size: 13px;
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'Open Sans Antsnab', sans-serif;
             margin-bottom: 20px;
             margin-right: 10px;
         }
@@ -3495,12 +3503,15 @@ a.print{
 
 .table a{
     font-size: 14px;
-    color: #000000;
     text-align: center;
     line-height: 18px;
     text-decoration: none;
 }
+/* Блять я оторву руки этому сраному верстальщику, сука ебаная! table4 - это таблица прайс-листа если чо*/
 .table4{
+    a {
+        color: #000;
+    }
     table{
         tr:nth-child(odd) {
             background-color: #fff;
@@ -4492,4 +4503,6 @@ html, body{
 .resp-tab-content {
     padding:10px;
 }
+
+
     
