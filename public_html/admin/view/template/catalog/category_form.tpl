@@ -40,6 +40,7 @@
               <div class="tab-content">
                 <?php foreach ($languages as $language) { ?>
                 <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
+                  
                   <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-name<?php echo $language['language_id']; ?>"><?php echo $entry_name; ?></label>
                     <div class="col-sm-10">
@@ -49,6 +50,25 @@
                       <?php } ?>
                     </div>
                   </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-isseo">
+                        <?php echo $entry_isseo; ?>
+                    </label>
+                    <div class="col-sm-1">
+                      <div class="checkbox">
+                        <label>
+                          <?php if($isseo) { ?>
+                          <input  type="checkbox" name="isseo" value="1" checked="checked" id="input-isseo" />
+                          <?php } else { ?>
+                          <input type="checkbox" name="isseo" value="1" id="input-isseo" />
+                          <?php } ?>
+                          &nbsp; </label>
+                      </div>
+                    </div>
+                    
+                  </div>
+
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
                     <div class="col-sm-10">

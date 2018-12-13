@@ -34,6 +34,8 @@ $_['entry_layout']          		= 'Выберите макет:';
 
 $_['entry_isfinal']                 = 'Группирует продукты?';
 $_['entry_category_prodproperties'] = 'Управлять свойствами';
+$_['entry_isseo']                   = 'Категория фильтра';
+
 
 // Help
 $_['help_filter']          			= '(Автодополнение)';

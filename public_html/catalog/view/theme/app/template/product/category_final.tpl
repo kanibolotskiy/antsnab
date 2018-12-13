@@ -10,23 +10,27 @@
                 <div class="title"><?= $heading_title ?></div>
                 <?= $description ?>
             </div>
-            <div class="pick-up">
-                <span>Подобрать:</span>
-                <ul>
-                    <li><a href="">для дерева</a></li>
-                    <li><a class="active" href="">для плитки</a></li>
-                    <li><a href="">для внутренних работ</a></li>
-                    <li><a href="">для пола</a></li>
-                    <li><a href="">для потолка</a></li>
-                </ul>
-            </div>
+            <?php if(isset($categories_isseo)) {?>
+                <?php if(count($categories_isseo)) {?>
+                    <div class="pick-up">
+                        <span>Подобрать:</span>
+                        <ul>    
+                            <?php foreach($categories_isseo as $item) {?>
+                                <li><a href="<?php echo $item['href'];?>"><?php echo $item['name']?></a></li>
+                            <?php }?>
+                        </ul>
+                    </div>
+                <?php }?>
+            <?php }?>
             <div class="catalog-tab catalog-tab2">
-                <select id="seldef1" title="от дешевых к дорогим">
-                    <option>от дешевых к дорогим</option>
-                    <option>от дешевых к дорогим</option>
-                    <option>от дешевых к дорогим</option>
-                    <option>от дешевых к дорогим</option>
-                </select>
+                <form method="GET">
+                    <select name="sort" id="seldef1" title="Cортировка" onchange="this.form.submit()">
+                        <option <?php if($sort_selected==0) echo 'selected';?>value="">сортировать...</option>
+                        <option <?php if($sort_selected==1) echo 'selected';?> value="price|ASC">от дешевых к дорогим</option>
+                        <option <?php if($sort_selected==2) echo 'selected';?> value="price|DESC">от дорогих к дешевым</option>
+                    </select>
+                </form>
+                
                 <?= $products ?>
                 <?php echo $pagination; ?>
                 <?php //include __DIR__ . '/../partial/lazyload.tpl' ?>

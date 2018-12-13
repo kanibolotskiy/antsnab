@@ -52,7 +52,6 @@ class ControllerCatalogCategory extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('catalog/category');
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_catalog_category->editCategory($this->request->get['category_id'], $this->request->post);
 
@@ -332,6 +331,8 @@ class ControllerCatalogCategory extends Controller {
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_layout'] = $this->language->get('entry_layout');
+		$data['entry_isseo'] = $this->language->get('entry_isseo');
+		
 
 		$data['help_filter'] = $this->language->get('help_filter');
 		$data['help_keyword'] = $this->language->get('help_keyword');
@@ -423,12 +424,14 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['category_description'] = array();
 		}
-
+	
+		//print_r($data['category_description']);
 		// Categories
 		$categories = $this->model_catalog_category->getAllCategories();
 
 		$data['categories'] = $this->getAllCategories($categories);
 
+		
 		if (isset($category_info)) {
 			unset($data['categories'][$category_info['category_id']]);
 		}
@@ -483,6 +486,15 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['keyword'] = '';
 		}
+
+		if (isset($this->request->post['isseo'])) {
+			$data['isseo'] = $this->request->post['isseo'];
+		} elseif (!empty($category_info)) {
+			$data['isseo'] = $category_info['isseo'];
+		} else {
+			$data['isseo'] = 0;
+		}
+
 
 		if (isset($this->request->post['image'])) {
 			$data['image'] = $this->request->post['image'];

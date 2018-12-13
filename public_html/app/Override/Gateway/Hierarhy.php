@@ -85,7 +85,7 @@ class Hierarhy extends \Model
             }
             $resultRows[$prodRow['category_id']]['products'][] = $prodRow;
         }
-
+        
         $tree = new Tree($resultRows, ['rootid'=>ROOT_CATEGORY_ID, 'id'=>'category_id', 'parent'=>'parent_id']);
         $this->cache->set( static::CACHE_PREFIX, serialize($tree) );
         Hierarhy::$cache = $tree; 
@@ -93,6 +93,7 @@ class Hierarhy extends \Model
 
     private function load()
     {
+        
         if (null === Hierarhy::$cache) {
             if( false === $this->cache->get(static::CACHE_PREFIX) ) {
                 $this->refresh();

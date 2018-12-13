@@ -29,7 +29,16 @@ class FinalCategory extends \Model
 
         return (boolean) $res->row['isfinal'];
     }
+    public function isCategorySeo($category_id)
+    {
+        $query = "select isseo from " . DB_PREFIX . "category where category_id = :id limit 1";
+        $res = $this->db->query($query, [':id' => $category_id]);
+        if ($res->num_rows == 0) {
+            return null;
+        }
 
+        return (boolean) $res->row['isseo'];
+    }
     /**
      * Глубокий поиск финальных категорий, с любого родительского уровня или самой себя
      * @param int | array $category_id - id родительской категории на любом верхнем уровне или сама финальная категория

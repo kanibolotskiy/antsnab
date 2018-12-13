@@ -10,6 +10,18 @@
                 <div class="title"><?= $heading_title ?></div>
                 <?= $description ?>
             </div>
+            <?php if(isset($categories_isseo)) {?>
+                <?php if(count($categories_isseo)) {?>
+                    <div class="pick-up">
+                        <span>Подобрать:</span>
+                        <ul>    
+                            <?php foreach($categories_isseo as $item) {?>
+                                <li><a href="<?php echo $item['href'];?>"><?php echo $item['name']?></a></li>
+                            <?php }?>
+                        </ul>
+                    </div>
+                <?php }?>
+            <?php }?>
             <div class="catalog-tab">
                 <!--@task1 move to css-->
                 <style>
@@ -17,6 +29,7 @@
                         min-height: 30px;
                     }
                 </style>
+                
                 <div id="mtab1" class="tab">
                     <ul class="tabset multi-tabset">
                         <li><a href="#m1tab1" class="active"></a></li>

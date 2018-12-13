@@ -46,7 +46,6 @@ class CategoryController extends \Controller
             $path = '';
 
             $parts = explode('_', (string) $this->request->get['path']);
-
             $category_id = (int) array_pop($parts);
 
             foreach ($parts as $path_id) {
@@ -69,22 +68,38 @@ class CategoryController extends \Controller
             }
             
             $category_final_info = $this->model_catalog_category->getCategory($category_id);
-            $this->data['bottom_text'] = $category_final_info["bottom_text"];
+            if(isset($category_final_info["bottom_text"])){
+                $this->data['bottom_text'] = $category_final_info["bottom_text"];
+            }else{
+                $this->data['bottom_text'] = '';
+            }
         } else {
             $category_id = 0;
         }
 
         $gateway = new FinalCategory($this->registry);
         $isCategoryFinal = $gateway->isCategoryFinal($category_id);
+        //$flag_is_seo=true;
+        $flag_is_seo=$gateway->isCategorySeo($category_id);
 
         $category_info = $this->model_catalog_category->getCategory($category_id);
+        $categories_seo = $this->model_catalog_category->getCategoresSeo($category_id);
+        
         if (!$category_info) {
             $this->showNotFound();
             return;
         }
-
         $this->setCommons($category_info);
+        
+        $this->setFilterCategories($categories_seo);
 
+        
+
+        //if($flag_is_seo)
+        if($flag_is_seo){
+            $this->showProducts($category_id,true);
+            return;
+        }
         if ($isCategoryFinal) {
             $this->showProducts($category_id);
             return;
@@ -92,7 +107,25 @@ class CategoryController extends \Controller
 
         $this->showCategories($category_id);
     }
+    
+    private function setFilterCategories($categories_seo){
+        $url="";
+        foreach($categories_seo as $category){
+            //echo "!".$category["category_id"]."!";
+            $category_seo_info = $this->model_catalog_category->getCategory($category["category_id"]);
+            $path = $this->hierarhy->getPath($category["category_id"]);
+            //echo $path."<br/>";
 
+            $this->data['categories_isseo'][] = array(
+                'name' => $category_seo_info['name'],
+                'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $category['category_id'] . $url)
+            );
+        }
+        
+        //print_r($category_seo_info);
+
+        
+    }
     private function showCategories($category_id)
     {
         $this->data['categories'] = array();
@@ -141,7 +174,7 @@ class CategoryController extends \Controller
         $this->response->setOutput($this->load->view('product/category', $this->data));
     }
 
-    private function showProducts($category_id)
+    private function showProducts($category_id,$is_seo=false)
     {
         $this->data['products'] = array();
         
@@ -150,19 +183,41 @@ class CategoryController extends \Controller
         } else {
             $filter = '';
         }
+        $sort_selected=0;
 
+        $sort = 'p.sort_order';
+        $order = 'ASC';
+        
+        $sort = 'p.sort_order';
+        $order = 'ASC';
+        if (isset($this->request->get['sort'])) {
+            $sort_arr=explode("|",$this->request->get['sort']);
+            if((isset($sort_arr[0]))and(isset($sort_arr[1]))){
+                
+                $sort="p.".$sort_arr[0];
+                $order=$sort_arr[1];
+                if($order=="ASC"){
+                    $sort_selected=1;
+                }else{
+                    $sort_selected=2;
+                }
+            }
+        }
+        
+        $this->data['sort_selected']=$sort_selected;
+        /*
         if (isset($this->request->get['sort'])) {
             $sort = $this->request->get['sort'];
         } else {
             $sort = 'p.sort_order';
         }
-
+        
         if (isset($this->request->get['order'])) {
             $order = $this->request->get['order'];
         } else {
             $order = 'ASC';
         }
-
+        */
         if (isset($this->request->get['page'])) {
             $page = $this->request->get['page'];
         } else {
@@ -191,10 +246,11 @@ class CategoryController extends \Controller
         $results = $productsHelper->getProducts($filter_data);
         $this->data['products'] = $productsHelper->render($results);
 
-        //summary table
-        $propGateway = new ProdProperties($this->registry);
-        $this->data['summary'] = $propGateway->getSummaryTableRows($category_id);
-
+        if(!$is_seo){
+            //summary table
+            $propGateway = new ProdProperties($this->registry);
+            $this->data['summary'] = $propGateway->getSummaryTableRows($category_id);
+        }
         //pagination
         $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
         $meta[PaginationHelper::BASE_URL_META_INDEX] = $this->url->link('product/category', 'path=' . $this->request->get['path']);

@@ -45,7 +45,7 @@ class ControllerProductCategory extends Controller {
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
 		);
-
+		
 		if (isset($this->request->get['path'])) {
 			$url = '';
 
@@ -125,6 +125,8 @@ class ControllerProductCategory extends Controller {
 			$data['button_list'] = $this->language->get('button_list');
 			$data['button_grid'] = $this->language->get('button_grid');
 
+			
+
 			// Set the last category breadcrumb
 			$data['breadcrumbs'][] = array(
 				'text' => $category_info['name'],
@@ -176,7 +178,22 @@ class ControllerProductCategory extends Controller {
 					'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url)
 				);
 			}
-
+/*
+			$sort = 'p.sort_order';
+			$order = 'ASC';
+			if (isset($this->request->get['sort'])) {
+				$sort_arr=explode("|",$this->request->get['sort']);
+				if((isset($sort_arr[0]))and(isset($sort_arr[1]))){
+					$sort=$sort_arr[0];
+					$order=$sort_arr[1];
+					if($order=="ASC"){
+						$sort_selected=1;
+					}else{
+						$sort_selected=2;
+					}
+				}
+			}
+*/
 			$data['products'] = array();
 
 			$filter_data = array(
@@ -246,9 +263,9 @@ class ControllerProductCategory extends Controller {
 			if (isset($this->request->get['limit'])) {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
-
+			
 			$data['sorts'] = array();
-
+			
 			$data['sorts'][] = array(
 				'text'  => $this->language->get('text_default'),
 				'value' => 'p.sort_order-ASC',
