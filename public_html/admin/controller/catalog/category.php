@@ -655,7 +655,6 @@ class ControllerCatalogCategory extends Controller {
 		}
 
 		$results = $this->model_catalog_category->getCategoriesByParentId($parent_id);
-
 		foreach ($results as $result) {
 			$path = $parent_path . $result['category_id'];
 
@@ -693,7 +692,8 @@ class ControllerCatalogCategory extends Controller {
 				'edit'        => $this->url->link('catalog/category/edit', 'token=' . $this->session->data['token'] . '&category_id=' . $result['category_id'] . $url, 'SSL'),
 				'delete'      => $this->url->link('catalog/category/delete', 'token=' . $this->session->data['token'] . '&category_id=' . $result['category_id'] . $url, 'SSL'),
 				'href'        => $href,
-				'indent'      => $indent
+				'indent'      => $indent,
+				'isseo'		  => $result['isseo']
 			);
 
 			if ($category_id == $result['category_id']) {

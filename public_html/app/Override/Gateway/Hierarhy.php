@@ -95,9 +95,9 @@ class Hierarhy extends \Model
     {
         
         if (null === Hierarhy::$cache) {
-            //if( false === $this->cache->get(static::CACHE_PREFIX) ) {
+            if( false === $this->cache->get(static::CACHE_PREFIX) ) {
                 $this->refresh();
-            //}
+            }
             Hierarhy::$cache = unserialize($this->cache->get(static::CACHE_PREFIX));            
         }
     }
