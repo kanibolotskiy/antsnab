@@ -53,7 +53,7 @@ class Hierarhy extends \Model
     {
         $language_id = (int) $this->config->get('config_language_id');
 
-        $sql = "select c.category_id, c.image, c.parent_id, cd.name, c.isfinal "
+        $sql = "select c.category_id, c.image, c.parent_id, cd.name, c.isfinal, c.isseo "
             . "from " . DB_PREFIX . "category as c "
             . "left join " . DB_PREFIX . "category_description as cd on cd.category_id = c.category_id "
             . "where language_id = :language_id and c.status=1 and c.category_id<>0 and c.category_id<>:root "
@@ -95,9 +95,9 @@ class Hierarhy extends \Model
     {
         
         if (null === Hierarhy::$cache) {
-            if( false === $this->cache->get(static::CACHE_PREFIX) ) {
+            //if( false === $this->cache->get(static::CACHE_PREFIX) ) {
                 $this->refresh();
-            }
+            //}
             Hierarhy::$cache = unserialize($this->cache->get(static::CACHE_PREFIX));            
         }
     }

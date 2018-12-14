@@ -4,7 +4,7 @@
     <div class="content">
         <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
         <?php echo $content_top; ?>
-
+        
         <?php if (!empty($products)): ?>
             <div class="catalog-info">
                 <div class="title"><?= $heading_title ?></div>

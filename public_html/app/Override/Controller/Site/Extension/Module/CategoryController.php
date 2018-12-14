@@ -33,8 +33,11 @@ class CategoryController extends \Controller
         foreach(  $this->hierarhy->getRootNodes() as $node ) {
             $item = $node->toArray();
             $item['href'] = $this->url->link('product/category', 'path=' . $this->hierarhy->getPath($node->getId())); 
-            $item['child'] = $this->recursiveGetItems($node);        
-            $data['categories'][] = $item;
+            $item['child'] = $this->recursiveGetItems($node);
+            //echo "!".$item['isseo']."!";
+            if(!$item['isseo']){
+                $data['categories'][] = $item;
+            }
         }
 
         return $this->load->view('extension/module/app/category', $data);
@@ -45,13 +48,14 @@ class CategoryController extends \Controller
         $categories = [];
         foreach( $rootNode->getChildren() as $node ) {
             $item = $node->toArray();
-            
-            $item['href'] = $this->url->link('product/category', 'path=' . $this->hierarhy->getPath($node->getId()));
-            if( in_array($node->getId(), self::$openedItems) ) {
-                $item['child'] = $this->recursiveGetItems($node);    
+            if(!$item['isseo']){
+                $item['href'] = $this->url->link('product/category', 'path=' . $this->hierarhy->getPath($node->getId()));
+                if( in_array($node->getId(), self::$openedItems) ) {
+                    $item['child'] = $this->recursiveGetItems($node);    
+                }
+                
+                $categories[] = $item;
             }
-            
-            $categories[] = $item;
         }
                 
         return $categories;
