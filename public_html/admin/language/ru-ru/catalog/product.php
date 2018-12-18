@@ -154,4 +154,7 @@ $_['tab_column_val'] = 'Текст';
 $_['tab_column_hide'] = 'Скрыть';
 $_['tab_entry_linkto_tabmanagement'] = 'Изменить на уровне категории';
 
+$_['entry_disseo'] = 'Не показывать в YML?';
+
+
 

@@ -77,6 +77,11 @@ class ModelCatalogProduct extends Model
 
     private function updateCustomFields($product_id, $data)
     {
+        $disseo=0;
+        if (!empty($data['disseo'])) {
+            $disseo = (float) $data['disseo'];
+        }
+
         $price_wholesale = 0.0000;
         if (!empty($data['price_wholesale'])) {
             $price_wholesale = (float) $data['price_wholesale'];
@@ -98,8 +103,9 @@ class ModelCatalogProduct extends Model
         }
 
 
-        $sql = "update " . DB_PREFIX . "product set price_wholesale = :price_wholesale, wholesale_threshold=:wholesale_threshold, produnit_template_id=:produnit_template_id where product_id = :id";
+        $sql = "update " . DB_PREFIX . "product set disseo = :disseo, price_wholesale = :price_wholesale, wholesale_threshold=:wholesale_threshold, produnit_template_id=:produnit_template_id where product_id = :id";
         $res = $this->db->query($sql, [
+            ':disseo' => $disseo,
             ':price_wholesale' => $price_wholesale,
             ':wholesale_threshold' => $wholesale_threshold,
             ':produnit_template_id' => $produnit_template_id,

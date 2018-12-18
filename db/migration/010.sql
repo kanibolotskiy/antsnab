@@ -1,0 +1,1 @@
+﻿ALTER TABLE `oc_product` ADD `disseo` TINYINT NOT NULL AFTER `produnit_template_id`;

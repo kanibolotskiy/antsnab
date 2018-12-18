@@ -684,6 +684,8 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_layout'] = $this->language->get('entry_layout');
 		$data['entry_recurring'] = $this->language->get('entry_recurring');
 		$data['entry_main_category'] = $this->language->get('entry_main_category');
+		$data['entry_disseo'] = $this->language->get('entry_disseo');
+		
 
 		$data['help_keyword'] = $this->language->get('help_keyword');
 		$data['help_sku'] = $this->language->get('help_sku');
@@ -830,6 +832,15 @@ class ControllerCatalogProduct extends Controller {
 			$data['product_description'] = $this->model_catalog_product->getProductDescriptions($this->request->get['product_id']);
 		} else {
 			$data['product_description'] = array();
+		}
+
+		
+		if (isset($this->request->post['disseo'])) {
+			$data['disseo'] = $this->request->post['disseo'];
+		} elseif (!empty($product_info)) {
+			$data['disseo'] = $product_info['disseo'];
+		} else {
+			$data['disseo'] = '';
 		}
 
 		if (isset($this->request->post['model'])) {

@@ -114,6 +114,24 @@
                                                 <input type="text" name="product_description[<?php echo $language['language_id']; ?>][tag]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['tag'] : ''; ?>" placeholder="<?php echo $entry_tag; ?>" id="input-tag<?php echo $language['language_id']; ?>" class="form-control" />
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="input-disseo">
+                                                <?php echo $entry_disseo; ?>
+                                            </label>
+                                            <div class="col-sm-1">
+                                            <div class="checkbox">
+                                                <label>
+                                                <?php if($disseo) { ?>
+                                                <input  type="checkbox" name="disseo" value="1" checked="checked" id="input-disseo" />
+                                                <?php } else { ?>
+                                                <input type="checkbox" name="disseo" value="1" id="input-disseo" />
+                                                <?php } ?>
+                                                &nbsp; </label>
+                                            </div>
+                                            </div>
+                                            
+                                        </div>
+                                        
                                     </div>
                                 <?php } ?>
                             </div>
