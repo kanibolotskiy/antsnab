@@ -66,7 +66,9 @@ class ModelCatalogCategory extends Model
         if(!isset($data['isseo'])){
             $data['isseo']=0;
         }
-
+        if(!isset($data['bottom_text'])){
+            $data['bottom_text']='';
+        }
         $this->db->query("UPDATE " . DB_PREFIX . "category SET parent_id = '" . (int) $data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int) $data['top'] : 0) . "', `column` = '" . (int) $data['column'] . "', sort_order = '" . (int) $data['sort_order'] . "', status = '" . (int) $data['status'] . "', isseo = '" . (int) $data['isseo'] . "', date_modified = NOW() WHERE category_id = '" . (int) $category_id . "'");
 
         if (isset($data['image'])) {
@@ -76,7 +78,8 @@ class ModelCatalogCategory extends Model
         $this->db->query("DELETE FROM " . DB_PREFIX . "category_description WHERE category_id = '" . (int) $category_id . "'");
 
         foreach ($data['category_description'] as $language_id => $value) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "category_description SET category_id = '" . (int) $category_id . "', language_id = '" . (int) $language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
+            //$this->db->query("INSERT INTO " . DB_PREFIX . "category_description SET category_id = '" . (int) $category_id . "', language_id = '" . (int) $language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
+            $this->db->query("INSERT INTO " . DB_PREFIX . "category_description SET category_id = '" . (int) $category_id . "', language_id = '" . (int) $language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', bottom_text = '" . $this->db->escape($value['bottom_text']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
         }
         
 
@@ -319,7 +322,8 @@ class ModelCatalogCategory extends Model
                 'meta_h1' => $result['meta_h1'],
                 'meta_description' => $result['meta_description'],
                 'meta_keyword' => $result['meta_keyword'],
-                'description' => $result['description']
+                'description' => $result['description'],
+                'bottom_text' => $result['bottom_text']
             );
         }
 

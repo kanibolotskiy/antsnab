@@ -99,6 +99,14 @@
                       <textarea name="category_description[<?php echo $language['language_id']; ?>][meta_keyword]" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
                     </div>
                   </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-bottom_text<?php echo $language['language_id']; ?>"><?php echo $entry_bottom_text; ?></label>
+                    <div class="col-sm-10">
+                      <textarea name="category_description[<?php echo $language['language_id']; ?>][bottom_text]" rows="5" placeholder="<?php echo $entry_bottom_text; ?>" id="input-meta-keyword<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['bottom_text'] : ''; ?></textarea>
+                    </div>
+                  </div>
+
                 </div>
                 <?php } ?>
               </div>

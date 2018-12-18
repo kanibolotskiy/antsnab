@@ -53,11 +53,11 @@ function getDstParentId($srcParentId)
     return $parent_id;
 }
 
-function insertAdditionalDescriptionFields($srcBottomText, $srcKeyword2, $categoryId)
+function insertAdditionalDescriptionFields($srcbottom_text, $srcKeyword2, $categoryId)
 {
     global $dstDB;
 
-    $sql = "update oc_category_description set description_bottom='$srcBottomText', meta_keyword2='$srcKeyword2' where category_id = $categoryId";
+    $sql = "update oc_category_description set description_bottom='$srcbottom_text', meta_keyword2='$srcKeyword2' where category_id = $categoryId";
 
     $dstDB->query($sql);
 }

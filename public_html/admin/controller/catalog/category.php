@@ -332,6 +332,7 @@ class ControllerCatalogCategory extends Controller {
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_layout'] = $this->language->get('entry_layout');
 		$data['entry_isseo'] = $this->language->get('entry_isseo');
+		$data['entry_bottom_text'] = $this->language->get('entry_bottom_text');
 		
 
 		$data['help_filter'] = $this->language->get('help_filter');
@@ -495,6 +496,14 @@ class ControllerCatalogCategory extends Controller {
 			$data['isseo'] = 0;
 		}
 
+		if (isset($this->request->post['bottom_text'])) {
+			$data['bottom_text'] = $this->request->post['bottom_text'];
+		} elseif (!empty($category_info)) {
+			$data['bottom_text'] = $category_info['bottom_text'];
+		} else {
+			$data['bottom_text'] = '';
+		}
+		
 
 		if (isset($this->request->post['image'])) {
 			$data['image'] = $this->request->post['image'];
@@ -557,6 +566,8 @@ class ControllerCatalogCategory extends Controller {
 		}
 
 		$this->load->model('design/layout');
+		
+		
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
 
