@@ -60,22 +60,24 @@ class ControllerExtensionFeedSeoMarket extends Controller {
 			$this->setDeliveryOptions();
 			
 			// Категории
-			$categories = $this->model_extension_feed_yandex_market->getCategory($allowed_categories);
-			
-			
+			$categories = $this->model_extension_feed_yandex_market->getCategory();
+			unset($allow_cat);
 			foreach ($categories as $category) {
 				$this->setCategory($category['name'], $category['category_id'], $category['parent_id']);
-
+				//*Новые разрешенные категории*/
+				$allow_cat[]=$category['category_id'];
+			}
+			if($allow_cat){
+				$allow_cat_str=implode(",",$allow_cat);
 			}
 
-			
 			// Товарные предложения
 			$in_stock_id = $this->config->get('yandex_market_in_stock'); // id статуса товара "В наличии"
 			$out_of_stock_id = $this->config->get('yandex_market_out_of_stock'); // id статуса товара "Нет на складе"
 			$vendor_required = false; // true - только товары у которых задан производитель, необходимо для 'vendor.model'
-			$products = $this->model_extension_feed_yandex_market->getProduct($allowed_categories, $out_of_stock_id, $vendor_required,true);
+			//$products = $this->model_extension_feed_yandex_market->getProduct($allowed_categories, $out_of_stock_id, $vendor_required);
 
-			//$products = $this->model_extension_feed_yandex_market->getProduct($allow_cat_str, $out_of_stock_id, $vendor_required);
+			$products = $this->model_extension_feed_yandex_market->getProduct($allow_cat_str, $out_of_stock_id, $vendor_required);
 
 
 
@@ -91,7 +93,7 @@ class ControllerExtensionFeedSeoMarket extends Controller {
 
 				// Параметры товарного предложения
 				$data['url'] = $this->url->link('product/product', 'path=' . $this->getPath($product['category_id']) . '&product_id=' . $product['product_id']);
-				$data['price'] = $this->currency->convert($this->tax->calculate($product['price_wholesale'], $product['tax_class_id']), $shop_currency, $offers_currency);
+				$data['price'] = $this->currency->convert($this->tax->calculate($product['price'], $product['tax_class_id']), $shop_currency, $offers_currency);
 				$data['currencyId'] = $offers_currency;
 				$data['categoryId'] = $product['category_id'];
 				$data['delivery'] = 'true';
@@ -132,6 +134,7 @@ class ControllerExtensionFeedSeoMarket extends Controller {
 			$this->response->addHeader('Content-Type: application/xml');
 			$this->response->setOutput($this->getYml());
 		}
+		
 	}
 
 	/**
