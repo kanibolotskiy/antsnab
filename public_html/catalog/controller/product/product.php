@@ -484,8 +484,14 @@ class ControllerProductProduct extends Controller {
 			/** @task move to override */
 			//Добавлен второй параметр - количество возвращаемых результатов (и RAND)
 			$results_related = $this->model_catalog_product->getProductRelated($this->request->get['product_id'],2);
-			
-			$results_recommends = $this->model_catalog_product->getProductRecommend($this->request->get['product_id'],2);
+			//print_r($results_related);
+			if(is_array($results_related)){
+				//print_r();
+				$exclude_tovar=implode(",",array_keys($results_related));
+				//echo "!".$exclude_tovar."!";
+
+			}
+			$results_recommends = $this->model_catalog_product->getProductRecommend($this->request->get['product_id'],2,$exclude_tovar);
 
 			$results=array_merge($results_related, $results_recommends);
 
