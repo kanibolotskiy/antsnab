@@ -17,7 +17,7 @@
 
         <link href="/catalog/view/theme/app/bundle/app2.css" rel="stylesheet">
         <?php if ($description) { ?>
-            <meta name="description" ontent="<?php echo $description; ?>" />
+            <meta name="description" content="<?php echo $description; ?>" />
         <?php } ?>
         <?php if ($keywords) { ?>
             <meta name="keywords" content= "<?php echo $keywords; ?>" />

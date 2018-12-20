@@ -217,10 +217,17 @@ class ControllerProductProduct extends Controller {
 			);
 
 			if ($product_info['meta_title']) {
-				$this->document->setTitle($product_info['meta_title']);
+				$seoTitle=$product_info['meta_title'];
 			} else {
-				$this->document->setTitle($product_info['name']);
+				$seoTitle=$product_info['name'];
 			}
+
+			//price_wholesale
+			/**Подставляем оптовую цену в Title */
+			$seoTitlePrice=$this->currency->format((float)$product_info['price_wholesale'] ? $product_info['price_wholesale'] : $product_info['price'], $this->session->data['currency']);
+			$seoTitle=str_replace('[+price]',$seoTitlePrice ,$seoTitle);
+		
+			$this->document->setTitle($seoTitle);
 
 			$this->document->setDescription($product_info['meta_description']);
 			$this->document->setKeywords($product_info['meta_keyword']);
@@ -232,13 +239,15 @@ class ControllerProductProduct extends Controller {
 			//$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/locale/'.$this->session->data['language'].'.js');
 			//$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 			//$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
+			
+			
 
 			if ($product_info['meta_h1']) {
 				$data['heading_title'] = $product_info['meta_h1'];
 			} else {
 				$data['heading_title'] = $product_info['name'];
 			}
-
+			
 			$data['text_select'] = $this->language->get('text_select');
 			$data['text_manufacturer'] = $this->language->get('text_manufacturer');
 			$data['text_model'] = $this->language->get('text_model');
@@ -415,7 +424,7 @@ class ControllerProductProduct extends Controller {
 			} else {
 				$data['captcha'] = '';
 			}
-
+			
 			//Отзывы
 			$results=$this->model_catalog_review->getReviewsByProductId($data['product_id']);
 			$review_total=$this->model_catalog_review->getTotalReviewsByProductId($data['product_id']);
@@ -565,7 +574,6 @@ class ControllerProductProduct extends Controller {
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
-
 			$this->response->setOutput($this->load->view('product/product', $data));
 		} else {
 			$url = '';
