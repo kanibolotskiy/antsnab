@@ -8,7 +8,7 @@ class ControllerCatalogProduct extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('catalog/product');
-
+		
 		$this->getList();
 		
 
@@ -668,6 +668,9 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_category'] = $this->language->get('entry_category');
 		$data['entry_filter'] = $this->language->get('entry_filter');
 		$data['entry_related'] = $this->language->get('entry_related');
+		$data['entry_analog'] = $this->language->get('entry_analog');
+		
+
 		$data['entry_attribute'] = $this->language->get('entry_attribute');
 		$data['entry_text'] = $this->language->get('entry_text');
 		$data['entry_option'] = $this->language->get('entry_option');
@@ -702,6 +705,8 @@ class ControllerCatalogProduct extends Controller {
 		$data['help_filter'] = $this->language->get('help_filter');
 		$data['help_download'] = $this->language->get('help_download');
 		$data['help_related'] = $this->language->get('help_related');
+		$data['help_analog'] = $this->language->get('help_analog');
+		
 		$data['help_tag'] = $this->language->get('help_tag');
 
 		$data['button_view'] = $this->language->get('button_view');
@@ -1395,7 +1400,6 @@ class ControllerCatalogProduct extends Controller {
 		}
 
 		$data['product_relateds'] = array();
-
 		foreach ($products as $product_id) {
 			$related_info = $this->model_catalog_product->getProduct($product_id);
 
@@ -1406,6 +1410,28 @@ class ControllerCatalogProduct extends Controller {
 				);
 			}
 		}
+		if (isset($this->request->post['product_analog'])) {
+			$products = $this->request->post['product_analog'];
+		} elseif (isset($this->request->get['product_id'])) {
+			$products = $this->model_catalog_product->getProductRelated($this->request->get['product_id'],'product_analogs');
+		} else {
+			$products = array();
+		}
+
+
+		$data['product_analogs'] = array();
+		
+		foreach ($products as $product_id) {
+			$analog_info = $this->model_catalog_product->getProduct($product_id);
+
+			if ($analog_info) {
+				$data['product_analogs'][] = array(
+					'product_id' => $analog_info['product_id'],
+					'name'       => $analog_info['name']
+				);
+			}
+		}
+		
 
 		if (isset($this->request->post['points'])) {
 			$data['points'] = $this->request->post['points'];

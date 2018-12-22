@@ -408,15 +408,21 @@ class ModelCatalogProduct extends Model {
 		return $query->rows;
 	}
 
-	public function getProductRelated($product_id, $rand=0) {
+	public function getProductRelated($product_id, $rand=false,$limit=0,$table,$exclude_ids='') {
 		$product_data = array();
 		$order_rand="";
 		if($rand){
-			$order_rand="ORDER BY RAND() LIMIT ".$rand;
+			$order_rand="ORDER BY RAND() LIMIT ".$limit;
 		}
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_related pr LEFT JOIN " . DB_PREFIX . "product p ON (pr.related_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pr.product_id = '" . (int)$product_id . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ".$order_rand);
+
+		if($exclude_ids){			
+			$exclude_sql=" AND p.product_id NOT IN (".$exclude_ids.")";
+		}
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX .$table. " pr LEFT JOIN " . DB_PREFIX . "product p ON (pr.related_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pr.product_id = '" . (int)$product_id . "' ".$exclude_sql." AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ".$order_rand);
+		//echo "SELECT * FROM " . DB_PREFIX .$table. " pr LEFT JOIN " . DB_PREFIX . "product p ON (pr.related_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pr.product_id = '" . (int)$product_id . "' ".$exclude_sql." AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ".$order_rand;
 
 		foreach ($query->rows as $result) {
+			//$product_data[$result['related_id']] = $this->getProduct($result['related_id']);
 			$product_data[$result['related_id']] = $this->getProduct($result['related_id']);
 		}
 		return $product_data;

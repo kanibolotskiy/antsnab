@@ -523,7 +523,21 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-related"><span data-toggle="tooltip" title="<?php echo $help_related; ?>"><?php echo $entry_related; ?></span></label>
+                                <label class="col-sm-2 control-label" for="input-analog"><?php echo $entry_analog; ?></span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="analog" value="" placeholder="<?php echo $entry_analog; ?>" id="input-analog" class="form-control" />
+                                    <div id="product-analog" class="well well-sm" style="height: 150px; overflow: auto;">
+                                    
+                                        <?php foreach ($product_analogs as $product_analog) { ?>
+                                            <div id="product-analog<?php echo $product_analog['product_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_analog['name']; ?>
+                                                <input type="hidden" name="product_analog[]" value="<?php echo $product_analog['product_id']; ?>" />
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-related"><?php echo $entry_related; ?></span></label>
                                 <div class="col-sm-10">
                                     <input type="text" name="related" value="" placeholder="<?php echo $entry_related; ?>" id="input-related" class="form-control" />
                                     <div id="product-related" class="well well-sm" style="height: 150px; overflow: auto;">
@@ -1319,7 +1333,35 @@
                 $(this).parent().remove();
             });
 
-// Related
+// Related, Analogs
+        $('input[name=\'analog\']').autocomplete({
+                'source': function (request, response) {
+                    $.ajax({
+                        url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' + encodeURIComponent(request),
+                        dataType: 'json',
+                        success: function (json) {
+                            response($.map(json, function (item) {
+                                return {
+                                    label: item['name'],
+                                    value: item['product_id']
+                                }
+                            }));
+                        }
+                    });
+                },
+                'select': function (item) {
+                    $('input[name=\'analog\']').val('');
+
+                    $('#product-analog' + item['value']).remove();
+
+                    $('#product-analog').append('<div id="product-analog' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_analog[]" value="' + item['value'] + '" /></div>');
+                }
+            });
+
+            $('#product-analog').delegate('.fa-minus-circle', 'click', function () {
+                $(this).parent().remove();
+            });
+
             $('input[name=\'related\']').autocomplete({
                 'source': function (request, response) {
                     $.ajax({

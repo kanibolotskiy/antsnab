@@ -288,6 +288,7 @@ class ModelCatalogProduct extends Model
 
     public function editProduct($product_id, $data)
     {
+        
         $this->db->query("UPDATE " . DB_PREFIX . "product SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int) $data['quantity'] . "', minimum = '" . (int) $data['minimum'] . "', subtract = '" . (int) $data['subtract'] . "', stock_status_id = '" . (int) $data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int) $data['manufacturer_id'] . "', shipping = '" . (int) $data['shipping'] . "', price = '" . (float) $data['price'] . "', points = '" . (int) $data['points'] . "', weight = '" . (float) $data['weight'] . "', weight_class_id = '" . (int) $data['weight_class_id'] . "', length = '" . (float) $data['length'] . "', width = '" . (float) $data['width'] . "', height = '" . (float) $data['height'] . "', length_class_id = '" . (int) $data['length_class_id'] . "', status = '" . (int) $data['status'] . "', tax_class_id = '" . (int) $data['tax_class_id'] . "', sort_order = '" . (int) $data['sort_order'] . "', date_modified = NOW() WHERE product_id = '" . (int) $product_id . "'");
 
         if (isset($data['image'])) {
@@ -402,7 +403,24 @@ class ModelCatalogProduct extends Model
                 $this->db->query("INSERT INTO " . DB_PREFIX . "product_filter SET product_id = '" . (int) $product_id . "', filter_id = '" . (int) $filter_id . "'");
             }
         }
+        
+    
+        /**Аналоги товаров */
+        $this->db->query("DELETE FROM " . DB_PREFIX . "product_analogs WHERE product_id = '" . (int) $product_id . "'");
+        $this->db->query("DELETE FROM " . DB_PREFIX . "product_analogs WHERE related_id = '" . (int) $product_id . "'");
 
+        //@task move to override
+        
+        if (isset($data['product_analog'])) {
+            foreach ($data['product_analog'] as $related_id) {
+                $this->db->query("DELETE FROM " . DB_PREFIX . "product_analogs WHERE product_id = '" . (int) $product_id . "' AND related_id = '" . (int) $related_id . "'");
+                $this->db->query("INSERT INTO " . DB_PREFIX . "product_analogs SET product_id = '" . (int) $product_id . "', related_id = '" . (int) $related_id . "'");
+                /* $this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int) $related_id . "' AND related_id = '" . (int) $product_id . "'");
+                  $this->db->query("INSERT INTO " . DB_PREFIX . "product_related SET product_id = '" . (int) $related_id . "', related_id = '" . (int) $product_id . "'"); */
+            }
+        }
+
+        /**Сопутствующие товары */
         $this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int) $product_id . "'");
         $this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE related_id = '" . (int) $product_id . "'");
 
@@ -785,11 +803,11 @@ class ModelCatalogProduct extends Model
         return ($query->num_rows ? (int) $query->row['category_id'] : 0);
     }
 
-    public function getProductRelated($product_id)
+    public function getProductRelated($product_id, $table='product_related')
     {
         $product_related_data = array();
 
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int) $product_id . "'");
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . $table." WHERE product_id = '" . (int) $product_id . "'");
 
         foreach ($query->rows as $result) {
             $product_related_data[] = $result['related_id'];
