@@ -1,5 +1,55 @@
 use antsnab;
 
+select 
+                catprop.category_prodproperty_id, catprop.`name` as cat_name, catprop.unit as cat_unit, 
+                catprop.`default` as cat_default, catprop.showInProdPreview, catprop.showInProdTab, catprop.showInSummary,
+                catprop.sortOrder as cat_sortOrder,  
+                prodval.sortOrder  as prod_sortOrder, prodval.val as prod_val, prodval.hide as prod_hide,
+                (if (prodval.sortOrder is null, catprop.sortOrder, prodval.sortOrder) ) as sortOrder,
+                (if (prodval.val is null, catprop.`default`, prodval.val) ) as val 
+                from oc_product_to_category as p2c
+                left join category_prodproperty as catprop on catprop.category_id = p2c.category_id
+                left join (select * from product_prodproperty where product_id = 217 ) as prodval on prodval.category_prodproperty_id = catprop.category_prodproperty_id 
+                where p2c.product_id = 217 and p2c.main_category = 1 and catprop.category_prodproperty_id is not null order by sortOrder ASC;
+
+				""select 
+                catprop.category_prodproperty_id, catprop.`name` as cat_name, catprop.unit as cat_unit, 
+                catprop.`default` as cat_default, catprop.showInProdPreview, catprop.showInProdTab, catprop.showInSummary,
+                catprop.sortOrder as cat_sortOrder,  
+                prodval.sortOrder  as prod_sortOrder, prodval.val as prod_val, prodval.hide as prod_hide,
+                (if (prodval.sortOrder is null, catprop.sortOrder, prodval.sortOrder) ) as sortOrder,
+                (if (prodval.val is null, catprop.`default`, prodval.val) ) as val 
+                from oc_product_to_category as p2c
+                left join category_prodproperty as catprop on catprop.category_id = p2c.category_id
+                left join (select * from product_prodproperty where product_id = :id ) as prodval on prodval.category_prodproperty_id = catprop.category_prodproperty_id 
+                where p2c.product_id = :id and p2c.main_category = 1 and catprop.category_prodproperty_id is not null ord""
+
+				"select 
+                catprop.category_prodproperty_id, catprop.`name` as cat_name, catprop.unit as cat_unit, 
+                catprop.`default` as cat_default, catprop.showInProdPreview, catprop.showInProdTab, catprop.showInSummary,
+                catprop.sortOrder as cat_sortOrder,  
+                prodval.sortOrder  as prod_sortOrder, prodval.val as prod_val, prodval.hide as prod_hide,
+                (if (prodval.sortOrder is null, catprop.sortOrder, prodval.sortOrder) ) as sortOrder,
+                (if (prodval.val is null, catprop.`default`, prodval.val) ) as val 
+                from oc_product_to_category as p2c
+                left join category_prodproperty as catprop on catprop.category_id = p2c.category_id
+                left join (select * from product_prodproperty where product_id = :id ) as prodval on prodval.category_prodproperty_id = catprop.category_prodproperty_id 
+                where p2c.product_id = :id and p2c.main_category = 1 and catprop.category_prodproperty_id is not null ord"
+
+				"select 
+                catprop.category_prodproperty_id, catprop.`name` as cat_name, catprop.unit as cat_unit, 
+                catprop.`default` as cat_default, catprop.showInProdPreview, catprop.showInProdTab, catprop.showInSummary,
+                catprop.sortOrder as cat_sortOrder,  
+                prodval.sortOrder  as prod_sortOrder, prodval.val as prod_val, prodval.hide as prod_hide,
+                (if (prodval.sortOrder is null, catprop.sortOrder, prodval.sortOrder) ) as sortOrder,
+                (if (prodval.val is null, catprop.`default`, prodval.val) ) as val 
+                from oc_product_to_category as p2c
+                left join category_prodproperty as catprop on catprop.category_id = p2c.category_id
+                left join (select * from product_prodproperty where product_id = :id ) as prodval on prodval.category_prodproperty_id = catprop.category_prodproperty_id 
+                where p2c.product_id = :id and p2c.main_category = 1 and catprop.category_prodproperty_id is not null ord"
+
+				$sql
+
 show columns from oc_category;
 
 show columns from produnit_unit;

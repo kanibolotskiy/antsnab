@@ -70,8 +70,13 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                 uiWholeSalePrice = saleToPriceKoef.div(saleToUiKoef).mul(wholeSalePrice),
                 currency = $('#priceSwitcher').attr('data-currency_symbol');
 
-            $price.text( format('# ###.00 ' + currency, uiPrice.valueOf() ) );
-            $wholeSalePrice.text( format ('# ###.00 ' + currency, uiWholeSalePrice.valueOf()) );
+            var isInt = ( uiPrice.valueOf() - parseInt(uiPrice.valueOf()) === 0 ),
+                formatStr = isInt?'### ###.':'### ###,##';
+            $price.text( format(formatStr + currency, uiPrice.valueOf() ) );
+
+            var isInt = ( uiWholeSalePrice.valueOf() - parseInt(uiWholeSalePrice.valueOf()) === 0 ),
+                formatStr = isInt?'### ###.':'### ###,##';
+            $wholeSalePrice.text( format (formatStr + ' ' + currency, uiWholeSalePrice.valueOf()) );
         }
 
     })()

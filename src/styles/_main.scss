@@ -233,7 +233,8 @@ select {
 body {
     margin:0;
     color:#000;
-    font-family: 'Open Sans Antsnab', sans-serif;
+    font-family: 'Open Sans AS', sans-serif;
+    font-weight: 400;
     font-size:13px;
     background:#fff;
     min-width:320px;
@@ -508,7 +509,7 @@ a.btn-nav{
         color: #666666;
         display: block;
         font-size: 13px;
-        font-family: 'Open Sans', sans-serif;
+        font-family: 'Open Sans AS', sans-serif;
         width: 100%;
     }
     button {
@@ -1196,7 +1197,7 @@ a.mail{
             color: #666666;
             display: block;
             font-size: 13px;
-            font-family: 'Open Sans Antsnab', sans-serif;
+            font-family: 'Open Sans AS', sans-serif;
             width: 100%;
             margin-bottom: 15px;
         }
@@ -1210,7 +1211,7 @@ a.mail{
             display: block;
             font-size: 13px;
             margin-bottom: 20px;
-            font-family: 'Open Sans Antsnab', sans-serif;
+            font-family: 'Open Sans AS', sans-serif;
             width: 100%;
         }
         input[type="submit"] {
@@ -1903,11 +1904,12 @@ button.show-more{
                     }
                     .complement{
                         margin-bottom: 11px;
-                        span{
+                        text-align:center;
+                        /*span{
                             &:first-child{
                                 display: none;
                             }
-                        }
+                        }*/
                     }
                     .price {
                         margin-bottom: 20px;
@@ -2597,7 +2599,7 @@ button.show-more{
                 background-color: transparent;
                 color: #666666;
                 font-size: 13px;
-                font-family: 'Open Sans Antsnab', sans-serif;
+                font-family: 'Open Sans AS', sans-serif;
                 width: 100%;
             }
             textarea {
@@ -2608,7 +2610,7 @@ button.show-more{
                 background-color: transparent;
                 color: #666666;
                 font-size: 13px;
-                font-family: 'Open Sans Antsnab', sans-serif;
+                font-family: 'Open Sans AS', sans-serif;
                 width: 100%;
             }
         }
@@ -2842,7 +2844,7 @@ button.show-more{
                 background-color: transparent;
                 color: #666666;
                 font-size: 13px;
-                font-family: 'Open Sans Antsnab', sans-serif;
+                font-family: 'Open Sans AS', sans-serif;
                 width:100%;
             }
             .delivery{
@@ -3352,7 +3354,7 @@ button.show-more{
             background-color: transparent;
             color: #666666;
             font-size: 13px;
-            font-family: 'Open Sans Antsnab', sans-serif;
+            font-family: 'Open Sans AS', sans-serif;
             margin-bottom: 20px;
             margin-right: 10px;
         }

@@ -54,6 +54,7 @@
 
                 
                 <?php if(!empty($summary['rows'])): ?>
+                <div class="title">Технические характеристики</div>
                 <div class="wrapper_adaptive_table">
                     <table class="summary table table-bordered table-striped table-responsive">
                         <thead>

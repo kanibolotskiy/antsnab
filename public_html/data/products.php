@@ -1,5 +1,7 @@
 <?php
-
+/** Проверь, что при переносе продуктов sort order у свойств НЕ ПЕРЕНОСИТСЯ!!! тк в итоге на сайте свистопляски 
+ * с чередованием свойств в preview - некрасиво смотрится
+*/
 include_once __DIR__ . '/bootstrap.php';
 include_once 'admin/model/catalog/product.php';
 

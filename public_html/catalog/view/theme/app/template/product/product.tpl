@@ -248,7 +248,7 @@
                 </div>-->
                 <div>
                     <div class="packaging">
-                        <div class="title">Упаковка <?=$heading_title?></div>
+                        <?php /*<div class="title">Упаковка <?=$heading_title?></div>*/?>
                         <div class="table">
                             <table>
                                 <tbody>
@@ -320,7 +320,7 @@
                 </div>
                 <div>
                     <div class="calculator">
-                        <div class="title">Калькулятор загрузки</div>
+                        <?php /*<div class="title">Калькулятор загрузки</div>*/?>
                         <p>В разработке</p>
 <!--
                         <p>Чтобы узнать сколько материала Эластоизол Премиум ЭКП-5,0 вам понадобится введите площадь изолируемой поверхности в квадратных метрах:</p>

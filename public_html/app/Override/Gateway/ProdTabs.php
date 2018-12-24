@@ -92,12 +92,12 @@ class ProdTabs extends \Model
                 (if (prodval.val is null, cattab.`default`, prodval.val) ) as val 
                 from oc_product_to_category as p2c
                 left join category_prodtab as cattab on cattab.category_id = p2c.category_id
-                left join (select * from product_prodtab where product_id = :id ) as prodval on prodval.category_prodtab_id = cattab.category_prodtab_id 
-                where p2c.product_id = :id and p2c.main_category = 1 and cattab.category_prodtab_id is not null";
+                left join (select * from product_prodtab where product_id = ? ) as prodval on prodval.category_prodtab_id = cattab.category_prodtab_id 
+                where p2c.product_id = ? and p2c.main_category = 1 and cattab.category_prodtab_id is not null";
         if ( null !== $order ) {
             $sql .= " " . $order;
         }
-        $res =  $this->db->query($sql, [':id' => $product_id] );
+        $res =  $this->db->query($sql, [$product_id, $product_id] );
 
         return $res->rows;
     }

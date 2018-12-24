@@ -96,7 +96,6 @@ class ProductListHelper extends \Model
                 throw new \Exception('Sale base wasnt found for product ' . $result['product_id']);
             }
             
-            //@task - сделать цена от...
             $priceUnitPrice = (float)$result['price_wholesale'];
             $saleUnitPrice = $saleToPriceKoef->multiply(Fraction::fromFloat($priceUnitPrice))->toFloat();
 
