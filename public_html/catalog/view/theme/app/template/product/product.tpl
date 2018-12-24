@@ -516,7 +516,7 @@
             </div>
         <?php endif;?>
 
-        <style>
+        <style type="text/css">
         .tovar_files .download {
             line-height: 40px;
             color: #000;
@@ -538,7 +538,7 @@
             width: 28px;
             height: 32px;
             background-position: center;
-            background-image: url(../img/icon19.png);
+            background-image: url(/catalog/view/theme/app/img/icon19.png);
             display: inline-block;
             vertical-align: top;
             background-repeat: no-repeat;
