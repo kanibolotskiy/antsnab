@@ -1,4 +1,9 @@
+
+<?php echo "ok";?>
+<?php print_r($files); ?>
+
 <?php if($files){ ?>
+
 	<style><?php echo $file_css; ?></style>  
 	<div class="<?php echo $config_file_block_class; ?>">
 	<?php if($config_file_block_index){ ?><!--noindex--><?php } ?>

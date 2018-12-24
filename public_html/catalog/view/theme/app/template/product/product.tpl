@@ -3,7 +3,7 @@
     <input type="hidden" id="product_id" value="<?=$product_id?>"/>
     <?= $column_left ?>
     <div class="content">
-        <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
+        <?php /*include __DIR__ . '/../partial/breadcrumbs.tpl' */ ?>
         <?php echo $content_top; ?>
         <div class="card-product"  itemprop="offers" itemscope itemtype="http://schema.org/Offer">
             <div class="title" itemprop="name"><?=$heading_title?></div>
@@ -377,7 +377,11 @@
                         </div>
                     </div>
                 <?php endforeach;?>
+
+                
+                
                 <div>
+                
                     <div class="reviews-container reviews-container2">
                         <?php foreach ($reviews as $r): ?>
                             <div class = "review-block">
@@ -398,7 +402,7 @@
                                 <?php endif; ?>
                             </div>
                         <?php endforeach; ?>
-                        <?php /* Во вкладке нахуй пагинацию*/ /*
+                        <?php /* Во вкладке - пагинацию*/ /*
                         <div class="page-navigation page-navigation2">
                             <?php echo $pagination; ?>
                         </div>*/ ?>
@@ -511,6 +515,15 @@
                 </div>
             </div>
         <?php endif;?>
+
+
+        <?php if(isset($files)){ ?>
+            <div class="tovar_files">
+                <?php foreach($files as $file){ ?>
+                    <a class="download" target="_blank" href="<?php echo $file['href']; ?>"><?php if($file['title']) { echo $file['title'];}else{echo $file['name'];} ?></a>
+                <?php } ?>
+            </div>
+        <?php } ?>
 
         <div class="mentioned-products mentioned-products2">
             <?php if( $products):?>

@@ -1,10 +1,11 @@
 <?php 
 class ControllerFileFile extends Controller {
-	public function index() {  
+	public function index() { 
+		
 		$this->load->model('tool/image');
 		$this->load->model('file/file');
 		
-		$this->document->addStyle('catalog/view/theme/default/stylesheet/file.css');
+		//$this->document->addStyle('catalog/view/theme/default/stylesheet/file.css');
 		
 		$data['files'] = array();
 		if ($this->customer->isLogged()) {
@@ -14,6 +15,7 @@ class ControllerFileFile extends Controller {
 		}
 		
 		if ($this->config->get('config_customer_group_file') && in_array($customer_group_id, $this->config->get('config_customer_group_file'))){		
+		
 			$config_file_block_title_tag = ($this->config->get('config_file_block_title_tag'))?$this->config->get('config_file_block_title_tag'):'h3';
 			$data['config_file_block_title'] = '<' . $config_file_block_title_tag . '>' . $this->config->get('config_file_block_title') . '</' . $config_file_block_title_tag . '>';
 			$data['config_file_block_class'] = $config_file_block_class = ($this->config->get('config_file_block_class'))?$this->config->get('config_file_block_class'):'files';
@@ -53,6 +55,7 @@ class ControllerFileFile extends Controller {
 			
 			$files_data = $this->model_file_file->getProductFiles($this->request->get['product_id']);
 			
+
 			foreach ($files_data as $file) {
 				if ($file['image'] && $file['image'] != 'no_image.jpg' ) {
 					$image = $this->model_tool_image->resize($file['image'], ($this->config->get('config_file_default_image_size_width'))?$this->config->get('config_file_default_image_size_width'):50, ($this->config->get('config_file_default_image_size_height'))?$this->config->get('config_file_default_image_size_height'):50);
@@ -60,7 +63,7 @@ class ControllerFileFile extends Controller {
 					$image = false;
 				}
 				
-				if(file_exists(str_replace("system/download", "files", DIR_DOWNLOAD) . $file['file'])) {
+				if(file_exists(str_replace("system/storage/download", "files", DIR_DOWNLOAD) . $file['file'])) {
 					$file_link = HTTP_SERVER . 'files/' . $file['file']; 
 				}else{
 					$file_link = false;
@@ -77,12 +80,9 @@ class ControllerFileFile extends Controller {
 				}
 			}				
 		}				
-		echo "!".$this->config->get('config_template')."!";
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/file/file.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/file/file.tpl', $data);
-		} else {
-			return $this->load->view('file/file.tpl', $data);
-		}		
+		
+		return $this->load->view('file/file', $data);
+			
   	}
 }
 ?>

@@ -1,4 +1,3 @@
-<?php /*///3274///*/ ?>
 <div class="tab-pane" id="tab-file">
 	<div class="table-responsive">
 		<table id="files" class="table table-striped table-bordered table-hover">
@@ -29,12 +28,12 @@
 					</td>
 					<td class="text-left">
 					<?php foreach ($languages as $language) { ?>
-						<input style="background:#fff url(view/image/flags/<?php echo $language['image']; ?>)right center no-repeat;" type="text" class="form-control" id="n<?php echo $file_row; ?><?php echo $language['language_id']; ?>" name="product_file[<?php echo $file_row; ?>][description][<?php echo $language['language_id']; ?>][name]" value="<?php echo $product_file['description'][$language['language_id']]['name']; ?>" />
+						<input style="background:#fff url(language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png) right center no-repeat;" type="text" class="form-control" id="n<?php echo $file_row; ?><?php echo $language['language_id']; ?>" name="product_file[<?php echo $file_row; ?>][description][<?php echo $language['language_id']; ?>][name]" value="<?php echo $product_file['description'][$language['language_id']]['name']; ?>" />
 					<?php } ?>
 					</td>
 					<td class="text-left">
 					<?php foreach ($languages as $language) { ?>
-						<input style="background:#fff url(view/image/flags/<?php echo $language['image']; ?>)right center no-repeat;" type="text" class="form-control" name="product_file[<?php echo $file_row; ?>][description][<?php echo $language['language_id']; ?>][title]" value="<?php echo $product_file['description'][$language['language_id']]['title']; ?>" />
+						<input style="background:#fff url(language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png) right center no-repeat;" type="text" class="form-control" name="product_file[<?php echo $file_row; ?>][description][<?php echo $language['language_id']; ?>][title]" value="<?php echo $product_file['description'][$language['language_id']]['title']; ?>" />
 					<?php } ?>
 					</td>		
 				<td class="text-left"><input type="text" class="form-control" name="product_file[<?php echo $file_row; ?>][sort_order]" value="<?php echo $product_file['sort_order']; ?>" size="2" /></td>
@@ -77,12 +76,12 @@ function addFile(){
 	html += '  <td class="text-center"><a href="" id="thumb-image' + file_row + '"data-toggle="image" class="img-thumbnail"><img src="<?php echo $placeholder; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /><input type="hidden" name="product_file[' + file_row + '][file_image]" value="" id="input-image' + file_row + '" /></td>';	
 	html += '	<td class="text-left">';
 	<?php foreach ($languages as $language) { ?>
-	html += '	<input style="background:#fff url(view/image/flags/<?php echo $language['image']; ?>)right center no-repeat;" class="form-control" type="text" id="n' + file_row + '<?php echo $language['language_id']; ?>" name="product_file[' + file_row + '][description][<?php echo $language['language_id']; ?>][name]" value="" />';	
+	html += '	<input style="background:#fff url(language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png) right center no-repeat;" class="form-control" type="text" id="n' + file_row + '<?php echo $language['language_id']; ?>" name="product_file[' + file_row + '][description][<?php echo $language['language_id']; ?>][name]" value="" />';	
 	<?php } ?>
 	html += '	</td>';
 	html += '	<td class="text-left">';
 	<?php foreach ($languages as $language) { ?>
-	html += '	<input style="background:#fff url(view/image/flags/<?php echo $language['image']; ?>)right center no-repeat;" class="form-control" type="text" name="product_file[' + file_row + '][description][<?php echo $language['language_id']; ?>][title]" value="" />';	
+	html += '	<input style="background:#fff url(language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png)right center no-repeat;" class="form-control" type="text" name="product_file[' + file_row + '][description][<?php echo $language['language_id']; ?>][title]" value="" />';	
 	<?php } ?>
 	html += '	</td>';
 	html += '	<td class="text-left"><input class="form-control" type="text" name="product_file[' + file_row + '][sort_order]" value="" size="2" /></td>';	

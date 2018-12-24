@@ -6,7 +6,7 @@ class ControllerFileFile extends Controller {
 		
 		$this->model_file_file->checkDBTables();		
 		
-		$this->language->load('catalog/file');
+		$this->load->language('catalog/file');
 		$data['tab_file'] = $this->language->get('tab_file');
 		$data['entry_file'] = $this->language->get('entry_file');
 		$data['entry_file_image'] = $this->language->get('entry_file_image');
@@ -16,7 +16,7 @@ class ControllerFileFile extends Controller {
 		$data['button_add_file'] = $this->language->get('button_add_file');
 		$data['error_file_exists'] = $this->language->get('error_file_exists');
 			
-		$this->language->load('catalog/product');	
+		$this->load->language('catalog/product');	
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');			
@@ -55,7 +55,7 @@ class ControllerFileFile extends Controller {
 				'file_id' => $product_file['file_id'],
 				'file' => $product_file['file'],
 				'image'      => $image,
-				'file_delete'=> (file_exists(str_replace("system/download", "files", str_replace("system/download", "files", DIR_DOWNLOAD)) . $product_file['file']))?false:true,
+				'file_delete'=> (file_exists(str_replace("system/storage/download", "files", str_replace("system/storage/download", "files", DIR_DOWNLOAD)) . $product_file['file']))?false:true,
 				'thumb'      => $this->model_tool_image->resize($image, 100, 100),
 				'sort_order' => $product_file['sort_order'],
 				'status' => $product_file['status'],
@@ -65,7 +65,7 @@ class ControllerFileFile extends Controller {
 			);
 		}
 		
-		return $this->load->view('file/file.tpl', $data);	
+		return $this->load->view('file/file', $data);	
 		
 	}
 	
@@ -96,8 +96,8 @@ class ControllerFileFile extends Controller {
 
 	public function upload_file() {
 		if($this->request->get['delete_old']){
-			if(file_exists(str_replace("system/download", "files", DIR_DOWNLOAD) . $this->request->get['delete_old'])) {			
-				unlink(str_replace("system/download", "files", DIR_DOWNLOAD) . $this->request->get['delete_old']);
+			if(file_exists(str_replace("system/storage/download", "files", DIR_DOWNLOAD) . $this->request->get['delete_old'])) {			
+				unlink(str_replace("system/storage/download", "files", DIR_DOWNLOAD) . $this->request->get['delete_old']);
 			}
 		}
 		$json = array();
@@ -116,12 +116,12 @@ class ControllerFileFile extends Controller {
 		}
 
 		if (!isset($json['error'])) {
-			if(!file_exists(str_replace("system/download", "files", DIR_DOWNLOAD) . $filename)) {	
-				move_uploaded_file($this->request->files['file']['tmp_name'], str_replace("system/download", "files", DIR_DOWNLOAD) . $filename);
+			if(!file_exists(str_replace("system/storage/download", "files", DIR_DOWNLOAD) . $filename)) {	
+				move_uploaded_file($this->request->files['file']['tmp_name'], str_replace("system/storage/download", "files", DIR_DOWNLOAD) . $filename);
 				$json['file'] = $filename;
 			}else{
 				$filename_rand = rand(5, 15) . $filename;
-				move_uploaded_file($this->request->files['file']['tmp_name'], str_replace("system/download", "files", DIR_DOWNLOAD) . $filename_rand);
+				move_uploaded_file($this->request->files['file']['tmp_name'], str_replace("system/storage/download", "files", DIR_DOWNLOAD) . $filename_rand);
 				$json['file'] = $filename_rand;
 			}
 			$json['name'] = $filename_original[0];
