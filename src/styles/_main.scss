@@ -4526,5 +4526,29 @@ html, body{
     padding:10px;
 }
 
-
-    
+.tovar_files .download {
+    line-height: 40px;
+    color: #000;
+    font-size: 13px;
+    position: relative;
+    padding-left: 40px;
+    margin-right: 20px;
+    margin-bottom: 40px;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 40px;
+    text-decoration: underline;
+}
+.tovar_files .download:before {
+    content:'';
+    position: absolute;
+    top: calc(50% - 17px);
+    left: 0;
+    width: 28px;
+    height: 32px;
+    background-position: center;
+    background-image: url(../img/icon19.png);
+    display: inline-block;
+    vertical-align: top;
+    background-repeat: no-repeat;
+}

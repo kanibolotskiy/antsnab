@@ -3,6 +3,7 @@ class ControllerProductProduct extends Controller {
 	private $error = array();
 
 	public function index() {
+		
 		$this->load->language('product/product');
 		$this->load->language('catalog/review');
 
@@ -69,6 +70,32 @@ class ControllerProductProduct extends Controller {
 			}
 		}
 
+		$this->load->model('file/file');
+		$files_data = $this->model_file_file->getProductFiles($this->request->get['product_id']);
+		foreach ($files_data as $file) {
+			if ($file['image'] && $file['image'] != 'no_image.jpg' ) {
+				$image = $this->model_tool_image->resize($file['image'], ($this->config->get('config_file_default_image_size_width'))?$this->config->get('config_file_default_image_size_width'):50, ($this->config->get('config_file_default_image_size_height'))?$this->config->get('config_file_default_image_size_height'):50);
+			} else {
+				$image = false;
+			}
+			
+			if(file_exists(str_replace("system/storage/download", "files", DIR_DOWNLOAD) . $file['file'])) {
+				$file_link = HTTP_SERVER . 'files/' . $file['file']; 
+			}else{
+				$file_link = false;
+			}
+			
+			if($file_link){
+				$data['files'][] = array(
+					'file_id' 	=> $file['file_id'],
+					'href'    	=> $file_link, 
+					'image'   	=> $image,
+					'name' 		=> $file['name'],
+					'title' 	=> $file['title'],
+				);
+			}
+		}
+		
 		$this->load->model('catalog/manufacturer');
 
 		if (isset($this->request->get['manufacturer_id'])) {
