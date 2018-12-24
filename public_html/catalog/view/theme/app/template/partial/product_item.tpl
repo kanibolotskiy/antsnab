@@ -20,7 +20,11 @@
             </div>
             <meta itemprop="priceCurrency" content="RUB">
             <div class="quantity-buy">
-                <div class="qnt-container" data-ui_name="<?=$p['sale_unit_name']?>"></div>
+                <div class="qnt-container" 
+                     data-ui_name="<?=$p['sale_unit_name']?>"
+                     data-ui_name_plural="<?=$p['sale_unit_name_plural']?>"
+                     data-ui_name_genitive="<?=$p['sale_unit_name_genitive']?>">
+                </div>
                 <a href="" class="buy"
                     data-product_id="<?=$p['product_id']?>" 
                     data-sale_to_price_koef="<?=$p['sale_to_price_koef']?>">

@@ -3,9 +3,13 @@ import {Quantity} from './lib/quantity.es6.js';
 function initQuantityContainers(collection) {
     collection.each(function(index){
         var $el = $(this),
-            $saleUnitName = $el.attr('data-ui_name');
+            saleUnitName = $el.attr('data-ui_name');
             Quantity.init($el, {
-                'ui_name': $saleUnitName,
+                'ui_names': {
+                    'ui_name': saleUnitName,
+                    'ui_name_plural': $el.attr('data-ui_name_plural'),
+                    'ui_name_genitive': $el.attr('data-ui_name_genitive')
+                }
             });
     });
 }

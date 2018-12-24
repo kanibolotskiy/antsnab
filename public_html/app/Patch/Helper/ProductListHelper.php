@@ -105,12 +105,13 @@ class ProductListHelper extends \Model
             } else {
                 $price = false;
             }
-            
             $path = $this->hierarhy->getPath($result['main_category']);
             $products[] = array(
                 'product_id' => $result['product_id'],
                 'sale_to_price_koef' => $saleToPriceKoef,
                 'sale_unit_name' => $saleUnit['name'],
+                'sale_unit_name_plural' => $saleUnit['name_plural'],
+                'sale_unit_name_genitive' => $saleUnit['name_package_dimension'],
                 'thumb' => $image,
                 'name' => $result['meta_h1'],
                 'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',

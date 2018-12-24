@@ -42,7 +42,11 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                     'sale_to_ui_koef':$activeEl.attr('data-sale_to_ui_koef'),
                     'ui_minimum':$activeEl.attr('data-ui_minimum'),
                     'ui_step':$activeEl.attr('data-ui_step'),
-                    'ui_name': $activeEl.attr('data-ui_name')
+                    'ui_names': {
+                        'ui_name': $activeEl.attr('data-ui_name'),
+                        'ui_name_plural': $activeEl.attr('data-ui_name_plural'),
+                        'ui_name_genitive': $activeEl.attr('data-ui_name_genitive')
+                    }
                 };
         
             //check if input controller was inited
@@ -52,7 +56,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
             }
         
             var controller = $input.data('quantity');
-            controller.switch(options.sale_to_ui_koef, options.ui_minimum, options.ui_step, options.ui_name);
+            controller.switch(options.sale_to_ui_koef, options.ui_minimum, options.ui_step, options.ui_names);
         }
        
         function togglePrices($activeEl) {

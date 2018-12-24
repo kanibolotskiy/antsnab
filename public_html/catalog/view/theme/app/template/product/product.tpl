@@ -9,9 +9,9 @@
             <div class="title" itemprop="name"><?=$heading_title?></div>
             <div class="manufacturer">
                 <p itemprop="seller">
-                    <span>ТУ/ГОСТ&nbsp;<?=$sku?></span>
+                    <span><?=$sku?></span>
                     <?php if ($manufacturer) { ?>
-                        <span><?php echo $manufacturer; ?></span>
+                        <span>Производитель:&nbsp<?php echo $manufacturer; ?></span>
                     <?php } ?>
                 </p>
             </div>
@@ -83,6 +83,8 @@
                                             data-ui_step = "1"
                                             <?php endif; ?>
                                             data-ui_name = "<?=$pUnits[1]['name']?>"
+                                            data-ui_name_plural = "<?=$pUnits[1]['name_plural']?>"
+                                            data-ui_name_genitive = "<?=$pUnits[1]['name_package_dimension']?>"
                                             data-ui_descr="<?=$pUnits[1]['relStr']?>" class="active">
                                             <a href="#"><?= $pUnits[1]['showName']?></a>
                                         </li>
@@ -94,6 +96,8 @@
                                             data-ui_step = "1"
                                             <?php endif; ?>
                                             data-ui_name = "<?=$pUnits[2]['name']?>"
+                                            data-ui_name_plural = "<?=$pUnits[2]['name_plural']?>"
+                                            data-ui_name_genitive = "<?=$pUnits[2]['name_package_dimension']?>"
                                             data-ui_descr="<?=$pUnits[2]['relStr']?>">
                                             <a href="#"><?= $pUnits[2]['showName']?></a>
                                         </li>
