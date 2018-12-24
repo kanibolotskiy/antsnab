@@ -17,9 +17,6 @@ use WS\Override\Gateway\ProdUnits\ProdUnitsCalc;
 class ProductListHelper extends \Model
 {
 
-    /** @const route (in OC terms) to products list template */
-    const RENDER_ROUTE = 'partial/product_list';
-
     public function getProducts($filter_data)
     {
         $this->load->model('catalog/product');
@@ -98,7 +95,7 @@ class ProductListHelper extends \Model
             if (!$saleUnit) {
                 throw new \Exception('Sale base wasnt found for product ' . $result['product_id']);
             }
-
+            
             //@task - сделать цена от...
             $priceUnitPrice = (float)$result['price_wholesale'];
             $saleUnitPrice = $saleToPriceKoef->multiply(Fraction::fromFloat($priceUnitPrice))->toFloat();
@@ -129,10 +126,5 @@ class ProductListHelper extends \Model
         }
 
         return $products;
-    }
-
-    public function render($products)
-    {
-        return $this->load->view(self::RENDER_ROUTE, ['products'=>$products]);
     }
 }

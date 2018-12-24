@@ -221,7 +221,15 @@ class CategoryController extends \Controller
                 //@changed get articles, pagination construction
                 $article_total = $this->model_newsblog_article->getTotalArticles($filter_data);
                 $data['articles'] = $this->collectArticles($filter_data, $articles_image_size, $date_format, $top_category_id);
-                $data['pagination'] = $this->paginate($article_total, (int) $limit, (int) $page, $data['articles'], $data['current_year'], $this->request->get['newsblog_path'] );
+
+                /** Pagination */
+                $paginationModel = PaginationHelper::getPaginationModel($article_total, (int)$limit, (int)$page);
+                
+                $paginationBaseUrl = $this->getPaginationBaseUrl($data['current_year'], $this->request->get['newsblog_path'] );
+                $data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl, $paginationModel);
+
+                $lazyLoadBaseUrl = $this->getLazyLoadBaseUrl($data['current_year'], $this->request->get['newsblog_path'] );
+                $data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl, $paginationModel);
             }
 
             /* $data['canonical'] = $this->url->link('newsblog/category', 'newsblog_path=' . $category_info['category_id'], 'SSL'); */
@@ -290,12 +298,11 @@ class CategoryController extends \Controller
         $this->load->model('newsblog/category');
         $this->load->model('newsblog/article');
 
-        
         $result = array('result'=>null, 'error'=>null);
 
         $category_id = 0;
-        if (isset($this->request->post['newsblog_path'])) {
-            $parts = explode('_', (string) $this->request->post['newsblog_path']);
+        if (isset($this->request->get['path'])) {
+            $parts = explode('_', (string) $this->request->get['path']);
             $top_category_id = $parts[0];
             $category_id = (int) array_pop($parts);
         }
@@ -323,13 +330,13 @@ class CategoryController extends \Controller
         }
 
         $page = 1;
-        if (isset($this->request->post['page'])) {
-            $page = $this->request->post['page'];
+        if (isset($this->request->get['page'])) {
+            $page = $this->request->get['page'];
         }
 
         $filter_year = null;
-        if (!empty($this->request->post['filter_year'])) {
-            $filter_year = (int) $this->request->post['filter_year'];
+        if (!empty($this->request->get['filter_year'])) {
+            $filter_year = (int) $this->request->get['filter_year'];
         } elseif ($category_id == static::NEWS_CATEGORY_ID) {
             $this->load->model('newsblog/article');
             $yearsRaw = $this->model_newsblog_article->getYears($category_id);
@@ -355,13 +362,25 @@ class CategoryController extends \Controller
            return true;
         }
 
-        $pagination = $this->paginate($article_total, $limit, $page, $articles, $filter_year, $this->request->post['newsblog_path'] );
-        $result['result'] = array(
-            'articles' => $articles,
-            'pagination' => $pagination
-        );
+        $template_default = 'category.tpl';
+        if ($category_info['template_category'])
+            $template_default = $category_info['template_category'];
 
-        $this->response->setOutput(json_encode($result, JSON_HEX_QUOT));
+        $articlesRendered = [];
+        foreach( $articles as $a ){
+            $articlesRendered[] = $this->load->view("newsblog/partial/item_{$template_default}", ['article'=>$a]);
+        }
+
+        $lazyLoadResponse = PaginationHelper::getLazyLoadResponse($this->registry, [
+            'items' => $articlesRendered,
+            'total' => (int)$article_total,
+            'itemsPerPage' => (int)$limit,
+            'page' => (int)$page,
+            'paginationBaseUrl' => $this->getPaginationBaseUrl($filter_year, $this->request->get['path'] ),
+            'lazyLoadBaseUrl' => $this->getLazyLoadBaseUrl($filter_year, $this->request->get['path'] ),
+        ]); 
+
+        $this->response->setOutput($lazyLoadResponse);
     }
 
     protected function collectArticles($filter_data, $articles_image_size, $date_format, $category_path = 0)
@@ -407,20 +426,17 @@ class CategoryController extends \Controller
         return $articles;
     }
 
-    /**
-     * Получает разметку пагинации, специфичную для данной страницы
-     * (устанавливает базовый URL и набор записей) 
-     */
-    protected function paginate($total, $limit, $page, $articles, $year = null, $category_path = 0)
+    protected function getPaginationBaseUrl($year = null, $category_path = 0)
     {
-
         $year_filter = (null === $year) ? '' : '&filter_year=' . $year;
-        $baseUrl = $this->url->link('newsblog/category', 'newsblog_path=' . $category_path .  $year_filter);
-        $paginationMeta = [PaginationHelper::BASE_URL_META_INDEX => $baseUrl, 'lazy'=>true];
-
-        $pagination = PaginationHelper::getPaginationModel($total, (int) $limit, (int) $page, $articles, $paginationMeta);
-        PaginationHelper::setDocumentLinks($this->document, $pagination);
-        return PaginationHelper::render($this->load, $pagination);
+        $baseUrl = $this->url->link('newsblog/category', 'newsblog_path=' . $category_path .  $year_filter );
+        return $baseUrl;
     }
 
+    protected function getLazyLoadBaseUrl($year = null, $category_path = 0)
+    {
+        $year_filter = (null === $year) ? '' : '&filter_year=' . $year;
+        $baseUrl = $this->url->link('newsblog/category/showmore', 'path=' . $category_path . $year_filter );
+        return $baseUrl; 
+    }
 }

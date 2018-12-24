@@ -39,56 +39,14 @@
                 <div class="staty-list">
                     <ul id="lazy-load_container">
                         <?php  foreach ($articles as $article) : ?>
-                            <li>
-                                <div class="news-block">
-                                    <?php if ($article['thumb']) { ?>
-                                        <div class="news-img">
-                                            <a href="<?php echo $article['href']; ?>">
-                                                <img src="<?php echo $article['thumb']; ?>"
-                                                     alt="<?php echo $article['name']; ?>"
-                                                     title="<?php echo $article['name']; ?>" />
-                                            </a>
-                                            <span><?=$article['cat_name']?></span>
-                                        </div>
-                                    <?php } ?>
-                                    <div class="news-description">
-                                        <a href="<?php echo $article['href']; ?>" class="title-news">
-                                            <?php echo $article['name']; ?>
-                                        </a>
-                                        <p><?php echo strip_tags($article['preview']); ?></p>
-                                        <a href="<?php echo $article['href']; ?>" class="more">Читать далее</a>
-                                    </div>
-                                </div>
-                            </li>
+                           <?php include __DIR__ . "/partial/item_allarticles.tpl" ?> 
                         <?php endforeach; ?>
-                        <!--NEWSBLOCK template for lazy-load pagination-->
-                        <script id="news-block" type="text/template">
-                            <li style="display:none">
-                                <div class="news-block">
-                                        <div class="news-img">
-                                            <a href="<%href%>">
-                                                <img src="<%thumb%>" 
-                                                     alt="<%name%>" 
-                                                     title="<%name%>" />
-                                            </a>
-                                            <span><%cat_name%></span>
-                                        </div>
-                                    <div class="news-description">
-                                        <a href="<%href%>" class="title-news">
-                                            <%name%>
-                                        </a>
-                                        <p><%preview%></p>
-                                        <a href="<%href%>" class="more">Читать далее</a>
-                                    </div>
-                                </div>
-                            </li>
-                        </script>
                     </ul>
                 </div>
                 
             </div>
-            <?php echo $pagination; ?>
-            <?php include __DIR__ . '/../partial/lazyload.tpl' ?>
+            <?php echo $paginationLazy;?>
+            <?php echo $pagination;?>
         <?php else: ?>
             <h1>Статей не найдено</h1>
         <?php endif;?>

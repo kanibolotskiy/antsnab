@@ -515,3 +515,21 @@
         margin-bottom: 20px;
     }
 }
+
+/** Сводная таблица в финальной категории */
+.summary tr th {
+    color: #000;
+    font-size: 14px;
+    font-weight: 700;
+    vertical-align: middle !important;
+    text-align: center;
+}
+.summary tr td {
+    text-align: center
+}
+.summary tr td.left {
+    text-align: left;
+}
+.summary tr th.grey {
+    background-color: #f9f9f9;
+}

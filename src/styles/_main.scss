@@ -1322,13 +1322,12 @@ a.mail{
 }
 ul.tabset {
     position: absolute;
-    top:-3px;
+    top:0px;
     right: 0;
     list-style: none;
     overflow: hidden;
     margin: 0;
     padding: 0;
-    float: right;
 }
 ul.tabset li {
     margin: 0;
@@ -1800,8 +1799,10 @@ a.buy{
         transition: 0.4s;
     }
 }
-a.show-more{
+button.show-more{
     display: block;
+    width: 100%;
+    cursor: pointer;
     text-decoration: none;
     text-align: center;
     border: 1px solid #EFEEEC;
@@ -1884,6 +1885,9 @@ a.show-more{
         li{
             .catalog-block{
                 .catalog-description{
+                    .description {
+                        display:none;
+                    }
                     a.title-product{
                         margin-bottom: 20px;
                         height: 40px;
@@ -1907,6 +1911,7 @@ a.show-more{
                     }
                     .price {
                         margin-bottom: 20px;
+                        text-align:center;
                     }
                     a.buy{
                         width: 100%;
@@ -4206,6 +4211,25 @@ a.print{
         width: 100%;
         margin-bottom: 20px;
     }
+
+    .tab-block ul li .catalog-description{
+        text-align:center;
+    }
+
+    .tab-block ul li .qnt-widget{
+        width: 100%;
+        margin: 0 0 10px 0;
+    }
+
+    .tab-block ul li .catalog-block .catalog-description a.buy {
+        width: 100%;
+    }
+
+    .tab-block .quantity-buy {
+        padding: 0 20px;
+        width: 100%;
+        margin-top: 20px;
+    }
 }
 @media screen and (max-width: 500px) {
     .logo{
@@ -4323,9 +4347,7 @@ a.print{
     }
 }
 @media screen and (max-width: 400px) {
-    .tab-block ul li .catalog-block .catalog-description a.buy {
-        width: 100%;
-    }
+ 
     .mentioned-products ul li{
         width:100%;
     }

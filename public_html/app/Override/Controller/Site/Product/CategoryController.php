@@ -79,12 +79,12 @@ class CategoryController extends \Controller
 
         $gateway = new FinalCategory($this->registry);
         $isCategoryFinal = $gateway->isCategoryFinal($category_id);
-        //$flag_is_seo=true;
         $flag_is_seo=$gateway->isCategorySeo($category_id);
 
         $category_info = $this->model_catalog_category->getCategory($category_id);
+        /* @ИСПРАВИТЬ перенести ниже после проверки наличия category_info */
         $categories_seo = $this->model_catalog_category->getCategoresSeo($category_id);
-        
+
         if (!$category_info) {
             $this->showNotFound();
             return;
@@ -93,9 +93,7 @@ class CategoryController extends \Controller
         
         $this->setFilterCategories($categories_seo);
 
-        
 
-        //if($flag_is_seo)
         if($flag_is_seo){
             $this->showProducts($category_id,true);
             return;
@@ -107,25 +105,69 @@ class CategoryController extends \Controller
 
         $this->showCategories($category_id);
     }
-    
+   
+    public function showmore()
+    {
+        if (isset($this->request->get['cat_path'])) {
+            $parts = explode('_', (string) $this->request->get['cat_path']);
+            $category_id = (int) array_pop($parts);
+        } else {
+            $category_id = 0;
+        }
+
+        $this->load->model('catalog/product');
+
+        $filter_data = $this->getFilter($category_id, $limit, $page);
+        $products_total = $this->model_catalog_product->getTotalProducts($filter_data);
+        $productsHelper = new ProductListHelper($this->registry);
+        $products = $productsHelper->getProducts($filter_data);
+
+        $queryString = $this->hierarhy->getPath($category_id);
+        if (isset($this->request->get['filter'])) {
+            $queryString .= '&filter=' . $this->request->get['filter'];
+        }
+        if (isset($this->request->get['sort'])) {
+            $queryString .= '&sort=' . $this->request->get['sort'];
+        }
+        $paginationBaseUrl = $this->url->link('product/category', 'path=' . $queryString);
+        $lazyLoadBaseUrl = $this->url->link('product/category/showmore', 'cat_path=' . $queryString);
+
+        $items = [];
+        foreach( $products as $p ){
+            $items[] = $this->load->view("partial/product_item", ['p'=>$p]);
+        }
+
+        $lazyLoadResponse = PaginationHelper::getLazyLoadResponse($this->registry, [
+            'items' => $items, 
+            'total' => (int)$products_total,
+            'itemsPerPage' => (int)$limit,
+            'page' => (int)$page,
+            'paginationBaseUrl' => $paginationBaseUrl,
+            'lazyLoadBaseUrl' => $lazyLoadBaseUrl,
+        ]); 
+
+        $this->response->setOutput($lazyLoadResponse);
+    }
+
     private function setFilterCategories($categories_seo){
         $url="";
         foreach($categories_seo as $category){
             //echo "!".$category["category_id"]."!";
+            /** @ИСПРАВИТЬ - зачем еще N запросов к базе если в $categories_seo уже все есть */
             $category_seo_info = $this->model_catalog_category->getCategory($category["category_id"]);
             $path = $this->hierarhy->getPath($category["category_id"]);
             //echo $path."<br/>";
 
             $this->data['categories_isseo'][] = array(
                 'name' => $category_seo_info['name'],
+                /** @ИСПРАВИТЬ - нужно использовать $path */
                 'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $category['category_id'] . $url)
             );
         }
         
         //print_r($category_seo_info);
-
-        
     }
+
     private function showCategories($category_id)
     {
         $this->data['categories'] = array();
@@ -174,90 +216,35 @@ class CategoryController extends \Controller
         $this->response->setOutput($this->load->view('product/category', $this->data));
     }
 
-    private function showProducts($category_id,$is_seo=false)
+    /** @ИСПРАВИТЬ - я бы назвал флаг $is_seo что то вроде $showPropertyTable или типа того */
+    private function showProducts($category_id, $is_seo=false)
     {
-        $this->data['products'] = array();
-        
-        if (isset($this->request->get['filter'])) {
-            $filter = $this->request->get['filter'];
-        } else {
-            $filter = '';
-        }
-        $sort_selected=0;
-
-        $sort = 'p.sort_order';
-        $order = 'ASC';
-        
-        $sort = 'p.sort_order';
-        $order = 'ASC';
-        if (isset($this->request->get['sort'])) {
-            $sort_arr=explode("|",$this->request->get['sort']);
-            if((isset($sort_arr[0]))and(isset($sort_arr[1]))){
-                
-                $sort="p.".$sort_arr[0];
-                $order=$sort_arr[1];
-                if($order=="ASC"){
-                    $sort_selected=1;
-                }else{
-                    $sort_selected=2;
-                }
-            }
-        }
-        
+        $filter_data = $this->getFilter($category_id, $limit, $page, $sort_selected);
         $this->data['sort_selected']=$sort_selected;
-        /*
-        if (isset($this->request->get['sort'])) {
-            $sort = $this->request->get['sort'];
-        } else {
-            $sort = 'p.sort_order';
-        }
-        
-        if (isset($this->request->get['order'])) {
-            $order = $this->request->get['order'];
-        } else {
-            $order = 'ASC';
-        }
-        */
-        if (isset($this->request->get['page'])) {
-            $page = $this->request->get['page'];
-        } else {
-            $page = 1;
-        }
-
-        if (isset($this->request->get['limit'])) {
-            $limit = (int) $this->request->get['limit'];
-        } else {
-            $limit = (int) $this->config->get($this->config->get('config_theme') . '_product_limit');
-        }
-
-        $filter_data = array(
-            'filter_category_id' => $category_id,
-            'filter_filter' => $filter,
-            'sort' => $sort,
-            'order' => $order,
-            'start' => ($page - 1) * $limit,
-            'limit' => $limit
-        );
-
-        
-        
-        //products
+        $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
         $productsHelper = new ProductListHelper($this->registry);
-        $results = $productsHelper->getProducts($filter_data);
-        $this->data['products'] = $productsHelper->render($results);
+        $this->data['products'] = $productsHelper->getProducts($filter_data);
 
         if(!$is_seo){
             //summary table
             $propGateway = new ProdProperties($this->registry);
             $this->data['summary'] = $propGateway->getSummaryTableRows($category_id);
         }
-        //pagination
-        $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
-        $meta[PaginationHelper::BASE_URL_META_INDEX] = $this->url->link('product/category', 'path=' . $this->request->get['path']);
-        $paginationModel = PaginationHelper::getPaginationModel($product_total, $limit, (int)$page, $results , $meta);
-        PaginationHelper::setDocumentLinks($this->document, $paginationModel);    
-        $this->data['pagination'] = PaginationHelper::render($this->load, $paginationModel);
 
+        /** Pagination */
+        $queryString = $this->hierarhy->getPath($category_id);
+        if (isset($this->request->get['filter'])) {
+            $queryString .= '&filter=' . $this->request->get['filter'];
+        }
+        if (isset($this->request->get['sort'])) {
+            $queryString .= '&sort=' . $this->request->get['sort'];
+        }
+        $paginationBaseUrl = $this->url->link('product/category', 'path=' . $queryString);
+        $lazyLoadBaseUrl = $this->url->link('product/category/showmore', 'cat_path=' . $queryString);
+
+        $paginationModel = PaginationHelper::getPaginationModel($product_total, (int)$limit, (int)$page);
+        $this->data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl, $paginationModel);
+        $this->data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl, $paginationModel);
 
         $this->setPartials();
         $this->response->setOutput($this->load->view('product/category_final', $this->data));
@@ -377,4 +364,68 @@ class CategoryController extends \Controller
         $this->data['compare'] = $this->url->link('product/compare');
     }
 
+    private function getFilter($category_id, &$limit, &$page = 1 , &$sort_selected = 0)
+    {
+        if (isset($this->request->get['filter'])) {
+            $filter = $this->request->get['filter'];
+        } else {
+            $filter = '';
+        }
+        /** @ИСПРАВИТЬ - это что за магические цифры?????????!!!!!!!! */
+        $sort_selected=0;
+
+        $sort = 'p.sort_order';
+        $order = 'ASC';
+        
+        if (isset($this->request->get['sort'])) {
+            $sort_arr=explode("|",$this->request->get['sort']);
+            if((isset($sort_arr[0]))and(isset($sort_arr[1]))){
+                
+                $sort="p.".$sort_arr[0];
+                $order=$sort_arr[1];
+                if($order=="ASC"){
+                    $sort_selected=1;
+                }else{
+                    $sort_selected=2;
+                }
+            }
+        }
+        
+        /*
+        if (isset($this->request->get['sort'])) {
+            $sort = $this->request->get['sort'];
+        } else {
+            $sort = 'p.sort_order';
+        }
+        
+        if (isset($this->request->get['order'])) {
+            $order = $this->request->get['order'];
+        } else {
+            $order = 'ASC';
+        }
+        */
+        if (isset($this->request->get['page'])) {
+            $page = $this->request->get['page'];
+        } else {
+            $page = 1;
+        }
+
+        if (isset($this->request->get['limit'])) {
+            $limit = (int) $this->request->get['limit'];
+        } else {
+            $limit = (int) $this->config->get($this->config->get('config_theme') . '_product_limit');
+        }
+
+        $filter_data = array(
+            'filter_category_id' => $category_id,
+            'filter_filter' => $filter,
+            'sort' => $sort,
+            'order' => $order,
+            'start' => ($page - 1) * $limit,
+            'limit' => $limit
+        );
+
+        return $filter_data;
+        
+    }
 }

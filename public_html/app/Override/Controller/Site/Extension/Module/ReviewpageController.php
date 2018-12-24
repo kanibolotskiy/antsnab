@@ -48,8 +48,10 @@ class ReviewpageController extends \Controller
         $data['text_thankyou'] = $this->language->get('text_thankyou');
 
         $current_route = $this->request->get['route'];
+        $lazyload_route =  'extension/module/reviewpage/showmore';
         $current_infId = $this->request->get['information_id'];
         $url = $this->url->link($current_route, 'information_id=' . $current_infId);
+        $lazyload_url = $this->url->link($lazyload_route, 'inf_id=' . $current_infId);
 
         //current page
         if (isset($this->request->get['page'])) {
@@ -59,33 +61,20 @@ class ReviewpageController extends \Controller
         }
         $limit = $reviewsLimit;
         $start = ($page - 1) * $limit;
+        $data['reviews'] = $this->getReviews($start, $limit);
 
         // new review
         $p = ( $page == 1 ) ? '' : '&page=' . $page;
         $data['action'] = $url . $p; 
 
-        //review list
-        $data['reviews'] = [];
-        $reviews = $this->model_catalog_review->getCompanyReviews($start, $limit);
-        if ($reviews) {
-            foreach ($reviews as $review) {
-                $data['reviews'][] = array(
-                    'author' => $review['author'],
-                    'text' => $review['text'],
-                    'about' => $review['about'],
-                    'moderator' => $review['moderator'],
-                    'answer' => $review['answer'],
-                    'date' => $review['date_added']
-                );
-            }
-        }
 
         //pagination
         $reviewsTotal = $this->model_catalog_review->getCompanyReviewsTotal();
-        $meta[PaginationHelper::BASE_URL_META_INDEX] = $url;
-        $paginationModel = PaginationHelper::getPaginationModel($reviewsTotal, $limit, (int)$page, $reviews , $meta);
-        PaginationHelper::setDocumentLinks($this->document, $paginationModel);    
-        $data['pagination'] = PaginationHelper::render($this->load, $paginationModel);
+
+        $lazyLoadBaseUrl = $this->url->link('product/search/showmore', $url);
+        $paginationModel = PaginationHelper::getPaginationModel($reviewsTotal, (int)$limit, (int)$page);
+        $data['pagination'] = PaginationHelper::render($this->registry, $url, $paginationModel);
+        $data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyload_url, $paginationModel);
 
         
         $this->error = array();
@@ -97,6 +86,64 @@ class ReviewpageController extends \Controller
         $data['captcha_key'] = $this->config->get('google_captcha_key');
 
         return $this->load->view('extension/module/app/reviewpage', $data);
+    }
+
+    public function showmore()
+    {
+        $current_route = $this->request->get['route'];
+        $lazyload_route =  'extension/module/reviewpage/showmore';
+        $current_infId = $this->request->get['inf_id'];
+        $url = $this->url->link($current_route, 'information_id=' . $current_infId);
+        $lazyload_url = $this->url->link($lazyload_route, '');
+
+
+        if (isset($this->request->get['page'])) {
+            $page = (int)$this->request->get['page'];
+        } else {
+            $page = 1;
+        }
+
+        $limit = (int)$this->config->get(AdminModule::CONFIG_KEY_COUNT);
+        $start = ($page - 1) * $limit;
+        $reviews = $this->getReviews($start, $limit);
+        $items = [];
+        foreach( $reviews as $r ){
+            $items[] = $this->load->view("partial/review_page_item", ['r'=>$r]);
+        }
+
+        $reviewsTotal = $this->model_catalog_review->getCompanyReviewsTotal();
+        $lazyLoadResponse = PaginationHelper::getLazyLoadResponse($this->registry, [
+            'items' => $items, 
+            'total' => $reviewsTotal,
+            'itemsPerPage' => $limit,
+            'page' => $page,
+            'paginationBaseUrl' => $url, 
+            'lazyLoadBaseUrl' => $lazyload_route,
+        ]); 
+
+        $this->response->setOutput($lazyLoadResponse);
+    }
+
+    private function getReviews($start, $limit)
+    {
+        $this->load->model('catalog/review');
+        $reviews = $this->model_catalog_review->getCompanyReviews($start, $limit);
+        if( !$reviews) {
+            return [];
+        }
+        $result = [];
+        foreach ($reviews as $review) {
+            $result[] = [ 
+                'author' => $review['author'],
+                'text' => $review['text'],
+                'about' => $review['about'],
+                'moderator' => $review['moderator'],
+                'answer' => $review['answer'],
+                'date' => $review['date_added']
+            ];
+        }
+
+        return $result;
     }
 
     protected function validateForm($request)

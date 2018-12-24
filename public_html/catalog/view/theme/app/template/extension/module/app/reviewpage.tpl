@@ -27,7 +27,7 @@
                 <span>Отзыв:
                     <i id="error_text" class="error"></i>
                 </span>
-                    <textarea  placeholder="Напишите Ваше мнение о нашей компании" name="text"><?= $entry_text ?></textarea>
+                    <textarea  placeholder="Поделитесь своим мнением о нашей компании" name="text"><?= $entry_text ?></textarea>
             </div>
             <div class = "agreement">
                 <input name="agree" class="error" type = "checkbox" id = "agree" value="1"/>
@@ -68,28 +68,15 @@
             
         </form>
     </div>
-    <?php foreach ($reviews as $r): ?>
-        <div class = "review-block">
-            <div class = "review">
-                <div class = "top">
-                    <span><strong><?= $r['author'] ?></strong> о <b><?= $r['about'] ?></b></span>
-                    <p><?= $r['date'] ?></p>
-                </div>
-                <?= $r['text'] ?>
-            </div>
-            <?php if (!empty($r['answer'])): ?>
-                <div class = "review answer-review">
-                    <div class = "top">
-                        <span><strong><?= $r['moderator'] ?></strong></span>
-                    </div>
-                    <em><?= $r['answer'] ?></em>
-                </div>
-            <?php endif; ?>
-        </div>
-    <?php endforeach; ?>
-    <div class="page-navigation page-navigation2">
-        <?php echo $pagination; ?>
+    <div id="lazy-load_container">
+        <?php foreach ($reviews as $r): ?>
+            <?php include __DIR__ . '/../../../partial/review_page_item.tpl' ?>
+        <?php endforeach; ?>
     </div>
+    <!--<div class="page-navigation page-navigation2">-->
+        <?php echo $paginationLazy;?>
+        <?php echo $pagination; ?>
+    <!--</div>-->
 </div>
 
     <div class="popup thank-you"> 
