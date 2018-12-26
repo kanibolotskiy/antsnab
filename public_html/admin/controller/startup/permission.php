@@ -44,6 +44,7 @@ class ControllerStartupPermission extends Controller {
 				'error/permission'
 			);
 
+			/** @task todo - сейчас мешается для оверрайднутых модулей */
 			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {
 				return new Action('error/permission');
 			}
