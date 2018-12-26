@@ -82,7 +82,6 @@ class ModuleController extends \ControllerExtensionExtensionModule
         }
 
         $data['hiden'] = false;
-
         if ($files) {
             foreach ($files as $file) {
 
