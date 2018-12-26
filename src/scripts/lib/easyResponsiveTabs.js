@@ -188,7 +188,7 @@
                         $currentTab.trigger('tabactivate', $currentTab);
 
                         //Update Browser History
-                        if (historyApi) {
+                        /*if (historyApi) {
                             var currentHash = window.location.hash;
                             var tabAriaParts = $tabAria.split('tab_item-');
                             // var newHash = respTabsId + (parseInt($tabAria.substring(9), 10) + 1).toString();
@@ -207,7 +207,7 @@
                             }
 
                             history.replaceState(null, null, newHash);
-                        }
+                        }*/
                     });
 
                 });

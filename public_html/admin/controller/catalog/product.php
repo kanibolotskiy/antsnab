@@ -80,9 +80,6 @@ class ControllerCatalogProduct extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
-            /*$product = $this->dm->find($this->request->get['product_id']);
-            $product->fill($this->request->post);
-            $this->dm->flush();*/
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -830,7 +827,6 @@ class ControllerCatalogProduct extends Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		$data['lang'] = $this->language->get('lang');
-
 		if (isset($this->request->post['product_description'])) {
 			$data['product_description'] = $this->request->post['product_description'];
 		} elseif (isset($this->request->get['product_id'])) {
@@ -839,6 +835,12 @@ class ControllerCatalogProduct extends Controller {
 			$data['product_description'] = array();
 		}
 
+		/** @task Говнокод какой то ну ладно Сейчас просто при ошибках формы теряется маленькое описание*/
+		$lang_id = 1; 
+		if (isset ($this->request->post['product_description_mini'][$lang_id])){
+			$data['product_description'][$lang_id]['description_mini'] = 
+				$this->request->post['product_description_mini'][$lang_id];
+		}
 		
 		if (isset($this->request->post['disseo'])) {
 			$data['disseo'] = $this->request->post['disseo'];

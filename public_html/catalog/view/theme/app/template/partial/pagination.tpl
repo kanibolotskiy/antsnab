@@ -1,5 +1,5 @@
 <div id="pagination_container">
-<?php if (count($pagination->getPages()) > 1): ?>
+<?php if ($pagination->getTotalNumberOfPages() != 0 && $pagination->getTotalNumberOfPages()>1 ): ?>
     <div class="page-navigation page-navigation2">
         <ul>
             <?php $style = (1 !== $pagination->getCurrentPageNumber())?'':'style="display:none"'?>

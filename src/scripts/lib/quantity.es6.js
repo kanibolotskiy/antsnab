@@ -275,6 +275,7 @@ class SaleQuantityModel {
         if(!step) {
             uiStep = koef;
         } else {
+            step = new Fraction(step);
             if( step.div(koef).compare(this._saleStep) >= 0 ) { //given step is bigger than sale step
                 uiStep = step;
                 //@todo - step должен содержать целое число sale steps

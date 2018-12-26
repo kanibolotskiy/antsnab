@@ -18,15 +18,16 @@ document.addEventListener("DOMContentLoaded", function(){
                 var items = data.result.items,
                     showMore = data.result.showMore,
                     pagination = data.result.pagination,
-                    $items = [];    
+                    $items = $([]);    
                 
                 /** append items */
                 $.each( items, function(index, item){
                     var $item = $(item);
-                    $items.push($item);
+                    // $items.push($item);
                     $item.css("display", "none");
                     $container.append($item);
                     $item.slideDown('slow');
+                    $items = $items.add($item);
                 });
                 
                 /** rerender shomore button */

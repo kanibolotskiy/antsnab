@@ -1,5 +1,11 @@
 use antsnab;
 
+show tables;
+show columns from oc_product;
+show columns from oc_url_alias;
+show columns from oc_newsblog_article_description;
+select description from oc_newsblog_article_description where article_id = 56;
+select * from oc_url_alias where `query`='category_id=123';
 select 
                 catprop.category_prodproperty_id, catprop.`name` as cat_name, catprop.unit as cat_unit, 
                 catprop.`default` as cat_default, catprop.showInProdPreview, catprop.showInProdTab, catprop.showInSummary,
@@ -24,6 +30,7 @@ select
                 left join (select * from product_prodproperty where product_id = :id ) as prodval on prodval.category_prodproperty_id = catprop.category_prodproperty_id 
                 where p2c.product_id = :id and p2c.main_category = 1 and catprop.category_prodproperty_id is not null ord""
 
+Cannot access private property Registry::$data
 				"select 
                 catprop.category_prodproperty_id, catprop.`name` as cat_name, catprop.unit as cat_unit, 
                 catprop.`default` as cat_default, catprop.showInProdPreview, catprop.showInProdTab, catprop.showInSummary,

@@ -101,8 +101,13 @@ class ProdProperties extends \Model
             $sql .= " " . $order;
         }
         $res =  $this->db->query($sql, [$product_id, $product_id] );
-
-        return $res->rows;
+        $rows = [];
+        /** Немного говнокода, чтобы м<sup>2</sup> выводилось тегами */
+        foreach ($res->rows as $row) {
+            $row['cat_unit'] = html_entity_decode($row['cat_unit']);
+            $rows[] = $row;
+        }
+        return $rows; 
     }
 
     /**

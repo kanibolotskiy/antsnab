@@ -191,6 +191,28 @@
         <div class="info-block info-block2">
             <?=$description?>
         </div>
+        <?php if(isset($locations[0])):?>
+            <?php $l = $locations[0]?>
+            <div class="popup2">
+                <div class="close3"></div>
+                <div class="popup-block2">
+                    <div class="popup-content2">
+                        <div class="close4"></div>
+                        <span><?=$l['name']?></span>
+                        <p><?=$l['address']?></p>
+                        <p><?=$l['open']?></p>
+                        <p><?=$l['comment']?></p>
+                        <p>Для вашего удобства можете <a href="#">скачать подробную схему проезда</a></p>
+                        <div id="prodmap2" 
+                             class="map map-container prodmap"
+                             data-longitude="<?=$l['longitude']?>"
+                             data-latitude="<?=$l['latitude']?>"
+                             data-name="<?=$l['name']?>" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif;?>
 
         <div id="demoTab">
             <ul class="resp-tabs-list vert">
@@ -207,10 +229,17 @@
                 <?php foreach($tabs as $t): ?>
                 <li><?=$t['name']?></li>
                 <?php endforeach;?>
-                <li>Отзывы</li>
+
+                <?php if(count($reviews)>0):?>
+                <li>Отзывы (<?= count($reviews) ?>)</li>
+                <?php else: ?>
+                <li>Отзывы </li>
+                <?php endif; ?>
             </ul>
 
             <div class="resp-tabs-container vert">
+
+                <!--TAB Описание-->
                 <?php if(!empty($properties)): ?>
                 <div>
                     <div class="table">
@@ -233,19 +262,24 @@
                             </tbody>
                         </table>
                     </div>
+                    
+                    <?php /* @task скачивания
+                    <div class="download">
+                        <ul>
+                            <li>
+                                <a href="">Скачать подробную карту</a>
+                            </li>
+                            <li>
+                                <a href="">Скачать сертификаты</a>
+                            </li>
+                        </ul>
+                    </div> 
+                    */?>
+
                 </div>
                 <?php endif;?>
-                <!--@task1 скачивания-->
-                <!--<div class="download">
-                    <ul>
-                        <li>
-                            <a href="">Скачать подробную карту</a>
-                        </li>
-                        <li>
-                            <a href="">Скачать сертификаты</a>
-                        </li>
-                    </ul>
-                </div>-->
+
+                <!--TAB упаковка-->
                 <div>
                     <div class="packaging">
                         <?php /*<div class="title">Упаковка <?=$heading_title?></div>*/?>
@@ -261,7 +295,8 @@
                                 </tbody>
                             </table>
                         </div>
-<!--
+                        
+                        <?php /* @task  Нормы загрузки
                         <div class="title">Нормы загрузки</div>
                         <div class="tipe">
                             <span>Выберите тип автомобиля:</span>
@@ -315,14 +350,18 @@
                                     </tr>
                                 </tbody></table>
                         </div>
--->
+                        */?> 
+
                     </div>
                 </div>
+
+                <!-- TAB калькулятор -->
                 <div>
                     <div class="calculator">
                         <?php /*<div class="title">Калькулятор загрузки</div>*/?>
                         <p>В разработке</p>
-<!--
+
+                        <?php /* @task калькулятор
                         <p>Чтобы узнать сколько материала Эластоизол Премиум ЭКП-5,0 вам понадобится введите площадь изолируемой поверхности в квадратных метрах:</p>
                         <div class="calculator-block">
                             <form action="">
@@ -366,51 +405,55 @@
                                         <td>от +5 до +40</td>
                                         <td>°С</td>
                                     </tr>
-                                </tbody></table>
+                                </tbody>
+                            </table>
                         </div>
                         <p>В таблице представлен расчет для устройства однослойного гидроизоляционного или кровельного покрытия.
                             Приведенные значения являются справочными, для более точного расчета необходимого количества материала и стоимости доставки обращайтесь к нашим сотрудникам.</p>
                         <a href="" class="print">Распечатать</a>
--->
+                        */?>
                     </div>
                 </div>
+            
+                <!-- TAB кастомные -->
                 <?php foreach($tabs as $t): ?>
-                    <div>
-                        <div class="application">
-                            <?=$t['text']?>
-                        </div>
+                <div>
+                    <div class="application">
+                        <?=$t['text']?>
                     </div>
+                </div>
                 <?php endforeach;?>
 
-                
-                
+                <!-- TAB отзывы -->
                 <div>
-                
                     <div class="reviews-container reviews-container2">
-                        <?php foreach ($reviews as $r): ?>
-                            <div class = "review-block">
-                                <div class = "review">
-                                    <div class = "top">
-                                        <span><strong><?= $r['author'] ?></strong> о <b><?= $r['about'] ?></b></span>
-                                        <p><?= $r['date'] ?></p>
-                                    </div>
-                                    <?= $r['text'] ?>
-                                </div>
-                                <?php if (!empty($r['answer'])): ?>
-                                    <div class = "review answer-review">
+                        <?php if( count($reviews)>0): ?>
+                            <?php foreach ($reviews as $r): ?>
+                                <div class = "review-block">
+                                    <div class = "review">
                                         <div class = "top">
-                                            <span><strong><?= $r['moderator'] ?></strong></span>
+                                            <span><strong><?= $r['author'] ?></strong> о <b><?= $r['about'] ?></b></span>
+                                            <p><?= $r['date'] ?></p>
                                         </div>
-                                        <em><?= $r['answer'] ?></em>
+                                        <?= $r['text'] ?>
                                     </div>
-                                <?php endif; ?>
-                            </div>
-                        <?php endforeach; ?>
-                        <?php /* Во вкладке - пагинацию*/ /*
-                        <div class="page-navigation page-navigation2">
-                            <?php echo $pagination; ?>
-                        </div>*/ ?>
-
+                                    <?php if (!empty($r['answer'])): ?>
+                                        <div class = "review answer-review">
+                                            <div class = "top">
+                                                <span><strong><?= $r['moderator'] ?></strong></span>
+                                            </div>
+                                            <em><?= $r['answer'] ?></em>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p style="font-size:14px">
+                                Никто еще не оставил отзыв об этом материале, Вы можете стать первым!
+                            </p>
+                            <br/>
+                            <br/>
+                        <?php endif; ?>
                         <div class="give-feedback">
                             <div class="title-give-feedback">Оставить отзыв</div>
                             <form id="form-review" method="post">
@@ -469,33 +512,11 @@
                                 
                             </form>
                         </div>
-                        
                     </div>
                 </div>
             </div>
         </div>
-        <?php if(isset($locations[0])):?>
-            <?php $l = $locations[0]?>
-            <div class="popup2">
-                <div class="close3"></div>
-                <div class="popup-block2">
-                    <div class="popup-content2">
-                        <div class="close4"></div>
-                        <span><?=$l['name']?></span>
-                        <p><?=$l['address']?></p>
-                        <p><?=$l['open']?></p>
-                        <p><?=$l['comment']?></p>
-                        <p>Для вашего удобства можете <a href="#">скачать подробную схему проезда</a></p>
-                        <div id="prodmap2" 
-                             class="map map-container prodmap"
-                             data-longitude="<?=$l['longitude']?>"
-                             data-latitude="<?=$l['latitude']?>"
-                             data-name="<?=$l['name']?>" >
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php endif;?>
+
 
         <?php if(isset($locations[1])):?>
             <?php $l = $locations[1]?>

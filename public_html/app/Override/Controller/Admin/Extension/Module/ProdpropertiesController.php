@@ -383,11 +383,11 @@ class ProdpropertiesController extends \Controller
     {
        $this->load->language('extension/module/prodproperties');
 
-       if( empty( trim($this->request->post['name']) ) ) {
+       if( strlen( trim($this->request->post['name']) ) == 0 ) {
            $this->error_fields['name'] = $this->language->get('error_name');
        }
 
-       if( empty( trim($this->request->post['default']) ) ) {
+       if( strlen ( trim($this->request->post['default']) ) == 0 ) {
            $this->error_fields['default'] = $this->language->get('error_default');
        }
 

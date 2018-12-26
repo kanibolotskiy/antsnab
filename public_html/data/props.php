@@ -1,5 +1,5 @@
 <?php
-
+/** проверь верно ли переносятся значения с 0 http://ant-snab/products/roll/krz/steklomast/ */
 use WS\Override\Gateway\ProdProperties;
 
 include_once __DIR__ . '/bootstrap.php';

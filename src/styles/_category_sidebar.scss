@@ -42,6 +42,7 @@ body.freeze {
 
 
 /*accordion*/
+
 .example-list {
     overflow: hidden;
     margin: 0;
@@ -55,6 +56,10 @@ body.freeze {
     position:relative;
     height:auto;
 }
+.accordion .slide {
+    display:none;
+}
+
 .simple-accordion {
     padding:27px 0 27px 0;
 }

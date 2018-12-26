@@ -253,7 +253,7 @@ class CartController extends \ControllerCheckoutCart
 
 
         //@added
-        $this->document->addStyle('admin/view/javascript/font-awesome/css/font-awesome.min.css');
+        $this->document->addStyle('/admin/view/javascript/font-awesome/css/font-awesome.min.css');
 
         $this->load->language('checkout/cart');
 

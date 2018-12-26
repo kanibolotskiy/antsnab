@@ -1,5 +1,5 @@
 <?php
-
+/* seo URL нужно прописать через тире! */
 include_once __DIR__ . '/bootstrap.php';
 include_once 'admin/model/newsblog/article.php';
 include_once 'admin/model/catalog/product.php';

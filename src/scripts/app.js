@@ -14,6 +14,7 @@ import './lib/opencart_search';
 import 'magnific-popup';
 import './category.js';
 import './prod.js';
+import './price.js';
 import './cart.js';
 import './review_page.js';
 import './yamap';

@@ -989,7 +989,7 @@ div.title:after {
         font-size: 15px;
         color: #000000;
         line-height: 24px;
-        margin-bottom: 24px;
+        margin-bottom: 12px;
         text-align: justify;
         a{
             display: inline-block;
@@ -2265,6 +2265,7 @@ button.show-more{
 }
 .staty-container{
     overflow: hidden;
+    min-height: 600px;
     .title{
         float: left;
         padding-top: 11px;
