@@ -26,6 +26,7 @@ $('#button-review_page').formSubmit({
             }
         }else{
             $(".popup.thank-you").addClass("visible");
+            $('input, textarea','#review_form').val('');
         }
     },
     error: function(){},

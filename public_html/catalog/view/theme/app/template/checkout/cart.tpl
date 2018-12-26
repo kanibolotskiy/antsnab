@@ -119,8 +119,7 @@
                         </div>
                         <div class="file">
                             <div class="file-block">
-                                <div id="filename">Я Юр. лицо, хочу
-                                    прикрепить реквизиты</div>
+                                <div id="filename">я юрлицо, хочу прикрепить реквизиты</div>
                                 <input id="file" type="file" value="">
                             </div>
                         </div>

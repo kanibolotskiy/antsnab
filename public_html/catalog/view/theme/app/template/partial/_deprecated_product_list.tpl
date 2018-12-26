@@ -1,10 +1,10 @@
-<div id="mtab1" class="tab">
-    <ul class="tabset multi-tabset">
+<!--<div id="mtab1" class="tab">-->
+    <ul class="tabset">
         <li><a href="#m1tab1" class="active"></a></li>
         <li><a href="#m1tab2"></a></li>
     </ul>
     <div class="tab-list">
-        <div id="m1tab1">
+        <!--<div id="m1tab1">
             <div class="tab-block tab-block2 tab-block3">
                 <ul>
                     <?php foreach ($products as $p): ?>
@@ -41,9 +41,9 @@
                     <?php endforeach; ?>
                 </ul>
             </div>
-        </div>
-        <div id="m1tab2">
-            <div class="tab-block">
+        </div>-->
+        <!--<div id="m1tab2">-->
+            <div class="tab-block tab-block2" >
                 <ul>
                     <?php foreach ($products as $p): ?>
                         <li itemscope itemtype="http://schema.org/Offer">
@@ -58,6 +58,11 @@
                                     <div itemprop="description"><p><?= $p['descriptionPreview'] ?></p></div>
                                     <div class="complement">
                                         <?php foreach ($p['properties'] as $prop): ?>
+                                            <span>
+                                                <?= $prop['name'] ?>:&nbsp;<strong><?= $prop['val'] ?>&nbsp;<?= $prop['unit'] ?></strong>
+                                            </span>
+                                        <?php endforeach ?>
+                                                                                <?php foreach ($p['properties'] as $prop): ?>
                                             <span>
                                                 <?= $prop['name'] ?>:&nbsp;<strong><?= $prop['val'] ?>&nbsp;<?= $prop['unit'] ?></strong>
                                             </span>
@@ -81,6 +86,6 @@
                     <?php endforeach; ?>
                 </ul>
             </div>
-        </div>
+        <!--</div>-->
     </div>
-</div>
+<!--</div>-->

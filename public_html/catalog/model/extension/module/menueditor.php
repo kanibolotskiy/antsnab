@@ -16,7 +16,8 @@ class ModelExtensionModuleMenueditor extends Model
         $pre_menu = array();
         $post_menu = array();
         $menu_editor_entries = $config->get('menu_editor_entries');
-
+        //  var_dump('ЗАПРОШЕН: ' . $_SERVER['REQUEST_URI']);
+        //  echo('<br/>');
         foreach ($menu_editor_entries as $menu_editor_entry) {
             if ($menu_editor_entry['position'] == 0) {
                 $pre_menu[] = array('name' => $menu_editor_entry['names'][$config->get('config_language_id')],
@@ -49,10 +50,13 @@ class ModelExtensionModuleMenueditor extends Model
 
         //we need exactly one leading slash 
         $url = preg_replace("/^\/*/", "/", $url);
-        /*var_dump($url);
-        var_dump($_SERVER['REQUEST_URI']);*/
+        // var_dump($url);
 
-        return $url === $_SERVER['REQUEST_URI'];
+        if( $url == '/' ) {
+            return $_SERVER['REQUEST_URI'] === '/';
+        } else {
+            return FALSE !== strpos($_SERVER['REQUEST_URI'], $url);
+        }
     }
 
 

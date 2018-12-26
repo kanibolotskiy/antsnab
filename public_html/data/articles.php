@@ -1,5 +1,5 @@
 <?php
-
+/* ЗАМЕНИ <div> и </div> на p */
 include_once __DIR__ . '/bootstrap.php';
 include_once 'admin/model/newsblog/article.php';
 

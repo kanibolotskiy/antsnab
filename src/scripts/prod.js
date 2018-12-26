@@ -1,15 +1,13 @@
 import {Quantity} from './lib/quantity.es6.js';
-var Fraction = require('fraction.js');
 import './lib/formsubmit.js';
-var Noty = require('noty');
+
+var Fraction = require('fraction.js');
+var format = require('number-format.js');
 
 /** Карточка */
 /** init switching ui in specification (product) page */
 if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
     (function() {
-        var Fraction = require('fraction.js'),
-            format = require('number-format.js');
-
 
         var $switchers = $('li','#priceSwitcher' ),
             $firstSwitcher = $($switchers[0]);
@@ -42,7 +40,11 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                     'sale_to_ui_koef':$activeEl.attr('data-sale_to_ui_koef'),
                     'ui_minimum':$activeEl.attr('data-ui_minimum'),
                     'ui_step':$activeEl.attr('data-ui_step'),
-                    'ui_name': $activeEl.attr('data-ui_name')
+                    'ui_names': {
+                        'ui_name': $activeEl.attr('data-ui_name'),
+                        'ui_name_plural': $activeEl.attr('data-ui_name_plural'),
+                        'ui_name_genitive': $activeEl.attr('data-ui_name_genitive')
+                    }
                 };
         
             //check if input controller was inited
@@ -52,7 +54,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
             }
         
             var controller = $input.data('quantity');
-            controller.switch(options.sale_to_ui_koef, options.ui_minimum, options.ui_step, options.ui_name);
+            controller.switch(options.sale_to_ui_koef, options.ui_minimum, options.ui_step, options.ui_names);
         }
        
         function togglePrices($activeEl) {
@@ -66,8 +68,13 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                 uiWholeSalePrice = saleToPriceKoef.div(saleToUiKoef).mul(wholeSalePrice),
                 currency = $('#priceSwitcher').attr('data-currency_symbol');
 
-            $price.text( format('# ###.00 ' + currency, uiPrice.valueOf() ) );
-            $wholeSalePrice.text( format ('# ###.00 ' + currency, uiWholeSalePrice.valueOf()) );
+            var isInt = ( uiPrice.valueOf() - parseInt(uiPrice.valueOf()) === 0 ),
+                formatStr = isInt?'### ###.':'### ###,##';
+            $price.text( format(formatStr + currency, uiPrice.valueOf() ) );
+
+            var isInt = ( uiWholeSalePrice.valueOf() - parseInt(uiWholeSalePrice.valueOf()) === 0 ),
+                formatStr = isInt?'### ###.':'### ###,##';
+            $wholeSalePrice.text( format (formatStr + ' ' + currency, uiWholeSalePrice.valueOf()) );
         }
 
     })()
@@ -90,7 +97,7 @@ if( $('.in-stock').length > 0) {
 /** submit reviews */
 $('#button-review').formSubmit({
     loaderSelector: '#ajax_loader',
-    url: 'index.php?route=product/product/write&product_id=' + $('#button-review').attr('data-product_id'),
+    url: '/index.php?route=product/product/write&product_id=' + $('#button-review').attr('data-product_id'),
     type: 'post',
     dataType: 'json',
     before: function() {
@@ -104,51 +111,10 @@ $('#button-review').formSubmit({
             }
         }else{
             $(".popup.thank-you").addClass("visible");
+            $('input, textarea','#form-review').val('');
         }
     },
     error: function(data){},
 });
 
-/** add to cart */
-$(window).on('load', function () {
-    $('.buy').on('click', function(e){
-        e.preventDefault();
-        var $container = $(this).parents('.quantity-buy'),
-            qntController = $container.find('.qnt-widget').data('quantity'), 
-            quantityInSaleUnits = qntController.getQuantityInSaleUnits(), 
-            toPriceQuantityKoef = new Fraction( $(this).attr('data-sale_to_price_koef') ), 
-            quantityInPriceUnits = toPriceQuantityKoef.mul(quantityInSaleUnits); 
-
-        $.ajax({
-            url:  'index.php?route=checkout/cart/add',
-            type: 'post',
-            data: {
-                quantity: quantityInPriceUnits.valueOf(),
-                product_id: $(this).attr('data-product_id'), 
-            },
-            dataType: 'json',
-            beforeSend: function() {
-                $('#cart_preloader').fadeIn(200);
-            },
-            complete: function() {
-                $('#cart_preloader').fadeOut(200);
-            },
-            success: function(json) {
-                if (json['success']) {
-                    $('.basket').html(json['total']);
-                    $('html, body').animate({ scrollTop: 0 }, 'slow');
-
-                    new Noty({
-                        text: json['success'],
-                        type: 'warning',
-                        theme: 'relax',
-                        timeout: 3000, 
-                    }).show();
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    });
-});
+;

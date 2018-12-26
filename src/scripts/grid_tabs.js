@@ -25,3 +25,17 @@ function initTabs() {
 		tabLinks: 'a'
 	});
 }
+
+$('#prodgrid').on('click', function(e){
+	e.preventDefault();
+	var container = $(this).parents('.catalog-tab').find('.tab-block');
+	container.addClass('tab-block2');
+	container.addClass('tab-block3');
+});
+
+$('#prodlist').on('click', function(e){
+	e.preventDefault();
+	var container = $(this).parents('.catalog-tab').find('.tab-block');
+	container.removeClass('tab-block2');
+	container.removeClass('tab-block3');
+});

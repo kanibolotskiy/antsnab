@@ -82,6 +82,8 @@ class ProdProperties extends \Model
         return true;
     }
 
+    /** @task в категории запрос выплоняется неск. раз - нужно оптимизировать см 
+     * app/Patch/Helper/ProductListHelper.php 56 */
     public function getPropertiesWithProductValues($product_id, $order)
     {
         $sql ="select 
@@ -93,14 +95,19 @@ class ProdProperties extends \Model
                 (if (prodval.val is null, catprop.`default`, prodval.val) ) as val 
                 from oc_product_to_category as p2c
                 left join category_prodproperty as catprop on catprop.category_id = p2c.category_id
-                left join (select * from product_prodproperty where product_id = :id ) as prodval on prodval.category_prodproperty_id = catprop.category_prodproperty_id 
-                where p2c.product_id = :id and p2c.main_category = 1 and catprop.category_prodproperty_id is not null";
+                left join (select * from product_prodproperty where product_id = ? ) as prodval on prodval.category_prodproperty_id = catprop.category_prodproperty_id 
+                where p2c.product_id = ? and p2c.main_category = 1 and catprop.category_prodproperty_id is not null";
         if ( null !== $order ) {
             $sql .= " " . $order;
         }
-        $res =  $this->db->query($sql, [':id' => $product_id] );
-
-        return $res->rows;
+        $res =  $this->db->query($sql, [$product_id, $product_id] );
+        $rows = [];
+        /** Немного говнокода, чтобы м<sup>2</sup> выводилось тегами */
+        foreach ($res->rows as $row) {
+            $row['cat_unit'] = html_entity_decode($row['cat_unit']);
+            $rows[] = $row;
+        }
+        return $rows; 
     }
 
     /**

@@ -39,6 +39,7 @@ class FinalCategory extends \Model
 
         return (boolean) $res->row['isseo'];
     }
+
     /**
      * Глубокий поиск финальных категорий, с любого родительского уровня или самой себя
      * @param int | array $category_id - id родительской категории на любом верхнем уровне или сама финальная категория

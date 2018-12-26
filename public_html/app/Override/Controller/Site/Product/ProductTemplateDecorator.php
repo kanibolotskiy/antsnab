@@ -83,10 +83,10 @@ class ProductTemplateDecorator implements IDecorator
                         $unit['calcRel'] &&
                         $unit['to_name_plural']) {
                         if ($unit['calcRel'] > 1) {
-                            $relStr = htmlspecialchars($unit['name'] . ', ' . (float)$unit['calcKoef'] . ' ' . $unit['to_name_plural']);
+                            $relStr = $unit['name'] . ', ' . (float)$unit['calcKoef'] . ' ' . $unit['to_name_plural'];
                         }
                     } else {
-                        $relStr = htmlspecialchars($unit['name']);
+                        $relStr = $unit['name'];
                     }
                         
                     $pUnits[$key]['relStr'] = $relStr;

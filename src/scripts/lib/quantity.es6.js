@@ -1,6 +1,10 @@
 import './decimalRound.js';
 var Fraction = require('fraction.js');
-
+/*
+ * Терминология
+ * Кратные единицы (sale) - те, в которых осуществляется продажа и которые определяют шаг продажи
+ * Пользовательские/отображаемые единицы (ui) - любая единица доступная для данного товара из переключателя
+ */
 class Quantity {
     static init(selector, opts) {
         if (undefined === opts) {
@@ -8,7 +12,7 @@ class Quantity {
         }
 
         var $els = (selector instanceof jQuery)?selector:$(selector),
-            elName = (opts.el_name)?opts.el_name:null;
+            elName = (opts.el_name)?opts.el_name:null; // не путать с opts.ui_names. el_name это аттрибут name input поля
 
         $els.each(function () {
             let view = new QuantityView(this, elName),
@@ -28,7 +32,7 @@ class Quantity {
             'sale_to_ui_koef': opts.sale_to_ui_koef ? new Fraction(opts.sale_to_ui_koef) : new Fraction(1),
             'ui_minimum': opts.ui_minimum ? parseFloat(opts.ui_minimum) : null, 
             'ui_step': opts.ui_step ? parseFloat(opts.ui_step) : null,
-            'ui_name': opts.ui_name || ''
+            'ui_names': opts.ui_names || {}
 
             //'sale_to_price_koef': new Fraction(opts.sale_to_price_koef) || new Fraction(1),
         };
@@ -39,13 +43,14 @@ class Quantity {
 
         this._registerEvents();
         this.view.$input = this.getQuantityInUiUnits(); 
-        this.view.$uName = this._options.ui_name;
+        this.view.$uName = this._resolveUiName(this._options.ui_names); //this._options.ui_name;
 
         this.view.render();
 
         return this;
     }
 
+    
 
     /**
      * Получить количество в выбранных пользователем единицах
@@ -64,7 +69,8 @@ class Quantity {
         this.model.uiQuantity = new Fraction(value);
 
         /** Количество автоматически округляется до шага кратности, возвращаем в инпут актуальное значение */
-        this.view.$input = this.getQuantityInUiUnits(); 
+        this.view.$input = this.getQuantityInUiUnits();
+        this.view.$uName = this._resolveUiName(); 
     }
 
     /**
@@ -80,7 +86,7 @@ class Quantity {
      * единицы кратности в новую пользовательскую единицу (дробь-строковое представление)
      * @param {string} ui_name - отображаемое имя
      */
-    switch(sale_to_ui_koef, ui_minimum, ui_step, ui_name) {
+    switch(sale_to_ui_koef, ui_minimum, ui_step, ui_names) {
         ui_minimum = ui_minimum ? parseFloat(ui_minimum) : null;
         ui_step = ui_step ? new Fraction(ui_step) : null;
         if( !sale_to_ui_koef ) {
@@ -88,7 +94,7 @@ class Quantity {
         }
         this.model.setUiModel(new Fraction(sale_to_ui_koef), ui_minimum, ui_step);
         this.view.$input = this.getQuantityInUiUnits(); 
-        this.view.$uName = ui_name;
+        this.view.$uName = this._resolveUiName(ui_names);
     }
 
     _registerEvents() {
@@ -99,17 +105,53 @@ class Quantity {
 
     _handleUp() {
         this.model.up(1);
-        this.view.$input = this.getQuantityInUiUnits(); 
-
+        this.view.$input = this.getQuantityInUiUnits();
+        this.view.$uName = this._resolveUiName();  
     }
 
     _hadleDown() {
         this.model.down(1);
-        this.view.$input = this.getQuantityInUiUnits(); 
+        this.view.$input = this.getQuantityInUiUnits();
+        this.view.$uName = this._resolveUiName();  
     }
 
     _changeHandler(e) {
         this.setQuantityInUiUnits(this.view.$input.val());
+    }
+
+    /**
+     * Склоняет отображение единицы измерения в инпуте, в зависимости от количества. Порт
+     * аналогичной php функции @see app/Override/Gateway/ProdUnits/ProdUnitStrings.php::plural
+     * @param {*} names 
+     */
+    _resolveUiName(names) {
+        if ( undefined == names ) {
+            names = this._options.ui_names;
+        }
+        if( undefined == names.ui_name ) {
+            return '';
+        }
+        var fullDictionary = {
+                name: names.ui_name,
+                plural: names.ui_name_plural || names.ui_name,
+                genitive: names.ui_name_genitive || names.ui_name
+            },
+            qnt = this.getQuantityInUiUnits(),
+            absQnt = Math.abs(qnt),
+            absQntStr = absQnt.toString(),
+            lastDigit = absQntStr[ absQntStr.length - 1],
+            beforeLastDigit = absQntStr[ absQntStr.length - 2];
+
+    
+        if (beforeLastDigit == '1' && absQntStr.length > 1 ) {
+            return fullDictionary.plural; 
+        } else if (lastDigit == '1') {
+            return fullDictionary.name; 
+        } else if ( ['2','3','4'].includes(lastDigit) ) {
+            return fullDictionary.genitive;
+        } else {
+            return fullDictionary.plural; 
+        }
     }
 
     /**
@@ -233,6 +275,7 @@ class SaleQuantityModel {
         if(!step) {
             uiStep = koef;
         } else {
+            step = new Fraction(step);
             if( step.div(koef).compare(this._saleStep) >= 0 ) { //given step is bigger than sale step
                 uiStep = step;
                 //@todo - step должен содержать целое число sale steps

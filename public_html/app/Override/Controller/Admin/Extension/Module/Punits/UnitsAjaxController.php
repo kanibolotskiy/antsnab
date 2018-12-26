@@ -37,6 +37,7 @@ class UnitsAjaxController extends \Controller
         }
 
         $result = null;
+        var_dump($this->request->post);
         $error = $this->validate($this->request->post);
 
         if (empty($error)) {

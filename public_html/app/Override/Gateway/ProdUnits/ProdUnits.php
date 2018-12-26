@@ -82,6 +82,18 @@ class ProdUnits extends \Model
 
         foreach ($result as $row) {
             $res[$row['product_id']] = $row;
+
+            /** немного говнокода, чтобы <sup>м2</sup> сразу отображались разметкой */
+            $res[$row['product_id']]['name'] = html_entity_decode($res[$row['product_id']]['name']);
+            $res[$row['product_id']]['name_price'] = html_entity_decode($res[$row['product_id']]['name_price']);
+            $res[$row['product_id']]['name_plural'] = html_entity_decode($res[$row['product_id']]['name_plural']);
+            $res[$row['product_id']]['name_in_package'] = html_entity_decode($res[$row['product_id']]['name_in_package']);
+            
+            $res[$row['product_id']]['to_name'] = html_entity_decode($res[$row['product_id']]['to_name']);
+            $res[$row['product_id']]['to_name_price'] = html_entity_decode($res[$row['product_id']]['to_name_price']);
+            $res[$row['product_id']]['to_name_plural'] = html_entity_decode($res[$row['product_id']]['to_name_plural']);
+            $res[$row['product_id']]['to_name_in_package'] = html_entity_decode($res[$row['product_id']]['to_name_in_package']);
+            $res[$row['product_id']]['to_name_genitive'] = html_entity_decode($res[$row['product_id']]['to_name_genitive']);
         }
         return $res;
     }
@@ -133,6 +145,18 @@ class ProdUnits extends \Model
             $units = [];
             foreach($res->rows as $row) {
                 $units[$row['unit_id']] = $row;
+
+                /** немного говнокода, чтобы <sup>м2</sup> сразу отображались разметкой */
+                $units[$row['unit_id']]['name'] = html_entity_decode($units[$row['unit_id']]['name']);
+                $units[$row['unit_id']]['name_price'] = html_entity_decode($units[$row['unit_id']]['name_price']);
+                $units[$row['unit_id']]['name_plural'] = html_entity_decode($units[$row['unit_id']]['name_plural']);
+                $units[$row['unit_id']]['name_package_dimension'] = html_entity_decode($units[$row['unit_id']]['name_package_dimension']);
+                $units[$row['unit_id']]['name_in_package'] = html_entity_decode($units[$row['unit_id']]['name_in_package']);
+
+                $units[$row['unit_id']]['to_name'] = html_entity_decode($units[$row['unit_id']]['to_name']);
+                $units[$row['unit_id']]['to_name_price'] = html_entity_decode($units[$row['unit_id']]['to_name_price']);
+                $units[$row['unit_id']]['to_name_plural'] = html_entity_decode($units[$row['unit_id']]['to_name_plural']);
+                $units[$row['unit_id']]['to_name_in_package'] = html_entity_decode($units[$row['unit_id']]['to_name_in_package']);
             }
             static::$unitsCache[$productId] = $units;
         }
@@ -149,6 +173,8 @@ class ProdUnits extends \Model
         $weight = ($data['weight'] === '') ? null : (float) str_replace(',', '.', $data['weight']);
         $calcRel = ($data['calcRel'] === '') ? null : (int) $data['calcRel'];
 
+
+
         $query = "UPDATE produnit_unit set 
                     name = :name,
                     name_price = :name_price,
@@ -164,7 +190,6 @@ class ProdUnits extends \Model
                     package_length = :package_length,
                     package_height = :package_height
                  WHERE unit_id = :unit_id";
-
         $res = $this->db->query($query, [
             ':name' => $data['name'],
             ':name_price' => $data['name_price'],

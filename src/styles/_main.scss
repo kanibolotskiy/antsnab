@@ -233,7 +233,8 @@ select {
 body {
     margin:0;
     color:#000;
-    font-family: 'Open Sans Antsnab', sans-serif;
+    font-family: 'Open Sans AS', sans-serif;
+    font-weight: 400;
     font-size:13px;
     background:#fff;
     min-width:320px;
@@ -508,7 +509,7 @@ a.btn-nav{
         color: #666666;
         display: block;
         font-size: 13px;
-        font-family: 'Open Sans', sans-serif;
+        font-family: 'Open Sans AS', sans-serif;
         width: 100%;
     }
     button {
@@ -988,7 +989,7 @@ div.title:after {
         font-size: 15px;
         color: #000000;
         line-height: 24px;
-        margin-bottom: 24px;
+        margin-bottom: 12px;
         text-align: justify;
         a{
             display: inline-block;
@@ -1196,7 +1197,7 @@ a.mail{
             color: #666666;
             display: block;
             font-size: 13px;
-            font-family: 'Open Sans Antsnab', sans-serif;
+            font-family: 'Open Sans AS', sans-serif;
             width: 100%;
             margin-bottom: 15px;
         }
@@ -1210,7 +1211,7 @@ a.mail{
             display: block;
             font-size: 13px;
             margin-bottom: 20px;
-            font-family: 'Open Sans Antsnab', sans-serif;
+            font-family: 'Open Sans AS', sans-serif;
             width: 100%;
         }
         input[type="submit"] {
@@ -1322,13 +1323,12 @@ a.mail{
 }
 ul.tabset {
     position: absolute;
-    top:-3px;
+    top:0px;
     right: 0;
     list-style: none;
     overflow: hidden;
     margin: 0;
     padding: 0;
-    float: right;
 }
 ul.tabset li {
     margin: 0;
@@ -1800,8 +1800,10 @@ a.buy{
         transition: 0.4s;
     }
 }
-a.show-more{
+button.show-more{
     display: block;
+    width: 100%;
+    cursor: pointer;
     text-decoration: none;
     text-align: center;
     border: 1px solid #EFEEEC;
@@ -1884,6 +1886,9 @@ a.show-more{
         li{
             .catalog-block{
                 .catalog-description{
+                    .description {
+                        display:none;
+                    }
                     a.title-product{
                         margin-bottom: 20px;
                         height: 40px;
@@ -1899,14 +1904,16 @@ a.show-more{
                     }
                     .complement{
                         margin-bottom: 11px;
-                        span{
+                        text-align:center;
+                        /*span{
                             &:first-child{
                                 display: none;
                             }
-                        }
+                        }*/
                     }
                     .price {
                         margin-bottom: 20px;
+                        text-align:center;
                     }
                     a.buy{
                         width: 100%;
@@ -2258,6 +2265,7 @@ a.show-more{
 }
 .staty-container{
     overflow: hidden;
+    min-height: 600px;
     .title{
         float: left;
         padding-top: 11px;
@@ -2592,7 +2600,7 @@ a.show-more{
                 background-color: transparent;
                 color: #666666;
                 font-size: 13px;
-                font-family: 'Open Sans Antsnab', sans-serif;
+                font-family: 'Open Sans AS', sans-serif;
                 width: 100%;
             }
             textarea {
@@ -2603,7 +2611,7 @@ a.show-more{
                 background-color: transparent;
                 color: #666666;
                 font-size: 13px;
-                font-family: 'Open Sans Antsnab', sans-serif;
+                font-family: 'Open Sans AS', sans-serif;
                 width: 100%;
             }
         }
@@ -2837,7 +2845,7 @@ a.show-more{
                 background-color: transparent;
                 color: #666666;
                 font-size: 13px;
-                font-family: 'Open Sans Antsnab', sans-serif;
+                font-family: 'Open Sans AS', sans-serif;
                 width:100%;
             }
             .delivery{
@@ -3347,7 +3355,7 @@ a.show-more{
             background-color: transparent;
             color: #666666;
             font-size: 13px;
-            font-family: 'Open Sans Antsnab', sans-serif;
+            font-family: 'Open Sans AS', sans-serif;
             margin-bottom: 20px;
             margin-right: 10px;
         }
@@ -4206,6 +4214,25 @@ a.print{
         width: 100%;
         margin-bottom: 20px;
     }
+
+    .tab-block ul li .catalog-description{
+        text-align:center;
+    }
+
+    .tab-block ul li .qnt-widget{
+        width: 100%;
+        margin: 0 0 10px 0;
+    }
+
+    .tab-block ul li .catalog-block .catalog-description a.buy {
+        width: 100%;
+    }
+
+    .tab-block .quantity-buy {
+        padding: 0 20px;
+        width: 100%;
+        margin-top: 20px;
+    }
 }
 @media screen and (max-width: 500px) {
     .logo{
@@ -4323,9 +4350,7 @@ a.print{
     }
 }
 @media screen and (max-width: 400px) {
-    .tab-block ul li .catalog-block .catalog-description a.buy {
-        width: 100%;
-    }
+ 
     .mentioned-products ul li{
         width:100%;
     }

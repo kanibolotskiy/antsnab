@@ -77,7 +77,11 @@
                                                           placeholder="<?php echo $entry_description_mini; ?>" 
                                                           id="input-description_mini<?php echo $language['language_id']; ?>" data-lang="<?php echo $lang; ?>" 
                                                           class="form-control summernote">
-                                                               <?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['description_mini'] : ''; ?>
+                                                            <?php if(isset($product_description[$language['language_id']])): ?>
+                                                                <?php if(isset($product_description[$language['language_id']]['description_mini'])): ?>
+                                                                    <?=$product_description[$language['language_id']]['description_mini']?>
+                                                                <?php endif; ?>
+                                                            <?php endif; ?>
                                                 </textarea>
                                             </div>
                                         </div>

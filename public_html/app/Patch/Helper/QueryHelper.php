@@ -32,9 +32,18 @@ class QueryHelper
         return $fieldName . " IN ('" . implode("','", $param) . "') ";
     }
 
+
+    public static function arrayWhere($rows, $field, $value)
+    {
+        return array_filter($rows, function($row) use ($field, $value) {
+            return isset($row[$field])?($row[$field] == $value):false;
+        });
+    }
+
     private static function escape($v)
     {
         return str_replace(array("\\", "\0", "\n", "\r", "\x1a", "'", '"'), array("\\\\", "\\0", "\\n", "\\r", "\Z", "\'", '\"'), $v);
     }
+
 
 }

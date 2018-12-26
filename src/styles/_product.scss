@@ -6,7 +6,7 @@
     .manufacturer{
         margin-bottom:16px;
         p{
-            font-size: 14px;
+            font-size: 12px;
             color: #666666;
             display:flex;
             justify-content: space-between;
@@ -40,7 +40,7 @@
                 font-size: 14px;
                 color: #000000;
                 line-height: 20px;
-                margin-bottom: 2px;
+                margin-bottom: 10px;
                 max-height: 80px;
                 overflow: hidden;
             }
@@ -459,6 +459,9 @@
 .notify.active {
     visibility: visible;
 }
+.noty_theme__relax.noty_type__warning {
+    background-color: #85F567;
+  }
 
 @media screen and (max-width: 639px) {
     .card-product-container .right .description-price p {
@@ -514,4 +517,22 @@
     .border{
         margin-bottom: 20px;
     }
+}
+
+/** Сводная таблица в финальной категории */
+.summary tr th {
+    color: #000;
+    font-size: 14px;
+    font-weight: 700;
+    vertical-align: middle !important;
+    text-align: center;
+}
+.summary tr td {
+    text-align: center
+}
+.summary tr td.left {
+    text-align: left;
+}
+.summary tr th.grey {
+    background-color: #f9f9f9;
 }

@@ -1,6 +1,4 @@
 <?php
-use WS\Patch\Helper\ProductListHelper;
-use WS\Patch\Helper\PaginationHelper;
 
 class ControllerProductSearch extends Controller {
 	public function index() {
