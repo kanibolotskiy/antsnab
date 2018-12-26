@@ -3,7 +3,6 @@ var Fraction = require('fraction.js');
 var Noty = require('noty');
 
 function initBuyButtons($buttons){
-    console.warn( $buttons);
     $buttons.on('click', function(e){
         e.preventDefault();
         var $container = $(this).parents('.quantity-buy'),

@@ -93,7 +93,8 @@ class Quantity {
             console.warn('You should set the koef for converting this value to your sale unit value');
         }
         this.model.setUiModel(new Fraction(sale_to_ui_koef), ui_minimum, ui_step);
-        this.view.$input = this.getQuantityInUiUnits(); 
+        this.view.$input = this.getQuantityInUiUnits();
+        this._options.ui_names =  ui_names;
         this.view.$uName = this._resolveUiName(ui_names);
     }
 
