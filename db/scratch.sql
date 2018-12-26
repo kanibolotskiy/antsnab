@@ -1,5 +1,5 @@
 use antsnab;
-
+select * from oc_event;
 show tables;
 show columns from oc_product;
 show columns from oc_url_alias;
