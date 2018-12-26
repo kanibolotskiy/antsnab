@@ -459,6 +459,9 @@
 .notify.active {
     visibility: visible;
 }
+.noty_theme__relax.noty_type__warning {
+    background-color: #85F567;
+  }
 
 @media screen and (max-width: 639px) {
     .card-product-container .right .description-price p {
