@@ -1,4 +1,7 @@
-Поверх 2018-07-07.clean.sql
+clean.sql
+rm -rf public_html/system/storage/cache/*
+rm -rf public_html/image/cache/catalog/images/*
+
 
 В след. последоват:
 beforeCategories.sql

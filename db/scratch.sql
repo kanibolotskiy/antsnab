@@ -1,4 +1,8 @@
 use antsnab;
+show tables;
+
+delete from oc_review;
+
 select * from oc_event;
 show tables;
 show columns from oc_product;

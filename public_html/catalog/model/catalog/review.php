@@ -120,12 +120,14 @@ class ModelCatalogReview extends Model
         
         $c = 0;
         $total = $this->getCompanyReviewsTotal();
-        
-        while( $c < $count) {
-            $offset = random_int(0, $total-1);
-            $query = $this->db->query("select * from " . DB_PREFIX . "review limit $offset,1" );
-            $result[] = $query->row;
-            $c++;
+       
+        if ($total > 0) {
+            while ($c < $count) {
+                $offset = random_int(0, $total-1);
+                $query = $this->db->query("select * from " . DB_PREFIX . "review limit $offset,1");
+                $result[] = $query->row;
+                $c++;
+            }
         }
 
         return $result;
