@@ -1,1 +1,0 @@
-﻿ALTER TABLE `oc_product` ADD `disseo` TINYINT NOT NULL;

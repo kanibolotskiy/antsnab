@@ -1,0 +1,1 @@
+alter table oc_banner_image modify column descr text; 

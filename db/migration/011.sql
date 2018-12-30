@@ -1,1 +1,0 @@
-﻿ALTER TABLE `oc_product` CHANGE `date_available` `date_available` DATE NOT NULL;
