@@ -4,17 +4,23 @@ rm -rf public_html/image/cache/catalog/images/*
 
 
 В след. последоват:
-beforeCategories.sql
-категории
-производители
-beforeProducts.sql
-продукты
-beforeArtCategories.sql
-artcategories.php
-newscategories.php
-articles.php
+# - для 2-й не нужно beforeCategories.sql
++категории
+# производители
+# beforeProducts.sql
+
++продукты
+
++удалить свойства которые забиты
++props.php
++вручную повыключать то, что не выводится в таблицу
++tabs.php
++units
+
++beforeArtCategories.sql
++artcategories.php
++newscategories.php
++articles.php
 news.php
-удалить свойства которые забиты
-props.php
-вручную повыключать то, что не выводится в таблицу
-tabs.php
+
+

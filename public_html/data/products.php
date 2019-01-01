@@ -1,22 +1,4 @@
 <?php
-/** Проверь, что при переносе продуктов sort order у свойств НЕ ПЕРЕНОСИТСЯ (в смысле надо чтобы не переносилось)!!! тк в итоге на сайте свистопляски 
- *  тк с чередованием свойств в preview - некрасиво смотрится
-*/
-
-/** Внимательно проверь перенесены ли отзывы */
-
-/**
- * Во всех карточках в табе "Скидки" есть ссылка "нашим менеджерам", она внутренняя из прошлой CMS и не работает. Придется руками поправить?
-*ПРОБОВАЛИ ПРАВИТЬ ПРИ ОБЩЕНИИ – ВСЕ ЗАДАЕТСЯ В АДМИНКЕ в модуле вкладки
-*Такие же ссылки /djem* есть и в других табах. Все руками? ПОПРОБУЮ АВТОМАТИЧЕСКИ ИХ ПОПРАВИТЬ – НО НЕ ОБЕЩАЮ ПРИ ПЕРЕНОСЕ
-
- обращайтесь к нашим <a href="djem://238"
-target="_blank">менеджерам</a>
-
- */
-
- /*
- у description и mini description - замени все div на p, как в статьях*/
 
 include_once __DIR__ . '/bootstrap.php';
 include_once 'admin/model/catalog/product.php';
@@ -77,12 +59,15 @@ function getMetaKeyword($keywords, $keyword)
 function getMiniDescription($product)
 {
     if(!empty($product['prodOrigin']['pr_text'])) {
-        return $product['prodOrigin']['pr_text'];
+        $mini =  $product['prodOrigin']['pr_text'];
     }
 
     if(!empty($product['catOrigin']['full_text'])) {
-       return(firstParagraph($product['catOrigin']['full_text']));
+       $mini = firstParagraph($product['catOrigin']['full_text']);
     }
+
+    //избавляемся от висячих дивов
+    return str_replace('div', 'p', $mini);
 }
 
 function firstParagraph($text)
@@ -258,7 +243,8 @@ foreach ($products as $srcData) {
         } elseif ($key == 'meta_keyword') {
             $dstData['product_description'][DST_DEFAULT_LANGUAGE_ID][$key] = getMetaKeyword($srcData['keywords'], $srcData['keyword']);
         } else {
-            $dstData['product_description'][DST_DEFAULT_LANGUAGE_ID][$key] = trim($srcData[$srcKey]);
+            $full = trim($srcData[$srcKey]);
+            $dstData['product_description'][DST_DEFAULT_LANGUAGE_ID][$key] = str_replace('div', 'p', $full);
         }
     }
 

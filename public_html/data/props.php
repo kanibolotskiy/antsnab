@@ -1,5 +1,4 @@
 <?php
-/** проверь верно ли переносятся значения с 0 http://ant-snab/products/roll/krz/steklomast/ */
 use WS\Override\Gateway\ProdProperties;
 
 include_once __DIR__ . '/bootstrap.php';
@@ -38,6 +37,13 @@ function getXMLVal($data, $key)
     return '';
 }
 
+function special_empty($val){
+    if ( $val === '0' || $val === 0) {
+        return false;
+    }
+    return empty($val);
+}
+
 $counter = 0;
 foreach ($dstFinalCategories as $dstFinalCategory) {
     $categorySrcId = $dstFinalCategory['srcId'];
@@ -74,7 +80,7 @@ foreach ($dstFinalCategories as $dstFinalCategory) {
         while (!empty($srcFinalProductData['h' . $i])) {
             $propertyName = $srcFinalProductData['h' . $i];
             $propertyUnit = !empty($srcFinalProductData['he' . $i]) ? $srcFinalProductData['he' . $i] : '';
-            $propertyValue = !empty($srcFinalProductData['hv' . $i]) ? $srcFinalProductData['hv' . $i] : '';
+            $propertyValue = !special_empty($srcFinalProductData['hv' . $i]) ? $srcFinalProductData['hv' . $i] : '';
 
             //заполним родительскую категорию первыми попавшимися значениями
             if (!isset($dstFinalCatProperties[$propertyName])) {
@@ -93,7 +99,7 @@ foreach ($dstFinalCategories as $dstFinalCategory) {
             if (empty($dstFinalCatProperties[$propertyName]['unit']) && !empty($propertyUnit)) {
                 $dstFinalCatProperties[$propertyName]['unit'] = $propertyUnit;
             }
-            if (empty($dstFinalCatProperties[$propertyName]['default']) && !empty($propertyValue)) {
+            if (special_empty($dstFinalCatProperties[$propertyName]['default']) && !special_empty($propertyValue)) {
                 $dstFinalCatProperties[$propertyName]['default'] = $propertyValue;
             }
             
@@ -140,7 +146,8 @@ foreach ($dstFinalCategories as $dstFinalCategory) {
             if( $propertyValue != $dstFinalCatProperties[$propertyName]['default']) { 
                 $dstFinaProdProperties[$srcId][$propertyName] = [
                     'val' => $propertyValue,
-                    'sortOrder' => $i,
+                    // 'sortOrder' => $i,
+                    'sortOrder' => '',
                     'hide' => 0,
                 ];
             }

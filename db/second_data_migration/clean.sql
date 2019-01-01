@@ -1,8 +1,13 @@
+use antsnab;
 delete   from category_prodproperty;
 delete   from category_prodtab;
 delete   from oc_attribute_to_1c;
 delete   from oc_cart;
 delete   from oc_category;
+delete from oc_url_alias where query like 'category%'; 
+delete from oc_url_alias where query like 'product%'; 
+-- update oc_category set category_id=71 where category_id = 261;
+-- update oc_category_description set category_id=71 where category_id=261;
 delete   from oc_category_description;
 delete   from oc_category_path;
 delete from oc_category_to_layout;
@@ -35,3 +40,5 @@ delete   from produnit_packagestr;
 delete   from produnit_template;
 delete   from produnit_unit;
 delete from oc_review;
+
+-- Вставить вручную корневую директорию

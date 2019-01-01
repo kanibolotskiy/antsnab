@@ -1,7 +1,56 @@
+    return -1;
+use antsnab;
+
+
+SELECT r.review_id, pd.name, r.author, r.email, r.company, r.rating, r.status, r.date_added, r.about, r.moderator, r.answer FROM oc_review r LEFT JOIN oc_product_description pd ON (r.product_id = pd.product_id) WHERE (pd.language_id = '1' or pd.language_id is NULL) AND r.author LIKE 'Виктор%' ORDER BY r.date_added DESC LIMIT 0,6;
+
+
+use antsnaborigin;
+
+select document_id, document_content from documents where document_content like '%Можно использовать мастику мбу в дачном доме%';
+
+
+
+
+
+
+
+show columns from oc_product;
+select * from oc_product;
+select product_id from oc_product where model = 150;
+
+
+use antsnaborigin;
+
+select document_id, document_type, document_create_time, document_link3, document_content from documents where document_type in (296,785) 
+    and document_link3 = 0 order by document_create_time, document_id;
+
+
+select * from oc_newsblog_category;
+
+update oc_newsblog_category set category_id = 2 where category_id=39;
+
+show columns from oc_newsblog_article_description;
+show columns from oc_newsblog_category_description;
+
+delete from oc_newsblog_category where category_id<>1;
+delete from oc_newsblog_category_description where category_id<>1;
+
+select distinct(bottom_text) from oc_category_description;
+show columns from oc_newsblog_category;
+select * from documents where 
+document_type = 296;
+select * from documents where document_id=1319;
+-- document_id=826 or document_id=291;
 use antsnab;
 show tables;
 
-delete from oc_review;
+
+show columns from oc_product_description;
+
+select * from oc_url_alias where query like 'category%';
+select * from oc_category_path where category_id = 282;
+
 
 select * from oc_event;
 show tables;

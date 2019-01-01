@@ -76,6 +76,9 @@ class ProductListHelper extends \Model
                 $unitErrors[] = "There is must be exactly one sale unit set for product. Nothing given or ambiguous";
             }
 
+            $saleToPriceKoef = null;
+            $saleToUiKoef = null;
+            $tax = null;
             if( !$unitErrors ) {
                 if (count($uiUnitAr) == 0 ) {
                     $uiUnit = array_shift($saleUnitAr);

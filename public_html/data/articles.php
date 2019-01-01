@@ -101,6 +101,13 @@ function getPubTime($timestamp)
     return date('Y-m-d H:i:s', $timestamp);
 }
 
+function special_trim($val)
+{
+    $val = trim($val);
+    $val = str_replace('div', 'p', $val);
+    return $val;
+}
+
 $dataConst = [
     'status' => '1',
     'article_store' => ['0'],
@@ -144,7 +151,7 @@ foreach ($articles as $srcData) {
     $dstData['article_description'][DST_DEFAULT_LANGUAGE_ID]['tag'] = '';
 
     foreach ($dataDescriptionMapping as $key => $srcKey) {
-        $dstData['article_description'][DST_DEFAULT_LANGUAGE_ID][$key] = trim($srcData[$srcKey]);
+        $dstData['article_description'][DST_DEFAULT_LANGUAGE_ID][$key] = special_trim($srcData[$srcKey]);
     }
 
     foreach ($dataConst as $key => $value) {

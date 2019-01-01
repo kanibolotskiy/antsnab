@@ -35,7 +35,12 @@ function getDstParentId($srcParentId)
     return $parent_id;
 }
 
-
+function special_trim($val)
+{
+    $val = trim($val);
+    $val = str_replace('div', 'p', $val);
+    return $val;
+}
 
 function getImagePath($srcImage)
 {
@@ -141,7 +146,7 @@ function getDstSlugFromUrl($url)
     $first = $pathParts[$count-4];
     $second = $pathParts[$count-3];
 
-    return $first .  '/' . $second .  '/' . $last ;
+    return $first .  '-' . $second .  '-' . $last ;
 }
 
 /**
@@ -245,9 +250,9 @@ foreach ($articles as $srcData) {
         (!empty($srcData['prodOrigin']['caption']))?$srcData['prodOrigin']['caption']:$srcData['document_name'];
     
     $dstData['article_description'][DST_DEFAULT_LANGUAGE_ID]['preview'] =     
-        (!empty($srcData['prodOrigin']['pr_txt']))?$srcData['prodOrigin']['pr_txt']:firstParagraph($srcData['prodOrigin']['text']);
+        (!empty($srcData['prodOrigin']['pr_txt']))?$srcData['prodOrigin']['pr_txt']:special_trim(firstParagraph($srcData['prodOrigin']['text']));
 
-    @$dstData['article_description'][DST_DEFAULT_LANGUAGE_ID]['description'] = $srcData['prodOrigin']['text'];    
+    @$dstData['article_description'][DST_DEFAULT_LANGUAGE_ID]['description'] = special_trim($srcData['prodOrigin']['text']);    
 
     $dstData['article_description'][DST_DEFAULT_LANGUAGE_ID]['meta_title'] =
         (!empty($srcData['prodOrigin']['title']))?$srcData['prodOrigin']['title']:$srcData['document_name'];

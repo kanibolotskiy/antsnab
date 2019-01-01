@@ -1,5 +1,14 @@
 <?php
+/** div на p */
+/**
+ * Во всех карточках в табе "Скидки" есть ссылка "нашим менеджерам", она внутренняя из прошлой CMS и не работает. Придется руками поправить?
+*ПРОБОВАЛИ ПРАВИТЬ ПРИ ОБЩЕНИИ – ВСЕ ЗАДАЕТСЯ В АДМИНКЕ в модуле вкладки
+*Такие же ссылки /djem* есть и в других табах. Все руками? ПОПРОБУЮ АВТОМАТИЧЕСКИ ИХ ПОПРАВИТЬ – НО НЕ ОБЕЩАЮ ПРИ ПЕРЕНОСЕ
 
+ обращайтесь к нашим <a href="djem://238"
+target="_blank">менеджерам</a>
+
+ */
 use WS\Override\Gateway\ProdTabs;
 
 include_once __DIR__ . '/bootstrap.php';
@@ -61,6 +70,13 @@ function specialMerge($catData, $prodData)
     return $product;
 }
 
+function specialTrim($val)
+{
+    $val = str_replace('div', 'p', $val);
+    $val = str_replace('djem://238', '/contacts/', $val);
+    return $val;
+}
+
 $counter = 0;
 foreach ($dstFinalCategories as $dstFinalCategory) {
     $categorySrcId = $dstFinalCategory['srcId'];
@@ -97,7 +113,7 @@ foreach ($dstFinalCategories as $dstFinalCategory) {
 
         //применение
         $propertyName = 'Применение'; 
-        @$propertyValue = $srcFinalProductData['primenenie'];
+        @$propertyValue =specialTrim($srcFinalProductData['primenenie']);
         if( !empty($propertyValue) ) {
             if (!isset($dstFinalCatProperties[$propertyName])) {
                 $dstFinalCatProperties[$propertyName] = [
@@ -119,7 +135,7 @@ foreach ($dstFinalCategories as $dstFinalCategory) {
 
         //хранение
         $propertyName = 'Хранение'; 
-        @$propertyValue = $srcFinalProductData['hranenie'];
+        @$propertyValue =specialTrim($srcFinalProductData['hranenie']);
         if( !empty($propertyValue) ) {
             if (!isset($dstFinalCatProperties[$propertyName])) {
                 $dstFinalCatProperties[$propertyName] = [
@@ -141,7 +157,7 @@ foreach ($dstFinalCategories as $dstFinalCategory) {
 
         //скидки
         $propertyName = 'Скидки'; 
-        @$propertyValue = $srcFinalProductData['sale'];
+        @$propertyValue =specialTrim($srcFinalProductData['sale']);
         if( !empty($propertyValue) ) {
             if (!isset($dstFinalCatProperties[$propertyName])) {
                 $dstFinalCatProperties[$propertyName] = [
@@ -172,7 +188,7 @@ foreach ($dstFinalCategories as $dstFinalCategory) {
                 continue;
             }
             $category_prodproperty_id = $propId;
-            $val = $productProps[$propName]['val'];
+            $val =specialTrim($productProps[$propName]['val']);
             $sortOrder = $productProps[$propName]['sortOrder'];
             $hide = $productProps[$propName]['hide'];
 

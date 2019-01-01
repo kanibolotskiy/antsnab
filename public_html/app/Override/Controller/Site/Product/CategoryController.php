@@ -186,13 +186,15 @@ class CategoryController extends \Controller
             $sub = array();
             $path = $this->hierarhy->getPath($result['category_id']);
             if( $result['isfinal'] ) {
-                $subRes = $this->hierarhy->getNodeById($result['category_id'])->get('products');
-                foreach ($subRes as $p) {
-                    $sub[] = array(
-                        'name' => $p['name'],
-                        'href' => $this->url->link('product/product', 'path=' . $path .  '&product_id=' . $p['product_id'])
-                    );
-                }
+                try {
+                    $subRes = $this->hierarhy->getNodeById($result['category_id'])->get('products');
+                    foreach ($subRes as $p) {
+                        $sub[] = array(
+                            'name' => $p['name'],
+                            'href' => $this->url->link('product/product', 'path=' . $path .  '&product_id=' . $p['product_id'])
+                        );
+                    }
+                } catch (\Exception $e ) {}
             } else {
                 $subRes = $this->hierarhy->getNodeById($result['category_id'])->getChildren(); 
                 foreach ($subRes as $c) {

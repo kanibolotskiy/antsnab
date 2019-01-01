@@ -1,0 +1,1 @@
+alter table oc_newsblog_article_description modify column `name` varchar(2000) ;

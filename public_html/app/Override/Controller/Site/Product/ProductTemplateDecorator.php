@@ -112,7 +112,7 @@ class ProductTemplateDecorator implements IDecorator
                 }
             }
 
-            if (!$pUnits[1]) {
+            if (!isset($pUnits[1])) {
                 throw new \Exception('No one unit wasnt set for product');
             }
             

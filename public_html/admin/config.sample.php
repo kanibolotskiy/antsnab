@@ -23,9 +23,13 @@ define('DIR_CATALOG', '/srv/http/ant-snab/public_html/catalog/');
 
 // DB
 define('DB_DRIVER', 'mpdo');
-define('DB_HOSTNAME', '');
+define('DB_HOSTNAME', 'localhost.localdomain');
 define('DB_USERNAME', '');
 define('DB_PASSWORD', '');
 define('DB_DATABASE', '');
 define('DB_PORT', '3306');
 define('DB_PREFIX', 'oc_');
+define('ROOT_CATEGORY_ID', 71);
+
+/** @see changes in /srv/http/ant-snab/public_html/system/library/db/mpdo.php and https://stackoverflow.com/questions/1197005/how-to-get-numeric-types-from-mysql-using-pdo */
+define('ATTR_EMULATE_PREPARES', false);
