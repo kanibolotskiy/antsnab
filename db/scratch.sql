@@ -3,6 +3,25 @@ use antsnab;
 
 show columns from oc_newsblog_article;
 
+select * from oc_newsblog_article where article_id=736;
+
+
+show tables;
+
+
+
+delete from oc_newsblog_article where article_id in (
+    select article_id from oc_newsblog_article_to_category where category_id in (49, 50, 51, 52, 53, 54, 55)
+);
+
+delete from oc_newsblog_article_description where article_id in (
+    select article_id from oc_newsblog_article_to_category where category_id in (49, 50, 51, 52, 53, 54, 55)
+);
+
+delete from oc_newsblog_article_to_category  where category_id in (49, 50, 51, 52, 53, 54, 55);
+
+
+select * from antsnaborigin.documents where document_id=3208;
 
 SELECT r.review_id, pd.name, r.author, r.email, r.company, r.rating, r.status, r.date_added, r.about, r.moderator, r.answer FROM oc_review r LEFT JOIN oc_product_description pd ON (r.product_id = pd.product_id) WHERE (pd.language_id = '1' or pd.language_id is NULL) AND r.author LIKE 'Виктор%' ORDER BY r.date_added DESC LIMIT 0,6;
 
@@ -10,7 +29,6 @@ SELECT r.review_id, pd.name, r.author, r.email, r.company, r.rating, r.status, r
 use antsnaborigin;
 
 select document_id, document_content from documents where document_content like '%Можно использовать мастику мбу в дачном доме%';
-
 
 
 

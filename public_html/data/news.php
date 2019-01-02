@@ -52,7 +52,7 @@ function getArticles()
     global $srcDB;
     global $SRC_PRODUCT_DOCUMENT_TYPES;
 
-    $sql = "select D.document_id, D.document_parent_id, D.document_level, D.document_sort, D.document_name, D.document_url, D.document_content, P.document_content as document_parent_content from documents as D "
+    $sql = "select D.document_id, D.document_publish_time, D.document_parent_id, D.document_level, D.document_sort, D.document_name, D.document_url, D.document_content, P.document_content as document_parent_content from documents as D "
         . " left join documents as P on P.document_id = D.document_parent_id "
         . " where D.document_type in (" . implode(',', $SRC_PRODUCT_DOCUMENT_TYPES) . ") and D.document_deleted = 0 order by D.document_parent_id, D.document_sort";
     $rows = $srcDB->query($sql)->rows;
@@ -111,7 +111,7 @@ function firstParagraph($text)
 }
 
 /**
- * @return DateTime
+ * @deprecated @return DateTime
  */
 function getNewsDateFromUrl($url)
 {
@@ -129,8 +129,8 @@ function getNewsDateFromUrl($url)
         $year = $pathParts[$count-4];
         $dateTime = DateTime::createFromFormat('Y-m-d', $year . '-' . $month . '-' . $day);
     }
-    
-    return $dateTime;
+
+   return $dateTime; 
 }
 
 function getDstSlugFromUrl($url)
@@ -248,9 +248,10 @@ foreach ($articles as $srcData) {
 
     $dstData['article_description'][DST_DEFAULT_LANGUAGE_ID]['name'] = 
         (!empty($srcData['prodOrigin']['caption']))?$srcData['prodOrigin']['caption']:$srcData['document_name'];
-    
-    $dstData['article_description'][DST_DEFAULT_LANGUAGE_ID]['preview'] =     
-        (!empty($srcData['prodOrigin']['pr_txt']))?$srcData['prodOrigin']['pr_txt']:special_trim(firstParagraph($srcData['prodOrigin']['text']));
+
+    /* preview просто сделаем пустым, тк у нас есть толковая обработка, а в новостях наблюдается хаос */
+    $dstData['article_description'][DST_DEFAULT_LANGUAGE_ID]['preview'] ='';     
+        /*(!empty($srcData['prodOrigin']['pr_txt']))?$srcData['prodOrigin']['pr_txt']:special_trim(firstParagraph($srcData['prodOrigin']['text']));*/
 
     @$dstData['article_description'][DST_DEFAULT_LANGUAGE_ID]['description'] = special_trim($srcData['prodOrigin']['text']);    
 
@@ -273,8 +274,9 @@ foreach ($articles as $srcData) {
 
     /*url end must be in format ... Y/m/d/slug/ to get date*/
 
-    $dateFromUrl = getNewsDateFromUrl($srcData['document_url']);
-    $date = ($dateFromUrl)?$dateFromUrl->format('Y-m-d H:i:s'):(new DateTime())->format('Y-m-d H:i:s');
+    //$dateFromUrl = getNewsDateFromUrl($srcData['document_url']);
+    //$date = ($dateFromUrl)?$dateFromUrl->format('Y-m-d H:i:s'):(new DateTime())->format('Y-m-d H:i:s');
+    $date = (new DateTime())->setTimestamp($srcData['document_publish_time'])->format('Y-m-d H:i:s');
     $dstData['date_available'] = $date;
 
     $dstData['keyword'] = getDstSlugFromUrl( $srcData['document_url'] ); 
