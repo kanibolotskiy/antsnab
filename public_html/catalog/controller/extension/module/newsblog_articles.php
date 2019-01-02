@@ -62,14 +62,21 @@ class ControllerExtensionModuleNewsBlogArticles extends Controller {
  				$thumb 		= false;
  			}
 
- 			$mainCategoryId =  $this->model_newsblog_article->getArticleMainCategoryId($result['article_id']);
+			$mainCategoryId =  $this->model_newsblog_article->getArticleMainCategoryId($result['article_id']);
+			
+			/** @task move to override */
+			$preview = strip_tags(html_entity_decode($result['preview']));
+			if( empty($preview) ) {
+				$preview = strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'));
+			}
+			$preview = mb_substr($preview, 0, $setting['desc_limit']) . '...';
 
 			$data['articles'][] = array(
 				'article_id'  		=> $result['article_id'],
 				'original' 			=> $original,
 				'thumb' 			=> $thumb,
 				'name'        		=> $result['name'],
-				'preview'  			=> mb_substr(strip_tags(html_entity_decode($result['preview'], ENT_QUOTES, 'UTF-8')), 0, $setting['desc_limit']) . '...',
+				'preview'  			=> $preview,
 				'attributes'  		=> $result['attributes'],
 				'href'         		=> $this->url->link('newsblog/article', 'newsblog_path=' . $mainCategoryId . '&newsblog_article_id=' . $result['article_id']),
 				'date'   			=> ($date_format ? date($date_format, strtotime($result['date_available'])) : false),

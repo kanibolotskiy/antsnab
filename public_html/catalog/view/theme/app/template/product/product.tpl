@@ -433,7 +433,7 @@
                                     <div class = "review">
                                         <div class = "top">
                                             <span><strong><?= $r['author'] ?></strong> о <b><?= $r['about'] ?></b></span>
-                                            <p><?= $r['date'] ?></p>
+                                            <p><?= $r['date_added'] ?></p>
                                         </div>
                                         <?= $r['text'] ?>
                                     </div>

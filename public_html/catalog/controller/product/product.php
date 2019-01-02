@@ -3,7 +3,6 @@ class ControllerProductProduct extends Controller {
 	private $error = array();
 
 	public function index() {
-		
 		$this->load->language('product/product');
 		$this->load->language('catalog/review');
 
@@ -472,7 +471,9 @@ class ControllerProductProduct extends Controller {
 					'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 					//'edit'       => $this->url->link('catalog/review/edit',  '&review_id=' . $result['review_id'] . $url, true)
 				);
+
 			}
+
 
 			//current page
 			if (isset($this->request->get['page'])) {

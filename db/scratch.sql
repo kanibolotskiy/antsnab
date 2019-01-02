@@ -1,6 +1,8 @@
     return -1;
 use antsnab;
 
+show columns from oc_newsblog_article;
+
 
 SELECT r.review_id, pd.name, r.author, r.email, r.company, r.rating, r.status, r.date_added, r.about, r.moderator, r.answer FROM oc_review r LEFT JOIN oc_product_description pd ON (r.product_id = pd.product_id) WHERE (pd.language_id = '1' or pd.language_id is NULL) AND r.author LIKE 'Виктор%' ORDER BY r.date_added DESC LIMIT 0,6;
 
