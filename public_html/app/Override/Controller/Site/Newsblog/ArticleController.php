@@ -158,8 +158,16 @@ class ArticleController extends \Controller
                 $data['thumb'] = false;
             }
 
+            /** @todo  hardcoded */
+            $settings['desc_limit'] = 65;
+			$preview = html_entity_decode($article_info['preview'], ENT_QUOTES, 'UTF-8');
+			if( empty($preview) ) {
+				$preview = html_entity_decode($article_info['description'], ENT_QUOTES, 'UTF-8');
+			}
+            $preview = mb_substr($preview, 0, $settings['desc_limit']) . '...';
+
             if ($settings && $settings['show_preview'])
-                $data['preview'] = html_entity_decode($article_info['preview'], ENT_QUOTES, 'UTF-8');
+                $data['preview'] = $preview;
             else
                 $data['preview'] = '';
 
@@ -214,12 +222,19 @@ class ArticleController extends \Controller
 
                 $mainCategoryId = $this->model_newsblog_article->getArticleMainCategoryId($result['article_id']);
 
+                $preview = html_entity_decode($result['preview'], ENT_QUOTES, 'UTF-8');
+                if( empty($preview) ) {
+                    $preview = html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8');
+                }
+                /** @todo hardcoded later */
+                $preview = mb_substr($preview, 0, $settings['desc_limit']) . '...';
+
                 $data['articles'][] = array(
                     'article_id' => $result['article_id'],
                     'original' => $original,
                     'thumb' => $thumb,
                     'name' => $result['name'],
-                    'preview' => html_entity_decode($result['preview'], ENT_QUOTES, 'UTF-8'),
+                    'preview' => $preview,
                     'attributes' => $result['attributes'],
                     'href' => $this->url->link('newsblog/article', 'newsblog_path=' . $mainCategoryId . '&newsblog_article_id=' . $result['article_id']),
                     'date' => ($date_format ? date($date_format, strtotime($result['date_available'])) : false),

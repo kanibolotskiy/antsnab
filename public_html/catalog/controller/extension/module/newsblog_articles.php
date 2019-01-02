@@ -65,7 +65,7 @@ class ControllerExtensionModuleNewsBlogArticles extends Controller {
 			$mainCategoryId =  $this->model_newsblog_article->getArticleMainCategoryId($result['article_id']);
 			
 			/** @task move to override */
-			$preview = strip_tags(html_entity_decode($result['preview']));
+			$preview = strip_tags(html_entity_decode($result['preview'], ENT_QUOTES, 'UTF-8'));
 			if( empty($preview) ) {
 				$preview = strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'));
 			}

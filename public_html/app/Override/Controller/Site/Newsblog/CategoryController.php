@@ -93,7 +93,7 @@ class CategoryController extends \Controller
             if ($category_info['settings']) {
                 $settings = unserialize($category_info['settings']);
                 $category_info = array_merge($category_info, $settings);
-
+                
                 $articles_image_size = array($settings['images_size_width'], $settings['images_size_height']);
                 $category_image_size = array($settings['image_size_width'], $settings['image_size_height']);
                 $date_format = $settings['date_format'];
@@ -403,6 +403,9 @@ class CategoryController extends \Controller
             }
 
             $preview = html_entity_decode($result['preview'], ENT_QUOTES, 'UTF-8');
+            if( empty($preview) ) {
+                $preview = html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8');
+            }
             $preview = strip_tags($preview);
             $preview = mb_substr($preview, 0, static::PREVIEW_SYMBOLS_COUNT ) . '...';
 
