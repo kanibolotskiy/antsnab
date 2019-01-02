@@ -193,6 +193,7 @@ class CategoryController extends \Controller
                 if ($top_category_id == static::NEWS_CATEGORY_ID) {
                     $this->load->model('newsblog/article');
                     $yearsRaw = $this->model_newsblog_article->getYears($top_category_id);
+                    //просто получить подкатегории
                     if ($yearsRaw) {
 
                         $maxYear = $yearsRaw[0];
