@@ -187,49 +187,36 @@ class CategoryController extends \Controller
 
                 /** @added filtering by year */
                 $data['years'] = array();
-                $data['current_year'] = null;
 
-                /** @task pitflows: если опубликовано в 2019 году, а размещено в категорию 2018 - не отображает. Сменить категорию (убрать 2018 - не дает!!!) и проверь запрос - наспех делелось */
                 if ($top_category_id == static::NEWS_CATEGORY_ID) {
                     $this->load->model('newsblog/article');
-                    $yearsRaw = $this->model_newsblog_article->getYears($top_category_id);
-                    //просто получить подкатегории
-                    if ($yearsRaw) {
-
-                        $maxYear = $yearsRaw[0];
-                        $data['current_year'] = $maxYear;
-                        if (isset($this->request->get['filter_year'])) {
-                            $data['current_year'] = (int) $this->request->get['filter_year'];
-                        }
-                        $filter_data['filter_year'] = $data['current_year'];
-
-                        //collect years
-                        foreach ($yearsRaw as $y) {
-                            $year_filter = '';
-                            if ($maxYear != $y) {
-                                $year_filter = '&filter_year=' . $y;
-                            }
-
-                            $baseLink = $this->url->link('newsblog/category', 'newsblog_path=' . $this->request->get['newsblog_path']);
-                            $data['years'][] = array(
-                                'href' => $baseLink . $year_filter,
-                                'text' => $y
-                            );
-                        }
+                    $yearsRaw = [];
+                    $newsSubCats = $this->model_newsblog_category->getCategories(static::NEWS_CATEGORY_ID);
+                    foreach($newsSubCats as $sub) {
+                        $newPath = static::NEWS_CATEGORY_ID . '_' . $sub['category_id'];                  
+                        $isActive = $newPath === $this->request->get['newsblog_path'];
+                        $data['years'][$sub['name']] = [
+                            'href' => $this->url->link('newsblog/category', 'newsblog_path=' . $newPath ),
+                            'text' => $sub['name'],
+                            'active' => $isActive 
+                        ];    
                     }
+                    krsort($data['years'], SORT_STRING);
+
                 }
 
                 //@changed get articles, pagination construction
                 $article_total = $this->model_newsblog_article->getTotalArticles($filter_data);
                 $data['articles'] = $this->collectArticles($filter_data, $articles_image_size, $date_format, $top_category_id);
 
+
                 /** Pagination */
                 $paginationModel = PaginationHelper::getPaginationModel($article_total, (int)$limit, (int)$page);
                 
-                $paginationBaseUrl = $this->getPaginationBaseUrl($data['current_year'], $this->request->get['newsblog_path'] );
+                $paginationBaseUrl = $this->url->link('newsblog/category', 'newsblog_path=' . $this->request->get['newsblog_path']);
                 $data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl, $paginationModel);
 
-                $lazyLoadBaseUrl = $this->getLazyLoadBaseUrl($data['current_year'], $this->request->get['newsblog_path'] );
+                $lazyLoadBaseUrl = $this->url->link('newsblog/category/showmore', 'path=' . $this->request->get['newsblog_path'] );
                 $data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl, $paginationModel);
             }
 
@@ -335,15 +322,6 @@ class CategoryController extends \Controller
             $page = $this->request->get['page'];
         }
 
-        $filter_year = null;
-        if (!empty($this->request->get['filter_year'])) {
-            $filter_year = (int) $this->request->get['filter_year'];
-        } elseif ($category_id == static::NEWS_CATEGORY_ID) {
-            $this->load->model('newsblog/article');
-            $yearsRaw = $this->model_newsblog_article->getYears($category_id);
-            $maxYear = $yearsRaw[0];
-            $filter_year = $maxYear;
-        }
 
         $filter_data = array(
             'filter_category_id' => $category_id,
@@ -352,7 +330,7 @@ class CategoryController extends \Controller
             'order' => $category_info['sort_direction'],
             'start' => ($page - 1) * $limit,
             'limit' => $limit,
-            'filter_year' => $filter_year
+            //'filter_year' => $filter_year
         );
         $articles = $this->collectArticles($filter_data, $articles_image_size, $date_format, $top_category_id );
         $article_total = $this->model_newsblog_article->getTotalArticles($filter_data);
@@ -377,8 +355,10 @@ class CategoryController extends \Controller
             'total' => (int)$article_total,
             'itemsPerPage' => (int)$limit,
             'page' => (int)$page,
-            'paginationBaseUrl' => $this->getPaginationBaseUrl($filter_year, $this->request->get['path'] ),
-            'lazyLoadBaseUrl' => $this->getLazyLoadBaseUrl($filter_year, $this->request->get['path'] ),
+            //'paginationBaseUrl' => $this->getPaginationBaseUrl($filter_year, $this->request->get['path'] ),
+            'paginationBaseUrl' => $this->url->link('newsblog/category', 'newsblog_path=' . $this->request->get['path']),
+            //'lazyLoadBaseUrl' => $this->getLazyLoadBaseUrl($filter_year, $this->request->get['path'] ),
+            'lazyLoadBaseUrl' => $this->url->link('newsblog/category/showmore', 'path=' . $this->request->get['path'] )
         ]); 
 
         $this->response->setOutput($lazyLoadResponse);
@@ -430,17 +410,4 @@ class CategoryController extends \Controller
         return $articles;
     }
 
-    protected function getPaginationBaseUrl($year = null, $category_path = 0)
-    {
-        $year_filter = (null === $year) ? '' : '&filter_year=' . $year;
-        $baseUrl = $this->url->link('newsblog/category', 'newsblog_path=' . $category_path .  $year_filter );
-        return $baseUrl;
-    }
-
-    protected function getLazyLoadBaseUrl($year = null, $category_path = 0)
-    {
-        $year_filter = (null === $year) ? '' : '&filter_year=' . $year;
-        $baseUrl = $this->url->link('newsblog/category/showmore', 'path=' . $category_path . $year_filter );
-        return $baseUrl; 
-    }
 }

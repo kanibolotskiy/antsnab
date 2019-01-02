@@ -3,7 +3,7 @@ use antsnab;
 
 show columns from oc_newsblog_article;
 
-select * from oc_newsblog_article where article_id=736;
+select * from oc_newsblog_article as a left join oc_newsblog_article_description as d on d.article_id = a.article_id;
 
 
 show tables;
