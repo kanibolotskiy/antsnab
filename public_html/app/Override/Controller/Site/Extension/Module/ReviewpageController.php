@@ -71,7 +71,6 @@ class ReviewpageController extends \Controller
         //pagination
         $reviewsTotal = $this->model_catalog_review->getCompanyReviewsTotal();
 
-        $lazyLoadBaseUrl = $this->url->link('product/search/showmore', $url);
         $paginationModel = PaginationHelper::getPaginationModel($reviewsTotal, (int)$limit, (int)$page);
         $data['pagination'] = PaginationHelper::render($this->registry, $url, $paginationModel);
         $data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyload_url, $paginationModel);
@@ -90,11 +89,17 @@ class ReviewpageController extends \Controller
 
     public function showmore()
     {
+        /*$current_route = $this->request->get['route'];
+        $lazyload_route =  'extension/module/reviewpage/showmore';
+        $current_infId = $this->request->get['information_id'];
+        $url = $this->url->link($current_route, 'information_id=' . $current_infId);
+        $lazyload_url = $this->url->link($lazyload_route, 'inf_id=' . $current_infId);*/
+
         $current_route = $this->request->get['route'];
         $lazyload_route =  'extension/module/reviewpage/showmore';
         $current_infId = $this->request->get['inf_id'];
         $url = $this->url->link($current_route, 'information_id=' . $current_infId);
-        $lazyload_url = $this->url->link($lazyload_route, '');
+        $lazyload_url = $this->url->link($lazyload_route, 'inf_id=' . $current_infId);
 
 
         if (isset($this->request->get['page'])) {
@@ -118,7 +123,7 @@ class ReviewpageController extends \Controller
             'itemsPerPage' => $limit,
             'page' => $page,
             'paginationBaseUrl' => $url, 
-            'lazyLoadBaseUrl' => $lazyload_route,
+            'lazyLoadBaseUrl' => $lazyload_url,
         ]); 
 
         $this->response->setOutput($lazyLoadResponse);
