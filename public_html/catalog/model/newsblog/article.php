@@ -113,10 +113,10 @@ class ModelNewsBlogArticle extends Model {
 			}
 		}
 
-        /**@task move to override*/
-        if(!empty($data['filter_year'])) {
+        /**@task move to override @deprecated*/
+        /*if(!empty($data['filter_year'])) {
             $sql .= " AND year(a.date_available) = " . (int)$data['filter_year'];
-        }
+        }*/
 
 		$sql .= " GROUP BY a.article_id";
 
@@ -467,17 +467,17 @@ class ModelNewsBlogArticle extends Model {
 			$sql .= ")";
 		}
 
-        /**@task move to override*/
-        if(!empty($data['filter_year'])) {
+        /**@task move to override @deprecated*/
+        /*if(!empty($data['filter_year'])) {
             $sql .= " AND year(p.date_available) = " . (int)$data['filter_year'];
-        }
+        }*/
 		$query = $this->db->query($sql);
 
 		return $query->row['total'];
 	}
 
-    /**@task move to override*/
-    public function getYears($category_id)
+	/** @deprecated */
+    public function __getYears($category_id)
     {
 		/*$sql = "select year(date_available) as yr from ".DB_PREFIX."newsblog_article left join ".DB_PREFIX."newsblog_article_to_category on ".DB_PREFIX."newsblog_article.article_id=".DB_PREFIX."newsblog_article_to_category.article_id where ".DB_PREFIX."newsblog_article_to_category.category_id = ".$this->db->escape($category_id)." group by yr order by yr DESC";*/
 

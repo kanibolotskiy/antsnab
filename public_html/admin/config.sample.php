@@ -4,8 +4,8 @@ define('HTTP_SERVER', 'http://ant-snab/admin/');
 define('HTTP_CATALOG', 'http://ant-snab/');
 
 // HTTPS
-define('HTTPS_SERVER', 'http://ant-snab/admin/');
-define('HTTPS_CATALOG', 'http://ant-snab/');
+define('HTTPS_SERVER', 'https://ant-snab/admin/');
+define('HTTPS_CATALOG', 'https://ant-snab/');
 
 // DIR
 define('DIR_APPLICATION', '/srv/http/ant-snab/public_html/admin/');

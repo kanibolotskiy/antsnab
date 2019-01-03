@@ -12,7 +12,7 @@
                     <div class="month">
                         <ul id="lazy-load_container">
                             <?php foreach($years as $y): ?>
-                                <?php if( $current_year == $y['text'] ): ?>
+                                <?php if( $y['active'] ): ?>
                                 <li><a class="active" href="<?=$y['href']?>"><?=$y['text']?></a></li>
                                 <?php else: ?>
                                 <li><a href="<?=$y['href']?>"><?=$y['text']?></a></li>
