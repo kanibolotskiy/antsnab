@@ -233,7 +233,7 @@ class CartController extends \ControllerCheckoutCart
             'name' => '',
             'phone' => '',
             'email' => '',
-            'need_shipping' => 1,
+            'need_shipping' => 0,
             'shipping_address' => '',
         ];
 

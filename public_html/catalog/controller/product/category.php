@@ -194,6 +194,8 @@ class ControllerProductCategory extends Controller {
 				}
 			}
 */
+
+
 			$data['products'] = array();
 
 			$filter_data = array(

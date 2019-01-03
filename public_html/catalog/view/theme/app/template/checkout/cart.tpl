@@ -80,7 +80,7 @@
 
             <div class="ordering">
                 <form id="order_form" method="post" enctype="multipart/form-data" >
-                    <p>Нажимая на кнопку Заказать, я даю <a target="_blank" href="index.php?route=information/information&information_id=3">согласие на обработку персональных данных</a></p>
+                    <p>Нажимая на кнопку Заказать, я даю <a target="_blank" href="index.php?route=information/information&information_id=11">согласие на обработку персональных данных</a></p>
                     <div class="row">
                         <div class="form-group">
                             <?php if (isset($form_errors['name'])): ?>
@@ -111,6 +111,7 @@
 
                     </div>
                     <div class="row">
+
                         <div class="delivery">
                             <?php if( $form_data['need_shipping'] == 1 ): ?>
                                 <input name="need_shipping" type="checkbox" id="2" value="1" checked="checked"/>
@@ -127,7 +128,9 @@
                         </div>
                         <input type="submit" value="Заказать">
                     </div>
-                    <div class="row">
+                    
+
+                    <div class="row delivery_row" <?php echo ($form_data['need_shipping']==1?"":"style='display:none;'"); ?>>
                         <?php if (isset($form_errors['shipping_address'])): ?>
                             <i class="error"><?= $form_errors['shipping_address'] ?></i>
                             <input value="<?= $form_data['shipping_address'] ?>" class="error" name="shipping_address" type="text" placeholder="Введите адрес"/>
@@ -181,7 +184,7 @@
                             <img src="img/img56.jpg" alt="img">
                         </div>
                         <a href="" class="title-product">Грунтовка
-                            уневерсальная</a>
+                            универсальная</a>
                         <strong>1 350 р. </strong>
                         <a href="" class="order-btn">Купить</a>
                     </div>

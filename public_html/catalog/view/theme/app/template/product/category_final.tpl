@@ -24,23 +24,29 @@
                 <?php }?>
             <?php }?>
 
-            <div class="catalog-tab" style="padding-top:60px">
+            <div class="catalog-tab" style="padding-top:20px">
 
-                <form method="GET" style="position:absolute;top:0">
+                <form method="GET" style="position:absolute;top:0;z-index:2;">
                     <select  name="sort" id="seldef1" title="Cортировка" onchange="this.form.submit()">
-                        <option <?php if($sort_selected==0) echo 'selected';?>value="">сортировать...</option>
+                        <option <?php if($sort_selected==0) echo 'selected';?>value="">по нашему</option>
                         <option <?php if($sort_selected==1) echo 'selected';?> value="price|ASC">от дешевых к дорогим</option>
                         <option <?php if($sort_selected==2) echo 'selected';?> value="price|DESC">от дорогих к дешевым</option>
                     </select>
                 </form>
-
+                <div class="wrap_select_view">
+                    <ul class="select_view_switch">
+                        <li class="select_view select_view1 <?php echo $cat_view1;?>" rel="view1"></li>
+                        <li class="select_view select_view2 <?php echo $cat_view2;?>" rel="view2"></li>
+                    </ul>
+                </div>
+                <!--
                 <ul class="tabset">
                     <li><a id="prodgrid" href="#" class="active"></a></li>
                     <li><a id="prodlist" href="#"></a></li>
                 </ul>
-
+                -->
                 <div class="tab-list">
-                    <div class="tab-block tab-block2 tab-block3" >
+                    <div class="tab-block tab-block3 <?php echo $cat_view_class;?>" >
                         <ul id="lazy-load_container">
                             <?php foreach ($products as $p): ?>
                                 <?php include __DIR__ . '/../partial/product_item.tpl' ?>

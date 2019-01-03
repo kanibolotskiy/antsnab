@@ -3,7 +3,16 @@ import './lib/jquery.tabs';
 /* Табы вида (грида) в категории */
 // page init
 $(function(){
-	initTabs();
+	//initTabs();
+	$(".select_view").click(function(){
+		if(!$(this).hasClass("active")){
+			$(".select_view").removeClass("active");
+			$(this).addClass("active");
+			$(".tab-block").toggleClass("tab-block2");
+			var rel=$(this).attr("rel");
+			$.cookie('cat_view', rel, { expires: 7, path: '/' });
+		}
+	});
 });
 
 // content tabs init

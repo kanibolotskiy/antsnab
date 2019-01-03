@@ -1,4 +1,6 @@
 <div class="price-list">
+    <div class="price-heading">
+        <div class="price-dat">Цены по состоянию на: <span><?php echo $date;?></span></div>
         <div class="download download3">
                 <span><?=$price_download?></span>
             <ul>
@@ -10,6 +12,7 @@
                 </li>
             </ul>
         </div>
+    </div>
         <div class="select-list">
             <ul>
                 <li id="firstActive">

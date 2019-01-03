@@ -3,7 +3,8 @@
     <input type="hidden" id="product_id" value="<?=$product_id?>"/>
     <?= $column_left ?>
     <div class="content">
-        <?php /*include __DIR__ . '/../partial/breadcrumbs.tpl' */ ?>
+        крошки тут
+        <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
         <?php echo $content_top; ?>
         <div class="card-product"  itemprop="offers" itemscope itemtype="http://schema.org/Offer">
             <div class="title" itemprop="name"><?=$heading_title?></div>

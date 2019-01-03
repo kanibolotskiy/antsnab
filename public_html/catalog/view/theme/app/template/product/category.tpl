@@ -31,16 +31,26 @@
                 </style>
                 
                 <div id="mtab1" class="tab">
+                    <div class="wrap_select_view">
+                        <ul class="select_view_switch">
+                            <li class="select_view select_view1 <?php echo $cat_view1;?>" rel="view1"></li>
+                            <li class="select_view select_view2 <?php echo $cat_view2;?>" rel="view2"></li>
+                        </ul>
+                    </div>
+                    <!--
                     <ul class="tabset multi-tabset">
                         <li><a href="#m1tab1" class="active"></a></li>
                         <li><a href="#m1tab2"></a></li>
                     </ul>
+                    -->
                     <div class="tab-list">
                         <div id="m1tab1">
-                            <div class="tab-block tab-block2">
+                            <div class="tab-block <?php echo $cat_view_class;?>">
+                                <!--
                                 <div class="title-catalog">
-                                    &nbsp;<!--Рулонные материалы-->
+                                    &nbsp;Рулонные материалы
                                 </div>
+                                -->
                                 <ul>
                                     <?php foreach ($categories as $c): ?>
                                         <li>
@@ -59,6 +69,11 @@
                                                             </a>
                                                         <?php endforeach;?>
                                                     </div> 
+                                                    <div class="cat-desc">
+                                                        <p>
+                                                        <?= $c['description'] ?>
+                                                        </p>
+                                                    </div>
                                                 </div> 
                                                 <a href="<?= $c['href'] ?>" class="more">Подробнее</a> 
                                             </div> 
@@ -72,10 +87,11 @@
                                 -->
                             </div>
                         </div> 
+                        <!--
                         <div id="m1tab2">
                             <div class="tab-block">
                                 <div class="title-catalog">
-                                    &nbsp;<!--Рулонные материалы-->
+                                    &nbsp;
                                  </div>
                                 <ul>
                                     <?php foreach ($categories as $c): ?>
@@ -104,13 +120,9 @@
                                         </li>
                                     <?php endforeach; ?>
                                 </ul>
-                                <!--<div class="title-catalog">
-                                    Мастики, праймеры, битум 
-                                 </div>
-                                 <ul><li></li></ul> 
-                                -->
                             </div>
                         </div> 
+                        -->
                     </div>
                 </div>
             </div>

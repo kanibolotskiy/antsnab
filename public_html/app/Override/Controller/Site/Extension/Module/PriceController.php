@@ -31,7 +31,8 @@ class PriceController extends \Controller
         $data['price_download'] = $this->language->get('price_download');
         $data['pdf'] = $this->config->get(AdminModule::CONFIG_KEY_PDF_ROUTE);
         $data['xls'] = $this->config->get(AdminModule::CONFIG_KEY_XLS_ROUTE);
-
+        
+        $data['date']=date("d.m.Y");
         //content of table
         $rootCat = $this->config->get(AdminModule::CONFIG_KEY_START_CATEGORY_PARENT_ID);
         $startCat = $this->config->get(AdminModule::CONFIG_KEY_START_CATEGORY_ID);
@@ -129,24 +130,25 @@ class PriceController extends \Controller
            return $lists;
         }
         $lists['active'][] = $thirdActive;
-
         return $lists;
     }
 
     protected function getPriceTableContentHTML($finalsParent)
-    {
+    { 
         $fCategoryGateway = new FinalCategory($this->registry);
         $data['categories'] = $fCategoryGateway->getFinalCategoriesWithProducts(
             $finalsParent,
-            'c.parent_id, c.sort_order', //categories order
+            'c.parent_id, c.sort_order' //categories order
             /*'LCASE(cd.name)',*/ //categories order
-            ['sort'=>'pd.name'] //products order in categories*/
+            /*['sort'=>'pd.name']*/ //products order in categories*/
         );
 
         $productIds = [];
+        //print_r($data['categories']);
         foreach( $data['categories'] as  $category ) {
             $productIds = array_merge($productIds, array_keys($category['products']) );
         }
+        
         $unitsGateway = new ProdUnits($this->registry);
         $data['priceUnits'] = $unitsGateway->getProductsWithUnit($productIds, 'isPriceBase');
         $data['saleUnits'] = $unitsGateway->getProductsWithUnit($productIds, 'isSaleBase');

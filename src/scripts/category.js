@@ -1,4 +1,5 @@
 import {Quantity} from './lib/quantity.es6.js';
+import './lib/jquery.cookie';
 var Fraction = require('fraction.js');
 var Noty = require('noty');
 

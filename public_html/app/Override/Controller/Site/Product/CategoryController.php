@@ -77,6 +77,24 @@ class CategoryController extends \Controller
             $category_id = 0;
         }
 
+        $cat_view1="active";
+        $cat_view2="";
+        $cat_view_class="tab-block2";
+
+        if(isset($_COOKIE["cat_view"])){
+
+            if($_COOKIE["cat_view"]=="view2"){
+                $cat_view1="";                
+                $cat_view2="active";
+                $cat_view_class="";
+            }
+        }
+        $this->data["cat_view1"]=$cat_view1;
+        $this->data["cat_view2"]=$cat_view2;
+        $this->data["cat_view_class"]=$cat_view_class;
+
+        //echo "!".$_COOKIE["cat_view"]."!";
+
         $gateway = new FinalCategory($this->registry);
         $isCategoryFinal = $gateway->isCategoryFinal($category_id);
         $flag_is_seo=$gateway->isCategorySeo($category_id);
@@ -197,11 +215,14 @@ class CategoryController extends \Controller
                 } catch (\Exception $e ) {}
             } else {
                 $subRes = $this->hierarhy->getNodeById($result['category_id'])->getChildren(); 
+                
                 foreach ($subRes as $c) {
-                    $sub[] = array (
-                        'name' => $c->get('name'),
-                        'href' => $this->url->link('product/category', 'path=' . $path . '_' . $c->get('category_id') . $url)
-                    );
+                    if(!$c->get('isseo')){
+                        $sub[] = array (
+                            'name' => $c->get('name'),
+                            'href' => $this->url->link('product/category', 'path=' . $path . '_' . $c->get('category_id') . $url)
+                        );
+                    }
                 }
             }
             
@@ -218,8 +239,7 @@ class CategoryController extends \Controller
         $this->response->setOutput($this->load->view('product/category', $this->data));
     }
 
-    /** @ИСПРАВИТЬ - я бы назвал флаг $is_seo что то вроде $showPropertyTable или типа того */
-    private function showProducts($category_id, $is_seo=false)
+    private function showProducts($category_id, $showPropertyTable=false)
     {
         $filter_data = $this->getFilter($category_id, $limit, $page, $sort_selected);
         $this->data['sort_selected']=$sort_selected;
@@ -227,7 +247,7 @@ class CategoryController extends \Controller
         $productsHelper = new ProductListHelper($this->registry);
         $this->data['products'] = $productsHelper->getProducts($filter_data);
 
-        if(!$is_seo){
+        if(!$showPropertyTable){
             //summary table
             $propGateway = new ProdProperties($this->registry);
             $this->data['summary'] = $propGateway->getSummaryTableRows($category_id);

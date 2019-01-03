@@ -25,3 +25,12 @@ if( $('.qnt-container-cart').length > 0) {
         qntController.setQuantityInUiUnits($priceUnitQuantity);
     });
 }
+$(function(){
+    $("input[name='need_shipping']").change(function(){
+        if($(this).prop("checked")){
+            $(".delivery_row").stop().slideDown(150);
+        }else{
+            $(".delivery_row").stop().slideUp(150);
+        }
+    });
+});
