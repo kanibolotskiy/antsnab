@@ -5,6 +5,7 @@ class ControllerExtensionModuleNewsBlogArticles extends Controller {
 
 	public function index(){
 	//CKEditor
+	
     if ($this->config->get('config_editor_default')) {
         $this->document->addScript('view/javascript/ckeditor/ckeditor.js');
         $this->document->addScript('view/javascript/ckeditor/ckeditor_init.js');

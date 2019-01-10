@@ -14,6 +14,7 @@ class ControllerErrorNotFound extends Controller {
 			'href' => $this->url->link('common/home')
 		);
 
+		/*
 		if (isset($this->request->get['route'])) {
 			$url_data = $this->request->get;
 
@@ -34,6 +35,7 @@ class ControllerErrorNotFound extends Controller {
 				'href' => $this->url->link($route, $url, isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1')))
 			);
 		}
+		*/
 		$information_id = 10;
 		$information_info = $this->model_catalog_information->getInformation($information_id);
 		

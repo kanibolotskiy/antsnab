@@ -4747,6 +4747,7 @@ filter: grayscale(1); /* W3C */
 .our-production ul {position:relative;overflow:hidden;display:block;}
 
 .staty-container .staty-list ul,.tab-block ul{
+    width:100%;
     position:relative;overflow:hidden;font-size:0;
     display:block;
     display: table;
@@ -4922,7 +4923,8 @@ a.buy{display:inline-block;vertical-align: top;}
         padding: 0;
         line-height: normal;
     }
-
+    .price-dat,.download3{float:none;width:100%;}
+    .download3{margin-top:10px;}
     .footer-nav {
         display: none;
     }

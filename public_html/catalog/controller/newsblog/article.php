@@ -4,7 +4,6 @@ class ControllerNewsBlogArticle extends Controller {
 
 	public function index() {
 		$this->load->language('newsblog/article');
-
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -235,6 +234,7 @@ class ControllerNewsBlogArticle extends Controller {
 				} else {
 					$rating = false;
 				}
+				
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
@@ -248,6 +248,7 @@ class ControllerNewsBlogArticle extends Controller {
 					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 				);
 			}
+			
 
 			$data['tags'] = array();
 
