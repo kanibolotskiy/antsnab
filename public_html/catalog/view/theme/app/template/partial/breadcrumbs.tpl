@@ -33,9 +33,13 @@
                 <span class="bread_mob"><i class="material-icons">home</i></span>
             </a>
         <?php } else{ ?>
-            <a href="<?php echo $breadcrumb['href'];?>" itemprop="item ">
+            <?php if($i!=(count($breadcrumbs)-1)){?>
+                <a href="<?php echo $breadcrumb['href'];?>" itemprop="item ">
+                    <span itemprop="name"><?php echo $breadcrumb['text'];?></span>
+                </a>
+            <?php }else{ ?>
                 <span itemprop="name"><?php echo $breadcrumb['text'];?></span>
-            </a>
+            <?php }?>
         <?php }?>
     </span>	
     

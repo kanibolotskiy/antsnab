@@ -3,6 +3,7 @@ class ControllerProductProduct extends Controller {
 	private $error = array();
 
 	public function index() {
+		
 		$this->load->language('product/product');
 		$this->load->language('catalog/review');
 
@@ -133,7 +134,7 @@ class ControllerProductProduct extends Controller {
 
 		if (isset($this->request->get['search']) || isset($this->request->get['tag'])) {
 			$url = '';
-
+ 
 			if (isset($this->request->get['search'])) {
 				$url .= '&search=' . $this->request->get['search'];
 			}
@@ -170,6 +171,7 @@ class ControllerProductProduct extends Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
+			
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_search'),
 				'href' => $this->url->link('product/search', $url)
@@ -185,7 +187,6 @@ class ControllerProductProduct extends Controller {
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);
-
 		if ($product_info) {
 			$url = '';
 
@@ -578,7 +579,7 @@ class ControllerProductProduct extends Controller {
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
-					'meta_h1'        => $result['meta_h1'],
+					'meta_h1'     => $result['meta_h1'],
 					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
 					'price'       => $price,
 					'special'     => $special,

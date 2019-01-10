@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']        = 'Заказ успешно сформирован!';
+$_['heading_title']        = 'Благодарим за заказ!';
 
 // Text
 $_['text_basket']          = 'Корзина покупок';

@@ -68,7 +68,12 @@
                             height: 25px;
                             @include transition;
                             width: 70px;
-
+                            position:relative;
+                            sup{
+                                font-size: 10px;
+                                position: absolute;
+                                top: -3px;
+                            }
                         }
                         &.active {
                           a {
@@ -87,12 +92,17 @@
         .quantity-buy{
             justify-content: space-between;
             flex-wrap: nowrap;
+            margin-top:20px;
             .quantity-buy-block{
+                position:relative;overflow:hidden;float:left;
+                
+                /*
                 min-width: 135px;
                 display: flex;
+                */
             }
             a.buy{
-                width: 54%;
+                /*width: 54%;*/
             }
         }
     }
@@ -142,12 +152,14 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    height:42px;
     .wholesale-price{
         strong{
             font-weight: 400;
             color: #000000;
             font-size: 26px;
             margin-bottom: 5px;
+            
         }
         span{
             display: inline-block;
@@ -240,6 +252,7 @@
     width: 100%;
     height: 1px;
     background-color: #E8E5E2;
+    margin-top:20px;margin-bottom:20px;
 }
 .in-stock{
     border: 1px solid #EAE7E4;
@@ -247,11 +260,13 @@
     flex-direction: column;
     justify-content: center;
     padding: 0 0 0 20px;
-    position: absolute;
+    position:relative;margin-top:17px;
+    /*position: absolute;
     bottom: 0px;
     width: 100%;
+    */
     /** хак для ровной высоты между скаладами и ноготками фоток. это только инициализация для fallback для браузеров с отключенным js*/
-    height:79;
+    /*height:79;*/
     span{
         display: block;
         background: url(../img/icon23.png) no-repeat 0 50%;
@@ -274,6 +289,7 @@
             font-size: 13px;
             text-decoration: underline;
             background: url(../img/icon24.png) no-repeat 0 50%;
+            margin-bottom:4px;
             cursor: pointer;
             &:hover{
                 text-decoration: none;

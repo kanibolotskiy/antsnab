@@ -2,8 +2,29 @@ import {Quantity} from './lib/quantity.es6.js';
 import './lib/formsubmit.js';
 
 var Fraction = require('fraction.js');
-var format = require('number-format.js');
-
+//var format = require('number-format.js');
+function number_format(number, decimals, dec_point, thousands_sep) {
+    number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+    var n = !isFinite(+number) ? 0 : +number,
+	prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+	sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+	dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+	s = '',
+	toFixedFix = function (n, prec) {
+	    var k = Math.pow(10, prec);
+	    return '' + Math.round(n * k) / k;
+	};
+    // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+    if (s[0].length > 3) {
+	s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    }
+    if ((s[1] || '').length < prec) {
+	s[1] = s[1] || '';
+	s[1] += new Array(prec - s[1].length + 1).join('0');
+    }
+    return s.join(dec);
+}
 /** Карточка */
 /** init switching ui in specification (product) page */
 if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
@@ -68,13 +89,21 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                 uiWholeSalePrice = saleToPriceKoef.div(saleToUiKoef).mul(wholeSalePrice),
                 currency = $('#priceSwitcher').attr('data-currency_symbol');
 
+            
             var isInt = ( uiPrice.valueOf() - parseInt(uiPrice.valueOf()) === 0 ),
                 formatStr = isInt?'### ###.':'### ###,##';
-            $price.text( format(formatStr + currency, uiPrice.valueOf() ) );
+                //console.log(formatStr+"+"+currency+"+"+uiPrice.valueOf());
+                //console.log(format(formatStr + currency, uiPrice.valueOf() ));
+
+                
+                $price.text(number_format(uiPrice.valueOf(), 2, ",", " ") + " " + currency);
+          //  $price.text( format(formatStr + currency, uiPrice.valueOf() ) );
 
             var isInt = ( uiWholeSalePrice.valueOf() - parseInt(uiWholeSalePrice.valueOf()) === 0 ),
                 formatStr = isInt?'### ###.':'### ###,##';
-            $wholeSalePrice.text( format (formatStr + ' ' + currency, uiWholeSalePrice.valueOf()) );
+            //$wholeSalePrice.text( format (formatStr + ' ' + currency, uiWholeSalePrice.valueOf()) );
+                $wholeSalePrice.text(number_format(uiWholeSalePrice.valueOf(), 2, ",", " ") + " " + currency);
+            
         }
 
     })()
@@ -83,6 +112,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
 if( $('.in-stock').length > 0) {
     /** Авторесайз блока со складами под размер ноготков фоото */
     /** @task - если отсутствуют ноготки - схлопывается при ресайзе */
+    /*
     window.addEventListener('resize', function(){
         var thumbNav = document.getElementsByClassName('thumb__nav')[0], 
             thumbNavHeight = thumbNav.offsetHeight,
@@ -92,6 +122,7 @@ if( $('.in-stock').length > 0) {
         document.getElementById('prodRight').style.paddingBottom = thumbNavTotalHeight +  "px";
         document.getElementsByClassName('in-stock')[0].style.height = thumbNavHeight + "px";
     });
+    */
 }
 
 /** submit reviews */

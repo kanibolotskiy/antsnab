@@ -2,7 +2,7 @@ import 'slick-carousel';
 
 /* Slick слайдеры */
 
-/* Картинки категории - пока не реализованы в шаблоне*/
+/* Картинки категории - пока не реализованы в шаблоне */
 $('.multiple-items').slick({
     infinite: true,
     slidesToShow: 3,
@@ -22,6 +22,7 @@ $('.multiple-items').slick({
         }
     ]
 });
+
 
 /* Отзывы на главной */
 $('.responsive').slick({

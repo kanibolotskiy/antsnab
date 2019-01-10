@@ -35,9 +35,9 @@
                             <?php $cnt = 0 ?>
                             <?php foreach ($locations as $l): ?>
                                 <?php if ($cnt === 0): ?>
-                                    <li><a href="#m1tab<?= $cnt ?>" class="active"><?= $l['name'] ?></a></li>
+                                    <li><a class="map_tab active" href="m1tab<?= $cnt ?>"><?= $l['name'] ?></a></li>
                                 <?php else: ?>
-                                    <li><a href="#m1tab<?= $cnt ?>" ><?= $l['name'] ?></a></li>
+                                    <li><a class="map_tab" href="m1tab<?= $cnt ?>"><?= $l['name'] ?></a></li>
                                 <?php endif; ?>
                                 <?php $cnt++ ?>
                             <?php endforeach; ?>
@@ -45,17 +45,19 @@
                         <div class="tab-list">
                             <?php $cnt = 0; ?>
                             <?php foreach ($locations as $l): ?>
-                                <div id="m1tab<?= $cnt ?>" >
+                                <div class="map_block" id="m1tab<?= $cnt ?>" style='<?php echo ($cnt==0?"display:block;":"display:none;"); ?>'>
                                     <div class="contacts-tab">
                                         <p><?= $l['address'] ?></p>
                                         <p><?= $l['open'] ?></p>
+                                        
                                         <?php if (!empty($l['latitude']) && !empty($l['longitude'])): ?>
                                             <div data-latitude="<?=$l['latitude']?>" 
                                                  data-longitude="<?=$l['longitude']?>" 
-                                                 data-name="<?=l['name']?>" id="map<?= $cnt ?>" 
+                                                 data-name="<?=$l['name']?>" id="map<?= $cnt ?>" 
                                                  class="map map-container">
                                             </div>
                                         <?php endif; ?>
+                                        
                                         <!-- @task1 hardcoded -->
                                         <a target="_blank" href="/system/storage/download/sklad-a-plan.pdf.JDa4QZE4AmF8uHtfdkmwjUdNYVGJGEAd" class="download-map">Скачать подробную карту</a>
                                     </div>

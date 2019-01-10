@@ -7,7 +7,6 @@
         <div class="article">
         <h1><?php echo $heading_title; ?></h1>
             <div class="article_columns">
-
                 <h2><?php echo $heading_categories; ?></h2>
                 <ul>
                 <?php foreach ($categories as $category_1) { ?>

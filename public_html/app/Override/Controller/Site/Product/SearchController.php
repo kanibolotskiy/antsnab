@@ -165,6 +165,20 @@ class SearchController extends \Controller
 
 		$this->load->model('catalog/category');
 
+		$cat_view1="active";
+        $cat_view2="";
+        $cat_view_class="tab-block2";
+        if(isset($_COOKIE["cat_view"])){
+            if($_COOKIE["cat_view"]=="view2"){
+                $cat_view1="";                
+                $cat_view2="active";
+                $cat_view_class="";
+            }
+        }
+        $data["cat_view1"]=$cat_view1;
+        $data["cat_view2"]=$cat_view2;
+		$data["cat_view_class"]=$cat_view_class;
+		
 		// 3 Level Category Search
 		$data['categories'] = array();
 

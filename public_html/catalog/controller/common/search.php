@@ -10,7 +10,6 @@ class ControllerCommonSearch extends Controller {
 		} else {
 			$data['search'] = '';
 		}
-
 		return $this->load->view('common/search', $data);
 	}
 }

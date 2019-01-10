@@ -490,7 +490,9 @@ class ControllerProductSearch extends Controller {
 				$this->model_account_search->addSearch($search_data);
 			}
 		}
-
+        
+		
+		
 		$data['search'] = $search;
 		$data['description'] = $description;
 		$data['category_id'] = $category_id;

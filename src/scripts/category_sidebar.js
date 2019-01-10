@@ -3,7 +3,7 @@ import 'jquery-touchswipe';
 
 /* Навигация в сайдбаре */
 (function($){
-   const  slideDuration = 300,
+   var  slideDuration = 300,
           stickBreakpoint = 800,
           freezeClass = 'freeze',
           stickClass = 'fixed-nav'; 

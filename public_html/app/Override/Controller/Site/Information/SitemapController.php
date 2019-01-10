@@ -59,12 +59,17 @@ class SitemapController extends \Controller {
 		$this->load->model('catalog/information');
 
 		$data['informations'] = array();
+		$exclude_ids=[10]; //Исключаем лишние страницы
 
 		foreach ($this->model_catalog_information->getInformations() as $result) {
-			$data['informations'][] = array(
-				'title' => $result['title'],
-				'href'  => $this->url->link('information/information', 'information_id=' . $result['information_id'])
-			);
+			
+			//echo $result['title']."=".$result["information_id"]."<br/>";
+			if(!in_array($result["information_id"],$exclude_ids)){
+				$data['informations'][] = array(
+					'title' => $result['title'],
+					'href'  => $this->url->link('information/information', 'information_id=' . $result['information_id'])
+				);
+			}
 		}
         
 
@@ -84,8 +89,10 @@ class SitemapController extends \Controller {
 
         //$categories_1 = $this->model_catalog_category->getCategories(0);
         
-        $categories_1 = $tree->getRootNodes();
+		$categories_1 = $tree->getRootNodes();
+		
 		foreach ($categories_1 as $category_1) {
+			
 			$level_2_data = array();
 
 			//$categories_2 = $this->model_catalog_category->getCategories($category_1['category_id']);
@@ -102,34 +109,41 @@ class SitemapController extends \Controller {
                     $level_4_data = array();
                     $categories_4 = $category_3->getChildren();
                     foreach( $categories_4 as $category_4 ) {
-                        $path4 = $this->hierarhy->getPath($category_4->getId());
-                        $level_4_data[] = array(
-                            'name' => $category_4->get('name'),
-                            'href' => $this->url->link($routeName, $pathName . '=' . $path4), 
-                        );
+						$path4 = $this->hierarhy->getPath($category_4->getId());
+						if(!$category_4->get('isseo')){
+							$level_4_data[] = array(
+								'name' => $category_4->get('name'),
+								'href' => $this->url->link($routeName, $pathName . '=' . $path4), 
+							);
+						}
                     }
 
-                    $path3 = $this->hierarhy->getPath($category_3->getId());
-					$level_3_data[] = array(
-						'name' => $category_3->get('name'),
-                        'children' => $level_4_data,
-						'href' => $this->url->link($routeName, $pathName . '=' . $path3)
-					);
+					$path3 = $this->hierarhy->getPath($category_3->getId());
+					if(!$category_3->get('isseo')){
+						$level_3_data[] = array(
+							'name' => $category_3->get('name'),
+							'children' => $level_4_data,
+							'href' => $this->url->link($routeName, $pathName . '=' . $path3)
+						);
+					}
 				}
 
-                $path2 = $this->hierarhy->getPath($category_2->getId());
-				$level_2_data[] = array(
-					'name'     => $category_2->get('name'),
-					'children' => $level_3_data,
-					'href'     => $this->url->link($routeName, $pathName . '=' . $path2),
-				);
+				$path2 = $this->hierarhy->getPath($category_2->getId());
+				if(!$category_2->get('isseo')){
+					$level_2_data[] = array(
+						'name'     => $category_2->get('name'),
+						'children' => $level_3_data,
+						'href'     => $this->url->link($routeName, $pathName . '=' . $path2),
+					);
+				}
 			}
-
-			$data['categories'][] = array(
-				'name'     => $category_1->get('name'),
-				'children' => $level_2_data,
-				'href'     => $this->url->link($routeName, $pathName . '=' . $category_1->getId())
-			);
+		
+				$data['categories'][] = array(
+					'name'     => $category_1->get('name'),
+					'children' => $level_2_data,
+					'href'     => $this->url->link($routeName, $pathName . '=' . $category_1->getId())
+				);
+		
 		}
 
         return $data['categories'];

@@ -21,3 +21,4 @@ class ModelExtensionTotalSubTotal extends Model {
 		$total['total'] += $sub_total;
 	}
 }
+ 

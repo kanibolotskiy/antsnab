@@ -24,7 +24,7 @@
                 <?php }?>
             <?php }?>
 
-            <div class="catalog-tab" style="padding-top:20px">
+            <div class="catalog-tab">
 
                 <form method="GET" style="position:absolute;top:0;z-index:2;">
                     <select  name="sort" id="seldef1" title="Cортировка" onchange="this.form.submit()">

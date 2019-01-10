@@ -2,9 +2,11 @@
 class ControllerCheckoutSuccess extends Controller {
 	public function index() {
 		$this->load->language('checkout/success');
-
+		$order_id='';
 		if (isset($this->session->data['order_id'])) {
 			$this->cart->clear();
+			
+			$this->session->data['save_order_od']=$this->session->data['order_id'];
 
 			// Add to activity log
 			if ($this->config->get('config_customer_activity')) {
@@ -28,6 +30,7 @@ class ControllerCheckoutSuccess extends Controller {
 				}
 			}
 
+			
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
@@ -84,7 +87,48 @@ class ControllerCheckoutSuccess extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
+		
+		/**Текст спасибо за оформление заказа */
+		$this->load->model('catalog/information');
+		//echo date("H:m");
+		if($this->OfficeWorkTime()){
+			$information_id = 14;
+		}else{
+			$information_id = 13;
+		}
+		
+		$information_info = $this->model_catalog_information->getInformation($information_id);
+		$data['content']=html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');
+
+
+		$data['order_id']=$this->session->data['save_order_od'];
 
 		$this->response->setOutput($this->load->view('common/success', $data));
+	}
+	public function OfficeWorkTime($dummy = false) {
+		$OfficeWorkTimes = array(
+			
+			1 => array('8:30','18:30'), // MON
+			2 => array('8:30','18:30'),
+			3 => array('8:30','18:30'),
+			4 => array('6:30','18:30'),
+			5 => array('8:30','18:30'), // FRI
+			6 => null, // SUN
+			0 => null // SUN
+		  );
+		// Return: FALSE || array('begin' -> unix_datetime, 'end' -> unix_datetime)
+		
+		$Now = getdate();	
+		$v = $OfficeWorkTimes[$Now['wday']];
+		if (null == $v) 
+			return false;
+		else {
+			$begin = strtotime($OfficeWorkTimes[$Now['wday']][0]);
+			$end = strtotime($OfficeWorkTimes[$Now['wday']][1]);
+			if ( (time() < $begin ) OR ( time() > $end ) ) 
+				return false;
+			else 
+				return true;
+		}
 	}
 }

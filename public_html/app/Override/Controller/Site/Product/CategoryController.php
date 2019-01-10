@@ -80,9 +80,7 @@ class CategoryController extends \Controller
         $cat_view1="active";
         $cat_view2="";
         $cat_view_class="tab-block2";
-
         if(isset($_COOKIE["cat_view"])){
-
             if($_COOKIE["cat_view"]=="view2"){
                 $cat_view1="";                
                 $cat_view2="active";
@@ -92,8 +90,6 @@ class CategoryController extends \Controller
         $this->data["cat_view1"]=$cat_view1;
         $this->data["cat_view2"]=$cat_view2;
         $this->data["cat_view_class"]=$cat_view_class;
-
-        //echo "!".$_COOKIE["cat_view"]."!";
 
         $gateway = new FinalCategory($this->registry);
         $isCategoryFinal = $gateway->isCategoryFinal($category_id);

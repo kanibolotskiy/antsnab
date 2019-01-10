@@ -3,8 +3,28 @@
     <input type="hidden" id="product_id" value="<?=$product_id?>"/>
     <?= $column_left ?>
     <div class="content">
-        крошки тут
-        <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
+        <div class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+            <?php $i=0;foreach ($breadcrumbs as $breadcrumb) { ?>
+            <span class="itembread" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <?php if(!$i){?>
+                    <a href="<?php echo $breadcrumb['href'];?>" itemprop="item ">
+                        <span class="bread_desc" itemprop="name"><?php echo $breadcrumb['text'];?></span>
+                        <span class="bread_mob"><i class="material-icons">home</i></span>
+                    </a>
+                <?php } else{ ?>
+                    <?php if($i!=(count($breadcrumbs)-1)){?>
+                        <a href="<?php echo $breadcrumb['href'];?>" itemprop="item ">
+                            <span itemprop="name"><?php echo $breadcrumb['text'];?></span>
+                        </a>
+                    <?php }else{ ?>
+                        <span itemprop="name"><?php echo $breadcrumb['text'];?></span>
+                    <?php }?>
+                <?php }?>
+            </span>	
+            
+            <?php $i++;} ?>
+        </div>
+
         <?php echo $content_top; ?>
         <div class="card-product"  itemprop="offers" itemscope itemtype="http://schema.org/Offer">
             <div class="title" itemprop="name"><?=$heading_title?></div>
@@ -154,23 +174,20 @@
 
                             <div class="quantity-buy">
                                 <div class="quantity-buy-block">
-                                    <div class="qnt-container-spec">
-                                    </div>
+                                    <div class="qnt-container-spec"></div>
                                 </div>
                                 <a data-loading-text="Добавление..." 
                                    id="button-cart" 
                                    href="#" 
                                    data-product_id="<?=$product_id?>"
                                    data-sale_to_price_koef="<?=$sale_to_price_koef?>"
-                                   class="buy">
-                                   Купить
-                                </a>
+                                   class="buy">Купить</a>
                             </div>
 
                         <?php endif;?>
                     <!--</div>--> 
 
-                    <div class="in-stock" style="height:79px;">
+                    <div class="in-stock">
                         <span>Товар в наличии</span>
                         <ul>
                             <?php if(isset($locations[0])):?>
@@ -243,7 +260,7 @@
                 <!--TAB Описание-->
                 <?php if(!empty($properties)): ?>
                 <div>
-                    <div class="table">
+                    <div class="table table_desc">
                         <table>
                             <thead>
                                 <tr>
@@ -284,7 +301,7 @@
                 <div>
                     <div class="packaging">
                         <?php /*<div class="title">Упаковка <?=$heading_title?></div>*/?>
-                        <div class="table">
+                        <div class="table table_pack">
                             <table>
                                 <tbody>
                                     <?php foreach( $packageStrings as $s):?>
@@ -541,7 +558,7 @@
                 </div>
             </div>
         <?php endif;?>
-
+<!--
         <style type="text/css">
         .tovar_files .download {
             line-height: 40px;
@@ -570,6 +587,7 @@
             background-repeat: no-repeat;
         }
         </style>
+-->
         <?php if(isset($files)){ ?>
             <div class="tovar_files">
                 <?php foreach($files as $file){ ?>
@@ -591,7 +609,7 @@
                         </a>
                         <a href="<?=$p['href']?>" class="title-product"><?=$p['meta_h1']?></a>
                         <strong><?=$p['price']?></strong>
-                        <a href="<?=$p['href']?>" class="order-btn">Купить</a>
+                        <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
                     </div>
                 </li>
                 <?php endforeach;?>
