@@ -4892,6 +4892,10 @@ a.buy{display:inline-block;vertical-align: top;}
 .success_content{font-size:16px;margin-top: 30px;}
 .success_content b{font-weight:bold;}
 .success_content p{margin-bottom:4px;}
+.about_sertificats{position:relative;overflow:hidden;margin-bottom:40px;}
+.about_sert_img{float:left;width:50%;}
+.about_sert_img a{display:block;text-align:center;}
+.about_sert_img img{max-height:350px;width:auto!important;max-width:300px;}
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{
         width: 100%;
@@ -4915,6 +4919,7 @@ a.buy{display:inline-block;vertical-align: top;}
     }   
 }
 @media screen and (max-width: 640px){
+    .about_sert_img{float:none;width:100%;}
     .nav ul {
         display: none;
     }

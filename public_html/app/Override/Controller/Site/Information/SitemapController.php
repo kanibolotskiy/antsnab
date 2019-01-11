@@ -59,18 +59,18 @@ class SitemapController extends \Controller {
 		$this->load->model('catalog/information');
 
 		$data['informations'] = array();
-		$exclude_ids=[10]; //Исключаем лишние страницы
+
+		//$exclude_ids=[10]; //Исключаем лишние страницы
 
 		foreach ($this->model_catalog_information->getInformations() as $result) {
-			
-			//echo $result['title']."=".$result["information_id"]."<br/>";
-			if(!in_array($result["information_id"],$exclude_ids)){
+			if(!$result['notinmap']){
 				$data['informations'][] = array(
 					'title' => $result['title'],
 					'href'  => $this->url->link('information/information', 'information_id=' . $result['information_id'])
 				);
 			}
 		}
+		
         
 
 		$data['column_left'] = $this->load->controller('common/column_left');

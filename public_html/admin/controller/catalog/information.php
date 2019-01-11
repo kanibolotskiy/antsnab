@@ -282,8 +282,12 @@ class ControllerCatalogInformation extends Controller {
 		$data['entry_description'] = $this->language->get('entry_description');
 		$data['entry_meta_title'] = $this->language->get('entry_meta_title');
 		$data['entry_meta_h1'] = $this->language->get('entry_meta_h1');
+		
+
 		$data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
+		$data['entry_notinmap'] = $this->language->get('entry_notinmap');
+
 		$data['entry_keyword'] = $this->language->get('entry_keyword');
 		$data['entry_store'] = $this->language->get('entry_store');
 		$data['entry_bottom'] = $this->language->get('entry_bottom');
@@ -368,7 +372,7 @@ class ControllerCatalogInformation extends Controller {
 		if (isset($this->request->get['information_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$information_info = $this->model_catalog_information->getInformation($this->request->get['information_id']);
 		}
-
+		
 		$data['token'] = $this->session->data['token'];
 		$data['ckeditor'] = $this->config->get('config_editor_default');
 
@@ -385,6 +389,14 @@ class ControllerCatalogInformation extends Controller {
 		} else {
 			$data['information_description'] = array();
 		}
+		/*
+		print_r($data['information_description']);
+		if($data['information_description']["notinmap"]){
+			$data["notinmap"]=$data['information_description']["notinmap"];
+		}else{
+			$data["notinmap"]=0;
+		}
+		*/
 
 		$this->load->model('setting/store');
 
@@ -405,6 +417,16 @@ class ControllerCatalogInformation extends Controller {
 		} else {
 			$data['keyword'] = '';
 		}
+		
+		/*
+		if (isset($this->request->post['notinmap'])) {
+			$data['notinmap'] = $this->request->post['notinmap'];
+		} elseif (!empty($information_info)) {
+			$data['notinmap'] = $information_info['notinmap'];
+		} else {
+			$data['notinmap'] = '';
+		}
+		*/
 
 		if (isset($this->request->post['bottom'])) {
 			$data['bottom'] = $this->request->post['bottom'];

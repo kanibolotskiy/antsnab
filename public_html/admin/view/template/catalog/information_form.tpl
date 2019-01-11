@@ -1,5 +1,5 @@
 <?php echo $header; ?><?php echo $column_left; ?>
-<div id="content">
+<div id="content"> 
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
@@ -86,6 +86,26 @@
                     <label class="col-sm-2 control-label" for="input-meta-keyword<?php echo $language['language_id']; ?>"><?php echo $entry_meta_keyword; ?></label>
                     <div class="col-sm-10">
                       <textarea name="information_description[<?php echo $language['language_id']; ?>][meta_keyword]" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
+                    </div>
+                  </div>
+                  
+                  
+                  <div class="form-group">
+
+                    <label class="col-sm-2 control-label" for="input-notinmap">
+                        <?php echo $entry_notinmap; ?>
+                    </label>
+                    <div class="col-sm-1">
+                      <div class="checkbox">
+                        <label>
+                        <?php if (isset($information_description[$language['language_id']]['notinmap'])){?>
+                          <input type="checkbox" name="information_description[<?php echo $language['language_id']; ?>][notinmap]"  <?php echo ($information_description[$language['language_id']]['notinmap']?'checked="checked"':'') ; ?> value="1" id="input-notinmap" />
+                        <?php }else{?>
+                          <input type="checkbox" name="information_description[<?php echo $language['language_id']; ?>][notinmap]" value="1" id="input-notinmap" />
+                        <?php }?>
+                          &nbsp; </label>
+                        
+                      </div>
                     </div>
                   </div>
                 </div>

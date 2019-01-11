@@ -4,6 +4,7 @@
         <div class="content">
             <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
             <?php echo $content_top; ?>
+            
             <?php if( !empty($articles) ):?>
                 <div class="news-container" id="lazy-load_container">
                     <div class="title">Новости</div>

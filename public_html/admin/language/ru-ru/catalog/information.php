@@ -20,6 +20,8 @@ $_['entry_description']         = 'Описание:';
 $_['entry_store']          		= 'Магазины:';
 $_['entry_meta_title']          = 'HTML-тег Title';
 $_['entry_meta_h1']             = 'HTML-тег H1';
+$_['entry_notinmap']            = 'Не показывать в карте сайта?';
+
 $_['entry_meta_keyword']        = 'Мета-тег Keywords:';
 $_['entry_meta_description']    = 'Мета-тег Description:';
 $_['entry_keyword']          	= 'SEO URL:';

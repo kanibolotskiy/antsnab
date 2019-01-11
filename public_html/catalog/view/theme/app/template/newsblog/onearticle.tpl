@@ -4,6 +4,7 @@
     <div class="content ">
         <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
         <?php echo $content_top; ?>
+        
         <div class="article">
             <div class="title"><?php echo $heading_title; ?></div>
             <?php if ($thumb) { ?>
