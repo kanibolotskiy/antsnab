@@ -1,0 +1,1 @@
+ALTER TABLE `oc_information_description` ADD `notinmap` TINYINT NOT NULL AFTER `meta_keyword`;
