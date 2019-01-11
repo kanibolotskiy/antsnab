@@ -534,13 +534,13 @@ class ControllerProductProduct extends Controller {
 			unset($exclude_ids);
 			
 
-			$results_rl = $this->model_catalog_product->getProductRelated($this->request->get['product_id'],true,2,'product_related',$this->request->get['product_id']);
+			$results_rl = $this->model_catalog_product->getProductRelated($this->request->get['product_id'],true,2,'product_analogs',$this->request->get['product_id']);
 			
 			$exclude_ids=array_keys($results_rl);
 			$exclude_ids[]=$this->request->get['product_id'];
 			$exclude_str=implode(",",$exclude_ids);
 			
-			$results_an = $this->model_catalog_product->getProductRelated($this->request->get['product_id'],true,2,'product_analogs',$exclude_str);
+			$results_an = $this->model_catalog_product->getProductRelated($this->request->get['product_id'],true,2,'product_related',$exclude_str);
 
 			$results=array_merge($results_rl, $results_an);
 
