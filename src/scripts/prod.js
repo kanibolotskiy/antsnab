@@ -95,15 +95,35 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                 //console.log(formatStr+"+"+currency+"+"+uiPrice.valueOf());
                 //console.log(format(formatStr + currency, uiPrice.valueOf() ));
 
-                
-                $price.text(number_format(uiPrice.valueOf(), 2, ",", " ") + " " + currency);
-          //  $price.text( format(formatStr + currency, uiPrice.valueOf() ) );
+                var price_val=uiPrice.valueOf();
+                var opt_price_val=uiWholeSalePrice.valueOf();
+                var price_str='';
+                var opt_price_str='';
 
+                if(price_val-parseInt(price_val)===0){
+                    price_str = number_format(price_val, 0, ",", " ") + " " + currency 
+                }else{
+                    price_str = number_format(price_val, 2, ",", " ") + " " + currency
+                }
+                $price.text(price_str);
+
+                if(opt_price_val-parseInt(opt_price_val)===0){
+                    opt_price_str = number_format(opt_price_val, 0, ",", " ") + " " + currency 
+                }else{
+                    opt_price_str = number_format(opt_price_val, 2, ",", " ") + " " + currency
+                }
+                $wholeSalePrice.text(opt_price_str);
+
+                //$price.text(number_format(uiPrice.valueOf(), 2, ",", " ") + " " + currency);
+          //  $price.text( format(formatStr + currency, uiPrice.valueOf() ) );
+/*
             var isInt = ( uiWholeSalePrice.valueOf() - parseInt(uiWholeSalePrice.valueOf()) === 0 ),
                 formatStr = isInt?'### ###.':'### ###,##';
             //$wholeSalePrice.text( format (formatStr + ' ' + currency, uiWholeSalePrice.valueOf()) );
+                console.log(isInt);
                 $wholeSalePrice.text(number_format(uiWholeSalePrice.valueOf(), 2, ",", " ") + " " + currency);
-            
+*/
+
         }
 
     })()

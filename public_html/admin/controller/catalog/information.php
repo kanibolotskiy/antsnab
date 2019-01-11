@@ -389,14 +389,7 @@ class ControllerCatalogInformation extends Controller {
 		} else {
 			$data['information_description'] = array();
 		}
-		/*
-		print_r($data['information_description']);
-		if($data['information_description']["notinmap"]){
-			$data["notinmap"]=$data['information_description']["notinmap"];
-		}else{
-			$data["notinmap"]=0;
-		}
-		*/
+		
 
 		$this->load->model('setting/store');
 

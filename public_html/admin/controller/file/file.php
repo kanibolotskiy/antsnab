@@ -116,14 +116,17 @@ class ControllerFileFile extends Controller {
 		}
 
 		if (!isset($json['error'])) {
-			if(!file_exists(str_replace("system/storage/download", "files", DIR_DOWNLOAD) . $filename)) {	
+
+			//if(!file_exists(str_replace("system/storage/download", "files", DIR_DOWNLOAD) . $filename)) {	
 				move_uploaded_file($this->request->files['file']['tmp_name'], str_replace("system/storage/download", "files", DIR_DOWNLOAD) . $filename);
 				$json['file'] = $filename;
+			/*
 			}else{
 				$filename_rand = rand(5, 15) . $filename;
 				move_uploaded_file($this->request->files['file']['tmp_name'], str_replace("system/storage/download", "files", DIR_DOWNLOAD) . $filename_rand);
 				$json['file'] = $filename_rand;
 			}
+			*/
 			$json['name'] = $filename_original[0];
 			$json['success'] = "File upload!"; 
 		}
