@@ -94,7 +94,7 @@ class ControllerCheckoutSuccess extends Controller {
 		if($this->OfficeWorkTime()){
 			$information_id = 14;
 		}else{
-			$information_id = 13;
+			$information_id = 15;
 		}
 		
 		$information_info = $this->model_catalog_information->getInformation($information_id);
