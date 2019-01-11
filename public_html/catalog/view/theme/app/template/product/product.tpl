@@ -272,7 +272,7 @@
                             <tbody>
                                 <?php foreach( $properties as $p):?>
                                 <tr>
-                                    <td><?=$p['name']?></td>
+                                    <td><?=html_entity_decode($p['name'])?></td>
                                     <td><?=$p['val']?></td>
                                     <td><?=$p['unit']?></td>
                                 </tr>
