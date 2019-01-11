@@ -281,20 +281,15 @@
                         </table>
                     </div>
                     
-                    <?php /* @task скачивания
-                    <div class="download">
-                        <ul>
-                            <li>
-                                <a href="">Скачать подробную карту</a>
-                            </li>
-                            <li>
-                                <a href="">Скачать сертификаты</a>
-                            </li>
-                        </ul>
-                    </div> 
-                    */?>
-
+                    <?php if(isset($files)){ ?>
+                        <div class="tovar_files">
+                            <?php foreach($files as $file){ ?>
+                                <a class="download" target="_blank" href="<?php echo $file['href']; ?>"><?php if($file['title']) { echo $file['title'];}else{echo $file['name'];} ?></a>
+                            <?php } ?>
+                        </div>
+                    <?php } ?>
                 </div>
+                
                 <?php endif;?>
 
                 <!--TAB упаковка-->
@@ -558,43 +553,6 @@
                 </div>
             </div>
         <?php endif;?>
-<!--
-        <style type="text/css">
-        .tovar_files .download {
-            line-height: 40px;
-            color: #000;
-            font-size: 13px;
-            position: relative;
-            padding-left: 40px;
-            margin-right: 20px;
-            margin-bottom: 40px;
-            display: inline-block;
-            vertical-align: top;
-            margin-top: 40px;
-            text-decoration: underline;
-        }
-        .tovar_files .download:before {
-            content:'';
-            position: absolute;
-            top: calc(50% - 17px);
-            left: 0;
-            width: 28px;
-            height: 32px;
-            background-position: center;
-            background-image: url(/catalog/view/theme/app/img/icon19.png);
-            display: inline-block;
-            vertical-align: top;
-            background-repeat: no-repeat;
-        }
-        </style>
--->
-        <?php if(isset($files)){ ?>
-            <div class="tovar_files">
-                <?php foreach($files as $file){ ?>
-                    <a class="download" target="_blank" href="<?php echo $file['href']; ?>"><?php if($file['title']) { echo $file['title'];}else{echo $file['name'];} ?></a>
-                <?php } ?>
-            </div>
-        <?php } ?>
 
         <div class="mentioned-products mentioned-products2">
             <?php if( $products):?>
