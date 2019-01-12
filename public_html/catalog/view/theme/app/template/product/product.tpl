@@ -52,9 +52,9 @@
                     </div>
                 </div> 
                 <div class="left">
-                    <div class="fade thumb__list">
+                    <div class="tovar_main_image">
                         <?php if ($thumb) { ?>
-                            <a class="thumbnail thumb__link" 
+                            <a class="" data-fancybox="gallery" data-caption="<?php echo $heading_title; ?>"
                                href="<?php echo $popup; ?>" 
                                title="<?php echo $heading_title; ?>">
                                 <img itemprop="image" src="<?php echo $thumb; ?>"
@@ -63,10 +63,33 @@
                             </a>
                         <?php } ?>
                     </div>
+                    <!--
+                    <div class="fade thumb__list">
+                        <?php if ($thumb) { ?>
+                            <a class="" data-fancybox="gallery" data-caption="<?php echo $heading_title; ?>"
+                               href="<?php echo $popup; ?>" 
+                               title="<?php echo $heading_title; ?>">
+                                <img itemprop="image" src="<?php echo $thumb; ?>"
+                                     title="<?php echo $heading_title; ?>"
+                                     alt="<?php echo $heading_title; ?>" />
+                            </a>
+                        <?php } ?>
+                    </div>
+                    -->
                     <div class="thumb__nav">
                         <?php if ($images) { ?>
-                        <div class="thumb__list">
+                        <div class="tovar_mini_gallery">
                             <?php foreach ($images as $image) { ?>
+                                <div class="tovar_mini_image">
+                                    <a data-fancybox="gallery" 
+                                    href="<?php echo $image['popup']; ?>" 
+                                    title="<?php echo $heading_title; ?>">
+                                            <img src="<?php echo $image['thumb']; ?>" 
+                                                title="<?php echo $heading_title; ?>" 
+                                                alt="<?php echo $heading_title; ?>" />
+                                    </a>
+                                </div>
+                                <!--
                                 <div class="thumb__item">
                                     <a class="thumb__link" 
                                     href="<?php echo $image['popup']; ?>" 
@@ -76,6 +99,7 @@
                                                 alt="<?php echo $heading_title; ?>" />
                                     </a>
                                 </div>
+                                -->
                             <?php } ?>
                         </div>
                         <?php }?>
