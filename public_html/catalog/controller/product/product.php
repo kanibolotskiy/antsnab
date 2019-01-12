@@ -335,10 +335,11 @@ class ControllerProductProduct extends Controller {
 				//$data['popup'] = $this->model_tool_image->resize($product_info['image'], 1000, 750);
 				//$data['popup'] = $product_info['image'];
 				$data['popup'] = $this->model_tool_image->myResize($product_info['image'], 1000, 750);
+				echo "!".$product_info['image']."!";
 			} else {
 				$data['popup'] = '';
 			}
-
+			
 			if ($product_info['image']) {
 				$data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get($this->config->get('config_theme') . '_image_thumb_width'), $this->config->get($this->config->get('config_theme') . '_image_thumb_height'));
 				$this->document->setOgImage($data['thumb']);
@@ -355,7 +356,7 @@ class ControllerProductProduct extends Controller {
 				if($count_images<4){
 					$data['images'][] = array(
 						//'popup' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_popup_width'), $this->config->get($this->config->get('config_theme') . '_image_popup_height')),
-						'popup' => $this->model_tool_image->resize($result['image'],1000,750),
+						'popup' => $this->model_tool_image->myResize($result['image'],1000,750),
 						'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_additional_width'), $this->config->get($this->config->get('config_theme') . '_image_additional_height'))
 					);
 				}
