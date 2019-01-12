@@ -335,7 +335,6 @@ class ControllerProductProduct extends Controller {
 				//$data['popup'] = $this->model_tool_image->resize($product_info['image'], 1000, 750);
 				//$data['popup'] = $product_info['image'];
 				$data['popup'] = $this->model_tool_image->myResize($product_info['image'], 1000, 750);
-				echo "!".$product_info['image']."!";
 			} else {
 				$data['popup'] = '';
 			}
