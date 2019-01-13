@@ -601,17 +601,6 @@
         <?php echo $content_bottom; ?>
     </div>
 </div>
-<script>
-    window.addEventListener("load", function(){
-        $('.thumb__list').magnificPopup({
-            type:'image',
-            delegate: 'a',
-            gallery: {
-                enabled:true
-            }
-        });
-    });
-</script>
 <div class="popup thank-you">
     <div class="close"></div>
     <div class="popup-block">

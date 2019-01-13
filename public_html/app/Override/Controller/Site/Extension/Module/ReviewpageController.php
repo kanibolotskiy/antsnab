@@ -17,6 +17,7 @@ class ReviewpageController extends \Controller
 
     public function index()
     {
+        
         $this->load->language('extension/module/reviewpage');
         $this->load->model('catalog/review');
         $defaultRaiting = (int)$this->config->get(AdminModule::CONFIG_KEY_RAITING);

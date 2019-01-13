@@ -35,10 +35,42 @@ class ModelCatalogReview extends Model
             $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
             $mail->setTo($this->config->get('config_email'));
-            $mail->setFrom($this->config->get('config_email'));
+            //$mail->setFrom($this->config->get('config_email'));
+            $mail->setFrom("otzyv@ant-snab.ru");
             $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
             $mail->setSubject($subject);
-            $mail->setText($message);
+
+            //$mail->setText($message);
+/*
+            1. Логотип
+            2. Надпись "На сайте оставлен отзыв о компании"
+            3. Имя клиента
+            4. Компания
+            5. e-mail
+            6. Текст отзыва
+            Письмо приходит с ящика otzyv@ant-snab.ru
+            Письмо приходит на ящик recall@ant-snab.ru
+            Тема письма: Ура! Новый отзыв о компании!
+*/
+            if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+                $b_patch=$this->config->get('config_ssl').'image/';
+            } else {
+                $b_patch=$this->config->get('config_url').'image/';
+            }
+            
+
+            $data["caption"]="На сайте оставлен отзыв о компании";
+            $data["logo"]=$b_patch."catalog/image/header/logo.png";
+            
+            $data["data_content"][]=array("Имя клиента",$data['author']);
+            $data["data_content"][]=array("Компания",$data['company']);
+            $data["data_content"][]=array("Email",$data['email']);
+            $data["data_content"][]=array("Текст отзыва",$data['text']);
+            
+
+            $report_text=$this->load->view('extension/module/app/review_report', $data);
+
+            $mail->setHTML($report_text);
             $mail->send();
 
             // Send to additional alert emails

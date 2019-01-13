@@ -4898,7 +4898,8 @@ a.buy{display:inline-block;vertical-align: top;}
 .about_sert_img img{max-height:350px;width:auto!important;max-width:300px;}
 .tovar_main_image{border: 2px solid #EFEEEC;display:block;}
 .tovar_main_image a{display:block;text-align:center;}
-.tovar_mini_image{border: 2px solid #EFEEEC;display:block;}
+.tovar_mini_image{border: 2px solid #EFEEEC;display:block;width:24%;}
+
 .tovar_mini_gallery{display: flex;
     display: -webkit-box;
 	display: -moz-box;
@@ -4909,6 +4910,7 @@ a.buy{display:inline-block;vertical-align: top;}
     -ms-flex-pack: justify;
     justify-content: space-between;
     -webkit-box-pack: justify;}
+.tovar_mini_image img,.tovar_main_image img{max-width:100%;height:auto;}
 
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{
