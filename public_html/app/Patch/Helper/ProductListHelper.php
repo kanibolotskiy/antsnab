@@ -48,8 +48,8 @@ class ProductListHelper extends \Model
                 if ($p['showInProdPreview']) {
                     $previewProperties[] = array(
                         'name' => $p['cat_name'],
-                        'val' => $p['val'],
-                        'unit' => htmlspecialchars_decode($p['cat_unit'],ENT_QUOTES)
+                        'val' => htmlspecialchars_decode($p['val'],ENT_QUOTES),
+                        'unit' => $p['cat_unit']
                     );
                 }
             }
