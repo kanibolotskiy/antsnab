@@ -297,8 +297,8 @@
                                 <?php foreach( $properties as $p):?>
                                 <tr>
                                     <td><?=htmlspecialchars_decode($p['name'],ENT_QUOTES)?></td>
-                                    <td><?=$p['val']?></td>
-                                    <td><?=$p['unit']?></td>
+                                    <td><?=htmlspecialchars_decode($p['val'],ENT_QUOTES)?></td>
+                                    <td><?=htmlspecialchars_decode($p['unit'],ENT_QUOTES)?></td>
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -325,8 +325,8 @@
                                 <tbody>
                                     <?php foreach( $packageStrings as $s):?>
                                     <tr>
-                                        <td><?=$s['description']?></td>
-                                        <td><?=$s['value']?></td>
+                                        <td><?=htmlspecialchars_decode($s['description'],ENT_QUOTES)?></td>
+                                        <td><?=htmlspecialchars_decode($s['value'],ENT_QUOTES)?></td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
