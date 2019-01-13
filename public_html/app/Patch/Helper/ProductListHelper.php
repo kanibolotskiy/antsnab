@@ -49,7 +49,7 @@ class ProductListHelper extends \Model
                     $previewProperties[] = array(
                         'name' => $p['cat_name'],
                         'val' => $p['val'],
-                        'unit' => htmlspecialchars_decode($p['cat_unit'],ENT_QUOTES);
+                        'unit' => htmlspecialchars_decode($p['cat_unit'],ENT_QUOTES)
                     );
                 }
             }
