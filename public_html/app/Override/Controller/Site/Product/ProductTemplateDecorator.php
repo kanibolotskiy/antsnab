@@ -149,7 +149,7 @@ class ProductTemplateDecorator implements IDecorator
             if (!$p['prod_hide']) {
                 $data['properties'][] = [
                    'name' => $p['cat_name'],
-                   'val' => $p['val'],
+                   'val' => htmlspecialchars_decode($p['val'],ENT_QUOTES),
                    'unit' => $p['cat_unit']
                ];
             }
