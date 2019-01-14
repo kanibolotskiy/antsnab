@@ -402,7 +402,6 @@ class SearchController extends \Controller
 			} else {
 			    $this->document->addLink($this->url->link('product/search', $url . '&page='. ($page - 1), true), 'prev');
 			}*/
-			print_r($data['products']);
 			if (isset($this->request->get['search']) && $this->config->get('config_customer_search')) {
 				$this->load->model('account/search');
 
