@@ -111,8 +111,15 @@ $(document).ready(function(){
             },
             success: function(json) {
                 if (json['success']) {
-                    $('.basket').html(json['total']);
+                    $('.basket').html(json['total_str']);
+                    
+
                     if(itm.hasClass("cart_button_buy")){
+                        var total=json["total"];
+                        $("#total_cart").css({"opacity":0});
+                        $("#total_cart").text(total);
+                        $("#total_cart").animate({"opacity":1},100);
+                        
                         var new_product=json["added_product"];
                         var added_key=json["added_key"];
 

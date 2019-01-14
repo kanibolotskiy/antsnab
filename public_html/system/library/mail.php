@@ -163,7 +163,6 @@ class Mail {
 			} else {
 				$hostname = $this->smtp_hostname;
 			}
-
 			$handle = fsockopen($hostname, $this->smtp_port, $errno, $errstr, $this->smtp_timeout);
 
 			if (!$handle) {

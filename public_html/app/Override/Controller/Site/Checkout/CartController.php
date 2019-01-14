@@ -320,7 +320,9 @@ class CartController extends \ControllerCheckoutCart
 				$productsCount = $this->cart->countProductTypes();
 				$productsCountStr = ProdUnitStrings::plural($productsCount, 
 								'вид товара', 'вида товара', 'видов товара');
-				$json['total'] = sprintf($this->language->get('text_items'), $productsCount, $productsCountStr, $this->currency->format($total, $this->session->data['currency']));
+                $json['total'] = $this->currency->format($total, $this->session->data['currency']);
+                $json['total_str'] = sprintf($this->language->get('text_items'), $productsCount, $productsCountStr, $this->currency->format($total, $this->session->data['currency']));
+
             } else {
                 $json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']));
             }

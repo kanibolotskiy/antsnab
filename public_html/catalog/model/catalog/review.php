@@ -15,15 +15,15 @@ class ModelCatalogReview extends Model
             $this->load->model('catalog/product');
 
             $product_info = $this->model_catalog_product->getProduct($product_id);
-
-            $subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-
+            
+            /*
             $message = $this->language->get('text_waiting') . "\n";
             $message .= sprintf($this->language->get('text_product'), html_entity_decode($product_info['name'], ENT_QUOTES, 'UTF-8')) . "\n";
             $message .= sprintf($this->language->get('text_reviewer'), html_entity_decode($data['author'], ENT_QUOTES, 'UTF-8')) . "\n";
             //$message .= sprintf($this->language->get('text_rating'), $data['rating']) . "\n";
             $message .= $this->language->get('text_review') . "\n";
             $message .= html_entity_decode($data['text'], ENT_QUOTES, 'UTF-8') . "\n\n";
+            */
 
             $mail = new Mail();
             $mail->protocol = $this->config->get('config_mail_protocol');
@@ -35,10 +35,9 @@ class ModelCatalogReview extends Model
             $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
             $mail->setTo($this->config->get('config_email'));
-            //$mail->setFrom($this->config->get('config_email'));
-            $mail->setFrom("otzyv@ant-snab.ru");
+            $mail->setFrom($this->config->get('config_email'));
             $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-            $mail->setSubject($subject);
+            
 
             //$mail->setText($message);
 /*
@@ -57,14 +56,25 @@ class ModelCatalogReview extends Model
             } else {
                 $b_patch=$this->config->get('config_url').'image/';
             }
+            if($product_id){
+                $subject = $this->language->get('text_subject_product');
+                $data["caption"]=$this->language->get('text_caption_product');
+            }else{
+                $subject = $this->language->get('text_subject_company');
+                $data["caption"]=$this->language->get('text_caption_company');
+            }
+            $mail->setSubject($subject);
             
-
-            $data["caption"]="На сайте оставлен отзыв о компании";
             $data["logo"]=$b_patch."catalog/image/header/logo.png";
             
             $data["data_content"][]=array("Имя клиента",$data['author']);
             $data["data_content"][]=array("Компания",$data['company']);
             $data["data_content"][]=array("Email",$data['email']);
+            if($product_id){
+                //print_r($product_info);
+                $product_url= $this->url->link('product/product', '&product_id=' . $product_info['product_id']);
+                $data["data_content"][]=array("Название продукта","<a href='".$product_url."'>".$product_info['name']."</a>");
+            }
             $data["data_content"][]=array("Текст отзыва",$data['text']);
             
 

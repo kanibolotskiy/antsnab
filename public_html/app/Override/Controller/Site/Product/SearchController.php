@@ -223,7 +223,7 @@ class SearchController extends \Controller
             $productsHelper = new ProductListHelper($this->registry);
             $results = $productsHelper->getProducts($filter_data);
             $data['products'] = $results;
-
+			
 			$url = '';
 
 			if (isset($this->request->get['search'])) {
@@ -402,7 +402,7 @@ class SearchController extends \Controller
 			} else {
 			    $this->document->addLink($this->url->link('product/search', $url . '&page='. ($page - 1), true), 'prev');
 			}*/
-
+			print_r($data['products']);
 			if (isset($this->request->get['search']) && $this->config->get('config_customer_search')) {
 				$this->load->model('account/search');
 
