@@ -754,7 +754,8 @@ class CartController extends \ControllerCheckoutCart
                     }
                     
                     if ($result['image']) {
-                        $image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
+                        //$image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
+                        $image = $this->model_tool_image->myResize($result['image'], 160,160,2);
                     } else {
                         $image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
                     }
@@ -807,7 +808,7 @@ class CartController extends \ControllerCheckoutCart
                         'minimum' => ($result['minimum'] > 0) ? $result['minimum'] : 1,
                         'rating' => $rating,
                         'properties' => $previewProperties,
-                        'href' => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+                        'href' => $this->url->link('product/product', 'product_id=' . $result['product_id'])
                     );
                 }
 

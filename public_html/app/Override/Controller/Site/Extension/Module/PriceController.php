@@ -37,6 +37,7 @@ class PriceController extends \Controller
         $rootCat = $this->config->get(AdminModule::CONFIG_KEY_START_CATEGORY_PARENT_ID);
         $startCat = $this->config->get(AdminModule::CONFIG_KEY_START_CATEGORY_ID);
         $data['selectors'] = $this->getPriceSelectors($rootCat, $startCat);
+
         $data['SHOW_ALL_OPTION_VALUE'] = static::SHOW_ALL_OPTION_VALUE;
         $data['priceTableContent'] = $this->getPriceTableContentHTML($startCat);
 
@@ -73,7 +74,7 @@ class PriceController extends \Controller
         $this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($result));
     }
-
+ 
     protected function getPriceSelectors($firstParentId, $firstActive = null,  $secondActive = null, $thirdActive = null)
     {
         $this->load->language('extension/module/price');
