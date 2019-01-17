@@ -1,17 +1,46 @@
 <?php
 class ModelLocalisationLocation extends Model {
+	/**Добавляем файлы для загрузки для локализаций */
+	public function getLocationDownloads($location_id)
+    {
+        $location_download_data = array();
+
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "location_to_download WHERE location_id = '" . (int) $location_id . "'");
+
+        foreach ($query->rows as $result) {
+            $location_download_data[] = $result['download_id'];
+        }
+
+        return $location_download_data;
+	}
+	
 	public function addLocation($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "location SET name = '" . $this->db->escape($data['name']) . "', address = '" . $this->db->escape($data['address']) . "', geocode = '" . $this->db->escape($data['geocode']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', image = '" . $this->db->escape($data['image']) . "', open = '" . $this->db->escape($data['open']) . "', comment = '" . $this->db->escape($data['comment']) . "'");
 	
+		if (isset($data['location_download'])) {
+            foreach ($data['location_download'] as $download_id) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "location_to_download SET location_id = '" . (int) $location_id . "', download_id = '" . (int) $download_id . "'");
+            }
+		}
+		
 		return $this->db->getLastId();
 	}
 
 	public function editLocation($location_id, $data) {
 		$this->db->query("UPDATE " . DB_PREFIX . "location SET name = '" . $this->db->escape($data['name']) . "', address = '" . $this->db->escape($data['address']) . "', geocode = '" . $this->db->escape($data['geocode']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', image = '" . $this->db->escape($data['image']) . "', open = '" . $this->db->escape($data['open']) . "', comment = '" . $this->db->escape($data['comment']) . "' WHERE location_id = '" . (int)$location_id . "'");
+
+		$this->db->query("DELETE FROM " . DB_PREFIX . "location_to_download WHERE location_id = '" . (int) $location_id . "'");
+
+        if (isset($data['location_download'])) {
+            foreach ($data['location_download'] as $download_id) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "location_to_download SET location_id = '" . (int) $location_id . "', download_id = '" . (int) $download_id . "'");
+            }
+        }
 	}
 
 	public function deleteLocation($location_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "location WHERE location_id = " . (int)$location_id);
+		$this->db->query("DELETE FROM " . DB_PREFIX . "location_to_download WHERE location_id = '" . (int) $location_id . "'");
 	}
 
 	public function getLocation($location_id) {

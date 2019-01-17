@@ -16,6 +16,7 @@ define('DIR_TEMPLATE', '/srv/http/ant-snab/public_html/admin/view/template/');
 define('DIR_CONFIG', '/srv/http/ant-snab/public_html/system/config/');
 define('DIR_CACHE', '/srv/http/ant-snab/public_html/system/storage/cache/');
 define('DIR_DOWNLOAD', '/srv/http/ant-snab/public_html/system/storage/download/');
+
 define('DIR_LOGS', '/srv/http/ant-snab/public_html/system/storage/logs/');
 define('DIR_MODIFICATION', '/srv/http/ant-snab/public_html/system/storage/modification/');
 define('DIR_UPLOAD', '/srv/http/ant-snab/public_html/system/storage/upload/');

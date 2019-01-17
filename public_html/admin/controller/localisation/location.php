@@ -29,7 +29,7 @@ class ControllerLocalisationLocation extends Controller {
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
-
+ 
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
@@ -284,6 +284,8 @@ class ControllerLocalisationLocation extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
+		$data['entry_download'] = $this->language->get('entry_download');
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -424,6 +426,34 @@ class ControllerLocalisationLocation extends Controller {
 			$data['comment'] = $location_info['comment'];
 		} else {
 			$data['comment'] = '';
+		}
+
+
+		// Загрузки для локализаций
+		$this->load->model('catalog/download');
+		
+		if (isset($this->request->post['location_download'])) {
+			$location_downloads = $this->request->post['location_download'];
+		} elseif (isset($this->request->get['location_id'])) {
+			//$location_downloads = $this->model_catalog_product->getLocationtDownloads($this->request->get['location_id']);
+			$location_downloads = $this->model_localisation_location->getLocationDownloads($this->request->get['location_id']);
+
+		} else {
+			$location_downloads = array();
+		}
+
+		$data['location_downloads'] = array();
+
+		foreach ($location_downloads as $download_id) {
+			$download_info = $this->model_catalog_download->getDownload($download_id);
+
+			if ($download_info) {
+				$data['location_downloads'][] = array(
+					'download_id' => $download_info['download_id'],
+					'name'        => $download_info['name']
+				);
+			}
+			
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -755,7 +755,7 @@ class CartController extends \ControllerCheckoutCart
                     
                     if ($result['image']) {
                         //$image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
-                        $image = $this->model_tool_image->myResize($result['image'], 160,160,2);
+                        $image = $this->model_tool_image->myResize($result['image'], 200,200,2);
                     } else {
                         $image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
                     }

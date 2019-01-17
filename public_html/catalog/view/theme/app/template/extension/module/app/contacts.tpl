@@ -59,7 +59,11 @@
                                         <?php endif; ?>
                                         
                                         <!-- @task1 hardcoded -->
-                                        <a target="_blank" href="/system/storage/download/sklad-a-plan.pdf.JDa4QZE4AmF8uHtfdkmwjUdNYVGJGEAd" class="download-map">Скачать подробную карту</a>
+                                        <?php foreach($l['files'] as $locaction_file){ ?>
+                                            <a target="_blank" href="<?php echo $locaction_file['file_link'];?>" class="download-map">Скачать подробную карту</a>
+                                        <?php }?>
+                                        <!--<a target="_blank" href="<?php echo $l['file'];?>" class="download-map">Скачать подробную карту</a>-->
+                                        <!-- <a target="_blank" href="/system/storage/download/sklad-a-plan.pdf.JDa4QZE4AmF8uHtfdkmwjUdNYVGJGEAd" class="download-map">Скачать подробную карту</a>-->
                                     </div>
                                 </div>
                                 <?php $cnt++ ?>

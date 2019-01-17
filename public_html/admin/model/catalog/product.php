@@ -756,7 +756,7 @@ class ModelCatalogProduct extends Model
 
         return $product_reward_data;
     }
-
+ 
     public function getProductDownloads($product_id)
     {
         $product_download_data = array();
