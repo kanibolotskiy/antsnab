@@ -31,42 +31,17 @@
                         <div class="row">
                             <div class="form-group">
                                 <i class="error">Необходимо заполнить</i>
-                                <input value="<?= $form_data['name'] ?>" name="name" type="text" placeholder="Введите имя"/>
-            
-    <!--
-                                <?php if (isset($form_errors['name'])): ?>
-                                    <i class="error"><?= $form_errors['name'] ?></i>
-                                    <input value="<?= $form_data['name'] ?>" class="error" name="name" type="text" placeholder="Введите имя"/>
-                                <?php else: ?>    
-                                    <input  value="<?= $form_data['name'] ?>" name="name" type="text" placeholder="Введите имя"/>
-                                <?php endif; ?>
-    -->                           
+                                <input value="<?= $form_data['name'] ?>" name="name" type="text" placeholder="Введите имя"/>                        
                             </div>
 
                             <div class="form-group">
                                 <i class="error">Необходимо заполнить</i>
                                 <input value="<?= $form_data['phone'] ?>" name="phone" type="text" placeholder="Введите телефон"/>                            
-    <!--                        
-                                <?php if (isset($form_errors['phone'])): ?>
-                                    <i class="error"><?= $form_errors['phone'] ?></i>
-                                    <input value="<?= $form_data['phone'] ?>" class="error" name="phone" type="text" placeholder="Введите телефон"/>
-                                <?php else: ?>    
-                                    <input  value="<?= $form_data['phone'] ?>" name="phone" type="text" placeholder="Введите телефон"/>
-                                <?php endif; ?>
-    -->                            
                             </div>
 
                             <div class="form-group">
                                 <i class="error">Неверный формат</i>
                                 <input  value="<?= $form_data['email'] ?>" name="email" type="text" placeholder="Введите электронную почту"/>
-    <!--                        
-                                <?php if (isset($form_errors['email'])): ?>
-                                    <i class="error"><?= $form_errors['email'] ?></i>
-                                    <input value="<?= $form_data['email'] ?>" class="error" name="email" type="text" placeholder="Введите электронную почту"/>
-                                <?php else: ?>    
-                                    <input  value="<?= $form_data['email'] ?>" name="email" type="text" placeholder="Введите электронную почту"/>
-                                <?php endif; ?>
-    -->                            
                             </div>
 
                         </div>
@@ -92,15 +67,7 @@
 
                         <div class="row delivery_row" <?php echo ($form_data['need_shipping']==1?"":"style='display:none;'"); ?>>
                             <i class="error">Введите адрес доставки</i>
-                            <input  value="<?= $form_data['shipping_address'] ?>" name="shipping_address" type="text" placeholder="Введите адрес"/>
-    <!--                    
-                            <?php if (isset($form_errors['shipping_address'])): ?>
-                                <i class="error"><?= $form_errors['shipping_address'] ?></i>
-                                <input value="<?= $form_data['shipping_address'] ?>" class="error" name="shipping_address" type="text" placeholder="Введите адрес"/>
-                            <?php else: ?>    
-                                <input  value="<?= $form_data['shipping_address'] ?>" name="shipping_address" type="text" placeholder="Введите адрес"/>
-                            <?php endif; ?>
-    -->                        
+                            <input  value="<?= $form_data['shipping_address'] ?>" name="shipping_address" type="text" placeholder="Введите адрес"/>                 
                         </div>
                     </form>
                 </div>

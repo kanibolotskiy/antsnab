@@ -11,7 +11,7 @@
             <?php } ?>
         </li>
         <li>
-            <a class="prod-name" href="<?php echo $product['href']; ?>">
+            <a target="_blank" class="prod-name" href="<?php echo $product['href']; ?>">
                 <?php echo $product['meta_h1']; ?>
             </a>
             <p><?=$product['location']?></p>
