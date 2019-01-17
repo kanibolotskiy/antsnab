@@ -108,6 +108,20 @@
                       </div>
                     </div>
                   </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-download"><span data-toggle="tooltip" title="<?php echo $help_download; ?>"><?php echo $entry_download; ?></span></label>
+                    <div class="col-sm-10">
+                        <input type="text" name="download" value="" placeholder="<?php echo $entry_download; ?>" id="input-download" class="form-control" />
+                        <div id="information-download" class="well well-sm" style="height: 150px; overflow: auto;">
+                            <?php foreach ($information_downloads as $information_download) { ?>
+                                <div id="information-download<?php echo $information_download['download_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $information_download['name']; ?>
+                                    <input type="hidden" name="information_download[]" value="<?php echo $information_download['download_id']; ?>" />
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+
                 </div>
                 <?php } ?>
               </div>
@@ -241,8 +255,40 @@
       ckeditorInit('input-description<?php echo $language['language_id']; ?>', getURLVar('token'));
     <?php } ?>
   <?php } ?>
-  //--></script>
-  <script type="text/javascript"><!--
-$('#language a:first').tab('show');
+//--></script>
+<script type="text/javascript"><!--
+    $('#language a:first').tab('show');
+    
+    // Downloads
+    $('input[name=\'download\']').autocomplete({
+        'source': function (request, response) {
+            $.ajax({
+                url: 'index.php?route=catalog/download/autocomplete&token=<?php echo $token; ?>&filter_name=' + encodeURIComponent(request),
+                dataType: 'json',
+                success: function (json) {
+                    response($.map(json, function (item) {
+                        return {
+                            label: item['name'],
+                            value: item['download_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function (item) {
+            $('input[name=\'download\']').val('');
+
+            $('#information-download' + item['value']).remove();
+
+        $('#information-download').append('<div id="information-download' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="information_download[]" value="' + item['value'] + '" /></div>');     
+        }
+    });
+
+    $('#information-download').delegate('.fa-minus-circle', 'click', function () {
+        $(this).parent().remove();
+    });
+
 //--></script></div>
+
+
 <?php echo $footer; ?>

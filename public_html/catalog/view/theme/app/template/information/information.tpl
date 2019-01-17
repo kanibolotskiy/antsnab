@@ -3,12 +3,20 @@
     <?= $column_left ?>
     <div class="content">
         <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
+        
         <?php echo $content_top; ?>
         <div class="article content_inner">
             <h1 class="title"><?php echo $heading_title; ?></h1>
             <?php echo $description; ?>
         </div>
         <?php echo $content_bottom; ?>
+        <?php if(isset($files)) {?>
+            <div class="tovar_files">
+                <?php foreach($files as $file){?>
+                    <a class="download" target="_blank" href="<?php echo $file['file_link'];?>"><?php echo $file['name'];?></a>
+                <?php }?>
+            </div>
+        <?php }?>
     </div>
 </div>
 <?= $footer ?>

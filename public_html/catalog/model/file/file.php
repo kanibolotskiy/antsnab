@@ -1,5 +1,24 @@
 <?php
 class ModelFileFile extends Model {
+	
+	public function getInformationFiles($information_id) {
+		$information_files_data = array(); 
+		
+		$information_files_query = $this->db->query("SELECT dd.name, d.filename FROM " . DB_PREFIX . "download d 
+		LEFT JOIN " . DB_PREFIX . "download_description dd ON (d.download_id=dd.download_id)
+		LEFT JOIN " . DB_PREFIX . "information_to_download ld ON (ld.download_id=d.download_id)
+		WHERE ld.information_id=".(int)$information_id);
+
+		
+		foreach ($information_files_query->rows as $information_file) {			
+			$information_files_data[] = array(
+				'name'		=> $information_file['name'],
+				'filename'	=> $information_file['filename']
+			);
+		}
+		return $information_files_data;
+	}
+	
 	public function getLocationFiles($location_id) {
 		$location_files_data = array(); 
 		

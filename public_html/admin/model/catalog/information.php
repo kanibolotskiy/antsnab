@@ -1,9 +1,28 @@
 <?php
 class ModelCatalogInformation extends Model {
+	/**Добавляем файлы для загрузки для локализаций */
+	public function getInformationDownloads($information_id)
+    {
+        $information_download_data = array();
+
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "information_to_download WHERE information_id = '" . (int) $information_id . "'");
+
+        foreach ($query->rows as $result) {
+            $information_download_data[] = $result['download_id'];
+        }
+
+        return $information_download_data;
+	}
 	public function addInformation($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "information SET sort_order = '" . (int)$data['sort_order'] . "', bottom = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', status = '" . (int)$data['status'] . "'");
  
 		$information_id = $this->db->getLastId();
+
+		if (isset($data['information_download'])) {
+            foreach ($data['information_download'] as $download_id) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "information_to_download SET information_id = '" . (int) $information_id . "', download_id = '" . (int) $download_id . "'");
+            }
+		}
 
 		foreach ($data['information_description'] as $language_id => $value) {
 			$sql_notinmap='';
@@ -38,7 +57,14 @@ class ModelCatalogInformation extends Model {
 		$this->db->query("UPDATE " . DB_PREFIX . "information SET sort_order = '" . (int)$data['sort_order'] . "', bottom = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', status = '" . (int)$data['status'] . "' WHERE information_id = '" . (int)$information_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_description WHERE information_id = '" . (int)$information_id . "'");
+
+		$this->db->query("DELETE FROM " . DB_PREFIX . "information_to_download WHERE information_id = '" . (int) $information_id . "'");
 		
+        if (isset($data['information_download'])) {	
+            foreach ($data['information_download'] as $download_id) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "information_to_download SET information_id = '" . (int) $information_id . "', download_id = '" . (int) $download_id . "'");
+            }
+        }
 		
 		foreach ($data['information_description'] as $language_id => $value) {
 			$sql_notinmap='';
@@ -79,6 +105,7 @@ class ModelCatalogInformation extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_to_store WHERE information_id = '" . (int)$information_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_to_layout WHERE information_id = '" . (int)$information_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'information_id=" . (int)$information_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "information_to_download WHERE information_id = '" . (int) $location_id . "'");
 
 		$this->cache->delete('information');
 	}

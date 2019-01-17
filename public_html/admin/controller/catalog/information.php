@@ -304,6 +304,7 @@ class ControllerCatalogInformation extends Controller {
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_data'] = $this->language->get('tab_data');
 		$data['tab_design'] = $this->language->get('tab_design');
+		$data['entry_download'] = $this->language->get('entry_download');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -456,6 +457,31 @@ class ControllerCatalogInformation extends Controller {
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
+
+		// Загрузки для локализаций
+		$this->load->model('catalog/download');
+		
+		if (isset($this->request->post['information_download'])) {
+			$information_downloads = $this->request->post['information_download'];
+		} elseif (isset($this->request->get['information_id'])) {
+			$information_downloads = $this->model_catalog_information->getInformationDownloads($this->request->get['information_id']);
+		} else {
+			$information_downloads = array();
+		}
+
+		$data['information_downloads'] = array();
+
+		foreach ($information_downloads as $download_id) {
+			$download_info = $this->model_catalog_download->getDownload($download_id);
+
+			if ($download_info) {
+				$data['information_downloads'][] = array(
+					'download_id' => $download_info['download_id'],
+					'name'        => $download_info['name']
+				);
+			}
+			
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

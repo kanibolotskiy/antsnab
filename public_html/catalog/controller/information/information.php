@@ -42,6 +42,22 @@ class ControllerInformationInformation extends Controller {
 				$data['heading_title'] = $information_info['title'];
 			}
 
+			$this->load->model('file/file');
+			$files_data = $this->model_file_file->getInformationFiles($information_id);			
+			
+			$information_files=[];
+			foreach ($files_data as $file) {
+				$file_link = HTTP_SERVER . 'files/' . $file['filename']; 
+				if($file_link){
+					$information_files[] = array(
+						'name' 	    => $file['name'],
+						'file_link' => $file_link
+					);
+				}
+			}
+			$data['files']=$information_files;
+			
+
 			$data['button_continue'] = $this->language->get('button_continue');
 
 			$data['description'] = html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');
