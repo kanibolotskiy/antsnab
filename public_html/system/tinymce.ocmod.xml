@@ -101,7 +101,7 @@
               'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
               'save table contextmenu directionality emoticons template paste textcolor colorpicker'
             ],
-            toolbar: 'bold italic sizeselect fontselect fontsizeselect | hr alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | insertfile undo redo | forecolor backcolor emoticons superscript | code',
+            toolbar: 'formatselect bold italic sizeselect fontselect fontsizeselect | hr alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | insertfile undo redo | forecolor backcolor emoticons superscript | code ',
             fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
           });
           
