@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>TinyMCE Editor</name>
+  <code>tinymceeditor</code>
+  <version>1.0</version>
+  <author>Web studio 2304</author>
+  <link>http://2304.ru</link>
+  <file path="admin/view/template/{*,*/*}/*.tpl">
+    <operation>
+	  <search><![CDATA[ckeditorInit]]></search>
+        <add position="after" offset="3"><![CDATA[
+		<div class="modal fade" id="filePickerError" style="z-index: 65538;" tabindex="-1" role="dialog" aria-labelledby="filePickerErrorLabel">
+		  <div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="filePickerErrorLabel">Мнеджер изображений</h4>
+			  </div>
+			  <div class="modal-body">
+				Для работы с изображениями рекомендуем Вам обратить внимание на следующий файловый менеджер</br>
+				Он заменяет стандартный менеджер изображений и имеет множество функций, которые упрощают Вашу работу с изображениями</br>
+        Ознакомиться с возможностями модуля, а также посмотреть его демо и приобрести можно по ссылкам ниже: </br></br>
+				<a target="_blank" href="https://opencartforum.com/files/file/3008-menedzher-izobrazheniy-opencart-2x/">Мнеджер изображений на opencartforum</a></br>
+				<a target="_blank" href="https://liveopencart.ru/opencart-moduli-shablony/moduli/adminka/menedjer-izobrajeniy-opencart-2-3">Мнеджер изображений на liveopencart</a></br>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			  </div>
+			</div>
+		  </div>
+		</div>
+    <style>
+    #modal-image {
+      z-index:65537;
+    }
+    </style>
+		<script src='view/javascript/tinymce/tinymce.min.js'></script>
+          <script>
+
+		  function elFinderBrowser (callback, value, meta) {
+		  try {
+			  var fm = $('<div/>').dialogelfinder({
+				  url : 'index.php?route=elfinder/connector&token=' + getURLVar('token'),
+				  lang : 'ru',
+				  width : 900,
+				  height: 400,
+				  destroyOnClose : true,
+			  getFileCallback : function(file, fm) {
+					var info = file.name + ' (' + fm.formatSize(file.size) + ')';
+					callback(file.url, {alt: info});
+			  },
+			  commandsOptions : {
+				  getfile : {
+					  oncomplete : 'close',
+					  multiple : false,
+					  folders : false
+				  }
+			  }
+				}).dialogelfinder('instance');
+		  } catch (err) {
+			$('#filePickerError').modal('show');
+          $.ajax({
+								url: 'index.php?route=common/filemanager&token=' + getURLVar('token'),
+								dataType: 'html',
+								beforeSend: function() {
+									$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+									$('#button-image').prop('disabled', true);
+								},
+								complete: function() {
+									$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+									$('#button-image').prop('disabled', false);
+								},
+								success: function(html) {
+									$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+									
+									$('#modal-image').modal('show');
+									
+									$('#modal-image').delegate('a.thumbnail', 'click', function(e) {
+										e.preventDefault();
+										
+										//$(element).summernote('insertImage', $(this).attr('href'));
+										callback($(this).attr('href'));							
+										$('#modal-image').modal('hide');
+									});
+								}
+							});
+		  }
+		  return false;
+		}
+    $('.summernote').addClass('tinymce');
+          $('.summernote').removeClass('summernote');
+          tinymce.init({
+            selector: '.tinymce',
+            skin: 'bootstrap',
+            language: 'ru',
+            height:300,
+            file_picker_callback : elFinderBrowser,
+            plugins: [
+              'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+              'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+              'save table contextmenu directionality emoticons template paste textcolor colorpicker'
+            ],
+            toolbar: 'bold italic sizeselect fontselect fontsizeselect | hr alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | insertfile undo redo | forecolor backcolor emoticons | code',
+            fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+          });
+          
+          </script>]]></add>
+    </operation>
+	
+  </file>
+</modification>
