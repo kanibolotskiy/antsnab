@@ -99,12 +99,16 @@ class PriceController extends \Controller
         $secondParentNode = $this->hierarhy->getNodeById($firstActive);
         $secondCategories = $secondParentNode->getChildren(); 
         $lists['l2'][$this->language->get('all_text')] = static::SHOW_ALL_OPTION_VALUE;
+        
         if( empty($secondCategories) ) {
             return $lists;
         }
 
         foreach($secondCategories as $cat) {
-            $lists['l2'][$cat->get('name')] = $cat->get('category_id');
+            //echo "id=".$cat->get('category_id')."|isseo=".$cat->get('isseo')."<br/>";
+            if(!$cat->get('isseo')){
+                $lists['l2'][$cat->get('name')] = $cat->get('category_id');
+            }
         }
         if( null == $secondActive || !in_array($secondActive, array_values($lists['l2']) ) ) {
             return $lists;

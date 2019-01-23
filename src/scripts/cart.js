@@ -28,11 +28,12 @@ if( $('.qnt-container-cart').length > 0) {
     });
 }
 function refresh_veiew_cart(json){
+    
     if(json["success"]){
         var total=json["total"];
         $("#total_cart").css({"opacity":0});
         $("#total_cart").text(total);
-        $('.basket').html(json['total_str']);
+        $(".basket").html(json['total_str']);
 
         $("#total_cart").animate({"opacity":1},100);
         
@@ -97,7 +98,7 @@ $(function(){
         });
     });
     //$(document).on("change",".qnt",function(){
-    $(document).on("click",".LeftButton,.RightButton",function(){
+    $(document).on("click",".basket-row .LeftButton,.basket-row .RightButton",function(){
         refresh_cart();
     });
     $(document).on("change",".qnt",function(){

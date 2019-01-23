@@ -603,7 +603,7 @@ class CartController extends \ControllerCheckoutCart
 
             /** @task - сделать в будущем нормально через некий оптовый модуль, кстати в заказе это как то работает!!!!!!  */
             $data['totals'][] = array(
-                'title' => 'Итого', 
+                'title' => 'Сумма без учета доставки', 
                 'text' => $this->currency->format($orderSumTotal, $this->session->data['currency'])
             );
 
@@ -1026,8 +1026,12 @@ class CartController extends \ControllerCheckoutCart
 
         $productsCount = $this->cart->countProductTypes();
 		$productsCountStr = ProdUnitStrings::plural($productsCount, 
-						'вид товара', 'вида товара', 'видов товара');
-		$data['total_str'] = sprintf($this->language->get('text_items'), $productsCount, $productsCountStr, $this->currency->format($orderSumTotal, $this->session->data['currency']));
+                        'вид товара', 'вида товара', 'видов товара');
+        if($productsCount){
+            $data['total_str'] = sprintf($this->language->get('text_items'), $productsCount, $productsCountStr, $this->currency->format($orderSumTotal, $this->session->data['currency']));
+        }else{
+            $data['total_str'] = $this->language->get('text_items_empty');
+        }
                 
 
         //$json['total_str'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));

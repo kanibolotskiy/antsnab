@@ -20,16 +20,15 @@
 
             <?php if ($product['isWholesale']): ?>
                 <span class="cart_price_caption_opt" style="display:block;">Цена опт</span>
-                <span class="cart_price_caption_rozn" style="display:none;">Цена розн.</span>
+                <span class="cart_price_caption_rozn" style="display:none;">Цена</span>
                 <strong class="cart_price_val"><?= $product['price_wholesale']; ?></strong>
             <?php else: ?>
                 <span class="cart_price_caption_opt" style="display:none;">Цена опт</span>
-                <span class="cart_price_caption_rozn" style="display:block;">Цена розн.</span>
+                <span class="cart_price_caption_rozn" style="display:block;">Цена</span>
                 <strong class="cart_price_val"><?= $product['price']; ?></strong>
             <?php endif; ?>
         </li>
         <li>
-            <?php /* inited in cart.js  @task - нужно обновление страницы при смене инпута*/ ?>
             <div 
                 class="qnt-container-cart without_input"
                 data-el_name="quantity[<?php echo $product['cart_id']; ?>]"

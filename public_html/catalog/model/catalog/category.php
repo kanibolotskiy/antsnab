@@ -54,7 +54,6 @@ class ModelCatalogCategory extends Model {
 				}
 			}
 		}
-
 		return $filter_group_data;
 	}
 

@@ -75,7 +75,7 @@
                                                         </p>
                                                     </div>
                                                 </div> 
-                                                <a href="<?= $c['href'] ?>" class="more">Подробнее</a> 
+                                                <a href="<?= $c['href'] ?>" class="more">Смотреть все</a> 
                                             </div> 
                                         </li>
                                     <?php endforeach; ?>
@@ -125,6 +125,9 @@
                         -->
                     </div>
                 </div>
+            </div>
+            <div class="bottom_text">
+                <?php echo $bottom_text; ?>
             </div>
         <?php else: ?>
             <h1>Категорий не найдено</h1>

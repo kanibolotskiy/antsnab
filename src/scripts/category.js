@@ -110,6 +110,7 @@ $(document).ready(function(){
                 $('#cart_preloader').fadeOut(200);
             },
             success: function(json) {
+                
                 if (json['success']) {
                     $('.basket').html(json['total_str']);
                     
@@ -162,7 +163,7 @@ $(document).ready(function(){
                             });
                         }
                     }
-                    $('html, body').animate({ scrollTop: 0 }, 'slow');
+                    //$('html, body').animate({ scrollTop: 0 }, 'slow');
      
                     new Noty({
                         text: json['success'],

@@ -820,7 +820,7 @@ div.title:after {
     }
 }
 .our-production{
-    margin: 0 0 24px;
+    margin: 0;
     h1{
         margin-bottom: 27px;
     }
@@ -1543,7 +1543,7 @@ ul.tabset li:last-child a.active {
                         display: none;
                     }
                     .tags{
-                        max-height:116px;
+                        max-height:102px;
                         /*max-height: 1000px;*/
                         position: relative;
                         display: block;
@@ -1818,11 +1818,11 @@ a.buy{
     line-height: 40px;
     background-color: #d3a06d;
     text-align: center;
-    -webkit-transition: 0.4s;
-    -moz-transition: 0.4s;
-    -ms-transition: 0.4s;
-    -o-transition: 0.4s;
-    transition: 0.4s;
+    -webkit-transition:background-color 0.4s;
+    -moz-transition:background-color 0.4s;
+    -ms-transition:background-color 0.4s;
+    -o-transition:background-color 0.4s;
+    transition:background-color 0.4s;
     &:hover{
         background-color: #c97c2f;
         -webkit-transition: 0.4s;
@@ -2388,7 +2388,7 @@ button.show-more{
         display: block;
         text-decoration: underline;
         margin-bottom: 28px;
-        font-size: 13px;
+        font-size: 14px;
         color: #4965ed;
         &:hover{
             text-decoration: none;
@@ -2418,7 +2418,7 @@ button.show-more{
                 display: block;
                 text-decoration: underline;
                 color: #4965ed;
-                font-size: 13px;
+                font-size: 14px;
                 line-height: 16px;
                 &:hover{
                     text-decoration: none;
@@ -2500,7 +2500,7 @@ button.show-more{
         line-height: 32px;
         min-height: 32px;
         color: #000000;
-        font-size: 13px;
+        font-size: 14px;
         &:hover{
             text-decoration: none;
         }
@@ -4189,7 +4189,7 @@ a.print{
         }
     }
     .review-block .review {
-        padding: 20px 15px 15px;
+        padding: 20px 15px 32px;
     }
     .review-block .answer-review {
         margin: -25px 15px 0 50px;
@@ -4582,17 +4582,18 @@ html, body{
     padding:10px;
 }
 
+.tovar_files{margin-top:30px;}
 .tovar_files .download {
-    line-height: 40px;
+    line-height: 20px;
     color: #000;
     font-size: 13px;
     position: relative;
     padding-left: 40px;
     margin-right: 20px;
-    margin-bottom: 0px;
+    margin-bottom: 20px;
     display: inline-block;
     vertical-align: top;
-    margin-top: 40px;
+    margin-top: 10px;
     text-decoration: underline;
 }
 .tovar_files .download:before {
@@ -4640,7 +4641,7 @@ html, body{
     width:100%;
 }
 .catalog_view.table_catalog_view .catalog-img{width:207px;}
-.wrap_select_view{position:relative;overflow:hidden;margin-bottom:10px;}
+.wrap_select_view{position:relative;/*overflow:hidden;*/margin-bottom:10px;height:30px;}
 .select_view_switch{float:right;border: 1px solid #E8E5E2;}
 .select_view{
     width:39px;height:28px;float: left;cursor:pointer;
@@ -4818,7 +4819,7 @@ filter: grayscale(1); /* W3C */
     -webkit-box-pack: justify;
 }
 .tab-block2 .catalog-description .quantity-buy{display:block;}
-.tab-block2 .catalog-description .quantity-buy .qnt-widget{float:left;}
+/*.tab-block2 .catalog-description .quantity-buy .qnt-widget{float:left;}*/
 
 /*.quantity-buy{display:block;}
 .quantity-buy .qnt-widget{display:inline-block;}
@@ -4913,6 +4914,14 @@ a.buy{display:inline-block;vertical-align: top;}
 .tovar_mini_image img,.tovar_main_image img{max-width:100%;height:auto;}
 .tab-block ul li .catalog-img {width: 207px;}
 .tab-block.tab-block2 ul li .catalog-img {width: auto;}
+.call-us a,.tel a{cursor: auto;}
+.call-us a:hover,.tel a:hover{color:#000;}
+.nice-select{height:30px;font-size:13px;}
+.clear{clear:both;}
+
+.tab-block.tab-block2 a.buy{width:100%;}
+.tab-block.tab-block2 .qnt-widget{margin-right:0;}
+
 
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{
@@ -4937,6 +4946,8 @@ a.buy{display:inline-block;vertical-align: top;}
     }   
 }
 @media screen and (max-width: 640px){
+    .tel a{cursor: pointer;}
+    .tel a:hover{color:#7d7d7d;}
     .about_sert_img{float:none;width:100%;}
     .nav ul {
         display: none;

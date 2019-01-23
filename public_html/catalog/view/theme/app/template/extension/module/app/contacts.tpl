@@ -1,5 +1,5 @@
 <div class = "reviews-container">
-<div class="container main">
+
     <div class="content">
         <div class="contacts-container">
             <a target="blank" href="<?=$rekviziti?>" class="requisites">Наши реквизиты</a>
@@ -18,7 +18,7 @@
                     <li>
                         <p><?= $telephone ?></p>
                         <?php if (!empty($fax)): ?>
-                            <p><?= $fax ?> — бесплатный звонок по России</p>
+                            <p><?= $fax ?> — бесплатно по РФ</p>
                         <?php endif; ?>
                     </li>
                     <li>
@@ -74,5 +74,4 @@
             <?php endif; ?>
         </div>
     </div>
-</div>
 </div>

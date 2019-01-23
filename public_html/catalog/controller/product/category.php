@@ -351,7 +351,7 @@ class ControllerProductCategory extends Controller {
 					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&limit=' . $value)
 				);
 			}
-
+			
 			$url = '';
 
 			if (isset($this->request->get['filter'])) {

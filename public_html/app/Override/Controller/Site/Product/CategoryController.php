@@ -237,7 +237,9 @@ class CategoryController extends \Controller
 
     private function showProducts($category_id, $showPropertyTable=false)
     {
+        
         $filter_data = $this->getFilter($category_id, $limit, $page, $sort_selected);
+        
         $this->data['sort_selected']=$sort_selected;
         $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
         $productsHelper = new ProductListHelper($this->registry);
@@ -389,23 +391,27 @@ class CategoryController extends \Controller
         } else {
             $filter = '';
         }
+
         /** @ИСПРАВИТЬ - это что за магические цифры?????????!!!!!!!! */
-        $sort_selected=0;
+        //$sort_selected=0;
 
         $sort = 'p.sort_order';
         $order = 'ASC';
-        
+        $sort_selected="";
         if (isset($this->request->get['sort'])) {
+            $sort_selected=$this->request->get['sort'];
+
             $sort_arr=explode("|",$this->request->get['sort']);
             if((isset($sort_arr[0]))and(isset($sort_arr[1]))){
-                
                 $sort="p.".$sort_arr[0];
                 $order=$sort_arr[1];
+                /*
                 if($order=="ASC"){
                     $sort_selected=1;
                 }else{
                     $sort_selected=2;
                 }
+                */
             }
         }
         
@@ -442,8 +448,6 @@ class CategoryController extends \Controller
             'start' => ($page - 1) * $limit,
             'limit' => $limit
         );
-
         return $filter_data;
-        
     }
 }
