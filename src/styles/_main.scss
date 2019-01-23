@@ -2307,7 +2307,8 @@ button.show-more{
     min-height: 600px;
     .title{
         float: left;
-        padding-top: 5px;
+        /*padding-top: 5px;*/
+        line-height:26px;
         margin-right: 25px;
     }
     .select-area{
