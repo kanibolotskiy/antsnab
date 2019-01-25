@@ -42,22 +42,23 @@ echo $header;
 
                         </div>
                     </div>
+                    
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" >
-<?php echo $entry_pdfroute; ?>
+                        <label class="col-sm-2 control-label" for="input-download">
+                            <?php echo $entry_download; ?>
                         </label>
                         <div class="col-sm-10">
-                            <input name="<?= PriceController::CONFIG_KEY_PDF_ROUTE ?>"  value="<?= ${PriceController::CONFIG_KEY_PDF_ROUTE} ?>"/>
+                            <input type="text" name="download" value="" placeholder="<?php echo $entry_download; ?>" id="input-download" class="form-control" />
+                            <div id="price-download" class="well well-sm" style="height: 150px; overflow: auto;">
+                                <?php foreach ($price_downloads as $price_download) { ?>
+                                    <div id="price-download<?php echo $price_download['download_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $price_download['name']; ?>
+                                        <input type="hidden" name="price_download[]" value="<?php echo $price_download['download_id']; ?>" />
+                                    </div>
+                                <?php } ?>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" >
-<?php echo $entry_xlsroute; ?>
-                        </label>
-                        <div class="col-sm-10">
-                            <input name="<?= PriceController::CONFIG_KEY_XLS_ROUTE ?>"  value="<?= ${PriceController::CONFIG_KEY_XLS_ROUTE} ?>"/>
-                        </div>
-                    </div>
+                    
                     <div class="form-group">
                         <label class="col-sm-2 control-label" >
 <?php echo $entry_rootcategory; ?>
@@ -79,4 +80,35 @@ echo $header;
         </div>
     </div>
 </div>
+<script type="text/javascript"><!--
+    // Downloads
+    $('input[name=\'download\']').autocomplete({
+        'source': function (request, response) {
+            $.ajax({
+                url: 'index.php?route=catalog/download/autocomplete&token=<?php echo $token; ?>&filter_name=' + encodeURIComponent(request),
+                dataType: 'json',
+                success: function (json) {
+                    response($.map(json, function (item) {
+                        return {
+                            label: item['name'],
+                            value: item['download_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function (item) {
+            $('input[name=\'download\']').val('');
+
+            $('#location-download' + item['value']).remove();
+
+        $('#location-download').append('<div id="location-download' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="location_download[]" value="' + item['value'] + '" /></div>');     
+        }
+    });
+
+    $('#location-download').delegate('.fa-minus-circle', 'click', function () {
+        $(this).parent().remove();
+    });
+//--></script>
+
 <?php echo $footer; ?>

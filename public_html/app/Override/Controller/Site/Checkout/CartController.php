@@ -613,12 +613,19 @@ class CartController extends \ControllerCheckoutCart
             $data['personaldata'] = $this->url->link('information/information', 'information_id=11', '', true);
             
 
-            /**Тест на странице "оформление доставки */
+            /**Текст на странице "оформление доставки" */
             $this->load->model('catalog/information');
             $information_id = 12;
             $information_info = $this->model_catalog_information->getInformation($information_id);
             $data['cart_text']=html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');
 
+            /**Текст для пустой корзины */
+            $this->load->model('catalog/information');
+            $information_id = 17;
+            $information_info = $this->model_catalog_information->getInformation($information_id);
+            $data['empty_cart']=html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');
+
+            //$data['empty_cart'] = $this->language->get('empty_cart');
 
             $this->load->model('extension/extension');
 
@@ -863,13 +870,19 @@ class CartController extends \ControllerCheckoutCart
 					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 				);
 			}*/
-            $data['empty_cart'] = $this->language->get('empty_cart');
+            
 
             $this->response->setOutput($this->load->view('checkout/cart', $data));
         } else {
             $data['heading_title'] = $this->language->get('heading_title');
 
-            $data['text_error'] = $this->language->get('text_empty');
+            /**Текст для пустой корзины */
+            $this->load->model('catalog/information');
+            $information_id = 17;
+            $information_info = $this->model_catalog_information->getInformation($information_id);
+            $data['text_error']=html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');
+
+            //$data['text_error'] ="ok";// $this->language->get('text_empty');
 
             $data['button_continue'] = $this->language->get('button_continue');
 

@@ -13,8 +13,10 @@ use WS\Override\Controller\Admin\Extension\AModuleController;
 
 class PriceController extends AModuleController
 {
+    /*
     const CONFIG_KEY_PDF_ROUTE = 'price_pdfroute';
     const CONFIG_KEY_XLS_ROUTE = 'price_xlsroute';
+    */
 
     /**родительская категория для первого селекта прайс-листа*/
     const START_CATEGORY_PARENT_ID_DEFAULT = 71;
@@ -33,13 +35,18 @@ class PriceController extends AModuleController
     public function index()
     {
         parent::commonIndex();
-
+        /*
         $this->data['entry_pdfroute'] = $this->language->get('entry_pdfroute');
         $this->data['entry_xlsroute'] = $this->language->get('entry_xlsroute');    
+        */
+
         $this->data['entry_rootcategory'] = $this->language->get('entry_rootcategory');    
         $this->data['entry_startcategory'] = $this->language->get('entry_startcategory');
 
+        $this->data['entry_download'] = $this->language->get('entry_download');
+
         // entry
+        /*
         if (isset($this->request->post[static::CONFIG_KEY_PDF_ROUTE])) {
             $this->data[static::CONFIG_KEY_PDF_ROUTE] = $this->request->post[static::CONFIG_KEY_PDF_ROUTE];
         } else {
@@ -51,6 +58,7 @@ class PriceController extends AModuleController
         } else {
             $this->data[static::CONFIG_KEY_XLS_ROUTE] = $this->config->get(static::CONFIG_KEY_XLS_ROUTE);
         }
+        */
 
         if (isset($this->request->post[static::CONFIG_KEY_START_CATEGORY_PARENT_ID])) {
             $this->data[static::CONFIG_KEY_START_CATEGORY_PARENT_ID] = $this->request->post[static::CONFIG_KEY_START_CATEGORY_PARENT_ID];
@@ -70,12 +78,17 @@ class PriceController extends AModuleController
     public function install()
     {
         parent::install();
-
+        /*
         $sql = "insert into " . DB_PREFIX . "_setting (store_id, code, `key`, `value`, serialized) values" .
             " (0, '" . $this->getCode() . "', '" . static::CONFIG_KEY_PDF_ROUTE . "','', false), " .
             " (0, '" . $this->getCode() . "', '" . static::CONFIG_KEY_XLS_ROUTE . "','', false), " .
             " (0, '" . $this->getCode() . "', '" . static::CONFIG_KEY_START_CATEGORY_PARENT_ID . "',".static::START_CATEGORY_PARENT_ID_DEFAULT.", false), " .
             " (0, '" . $this->getCode() . "', '" . static::CONFIG_KEY_START_CATEGORY_ID . "'," . static::START_CATEGORY_ID_DEFAULT . ", false), ";
+        */
+        $sql = "insert into " . DB_PREFIX . "_setting (store_id, code, `key`, `value`, serialized) values" .
+            " (0, '" . $this->getCode() . "', '" . static::CONFIG_KEY_START_CATEGORY_PARENT_ID . "',".static::START_CATEGORY_PARENT_ID_DEFAULT.", false), " .
+            " (0, '" . $this->getCode() . "', '" . static::CONFIG_KEY_START_CATEGORY_ID . "'," . static::START_CATEGORY_ID_DEFAULT . ", false), ";
+
         return $this->db->query($sql);
     }
 

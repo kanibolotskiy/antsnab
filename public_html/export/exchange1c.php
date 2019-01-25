@@ -60,7 +60,7 @@ if ($config->get('exchange1c_log_filename')) {
 	$log = new Log($config->get('config_error_filename'));
 }
 $registry->set('log', $log);
-
+echo $config->get('exchange1c_log_filename');
 // ДЛЯ ОТЛАДКИ АВТОРИЗАЦИИ
 //$server_info = print_r($_SERVER, true);
 //$log->write($server_info);

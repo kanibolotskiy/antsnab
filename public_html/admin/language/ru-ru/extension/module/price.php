@@ -19,3 +19,6 @@ $_['entry_startcategory'] = 'Категория первого селекта id
 // Error
 $_['error_permission'] = 'У вас нет права';
 $_['error_empty_line'] = 'Предупреждение: пустые значения';
+
+$_['entry_download'] = 'Загрузки';
+
