@@ -124,7 +124,7 @@ class ContactpageController extends \Controller
                     'image'       => $image,
                     'open'        => nl2br($location_info['open']),
                     'comment'     => $location_info['comment'],
-                    'files'=>$location_files
+                    'files'       => $location_files
                 );
             }
         }

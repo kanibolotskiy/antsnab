@@ -175,6 +175,7 @@ class ProductTemplateDecorator implements IDecorator
         $data['locations'] = array();
 
         $registry->get('load')->model('localisation/location');
+        $registry->get('load')->model('file/file');
 
         foreach ((array)$registry->get('config')->get('config_location') as $location_id) {
             $location_info = $registry->get('model_localisation_location')->getLocation($location_id);
@@ -186,6 +187,17 @@ class ProductTemplateDecorator implements IDecorator
                     $image = false;
                 }
 
+                $location_files=[];
+                $files_data = $registry->get('model_file_file')->getLocationFiles($location_id);
+                foreach ($files_data as $file) {
+                    $file_link = HTTP_SERVER . 'files/' . $file['filename']; 
+                    if($file_link){
+                        $location_files[] = array(
+                            'name' 	    => $file['name'],
+                            'file_link' => $file_link
+                        );
+                    }
+                }
                 $data['locations'][] = array(
                     'location_id' => $location_info['location_id'],
                     'name'        => $location_info['name'],
@@ -195,7 +207,8 @@ class ProductTemplateDecorator implements IDecorator
                     'fax'         => $location_info['fax'],
                     'image'       => $image,
                     'open'        => nl2br($location_info['open']),
-                    'comment'     => $location_info['comment']
+                    'comment'     => $location_info['comment'],
+                    'files'       => $location_files
                 );
             }
         }

@@ -262,7 +262,7 @@
                             <p><?=$l['address']?></p>
                             <p><?=$l['open']?></p>
                             <p><?=$l['comment']?></p>
-                            <p>Для вашего удобства можете <a href="#">скачать подробную схему проезда</a></p>
+                            <p>Для вашего удобства можете <a target="_blank" href="<?php echo $l["files"][0]['file_link'];?>">скачать подробную схему проезда</a></p>
                             <div id="prodmap2" 
                                 class="map map-container prodmap"
                                 data-longitude="<?=$l['longitude']?>"
