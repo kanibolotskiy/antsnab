@@ -2010,7 +2010,8 @@ button.show-more{
     margin: 0;
     overflow: hidden;
     font-size: 14px;
-    color: #444444;
+    /*color: #444444;*/
+    color:#000;
     line-height: 24px;
 
     p{
@@ -2539,7 +2540,7 @@ button.show-more{
     .review{
         border: 2px solid #EFEEEC;
         position: relative;
-        padding: 30px 29px 40px;
+        padding: 30px 29px 28px;
         &:after{
             content: '';
             display: block;
@@ -2767,7 +2768,7 @@ button.show-more{
                     }
                 }
                 &:nth-child(4) {
-                    width:107px;
+                    /*width:107px;*/
                     text-align: center;
                     padding-top: 4px;
                     .OutputContainer{
@@ -2792,8 +2793,8 @@ button.show-more{
                     display: block;
                     text-decoration: none;
                     color: #000000;
-                    font-size: 15px;
-                    line-height: 18px;
+                    font-size: 14px;
+                    line-height: 16px;
                     &:hover{
                         text-decoration: underline;
                     }
@@ -2805,8 +2806,8 @@ button.show-more{
                     display: block;
                     text-decoration: none;
                     color: #666666;
-                    font-size: 14px;
-                    line-height: 20px;
+                    font-size: 11px;
+                    line-height: 15px;
                 }
                 span{
                     display: block;
@@ -4190,7 +4191,7 @@ a.print{
         }
     }
     .review-block .review {
-        padding: 20px 15px 32px;
+        padding: 20px 15px 25px;
     }
     .review-block .answer-review {
         margin: -25px 15px 0 50px;
@@ -4922,7 +4923,7 @@ a.buy{display:inline-block;vertical-align: top;}
 
 .tab-block.tab-block2 a.buy{width:100%;}
 .tab-block.tab-block2 .qnt-widget{margin-right:0;}
-
+.notinstock{margin-bottom: 4px;font-weight: bold;font-size: 13px;}
 
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{
@@ -4947,6 +4948,9 @@ a.buy{display:inline-block;vertical-align: top;}
     }   
 }
 @media screen and (max-width: 640px){
+    .review-block .review {
+        padding: 20px 15px 32px;
+    }
     .tel a{cursor: pointer;}
     .tel a:hover{color:#7d7d7d;}
     .about_sert_img{float:none;width:100%;}

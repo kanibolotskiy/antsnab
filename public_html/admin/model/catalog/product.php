@@ -407,7 +407,7 @@ class ModelCatalogProduct extends Model
     
         /**Аналоги товаров */
         $this->db->query("DELETE FROM " . DB_PREFIX . "product_analogs WHERE product_id = '" . (int) $product_id . "'");
-        $this->db->query("DELETE FROM " . DB_PREFIX . "product_analogs WHERE related_id = '" . (int) $product_id . "'");
+        //$this->db->query("DELETE FROM " . DB_PREFIX . "product_analogs WHERE related_id = '" . (int) $product_id . "'");
 
         //@task move to override
         
@@ -422,7 +422,7 @@ class ModelCatalogProduct extends Model
 
         /**Сопутствующие товары */
         $this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int) $product_id . "'");
-        $this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE related_id = '" . (int) $product_id . "'");
+        //$this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE related_id = '" . (int) $product_id . "'");
 
         //@task move to override
         if (isset($data['product_related'])) {

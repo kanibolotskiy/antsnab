@@ -1,27 +1,41 @@
 <footer class="footer">
-    <div class="container">
+    <div class="container" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="url" content="<?php echo $home;?>">
+        <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+            <img itemprop="url image" src="<?php echo $logo;?>" style="display:none;"/>
+            <meta itemprop="width" content="115">
+            <meta itemprop="height" content="115">
+        </div>
+
+        
+
         <div class="footer-left">
             <div class="soc">
                 <span>Мы в соцсетях:</span>
                 <ul>
                     <li>
-                        <a target="_blank" href="https://vk.com/antsnab" rel="nofollow">
+                        <a target="_blank" itemprop="sameAs" href="https://vk.com/antsnab" rel="nofollow">
                             <img src="/catalog/view/theme/app/img/soc1.png" alt="img">
                         </a>
                     </li>
                     <li>
-                        <a target="_blank" href="https://www.facebook.com/antsnab.tk" rel="nofollow">
+                        <a target="_blank" itemprop="sameAs" href="https://www.facebook.com/antsnab.tk" rel="nofollow">
                             <img src="/catalog/view/theme/app/img/soc2.png" alt="img">
                         </a>
                     </li>
                     <li>
-                        <a target="_blank" href="https://twitter.com/antsnab" rel="nofollow">
+                        <a target="_blank" itemprop="sameAs" href="https://twitter.com/antsnab" rel="nofollow">
                             <img src="/catalog/view/theme/app/img/soc3.png" alt="img">
+                        </a>
+                    </li>
+                    <li>
+                        <a target="_blank" itemprop="sameAs" href="https://www.instagram.com/bitumman/" rel="nofollow">
+                            <img src="/catalog/view/theme/app/img/insta.png" alt="img">
                         </a>
                     </li>
                 </ul>
             </div>
-            <p>© ООО "Ант-Снаб", 2012-<?php echo date("Y");?>.</p>
+            <p>© <span itemprop="name">ООО "ТК Ант-Снаб"</span>, 2012-<?php echo date("Y");?>.</p>
             <a href="<?=$sitemap?>">Карта сайта</a>
             <a href="<?=$confidence?>">Политика конфиденциальности</a>
         </div>
@@ -46,21 +60,24 @@
                     <?php endforeach; ?>
                 </ul>
             </nav>
+            
             <div class="footer-info">
-
-                <p class="address"><?= $address ?></p>
+                <!--<?= $address ?>-->
+                <p class="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                    <span itemprop="postalCode">127566</span>, <span itemprop="addressLocality">г. Москва</span>, <span itemprop="streetAddress">Высоковольтный проезд, дом 1, стр. 43</span>
+                </p>
                 <div class="call-us">
                     <span>позвоните нам:</span>
-                    <a rel="nofollow" href="tel:<?= $telephone ?>"><?= $telephone ?></a>
+                    <a rel="nofollow" href="tel:<?= $telephone ?>"><span itemprop="telephone"><?= $telephone ?></span></a>
                 </div>
                 <div class="line"></div>
                 <?php if( !empty($telephone2) ):?>
                 <div class="call-us call-us2">
                     <span>бесплатный звонок по России</span>
-                    <a rel="nofollow" href="tel:<?= $telephone2 ?>"><?= $telephone2 ?></a>
+                    <a rel="nofollow" href="tel:<?= $telephone2 ?>"><span itemprop="telephone"><?= $telephone2 ?></span></a>
                 </div>
                 <?php endif;?>
-                <a rel="nofollow" href="mailto:<?= $email ?>" class="mail"><?= $email ?></a>
+                <a rel="nofollow" href="mailto:<?= $email ?>" class="mail"><span itemprop="email"><?= $email ?></span></a>
             </div>
         </div>
     </div>

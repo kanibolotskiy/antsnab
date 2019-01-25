@@ -107,7 +107,9 @@ class ProductListHelper extends \Model
                                 ->divide($saleToUiKoef)
                                 ->multiply( Fraction::fromFloat($price) )
                                 ->toFloat();
-                    $price = $this->currency->format($this->tax->calculate($uiPrice, $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+                    $price_val = $this->tax->calculate($uiPrice, $result['tax_class_id'], $this->config->get('config_tax'));
+                    $price = $this->currency->format($price_val, $this->session->data['currency']);
+                    
                 } else {
                     $price = false;
                 }
@@ -149,6 +151,7 @@ class ProductListHelper extends \Model
                 'name' => $result['meta_h1'],
                 'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
                 'descriptionPreview' => utf8_substr(strip_tags(html_entity_decode($result['location'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '...',
+                'price_val'=>$price_val,
                 'price' => $price??0,
                 'special' => $special??0,
                 'tax' => $tax,

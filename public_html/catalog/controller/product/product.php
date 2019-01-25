@@ -320,6 +320,16 @@ class ControllerProductProduct extends Controller {
 			$data['points'] = $product_info['points'];
 			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
 
+			$data['product_link'] = $this->url->link('product/product', 'product_id=' . $this->request->get['product_id']);
+
+
+			$data['quantity_stock']=$product_info['quantity'];
+			if ($product_info['quantity'] > 0) {
+				$data['stock'] = $this->language->get('stock_avail');
+			}else{
+				$data['stock'] = $this->language->get('stock_byorder');
+			}
+			/*
 			if ($product_info['quantity'] <= 0) {
 				$data['stock'] = $product_info['stock_status'];
 			} elseif ($this->config->get('config_stock_display')) {
@@ -327,7 +337,7 @@ class ControllerProductProduct extends Controller {
 			} else {
 				$data['stock'] = $this->language->get('text_instock');
 			}
-
+			*/
 			$this->load->model('tool/image');
 
 			if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
@@ -367,6 +377,8 @@ class ControllerProductProduct extends Controller {
 				}
 				$count_images++;
 			}
+			
+			$data['price_wholesale'] = $product_info['price_wholesale'];
 
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 				$data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
@@ -451,6 +463,7 @@ class ControllerProductProduct extends Controller {
 			} else {
 				$data['customer_name'] = '';
 			}
+			
 
 			$data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
 			$data['rating'] = (int)$product_info['rating'];
@@ -563,9 +576,12 @@ class ControllerProductProduct extends Controller {
 				}
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$price_val=$this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'));
+					$price = $this->currency->format($price_val, $this->session->data['currency']);
+					
 				} else {
 					$price = false;
+					$price_val=0;
 				}
 
 				if ((float)$result['special']) {
@@ -593,6 +609,7 @@ class ControllerProductProduct extends Controller {
 					'meta_h1'     => $result['meta_h1'],
 					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
 					'price'       => $price,
+					'price_val'	  => $price_val,
 					'special'     => $special,
 					'tax'         => $tax,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
