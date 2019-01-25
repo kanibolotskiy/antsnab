@@ -39,10 +39,10 @@ class ModelToolImage extends Model {
                 $scaleW = $width_orig/$width;
 				$scaleH = $height_orig/$height;
 
-				//$image = new Image(DIR_IMAGE . $old_image);
-				//if($watermark){
+				$image = new Image(DIR_IMAGE . $old_image);
+				if($watermark){
 					$image->watermark(new Image(DIR_IMAGE . $watermark), 'middlecenter');
-				//}
+				}
 
                 if ($scaleH > $scaleW) {
                     $_height = $height * $scaleW;
