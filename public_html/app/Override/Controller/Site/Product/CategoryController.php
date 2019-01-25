@@ -69,7 +69,7 @@ class CategoryController extends \Controller
             
             $category_final_info = $this->model_catalog_category->getCategory($category_id);
             if(isset($category_final_info["bottom_text"])){
-                $this->data['bottom_text'] = $category_final_info["bottom_text"];
+                $this->data['bottom_text'] = html_entity_decode($category_final_info["bottom_text"]);
             }else{
                 $this->data['bottom_text'] = '';
             }

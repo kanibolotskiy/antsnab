@@ -69,6 +69,76 @@
             </div>
         </div>
     </form>
-    <script>
-    </script>
+    <script src='view/javascript/tinymce/tinymce.min.js'></script>
+          <script>
+
+		  function elFinderBrowser (callback, value, meta) {
+		  try {
+			  var fm = $('<div/>').dialogelfinder({
+				  url : 'index.php?route=elfinder/connector&token=' + getURLVar('token'),
+				  lang : 'ru',
+				  width : 900,
+				  height: 400,
+				  destroyOnClose : true,
+			  getFileCallback : function(file, fm) {
+					var info = file.name + ' (' + fm.formatSize(file.size) + ')';
+					callback(file.url, {alt: info});
+			  },
+			  commandsOptions : {
+				  getfile : {
+					  oncomplete : 'close',
+					  multiple : false,
+					  folders : false
+				  }
+			  }
+				}).dialogelfinder('instance');
+		  } catch (err) {
+			//$('#filePickerError').modal('show');
+          $.ajax({
+								url: 'index.php?route=common/filemanager&token=' + getURLVar('token'),
+								dataType: 'html',
+								beforeSend: function() {
+									$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+									$('#button-image').prop('disabled', true);
+								},
+								complete: function() {
+									$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+									$('#button-image').prop('disabled', false);
+								},
+								success: function(html) {
+								
+									$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+									
+									$('#modal-image').modal('show');
+									
+									$('#modal-image').delegate('a.thumbnail', 'click', function(e) {
+										e.preventDefault();
+										
+										//$(element).summernote('insertImage', $(this).attr('href'));
+										callback($(this).attr('href'));							
+										$('#modal-image').modal('hide');
+									});
+								}
+							});
+		  }
+		  return false;
+		}
+    $('.summernote').addClass('tinymce');
+          $('.summernote').removeClass('summernote');
+          tinymce.init({
+            selector: '.tinymce',
+            skin: 'bootstrap',
+            language: 'ru',
+            height:300,
+            file_picker_callback : elFinderBrowser,
+            plugins: [
+              'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+              'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+              'save table contextmenu directionality emoticons template paste textcolor colorpicker'
+            ],
+            toolbar: 'formatselect bold italic sizeselect fontselect fontsizeselect | hr alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | insertfile undo redo | forecolor backcolor emoticons superscript | code ',
+            fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+          });
+          
+          </script>
     <?php echo $footer; ?>

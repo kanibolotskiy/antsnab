@@ -4570,15 +4570,13 @@ html, body{
     from {-webkit-transform: rotate(0deg);}
     to {-webkit-transform: rotate(360deg);}
 }
-.bottom_text, .bottom_text p{font-size: 14px;
-    color: #444444;
-    line-height: 24px;
-    margin-top: 24px;
-    letter-spacing: 0.12px;}
 
-    #noty_layout__topRight {
-        top: 37px;
-    }
+.bottom_text{margin-top: 24px;font-size: 14px;color: #000;line-height: 24px;letter-spacing: 0.12px;}
+.bottom_text p{margin-bottom: 5px;}
+
+#noty_layout__topRight {
+    top: 37px;
+}
 
 .resp-tab-content {
     padding:10px;
