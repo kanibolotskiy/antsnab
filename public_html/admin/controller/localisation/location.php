@@ -276,6 +276,7 @@ class ControllerLocalisationLocation extends Controller {
 		$data['entry_image'] = $this->language->get('entry_image');
 		$data['entry_open'] = $this->language->get('entry_open');
 		$data['entry_comment'] = $this->language->get('entry_comment');
+		$data['entry_map'] = $this->language->get('entry_map');
 
 		$data['help_geocode'] = $this->language->get('help_geocode');
 		$data['help_open'] = $this->language->get('help_open');
@@ -366,6 +367,14 @@ class ControllerLocalisationLocation extends Controller {
 			$data['address'] = $location_info['address'];
 		} else {
 			$data['address'] = '';
+		}
+
+		if (isset($this->request->post['map'])) {
+			$data['map'] = $this->request->post['map'];
+		} elseif (!empty($location_info)) {
+			$data['map'] = $location_info['map'];
+		} else {
+			$data['map'] = '';
 		}
 
 		if (isset($this->request->post['geocode'])) {

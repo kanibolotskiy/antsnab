@@ -208,6 +208,7 @@ class ProductTemplateDecorator implements IDecorator
                     'image'       => $image,
                     'open'        => nl2br($location_info['open']),
                     'comment'     => $location_info['comment'],
+                    'map'         => html_entity_decode($location_info['map']),
                     'files'       => $location_files
                 );
             }

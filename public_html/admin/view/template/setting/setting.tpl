@@ -173,6 +173,12 @@
                   <?php } ?>
                 </div>
               </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-email_site"><?php echo $entry_email_site; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_email_site" value="<?php echo $config_email_site; ?>" placeholder="<?php echo $entry_email_site; ?>" id="input-email_site" class="form-control" />
+                </div>
+              </div>
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
                 <div class="col-sm-10">

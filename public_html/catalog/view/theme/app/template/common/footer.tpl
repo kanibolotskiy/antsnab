@@ -77,7 +77,7 @@
                     <a rel="nofollow" href="tel:<?= $telephone2 ?>"><span itemprop="telephone"><?= $telephone2 ?></span></a>
                 </div>
                 <?php endif;?>
-                <a rel="nofollow" href="mailto:<?= $email ?>" class="mail"><span itemprop="email"><?= $email ?></span></a>
+                <a rel="nofollow" href="mailto:<?= $email_site ?>" class="mail"><span itemprop="email"><?= $email_site ?></span></a>
             </div>
         </div>
     </div>

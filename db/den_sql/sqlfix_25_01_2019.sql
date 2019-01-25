@@ -1,0 +1,1 @@
+ALTER TABLE `oc_location` ADD `map` TEXT NOT NULL AFTER `comment`;

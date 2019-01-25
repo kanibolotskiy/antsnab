@@ -81,6 +81,7 @@ class ContactpageController extends \Controller
         $data['fax'] = $this->config->get('config_fax');
         $data['open'] = nl2br($this->config->get('config_open'));
         $data['comment'] = $this->config->get('config_comment');
+        $data['email_site'] = $this->config->get('config_email_site');
 
         $data['locations'] = array();
 
@@ -124,13 +125,15 @@ class ContactpageController extends \Controller
                     'image'       => $image,
                     'open'        => nl2br($location_info['open']),
                     'comment'     => $location_info['comment'],
+                    'map'         => html_entity_decode($location_info['map']),
                     'files'       => $location_files
                 );
             }
         }
-
+        /*
         $config = $this->config;
         $data['shop_email'] = $config->get('config_email');
+        */
 
         foreach ($data['locations'] as &$location) {
             $geocode = str_replace(' ', '', $location['geocode']);

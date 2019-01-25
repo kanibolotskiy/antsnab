@@ -44,6 +44,12 @@
             </div>
           </div>
           <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-map"><?php echo $entry_map; ?></label>
+            <div class="col-sm-10">
+              <textarea type="text" name="map" placeholder="<?php echo $entry_map; ?>" rows="5" id="input-map" class="form-control"><?php echo $map; ?></textarea>
+            </div>
+          </div>
+          <div class="form-group">
             <label class="col-sm-2 control-label" for="input-geocode"><span data-toggle="tooltip" data-container="#content" title="<?php echo $help_geocode; ?>"><?php echo $entry_geocode; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="geocode" value="<?php echo $geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" id="input-geocode" class="form-control" />

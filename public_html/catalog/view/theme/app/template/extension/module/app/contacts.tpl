@@ -23,7 +23,7 @@
                     </li>
                     <li>
                         <p>E-mail</p>
-                        <a href="mailto:<?= $shop_email ?>"><?= $shop_email ?></a>
+                        <a href="mailto:<?= $email_site ?>"><?= $email_site ?></a>
                     </li>
                 </ul>
             </div>
@@ -50,20 +50,14 @@
                                         <p><?= $l['address'] ?></p>
                                         <p><?= $l['open'] ?></p>
                                         
-                                        <?php if (!empty($l['latitude']) && !empty($l['longitude'])): ?>
-                                            <div data-latitude="<?=$l['latitude']?>" 
-                                                 data-longitude="<?=$l['longitude']?>" 
-                                                 data-name="<?=$l['name']?>" id="map<?= $cnt ?>" 
-                                                 class="map map-container">
-                                            </div>
-                                        <?php endif; ?>
+                                        <div class="map map_data">
+                                            <?php echo trim($l['map']);?>
+                                        </div>
                                         
-                                        <!-- @task1 hardcoded -->
                                         <?php foreach($l['files'] as $locaction_file){ ?>
                                             <a target="_blank" href="<?php echo $locaction_file['file_link'];?>" class="download-map">Скачать подробную карту</a>
                                         <?php }?>
-                                        <!--<a target="_blank" href="<?php echo $l['file'];?>" class="download-map">Скачать подробную карту</a>-->
-                                        <!-- <a target="_blank" href="/system/storage/download/sklad-a-plan.pdf.JDa4QZE4AmF8uHtfdkmwjUdNYVGJGEAd" class="download-map">Скачать подробную карту</a>-->
+
                                     </div>
                                 </div>
                                 <?php $cnt++ ?>
