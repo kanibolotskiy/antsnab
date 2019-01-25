@@ -413,7 +413,7 @@ class ModelCatalogProduct extends Model
         
         if (isset($data['product_analog'])) {
             foreach ($data['product_analog'] as $related_id) {
-                $this->db->query("DELETE FROM " . DB_PREFIX . "product_analogs WHERE product_id = '" . (int) $product_id . "' AND related_id = '" . (int) $related_id . "'");
+                //$this->db->query("DELETE FROM " . DB_PREFIX . "product_analogs WHERE product_id = '" . (int) $product_id . "' AND related_id = '" . (int) $related_id . "'");
                 $this->db->query("INSERT INTO " . DB_PREFIX . "product_analogs SET product_id = '" . (int) $product_id . "', related_id = '" . (int) $related_id . "'");
                 /* $this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int) $related_id . "' AND related_id = '" . (int) $product_id . "'");
                   $this->db->query("INSERT INTO " . DB_PREFIX . "product_related SET product_id = '" . (int) $related_id . "', related_id = '" . (int) $product_id . "'"); */
@@ -427,7 +427,7 @@ class ModelCatalogProduct extends Model
         //@task move to override
         if (isset($data['product_related'])) {
             foreach ($data['product_related'] as $related_id) {
-                $this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int) $product_id . "' AND related_id = '" . (int) $related_id . "'");
+                //$this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int) $product_id . "' AND related_id = '" . (int) $related_id . "'");
                 $this->db->query("INSERT INTO " . DB_PREFIX . "product_related SET product_id = '" . (int) $product_id . "', related_id = '" . (int) $related_id . "'");
                 /* $this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int) $related_id . "' AND related_id = '" . (int) $product_id . "'");
                   $this->db->query("INSERT INTO " . DB_PREFIX . "product_related SET product_id = '" . (int) $related_id . "', related_id = '" . (int) $product_id . "'"); */
