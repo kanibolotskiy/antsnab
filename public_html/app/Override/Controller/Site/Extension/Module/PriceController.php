@@ -159,7 +159,8 @@ class PriceController extends \Controller
         $data['saleUnits'] = $unitsGateway->getProductsWithUnit($productIds, 'isSaleBase');
         $data['cur'] = $this->currency;
         $data['curSym'] = $this->config->get('config_currency');
-
+        
+        
         return $this->load->view('extension/module/app/price/price_tableContent', $data);
     }
 }

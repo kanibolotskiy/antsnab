@@ -348,14 +348,16 @@ class ControllerProductProduct extends Controller {
 		
 
 			if ($product_info['image']) {
-				$data['popup'] = $b_patch . $product_info['image'];
+				//$data['popup'] = $b_patch . $product_info['image'];
+				$data['popup'] = $this->model_tool_image->myResize($product_info['image'], 1000,750,10,'watermark.png');
+
 			} else {
 				$data['popup'] = '';
 			}
 
 			if ($product_info['image']) {
-				//$data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get($this->config->get('config_theme') . '_image_thumb_width'), $this->config->get($this->config->get('config_theme') . '_image_thumb_height'));
-				$data['thumb'] = $this->model_tool_image->myResize($product_info['image'],$this->config->get($this->config->get('config_theme') . '_image_thumb_width'), 350,350,3);
+				$data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get($this->config->get('config_theme') . '_image_thumb_width'), $this->config->get($this->config->get('config_theme') . '_image_thumb_height'));
+				//$data['thumb'] = $this->model_tool_image->myResize($product_info['image'],$this->config->get($this->config->get('config_theme') . '_image_thumb_width'), 350,350,4,'watermark.png');
 				$this->document->setOgImage($data['thumb']);
 			} else {
 				$data['thumb'] = '';

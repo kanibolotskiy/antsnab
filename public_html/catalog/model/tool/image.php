@@ -1,6 +1,6 @@
 <?php
 class ModelToolImage extends Model {
-	public function myResize($filename, $width, $height, $type = "") {
+	public function myResize($filename, $width, $height, $type = "", $watermark="") {
 		if (!is_file(DIR_IMAGE . $filename)) {
 			if (is_file(DIR_IMAGE . 'no_image.jpg')) {
 				$filename = 'no_image.jpg';
@@ -37,9 +37,12 @@ class ModelToolImage extends Model {
             list($width_orig, $height_orig) = getimagesize(DIR_IMAGE . $old_image);
             if ($width_orig != $width || $height_orig != $height) {
                 $scaleW = $width_orig/$width;
-                $scaleH = $height_orig/$height;
+				$scaleH = $height_orig/$height;
 
-                $image = new Image(DIR_IMAGE . $old_image);
+				//$image = new Image(DIR_IMAGE . $old_image);
+				//if($watermark){
+					$image->watermark(new Image(DIR_IMAGE . $watermark), 'middlecenter');
+				//}
 
                 if ($scaleH > $scaleW) {
                     $_height = $height * $scaleW;

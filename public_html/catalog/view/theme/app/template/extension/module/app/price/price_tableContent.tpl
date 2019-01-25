@@ -8,10 +8,10 @@
         <tr>
             <td>
                 <a href="<?=$prodData['href']?>" class="no-formated">
-                    <?=$prodData['meta_h1']?>
+                    <?=$prodData['name']?>
                 </a>
             </td>
-            <td class="hide_on_mobile">
+            <td class="hide_on_mobile sec_column_price">
                 <?php
                     $package = '';
                     if( isset($saleUnits[$prodData['product_id']]) ){

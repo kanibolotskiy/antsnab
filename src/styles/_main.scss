@@ -1428,7 +1428,7 @@ ul.tabset li:last-child a.active {
                     display: block;
                     text-decoration: underline;
                     color: #000000;
-                    font-size: 16px;
+                    font-size: 15px;
                     line-height: 20px;
                     margin-bottom: 16px;
                     &:hover{
@@ -1720,7 +1720,7 @@ ul.tabset li:last-child a.active {
         display: block;
         margin-bottom: 7px;
         color: #444444;
-        font-size: 14px;
+        font-size: 13px;
         strong{
             font-weight: bold;
             color: #000;
@@ -4511,7 +4511,7 @@ html, body{
 }
 
 .resp-tabs-list{position:relative;overflow:hidden;margin-bottom: 10px !important;}
-.resp-tab-active{border:0!important;color:#fff;background-color:#d3a06d!important;}
+.resp-tab-active{border:0!important;color:#fff;background-color:#d3a06d!important;cursor:auto!important;}
 .resp-tab-content{border:0!important;padding:0;}
 .production-block a{color:#000;}
 .give-feedback{position:relative;margin-bottom:25px}
@@ -4570,7 +4570,7 @@ html, body{
     from {-webkit-transform: rotate(0deg);}
     to {-webkit-transform: rotate(360deg);}
 }
-
+.sec_column_price{font-size: 12px!important;white-space: nowrap;}
 .bottom_text{margin-top: 24px;font-size: 14px;color: #000;line-height: 24px;letter-spacing: 0.12px;}
 .bottom_text p{margin-bottom: 5px;}
 

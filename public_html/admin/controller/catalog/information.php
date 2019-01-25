@@ -260,7 +260,8 @@ class ControllerCatalogInformation extends Controller {
 	}
 
 	protected function getForm() {
-    //CKEditor
+	//CKEditor
+	/*
     if ($this->config->get('config_editor_default')) {
         $this->document->addScript('view/javascript/ckeditor/ckeditor.js');
         $this->document->addScript('view/javascript/ckeditor/ckeditor_init.js');
@@ -270,7 +271,7 @@ class ControllerCatalogInformation extends Controller {
         $this->document->addScript('view/javascript/summernote/opencart.js');
         $this->document->addStyle('view/javascript/summernote/summernote.css');
     }
-
+	*/
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_form'] = !isset($this->request->get['information_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
@@ -318,11 +319,13 @@ class ControllerCatalogInformation extends Controller {
 			$data['error_title'] = array();
 		}
 
+		
 		if (isset($this->error['description'])) {
 			$data['error_description'] = $this->error['description'];
 		} else {
 			$data['error_description'] = array();
 		}
+		
 
 		if (isset($this->error['meta_title'])) {
 			$data['error_meta_title'] = $this->error['meta_title'];
@@ -494,15 +497,16 @@ class ControllerCatalogInformation extends Controller {
 		if (!$this->user->hasPermission('modify', 'catalog/information')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-
+		
 		foreach ($this->request->post['information_description'] as $language_id => $value) {
 			if ((utf8_strlen($value['title']) < 3) || (utf8_strlen($value['title']) > 64)) {
 				$this->error['title'][$language_id] = $this->language->get('error_title');
 			}
-
+			/*
 			if (utf8_strlen($value['description']) < 3) {
 				$this->error['description'][$language_id] = $this->language->get('error_description');
 			}
+			*/
 	}
 
 		if (utf8_strlen($this->request->post['keyword']) > 0) {
