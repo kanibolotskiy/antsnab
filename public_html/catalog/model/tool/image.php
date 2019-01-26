@@ -40,9 +40,7 @@ class ModelToolImage extends Model {
 				$scaleH = $height_orig/$height;
 
 				$image = new Image(DIR_IMAGE . $old_image);
-				if($watermark){
-					$image->watermark(new Image(DIR_IMAGE . $watermark), 'middlecenter');
-				}
+				
 
                 if ($scaleH > $scaleW) {
                     $_height = $height * $scaleW;
@@ -65,7 +63,10 @@ class ModelToolImage extends Model {
 
                     $image->crop($top_x, $top_y, $bottom_x, $bottom_y);
                 }
-                $image->resize($width, $height, $type);
+				$image->resize($width, $height, $type);
+				if($watermark){
+					$image->watermark(new Image(DIR_IMAGE . $watermark), 'middlecenter');
+				}
                 $image->save(DIR_IMAGE . $new_image);
             } else {
                 copy(DIR_IMAGE . $old_image, DIR_IMAGE . $new_image);
