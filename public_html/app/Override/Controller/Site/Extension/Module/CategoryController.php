@@ -28,13 +28,14 @@ class CategoryController extends \Controller
 		}
 
         $data['openeditems'] = self::$openedItems = $parts;
-
+        $data['openeditems'][] = $data['category_id'];
+       
         $data['categories'] = [];
         foreach(  $this->hierarhy->getRootNodes() as $node ) {
             $item = $node->toArray();
             $item['href'] = $this->url->link('product/category', 'path=' . $this->hierarhy->getPath($node->getId())); 
             $item['child'] = $this->recursiveGetItems($node);
-            //echo "!".$item['isseo']."!";
+            
             if(!$item['isseo']){
                 $data['categories'][] = $item;
             }

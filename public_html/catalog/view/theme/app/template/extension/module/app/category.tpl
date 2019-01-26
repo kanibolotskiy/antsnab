@@ -7,6 +7,9 @@
         <ul class="simple-accordion">
         
         <?php foreach ($categories as $parent) { ?>
+                
+            
+
                 <?php if ( in_array($parent['category_id'], $openeditems) ) { ?>
                 <li class="active">
                 <?php } else { ?>
