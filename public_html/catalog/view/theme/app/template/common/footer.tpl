@@ -68,13 +68,13 @@
                 </p>
                 <div class="call-us">
                     <span>позвоните нам:</span>
-                    <a rel="nofollow" href="tel:<?= $telephone ?>"><span itemprop="telephone"><?= $telephone ?></span></a>
+                    <a rel="nofollow" href="tel:<?= $telephone ?>"><span class="footer_phone_v" itemprop="telephone"><?= $telephone ?></span></a>
                 </div>
                 <div class="line"></div>
                 <?php if( !empty($telephone2) ):?>
                 <div class="call-us call-us2">
                     <span>бесплатный звонок по России</span>
-                    <a rel="nofollow" href="tel:<?= $telephone2 ?>"><span itemprop="telephone"><?= $telephone2 ?></span></a>
+                    <a rel="nofollow" href="tel:<?= $telephone2 ?>"><span class="footer_phone_v" itemprop="telephone"><?= $telephone2 ?></span></a>
                 </div>
                 <?php endif;?>
                 <a rel="nofollow" href="mailto:<?= $email_site ?>" class="mail"><span itemprop="email"><?= $email_site ?></span></a>

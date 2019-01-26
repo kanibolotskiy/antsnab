@@ -327,14 +327,15 @@
                                 </tbody>
                             </table>
                         </div>
-                        
+                        <!--noindex-->
                         <?php if(isset($files)){ ?>
                             <div class="tovar_files">
                                 <?php foreach($files as $file){ ?>
-                                    <a class="download" target="_blank" href="<?php echo $file['href']; ?>"><?php if($file['title']) { echo $file['title'];}else{echo $file['name'];} ?></a>
+                                    <a rel="nofollow" class="download" target="_blank" href="<?php echo $file['href']; ?>"><?php if($file['title']) { echo $file['title'];}else{echo $file['name'];} ?></a>
                                 <?php } ?>
                             </div>
                         <?php } ?>
+                        <!--/noindex-->
                     </div>
                     
                     <?php endif;?>

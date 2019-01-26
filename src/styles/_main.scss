@@ -3243,7 +3243,7 @@ button.show-more{
     color: #000;
     margin-bottom: 20px;
     span{
-        color: #d3a06d;
+        /*color: #d3a06d;*/
     }
     a{
         text-decoration: underline;
@@ -3297,6 +3297,35 @@ button.show-more{
     .border{
         margin-bottom: 20px;
     }
+    table{
+        max-width:100%;
+        border-collapse: collapse;
+        tr{
+            td{
+                padding: 17px;
+                border: 1px solid #E8E5E2;
+                font-size: 14px;
+                color: #000000;
+                p{
+                    margin-top:0;
+                    margin-bottom:0;
+                    line-height:17px!important;
+                }
+            }
+        }
+        tr:first-child{
+            td{    
+                font-weight: bold;
+            }
+        }
+        tr:nth-child(odd) {
+            td{
+                background-color: #EFEEEC;
+            }
+        }
+
+    }
+
 }
 .packaging{
     .title{
@@ -4945,6 +4974,8 @@ a.buy{display:inline-block;vertical-align: top;}
 .about_sertificats_col img{max-width:100%;height:auto;}
 .recalc.intotal span{white-space: nowrap;line-height: 25px;}
 .noty_theme__relax.noty_type__warning{line-height:20px;color:#000;border:1px solid #000;font-weight:bold;}
+.call-us span.footer_phone_v{color: #000000;font-weight: 600;font-size: 22px;}
+
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{
         width: 100%;
