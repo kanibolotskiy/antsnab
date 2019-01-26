@@ -9,7 +9,6 @@
             <h1 class="title"><?php echo $heading_title; ?></h1>
             <?php echo $description; ?>
         </div>
-        <?php echo $content_bottom; ?>
         <?php if(isset($files)) {?>
             <div class="tovar_files">
                 <?php foreach($files as $file){?>
@@ -17,6 +16,8 @@
                 <?php }?>
             </div>
         <?php }?>
+        <?php echo $content_bottom; ?>
+        
     </div>
 </div>
 <?= $footer ?>

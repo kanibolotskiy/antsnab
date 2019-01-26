@@ -3945,6 +3945,7 @@ a.print{
     }
     .content .news{
         display: block;
+        margin-top:20px;
     }
     .accordion .opener{
         padding-right: 55px;
@@ -3987,6 +3988,8 @@ a.print{
     }
 
 }
+
+
 @media screen and (max-width: 768px) {
     .nav ul li a{
         font-size: 12px;
@@ -4993,6 +4996,12 @@ background:rgba(0,0,0, 0.3);opacity:1;
 width:64px;height:64px;left:50%;margin-left:-32px;top:50%;margin-top:-32px;
 background: url(../img/youtube_button.png) no-repeat;}
 .resp-tabs-list li{padding:13px;}
+.collapse svg{
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg); 
+    transform: rotate(90deg);}
+    
+.resp-tab-content:first-child{display:block;}
 
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{
