@@ -342,7 +342,7 @@
                     <?php if($video_link) {?>
                         <div>
                             <div class="wrap_youtube_image">
-                                <a href="<?php echo $video_link;?>" data-fancybox fancybox-caption="<?php echo $heading_title;?>. #Видео">
+                                <a href="<?php echo $video_link;?>" data-fancybox data-caption="<?php echo $heading_title;?>. #Видео">
                                     <div class="youtube_image">
                                         <img src="<?php echo $video_img;?>">
                                     </div>

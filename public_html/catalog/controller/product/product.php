@@ -381,6 +381,7 @@ class ControllerProductProduct extends Controller {
 			}
 
 			$data['video_link']='';
+			$data['video_img']='';
 			if($product_info['video']){
 				$data['video_link'] = $product_info['video'];
 				$video_id = explode("?v=", $data['video_link']); // For videos like http://www.youtube.com/watch?v=...
