@@ -373,7 +373,7 @@ class ControllerProductProduct extends Controller {
 					$data['images'][] = array(
 						//'popup' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_popup_width'), $this->config->get($this->config->get('config_theme') . '_image_popup_height')),
 						//'popup' => $this->model_tool_image->resize($result['image'],1000,750),
-						//'popup' => $this->model_tool_image->myResize($result['image'],1000,750,1,'watermark.png'),
+						'popup' => $this->model_tool_image->myResize($result['image'],1000,750,1,'watermark.png'),
 						'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_additional_width'), $this->config->get($this->config->get('config_theme') . '_image_additional_height'))
 					);
 				}
