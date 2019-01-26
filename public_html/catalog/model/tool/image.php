@@ -62,7 +62,8 @@ class ModelToolImage extends Model {
                     $bottom_y = $height_orig;
 
                     $image->crop($top_x, $top_y, $bottom_x, $bottom_y);
-                }
+				}
+				$image->resize($width, $height, $type);
 				if($watermark){
 					$image->watermark(new Image(DIR_IMAGE . 'watermark.png'), 'middlecenter');
 				}
