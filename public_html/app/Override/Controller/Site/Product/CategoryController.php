@@ -166,20 +166,14 @@ class CategoryController extends \Controller
     private function setFilterCategories($categories_seo){
         $url="";
         foreach($categories_seo as $category){
-            //echo "!".$category["category_id"]."!";
-            /** @ИСПРАВИТЬ - зачем еще N запросов к базе если в $categories_seo уже все есть */
-            $category_seo_info = $this->model_catalog_category->getCategory($category["category_id"]);
-            $path = $this->hierarhy->getPath($category["category_id"]);
-            //echo $path."<br/>";
-
-            $this->data['categories_isseo'][] = array(
-                'name' => $category_seo_info['name'],
-                /** @ИСПРАВИТЬ - нужно использовать $path */
-                'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $category['category_id'] . $url)
-            );
+            if(!$category['notshowisseo']){
+                $this->data['categories_isseo'][] = array(
+                    'name' => $category['name'],
+                    /** @ИСПРАВИТЬ - нужно использовать $path */
+                    'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $category['category_id'] . $url)
+                );
+            }
         }
-        
-        //print_r($category_seo_info);
     }
 
     private function showCategories($category_id)

@@ -332,6 +332,9 @@ class ControllerCatalogCategory extends Controller {
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_layout'] = $this->language->get('entry_layout');
 		$data['entry_isseo'] = $this->language->get('entry_isseo');
+		$data['entry_notshowisseo'] = $this->language->get('entry_notshowisseo');
+		
+
 		$data['entry_bottom_text'] = $this->language->get('entry_bottom_text');
 		
 
@@ -495,6 +498,16 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['isseo'] = 0;
 		}
+
+		if (isset($this->request->post['notshowisseo'])) {
+			$data['notshowisseo'] = $this->request->post['notshowisseo'];
+		} elseif (!empty($category_info)) {
+			$data['notshowisseo'] = $category_info['notshowisseo'];
+		} else {
+			$data['notshowisseo'] = 0;
+		}
+
+		
 
 		if (isset($this->request->post['bottom_text'])) {
 			$data['bottom_text'] = $this->request->post['bottom_text'];
@@ -704,7 +717,8 @@ class ControllerCatalogCategory extends Controller {
 				'delete'      => $this->url->link('catalog/category/delete', 'token=' . $this->session->data['token'] . '&category_id=' . $result['category_id'] . $url, 'SSL'),
 				'href'        => $href,
 				'indent'      => $indent,
-				'isseo'		  => $result['isseo']
+				'isseo'		  => $result['isseo'],
+				'notshowisseo'=> $result['notshowisseo'],
 			);
 
 			if ($category_id == $result['category_id']) {

@@ -70,6 +70,25 @@
                   </div>
 
                   <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-notshowisseo">
+                        <?php echo $entry_notshowisseo; ?>
+                    </label>
+                    <div class="col-sm-1">
+                      <div class="checkbox">
+                        <label>
+                          <?php if($notshowisseo) { ?>
+                          <input  type="checkbox" name="notshowisseo" value="1" checked="checked" id="input-notshowisseo" />
+                          <?php } else { ?>
+                          <input type="checkbox" name="notshowisseo" value="1" id="input-notshowisseo" />
+                          <?php } ?>
+                          &nbsp; </label>
+                      </div>
+                    </div>
+                    
+                  </div>
+
+
+                  <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
                     <div class="col-sm-10">
                       <textarea name="category_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>" data-lang="<?php echo $lang; ?>" class="form-control summernote"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['description'] : ''; ?></textarea>

@@ -35,6 +35,9 @@ $_['entry_layout']          		= 'Выберите макет:';
 $_['entry_isfinal']                 = 'Группирует продукты?';
 $_['entry_category_prodproperties'] = 'Управлять свойствами';
 $_['entry_isseo']                   = 'Категория фильтра';
+$_['entry_notshowisseo']            = 'Не показывать в подборке';
+
+
 $_['entry_bottom_text']              = 'Нижний текст';
 
 

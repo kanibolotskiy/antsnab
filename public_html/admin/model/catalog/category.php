@@ -8,7 +8,12 @@ class ModelCatalogCategory extends Model
         if(!isset($data['isseo'])){
             $data['isseo']=0;
         }
-        $this->db->query("INSERT INTO " . DB_PREFIX . "category SET parent_id = '" . (int) $data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int) $data['top'] : 0) . "', `column` = '" . (int) $data['column'] . "', sort_order = '" . (int) $data['sort_order'] . "', status = '" . (int) $data['status'] . "', isseo = '" . (int) $data['isseo'] . "', date_modified = NOW(), date_added = NOW()");
+        if(!isset($data['notshowisseo'])){
+            $data['notshowisseo']=0;
+        }
+        
+
+        $this->db->query("INSERT INTO " . DB_PREFIX . "category SET parent_id = '" . (int) $data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int) $data['top'] : 0) . "', `column` = '" . (int) $data['column'] . "', sort_order = '" . (int) $data['sort_order'] . "', status = '" . (int) $data['status'] . "', isseo = '" . (int) $data['isseo'] . "', notshowisseo = '" . (int) $data['notshowisseo'] . "', date_modified = NOW(), date_added = NOW()");
 
         $category_id = $this->db->getLastId();
 
@@ -66,10 +71,16 @@ class ModelCatalogCategory extends Model
         if(!isset($data['isseo'])){
             $data['isseo']=0;
         }
+        if(!isset($data['notshowisseo'])){
+            $data['notshowisseo']=0;
+        }
+
+        
+
         if(!isset($data['bottom_text'])){
             $data['bottom_text']='';
         }
-        $this->db->query("UPDATE " . DB_PREFIX . "category SET parent_id = '" . (int) $data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int) $data['top'] : 0) . "', `column` = '" . (int) $data['column'] . "', sort_order = '" . (int) $data['sort_order'] . "', status = '" . (int) $data['status'] . "', isseo = '" . (int) $data['isseo'] . "', date_modified = NOW() WHERE category_id = '" . (int) $category_id . "'");
+        $this->db->query("UPDATE " . DB_PREFIX . "category SET parent_id = '" . (int) $data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int) $data['top'] : 0) . "', `column` = '" . (int) $data['column'] . "', sort_order = '" . (int) $data['sort_order'] . "', status = '" . (int) $data['status'] . "', isseo = '" . (int) $data['isseo'] . "', notshowisseo = '" . (int) $data['notshowisseo'] . "', date_modified = NOW() WHERE category_id = '" . (int) $category_id . "'");
 
         if (isset($data['image'])) {
             $this->db->query("UPDATE " . DB_PREFIX . "category SET image = '" . $this->db->escape($data['image']) . "' WHERE category_id = '" . (int) $category_id . "'");

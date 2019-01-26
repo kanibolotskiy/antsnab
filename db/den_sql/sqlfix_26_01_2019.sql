@@ -1,0 +1,1 @@
+ALTER TABLE `oc_category` ADD `notshowisseo` TINYINT NOT NULL AFTER `isseo`;
