@@ -63,8 +63,10 @@ class ModelToolImage extends Model {
 
                     $image->crop($top_x, $top_y, $bottom_x, $bottom_y);
                 }
-				
-                $image->save(DIR_IMAGE . $new_image);
+				if($watermark){
+					$image->watermark(new Image(DIR_IMAGE . 'watermark.png'), 'middlecenter');
+				}
+				$image->save(DIR_IMAGE . $new_image);
             } else {
 				if($watermark){
 					$image = new Image(DIR_IMAGE . $old_image);
