@@ -177,6 +177,7 @@ class CartController extends \ControllerCheckoutCart
                     /*------------------------------------------------*/
                     $produnitsGateway = new ProdUnits($this->registry);
                     $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
+                    $propGateway = new ProdProperties($this->registry);
                     $prodUnits = $produnitsGateway->getUnitsByProduct($product['product_id']);
                     $priceUnit = null;
                     foreach ($prodUnits as $unit_id => $unit) {
@@ -233,6 +234,18 @@ class CartController extends \ControllerCheckoutCart
                     }
                     $recurring = '';
                     
+                    $properties = $propGateway->getPropertiesWithProductValues($product['product_id'], 'order by sortOrder ASC');
+                    $previewProperties = array();
+                    foreach ($properties as $p) {
+                        if ($p['showInProdPreview']) {
+                            $previewProperties[] = array(
+                                'name' => $p['cat_name'],
+                                'val' => htmlspecialchars_decode($p['val'],ENT_QUOTES),
+                                'unit' => $p['cat_unit']
+                            );
+                        }
+                    }
+                    
                     $data['product'] = array(
                         'cart_id' => $product['cart_id'],
                         'thumb' => $image,
@@ -255,6 +268,7 @@ class CartController extends \ControllerCheckoutCart
                         'priceUnit'=> $priceUnit,
                         'saleToPriceKoef' => $saleToPriceKoef,
                         'location' => $product['location'],
+                        'properties' => $previewProperties,
                         'href' => $this->url->link('product/product', 'product_id=' . $product['product_id'])
                     );
                     /*------------------------------------------------*/
