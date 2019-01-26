@@ -2139,7 +2139,7 @@ button.show-more{
                     font-size: 14px;
                     margin-bottom: 15px;
                     line-height: 20px;
-                    max-height: 66px;
+                    /*max-height: 66px;*/
                     overflow: hidden;
                     &:hover{
                         text-decoration: none;
@@ -2969,10 +2969,12 @@ button.show-more{
             .products-block {
                 a.title-product{
                     padding: 0 10px;
-                    height:65px;
+                    text-align:center;
+                    /*height:65px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    */
                 }
                 a.order-btn{
                     width: 96px;
@@ -5005,7 +5007,7 @@ background: url(../img/youtube_button.png) no-repeat;}
 .about-us img{max-width:100%;height:auto;}
 .basket-row .complement{margin-top:9px;}
 .basket-row .complement span,.basket-row .complement strong{font-size:12px!important;display:inline-block!important;}
-
+.basket-row img{max-width:100%;height:auto;}
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{
         width: 100%;
