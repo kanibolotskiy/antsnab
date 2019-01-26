@@ -283,11 +283,11 @@
                 <ul class="resp-tabs-list vert">
 
                     <?php if(!empty($properties)): ?>
-                    <li>
-                        Описание
-                    </li>
+                        <li>Описание</li>
                     <?php endif;?>
-
+                    <?php if($video_link) {?>
+                        <li>Видео</li>
+                    <?php }?>
                     <li>Упаковка</li>
                     <li>Калькулятор</li>
 
@@ -339,7 +339,17 @@
                     </div>
                     
                     <?php endif;?>
-
+                    <?php if($video_link) {?>
+                        <div>
+                            <div class="wrap_youtube_image">
+                                <a href="<?php echo $video_link;?>" data-fancybox fancybox-caption="<?php echo $heading_title;?>. #Видео">
+                                    <div class="youtube_image">
+                                        <img src="<?php echo $video_img;?>">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    <?php }?>
                     <!--TAB упаковка-->
                     <div>
                         <div class="packaging">

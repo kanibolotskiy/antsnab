@@ -685,6 +685,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_recurring'] = $this->language->get('entry_recurring');
 		$data['entry_main_category'] = $this->language->get('entry_main_category');
 		$data['entry_disseo'] = $this->language->get('entry_disseo');
+		$data['entry_video'] = $this->language->get('entry_video');
 		
 
 		$data['help_keyword'] = $this->language->get('help_keyword');

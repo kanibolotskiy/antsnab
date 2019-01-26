@@ -1,0 +1,1 @@
+ALTER TABLE `oc_product_description` ADD `video` VARCHAR(255) NOT NULL AFTER `description_mini`;

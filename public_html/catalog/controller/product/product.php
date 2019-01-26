@@ -379,7 +379,20 @@ class ControllerProductProduct extends Controller {
 				}
 				$count_images++;
 			}
-			
+
+			$data['video_link']='';
+			if($product_info['video']){
+				$data['video_link'] = $product_info['video'];
+				$video_id = explode("?v=", $data['video_link']); // For videos like http://www.youtube.com/watch?v=...
+				if (empty($video_id[1]))
+					$video_id = explode("/v/", $data['video_link']); // For videos like http://www.youtube.com/watch/v/..
+
+				$video_id = explode("&", $video_id[1]); // Deleting any other params
+				$video_id = $video_id[0];
+				$data['video_img']='//img.youtube.com/vi/'.$video_id.'/maxresdefault.jpg';
+			}
+
+
 			$data['price_wholesale'] = $product_info['price_wholesale'];
 
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {

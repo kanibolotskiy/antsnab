@@ -119,6 +119,13 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="input-video<?php echo $language['language_id']; ?>"><span><?php echo $entry_video; ?></span></label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="product_description[<?php echo $language['language_id']; ?>][video]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['video'] : ''; ?>" placeholder="<?php echo $entry_video; ?>" id="input-video<?php echo $language['language_id']; ?>" class="form-control" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
                                             <label class="col-sm-2 control-label" for="input-disseo">
                                                 <?php echo $entry_disseo; ?>
                                             </label>
