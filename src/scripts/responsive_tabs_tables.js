@@ -18,16 +18,16 @@ $('#demoTab').easyResponsiveTabs(
         */
     }
 );
-
-$(".resp-accordion.vert.resp-tab-active").each(function(){
-    $(this).removeClass("resp-tab-active");
-    $(this).css({"background-color":"rgb(239, 238, 236)","border-color":"rgb(255, 255, 255)"});
-})
-$(".resp-tab-content.vert.resp-tab-content-active").each(function(){
-    $(this).removeClass("resp-tab-content-active");
-    $(this).css({"display":"none"});
-});
-
+if($(document).width()<750){
+    $(".resp-accordion.vert.resp-tab-active").each(function(){
+        $(this).removeClass("resp-tab-active");
+        $(this).css({"background-color":"rgb(239, 238, 236)","border-color":"rgb(255, 255, 255)"});
+    })
+    $(".resp-tab-content.vert.resp-tab-content-active").each(function(){
+        $(this).removeClass("resp-tab-content-active");
+        $(this).css({"display":"none"});
+    });
+}
 /* Адаптивные таблицы в статьях */
 $(".article").find("table").each(function () {
     $(this).wrap('<div class="table-responsive"></div>');

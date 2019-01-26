@@ -5002,6 +5002,9 @@ background: url(../img/youtube_button.png) no-repeat;}
     transform: rotate(90deg);}
     
 .resp-tab-content:first-child{display:block;}
+.about-us img{max-width:100%;height:auto;}
+.basket-row .complement{margin-top:9px;}
+.basket-row .complement span,.basket-row .complement strong{font-size:12px!important;display:inline-block!important;}
 
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{
@@ -5026,6 +5029,10 @@ background: url(../img/youtube_button.png) no-repeat;}
     }   
 }
 @media screen and (max-width: 640px){
+    .basket-block .basket-row ul li:nth-child(6) {
+        width: 100%;
+    }
+    .actionbutton.del{margin:10px auto 0;}
     .tab-block .catalog-img{
         width:auto;height:auto;position:relative;top:initial;margin-top:0;
         margin: 10px auto;

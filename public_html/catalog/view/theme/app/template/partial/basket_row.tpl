@@ -14,18 +14,15 @@
             <a target="_blank" class="prod-name" href="<?php echo $product['href']; ?>">
                 <?php echo $product['meta_h1']; ?>
             </a>
-            
+
             <p><?=$product['location']?></p>
-            
-            <!--
             <div class="complement">
                 <?php foreach ($product['properties'] as $prop): ?>
                     <span>
                         <?= $prop['name'] ?>:&nbsp;<strong><?= $prop['val'] ?>&nbsp;<?= $prop['unit'] ?></strong>
                     </span>
-                <?php endforeach ?>
+                <?php endforeach ?>            
             </div>
-            -->
         </li>
         <li>
 

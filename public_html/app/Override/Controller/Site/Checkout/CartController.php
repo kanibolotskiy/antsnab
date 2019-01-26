@@ -255,7 +255,6 @@ class CartController extends \ControllerCheckoutCart
                         'priceUnit'=> $priceUnit,
                         'saleToPriceKoef' => $saleToPriceKoef,
                         'location' => $product['location'],
-    
                         'href' => $this->url->link('product/product', 'product_id=' . $product['product_id'])
                     );
                     /*------------------------------------------------*/
@@ -439,6 +438,11 @@ class CartController extends \ControllerCheckoutCart
             $products = $this->cart->getProducts();
 
             $orderSumTotal = 0;
+
+            $propGateway = new ProdProperties($this->registry);
+            $produnitsGateway = new ProdUnits($this->registry);
+            $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
+
             foreach ($products as $product) {
                 $product_total = 0;
 
@@ -487,10 +491,13 @@ class CartController extends \ControllerCheckoutCart
                  * опеределения минимального количества и шага в переключателях
                  * @task переосмыслить вместе с ProductTemplateDecorator - и вынести в отдельный метод
                  */
-                $produnitsGateway = new ProdUnits($this->registry);
-                $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
+                
                 $prodUnits = $produnitsGateway->getUnitsByProduct($product['product_id']);
                 $priceUnit = null;
+
+                
+                
+                
                 foreach ($prodUnits as $unit_id => $unit) {
                     if ($unit['isPriceBase'] == 1 && !$priceUnit) {
                         $priceUnit = $unit;
@@ -558,7 +565,17 @@ class CartController extends \ControllerCheckoutCart
                     }
                 }*/
 
-
+                $properties = $propGateway->getPropertiesWithProductValues($product['product_id'], 'order by sortOrder ASC');
+                $previewProperties = array();
+                foreach ($properties as $p) {
+                    if ($p['showInProdPreview']) {
+                        $previewProperties[] = array(
+                            'name' => $p['cat_name'],
+                            'val' => htmlspecialchars_decode($p['val'],ENT_QUOTES),
+                            'unit' => $p['cat_unit']
+                        );
+                    }
+                }
 
                 $data['products'][] = array(
                     'cart_id' => $product['cart_id'],
@@ -582,8 +599,8 @@ class CartController extends \ControllerCheckoutCart
                     'total' => $total,
                     'priceUnit'=> $priceUnit,
                     'saleToPriceKoef' => $saleToPriceKoef,
-                    'location' => $product['location'],
-
+                    'location' => html_entity_decode($product['location']),
+                    'properties' => $previewProperties,
                     'href' => $this->url->link('product/product', 'product_id=' . $product['product_id'])
                 );
             }
@@ -657,7 +674,7 @@ class CartController extends \ControllerCheckoutCart
             //related products
             $data["products_analog"]=[];
             $product_ids=[];
-            $propGateway = new ProdProperties($this->registry);
+            
             foreach($products as $product){
                 $product_ids[]=$product['product_id'];
             }
@@ -676,17 +693,6 @@ class CartController extends \ControllerCheckoutCart
                 $results_analog = $this->model_catalog_product->getProductRelated($products_str,true,4,'product_related',$products_str);
                 
                 foreach ($results_analog as $result) {
-                    $properties = $propGateway->getPropertiesWithProductValues($result['product_id'], 'order by sortOrder ASC');
-                    $previewProperties = array();
-                    foreach ($properties as $p) {
-                        if ($p['showInProdPreview']) {
-                            $previewProperties[] = array(
-                                'name' => $p['cat_name'],
-                                'val' => $p['val'],
-                                'unit' => $p['cat_unit']
-                            );
-                        }
-                    }
                     
                     $produnitsGateway = new ProdUnits($this->registry);
                     
@@ -816,7 +822,6 @@ class CartController extends \ControllerCheckoutCart
                         'tax' => $tax,
                         'minimum' => ($result['minimum'] > 0) ? $result['minimum'] : 1,
                         'rating' => $rating,
-                        'properties' => $previewProperties,
                         'href' => $this->url->link('product/product', 'product_id=' . $result['product_id'])
                     );
                 }
