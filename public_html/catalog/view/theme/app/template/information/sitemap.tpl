@@ -8,6 +8,7 @@
         <h1><?php echo $heading_title; ?></h1>
             <div class="article_columns">
                 <h2><?php echo $heading_categories; ?></h2>
+                test
                 <ul>
                 <?php foreach ($categories as $category_1) { ?>
                 <li><a href="<?php echo $category_1['href']; ?>"><?php echo $category_1['name']; ?></a>
