@@ -54,12 +54,15 @@ class CallformController extends \Controller
 
         if ( empty($this->request->post['phone']) ) {
             $this->formError['phone'] = $this->language->get('error_phone');
-        } else {
+        }
+        /*
+         else {
             $trimmedPhone = preg_replace('~\D~', '', $this->request->post['phone']);
             if( strlen($trimmedPhone) != 10 ) {
                 $this->formError['phone'] = $this->language->get('error_phone2');
             }
         }
+        */
 
         if (utf8_strlen($this->request->post['text']) > 2000) {
             $this->formError['text']  = $this->language->get('error_text');
