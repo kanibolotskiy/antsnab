@@ -61,7 +61,7 @@
                         <?php }?>
 
                         <meta itemprop="seller" content="<?php echo $manufacturer; ?>">
-                        <meta itemprop="url" content="<?php echo $product_link;?>"/>
+                        <meta itemprop="url" content="<?php echo $product_link;?>" href="<?php echo $product_link;?>"/>
                         <div id="cart_preloader" class="ajax_loader">
                             <div class="loader-classic">
                                 <span></span>
@@ -123,7 +123,7 @@
                                         <meta itemprop="maxPrice" content="<?php echo $price;?>">
                                         <meta itemprop="price" content="<?php echo $price;?>">
                                     </span>    
-
+                                    <meta itemprop="price" content="<?php echo $price;?>">
                                     <div class="price-for">
                                         <span>Цена за:</span>
                                         
@@ -501,6 +501,8 @@
                             <?php if( count($reviews)>0): ?>
                                 <?php foreach ($reviews as $r): ?>
                                     <div class = "review-block" itemscope itemtype="http://schema.org/Review" itemprop="review">
+                                        <meta itemprop="itemReviewed" content="<?php echo $p['meta_h1'];?>"/>
+
                                         <span itemprop="reviewRating" itemscope="" itemtype="http://schema.org/Rating">
                                             <meta itemprop="ratingValue" content="5">
                                             <meta itemprop="worstRating" content="1">
