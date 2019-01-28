@@ -44,6 +44,7 @@ class HeaderTemplateDecorator implements IDecorator
         $data['form_data']['name'] = isset($callform['data']['name']) ? $callform['data']['name'] : '';
         $data['form_data']['phone'] = isset($callform['data']['phone']) ? $callform['data']['phone'] : '';
         $data['form_data']['text'] = isset($callform['data']['text']) ? $callform['data']['text'] : '';
+        $data['form_data']['workemail'] = isset($callform['data']['workemail']) ? $callform['data']['workemail'] : '';        
 
 
         // gun88 menu_editor module

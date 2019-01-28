@@ -35,6 +35,7 @@ class CallformController extends \Controller
                 }
             }
         }
+        $data['workemail']='';
         $data['errors'] = $this->formError;
         $data['data'] = $this->request->post;
         $redirect = $this->request->post['redirect'];
@@ -55,6 +56,11 @@ class CallformController extends \Controller
         if ( empty($this->request->post['phone']) ) {
             $this->formError['phone'] = $this->language->get('error_phone');
         }
+
+        if (!empty($this->request->post['workemail']) ) {
+            $this->formError['workemail'] = $this->language->get('error_phone');
+        }
+
         /*
          else {
             $trimmedPhone = preg_replace('~\D~', '', $this->request->post['phone']);

@@ -79,6 +79,9 @@
                         <?php else: ?>    
                             <input  value="<?= $form_data['phone'] ?>" name="phone" type="text" placeholder="Телефон"/>
                         <?php endif; ?>
+                        
+
+                        <input value="<?= $form_data['workemail'] ?>" name="workemail" type="text" placeholder="Рабочий email"/>
 
                         <?php if (isset($form_errors['text'])): ?>
                             <i class="error"><?= $form_errors['text'] ?></i>
