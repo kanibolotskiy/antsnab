@@ -18,9 +18,9 @@
                             <span property="name"><?php echo $breadcrumb['text'];?></span>
                         </a>
                     <?php }else{ ?>
-                        <a property="item" typeof="WebPage" href="<?php echo $breadcrumb['href'];?>">
+                        <span property="item" typeof="WebPage" href="<?php echo $breadcrumb['href'];?>">
                             <span property="name"><?php echo $breadcrumb['text'];?></span>
-                        </a>
+                        </span>
                     <?php }?>
                 <?php }?>
             </span>	
