@@ -61,7 +61,7 @@
                         <?php }?>
 
                         <meta itemprop="seller" content="<?php echo $manufacturer; ?>">
-                        <meta itemprop="url" content="<?php echo $product_link;?>" href="<?php echo $product_link;?>"/>
+                        <div itemprop="url" href="<?php echo $product_link;?>" style="display:none;"><?php echo $product_link;?></div>
                         <div id="cart_preloader" class="ajax_loader">
                             <div class="loader-classic">
                                 <span></span>
@@ -121,9 +121,10 @@
                                         <meta itemprop="priceCurrency" content="RUB"/>
                                         <meta itemprop="minPrice" content="<?php echo $price_wholesale;?>">                                        
                                         <meta itemprop="maxPrice" content="<?php echo $price;?>">
-                                        <meta itemprop="price" content="<?php echo $price;?>">
+                                        
                                     </span>    
                                     <meta itemprop="price" content="<?php echo $price;?>">
+                                    
                                     <div class="price-for">
                                         <span>Цена за:</span>
                                         
