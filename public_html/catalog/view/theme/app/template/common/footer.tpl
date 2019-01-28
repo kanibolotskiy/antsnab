@@ -1,6 +1,6 @@
 <footer class="footer">
     <div class="container" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="url" content="<?php echo $home;?>">
+        <div itemprop="url" href="<?php echo $home;?>" content="<?php echo $home;?>" style="display:none;"></div>
         <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
             <img itemprop="url image" src="<?php echo $logo;?>" style="display:none;"/>
             <meta itemprop="width" content="115">
