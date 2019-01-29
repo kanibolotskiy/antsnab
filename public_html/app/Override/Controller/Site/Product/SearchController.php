@@ -15,7 +15,7 @@ class SearchController extends \Controller
 		$this->load->model('catalog/product');
 
 		$this->load->model('tool/image');
-
+		
 		if (isset($this->request->get['search'])) {
 			$search = $this->request->get['search'];
 		} else {
@@ -218,10 +218,13 @@ class SearchController extends \Controller
 		$data['products'] = array();
 
 		if (isset($this->request->get['search']) || isset($this->request->get['tag'])) {
-            $filter_data = $this->getFilter($category_id, $limit, $page);
+			
+			$filter_data = $this->getFilter($category_id, $limit, $page);
+			
             $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
             $productsHelper = new ProductListHelper($this->registry);
-            $results = $productsHelper->getProducts($filter_data);
+			$results = $productsHelper->getProducts($filter_data);
+			
             $data['products'] = $results;
 			
 			$url = '';

@@ -503,6 +503,7 @@ class ControllerProductProduct extends Controller {
 					'name'       => $result['name'],
 					'text'       => $result['text'],
 					'about'      => $result['name'],
+					'about_txt'      => $result['name'],
 					'date'       => $result['date_added'],
 					'answer'     => $result['answer'],
 					'author'     => $result['author'],

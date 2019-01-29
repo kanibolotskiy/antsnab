@@ -226,7 +226,7 @@
 
                             <div class="in-stock">
                                 <?php if($quantity_stock>0){?>
-                                <span>На складе</span>
+                                <span><?php echo $stock;?></span>
                                 <ul>
                                     <?php if(isset($locations[0])):?>
                                         <li class="stock1">
