@@ -403,50 +403,17 @@ body {
         padding: 0 37px;
         li{
             position: relative;
+            color: black; 
+            font-size: 16px;
+            font-weight: 600;
+            
             a{
                 display: block;
                 text-decoration: none;
                 color: black; 
-                font-size: 16px;
-                font-weight: 600;
+                
                 position: relative;
-                @include transition;
-                &:after{
-                    content:'';
-                    display:block;
-                    clear:both;
-                    position: absolute;
-                    top:-30px;
-                    left: 0;
-                    width: 100%;
-                    height:5px;
-                    background-color: #d3a06c;
-                    @include transition;
-                }
-                &:before{
-                    content:'';
-                    display:block;
-                    clear:both;
-                    position: absolute;
-                    top:-20px;
-                    left:50%;
-                    width: 7px;
-                    margin-left: -3.5px;
-                    height:4px;
-                    background: url(../img/icon-nav.png) no-repeat;
-                    @include transition;
-                }
-                &:hover{
-                    @include transition;
-                    &:after{
-                        top:-3px;
-                        @include transition;
-                    }
-                    &:before{
-                        top:2px;
-                        @include transition;
-                    }
-                }
+                
             }
             a.active{
                 &:after{
@@ -471,6 +438,72 @@ body {
                     margin-left: -3.5px;
                     height:4px;
                     background: url(../img/icon-nav.png) no-repeat;
+                }
+            }
+        }
+        li.active{
+            &:after{
+                content:'';
+                display:block;
+                clear:both;
+                position: absolute;
+                top:-3px;
+                left: 0;
+                width: 100%;
+                height:5px;
+                background-color: #d3a06c;
+                @include transition;
+            }
+            &:before{
+                content:'';
+                display:block;
+                clear:both;
+                position: absolute;
+                top:2px;
+                left:50%;
+                width: 7px;
+                margin-left: -3.5px;
+                height:4px;
+                background: url(../img/icon-nav.png) no-repeat;
+                @include transition;
+            }
+        }
+        li.menu_li{
+            @include transition;
+            &:after{
+                content:'';
+                display:block;
+                clear:both;
+                position: absolute;
+                top:-30px;
+                left: 0;
+                width: 100%;
+                height:5px;
+                background-color: #d3a06c;
+                @include transition;
+            }
+            &:before{
+                content:'';
+                display:block;
+                clear:both;
+                position: absolute;
+                top:-20px;
+                left:50%;
+                width: 7px;
+                margin-left: -3.5px;
+                height:4px;
+                background: url(../img/icon-nav.png) no-repeat;
+                @include transition;
+            }
+            &:hover{
+                @include transition;
+                &:after{
+                    top:-3px;
+                    @include transition;
+                }
+                &:before{
+                    top:2px;
+                    @include transition;
                 }
             }
         }
@@ -1076,15 +1109,22 @@ div.title:after {
         flex-wrap: wrap;
         justify-content: space-between;
         li{
+            color: #333333;
+            font-size: 14px;
+                font-weight: bold;
             a{
                 display: block;
                 text-decoration: none;
                 color: #333333;
-                font-size: 14px;
-                font-weight: bold;
+                
                 &:hover{
                     text-decoration: underline;
                 }
+            }
+        }
+        li.active{
+            span{
+                text-decoration: underline;
             }
         }
     }
@@ -2541,7 +2581,7 @@ button.show-more{
     .review{
         border: 2px solid #EFEEEC;
         position: relative;
-        padding: 30px 29px 28px;
+        padding: 30px 29px 42px;
         &:after{
             content: '';
             display: block;
@@ -2589,7 +2629,7 @@ button.show-more{
     }
     .answer-review{
         background-color: #FBFAF9;
-        margin: -19px 30px 0 69px;
+        margin: -30px 30px 0 69px;
         padding: 22px 26px 23px 26px;
         .top{
             margin-bottom: 14px;
@@ -3873,7 +3913,7 @@ a.print{
         width: 3px;
         background: url(../img/bg-li.png) no-repeat 50% 0;
     }
-    .nav ul li a {
+    .nav ul li {
         font-size:14px;
     }
     
@@ -3993,7 +4033,7 @@ a.print{
 
 
 @media screen and (max-width: 768px) {
-    .nav ul li a{
+    .nav ul li{
         font-size: 12px;
     }
     .address{
@@ -4233,7 +4273,7 @@ a.print{
         padding: 20px 15px 25px;
     }
     .review-block .answer-review {
-        margin: -25px 15px 0 50px;
+        margin: -30px 15px 0 50px;
         padding: 15px 15px 15px 15px;
         em{
             padding: 0;
@@ -5009,6 +5049,9 @@ background: url(../img/youtube_button.png) no-repeat;}
 .basket-row .complement span,.basket-row .complement strong{font-size:12px!important;display:inline-block!important;}
 .basket-row img{max-width:100%;height:auto;}
 input[name="workemail"]{display:none!important;}
+.reviews a{color:#d3a06d;text-decoration:none;}
+.reviews a:hover{text-decoration:underline;}
+
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{
         width: 100%;
@@ -5045,7 +5088,7 @@ input[name="workemail"]{display:none!important;}
     .select_view_switch{display:none;}
     .tab-block ul li .catalog-description p{text-align:left;}
     .review-block .review {
-        padding: 20px 15px 32px;
+        padding: 20px 15px 38px;
     }
     .tel a{cursor: pointer;}
     .tel a:hover{color:#7d7d7d;}

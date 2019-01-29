@@ -150,29 +150,17 @@ class ModelCatalogReview extends Model
 
     public function getTotalReviewsByProductId($product_id)
     {
-        /* $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "product p ON (r.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p.product_id = '" . (int) $product_id . "' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '" . (int) $this->config->get('config_language_id') . "'"); */
-
         $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "product p ON (r.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE r.product_id = '" . (int) $product_id . "' AND (p.date_available <= NOW() or p.date_available is null) AND (p.status = '1' or p.status is NULL) AND r.status = '1' AND ( pd.language_id = '" . (int) $this->config->get('config_language_id') . "' or pd.language_id is NULL) ");
         return $query->row['total'];
     }
-
-    public function getRandReviews($count = 2)
-    {
+    
+    public function getRandReviews($count = 2){
         $result = array();
-        
-        $c = 0;
-        $total = $this->getCompanyReviewsTotal();
-       
-        if ($total > 0) {
-            while ($c < $count) {
-                $offset = random_int(0, $total-1);
-                $query = $this->db->query("select * from " . DB_PREFIX . "review limit $offset,1");
-                $result[] = $query->row;
-                $c++;
-            }
-        }
+        $query = $this->db->query("select oc.*,pd.name from " . DB_PREFIX . "review oc LEFT JOIN " . DB_PREFIX . "product_description pd ON oc.product_id=pd.product_id where oc.status=1 order by RAND() limit ".$count);
 
+        foreach($query->rows as $row){
+            $result[]=$row;
+        }
         return $result;
     }
-
 }

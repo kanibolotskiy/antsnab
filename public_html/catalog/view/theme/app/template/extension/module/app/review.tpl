@@ -2,11 +2,15 @@
     <div class="title"><?=$heading_title?></div>
     <div class="slider responsive">
         <?php foreach( $reviews as $r):?>
+        
         <div class="slick-slide">
             <div class="slick-slide-block">
                 <div class="slick__review">
                     <div class="top">
-                        <span><strong><?=$r['author']?></strong> о <b><?=$r['about']?></b></span>
+                        <?php 
+                            $about_txt='<a href="'.$r["href"].'">'.$r["about_txt"].'</a>';
+                        ?>
+                        <span><strong><?php echo $r["author"]?></strong> о <b><?php echo $about_txt?></b></span>
                         <p><?= date_format(date_create($r['date_added']), 'd.m.Y') ?></p>
                     </div>
                     <em><?=$r['text']?></em>

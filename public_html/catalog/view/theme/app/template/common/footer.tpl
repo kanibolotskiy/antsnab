@@ -43,7 +43,20 @@
             <nav class="footer-nav">
                 <ul>
                     <?php foreach ($top_menu as $item) : ?>
+
+                        <?php if($item['isactive']){?>
+                            <li class="active">
+                                <span><?php echo $item['name']; ?></span>
+                            </li>
+                        <?php }else{?>
+                            <li class="menu_li">
+                                <a href="<?php echo $item['href']; ?>"><?php echo $item['name']; ?></a>
+                            </li>
+                        <?php }?>
+
+                        <!--
                         <?php $active = ($item['isactive']) ? 'class="active"' : ""; ?>
+                        
                         <?php if (isset($item['target']) && trim($item['target']) != "") { ?>
                             <li>
                                 <a <?= $active ?> href="<?php echo $item['href']; ?>" target="<?php echo $item['target']; ?>">
@@ -57,6 +70,7 @@
                                 </a>
                             </li>
                         <?php } ?>
+                        -->
                     <?php endforeach; ?>
                 </ul>
             </nav>

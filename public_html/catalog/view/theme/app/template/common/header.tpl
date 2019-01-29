@@ -158,18 +158,24 @@
                 <ul>
                     <?php $cnt = 0; $ttl = count($top_menu);?>
                     <?php foreach ($top_menu as $item) : ?>
-                        <?php $active = ($item['isactive']) ? 'class="active"' : ""; ?>
-                        <?php if (isset($item['target']) && trim($item['target']) != "") { ?>
-                            <li>
-                                <a <?= $active ?> href="<?php echo $item['href']; ?>" target="<?php echo $item['target']; ?>"><?php echo $item['name']; ?></a>
+                        <?php 
+                            if (isset($item['target']) && trim($item['target']) != "") {
+                                $target=" target=".$item['target'];
+                            }else{
+                                $target="";
+                            }
+                        ?>
+                        
+                        <?php if($item['isactive']){?>
+                            <li class="active">
+                                <span><?php echo $item['name']; ?></span>
                             </li>
-                        <?php } else { ?>
-                            <li>
-                                <a <?= $active ?> href="<?php echo $item['href']; ?>">
-                                    <?php echo $item['name']; ?>
-                                </a>
+                        <?php }else{?>
+                            <li class="menu_li">
+                                <a href="<?php echo $item['href']; ?>" <?php echo $target; ?>><?php echo $item['name']; ?></a>
                             </li>
-                        <?php } ?>
+                        <?php }?>
+
                         <?php $cnt++;?>
                         <?php if( $cnt != $ttl): ?>
                         <li class="separator"></li>

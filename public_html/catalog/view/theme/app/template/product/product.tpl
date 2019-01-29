@@ -502,7 +502,7 @@
                             <?php if( count($reviews)>0): ?>
                                 <?php foreach ($reviews as $r): ?>
                                     <div class = "review-block" itemscope itemtype="http://schema.org/Review" itemprop="review">
-                                        <meta itemprop="itemReviewed" content="<?php echo $p['meta_h1'];?>"/>
+                                        <meta itemprop="itemReviewed" content="<?= $r['about_txt'] ?>"/>
 
                                         <span itemprop="reviewRating" itemscope="" itemtype="http://schema.org/Rating">
                                             <meta itemprop="ratingValue" content="5">
@@ -513,7 +513,7 @@
                                         <div class = "review">
                                             <div class = "top">
                                                 <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-                                                    <strong itemprop="name"><?= $r['author'] ?></strong> о <b><?= $r['about'] ?></b>
+                                                    <strong itemprop="name"><?= $r['author'] ?></strong> о <b>"<?= $r['about'] ?>"</b>
                                                 </span>
                                                 <p><?= $r['date_added'] ?></p>
                                             </div>

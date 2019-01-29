@@ -142,7 +142,7 @@ class ReviewpageController extends \Controller
             $result[] = [ 
                 'author' => $review['author'],
                 'text' => $review['text'],
-                'about' => $review['about'],
+                'about' => '"Сервисе"',//$review['about'],
                 'moderator' => $review['moderator'],
                 'answer' => $review['answer'],
                 'date' => ( new \DateTime($review['date_added']) )->format('d.m.Y')
