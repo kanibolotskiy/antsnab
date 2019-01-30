@@ -5059,7 +5059,9 @@ input[name="workemail"]{display:none!important;}
 .article-content{font-size:14px; line-height:18px;color:#000;}
 .article-content p{margin-bottom:10px}
 .article-content ul{margin-top:12px;margin-bottom:12px;}
-
+.notify_cart{margin-top:10px;}
+.notify_cart a{color:#000;}
+.notify_cart a:hover{text-decoration:none;}
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{
         width: 100%;

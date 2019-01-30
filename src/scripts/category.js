@@ -163,10 +163,9 @@ $(document).ready(function(){
                             });
                         }
                     }
-                    //$('html, body').animate({ scrollTop: 0 }, 'slow');
-     
+
                     new Noty({
-                        text: json['success'],
+                        text: json['success']+"<div class='notify_cart'><a href='card/'>Перейти в корзину</a></div>",
                         type: 'warning',
                         theme: 'relax',
                         timeout: 3000, 
