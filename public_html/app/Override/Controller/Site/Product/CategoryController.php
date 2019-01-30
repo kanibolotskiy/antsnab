@@ -389,23 +389,16 @@ class CategoryController extends \Controller
         /** @ИСПРАВИТЬ - это что за магические цифры?????????!!!!!!!! */
         //$sort_selected=0;
 
-        $sort = 'p.sort_order';
-        $order = 'ASC';
+        $sort = '';
+        $order = '';
         $sort_selected="";
         if (isset($this->request->get['sort'])) {
             $sort_selected=$this->request->get['sort'];
 
             $sort_arr=explode("|",$this->request->get['sort']);
             if((isset($sort_arr[0]))and(isset($sort_arr[1]))){
-                $sort="p.".$sort_arr[0];
+                $sort=$sort_arr[0];
                 $order=$sort_arr[1];
-                /*
-                if($order=="ASC"){
-                    $sort_selected=1;
-                }else{
-                    $sort_selected=2;
-                }
-                */
             }
         }
         

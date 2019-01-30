@@ -7,7 +7,7 @@
 
         <?php if (!empty($categories)): ?>
             <div class="catalog-info">
-                <div class="title"><?= $heading_title ?></div>
+                <h1 class="title"><?= $heading_title ?></h1>
                 <?= $description ?>
             </div>
             <?php if(isset($categories_isseo)) {?>

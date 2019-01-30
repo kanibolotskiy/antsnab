@@ -188,7 +188,29 @@ class ModelCatalogProduct extends Model {
 			'p.sort_order',
 			'p.date_added'
 		);
+		//echo "!".$data['sort']."!".$data['order']."!";
 
+		$sort_by=' p.sort_order';
+		$sort_dir=' ASC';
+		if(isset($data['sort']) && isset($data['order'])){
+
+			//&& (isset($data['order']))
+
+			if($data['sort']=="name"){
+				$sort_by=" LCASE(pd.name)";
+			}
+			if($data['sort']=="price"){
+				$sort_by=" p.price";
+			}
+			
+			if($data['order']=="DESC"){
+				$sort_dir = " DESC";
+			}
+		}
+		$sql .= " ORDER BY ".$sort_by.$sort_dir;
+
+		//echo "!".$sql."!";
+		/*
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
 				$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
@@ -206,7 +228,7 @@ class ModelCatalogProduct extends Model {
 		} else {
 			$sql .= " ASC, LCASE(pd.name) ASC";
 		}
-
+		*/
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
 				$data['start'] = 0;
@@ -218,7 +240,7 @@ class ModelCatalogProduct extends Model {
 
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
-
+		
 		$product_data = array();
 
 		$query = $this->db->query($sql);
@@ -268,7 +290,7 @@ class ModelCatalogProduct extends Model {
 
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
-
+		
 		$product_data = array();
 
 		$query = $this->db->query($sql);

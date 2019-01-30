@@ -163,12 +163,14 @@ h2 {
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 10px;
-    margin-top: 10px;
+    margin-top: 20px;
+
 }
 h3 {
     font-size: 16px;
     margin-bottom: 10px;
-    margin-top: 10px;
+    margin-top: 20px;
+    font-weight:bold;
 }
 input, textarea { outline:none; }
 input:active, textarea:active { outline:none; }
@@ -1026,8 +1028,8 @@ div.title:after {
         display: block;
         font-size: 15px;
         color: #000000;
-        line-height: 20px!important;
-        margin-bottom: 12px;
+        line-height: 18px!important;
+        margin-bottom:10px;
         text-align: justify;
         a{
             display: inline-block;
@@ -1347,16 +1349,18 @@ a.mail{
 }
 .catalog-info{
     margin: 0;
+    margin-bottom:15px;
+    font-size:14px; 
     .title{
         margin-bottom: 20px;
     }
     p{
         display: block;
         font-size: 14px;
-        color: #444444;
+        color: #000;
         line-height: 24px;
         margin-bottom: 10px;
-        letter-spacing: 0.12px;
+        line-height:18px;margin-bottom:10px
     }
 }
 /*tabs*/
@@ -5051,6 +5055,10 @@ background: url(../img/youtube_button.png) no-repeat;}
 input[name="workemail"]{display:none!important;}
 .reviews a{color:#d3a06d;text-decoration:none;}
 .reviews a:hover{text-decoration:underline;}
+.card-product-container .right .description-price .description-mini{line-height:18px;}
+.article-content{font-size:14px; line-height:18px;color:#000;}
+.article-content p{margin-bottom:10px}
+.article-content ul{margin-top:12px;margin-bottom:12px;}
 
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{
@@ -5074,6 +5082,12 @@ input[name="workemail"]{display:none!important;}
         display:block; 
     }   
 }
+
+.bottom_text{font-size:14px; line-height:18px;}
+.bottom_text em{font-style: italic;}
+.bottom_text img{max-width:100%;height:auto;}
+.bottom_text p{margin-bottom:10px;}
+
 @media screen and (max-width: 640px){
     .basket-block .basket-row ul li:nth-child(6) {
         width: 100%;
@@ -5112,4 +5126,5 @@ input[name="workemail"]{display:none!important;}
     }
     .footer a.mail{display:inline-block;}
     .description-mini{margin-top:10px;}
+    .tab-block ul li .catalog-description{padding-left:15px;}
 }
