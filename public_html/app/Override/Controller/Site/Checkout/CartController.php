@@ -584,11 +584,13 @@ class CartController extends \ControllerCheckoutCart
                 $previewProperties = array();
                 foreach ($properties as $p) {
                     if ($p['showInProdPreview']) {
-                        $previewProperties[] = array(
-                            'name' => $p['cat_name'],
-                            'val' => htmlspecialchars_decode($p['val'],ENT_QUOTES),
-                            'unit' => $p['cat_unit']
-                        );
+                        if($p['cat_name']=="Упаковка"){
+                            $previewProperties[] = array(
+                                'name' => $p['cat_name'],
+                                'val' => htmlspecialchars_decode($p['val'],ENT_QUOTES),
+                                'unit' => $p['cat_unit']
+                            );
+                        }
                     }
                 }
 
