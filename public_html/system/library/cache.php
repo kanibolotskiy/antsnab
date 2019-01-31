@@ -2,7 +2,7 @@
 class Cache {
 	private $adaptor;
 
-	public function __construct($adaptor, $expire = 3600) {
+	public function __construct($adaptor, $expire = 2678400) {//Увеличили время хранения сессий до 1 месяца
 		$class = 'Cache\\' . $adaptor;
 
 		if (class_exists($class)) {
