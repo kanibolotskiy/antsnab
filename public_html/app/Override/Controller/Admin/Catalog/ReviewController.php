@@ -352,7 +352,10 @@ class ReviewController extends \ControllerCatalogReview
         $data['entry_rating'] = $this->language->get('entry_rating');
         $data['entry_date_added'] = $this->language->get('entry_date_added');
         $data['entry_status'] = $this->language->get('entry_status');
+        $data['entry_sended'] = $this->language->get('entry_sended');
+
         $data['entry_text'] = $this->language->get('entry_text');
+        
 
         $data['help_product'] = $this->language->get('help_product');
         $data['help_about'] = $this->language->get('help_about');
@@ -582,6 +585,14 @@ class ReviewController extends \ControllerCatalogReview
             $data['date_added'] = '';
         }
 
+        if (isset($this->request->post['sended'])) {
+            $data['sended'] = $this->request->post['sended'];
+        } elseif (!empty($review_info)) {
+            $data['sended'] = $review_info['sended'];
+        } else {
+            $data['sended'] = '';
+        }
+        
         if (isset($this->request->post['status'])) {
             $data['status'] = $this->request->post['status'];
         } elseif (!empty($review_info)) {

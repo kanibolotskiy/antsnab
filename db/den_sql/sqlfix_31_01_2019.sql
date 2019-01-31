@@ -1,0 +1,1 @@
+ALTER TABLE `oc_review` ADD `sended` TINYINT NOT NULL DEFAULT '1' AFTER `company`;

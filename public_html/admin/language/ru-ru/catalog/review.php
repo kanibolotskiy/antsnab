@@ -33,6 +33,8 @@ $_['entry_rating']          = 'Рейтинг:';
 $_['entry_status']          = 'Статус:';
 $_['entry_text']          	= 'Текст:';
 $_['entry_date_added']      = 'Дата добавления';
+$_['entry_sended']          = 'Выслано на Email';
+
 
 // Help
 $_['help_product']          = '(Автодополнение)';

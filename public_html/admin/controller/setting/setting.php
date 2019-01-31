@@ -80,6 +80,9 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_geocode'] = $this->language->get('entry_geocode');
 		$data['entry_email'] = $this->language->get('entry_email');
 		$data['entry_email_site'] = $this->language->get('entry_email_site');
+		$data['entry_email_recall'] = $this->language->get('entry_email_recall');
+		
+
 
 		$data['entry_telephone'] = $this->language->get('entry_telephone');
 		$data['entry_fax'] = $this->language->get('entry_fax');
@@ -560,6 +563,13 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_email_site'] = $this->config->get('config_email_site');
 		}
+
+		if (isset($this->request->post['config_email_recall'])) {
+			$data['config_email_recall'] = $this->request->post['config_email_recall'];
+		} else {
+			$data['config_email_recall'] = $this->config->get('config_email_recall');
+		}
+		
 
 		if (isset($this->request->post['config_telephone'])) {
 			$data['config_telephone'] = $this->request->post['config_telephone'];

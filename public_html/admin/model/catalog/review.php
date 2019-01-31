@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogReview extends Model {
 	public function addReview($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = '" . $this->db->escape($data['date_added']) . "'");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "review SET sended=0, author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = '" . $this->db->escape($data['date_added']) . "'");
 
 		$review_id = $this->db->getLastId();
 
@@ -38,8 +38,16 @@ class ModelCatalogReview extends Model {
 
 
 	public function editReview($review_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = '" . $this->db->escape($data['date_added']) . "', date_modified = NOW() WHERE review_id = '" . (int)$review_id . "'");
-
+		if(isset($data['sended'])){
+			$sended=$data['sended'];
+		}else{
+			$sended=0;
+		}
+		if(!$sended and $data['status']){
+			$this->sendReview($data['product_id'], $data);
+			$sended=1;
+		}
+		$this->db->query("UPDATE " . DB_PREFIX . "review SET sended='" . $sended . "', author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = '" . $this->db->escape($data['date_added']) . "', date_modified = NOW() WHERE review_id = '" . (int)$review_id . "'");
 		$this->cache->delete('product');
 	}
 
@@ -155,4 +163,65 @@ class ModelCatalogReview extends Model {
 
 		return $query->row['total'];
 	}
+
+	private function sendReview($product_id, $data)
+    {
+        if (in_array('review', (array) $this->config->get('config_mail_alert'))) {
+            $this->load->language('mail/review');
+        
+
+            $mail = new Mail();
+            $mail->protocol = $this->config->get('config_mail_protocol');
+            $mail->parameter = $this->config->get('config_mail_parameter');
+            $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+            $mail->smtp_username = $this->config->get('config_mail_smtp_username');
+            $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+            $mail->smtp_port = $this->config->get('config_mail_smtp_port');
+            $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
+            //$mail->setTo($this->config->get('config_email'));
+			//$mail->setTo($this->config->get('config_email_recall'));
+
+			$mail->setTo($data['email']);
+            $mail->setFrom($this->config->get('config_email'));
+            $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+            
+            if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+                $b_patch=$this->config->get('config_ssl').'image/';
+            } else {
+                $b_patch=$this->config->get('config_url').'image/';
+			}
+			
+            
+            $data["logo"]=$b_patch."catalog/image/header/logo.png";
+			
+			/*
+            $data["data_content"][]=array("Имя клиента",$data['author']);
+            $data["data_content"][]=array("Компания",$data['company']);
+			$data["data_content"][]=array("Email",$data['email']);
+			*/
+			
+            if($product_id){
+				$subject = $this->language->get('text_subject_product');
+				$data["caption"]=$this->language->get('text_caption_thanks');
+				$review_link=HTTP_CATALOG.'index.php?route=product/product&product_id='.$product_id;
+            }else{
+				$subject = $this->language->get('text_subject_company');
+				$data["caption"]=$this->language->get('text_caption_thanks');
+				$review_page_id = 8;
+				$review_link = HTTP_CATALOG.'index.php?route=information/information&information_id='.$review_page_id;
+			}
+
+			$mail->setSubject($subject);
+			
+		
+			$data["data_text"]=sprintf($this->language->get('text_thanks'),$data["author"],$review_link);
+			
+			
+            $report_text=$this->load->view('catalog/review_report', $data);
+
+            $mail->setHTML($report_text);
+            $mail->send();
+        }
+    }
 }

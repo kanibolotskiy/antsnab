@@ -6,7 +6,7 @@
     <?php foreach($data_content as $data_row) {?>
         <tr>
             <td style="border:1px solid #ddd;padding:4px 10px;"><?php echo $data_row[0];?></td>
-            <td style="border:1px solid #ddd;padding:4px 10px;"><b><?php echo $data_row[1];?></b></td>
+            <td style="border:1px solid #ddd;padding:4px 10px;"><?php echo $data_row[1];?></td>
         </tr>
     <?php }?>
 </table>

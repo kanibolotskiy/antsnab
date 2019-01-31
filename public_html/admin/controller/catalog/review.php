@@ -66,7 +66,7 @@ class ControllerCatalogReview extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('catalog/review');
-
+		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_catalog_review->editReview($this->request->get['review_id'], $this->request->post);
 
@@ -411,6 +411,7 @@ class ControllerCatalogReview extends Controller {
 	}
 
 	protected function getForm() {
+		
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_form'] = !isset($this->request->get['review_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
@@ -423,7 +424,8 @@ class ControllerCatalogReview extends Controller {
 		$data['entry_date_added'] = $this->language->get('entry_date_added');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_text'] = $this->language->get('entry_text');
-
+		$data['entry_sended'] = $this->language->get('entry_sended');
+		
 		$data['help_product'] = $this->language->get('help_product');
 
 		$data['button_save'] = $this->language->get('button_save');
@@ -488,6 +490,7 @@ class ControllerCatalogReview extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
+
 
 		$data['breadcrumbs'] = array();
 
@@ -565,6 +568,13 @@ class ControllerCatalogReview extends Controller {
 			$data['date_added'] = '';
 		}
 
+		if (isset($this->request->post['sended'])) {
+			$data['sended'] = $this->request->post['sended'];
+		} else {
+			$data['sended'] = '0';
+		}
+
+
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];
 		} elseif (!empty($review_info)) {
@@ -573,11 +583,14 @@ class ControllerCatalogReview extends Controller {
 			$data['status'] = '';
 		}
 
+		//print_r($data);
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
-
+		
 		$this->response->setOutput($this->load->view('catalog/review_form', $data));
+		
 	}
 
 	protected function validateForm() {
@@ -611,4 +624,5 @@ class ControllerCatalogReview extends Controller {
 
 		return !$this->error;
 	}
+	
 }

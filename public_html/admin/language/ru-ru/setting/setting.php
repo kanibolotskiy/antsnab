@@ -42,6 +42,8 @@ $_['entry_address']                    = 'Адрес магазина:';
 $_['entry_geocode']                    = 'Местоположение';
 $_['entry_email']                      = 'E-Mail';
 $_['entry_email_site']                 = 'E-Mail для отображения на сайте';
+$_['entry_email_recall']               = 'E-Mail для отзывов';
+
 $_['entry_telephone']                  = 'Телефон:';
 $_['entry_fax']                        = 'Факс';
 $_['entry_image']                      = 'Изображение на странице обратной связи';

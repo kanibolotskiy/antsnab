@@ -165,6 +165,24 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-sended">
+                            <?php echo $entry_sended; ?>
+                        </label>
+                        <div class="col-sm-1">
+                            <div class="checkbox">
+                                <label>
+                                <?php if($sended) { ?>
+                                <input  type="checkbox" name="sended" value="1" checked="checked" id="input-sended" />
+                                <?php } else { ?>
+                                <input type="checkbox" name="sended" value="1" id="input-sended" />
+                                <?php } ?>
+                                &nbsp; </label>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
                         <div class="col-sm-10">
                             <select name="status" id="input-status" class="form-control">

@@ -34,7 +34,8 @@ class ModelCatalogReview extends Model
             $mail->smtp_port = $this->config->get('config_mail_smtp_port');
             $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
-            $mail->setTo($this->config->get('config_email'));
+            //$mail->setTo($this->config->get('config_email'));
+            $mail->setTo($this->config->get('config_email_recall'));
             $mail->setFrom($this->config->get('config_email'));
             $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
             
@@ -47,7 +48,6 @@ class ModelCatalogReview extends Model
             4. Компания
             5. e-mail
             6. Текст отзыва
-            Письмо приходит с ящика otzyv@ant-snab.ru
             Письмо приходит на ящик recall@ant-snab.ru
             Тема письма: Ура! Новый отзыв о компании!
 */
@@ -84,6 +84,7 @@ class ModelCatalogReview extends Model
             $mail->send();
 
             // Send to additional alert emails
+            /*
             $emails = explode(',', $this->config->get('config_alert_email'));
 
             foreach ($emails as $email) {
@@ -92,6 +93,7 @@ class ModelCatalogReview extends Model
                     $mail->send();
                 }
             }
+            */
         }
     }
 
@@ -104,7 +106,7 @@ class ModelCatalogReview extends Model
     {
        /* $this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['name']) . "', customer_id = '" . (int) $this->customer->getId() . "', product_id = '" . (int) $product_id . "', text = '" . $this->db->escape($data['text']) . "', rating = '" . (int) $data['rating'] . "', date_added = NOW()");*/
 
-         $this->db->query("INSERT INTO " . DB_PREFIX . "review SET company ='" . $this->db->escape($data['company']) . "', email = '" . $this->db->escape($data['email']) . "', author = '" . $this->db->escape($data['author']) . "', customer_id = '" . (int) $this->customer->getId() . "', product_id = '" . (int) $product_id . "', text = '" . $this->db->escape($data['text']) . "', date_added = NOW()");
+         $this->db->query("INSERT INTO " . DB_PREFIX . "review SET sended=0, company ='" . $this->db->escape($data['company']) . "', email = '" . $this->db->escape($data['email']) . "', author = '" . $this->db->escape($data['author']) . "', customer_id = '" . (int) $this->customer->getId() . "', product_id = '" . (int) $product_id . "', text = '" . $this->db->escape($data['text']) . "', date_added = NOW()");
 
 
         $review_id = $this->db->getLastId();
