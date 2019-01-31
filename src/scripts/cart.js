@@ -41,7 +41,7 @@ function refresh_veiew_cart(json){
         if(products.length){
             $("#empty_cart_block").hide();
             $("#full_cart_block").show();
-            for(i=0;i<products.length;i++){
+            for(var i=0;i<products.length;i++){
                 var itm=$("input[name='quantity["+products[i].cart_id+"]']").closest("ul");
                 if(products[i].isWholesale){
                     itm.find(".cart_price_caption_opt").show();
