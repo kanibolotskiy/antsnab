@@ -193,7 +193,7 @@ class ModelCatalogReview extends Model {
 			}
 			
             
-            $data["logo"]=$b_patch."catalog/image/header/logo.png";
+            $data["logo"]="https://ant-snab.ru/image/catalog/logo.jpg";
 			
 			/*
             $data["data_content"][]=array("Имя клиента",$data['author']);
