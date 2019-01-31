@@ -5091,6 +5091,10 @@ input[name="workemail"]{display:none!important;}
 .bottom_text p{margin-bottom:10px;}
 
 @media screen and (max-width: 640px){
+    
+    .nav ul li{text-align:center;}
+    .nav ul li:after,.nav ul li:before,.nav ul li.menu_li:after,.nav ul li.menu_li:before{display:none!important;}
+    .nav ul li.active span{text-decoration:underline;}
     .basket-block .basket-row ul li:nth-child(6) {
         width: 100%;
     }
