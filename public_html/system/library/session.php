@@ -26,8 +26,8 @@ class Session {
 				exit('Error: Invalid session ID!');
 			}
 			
-			//session_set_cookie_params(0, '/');
-			session_set_cookie_params(60*60*24*31, '/'); //Устанавливаем сессию в 1 месяц
+			session_set_cookie_params(0, '/');
+			//session_set_cookie_params(60*60*24*31, '/'); //Устанавливаем сессию в 1 месяц
 			session_start();
 		}			
 	}
