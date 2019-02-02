@@ -284,22 +284,22 @@
                 <ul class="resp-tabs-list vert">
 
                     <?php if(!empty($properties)): ?>
-                        <li>Описание</li>
+                        <li goal_data="card-description">Описание</li>
                     <?php endif;?>
                     <?php if($video_link) {?>
                         <li>Видео</li>
                     <?php }?>
-                    <li>Упаковка</li>
-                    <li>Калькулятор</li>
-
-                    <?php foreach($tabs as $t): ?>
-                    <li><?=$t['name']?></li>
-                    <?php endforeach;?>
+                    <li goal_data="card-pack">Упаковка</li>
+                    <li goal_data="card-calc">Калькулятор</li>
+                    
+                    <?php $i=0; foreach($tabs as $t){ ?>
+                    <li goal_data="tabdat_<?php echo $i;?>"><?=$t['name']?></li>
+                    <?php $i++; }?>
 
                     <?php if(count($reviews)>0):?>
-                    <li>Отзывы (<?= count($reviews) ?>)</li>
+                    <li goal_data="card-review">Отзывы (<?= count($reviews) ?>)</li>
                     <?php else: ?>
-                    <li>Отзывы </li>
+                    <li goal_data="card-review">Отзывы </li>
                     <?php endif; ?>
                 </ul>
 
