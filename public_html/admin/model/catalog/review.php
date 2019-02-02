@@ -193,7 +193,7 @@ class ModelCatalogReview extends Model {
 			}
 			
             
-            $data["logo"]="https://ant-snab.ru/image/catalog/logo.jpg";
+            $data["logo"]= $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
 			
 			/*
             $data["data_content"][]=array("Имя клиента",$data['author']);

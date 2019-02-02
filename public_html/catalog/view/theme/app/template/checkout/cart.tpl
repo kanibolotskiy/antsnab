@@ -58,7 +58,7 @@
                             <div class="file">
                                 <div class="file-block">
                                     <div id="filename">я юрлицо, хочу прикрепить реквизиты</div>
-                                    <input id="file" type="file" value="">
+                                    <input id="file" type="file" value="" name="download">
                                 </div>
                             </div>
                             <input type="submit" value="Заказать">

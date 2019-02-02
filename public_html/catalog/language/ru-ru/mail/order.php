@@ -14,11 +14,26 @@ $_['text_new_shipping_method']  = 'Метод доставки:';
 $_['text_new_email']  			= 'E-mail:';
 $_['text_new_telephone']  		= 'Телефон:';
 $_['text_new_ip']  				= 'IP адрес:';
+$_['text_new_name']             = 'Имя:';
 $_['text_new_payment_address']  = 'Адрес платежа';
 $_['text_new_shipping_address'] = 'Адрес доставки';
 $_['text_new_products']         = 'Товары';
 $_['text_new_product']          = 'Товар';
 $_['text_new_model']            = 'Модель';
+$_['text_unit']                 = 'Ед. изм.';
+$_['text_caption_user']         = 'Спасибо за ваш заказ';
+$_['text_caption_admin']        = 'Новый заказ с сайта';
+$_['text_subject_user']         = 'Ант-Снаб. Подтверждение вашего заказа';
+$_['text_subject_admin']        = 'Ант-Снаб. Новый заказ с сайта';
+$_['text_notify_admin']         = '';
+$_['text_notify_user_worktime'] = '<p>Если в данных допущена ошибка, пожалуйста свяжитесь с нами по телефонам: 8 (495) 255-01-37 | 8 (800) 775-28-31 или напишите письмо на почту <a href="mailto:zakaz@ant-snab.ru">zakaz@ant-snab.ru</p>
+<p>Если данные верны, ожидайте звонка с подтверждением заказа (в течение 10 минут) или письма со счетом (в течение 30 минут).</p>
+<p>С любовью и заботой, <a href="https://ant-snab.ru">"Ант-Снаб"</a></p>';
+$_['text_notify_user_notworktime']  = '<p>Если в данных допущена ошибка, пожалуйста свяжитесь с нами по телефонам: 8 (495) 255-01-37 | 8 (800) 775-28-31 или напишите письмо на почту <a href="mailto:zakaz@ant-snab.ru">zakaz@ant-snab.ru</p>
+<p>Если данные верны, ожидайте звонка с подтверждением заказа или письма со счетом.</p>
+<p>С любовью и заботой, <a href="https://ant-snab.ru">"Ант-Снаб"</a></p>';
+
+
 $_['text_new_quantity']         = 'Кол-во';
 $_['text_new_price']            = 'Цена';
 $_['text_new_order_total']      = 'Итог заказа';

@@ -3,7 +3,9 @@ class ControllerCheckoutSuccess extends Controller {
 	public function index() {
 		$this->load->language('checkout/success');
 		$order_id='';
+		
 		if (isset($this->session->data['order_id'])) {
+			
 			$this->cart->clear();
 			
 			$this->session->data['save_order_od']=$this->session->data['order_id'];
@@ -90,8 +92,9 @@ class ControllerCheckoutSuccess extends Controller {
 		
 		/**Текст спасибо за оформление заказа */
 		$this->load->model('catalog/information');
+		$this->load->model('checkout/order');
 		//echo date("H:m");
-		if($this->OfficeWorkTime()){
+		if($this->model_checkout_order->OfficeWorkTime()){
 			$information_id = 14;
 		}else{
 			$information_id = 15;
@@ -105,30 +108,5 @@ class ControllerCheckoutSuccess extends Controller {
 
 		$this->response->setOutput($this->load->view('common/success', $data));
 	}
-	public function OfficeWorkTime($dummy = false) {
-		$OfficeWorkTimes = array(
-			
-			1 => array('8:30','18:30'), // MON
-			2 => array('8:30','18:30'),
-			3 => array('8:30','18:30'),
-			4 => array('6:30','18:30'),
-			5 => array('8:30','18:30'), // FRI
-			6 => null, // SUN
-			0 => null // SUN
-		  );
-		// Return: FALSE || array('begin' -> unix_datetime, 'end' -> unix_datetime)
-		
-		$Now = getdate();	
-		$v = $OfficeWorkTimes[$Now['wday']];
-		if (null == $v) 
-			return false;
-		else {
-			$begin = strtotime($OfficeWorkTimes[$Now['wday']][0]);
-			$end = strtotime($OfficeWorkTimes[$Now['wday']][1]);
-			if ( (time() < $begin ) OR ( time() > $end ) ) 
-				return false;
-			else 
-				return true;
-		}
-	}
+	
 }

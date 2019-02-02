@@ -52,7 +52,7 @@ class ModelCatalogReview extends Model
             }
             $mail->setSubject($subject);
             
-            $data["logo"]="https://ant-snab.ru/image/catalog/logo.jpg";
+            $data["logo"]= $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
             
             $data["data_content"][]=array("Имя клиента",$data['author']);
             $data["data_content"][]=array("Компания",$data['company']);

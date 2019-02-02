@@ -352,6 +352,7 @@ class CartController extends \ControllerCheckoutCart
     //@task тут тоже фигня. ради одного скрипта добавлено
     public function index()
     {
+        
         $data['form_data'] = [
             'name' => '',
             'phone' => '',
@@ -360,6 +361,7 @@ class CartController extends \ControllerCheckoutCart
             'shipping_address' => '',
         ];
 
+        
         if ($this->request->server['REQUEST_METHOD'] == 'POST') {
             $data['form_data'] = $this->request->post;
             if (!isset($this->request->post['need_shipping'])) {
@@ -967,6 +969,7 @@ class CartController extends \ControllerCheckoutCart
 
         include_once 'catalog/model/checkout/order.php';
         $model = new \ModelCheckoutOrder($this->registry);
+        
         $order_id = $model->addOrder($orderData);
         if ($order_id) {
             //send emails
@@ -1195,6 +1198,27 @@ class CartController extends \ControllerCheckoutCart
         $order_data['shipping_custom_field'] = array();
         $order_data['shipping_method'] = '';
         $order_data['shipping_code'] = '';
+
+        if(isset($_FILES)){
+            if(is_uploaded_file($_FILES['download']['tmp_name'])) {
+                $order_data['files']=$_FILES;
+            }
+        }
+
+        //echo "!".print_r($this->request->post,1)."!";
+        //echo "!".print_r($_FILES,1)."!";
+        /*        
+        $uploads_dir='files/orders/';
+        if(isset($_FILES)){
+            $tmp_name=$_FILES['download']['tmp_name'];
+            if(is_uploaded_file($tmp_name)) {
+                $name = basename($_FILES['download']['name']);
+                echo "!uploaded=".$tmp_name."!";
+                move_uploaded_file($tmp_name, $uploads_dir.$name);
+                //$order_data['download']
+            }
+        }
+        */
 
         $order_data['products'] = array();
 

@@ -12,7 +12,7 @@
         </li>
         <li>
             <a target="_blank" class="prod-name" href="<?php echo $product['href']; ?>">
-                <?php echo $product['meta_h1']; ?>
+                <?php echo $product['name']; ?>
             </a>
 
             <p><?=$product['location']?></p>
