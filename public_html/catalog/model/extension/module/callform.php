@@ -36,9 +36,11 @@ class ModelExtensionModuleCallform extends Model
             $this->load->language('extension/module/callform');
 
 
-            $subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+            //$subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
             //@task make from language variables or tpl 
+            
+            /*
             $message = '<p>Заказ звонка</p>
             <table style="border-collapse:collapse;">
             <tr>
@@ -54,7 +56,31 @@ class ModelExtensionModuleCallform extends Model
                 <td style="padding:4px 10px;border:1px solid #ccc;">'.$data["text"].'</td>
             </tr>
             </table>';
- 
+            */
+            $data["logo"]= $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
+
+            $this->load->model('checkout/order');
+            if($this->model_checkout_order->OfficeWorkTime()){
+                $data["caption"]=$this->language->get('text_caption_worktime');
+                $subject=$this->language->get('text_subject_worktime');
+
+                //Инициировать звонок
+            }else{
+                $data["caption"]=$this->language->get('text_caption_notworktime');
+                $subject=$this->language->get('text_subject_notworktime');
+            }
+            
+            
+            //$data["data"]=date("d.m.Y H:i");
+
+            $data["data_content"][]=array("Имя клиента",$data['name']);
+            $data["data_content"][]=array("Телефон",$data['phone']);
+            $data["data_content"][]=array("Сообщение",$data['text']);
+            $data["data_content"][]=array("Дата события",date("d.m.Y H:i"));
+            
+
+            $message = $this->load->view('extension/call_report', $data);
+
             $mail = new Mail();
             $mail->protocol = $this->config->get('config_mail_protocol');
             $mail->parameter = $this->config->get('config_mail_parameter');

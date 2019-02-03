@@ -1205,21 +1205,6 @@ class CartController extends \ControllerCheckoutCart
             }
         }
 
-        //echo "!".print_r($this->request->post,1)."!";
-        //echo "!".print_r($_FILES,1)."!";
-        /*        
-        $uploads_dir='files/orders/';
-        if(isset($_FILES)){
-            $tmp_name=$_FILES['download']['tmp_name'];
-            if(is_uploaded_file($tmp_name)) {
-                $name = basename($_FILES['download']['name']);
-                echo "!uploaded=".$tmp_name."!";
-                move_uploaded_file($tmp_name, $uploads_dir.$name);
-                //$order_data['download']
-            }
-        }
-        */
-
         $order_data['products'] = array();
 
         foreach ($this->cart->getProducts() as $product) {

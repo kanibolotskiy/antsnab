@@ -44,6 +44,8 @@ $_['entry_email']                      = 'E-Mail';
 $_['entry_email_site']                 = 'E-Mail для отображения на сайте';
 $_['entry_email_recall']               = 'E-Mail для отзывов';
 $_['entry_email_order']                = 'E-Mail для заказов';
+$_['entry_email_call']                 = 'E-Mail для заказа звонка';
+
 
 $_['entry_telephone']                  = 'Телефон:';
 $_['entry_fax']                        = 'Факс';
