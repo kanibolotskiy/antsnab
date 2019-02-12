@@ -185,21 +185,22 @@ class ModelCatalogReview extends Model {
 			$mail->setTo($data['email']);
             $mail->setFrom($this->config->get('config_email'));
             $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-            
+			
+			
+			/*
             if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
                 $b_patch=$this->config->get('config_ssl').'image/';
             } else {
                 $b_patch=$this->config->get('config_url').'image/';
 			}
-			
-            
-            $data["logo"]= $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
-			
-			/*
-            $data["data_content"][]=array("Имя клиента",$data['author']);
-            $data["data_content"][]=array("Компания",$data['company']);
-			$data["data_content"][]=array("Email",$data['email']);
 			*/
+		
+			
+			$b_patch = str_replace ("admin/" ,"", $this->config->get('site_base')).'image/';
+			$data["logo"]= $b_patch . $this->config->get('config_logo');
+			
+			//$data["logo"]= "*".print_r($this->config,1)."*";
+			
 			
             if($product_id){
 				$subject = $this->language->get('text_subject_product');
