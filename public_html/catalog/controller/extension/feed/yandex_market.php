@@ -91,7 +91,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 
 				// Параметры товарного предложения
 				$data['url'] = $this->url->link('product/product', 'path=' . $this->getPath($product['category_id']) . '&product_id=' . $product['product_id']);
-				$data['price'] = $this->currency->convert($this->tax->calculate($product['price_wholesale'], $product['tax_class_id']), $shop_currency, $offers_currency);
+				$data['price'] = $this->currency->convert($this->tax->calculate($product['price'], $product['tax_class_id']), $shop_currency, $offers_currency);
 				$data['currencyId'] = $offers_currency;
 				$data['categoryId'] = $product['category_id'];
 				$data['delivery'] = 'true';

@@ -83,7 +83,6 @@
                 <ul>
                 
                     <?php foreach( $products_analog as $p):?>
-                        <!--<?php include __DIR__ . '/../partial/product_item.tpl' ?>-->
                     
                     <li>
                         <div class="products-block">
@@ -92,14 +91,7 @@
                             </a>
                             <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
                             <strong><?=$p['price']?></strong>
-                            <!--
-                            <a href="<?=$p['href']?>" class="order-btn">Купить</a>
-                            <a href="#" class="buy cart_add"
-                                data-product_id="<?=$p['product_id']?>" 
-                                data-sale_to_price_koef="<?=$p['sale_to_price_koef']?>">
-                                Купить
-                            </a>
-                            -->
+                            
                             <div class="quantity-buy cart_quantity-buy">
                                 <?php if(empty($p['unit_errors'])): ?>
                                     <div class="qnt-container"

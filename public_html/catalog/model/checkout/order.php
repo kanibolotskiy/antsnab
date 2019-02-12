@@ -712,8 +712,10 @@ class ModelCheckoutOrder extends Model {
 				}
 				if($this->OfficeWorkTime()){
 					$data['text_footer']=$language->get('text_notify_user_worktime');
+					$data['text_capred']=$language->get('text_notify_red_worktime');
 				}else{
 					$data['text_footer']=$language->get('text_notify_user_notworktime');
+					$data['text_capred']=$language->get('text_notify_red_notworktime');
 				}
 
 
@@ -741,7 +743,7 @@ class ModelCheckoutOrder extends Model {
 				
 				if (in_array('order', (array)$this->config->get('config_mail_alert'))) {
 					$subject = sprintf($language->get('text_subject_admin'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'), $order_id);
-
+					$data['text_capred']='';
 					// HTML Mail
 					$data['text_greeting'] = $language->get('text_new_received');
 					$data['caption'] = $language->get('text_caption_admin');

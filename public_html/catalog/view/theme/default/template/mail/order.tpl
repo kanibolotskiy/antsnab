@@ -21,6 +21,9 @@
   <p style="margin-top: 0px; margin-bottom: 20px;"><?php echo $text_download; ?></p>
   <p style="margin-top: 0px; margin-bottom: 20px;"><a href="<?php echo $download; ?>"><?php echo $download; ?></a></p>
   <?php } ?>
+  <?php if ($text_capred) { ?>
+    <p style="color:#ff0000;"><?php echo $text_capred;?></p>
+  <?php }?>
   <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;">
     <thead>
       <tr>

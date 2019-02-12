@@ -287,7 +287,7 @@
                         <li goal_data="card-description">Описание</li>
                     <?php endif;?>
                     <?php if($video_link) {?>
-                        <li>Видео</li>
+                        <li goal_data="card-video">Видео</li>
                     <?php }?>
                     <li goal_data="card-pack">Упаковка</li>
                     <li goal_data="card-calc">Калькулятор</li>
