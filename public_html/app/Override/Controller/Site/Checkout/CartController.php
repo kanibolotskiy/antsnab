@@ -279,7 +279,7 @@ class CartController extends \ControllerCheckoutCart
                     $json['added_key']=$product['cart_id'];
                 }
                 //modified
-                $json['success'] = sprintf($this->language->get('text_success'), $product_info['meta_h1'], $this->url->link('checkout/cart'));
+                $json['success'] = sprintf($this->language->get('text_success'), $product_info['name'], $this->url->link('checkout/cart'));
 
                 // Unset all shipping and payment methods
                 unset($this->session->data['shipping_method']);
