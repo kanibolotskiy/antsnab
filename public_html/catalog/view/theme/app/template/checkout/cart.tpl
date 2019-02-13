@@ -72,7 +72,7 @@
                     </form>
                 </div>
             </div>
-            <div class="cart_description">
+            <div class="cart_description content-text">
                 <?php echo $cart_text;?>
             </div>
 

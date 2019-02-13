@@ -32,5 +32,8 @@ if($(document).width()<750){
 $(".article").find("table").each(function () {
     $(this).wrap('<div class="table-responsive"></div>');
 });
+$(".content-text table").each(function () {
+    $(this).wrap('<div class="table-responsive"></div>');
+});
 
 

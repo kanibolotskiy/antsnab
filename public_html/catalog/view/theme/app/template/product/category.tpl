@@ -126,7 +126,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bottom_text">
+            <div class="bottom_text content-text">
                 <?php echo $bottom_text; ?>
             </div>
         <?php else: ?>
