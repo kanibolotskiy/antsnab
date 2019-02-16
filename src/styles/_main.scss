@@ -4799,6 +4799,7 @@ filter: grayscale(1); /* W3C */
     margin-bottom: 10px;
 
 }
+.content-text ul li:before {content:'';display:none;}
 .content-text ul li:after {
     content: '';
     display: block;
