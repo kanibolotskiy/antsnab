@@ -158,6 +158,7 @@ class ArticleController extends \Controller
                 $data['thumb'] = false;
             }
 
+
             /** @todo  hardcoded */
             $settings['desc_limit'] = 65;
 			$preview = html_entity_decode($article_info['preview'], ENT_QUOTES, 'UTF-8');
@@ -174,16 +175,17 @@ class ArticleController extends \Controller
             $data['description'] = html_entity_decode($article_info['description'], ENT_QUOTES, 'UTF-8');
 
             $data['images'] = array();
-
+            
             $results = $this->model_newsblog_article->getArticleImages($newsblog_article_id);
 
             foreach ($results as $result) {
                 $data['images'][] = array(
                     'original' => HTTP_SERVER . 'image/' . $result['image'],
                     'popup' => $this->model_tool_image->resize($result['image'], $images_size_articles_big[0], $images_size_articles_big[1]),
-                    'thumb' => $this->model_tool_image->resize($result['image'], $images_size_articles_small[0], $images_size_articles_small[1])
+                    'thumb' => $this->model_tool_image->myResize($result['image'], $images_size_articles_small[0], $images_size_articles_small[1],1)
                 );
             }
+            print_r($data['images']);
 
 
             $data['attributes'] = $article_info['attributes'];

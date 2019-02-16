@@ -20,6 +20,16 @@
             <div class="article-content content-text content-text">
                 <?php echo $description; ?>
             </div>
+            
+            <?php if($images) {?>
+                <div class="gallery">
+                    <?php foreach($images as $image_item) {?>
+                    <div class="gallery_item">
+                        <a href="<?php echo $image_item['original'];?>" data-fancybox="gallery"><img src="<?php echo $image_item['thumb'];?>" /></a>
+                    </div>
+                    <?php }?>
+                </div>
+            <?php }?>
         </div>
         <script src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
         <script src="//yastatic.net/share2/share.js"></script>

@@ -1475,6 +1475,7 @@ ul.tabset li:last-child a.active {
                     font-size: 15px;
                     line-height: 20px;
                     margin-bottom: 16px;
+                    height:40px;overflow:hidden;
                     &:hover{
                         text-decoration: none;
                     }
@@ -2169,7 +2170,7 @@ button.show-more{
                 padding: 0 8px 20px 8px;
                 /*height: 100%;*/
                 overflow: hidden;
-                min-height: 350px;                
+                /*min-height: 350px;*/
                 position: relative;
 
                 .img-production{
@@ -2184,6 +2185,7 @@ button.show-more{
                     margin-bottom: 15px;
                     line-height: 20px;
                     /*max-height: 66px;*/
+                    height:40px;overflow:hidden;
                     overflow: hidden;
                     &:hover{
                         text-decoration: none;
@@ -5138,6 +5140,24 @@ input[name="workemail"]{display:none!important;}
 .notify_cart{margin-top:10px;}
 .notify_cart a{color:#000;}
 .notify_cart a:hover{text-decoration:none;}
+
+.gallery{font-size: 0px;
+/*
+    align-items: center;
+    display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+    display: -webkit-flex;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-pack: justify;
+*/
+}
+
+.gallery_item{margin-right:1%;width:24%;display:inline-block;margin-bottom:10px;}
+.gallery_item img{max-width:100%;height:auto;}
 
 
 @media screen and (max-width: 1200px){

@@ -123,7 +123,7 @@ class ControllerNewsBlogArticle extends Controller {
 			$data['button_compare'] = $this->language->get('button_compare');
 
 			$data['article_id'] = $newsblog_article_id;
-
+			
 			$this->load->model('tool/image');
 
 			if ($article_info['image']) {
