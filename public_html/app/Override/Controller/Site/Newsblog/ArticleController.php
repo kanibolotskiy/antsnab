@@ -185,7 +185,6 @@ class ArticleController extends \Controller
                     'thumb' => $this->model_tool_image->myResize($result['image'], $images_size_articles_small[0], $images_size_articles_small[1],1)
                 );
             }
-            print_r($data['images']);
 
 
             $data['attributes'] = $article_info['attributes'];
