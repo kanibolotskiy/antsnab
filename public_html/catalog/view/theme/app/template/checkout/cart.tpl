@@ -26,7 +26,7 @@
 
                 <div class="ordering">
                     <form id="order_form" method="post" enctype="multipart/form-data" >
-                        <p>Нажимая на кнопку Заказать, я даю <a target="_blank" href="<?php echo $personaldata;?>">согласие на обработку персональных данных</a></p>
+                        
 
                         <div class="row">
                             <div class="form-group">
@@ -69,6 +69,7 @@
                             <i class="error">Введите адрес доставки</i>
                             <input  value="<?= $form_data['shipping_address'] ?>" name="shipping_address" type="text" placeholder="Введите адрес"/>                 
                         </div>
+                        <p>Нажимая на кнопку Заказать, я даю <a target="_blank" href="<?php echo $personaldata;?>">согласие на обработку персональных данных</a></p>
                     </form>
                 </div>
             </div>
