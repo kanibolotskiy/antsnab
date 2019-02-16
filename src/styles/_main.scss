@@ -4815,6 +4815,16 @@ filter: grayscale(1); /* W3C */
     background-color: #d3a06d;
 }
 
+.content-text .table-responsive{
+    width:100%;overflow:auto;
+}
+
+.content-text .table-responsive table tr td {
+    font-size: 14px;
+    color: #000000;
+    border: 1px solid #E8E5E2;
+}
+
 .success_content{font-size:16px;margin-top: 30px;}
 .success_content b{font-weight:bold;}
 .success_content p{margin-bottom:4px;}
