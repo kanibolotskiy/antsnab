@@ -56,7 +56,7 @@ class HeaderTemplateDecorator implements IDecorator
 
         // no scripts in header
         $data['scripts'] = [];
-
+        
         return $data;
     }
 
