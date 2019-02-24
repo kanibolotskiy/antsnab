@@ -60,11 +60,14 @@ class PaginationHelper
 
         if (null !== $paginationModel->getPreviousPageNumber() ) {
             $document->addLink($pageUrl($paginationModel->getPreviousPageNumber()), 'prev');
+            
         }
  
         if (null !== $paginationModel->getNextPageNumber() ) {
             $document->addLink($pageUrl($paginationModel->getNextPageNumber()), 'next');
+            //$document->addLink($baseUrl, 'canonical');            
         }
+        $document->addLink($baseUrl, 'canonical');
 
         return $load->view(static::PAGINATION_TEMPLATE, ['pagination' => $paginationModel, 'pageUrl' => $pageUrl]);
     }

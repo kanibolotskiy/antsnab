@@ -218,6 +218,8 @@ class CategoryController extends \Controller
 
                 $lazyLoadBaseUrl = $this->url->link('newsblog/category/showmore', 'path=' . $this->request->get['newsblog_path'] );
                 $data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl, $paginationModel);
+
+
             }
 
             /* $data['canonical'] = $this->url->link('newsblog/category', 'newsblog_path=' . $category_info['category_id'], 'SSL'); */

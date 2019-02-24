@@ -2,12 +2,13 @@
 <?php if ($pagination->getTotalNumberOfPages() != 0 && $pagination->getTotalNumberOfPages()>1 ): ?>
     <div class="page-navigation page-navigation2">
         <ul>
-            <?php $style = (1 !== $pagination->getCurrentPageNumber())?'':'style="display:none"'?>
-            <li class="first-child">
-                <a <?=$style?> class="prevbut" href="<?= $pageUrl($pagination->getPreviousPageNumber()) ?>">
-                    Предыдущая
-                </a>
-            </li>
+            <?php if($pagination->getCurrentPageNumber()!==1) { ?>
+                <li class="first-child">
+                    <a class="prevbut" href="<?= $pageUrl($pagination->getPreviousPageNumber()) ?>">
+                        Предыдущая
+                    </a>
+                </li>    
+            <?php }?>
 
             <?php foreach ($pagination->getPages() as $p): ?> 
                 <li>
@@ -19,12 +20,15 @@
                 </li>
             <?php endforeach ?>
 
-            <?php $style = ($pagination->getCurrentPageNumber() != $pagination->getLastPageNumber())?'':'style="display:none"'?>
-            <li class="last-child">
-                <a <?=$style?> class="nextbut" href="<?= $pageUrl($pagination->getNextPageNumber()) ?>">
-                    Следующая
-                </a>
-            </li>
+            
+            <?php if ($pagination->getCurrentPageNumber() != $pagination->getLastPageNumber()){?>
+                <li class="last-child">
+                    <a class="nextbut" href="<?= $pageUrl($pagination->getNextPageNumber()) ?>">
+                        Следующая
+                    </a>
+                </li>
+            <?php }?>
+            
         </ul>
     </div>
 <?php endif; ?>

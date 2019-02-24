@@ -30,8 +30,10 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 
 			$output .= $this->getCategories(0);
 
+			
 			$this->load->model('catalog/manufacturer');
 
+			/*
 			$manufacturers = $this->model_catalog_manufacturer->getManufacturers();
 
 			foreach ($manufacturers as $manufacturer) {
@@ -51,13 +53,13 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 					$output .= '</url>';
 				}
 			}
-
+			*/
 			$this->load->model('catalog/information');
 
 			$informations = $this->model_catalog_information->getInformations();
 
 			foreach ($informations as $information) {
-				//print_r($information);
+				//#00b0dcprint_r($information);
 				if(!$information['notinmap']){
 					$output .= '<url>';
 					$output .= '<loc>' . $this->url->link('information/information', 'information_id=' . $information['information_id']) . '</loc>';
