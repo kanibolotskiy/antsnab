@@ -87,8 +87,17 @@ class ControllerCommonHeader extends Controller {
 		$data['shopping_cart'] = $this->url->link('checkout/cart');
 		$data['checkout'] = $this->url->link('checkout/checkout', '', true);
 		$data['contact'] = $this->url->link('information/contact');
-		$data['telephone'] = $this->config->get('config_telephone');
 
+		$this->load->model('module/referrer');
+		$contact_data_referrer=$this->model_module_referrer->getContactsReferrer();
+		
+		if(isset($contact_data_referrer['phone'])){
+			$data['telephone'] = $contact_data_referrer['phone'];
+		}else{
+			$data['telephone'] = $this->config->get('config_telephone');
+		}
+
+		
 		// Menu
 		$this->load->model('catalog/category');
 

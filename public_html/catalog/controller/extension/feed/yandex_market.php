@@ -90,7 +90,8 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 //				$data['cbid'] = 15;
 
 				// Параметры товарного предложения
-				$data['url'] = $this->url->link('product/product', 'path=' . $this->getPath($product['category_id']) . '&product_id=' . $product['product_id']);
+				//."&utm_source=market&utm_medium=cpc"
+				$data['url'] = $this->url->link('product/product', 'path=' . $this->getPath($product['category_id']) . '&product_id=' . $product['product_id'])."?utm_source=market&utm_medium=cpc";
 				$data['price'] = $this->currency->convert($this->tax->calculate($product['price'], $product['tax_class_id']), $shop_currency, $offers_currency);
 				$data['currencyId'] = $offers_currency;
 				$data['categoryId'] = $product['category_id'];

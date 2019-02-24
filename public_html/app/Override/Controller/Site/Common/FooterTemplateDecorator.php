@@ -22,10 +22,32 @@ class FooterTemplateDecorator implements IDecorator
         $config = $registry->get('config');
 
         // Fields
+        /*
         $data['telephone'] = $config->get('config_telephone');
         $data['telephone2'] = $config->get('config_fax');
         $data['address'] = nl2br( $config->get('config_address') );
         $data['email'] = $config->get('config_email');
+        */
+
+        $data['telephone2'] = $config->get('config_fax');
+        $data['address'] = nl2br( $config->get('config_address') );
+
+        $registry->get('load')->model('module/referrer');
+        $contact_data_referrer=$registry->get('model_module_referrer')->getContactsReferrer();
+
+		if(isset($contact_data_referrer['email'])){
+			$data['email_site']=$contact_data_referrer['email'];
+		}else{
+			$data['email_site']=$config->get('config_email_site');
+        }
+        if(isset($contact_data_referrer['phone'])){
+			$data['telephone']=$contact_data_referrer['phone'];
+		}else{
+			$data['telephone'] = $config->get('config_telephone');
+        }
+        
+
+        
         $data['confidence'] = $registry->get('url')->link('information/information', 'information_id=3');
         $data['sitemap'] = $registry->get('url')->link('information/sitemap');
 

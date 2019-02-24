@@ -31,6 +31,7 @@ class CategoryController extends \Controller
 
     public function index()
     {
+        
         $this->load->language('newsblog/category');
 
         $this->load->model('newsblog/category');
@@ -69,7 +70,7 @@ class CategoryController extends \Controller
                 }
 
                 $category_info = $this->model_newsblog_category->getCategory($path_id);
-
+                
                 if ($category_info) {
                     $data['breadcrumbs'][] = array(
                         'text' => $category_info['name'],
@@ -172,7 +173,6 @@ class CategoryController extends \Controller
             $limit = $category_info['limit'];
 
             if ($limit > 0) {
-
                 $sort = $category_info['sort_by'];
                 $order = $category_info['sort_direction'];
 
@@ -208,7 +208,7 @@ class CategoryController extends \Controller
                 //@changed get articles, pagination construction
                 $article_total = $this->model_newsblog_article->getTotalArticles($filter_data);
                 $data['articles'] = $this->collectArticles($filter_data, $articles_image_size, $date_format, $top_category_id);
-
+                
 
                 /** Pagination */
                 $paginationModel = PaginationHelper::getPaginationModel($article_total, (int)$limit, (int)$page);
@@ -322,7 +322,7 @@ class CategoryController extends \Controller
             $page = $this->request->get['page'];
         }
 
-
+        
         $filter_data = array(
             'filter_category_id' => $category_id,
             'filter_sub_category' => true,
@@ -372,6 +372,7 @@ class CategoryController extends \Controller
         $this->load->model('tool/image');
 
         $results = $this->model_newsblog_article->getArticles($filter_data);
+        
 
         foreach ($results as $result) {
 

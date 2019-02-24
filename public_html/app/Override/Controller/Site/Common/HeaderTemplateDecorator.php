@@ -22,6 +22,10 @@ class HeaderTemplateDecorator implements IDecorator
     public function process($data, $registry)
     {
         $config = $registry->get('config');
+        
+        $registry->get('load')->model('module/referrer');
+        $contact_data_referrer=$registry->get('model_module_referrer')->getContactsReferrer();
+
         $data['telephone2'] = $config->get('config_fax');
 
         /* @task  XSS attack posibble. change css and markup later. now used '<p>sometext</p>' */

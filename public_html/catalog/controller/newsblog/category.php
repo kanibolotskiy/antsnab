@@ -13,7 +13,6 @@ class ControllerNewsBlogCategory extends Controller {
 		} else {
 			$page = 1;
 		}
-
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
