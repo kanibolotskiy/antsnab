@@ -40,6 +40,7 @@ class ControllerModuleReferrer extends Controller {
     }
 
     public function delete() {
+        
         $this->load->language('module/referrer');
         $this->load->model('module/referrer');
         $url = '';
@@ -56,13 +57,20 @@ class ControllerModuleReferrer extends Controller {
             $url .= '&page=' . $this->request->get['page'];
         }
 
-        if (isset($this->request->post['selected']) && $this->validateDelete()) {
+        /*if (isset($this->request->post['selected']) && $this->validateDelete()) {
             foreach ($this->request->post['selected'] as $pattern_id) {
                 $this->model_module_referrer->deleteRecord($pattern_id);
             }
             $this->session->data['success'] = $this->language->get('text_success');
         }
+        */
 
+        if (isset($this->request->post['selected'])) {
+            foreach ($this->request->post['selected'] as $pattern_id) {
+                $this->model_module_referrer->deleteRecord($pattern_id);
+            }
+            $this->session->data['success'] = $this->language->get('text_success');
+        }
         $this->response->redirect($this->url->link('module/referrer', 'token=' . $this->session->data['token'] . $url, 'SSL'));
     }
 
