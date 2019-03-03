@@ -10,7 +10,7 @@
                 <?php if(!$i){?>
                     <a property="item" typeof="WebPage" href="<?php echo $breadcrumb['href'];?>">
                         <span class="bread_desc" property="name"><?php echo $breadcrumb['text'];?></span>
-                        <span class="bread_mob"><i class="material-icons">home</i></span>
+                        <span class="bread_mob bread_mob_home"></span>
                     </a>
                 <?php } else{ ?>
                     <?php if($i!=(count($breadcrumbs)-1)){?>
