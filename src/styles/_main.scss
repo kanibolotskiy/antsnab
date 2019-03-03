@@ -2500,6 +2500,26 @@ button.show-more{
             &:last-child{
                 margin-right: 0;
             }
+            div{
+                display: block;
+                margin-bottom: -2px;
+                width: auto;
+                height: 50px;
+                line-height: 50px;
+                @include transition;
+                padding: 0 12px;
+                text-decoration: none;
+                background: #eeeeee;
+                color: #444444;
+                font-size: 14px;
+                font-weight: bold;
+                &:hover{
+                    background: #d3a06d;
+                    color: #fff;
+                    @include transition;
+                }
+                cursor:pointer;
+            }
             a{
                 display: block;
                 margin-bottom: -2px;
@@ -2526,6 +2546,13 @@ button.show-more{
             }
         }
         a.active{
+            cursor:auto;
+            background: #d3a06d !important;
+            background-image: none !important;
+            color: #fff;
+            @include transition;
+        }
+        div.active{
             cursor:auto;
             background: #d3a06d !important;
             background-image: none !important;

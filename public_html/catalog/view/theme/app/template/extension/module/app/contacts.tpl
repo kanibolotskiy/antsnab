@@ -35,9 +35,15 @@
                             <?php $cnt = 0 ?>
                             <?php foreach ($locations as $l): ?>
                                 <?php if ($cnt === 0): ?>
-                                    <li><a class="map_tab active" href="m1tab<?= $cnt ?>"><?= $l['name'] ?></a></li>
+                                    <li>
+                                        <div class="map_tab active" rel="m1tab<?= $cnt ?>"><?= $l['name'] ?></div>
+                                        <!--<a class="map_tab active" href="m1tab<?= $cnt ?>"><?= $l['name'] ?></a>-->
+                                    </li>
                                 <?php else: ?>
-                                    <li><a class="map_tab" href="m1tab<?= $cnt ?>"><?= $l['name'] ?></a></li>
+                                    <li>
+                                        <div class="map_tab" rel="m1tab<?= $cnt ?>"><?= $l['name'] ?></div>
+                                        <!--<a class="map_tab" href="m1tab<?= $cnt ?>"><?= $l['name'] ?></a>-->
+                                    </li>
                                 <?php endif; ?>
                                 <?php $cnt++ ?>
                             <?php endforeach; ?>
