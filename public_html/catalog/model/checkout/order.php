@@ -581,11 +581,15 @@ class ModelCheckoutOrder extends Model {
 				foreach ($order_product_query->rows as $product) {
 					$prodUnits = $produnitsGateway->getUnitsByProduct($product['product_id']);
 					$unit_str="шт";
+					//$unit_str=$prodUnits[1]['name'];
+					$unit_str=print_r($prodUnits,1);
+					
 					foreach($prodUnits as $unit_arr){
-						if ($unit_arr['isPackageBase']){
+						if ($unit_arr['isPriceBase']){
 							$unit_str=$unit_arr['name'];
 						}
 					}
+					
 
 					$option_data = array();
 
