@@ -3350,7 +3350,7 @@ button.show-more{
         border-collapse: collapse;
         tr{
             td{
-                padding: 17px;
+                padding: 15px;
                 border: 1px solid #E8E5E2;
                 font-size: 14px;
                 color: #000000;
@@ -3946,6 +3946,7 @@ a.print{
         width: 100%;
         height: 26px;
         line-height: 26px;
+        padding-left:10px;padding-right:10px;
     }
     .basket .left{
         margin-right: 15px;
@@ -4719,7 +4720,7 @@ html, body{
 .breadcrumbs > span:last-child:after{display:none;}
 
 .bread_mob .material-icons{vertical-align:middle;font-size:20px;}
-
+.bread_mob_home{background:url(../img/home_ico.svg);vertical-align: middle;width: 15px;height: 15px;}
 .price-dat{float:left;color: #444;margin-top: 10px;font-size:14px;}
 .price-dat span{font-weight:bold;}
 .download3{border-bottom:0;margin-bottom:0;}
@@ -4758,6 +4759,8 @@ filter: grayscale(1); /* W3C */
 .bread_mob{display:none;}
 .bread_desc{display:inline-block;}
 .breadcrumbs a{display:inline-block;line-height: 18px;}
+.breadcrumbs span{line-height: 18px;}
+
 .itembread{white-space:nowrap;}
 .article a{color:rgb(89, 139, 166);}
 .content p a{color:rgb(89, 139, 166);}
