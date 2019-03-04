@@ -35,8 +35,9 @@ class ControllerNewsBlogArticle extends Controller {
 				}
 
 				$category_info = $this->model_newsblog_category->getCategory($newsblog_path_id);
-
+				
 				if ($category_info) {
+					
 					$data['breadcrumbs'][] = array(
 						'text' => $category_info['name'],
 						'href' => $this->url->link('newsblog/category', 'newsblog_path=' . $newsblog_path)

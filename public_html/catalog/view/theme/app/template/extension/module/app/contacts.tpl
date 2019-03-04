@@ -37,12 +37,10 @@
                                 <?php if ($cnt === 0): ?>
                                     <li>
                                         <div class="map_tab active" rel="m1tab<?= $cnt ?>"><?= $l['name'] ?></div>
-                                        <!--<a class="map_tab active" href="m1tab<?= $cnt ?>"><?= $l['name'] ?></a>-->
                                     </li>
                                 <?php else: ?>
                                     <li>
                                         <div class="map_tab" rel="m1tab<?= $cnt ?>"><?= $l['name'] ?></div>
-                                        <!--<a class="map_tab" href="m1tab<?= $cnt ?>"><?= $l['name'] ?></a>-->
                                     </li>
                                 <?php endif; ?>
                                 <?php $cnt++ ?>

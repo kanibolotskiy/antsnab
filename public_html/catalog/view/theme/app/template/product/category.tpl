@@ -37,20 +37,11 @@
                             <li class="select_view select_view2 <?php echo $cat_view2;?>" rel="view2"></li>
                         </ul>
                     </div>
-                    <!--
-                    <ul class="tabset multi-tabset">
-                        <li><a href="#m1tab1" class="active"></a></li>
-                        <li><a href="#m1tab2"></a></li>
-                    </ul>
-                    -->
+                    
                     <div class="tab-list">
                         <div id="m1tab1">
                             <div class="tab-block <?php echo $cat_view_class;?>">
-                                <!--
-                                <div class="title-catalog">
-                                    &nbsp;Рулонные материалы
-                                </div>
-                                -->
+                               
                                 <ul>
                                     <?php foreach ($categories as $c): ?>
                                         <li>

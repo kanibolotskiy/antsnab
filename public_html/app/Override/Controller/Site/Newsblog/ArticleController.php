@@ -39,6 +39,7 @@ class ArticleController extends \Controller
         $images_size_articles_small = array($this->config->get($this->config->get('config_theme') . '_image_thumb_width'), $this->config->get($this->config->get('config_theme') . '_image_thumb_height'));
 
         if (isset($this->request->get['newsblog_path'])) {
+            
             $newsblog_path = '';
 
             $parts = explode('_', (string) $this->request->get['newsblog_path']);
@@ -345,43 +346,58 @@ class ArticleController extends \Controller
             if ($settings && $settings['template_article'])
                 $template_default = $settings['template_article'];
 
+            
             $this->response->setOutput($this->load->view('newsblog/' . $template_default, $data));
         } else {
-            $url = '';
-
-            if (isset($this->request->get['newsblog_path'])) {
-                $url .= '&newsblog_path=' . $this->request->get['newsblog_path'];
-            }
-
-            if (isset($this->request->get['tag'])) {
-                $url .= '&tag=' . $this->request->get['tag'];
-            }
-
+            //print_r($data);
+            /*
             $data['breadcrumbs'][] = array(
-                'text' => $this->language->get('text_error'),
-                'href' => $this->url->link('newsblog/article', $url . '&newsblog_article_id=' . $newsblog_article_id)
+				'text' => $this->language->get('text_error'),
+				'href' => $this->url->link('newsblog/category')
+            );
+            */
+            
+
+            $data['breadcrumbs'] = [];
+            $data['breadcrumbs'][] = array(
+                'text' => $this->language->get('text_home'),
+                'href' => $this->url->link('common/home')
             );
 
-            $this->document->setTitle($this->language->get('text_error'));
 
-            $data['heading_title'] = $this->language->get('text_error');
+            /**Страница ошибки 404 */
+            $this->load->model('catalog/information');
+            $information_id = 10;
+            $information_info = $this->model_catalog_information->getInformation($information_id);
 
-            $data['text_error'] = $this->language->get('text_error');
+            //$data['cart_text']=html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');0
 
-            $data['button_continue'] = $this->language->get('button_continue');
+            //print_r($information_info);
+            $this->document->setTitle($information_info['title']);
+            $data['breadcrumbs'][] = array(
+                'text' => $information_info['title'],
+                'href' => ''
+            );
 
-            $data['continue'] = $this->url->link('common/home');
+			$data['heading_title'] = $information_info['title'];
 
-            $this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
+            $data['text_error'] = html_entity_decode($information_info['description']);
+            
+/*
+			$data['button_continue'] = $this->language->get('button_continue');
+			$data['continue'] = $this->url->link('common/home');
+*/
+			//$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
+            $this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . '/1.1 404 Not Found');
+			$data['column_left'] = $this->load->controller('common/column_left');
+			$data['column_right'] = $this->load->controller('common/column_right');
+			$data['content_top'] = $this->load->controller('common/content_top');
+			$data['content_bottom'] = $this->load->controller('common/content_bottom');
+			$data['footer'] = $this->load->controller('common/footer');
+			$data['header'] = $this->load->controller('common/header');
 
-            $data['column_left'] = $this->load->controller('common/column_left');
-            $data['column_right'] = $this->load->controller('common/column_right');
-            $data['content_top'] = $this->load->controller('common/content_top');
-            $data['content_bottom'] = $this->load->controller('common/content_bottom');
-            $data['footer'] = $this->load->controller('common/footer');
-            $data['header'] = $this->load->controller('common/header');
+			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));
 
-            $this->response->setOutput($this->load->view('error/not_found.tpl', $data));
         }
     }
 
