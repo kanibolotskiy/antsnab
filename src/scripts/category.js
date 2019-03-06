@@ -78,8 +78,11 @@ $('body').delegate('#lazy-load_container','onLazyLoaded', function(e, $items){
     initQuantityContainers($items.find('.qnt-container'));
     initBuyButtons($items.find('.buy'));
 });
+
+
 $(document).ready(function(){
     $(document).on('click','.buy',function(e){
+        
         e.preventDefault();
         var show_added=0;
         var itm=$(this);
@@ -110,8 +113,19 @@ $(document).ready(function(){
                 $('#cart_preloader').fadeOut(200);
             },
             success: function(json) {
-                
+                //console.log(json);
                 if (json['success']) {
+                    var product = [{
+                        "id": json['metrika_product_id'],
+                        "name": json['metrika_product_name'],
+                        "price": json['metrika_product_price'],
+                        "brand": json['metrika_product_manufacturer'],
+                        "category": json['metrika_product_category'],
+                        "quantity": json['metrika_product_quantity']
+                    }];
+                    dataLayer.push({"ecommerce": {"add": {"products": product}}});
+                    
+
                     $('.basket').html(json['total_str']);
                     
 

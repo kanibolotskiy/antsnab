@@ -68,6 +68,19 @@ function refresh_cart(){
         type: 'POST',
         dataType: 'json',
         success: function(json) {
+            
+
+            var product = [{
+                "id": json['metrika_product_id'],
+                "name": json['metrika_product_name'],
+                "price": json['metrika_product_price'],
+                "quantity": json['metrika_product_quantity']
+            }];
+            if(json["metrika_action"]=="add"){
+                dataLayer.push({"ecommerce": {"add": {"products": product}}});
+            }else{
+                dataLayer.push({"ecommerce": {"remove": {"products": product}}});
+            }
             refresh_veiew_cart(json);
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -87,6 +100,15 @@ $(function(){
             type: 'POST',
             dataType: 'json',
             success: function(json) {
+                //console.log(json);
+                var product = [{
+                    "id": json['metrika_product_id'],
+                    "name": json['metrika_product_name'],
+                    "price": json['metrika_product_price'],
+                    "quantity": json['metrika_product_quantity']
+                }];
+                dataLayer.push({"ecommerce": {"remove": {"products": product}}});
+
                 refresh_veiew_cart(json);
                 cart_row.fadeOut(200,function(){
                     cart_row.remove();
@@ -104,6 +126,76 @@ $(function(){
     $(document).on("change",".qnt",function(){
         refresh_cart();
     });
+
+    $("#order_form input[type='submit']").click(function(e){
+        e.preventDefault();
+        
+        var flag_order=true;
+        var frm=$("#order_form");
+
+        var input_name=frm.find("input[name='name']")
+        var input_phone=frm.find("input[name='phone']")
+        var input_email=frm.find("input[name='email']")
+        var input_address=frm.find("input[name='shipping_address']")
+
+        var pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
+
+        if($.trim(input_name.val())==""){
+            flag_order=false;
+            input_name.prev().fadeIn(100);
+        }else{
+            input_name.prev().fadeOut(100);
+        }
+        
+
+        if(($.trim(input_phone.val())!="")||($.trim(input_email.val())!="")){
+            input_phone.prev().fadeOut(100);
+            if($.trim(input_email.val())!=""){
+                if(!pattern.test($.trim(input_email.val()))){
+                    flag_order=false; 
+                    input_email.prev().fadeIn(100);
+                }else{
+                    input_email.prev().fadeOut(100);
+                }
+            }else{
+                input_email.prev().fadeOut(100);
+            }
+        }else{
+            flag_order=false; 
+            input_phone.prev().fadeIn(100);
+        }
+
+        if($("input[name='need_shipping']").prop("checked")){
+            if($.trim(input_address.val())==""){
+                flag_order=false;
+                input_address.prev().fadeIn(100);
+            }else{
+                input_address.prev().fadeOut(100);
+            }
+        }else{
+            input_address.prev().fadeOut(100);            
+        }
+        
+
+        if(flag_order){    
+            $.ajax({
+                url: '/index.php?route=checkout/cart/setProductsCommerce/',
+                type: 'POST',
+                dataType: 'json',
+                success: function(json) {
+                    dataLayer.push({"ecommerce": {"purchase": {"actionField": {
+                        "id" : json['orderid']
+                    },"products": json['products']}}});
+
+                    $("#order_form").submit();
+                }
+            });
+        }else{
+            console.log("not send");
+        }
+
+    });
+    /*
     $("#order_form").submit(function(e){
         var flag_order=true;
         var input_name=$(this).find("input[name='name']")
@@ -150,10 +242,12 @@ $(function(){
         }
         
 
-        if(!flag_order){
+        if(!flag_order){ 
             e.preventDefault();
         }
     });
+    */
+
     $("input[name='need_shipping']").change(function(){
         if($(this).prop("checked")){
             $(".delivery_row").stop().slideDown(150);

@@ -26,7 +26,7 @@ class HeaderTemplateDecorator implements IDecorator
         $registry->get('load')->model('module/referrer');
         $contact_data_referrer=$registry->get('model_module_referrer')->getContactsReferrer();
 
-        $data['telephone2'] = $config->get('config_fax');
+        //$data['telephone2'] = $config->get('config_fax');
 
         /* @task  XSS attack posibble. change css and markup later. now used '<p>sometext</p>' */
         $data['worktime'] = nl2br($config->get('config_open')); 

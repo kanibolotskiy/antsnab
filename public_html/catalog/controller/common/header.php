@@ -93,8 +93,10 @@ class ControllerCommonHeader extends Controller {
 		
 		if(isset($contact_data_referrer['phone'])){
 			$data['telephone'] = $contact_data_referrer['phone'];
+			$data['telephone2'] = '';
 		}else{
 			$data['telephone'] = $this->config->get('config_telephone');
+			$data['telephone2'] = $this->config->get('config_fax');
 		}
 
 		

@@ -77,11 +77,31 @@ class ContactpageController extends \Controller
         $data['address'] = nl2br($this->config->get('config_address'));
         $data['geocode'] = $this->config->get('config_geocode');
         $data['geocode_hl'] = $this->config->get('config_language');
-        $data['telephone'] = $this->config->get('config_telephone');
-        $data['fax'] = $this->config->get('config_fax');
+        
+        //$data['telephone'] = $this->config->get('config_telephone');
+        //$data['fax'] = $this->config->get('config_fax');
+
+        
+
+		$this->load->model('module/referrer');
+        $contact_data_referrer=$this->model_module_referrer->getContactsReferrer();
+
+		if(isset($contact_data_referrer['email'])){
+			$data['email_site']=$contact_data_referrer['email'];
+		}else{
+			$data['email_site']=$this->config->get('config_email_site');
+        }
+        if(isset($contact_data_referrer['phone'])){
+            $data['telephone']=$contact_data_referrer['phone'];
+			$data['fax'] = '';
+		}else{
+            $data['telephone'] = $this->config->get('config_telephone');
+			$data['fax'] = $this->config->get('config_fax');
+        }
+        
         $data['open'] = nl2br($this->config->get('config_open'));
         $data['comment'] = $this->config->get('config_comment');
-        $data['email_site'] = $this->config->get('config_email_site');
+        //$data['email_site'] = $this->config->get('config_email_site');
 
         $data['locations'] = array();
 

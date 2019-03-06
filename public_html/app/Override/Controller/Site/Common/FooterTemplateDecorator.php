@@ -29,7 +29,7 @@ class FooterTemplateDecorator implements IDecorator
         $data['email'] = $config->get('config_email');
         */
 
-        $data['telephone2'] = $config->get('config_fax');
+        //$data['telephone2'] = $config->get('config_fax');
         $data['address'] = nl2br( $config->get('config_address') );
 
         $registry->get('load')->model('module/referrer');
@@ -41,9 +41,11 @@ class FooterTemplateDecorator implements IDecorator
 			$data['email_site']=$config->get('config_email_site');
         }
         if(isset($contact_data_referrer['phone'])){
-			$data['telephone']=$contact_data_referrer['phone'];
+            $data['telephone']=$contact_data_referrer['phone'];
+            $data['telephone2'] = '';
 		}else{
-			$data['telephone'] = $config->get('config_telephone');
+            $data['telephone'] = $config->get('config_telephone');
+            $data['telephone2'] = $config->get('config_fax');
         }
         
 

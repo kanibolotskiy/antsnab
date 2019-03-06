@@ -158,8 +158,43 @@ class CartController extends \ControllerCheckoutCart
             }
 
             if (!$json) {
-                $this->cart->add($this->request->post['product_id'], $quantity, $option, $recurring_id);
+                $pr_id=$this->request->post['product_id'];
+
+                $this->cart->add($pr_id, $quantity, $option, $recurring_id);
                 
+                
+                $json['metrika_product_id']=$pr_id;
+                $json['metrika_product_name']=$product_info['name'];
+                $json['metrika_product_price']=$product_info['price'];
+                $json['metrika_product_manufacturer']=$product_info['manufacturer'];
+
+                $main_category_id=$product_info['main_category'];
+
+                $this->load->model('catalog/category');
+                $main_category_info = $this->model_catalog_category->getCategory($main_category_id);
+                $categories_names=[];
+
+                if($main_category_info){
+                    
+                    $parent_cat_id=$main_category_info['parent_id'];
+                    if($parent_cat_id){
+                        $parent_category_info = $this->model_catalog_category->getCategory($parent_cat_id);
+                        $categories_names[]=$parent_category_info['name'];
+                    }
+                    $categories_names[]=$main_category_info['name'];
+                }
+                $categories_str=print_r($main_category_info,1);
+
+                
+                $categories_str="";
+                if(is_array($categories_names)){
+                    $categories_str=implode("/",$categories_names);
+                }
+                
+                $json['metrika_product_category']=$categories_str;
+                $json['metrika_product_quantity']=$quantity;
+                
+
                 if($this->request->post['show_added']){
                     $products = $this->cart->getProducts();
                     $i=0;
@@ -658,7 +693,6 @@ class CartController extends \ControllerCheckoutCart
             $data['cart_text']=html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');
 
             /**Текст для пустой корзины */
-            $this->load->model('catalog/information');
             $information_id = 17;
             $information_info = $this->model_catalog_information->getInformation($information_id);
             $data['empty_cart']=html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');
@@ -982,26 +1016,150 @@ class CartController extends \ControllerCheckoutCart
 
         return $order_id;
     }
+
+    public function setProductsCommerce(){
+        $products = $this->cart->getProducts();
+        $this->load->model('catalog/product');
+        $this->load->model('catalog/category');
+        $this->load->model('checkout/order');
+
+        foreach($products as $product){
+            //print_r($product);
+            $product_info = $this->model_catalog_product->getProduct($product['product_id']);
+            
+            $main_category_info = $this->model_catalog_category->getCategory($product_info['main_category']);
+            $categories_names=[];
+
+            if($main_category_info){
+                
+                $parent_cat_id=$main_category_info['parent_id'];
+                if($parent_cat_id){
+                    $parent_category_info = $this->model_catalog_category->getCategory($parent_cat_id);
+                    $categories_names[]=$parent_category_info['name'];
+                }
+                $categories_names[]=$main_category_info['name'];
+            }
+            $categories_str=print_r($main_category_info,1);
+
+
+            $categories_str="";
+            if(is_array($categories_names)){
+                $categories_str=implode("/",$categories_names);
+            }
+            /**Не придумал как иначе */
+            $data['orderid']=$this->model_checkout_order->getLastOrderId()+1;
+            $data['products'][] = Array(
+                'id'=>$product['product_id'],
+                'name'=>$product['name'],
+                'price'=>$product['price'],
+                'quantity'=>$product['quantity'],
+                'brand'=>$product_info['manufacturer'],
+                'category'=>$categories_str
+                );
+        }
+/*
+$json['metrika_product_manufacturer']=$product_info['manufacturer'];
+
+$main_category_id=$product_info['main_category'];
+
+$this->load->model('catalog/category');
+$main_category_info = $this->model_catalog_category->getCategory($main_category_id);
+$categories_names=[];
+
+if($main_category_info){
+    
+    $parent_cat_id=$main_category_info['parent_id'];
+    if($parent_cat_id){
+        $parent_category_info = $this->model_catalog_category->getCategory($parent_cat_id);
+        $categories_names[]=$parent_category_info['name'];
+    }
+    $categories_names[]=$main_category_info['name'];
+}
+$categories_str=print_r($main_category_info,1);
+
+
+$categories_str="";
+if(is_array($categories_names)){
+    $categories_str=implode("/",$categories_names);
+}
+
+$json['metrika_product_category']=$categories_str;
+*/
+        $data['success']=true;
+        
+        
+        $this->response->setOutput(json_encode($data));    
+    }
     /**Ajax удаление */
     public function ajaxDel(){
-        
+        /*
         if (isset($this->request->post['key'])) {
             $this->cart->remove($this->request->post['key']);
+        }*/
+        
+        $products = $this->cart->getProducts();
+        $returned_data=[];
+        if (isset($this->request->post['key'])) {
+            foreach($products as $product){
+                if($product['cart_id']==$this->request->post['key']){
+                    $returned_data['metrika_action']="remove";
+                    $returned_data['metrika_product_id']=$product['product_id'];
+                    $returned_data['metrika_product_name']=$product['name'];
+                    $returned_data['metrika_product_price']=$product['price'];
+                    $returned_data['metrika_product_quantity']=$product['quantity'];
+                }
+            }
+            $this->cart->remove($this->request->post['key']);
         }
-        $this->ajaxRefresh();
+        
+        $this->ajaxRefresh($returned_data);
     }
     /**Ajax обновление */
-    public function ajaxRefresh(){
+    public function ajaxRefresh($returned_data=[]){
         $json = array();
 
+        $products = $this->cart->getProducts();
+
+        /*
+        foreach($products as $product){
+            $products_arr[]=array($product['cart_id']=>$product['quantity']);
+        }
+        */
+        //print_r($products_arr);
+        
 		// Update
 		if (!empty($this->request->post['quantity'])) {
 			foreach ($this->request->post['quantity'] as $key => $value) {
+                foreach($products as $product){
+                    if($product['cart_id']==$key){
+                        $delta=$product['quantity']-$value;
+                        $delta_val=abs($delta);
+                        if($delta>0){
+                            //echo "убавить";
+                            $returned_data['metrika_action']="remove";
+                            $returned_data['metrika_product_id']=$product['product_id'];
+                            $returned_data['metrika_product_name']=$product['name'];
+                            $returned_data['metrika_product_price']=$product['price'];
+                            $returned_data['metrika_product_quantity']=$delta_val;
+                        }
+                        if($delta<0){
+                            //echo "добавить";
+                            $returned_data['metrika_action']="add";
+                            $returned_data['metrika_product_id']=$product['product_id'];
+                            $returned_data['metrika_product_name']=$product['name'];
+                            $returned_data['metrika_product_price']=$product['price'];
+                            $returned_data['metrika_product_quantity']=$delta_val;
+                        }
+                    }
+                }
+
 				$this->cart->update($key, $value);
 			}
         }
 
-        $products = $this->cart->getProducts();
+        
+        
+
         $data['products']=[];
         $orderSumTotal = 0;
         foreach ($products as $product) {
@@ -1072,10 +1230,15 @@ class CartController extends \ControllerCheckoutCart
         }else{
             $data['total_str'] = $this->language->get('text_items_empty');
         }
-                
+        
+        if($returned_data){
+            $data['metrika_product_id']=$returned_data['metrika_product_id'];
+            $data['metrika_product_name']=$returned_data['metrika_product_name'];
+            $data['metrika_product_price']=$returned_data['metrika_product_price'];
+            $data['metrika_product_quantity']=$returned_data['metrika_product_quantity'];
+            $data['metrika_action']=$returned_data['metrika_action'];
 
-        //$json['total_str'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));
-
+        }
         $data['success']=true;
         $data['total'] = $this->currency->format($orderSumTotal, $this->session->data['currency']);
         $this->response->setOutput(json_encode($data));
