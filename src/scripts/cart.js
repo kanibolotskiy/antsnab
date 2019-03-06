@@ -38,6 +38,7 @@ function refresh_veiew_cart(json){
         $("#total_cart").animate({"opacity":1},100);
         
         var products=json["products"];
+        console.log(products);
         if(products.length){
             $("#empty_cart_block").hide();
             $("#full_cart_block").show();
@@ -69,17 +70,19 @@ function refresh_cart(){
         dataType: 'json',
         success: function(json) {
             
-
-            var product = [{
-                "id": json['metrika_product_id'],
-                "name": json['metrika_product_name'],
-                "price": json['metrika_product_price'],
-                "quantity": json['metrika_product_quantity']
-            }];
-            if(json["metrika_action"]=="add"){
-                dataLayer.push({"ecommerce": {"add": {"products": product}}});
-            }else{
-                dataLayer.push({"ecommerce": {"remove": {"products": product}}});
+            if (typeof dataLayer != 'undefined') {
+                var product = [{
+                    "id": json['metrika_product_id'],
+                    "name": json['metrika_product_name'],
+                    "price": json['metrika_product_price'],
+                    "quantity": json['metrika_product_quantity']
+                }];
+                
+                if(json["metrika_action"]=="add"){
+                    dataLayer.push({"ecommerce": {"add": {"products": product}}});
+                }else{
+                    dataLayer.push({"ecommerce": {"remove": {"products": product}}});
+                }
             }
             refresh_veiew_cart(json);
         },
@@ -107,7 +110,9 @@ $(function(){
                     "price": json['metrika_product_price'],
                     "quantity": json['metrika_product_quantity']
                 }];
-                dataLayer.push({"ecommerce": {"remove": {"products": product}}});
+                if (typeof dataLayer != 'undefined') {
+                    dataLayer.push({"ecommerce": {"remove": {"products": product}}});
+                }
 
                 refresh_veiew_cart(json);
                 cart_row.fadeOut(200,function(){
@@ -183,11 +188,14 @@ $(function(){
                 type: 'POST',
                 dataType: 'json',
                 success: function(json) {
-                    dataLayer.push({"ecommerce": {"purchase": {"actionField": {
-                        "id" : json['orderid']
-                    },"products": json['products']}}});
 
-                    $("#order_form").submit();
+                    if (typeof dataLayer != 'undefined') {
+                        dataLayer.push({"ecommerce": {"purchase": {"actionField": {
+                            "id" : json['orderid']
+                        },"products": json['products']}}});
+
+                        $("#order_form").submit();
+                    }
                 }
             });
         }else{

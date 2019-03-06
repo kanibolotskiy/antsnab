@@ -1119,7 +1119,7 @@ $json['metrika_product_category']=$categories_str;
         $json = array();
 
         $products = $this->cart->getProducts();
-
+        
         /*
         foreach($products as $product){
             $products_arr[]=array($product['cart_id']=>$product['quantity']);
@@ -1127,8 +1127,10 @@ $json['metrika_product_category']=$categories_str;
         */
         //print_r($products_arr);
         
-		// Update
+        // Update
+        
 		if (!empty($this->request->post['quantity'])) {
+            
 			foreach ($this->request->post['quantity'] as $key => $value) {
                 foreach($products as $product){
                     if($product['cart_id']==$key){
@@ -1156,9 +1158,10 @@ $json['metrika_product_category']=$categories_str;
 				$this->cart->update($key, $value);
 			}
         }
+        
 
         
-        
+        $products = $this->cart->getProducts();
 
         $data['products']=[];
         $orderSumTotal = 0;
@@ -1205,11 +1208,12 @@ $json['metrika_product_category']=$categories_str;
                     $total = $this->currency->format($rowTotal, $this->session->data['currency']);
                 }
                 $orderSumTotal += $rowTotal;
-
+                
             } else {
                 $price = false;
                 $total = false;
             }
+           
             $data['products'][] = array(
                 'cart_id' => $product['cart_id'],
                 'product_id'=>$product['product_id'],
