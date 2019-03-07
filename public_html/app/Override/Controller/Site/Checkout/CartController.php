@@ -336,35 +336,60 @@ class CartController extends \ControllerCheckoutCart
                     'total' => &$total
                 );
 
-                // Display prices
-                if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-                    $sort_order = array();
+                $products = $this->cart->getProducts();
 
-                    $results = $this->model_extension_extension->getExtensions('total');
-
-                    foreach ($results as $key => $value) {
-                        $sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
-                    }
-
-                    array_multisort($sort_order, SORT_ASC, $results);
-
-                    foreach ($results as $result) {
-                        if ($this->config->get($result['code'] . '_status')) {
-                            $this->load->model('extension/total/' . $result['code']);
-
-                            // We have to put the totals in an array so that they pass by reference.
-                            $this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
+                $data['products']=[];
+                $orderSumTotal = 0;
+                foreach ($products as $product) {
+                    $produnitsGateway = new ProdUnits($this->registry);
+                    $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
+                    $prodUnits = $produnitsGateway->getUnitsByProduct($product['product_id']);
+                    $priceUnit = null;
+                    foreach ($prodUnits as $unit_id => $unit) {
+                        if ($unit['isPriceBase'] == 1 && !$priceUnit) {
+                            $priceUnit = $unit;
+                            //коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
+                            $saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($product['product_id'], 'isSaleBase', $unit_id);
+                        } elseif ($unit['isPriceBase'] == 1) {
+                            throw new \Exception('Too many price bases for product ' . $product['product_id']);
                         }
                     }
-
-                    $sort_order = array();
-
-                    foreach ($totals as $key => $value) {
-                        $sort_order[$key] = $value['sort_order'];
+                    if (!$priceUnit) {
+                        throw new \Exception('Price base wasnt found for product ' . $product['product_id']);
                     }
 
-                    array_multisort($sort_order, SORT_ASC, $totals);
+                    $wholesale_threshold_in_saleUnits = Fraction::fromFloat((float)$product['wholesale_threshold']); 
+                    $wholesale_threshold = $wholesale_threshold_in_saleUnits->multiply($saleToPriceKoef)->toFloat(); 
+
+                    // Display prices
+                    if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+                        
+                        $saleUnit_price = (float)$this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
+                        $price = $this->currency->format($saleUnit_price, $this->session->data['currency']);
+
+                        $saleUnit_price_wholesale = (float)$this->tax->calculate($product['price_wholesale'], $product['tax_class_id'], $this->config->get('config_tax'));
+                        $price_wholesale = $this->currency->format($saleUnit_price_wholesale, $this->session->data['currency']);
+
+
+                        //@added @task
+                        $prodQuantity =(float)$product['quantity'];
+                        if ($prodQuantity >= $wholesale_threshold) {
+                            $rowTotal = $saleUnit_price_wholesale * $prodQuantity; 
+                            $isWholesale = true;
+                            $total = $this->currency->format($rowTotal, $this->session->data['currency']);
+                        } else {
+                            $rowTotal = $saleUnit_price * $prodQuantity; 
+                            $isWholesale = false;
+                            $total = $this->currency->format($rowTotal, $this->session->data['currency']);
+                        }
+                        $orderSumTotal += $rowTotal;
+                        
+                    } else {
+                        $price = false;
+                        $total = false;
+                    }
                 }
+
 
                 //modified
                 //$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));
@@ -372,7 +397,12 @@ class CartController extends \ControllerCheckoutCart
 				$productsCountStr = ProdUnitStrings::plural($productsCount, 
 								'вид товара', 'вида товара', 'видов товара');
                 $json['total'] = $this->currency->format($total, $this->session->data['currency']);
-                $json['total_str'] = sprintf($this->language->get('text_items'), $productsCount, $productsCountStr, $this->currency->format($total, $this->session->data['currency']));
+                //$json['total_str'] = sprintf($this->language->get('text_items'), $productsCount, $productsCountStr, $this->currency->format($total, $this->session->data['currency']));
+                if($productsCount){
+                    $json['total_str'] = sprintf($this->language->get('text_items'), $productsCount, $productsCountStr, $this->currency->format($orderSumTotal, $this->session->data['currency']));
+                }else{
+                    $json['total_str'] = sprintf($this->language->get('text_items_empty'), $productsCount, $productsCountStr, $this->currency->format($orderSumTotal, $this->session->data['currency']));
+                }
 
             } else {
                 $json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']));
@@ -1057,34 +1087,6 @@ class CartController extends \ControllerCheckoutCart
                 'category'=>$categories_str
                 );
         }
-/*
-$json['metrika_product_manufacturer']=$product_info['manufacturer'];
-
-$main_category_id=$product_info['main_category'];
-
-$this->load->model('catalog/category');
-$main_category_info = $this->model_catalog_category->getCategory($main_category_id);
-$categories_names=[];
-
-if($main_category_info){
-    
-    $parent_cat_id=$main_category_info['parent_id'];
-    if($parent_cat_id){
-        $parent_category_info = $this->model_catalog_category->getCategory($parent_cat_id);
-        $categories_names[]=$parent_category_info['name'];
-    }
-    $categories_names[]=$main_category_info['name'];
-}
-$categories_str=print_r($main_category_info,1);
-
-
-$categories_str="";
-if(is_array($categories_names)){
-    $categories_str=implode("/",$categories_names);
-}
-
-$json['metrika_product_category']=$categories_str;
-*/
         $data['success']=true;
         
         
@@ -1119,13 +1121,6 @@ $json['metrika_product_category']=$categories_str;
         $json = array();
 
         $products = $this->cart->getProducts();
-        
-        /*
-        foreach($products as $product){
-            $products_arr[]=array($product['cart_id']=>$product['quantity']);
-        }
-        */
-        //print_r($products_arr);
         
         // Update
         
