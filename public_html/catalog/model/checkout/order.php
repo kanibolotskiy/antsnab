@@ -734,24 +734,24 @@ class ModelCheckoutOrder extends Model {
 
 				$text .= $language->get('text_new_footer') . "\n\n";
 
-				$mail = new Mail();
+				if($order_info['email']){
+					$mail = new Mail();
+					$mail->protocol = $this->config->get('config_mail_protocol');
+					$mail->parameter = $this->config->get('config_mail_parameter');
+					$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+					$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+					$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+					$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+					$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
-				$mail->protocol = $this->config->get('config_mail_protocol');
-				$mail->parameter = $this->config->get('config_mail_parameter');
-				$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-				$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-				$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-				$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-				$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
-				$mail->setTo($order_info['email']);
-				$mail->setFrom($this->config->get('config_email'));
-				$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
-				$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
-				$mail->setHtml($this->load->view('mail/order', $data));
-				$mail->setText($text);
-				$mail->send();
-
+					$mail->setTo($order_info['email']);
+					$mail->setFrom($this->config->get('config_email'));
+					$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+					$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
+					$mail->setHtml($this->load->view('mail/order', $data));
+					$mail->setText($text);
+					$mail->send();
+				}
 				// Admin Alert Mail
 				
 				if (in_array('order', (array)$this->config->get('config_mail_alert'))) {
