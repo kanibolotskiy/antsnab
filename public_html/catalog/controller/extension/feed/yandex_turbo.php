@@ -161,10 +161,12 @@ class ControllerExtensionFeedYandexTurbo extends Controller {
 		if($this->config->get('yandex_market_deliverycost')){
 			$del_array['cost']=$this->config->get('yandex_market_deliverycost');
 		}
+		$del_array['days']="1-2";
+		/*
 		if($this->config->get('yandex_market_deliverydate')){
 			//$del_array['days']=$this->config->get('yandex_market_deliverydate');
-			$del_array['days']="1-2";
-		}
+		}*/
+		
 		if($this->config->get('yandex_market_deliverypre')){
 			$del_array['order-before']=$this->config->get('yandex_market_deliverypre');
 		}
