@@ -91,7 +91,10 @@ class ControllerExtensionFeedYandexTurbo extends Controller {
 				$data['price'] = $this->currency->convert($this->tax->calculate($product['price'], $product['tax_class_id']), $shop_currency, $offers_currency);
 				$data['currencyId'] = $offers_currency;
 				$data['categoryId'] = $product['category_id'];
+
+				$data['pickup'] = 'true';
 				$data['delivery'] = 'true';
+				
 //				$data['local_delivery_cost'] = 100;
 				$data['name'] = $product['meta_h1'];
 				$data['vendor'] = $product['manufacturer'];
@@ -159,7 +162,8 @@ class ControllerExtensionFeedYandexTurbo extends Controller {
 			$del_array['cost']=$this->config->get('yandex_market_deliverycost');
 		}
 		if($this->config->get('yandex_market_deliverydate')){
-			$del_array['days']=$this->config->get('yandex_market_deliverydate');
+			//$del_array['days']=$this->config->get('yandex_market_deliverydate');
+			$del_array['days']="1-2";
 		}
 		if($this->config->get('yandex_market_deliverypre')){
 			$del_array['order-before']=$this->config->get('yandex_market_deliverypre');
