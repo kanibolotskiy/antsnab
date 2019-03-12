@@ -20,6 +20,8 @@ class ProductTemplateDecorator implements IDecorator
 {
     const RULES_INFORMATION_ID = 5;
 
+    
+
     public function process($data, $registry)
     {
         $request = $registry->get('request');

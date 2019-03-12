@@ -2,6 +2,44 @@
 class ControllerProductProduct extends Controller {
 	private $error = array();
 
+	public function addtocart() {
+		
+		
+        $product_id = $this->request->get['id'];
+        $quantity = (isset($this->request->get['quantity']) ? $this->request->get['quantity'] : 1);
+        $option = array();
+        $recurring_id = 0;
+    
+        // Check if product exist
+        $this->load->model('catalog/product');
+    
+        $product_info = $this->model_catalog_product->getProduct($product_id);
+    
+        if ($product_info) {
+          $product_options = $this->model_catalog_product->getProductOptions($product_id);
+    
+          foreach ($product_options as $product_option) {
+            if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
+              $this->response->redirect($this->url->link('product/product', 'product_id=' . $product_id));
+              exit;
+            }
+          }
+    
+          $this->cart->add($product_id, $quantity, $option, $recurring_id);
+    
+          unset($this->session->data['shipping_method']);
+          unset($this->session->data['shipping_methods']);
+          unset($this->session->data['payment_method']);
+          unset($this->session->data['payment_methods']);
+    
+          $this->response->redirect($this->url->link('checkout/cart'));
+    
+        } else {
+          $this->response->redirect($this->url->link('common/home'));
+        }
+        
+	}
+	
 	public function index() {
 		
 		$this->load->language('product/product');
