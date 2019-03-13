@@ -101,7 +101,6 @@ class ControllerExtensionFeedYandexTurbo extends Controller {
 				$data['vendorCode'] = $product['model'];
 				$data['model'] = $product['name'];
 				$data['description'] = $product['description'];
-				$data['sales_notes'] = 'доставка от 800р';
 
 				
 				if ($product['image']) {
@@ -166,7 +165,7 @@ class ControllerExtensionFeedYandexTurbo extends Controller {
 		if($this->config->get('yandex_market_deliverydate')){
 			//$del_array['days']=$this->config->get('yandex_market_deliverydate');
 		}*/
-		
+
 		if($this->config->get('yandex_market_deliverypre')){
 			$del_array['order-before']=$this->config->get('yandex_market_deliverypre');
 		}
