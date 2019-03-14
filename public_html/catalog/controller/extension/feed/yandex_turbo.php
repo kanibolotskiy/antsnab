@@ -59,12 +59,16 @@ class ControllerExtensionFeedYandexTurbo extends Controller {
 			$this->setDeliveryOptions();
 			
 			// Категории
-			$categories = $this->model_extension_feed_yandex_market->getCategory($allowed_categories);
-			
-			
+			$categories = $this->model_extension_feed_yandex_market->getCategory();
+			unset($allow_cat);
 			foreach ($categories as $category) {
+				
 				$this->setCategory($category['name'], $category['category_id'], $category['parent_id']);
-
+				//*Новые разрешенные категории*/
+				$allow_cat[]=$category['category_id'];
+			}
+			if($allow_cat){
+				$allow_cat_str=implode(",",$allow_cat);
 			}
 
 			
@@ -72,7 +76,7 @@ class ControllerExtensionFeedYandexTurbo extends Controller {
 			$in_stock_id = $this->config->get('yandex_market_in_stock'); // id статуса товара "В наличии"
 			$out_of_stock_id = $this->config->get('yandex_market_out_of_stock'); // id статуса товара "Нет на складе"
 			$vendor_required = false; // true - только товары у которых задан производитель, необходимо для 'vendor.model'
-			$products = $this->model_extension_feed_yandex_market->getProduct($allowed_categories, $out_of_stock_id, $vendor_required,true);
+			$products = $this->model_extension_feed_yandex_market->getProduct($allow_cat_str, $out_of_stock_id, $vendor_required);
 
 			//$products = $this->model_extension_feed_yandex_market->getProduct($allow_cat_str, $out_of_stock_id, $vendor_required);
 
@@ -422,7 +426,7 @@ class ControllerExtensionFeedYandexTurbo extends Controller {
 		foreach ($this->categories as $category) {
 			$category_name = $category['name'];
 			unset($category['name'], $category['export']);
-			$yml .= $this->getElement($category, 'category', $category_name);
+			$yml .= $this->getElement($category, 'category',$category_name);
 		}
 		$yml .= '</categories>' . $this->eol;
 
@@ -465,7 +469,7 @@ class ControllerExtensionFeedYandexTurbo extends Controller {
 		foreach ($attributes as $key => $value) {
 			$retval .= $key . '="' . $value . '" ';
 		}
-		$retval .= $element_value ? '>' . $this->eol . $element_value . '</' . $element_name . '>' : '/>';
+		$retval .= $element_value ? '>' .  $element_value . '</' . $element_name . '>' : '/>';
 		$retval .= $this->eol;
 
 		return $retval;
