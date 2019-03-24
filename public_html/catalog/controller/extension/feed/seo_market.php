@@ -485,8 +485,8 @@ class ControllerExtensionFeedSeoMarket extends Controller {
 	private function prepareField($field) {
 		$field = htmlspecialchars_decode($field);
 		$field = strip_tags($field);
-		$from = array('"', '&', '>', '<', '\'');
-		$to = array('&quot;', '&amp;', '&gt;', '&lt;', '&apos;');
+		$from = array('"','&nbsp;', '&ndash;','&mdash;','&', '>', '<', '\'');
+		$to = array('&quot;',' ','–','—', '&amp;', '&gt;', '&lt;', '&apos;');
 		$field = str_replace($from, $to, $field);
 		if ($this->from_charset != 'windows-1251') {
 			$field = iconv($this->from_charset, 'windows-1251//TRANSLIT//IGNORE', $field);
