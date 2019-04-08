@@ -177,7 +177,7 @@
                                             HAS ERRORS, SEE ABOVE
                                         <?php else: ?>
                                         <div class="help_cont"> 
-                                            <strong id="wholesale_price" data-value="<?=$price_wholesale?>">
+                                            <strong id="wholesale_price" data-value="<?=$price_wholesale?>"><?=$price_wholesale_val?>
                                             </strong>
 
                                             <b class="help_question">?<em>Оптовая цена действительна при единовременной оплате <span id="wholesale_threshold" data-value="<?=$wholesale_threshold?>"><?=$wholesale_threshold?></span>&nbsp;<span id="wholesale_unit" data-value="<?=$saleUnit['name_plural']?>"><?=$saleUnit['name_plural']?></span></em></b>
@@ -200,7 +200,8 @@
                                     <!-- Розничная цена -->
                                     <div class="wholesale wholesale2">
                                             <div class="wholesale-price">
-                                                <strong id="price"  data-value="<?=$price?>">
+                                            
+                                                <strong id="price"  data-value="<?=$price?>"><?=$price_val?>
                                                 </strong><br/>
                                                 <span id="priceDescr">
                                                 </span>
