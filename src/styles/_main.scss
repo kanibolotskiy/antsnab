@@ -5292,7 +5292,7 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 }
 
 @media screen and (max-width: 640px){
-
+    .preheader_info{font-size:13px;}
     .logo_slogan{display:none;}
     .header .tel{order:4;width:100%;}
     .header .header_email{order:5;width:100%;}

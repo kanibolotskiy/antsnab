@@ -3003,7 +3003,8 @@ input[name="workemail"] { display: none !important; }
   .tel a { margin-bottom: 0; }
   .logo_slogan { display: inline-block; } }
 
-@media screen and (max-width: 640px) { .logo_slogan { display: none; }
+@media screen and (max-width: 640px) { .preheader_info { font-size: 13px; }
+  .logo_slogan { display: none; }
   .header .tel { order: 4; width: 100%; }
   .header .header_email { order: 5; width: 100%; }
   .btn-nav { order: 3; }
