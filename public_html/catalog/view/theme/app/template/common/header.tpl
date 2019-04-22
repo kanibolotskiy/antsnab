@@ -162,7 +162,10 @@
 
             <div class="tel">
                 <a rel="nofollow" href="tel:<?php echo $telephone; ?>"><?php echo $telephone; ?></a>
-                <a rel="nofollow" href="tel:<?= $telephone2 ?>">&nbsp;&nbsp;<?= $telephone2 ?></a>
+                <?php if($telephone2){ ?>
+                    <a rel="nofollow" href="tel:<?= $telephone2 ?>">&nbsp;&nbsp;<?= $telephone2 ?></a>
+                <?php }?>
+                
             </div>
 
             <div class="header_email">
