@@ -5290,6 +5290,7 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 }
 
 @media screen and (max-width: 640px){
+
     .logo_slogan{display:none;}
     .header .tel{order:4;width:100%;}
     .header .header_email{order:5;width:100%;}
@@ -5298,8 +5299,10 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
     .btn-nav{position: absolute;right: 10px;top: 130px;}
     .header_email{padding-left:0;background:none;}
     .header_email a{padding-left:0;}
-    .prehead_address .prehead_val{display:none;}
-    
+    /*.prehead_address .prehead_val{display:none;}*/
+    .prehead_address .prehead_cap{display:block;}
+    .prehead_address .hide_mb{display:none;}
+
     .nav ul li{text-align:center;}
     .nav ul li:after,.nav ul li:before,.nav ul li.menu_li:after,.nav ul li.menu_li:before{display:none!important;}
     .nav ul li.active span{text-decoration:underline;}

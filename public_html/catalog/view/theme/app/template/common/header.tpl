@@ -119,7 +119,7 @@
                     <a href="contacts/" >
                         <div class="prehead_address">
                             <span class="prehead_cap">Офис:</span>
-                            <span class="prehead_val">г. Москва, Высоковольтный проезд, дом 1, стр. 43</span>
+                            <span class="prehead_val">г. Москва<span class="hide_mb">, Высоковольтный проезд, дом 1, стр. 43</span></span>
                         </div>
                     </a>
                     <div class="prehead_work">

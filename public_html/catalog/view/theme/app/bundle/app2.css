@@ -3009,7 +3009,9 @@ input[name="workemail"] { display: none !important; }
   .btn-nav { position: absolute; right: 10px; top: 130px; }
   .header_email { padding-left: 0; background: none; }
   .header_email a { padding-left: 0; }
-  .prehead_address .prehead_val { display: none; }
+  /*.prehead_address .prehead_val{display:none;}*/
+  .prehead_address .prehead_cap { display: block; }
+  .prehead_address .hide_mb { display: none; }
   .nav ul li { text-align: center; }
   .nav ul li:after, .nav ul li:before, .nav ul li.menu_li:after, .nav ul li.menu_li:before { display: none !important; }
   .nav ul li.active span { text-decoration: underline; }
