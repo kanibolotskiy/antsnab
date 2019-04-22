@@ -60,4 +60,4 @@
 /nbproject/private/
 /antcss/node_modules/
 
-/public_html/catalog/view/theme/app/bundle/*
+#/public_html/catalog/view/theme/app/bundle/*
