@@ -98,6 +98,12 @@ class ControllerCommonHeader extends Controller {
 			$data['telephone'] = $this->config->get('config_telephone');
 			$data['telephone2'] = $this->config->get('config_fax');
 		}
+		
+		if(isset($contact_data_referrer['email'])){
+			$data['email_site']=$contact_data_referrer['email'];
+		}else{
+			$data['email_site']=$this->config->get('config_email_site');
+		}
 
 		
 		// Menu

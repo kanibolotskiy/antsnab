@@ -41,6 +41,7 @@
         <?php foreach ($links as $link) { ?>
             <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
         <?php } ?>
+        
     </head>
     <body>
         <?php if (true === $thank_you): ?>
@@ -111,33 +112,63 @@
             </div>
         </div>
 
-        <a href="" class="up"></a>
+        <a href="#" class="up" rel="nofollow"></a>
+        <div class="preheader">
+            <div class="container">
+                <div class="preheader_info">
+                    <a href="contacts/" >
+                        <div class="prehead_address">
+                            <span class="prehead_cap">Офис:</span>
+                            <span class="prehead_val">г. Москва, Высоковольтный проезд, дом 1, стр. 43</span>
+                        </div>
+                    </a>
+                    <div class="prehead_work">
+                        <span class="prehead_cap">Мы работаем:</span>
+                        <span class="prehead_val"><?= $worktime ?></span>
+                    </div>
+                    <a href="#" class="js-call" rel="nofollow">
+                        <div class="prehead_call">
+                            <span class="prehead_val order_call">Заказать звонок</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
         <header class="header container">
-
-            <strong class="logo">
-                <?php if ($logo) { ?>
-                    <?php if ($home == $og_url) { ?>
-                        <img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" />
-                    <?php } else { ?>
-                        <a href="<?php echo $home; ?>" title="<?php echo $name; ?>">
+            
+            <div class="wrap_logo">
+                <strong class="logo">
+                    <?php if ($logo) { ?>
+                        <?php if ($home == $og_url) { ?>
                             <img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" />
-                        </a>
-                    <?php } ?>
+                        <?php } else { ?>
+                            <a href="<?php echo $home; ?>" title="<?php echo $name; ?>">
+                                <img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" />
+                            </a>
+                        <?php } ?>
 
-                <?php } else { ?>
-                    <?php if ($home == $og_url) { ?>
-                        <div class="logo_bg"></div>
                     <?php } else { ?>
-                        <a href="<?php echo $home; ?>"><div class="logo_bg"></div></a>
+                        <?php if ($home == $og_url) { ?>
+                            <div class="logo_bg"></div>
+                        <?php } else { ?>
+                            <a href="<?php echo $home; ?>"><div class="logo_bg"></div></a>
+                        <?php } ?>
                     <?php } ?>
-                <?php } ?>
-            </strong>
+                </strong>
+                <div class="logo_slogan">
+                    Производство и продажа<br/>стройматериалов
+                </div>
+            </div>
 
             <div class="tel">
                 <a rel="nofollow" href="tel:<?php echo $telephone; ?>"><?php echo $telephone; ?></a>
-                <a rel="nofollow" href="tel:<?= $telephone2 ?>"><?= $telephone2 ?></a>
-                <a class="btn-request-call">Заказать звонок</a>
+                <a rel="nofollow" href="tel:<?= $telephone2 ?>">&nbsp;&nbsp;<?= $telephone2 ?></a>
             </div>
+
+            <div class="header_email">
+                <a href="mailto:<?= $email_site ?>"><?= $email_site ?></a>
+            </div>
+            <!--
             <div class="line"></div>
             <div class="schedule">
                 <span>Мы работаем:</span>
@@ -145,7 +176,9 @@
                     <?= $worktime ?>
                 </p>
             </div>
+            
             <a class="btn-request-call">Заказать звонок</a>
+            -->
             <?= $cart ?>
             <a class="btn-nav">
                 <span>

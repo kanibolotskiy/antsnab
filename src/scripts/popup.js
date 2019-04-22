@@ -3,8 +3,14 @@ $(".btn-request-call").click(function () {
     $(".popup").css("display", "block");
 });
 
+$(".js-call").click(function (e) {
+    e.preventDefault();
+    //$(".popup").css("display", "block");
+    $(".popup").fadeIn(200);
+});
 $(".close, .close2").click(function () {
-    $(".popup").css("display", "none");
+    //$(".popup").css("display", "none");
+    $(".popup").fadeOut(200);
 });
 
 
