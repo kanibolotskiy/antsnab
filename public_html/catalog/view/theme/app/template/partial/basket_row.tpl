@@ -48,7 +48,7 @@
                 data-wholesale_threshold="<?=$product['wholesale_threshold']?>"
                 data-price_quantity="<?php echo $product['quantity']; ?>">
             </div>
-            <div class="opt_limit_notification">Добавьте еще <span class="opt_limit_notification_value"></span>, цена снизится</div>
+            <div class="opt_limit_notification">добавьте еще <span class="opt_limit_notification_value"></span>, цена снизится</div>
         </li>
         <li>
             <span>Сумма</span>

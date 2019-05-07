@@ -5274,8 +5274,7 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
     -webkit-box-pack: justify;
 border-bottom:1px solid #e5e4e4;
 flex-wrap:wrap;
-padding-bottom: 18px;
-margin-bottom: 30px;
+margin-bottom: 18px;
 }
 .bene_item{text-align:center;width:20%;cursor:pointer;}
 .bene_item_ico{width:22px;height:22px;/*background:url(../img/bene_ico.png);*/
@@ -5301,7 +5300,7 @@ margin-bottom: 30px;
     -webkit-box-pack: justify;
     padding-right:15px;padding-left:15px;
 }
-.state_stock_col{margin-top:20px;margin-bottom:20px;}
+.state_stock_col{/*margin-top:20px;margin-bottom:20px;*/margin:20px auto;}
 .state_stock_cap{font-size:13px;color:#666;line-height:16px;}
 .state_stock_val{font-size:13px;color:#000;text-decoration:underline;line-height:18px;}
 
@@ -5341,7 +5340,7 @@ background-position:left center;background-repeat:no-repeat;
 .price_disc{float:right;font-size:14px;margin-top:20px;color:#444;text-decoration:underline;cursor:pointer;font-weight:bold;}
 .bene_item_desc{display:none;}
 .state_stock_cap{white-space:nowrap;}
-.opt_limit_notification{display:none;max-width: 160px;margin-top: 8px;line-height: 16px;margin-right: 9px;}
+.opt_limit_notification{display:none;max-width: 160px;margin-top: 8px;line-height: 16px;margin-right: 9px;font-size:12px;}
 .opt_limit_notification_value{display:inline!important;}
 .modal_form{margin-top:20px;}
 .modal_form_link{
@@ -5371,7 +5370,7 @@ background-position:left center;background-repeat:no-repeat;
 @media screen and (max-width: 980px){
     .bene_item{width:33%;}
     .wrap_price-for{flex-direction:column;align-items:initial;}
-
+    .state_stock_col{margin-left:initial;margin-right:initial;}
     .state_stock{flex-direction:column;align-items: initial;}
     .state_stock_link{text-align:left;margin-top:10px;}
     .state_stock_del{width:80%;height:1px;}
@@ -5404,6 +5403,7 @@ background-position:left center;background-repeat:no-repeat;
     
     .tel a{margin-bottom:0;}
     .logo_slogan{display:inline-block;}
+    .modal .modal-block{align-items:initial;}
 }
 
 @media screen and (max-width: 640px){

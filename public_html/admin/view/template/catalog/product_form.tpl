@@ -483,10 +483,12 @@
                                 <div class="col-sm-10">
                                     <div class="well well-sm" style="min-height: 150px;max-height: 500px;overflow: auto;">
                                         <table class="table table-striped">
-                                            <?php foreach ($categories as $category) { ?>
+                                            <?php foreach ($categories as $category) { $class_seo='isseo_'.$category['isseo']; ?>
+                                                
                                                 <tr>
-                                                    <td class="checkbox">
+                                                    <td class="checkbox isseo_" >
                                                         <label>
+                                                            <?php //print_r($category);?>
                                                             <?php if (in_array($category['category_id'], $product_category)) { ?>
                                                                 <input type="checkbox" name="product_category[]" value="<?php echo $category['category_id']; ?>" checked="checked" />
                                                                 <?php echo $category['name']; ?>

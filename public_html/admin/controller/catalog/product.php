@@ -1177,7 +1177,7 @@ class ControllerCatalogProduct extends Controller {
 		);
 
 		$data['categories'] = $this->model_catalog_category->getCategories($filter_data);
-
+		//print_r($data['categories']);
 		// Filters
 
 		if (isset($this->request->post['main_category_id'])) {
