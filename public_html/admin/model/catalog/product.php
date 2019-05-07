@@ -81,6 +81,11 @@ class ModelCatalogProduct extends Model
         if (!empty($data['disseo'])) {
             $disseo = (float) $data['disseo'];
         }
+        $showdiscount=0;
+        if (!empty($data['showdiscount'])) {
+            $showdiscount = (float) $data['showdiscount'];
+        }
+        
 
         $price_wholesale = 0.0000;
         if (!empty($data['price_wholesale'])) {
@@ -103,8 +108,9 @@ class ModelCatalogProduct extends Model
         }
 
 
-        $sql = "update " . DB_PREFIX . "product set disseo = :disseo, price_wholesale = :price_wholesale, wholesale_threshold=:wholesale_threshold, produnit_template_id=:produnit_template_id where product_id = :id";
+        $sql = "update " . DB_PREFIX . "product set disseo = :disseo, showdiscount = :showdiscount, price_wholesale = :price_wholesale, wholesale_threshold=:wholesale_threshold, produnit_template_id=:produnit_template_id where product_id = :id";
         $res = $this->db->query($sql, [
+            ':showdiscount' => $showdiscount,
             ':disseo' => $disseo,
             ':price_wholesale' => $price_wholesale,
             ':wholesale_threshold' => $wholesale_threshold,
@@ -290,8 +296,7 @@ class ModelCatalogProduct extends Model
 
     public function editProduct($product_id, $data)
     {
-        
-        $this->db->query("UPDATE " . DB_PREFIX . "product SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int) $data['quantity'] . "', minimum = '" . (int) $data['minimum'] . "', subtract = '" . (int) $data['subtract'] . "', stock_status_id = '" . (int) $data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int) $data['manufacturer_id'] . "', shipping = '" . (int) $data['shipping'] . "', price = '" . (float) $data['price'] . "', points = '" . (int) $data['points'] . "', weight = '" . (float) $data['weight'] . "', weight_class_id = '" . (int) $data['weight_class_id'] . "', length = '" . (float) $data['length'] . "', width = '" . (float) $data['width'] . "', height = '" . (float) $data['height'] . "', length_class_id = '" . (int) $data['length_class_id'] . "', status = '" . (int) $data['status'] . "', tax_class_id = '" . (int) $data['tax_class_id'] . "', sort_order = '" . (int) $data['sort_order'] . "', date_modified = NOW() WHERE product_id = '" . (int) $product_id . "'");
+        $this->db->query("UPDATE " . DB_PREFIX . "product SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int) $data['quantity'] . "', minimum = '" . (int) $data['minimum'] . "', subtract = '" . (int) $data['subtract'] . "', stock_status_id = '" . (int) $data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int) $data['manufacturer_id'] . "', shipping = '" . (int) $data['shipping'] . "', price = '" . (float) $data['price'] . "', points = '" . (int) $data['points'] . "', weight = '" . (float) $data['weight'] . "', weight_class_id = '" . (int) $data['weight_class_id'] . "', length = '" . (float) $data['length'] . "', width = '" . (float) $data['width'] . "', height = '" . (float) $data['height'] . "', length_class_id = '" . (int) $data['length_class_id'] . "', status = '" . (int) $data['status'] . "', tax_class_id = '" . (int) $data['tax_class_id'] . "', sort_order = '" . (int) $data['sort_order'] . "', mincount='".(int) $data['mincount']."', date_modified = NOW() WHERE product_id = '" . (int) $product_id . "'");
 
         if (isset($data['image'])) {
             $this->db->query("UPDATE " . DB_PREFIX . "product SET image = '" . $this->db->escape($data['image']) . "' WHERE product_id = '" . (int) $product_id . "'");
@@ -406,6 +411,15 @@ class ModelCatalogProduct extends Model
             }
         }
         
+        /**Преимущества */
+        $this->db->query("DELETE FROM dopinfo_benefits_to_product WHERE product_id = '" . (int) $product_id . "'");
+        //print_r($data);
+        if (isset($data['product_benefit'])) {
+            foreach ($data['product_benefit'] as $benefit_id) {
+                $this->db->query("INSERT INTO dopinfo_benefits_to_product SET product_id = '" . (int) $product_id . "', benefit_id = '" . (int) $benefit_id . "'");
+            }
+        }
+
     
         /**Аналоги товаров */
         $this->db->query("DELETE FROM " . DB_PREFIX . "product_analogs WHERE product_id = '" . (int) $product_id . "'");
@@ -491,6 +505,20 @@ class ModelCatalogProduct extends Model
             $data['product_image'] = $this->getProductImages($product_id);
             $data['product_option'] = $this->getProductOptions($product_id);
             $data['product_related'] = $this->getProductRelated($product_id);
+            $data['product_benefits'] = $this->getProductBenefits($product_id);
+            
+            $data['product_reward'] = $this->getProductRewards($product_id);
+            $data['product_special'] = $this->getProductSpecials($product_id);
+            $data['product_category'] = $this->getProductCategories($product_id);
+            $data['product_download'] = $this->getProductDownloads($product_id);
+            $data['product_layout'] = $this->getProductLayouts($product_id);
+            $data['product_store'] = $this->getProductStores($product_id);
+            $data['product_recurrings'] = $this->getRecurrings($product_id);
+
+            $data['main_category_id'] = $this->getProductMainCategoryId($product_id);
+            
+            $data['product_benefits'] = $this->getProductBenefits($product_id);
+            
             $data['product_reward'] = $this->getProductRewards($product_id);
             $data['product_special'] = $this->getProductSpecials($product_id);
             $data['product_category'] = $this->getProductCategories($product_id);
@@ -817,6 +845,42 @@ class ModelCatalogProduct extends Model
 
         return $product_related_data;
     }
+
+
+    /**Преимущества товара*/
+    public function getProductBenefits($product_id)
+    {
+        $product_related_data = array();
+        $query = $this->db->query("SELECT dbp.product_id,db.benefit_id,db.name FROM `dopinfo_benefits_to_product` dbp left join dopinfo_benefits db ON dbp.benefit_id=db.benefit_id WHERE dbp.product_id='" . (int) $product_id . "'");
+         
+
+        return $query->rows;
+        /*foreach ($query->rows as $result) {
+            $product_benefi[] = $result['benefit_id'];
+        }
+        return $product_related_data;
+        */
+    }
+    
+    public function getBenefits($data = array())
+    {
+        $product_related_data = array();
+
+        $sql="SELECT * FROM dopinfo_benefits";
+        
+        if (!empty($data['filter_name'])) {
+            $sql .= " AND pd.name LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
+        }
+        if (!empty($data['limit'])) {
+            $sql .= " limit ".$data['limit'];
+        }
+
+        $query = $this->db->query($sql);
+
+        return $query->rows;
+    }
+    
+
 
     public function getRecurrings($product_id)
     {

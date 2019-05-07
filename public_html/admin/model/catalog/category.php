@@ -11,9 +11,12 @@ class ModelCatalogCategory extends Model
         if(!isset($data['notshowisseo'])){
             $data['notshowisseo']=0;
         }
-        
 
-        $this->db->query("INSERT INTO " . DB_PREFIX . "category SET parent_id = '" . (int) $data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int) $data['top'] : 0) . "', `column` = '" . (int) $data['column'] . "', sort_order = '" . (int) $data['sort_order'] . "', status = '" . (int) $data['status'] . "', isseo = '" . (int) $data['isseo'] . "', notshowisseo = '" . (int) $data['notshowisseo'] . "', date_modified = NOW(), date_added = NOW()");
+        if(!isset($data['showdiscount'])){
+            $data['showdiscount']=0;
+        }
+
+        $this->db->query("INSERT INTO " . DB_PREFIX . "category SET parent_id = '" . (int) $data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int) $data['top'] : 0) . "', `column` = '" . (int) $data['column'] . "', sort_order = '" . (int) $data['sort_order'] . "', status = '" . (int) $data['status'] . "', isseo = '" . (int) $data['isseo'] . "',showdiscount = '" . (int) $data['showdiscount'] . "', notshowisseo = '" . (int) $data['notshowisseo'] . "', date_modified = NOW(), date_added = NOW()");
 
         $category_id = $this->db->getLastId();
 
@@ -75,12 +78,15 @@ class ModelCatalogCategory extends Model
             $data['notshowisseo']=0;
         }
 
+        if(!isset($data['showdiscount'])){
+            $data['showdiscount']=0;
+        }
         
 
         if(!isset($data['bottom_text'])){
             $data['bottom_text']='';
         }
-        $this->db->query("UPDATE " . DB_PREFIX . "category SET parent_id = '" . (int) $data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int) $data['top'] : 0) . "', `column` = '" . (int) $data['column'] . "', sort_order = '" . (int) $data['sort_order'] . "', status = '" . (int) $data['status'] . "', isseo = '" . (int) $data['isseo'] . "', notshowisseo = '" . (int) $data['notshowisseo'] . "', date_modified = NOW() WHERE category_id = '" . (int) $category_id . "'");
+        $this->db->query("UPDATE " . DB_PREFIX . "category SET parent_id = '" . (int) $data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int) $data['top'] : 0) . "', `column` = '" . (int) $data['column'] . "', sort_order = '" . (int) $data['sort_order'] . "', status = '" . (int) $data['status'] . "', isseo = '" . (int) $data['isseo'] . "',showdiscount = '" . (int) $data['showdiscount'] . "', notshowisseo = '" . (int) $data['notshowisseo'] . "', date_modified = NOW() WHERE category_id = '" . (int) $category_id . "'");
 
         if (isset($data['image'])) {
             $this->db->query("UPDATE " . DB_PREFIX . "category SET image = '" . $this->db->escape($data['image']) . "' WHERE category_id = '" . (int) $category_id . "'");
@@ -158,6 +164,15 @@ class ModelCatalogCategory extends Model
         if (isset($data['category_store'])) {
             foreach ($data['category_store'] as $store_id) {
                 $this->db->query("INSERT INTO " . DB_PREFIX . "category_to_store SET category_id = '" . (int) $category_id . "', store_id = '" . (int) $store_id . "'");
+            }
+        }
+
+        /**Преимущества */
+        $this->db->query("DELETE FROM dopinfo_benefits_to_product WHERE product_id = '" . (int) $category_id . "'");
+        //print_r($data);
+        if (isset($data['product_benefit'])) {
+            foreach ($data['product_benefit'] as $benefit_id) {
+                $this->db->query("INSERT INTO dopinfo_benefits_to_product SET product_id = '" . (int) $category_id . "', benefit_id = '" . (int) $benefit_id . "'");
             }
         }
 

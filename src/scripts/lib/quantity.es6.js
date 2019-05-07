@@ -23,6 +23,9 @@ class Quantity {
     }
     
     constructor(view, opts) {
+        
+        var rosn_limit=$("#data-rosn_limit").attr("data-rosn_limit");
+        //console.log("var1="+rosn_limit*)
         this._options = {
             /** SaleQuantity options */
             'sale_step': opts.sale_step? parseFloat(opts.sale_step) : 1,
@@ -87,8 +90,11 @@ class Quantity {
      * @param {string} ui_name - отображаемое имя
      */
     switch(sale_to_ui_koef, ui_minimum, ui_step, ui_names) {
+        
         ui_minimum = ui_minimum ? parseFloat(ui_minimum) : null;
         ui_step = ui_step ? new Fraction(ui_step) : null;
+        
+
         if( !sale_to_ui_koef ) {
             console.warn('You should set the koef for converting this value to your sale unit value');
         }
@@ -261,7 +267,6 @@ class SaleQuantityModel {
      */
     setUiModel(koef, minimum, step) {
         let uiStep, uiMinimum;
-        
         if(!minimum) {
             uiMinimum = koef.mul(this._saleMinimum ); 
         } else {
@@ -279,13 +284,14 @@ class SaleQuantityModel {
             step = new Fraction(step);
             if( step.div(koef).compare(this._saleStep) >= 0 ) { //given step is bigger than sale step
                 uiStep = step;
+                
                 //@todo - step должен содержать целое число sale steps
             } else {
                 uiStep = koef;                
                 console.warn('ui units step cant be less that its related sale unit');
             }
         }
-
+        
         this._uiModel = new UiQuantityModel(uiStep, uiMinimum);
         this._uiModel.value = koef.mul(this._quantity);
         this._uiKoef = koef;
@@ -332,6 +338,7 @@ class UiQuantityModel {
             return;
         }
         this._value = this._value.add(this._step.mul(steps));
+        //console.log(this._value);
     }
 
     down(steps) {
@@ -342,7 +349,8 @@ class UiQuantityModel {
         this._value = this._value.sub(this._step.mul(steps));
         if ( this._value.compare(this._minimum) < 0 )  { // < miniumum
             this._value = this._minimum;
-        }
+        }        
+        //console.log(this._value);
     }
 }
 
@@ -365,7 +373,7 @@ class QuantityView {
         this._elName = elName;
 
         this.$el.html('<div class="' + QuantityView.minusButClass + '"></div>\
-             <input class="qnt" type="text" name="' + elName + '" />\
+             <input class="qnt" id="product_count_add" type="text" name="' + elName + '" />\
              <span class="' + QuantityView.unameClass + '"></span>\
              <div class="'+ QuantityView.plusButClass + '"></div>');
     }

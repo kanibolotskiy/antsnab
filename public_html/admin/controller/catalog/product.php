@@ -79,6 +79,7 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('catalog/product');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+			
 			$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -666,6 +667,8 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_filter'] = $this->language->get('entry_filter');
 		$data['entry_related'] = $this->language->get('entry_related');
 		$data['entry_analog'] = $this->language->get('entry_analog');
+		$data['entry_benefits'] = $this->language->get('entry_benefits');
+		$data['entry_mincount'] = $this->language->get('entry_mincount');
 		
  
 		$data['entry_attribute'] = $this->language->get('entry_attribute');
@@ -686,7 +689,9 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_main_category'] = $this->language->get('entry_main_category');
 		$data['entry_disseo'] = $this->language->get('entry_disseo');
 		$data['entry_video'] = $this->language->get('entry_video');
+		$data['entry_showdiscount'] = $this->language->get('entry_showdiscount');
 		
+
 
 		$data['help_keyword'] = $this->language->get('help_keyword');
 		$data['help_sku'] = $this->language->get('help_sku');
@@ -850,6 +855,14 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['disseo'] = '';
 		}
+		if (isset($this->request->post['showdiscount'])) {
+			$data['showdiscount'] = $this->request->post['showdiscount'];
+		} elseif (!empty($product_info)) {
+			$data['showdiscount'] = $product_info['showdiscount'];
+		} else {
+			$data['showdiscount'] = '';
+		}
+
 
 		if (isset($this->request->post['model'])) {
 			$data['model'] = $this->request->post['model'];
@@ -979,6 +992,14 @@ class ControllerCatalogProduct extends Controller {
 			$data['price'] = $product_info['price'];
 		} else {
 			$data['price'] = '';
+		}
+
+		if (isset($this->request->post['mincount'])) {
+			$data['mincount'] = $this->request->post['mincount'];
+		} elseif (!empty($product_info)) {
+			$data['mincount'] = $product_info['mincount'];
+		} else {
+			$data['mincount'] = '';
 		}
 
 		$this->load->model('catalog/recurring');
@@ -1434,7 +1455,25 @@ class ControllerCatalogProduct extends Controller {
 				);
 			}
 		}
+
+
+		if (isset($this->request->post['product_benefit'])) {
+			$products_bene = $this->request->post['product_benefit'];
+		} elseif (isset($this->request->get['product_id'])) {
+			$products_bene = $this->model_catalog_product->getProductBenefits($this->request->get['product_id'],'product_benefits');
+		} else {
+			$products_bene = array();
+		}
+
+		$data['product_benefits'] = array();
+		foreach ($products_bene as $product_bene) {
+			$data['product_benefits'][] = array(
+				'benefit_id'=>$product_bene['benefit_id'],
+				'name'=>$product_bene['name']
+			);
+		}
 		
+
 
 		if (isset($this->request->post['points'])) {
 			$data['points'] = $this->request->post['points'];
@@ -1604,6 +1643,38 @@ class ControllerCatalogProduct extends Controller {
 			}
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function autocomplete_benefits() {
+		$json = array();
+		
+		if (isset($this->request->get['filter_name'])) {
+			$this->load->model('catalog/product');
+
+			if (isset($this->request->get['filter_name'])) {
+				$filter_name = $this->request->get['filter_name'];
+			} else {
+				$filter_name = '';
+			}
+
+			$filter_data = array(
+				'filter_name'  => $filter_name,
+				'start'        => 0,
+				'limit'        => 10
+			);
+			$results = $this->model_catalog_product->getBenefits($filter_data);
+
+			foreach ($results as $result) {
+				$json[] = array(
+					'product_id' => $result['benefit_id'],
+					'name'       => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
+				);
+			}
+			
+		}
+		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

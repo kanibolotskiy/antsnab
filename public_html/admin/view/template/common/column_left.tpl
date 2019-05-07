@@ -12,6 +12,7 @@
       <small><?php echo $user_group; ?></small></div>
   </div>
   <ul id="menu">
+    
     <?php foreach ($menus as $menu) { ?>
     <li id="<?php echo $menu['id']; ?>">
       <?php if ($menu['href']) { ?>

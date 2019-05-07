@@ -124,47 +124,73 @@
                                         
                                     </span>    
                                     <meta itemprop="price" content="<?php echo $price;?>">
-                                    
-                                    <div class="price-for">
-                                        <span>Цена за:</span>
-                                        
-                                        <!--Переключатель цен-->
-                                        <?php if($pUnitsErrors):?>
-                                            <?= $pUnitsErrors ?>
-                                        <?php else: ?>
-                                            <ul id="priceSwitcher"
-                                                data-currency_symbol="<?=$currencySymb?>"> 
+                                    <div class="wrap_price-for">
 
-                                                <li data-sale_to_ui_koef="<?=$pUnits[1]['sale_to_ui_koef']?>" 
-                                                    <?php if($pUnits[1]['force_step_by_one'] == 1):?>
-                                                    data-ui_minimum = "1"
-                                                    data-ui_step = "1"
-                                                    <?php endif; ?>
-                                                    data-ui_name = "<?=$pUnits[1]['name']?>"
-                                                    data-ui_name_plural = "<?=$pUnits[1]['name_plural']?>"
-                                                    data-ui_name_genitive = "<?=$pUnits[1]['name_package_dimension']?>"
-                                                    data-ui_descr="<?=$pUnits[1]['relStr']?>" class="active">
-                                                    <a href="#"><?= $pUnits[1]['showName']?></a>
-                                                </li>
+                                        <div class="price-for">
+                                            <span>Цена за:</span>
+                                            
+                                            <!--Переключатель цен-->
+                                            <?php if($pUnitsErrors):?>
+                                                <?= $pUnitsErrors ?>
+                                            <?php else: ?>
 
-                                                <?php if(isset($pUnits[2])):?>
-                                                <li data-sale_to_ui_koef="<?=$pUnits[2]['sale_to_ui_koef']?>"
-                                                    <?php if($pUnits[2]['force_step_by_one'] == 1):?>
-                                                    data-ui_minimum = "1"
-                                                    data-ui_step = "1"
-                                                    <?php endif; ?>
-                                                    data-ui_name = "<?=$pUnits[2]['name']?>"
-                                                    data-ui_name_plural = "<?=$pUnits[2]['name_plural']?>"
-                                                    data-ui_name_genitive = "<?=$pUnits[2]['name_package_dimension']?>"
-                                                    data-ui_descr="<?=$pUnits[2]['relStr']?>">
-                                                    <a href="#"><?= $pUnits[2]['showName']?></a>
-                                                </li>
-                                                <?php endif;?>
+                                            
+                                            
+                                                <ul id="priceSwitcher"
+                                                    data-currency_symbol="<?=$currencySymb?>" data-base_weight="<?=$baseWeight?>" data-opt_limit="<?=$optLimit?>" data-rosn_limit="<?=$mincount?>"> 
 
-                                            </ul>
-                                        <?php endif;?>
-                                        <!-- // -->
+                                                    <li class="unitpack1" data-sale_to_ui_koef="<?=$pUnits[1]['sale_to_ui_koef']?>" 
+                                                        <?php if($pUnits[1]['force_step_by_one'] == 1):?>
+                                                        data-ui_step = "1"
+                                                        <?php endif; ?>
 
+                                                        <?php if (( $quantity_stock<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){ ?>
+                                                            data-ui_step = "<?=$pUnits[2]['denom']?>"
+                                                            if($pUnits[1]['mincount']<$pUnits[2]['denom']){
+                                                                data-ui_minimum = "<?=$pUnits[2]['denom']?>"
+                                                            }else{
+                                                                data-ui_minimum = "<?=$pUnits[1]['mincount']?>"
+                                                            }
+                                                        <?php }else{ ?>
+                                                                data-ui_minimum = "<?=$pUnits[1]['mincount']?>"
+                                                        <?php }?>
+                                                        data-nom=<?=$pUnits[1]['nom']?>
+                                                        data-denom=<?=$pUnits[1]['denom']?>
+                                                        
+                                                        data-ui_name = "<?=$pUnits[1]['name']?>"
+                                                        data-ui_name_plural = "<?=$pUnits[1]['name_plural']?>"
+                                                        data-ui_name_genitive = "<?=$pUnits[1]['name_package_dimension']?>"
+                                                        data-ui_descr="<?=$pUnits[1]['relStr']?>" class="active">
+                                                        <a href="#"><?= $pUnits[1]['showName']?></a>
+                                                    </li>
+
+                                                    <?php if(isset($pUnits[2])):?>
+                                                    <li class="unitpack2" data-sale_to_ui_koef="<?=$pUnits[2]['sale_to_ui_koef']?>"
+                                                        <?php if($pUnits[2]['force_step_by_one'] == 1):?>
+                                                        data-ui_step = "1"
+                                                        <?php endif; ?>
+                                                        data-nom=<?=$pUnits[2]['nom']?>
+                                                        data-denom=<?=$pUnits[2]['denom']?>
+                                                        
+                                                        data-ui_minimum = "<?=$pUnits[2]['mincount']?>"
+                                                        data-ui_name = "<?=$pUnits[2]['name']?>"
+                                                        data-ui_name_plural = "<?=$pUnits[2]['name_plural']?>"
+                                                        data-ui_name_genitive = "<?=$pUnits[2]['name_package_dimension']?>"
+                                                        data-ui_descr="<?=$pUnits[2]['relStr']?>">
+                                                        <a href="#"><?= $pUnits[2]['showName']?></a>
+                                                    </li>
+                                                    <?php endif;?>
+
+                                                </ul>
+                                            <?php endif;?>
+                                            <!-- // -->
+
+                                        </div>
+                                        <?php if($discount_form){?>
+                                        <div class="price_disc">
+                                            <div class="js_modal" data-modal="modal_discount">Получить скидку</div>
+                                        </div>
+                                        <?php }?>
                                     </div>
 
                                 </div>
@@ -179,15 +205,16 @@
                                         <div class="help_cont"> 
                                             <strong id="wholesale_price" data-value="<?=$price_wholesale?>"><?=$price_wholesale_val?>
                                             </strong>
-
-                                            <b class="help_question">?<em>Оптовая цена действительна при единовременной оплате <span id="wholesale_threshold" data-value="<?=$wholesale_threshold?>"><?=$wholesale_threshold?></span>&nbsp;<span id="wholesale_unit" data-value="<?=$saleUnit['name_plural']?>"><?=$saleUnit['name_plural']?></span></em></b>
                                             
                                         </div>
                                         <span id="priceWholesaleDescr">
                                         </span>
                                         <?php endif;?>
                                     </div>
-                                    <p>Оптом</p>
+                                    <div class="count_limit">
+                                        <p>Оптом</p>
+                                        <p id="opt_limit"></p>
+                                    </div>
                                 </div> 
                                 <!-- // -->
 
@@ -199,18 +226,21 @@
 
                                     <!-- Розничная цена -->
                                     <div class="wholesale wholesale2">
-                                            <div class="wholesale-price">
-                                            
-                                                <strong id="price"  data-value="<?=$price?>"><?=$price_val?>
-                                                </strong><br/>
-                                                <span id="priceDescr">
-                                                </span>
-                                            </div>
-                                        <p>В розницу</p>
+                                        <div class="wholesale-price">
+                                        
+                                            <strong id="price"  data-value="<?=$price?>"><?=$price_val?>
+                                            </strong><br/>
+                                            <span id="priceDescr">
+                                            </span>
+                                        </div>
+                                        <div class="count_limit">
+                                            <p>В розницу</p>
+                                            <p id="rosn_limit"></p>
+                                        </div>
                                     </div>
                                     <!-- // -->
 
-                                    <div class="quantity-buy">
+                                    <div class="quantity-buy quantity-buy_product">
                                         <div class="quantity-buy-block">
                                             <div class="qnt-container-spec"></div>
                                         </div>
@@ -224,7 +254,33 @@
 
                                 <?php endif;?>
                             <!--</div>--> 
+                            <div class="wrap_state_stock">
+                                <div class="state_stock">
 
+                                    <div class="state_stock_col">
+                                        <div class="state_stock_col_info _avail">
+                                            <div class="state_stock_cap">Наличие на складе:</div>
+                                            <div class="state_stock_val">
+                                            <?php if($quantity_stock>0){?>
+                                                <span class="stock1">Алтуфьево</span>
+                                            <?php }else{ ?>
+                                                <span class="notinstock js_modal" data-modal="modal_delivery">Под заказ</span>
+                                            <?php }?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="state_stock_del"></div>
+                                    <div class="state_stock_col">
+                                        <div class="state_stock_col_info  _delivery">
+                                            <div class="state_stock_cap">Доставка:</div>
+                                            <div class="state_stock_val js_modal" data-modal="modal_delivery_cost" id="delivery_text"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="state_stock_link js_modal" data-modal="modal_delivery_pay">Способы оплаты и получения товара</div>
+                            </div>
+
+                            <!--
                             <div class="in-stock">
                                 <?php if($quantity_stock>0){?>
                                 <span><?php echo $stock;?></span>
@@ -244,10 +300,31 @@
                                     <div class="notinstock"><?php echo $stock;?></div>
                                 <?php }?>
                             </div>
-
+                            -->
                         </div>
                     </div>
                 </div>
+                <?php if($benefits) {?>
+                    <div class="benefits">
+                        <?php foreach($benefits as $benefit){ ?>
+                            <div class="bene_item">
+                                <div class="bene_item_ico"></div>
+                                <div class="bene_item_val"><?php echo $benefit['name'];?></div>
+                                <div class="bene_item_desc"><?php echo $benefit['description'];?></div>
+                            </div>
+                        <?php }?>
+                    </div>
+                    <div class="modal modal_benefits">
+                        <div class="modal-block">
+                            <div class="modal_overlay"></div>
+                            <div class="modal-content">
+                                <div class="modal_close"></div>
+                                <div class="modal_caption" id="caption_benefit"></div>
+                                <div class="modal_text content-text" id="text_benefit"></div>
+                            </div>
+                        </div>
+                    </div>
+                <?php }?>
                 <div class="info-block info-block2" itemprop="description">
                     <?=$description?>
                 </div>
@@ -264,22 +341,130 @@
                             <p><?=$l['address']?></p>
                             <p><?=$l['open']?></p>
                             <p><?=$l['comment']?></p>
-                            <p>Для вашего удобства можете <a target="_blank" href="<?php echo $l["files"][0]['file_link'];?>">скачать подробную схему проезда</a></p>
+                            <p>Для вашего удобства можете <a target="_blank" href="<?php echo $l['files'][0]['file_link'];?>">скачать подробную схему проезда</a></p>
                             <div class="map">
                                 <?=$l['map']?>
                             </div>
-                            <!--
-                            <div id="prodmap2" 
-                                class="map map-container prodmap"
-                                data-longitude="<?=$l['longitude']?>"
-                                data-latitude="<?=$l['latitude']?>"
-                                data-name="<?=$l['name']?>" >
-                            </div>
-                            -->
                         </div>
                     </div>
                 </div>
             <?php endif;?>
+
+            <div class="modal modal_delivery">
+                <div class="modal-block">
+                    <div class="modal_overlay"></div>
+                    <div class="modal-content">
+                        <div class="modal_close"></div>
+                        <div class="modal_caption"><?=$nostock_caption?></div>
+                        <div class="modal_text content-text">
+                            <?=$nostock_text?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <?php if($discount_form){?>
+            <div class="modal modal_discount">
+                <div class="modal-block">
+                    <div class="modal_overlay"></div>
+                    <div class="modal-content">
+                        <div class="modal_close"></div>
+                        <div class="wrp_modal_body">
+                            <div class="modal_caption"><?=$discount_caption?></div>
+                            <div class="modal_text content-text">
+                                <?=$discount_text?>
+                            </div>
+                            
+                            <div class="modal_form">
+                                <form id="discount_form" action="#" method="post" enctype="multipart/form-data">
+                                
+                                <div class="modal_form_row">
+                                    <i class="error">Необходимо заполнить</i>
+                                    <input class="required" name="name" type="text" placeholder="Ваше имя"/>
+                                </div>
+
+                                <div class="modal_form_row">
+                                    <i class="error">Необходимо заполнить</i>
+                                    <input class="required" name="company" type="text" placeholder="Название организации"/>
+                                </div>
+
+                                <div class="modal_form_row">
+                                    <i class="error">Необходимо заполнить</i>
+                                    <input class="required" name="phone" type="text" placeholder="Телефон"/>
+                                </div>
+                                <div class="modal_form_row">
+                                    <i class="error">Некорректный Email</i>
+                                    <input class="required" name="email" type="text" placeholder="E-mail"/>
+                                </div>
+                                <div class="modal_form_row">
+                                    <input name="site" type="text" placeholder="Сайт"/>
+                                </div>
+                                
+                                <div class="modal_form_row">
+                                    <i class="error">Необходимо заполнить</i>
+                                    <div class="file">
+                                        <div class="file-block">
+                                            <div id="filename">Прикрепить рекзизиты</div>
+                                            <input id="file" type="file" value="" name="download">
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="modal_form_link">
+                                    <p>Нажимая на кнопку Отправить, я даю <a target="_blank" href="agreement/">согласие на обработку персональных данных</a></p>
+                                </div>
+
+                                <input value="" name="workemail" type="text" placeholder="Рабочий email"/>
+
+                                <input
+                                    type ="submit"
+                                    class="g-recaptcha"
+                                    data-sitekey="<?= $captcha_key ?>"
+                                    data-callback="submitDiscountForm" value="Отправить"/>
+                            
+                                </form>
+                            </div>
+                        </div>
+                        <div class="wrp_modal_thsnk">
+                            <div class="modal_caption">Благодарим вас за обращение!</div>
+                            <div class="content-text">
+                                <p style="text-align: center">Мы свяжемся с вами в ближайшее время!</p>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            function submitDiscountForm(){ 
+                                $('#discount_form').submit();
+                            }
+                        </script>
+                        
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <?php }?>
+
+            <div class="modal modal_delivery_cost">
+                <div class="modal-block">
+                    <div class="modal_overlay"></div>
+                    <div class="modal-content">
+                        <div class="modal_close"></div>
+                        <div class="modal_caption" id="caption_delivery"></div>
+                        <div class="modal_text content-text" id="text_delivery"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal modal_delivery_pay">
+                <div class="modal-block">
+                    <div class="modal_overlay"></div>
+                    <div class="modal-content">
+                        <div class="modal_close"></div>
+                        <div class="modal_caption"><?=$delivery_cost_caption?></div>
+                        <div class="modal_text content-text"><?=$delivery_cost_text?></div>
+                    </div>
+                </div>
+            </div>
 
             <div id="demoTab">
                 <ul class="resp-tabs-list vert">

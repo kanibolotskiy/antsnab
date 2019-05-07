@@ -42,10 +42,13 @@
                 data-el_name="quantity[<?php echo $product['cart_id']; ?>]"
                 data-sale_to_price_koef="<?=$product['saleToPriceKoef']?>" 
                 data-ui_name="<?=$product['priceUnit']['name']?>"
+                data-ui_minimum="<?=$product['mincount']?>"
                 data-ui_name_plural="<?=$product['priceUnit']['name_plural']?>"
                 data-ui_name_genitive="<?=$product['priceUnit']['name_package_dimension']?>"
+                data-wholesale_threshold="<?=$product['wholesale_threshold']?>"
                 data-price_quantity="<?php echo $product['quantity']; ?>">
             </div>
+            <div class="opt_limit_notification">Добавьте еще <span class="opt_limit_notification_value"></span>, цена снизится</div>
         </li>
         <li>
             <span>Сумма</span>

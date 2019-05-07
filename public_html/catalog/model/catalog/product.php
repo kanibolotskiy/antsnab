@@ -71,7 +71,8 @@ class ModelCatalogProduct extends Model {
 				'status'           => $query->row['status'],
 				'date_added'       => $query->row['date_added'],
 				'date_modified'    => $query->row['date_modified'],
-				'viewed'           => $query->row['viewed']
+				'viewed'           => $query->row['viewed'],
+				'mincount'         => $query->row['mincount']
 			);
 		} else {
 			return false;
@@ -592,4 +593,175 @@ class ModelCatalogProduct extends Model {
 			return 0;
 		}
 	}
+	public function getProductBenefits($product_id) {
+		$query = $this->db->query("SELECT dbp.product_id,db.benefit_id,db.name,db.description FROM `dopinfo_benefits_to_product` dbp left join dopinfo_benefits db ON dbp.benefit_id=db.benefit_id WHERE dbp.product_id=" . (int)$product_id ." order by sort_order");
+		$benefits_product=$query->rows;
+		
+		if(count($benefits_product)){
+			return $benefits_product;
+		}else{
+			$query_cat = $this->db->query("SELECT category_id from " . DB_PREFIX . "product_to_category where main_category=1 AND product_id=" . (int)$product_id." LIMIT 1");
+			$cat_id=$query_cat->row["category_id"];
+			
+			$query = $this->db->query("SELECT dbp.product_id,db.benefit_id,db.name,db.description FROM `dopinfo_benefits_to_product` dbp left join dopinfo_benefits db ON dbp.benefit_id=db.benefit_id WHERE dbp.product_id=" . (int)$cat_id ." order by sort_order");
+
+			return $query->rows;
+		}
+		
+	}
+
+	public function getDeliveryDocs(){
+		$query = $this->db->query("SELECT * FROM `dopinfo_couriers` order by weight");
+
+		foreach ($query->rows as $result) {
+			$delivery_weights[$result['weight']]=Array(
+				$result['price'],
+				$result['name'],
+				$result['description']
+			);
+		}
+		
+		return $delivery_weights;
+	}
+
+	public function getDelivery($product_id, $weight_product){
+		$result=[];
+		/**Стоимость и сроки доставки */
+		$array_week=Array("в воскресенье","в понедельник","во вторник","в среду","в четверг","в пятницу","в субботу");
+
+		$delivery_weights=$this->getDeliveryDocs();
+		
+
+		$delivery_weights_rev=array_reverse($delivery_weights,true);
+		$del_price="";
+		$del_caption="";
+		$del_text="";
+		
+		
+		$product=$this->getProduct($product_id);
+
+		$delday_text='';
+		if($product['quantity']>0){
+			foreach($delivery_weights_rev as $del_weight=>$key){
+				if($weight_product<=$del_weight){
+					$del_price=$key[0];
+					$del_caption=$key[1];
+					$del_text=$key[2];
+				}
+			}
+			$date_str=date("Ymd");
+			$iswork=file_get_contents ("https://isdayoff.ru/".$date_str);
+			$date_week = date('w');
+			$hours=date("H");
+			$days=0;
+			
+			if(!$iswork and $hours<14){
+				$delday_text="сегодня";
+			}else{
+				$days=1;
+				while($iswork){
+					$end = date('Ymd', strtotime('+'.($days+1).' days'));
+					$date_week = date('w', strtotime('+'.($days+1).' days'));
+					$iswork=file_get_contents ("https://isdayoff.ru/".$end);
+					$days++;
+				}
+				if($days==1){
+					$delday_text="завтра";
+				}else{
+					$delday_text=$array_week[$date_week];
+				}
+			}
+		}else{
+			$doc_data=$this->getDocsData(1);
+
+			$delday_text='1-3 дня';
+			$del_price='<br/>по запросу';
+
+			$del_caption=$doc_data['name'];
+			$del_text=$doc_data['description'];
+			
+		}
+		$result['date_delivery']=$delday_text;
+		$result['price_delivery']=$del_price;
+		$result['caption_delivery']=$del_caption;
+		$result['text_delivery']=$del_text;
+
+		//return '<span class="nowrap">'.$delday_text.',</span> <span class="nowrap">'.$del_price.'</span>';
+		return $result;
+	}
+	public function getDocsData($doc_id){
+		$query = $this->db->query("SELECT * from dopinfo_docs where doc_id='". (int)$doc_id."'");
+		return $query->row;
+	}
+	public function showDiscountProduct($product_id){
+		$query = $this->db->query("SELECT showdiscount from " . DB_PREFIX . "product where product_id='". (int)$product_id."'");
+		$showDiscountProduct=$query->row['showdiscount'];
+		if(!$showDiscountProduct){
+			$query_cat = $this->db->query("SELECT category_id from " . DB_PREFIX . "product_to_category where main_category=1 AND product_id=" . (int)$product_id." LIMIT 1");
+			$cat_id=$query_cat->row["category_id"];
+			
+			$query = $this->db->query("SELECT showdiscount FROM " . DB_PREFIX . "category where category_id='".(int)$cat_id."'");
+			$showDiscountProduct=$query->row['showdiscount'];
+		}
+		return $showDiscountProduct;
+	}
+
+	public function sendMailOpt($data_post)
+    {
+		
+		$this->load->language('extension/module/optform');
+
+		$data["logo"]= $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
+
+		
+		//$this->load->model('checkout/order');
+		$data=[];
+		$data["caption"]=$this->language->get('text_caption');
+		$subject=$this->language->get('text_subject');
+		
+		$data["data_content"][]=array("Имя клиента",$data_post['name']);
+		$data["data_content"][]=array("Организация",$data_post['company']);
+		$data["data_content"][]=array("Телефон",$data_post['phone']);
+		$data["data_content"][]=array("Email",$data_post['email']);
+		$data["data_content"][]=array("Сайт",$data_post['site']);
+		$data["data_content"][]=array("Дата события",date("d.m.Y H:i"));
+		
+
+		$mail = new Mail();
+		$mail->protocol = $this->config->get('config_mail_protocol');
+		$mail->parameter = $this->config->get('config_mail_parameter');
+		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+		$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+		$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
+		
+		$mail->setTo($this->config->get('config_email_opt'));
+
+
+		if ($_FILES['download']['error'] <= 0 ){ // success, no error
+			
+			$uploaddir = 'uploads/';
+			
+			$file_name=basename($_FILES['download']['name']);
+			
+			$uploadfile = $uploaddir . $file_name;
+			if (move_uploaded_file($_FILES['download']['tmp_name'], $uploadfile)) {
+				$mail->addAttachment($uploadfile,$file_name);
+				$data["data_content"][]=array("Реквизиты",$file_name);
+			}
+			
+		}
+		$message = $this->load->view('extension/call_report', $data);
+
+		$mail->setFrom($this->config->get('config_email'));
+		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+		$mail->setSubject($subject);
+		$mail->setHTML($message);
+
+		$mail->send();
+		unlink($uploadfile);
+    }
+
 }

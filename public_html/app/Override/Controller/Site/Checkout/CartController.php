@@ -518,7 +518,7 @@ class CartController extends \ControllerCheckoutCart
             $data['products'] = array();
 
             $products = $this->cart->getProducts();
-
+//print_r($products);
             $orderSumTotal = 0;
 
             $propGateway = new ProdProperties($this->registry);
@@ -660,7 +660,13 @@ class CartController extends \ControllerCheckoutCart
                         }
                     }
                 }
-
+                //echo "product_id=".$product['cart_id']."|quantity=".$product['quantity']."<br/>";
+                
+                if($product['stock']){
+                    $mincount=1;
+                }else{
+                    $mincount=$product['mincount'];
+                }
                 $data['products'][] = array(
                     'cart_id' => $product['cart_id'],
                     'thumb' => $image,
@@ -685,10 +691,12 @@ class CartController extends \ControllerCheckoutCart
                     'saleToPriceKoef' => $saleToPriceKoef,
                     'location' => html_entity_decode($product['location']),
                     'properties' => $previewProperties,
-                    'href' => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+                    'href' => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+                    'mincount'=>$mincount
                 );
             }
 
+            //print_r($data['products']);
             // Gift Voucher
             $data['vouchers'] = array();
 
@@ -1383,7 +1391,7 @@ class CartController extends \ControllerCheckoutCart
                     'type' => $option['type']
                 );
             }
-
+            
             $order_data['products'][] = array(
                 'product_id' => $product['product_id'],
                 'name' => $product['name'],

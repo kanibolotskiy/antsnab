@@ -2,6 +2,25 @@
 class ControllerProductProduct extends Controller {
 	private $error = array();
 
+	public function ajaxDelivery(){
+		
+		$json = array();
+		
+		$this->load->model('catalog/product');
+
+		$weight=$this->request->post['weight'];
+		$product_id=$this->request->post['product_id'];
+		$delivery_info = $this->model_catalog_product->getDelivery($product_id,$weight);
+    
+		$json['date_delivery']=$delivery_info['date_delivery'];
+		$json['price_delivery']=$delivery_info['price_delivery'];
+		$json['caption_delivery']=$delivery_info['caption_delivery'];
+		$json['text_delivery']=html_entity_decode($delivery_info['text_delivery']);
+		
+
+		$json['success']=true;
+		$this->response->setOutput(json_encode($json));
+    }
 	public function addtocart() {
 		
 		
@@ -367,6 +386,8 @@ class ControllerProductProduct extends Controller {
 			}else{
 				$data['stock'] = $this->language->get('stock_byorder');
 			}
+
+
 			/*
 			if ($product_info['quantity'] <= 0) {
 				$data['stock'] = $product_info['stock_status'];
@@ -376,6 +397,7 @@ class ControllerProductProduct extends Controller {
 				$data['stock'] = $this->language->get('text_instock');
 			}
 			*/
+
 			$this->load->model('tool/image');
 
 			if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
@@ -686,6 +708,34 @@ class ControllerProductProduct extends Controller {
 					);
 				}
 			}
+			$benefits_array=$this->model_catalog_product->getProductBenefits($product_id);
+			$data['benefits']=[];
+			foreach($benefits_array as $benefit){
+				$data['benefits'][]=Array(
+					"name"=>$benefit['name'],
+					"description"=>html_entity_decode($benefit['description'])
+				);
+			}
+			
+			$show_discount_form=$this->model_catalog_product->showDiscountProduct($product_id);
+			$data['discount_form']=$show_discount_form;
+			if($show_discount_form){
+				$discountData=$this->model_catalog_product->getDocsData(3);
+				$data['discount_caption']=$discountData['name'];
+				$data['discount_text']=html_entity_decode($discountData['description']);
+			}
+			//$data['benefits']["description"]=html_entity_decode($data['benefits']["description"]);
+			
+			$nostockData=$this->model_catalog_product->getDocsData(1);
+			
+			$data['nostock_caption']=$nostockData['name'];
+			$data['nostock_text']=html_entity_decode($nostockData['description']);
+
+
+			$delcostData=$this->model_catalog_product->getDocsData(5);
+			$data['delivery_cost_caption']=$delcostData['name'];
+			$data['delivery_cost_text']=html_entity_decode($delcostData['description']);
+
 
 			$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
 
@@ -931,4 +981,22 @@ class ControllerProductProduct extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+	public function sendOptForm(){
+		$this->load->model('catalog/product');
+		/*
+		$data['name']=$this->request->post['name'];
+		$data['company']=$this->request->post['company'];
+		$data['phone']=$this->request->post['phone'];
+		$data['email']=$this->request->post['email'];
+		$data['site']=$this->request->post['site'];
+		*/
+		if(trim($data['workemail']=="")){
+			$this->model_catalog_product->sendMailOpt($this->request->post);
+		}
+		$json['success']="ok";
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+
+	}
+
 }

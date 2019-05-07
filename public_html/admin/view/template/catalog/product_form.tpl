@@ -142,6 +142,24 @@
                                             </div>
                                             
                                         </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="input-showdiscount">
+                                                <?php echo $entry_showdiscount; ?>
+                                            </label>
+                                            <div class="col-sm-1">
+                                            <div class="checkbox">
+                                                <label>
+                                                <?php if($showdiscount) { ?>
+                                                <input  type="checkbox" name="showdiscount" value="1" checked="checked" id="input-showdiscount" />
+                                                <?php } else { ?>
+                                                <input type="checkbox" name="showdiscount" value="1" id="input-showdiscount" />
+                                                <?php } ?>
+                                                &nbsp; </label>
+                                            </div>
+                                            </div>
+                                            
+                                        </div>
                                         
                                     </div>
                                 <?php } ?>
@@ -396,6 +414,14 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-mincount"><?php echo $entry_mincount; ?></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="mincount" value="<?php echo $mincount; ?>" placeholder="<?php echo $entry_mincount; ?>" id="input-mincount" class="form-control" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label" for="produnit_template_id">
                                     <?php echo $entry_produnit_template_id; ?>
                                 </label>
@@ -560,6 +586,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-benefits"><?php echo $entry_benefits; ?></span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="benefits" value="" placeholder="<?php echo $entry_benefits; ?>" id="input-benefits" class="form-control" />
+                                    <div id="product-benefits" class="well well-sm" style="height: 150px; overflow: auto;">
+                                        <?php foreach ($product_benefits as $product_benefit) { ?>
+                                            <div id="product-benefit<?php echo $product_benefit['benefit_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_benefit['name']; ?>
+                                                <input type="hidden" name="product_benefit[]" value="<?php echo $product_benefit['benefit_id']; ?>" />
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         
                         <!-- @task1 move somewhere styles-->
@@ -1344,8 +1384,8 @@
                 $(this).parent().remove();
             });
 
-// Related, Analogs
-        $('input[name=\'analog\']').autocomplete({
+            // Related, Analogs
+            $('input[name=\'analog\']').autocomplete({
                 'source': function (request, response) {
                     $.ajax({
                         url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' + encodeURIComponent(request),
@@ -1397,9 +1437,38 @@
                 }
             });
 
-            $('#product-related').delegate('.fa-minus-circle', 'click', function () {
+            $('#product-benefits').delegate('.fa-minus-circle', 'click', function () {
                 $(this).parent().remove();
             });
+
+            $('input[name=\'benefits\']').autocomplete({
+                'source': function (request, response) {
+                    $.ajax({
+                        url: 'index.php?route=catalog/product/autocomplete_benefits&token=<?php echo $token; ?>&filter_name=' + encodeURIComponent(request),
+                        dataType: 'json',
+                        success: function (json) {
+                            response($.map(json, function (item) {
+                                return {
+                                    label: item['name'],
+                                    value: item['product_id']
+                                }
+                            }));
+                        }
+                    });
+                },
+                'select': function (item) {
+                    $('input[name=\'benefits\']').val('');
+
+                    $('#product-benefit' + item['value']).remove();
+
+                    $('#product-benefits').append('<div id="product-benefit' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_benefit[]" value="' + item['value'] + '" /></div>');
+                }
+            });
+
+            $('#product-analog').delegate('.fa-minus-circle', 'click', function () {
+                $(this).parent().remove();
+            });
+
      //--></script>
   <script type="text/javascript"><!--
        var attribute_row = <?php echo $attribute_row; ?>;

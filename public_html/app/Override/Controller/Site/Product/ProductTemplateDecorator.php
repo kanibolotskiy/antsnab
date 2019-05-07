@@ -19,9 +19,9 @@ use WS\Override\Controller\Admin\Extension\Module\ReviewpageController as Review
 class ProductTemplateDecorator implements IDecorator
 {
     const RULES_INFORMATION_ID = 5;
-
     
-
+ 
+    
     public function process($data, $registry)
     {
         $request = $registry->get('request');
@@ -68,7 +68,7 @@ class ProductTemplateDecorator implements IDecorator
         $priceUnit = null;
         $saleUnit = null;
         $saleToPriceKoef = null;
-
+        
         try {
             foreach ($prodUnits as $unit_id => $unit) {
                 /** единицы измерения с sortorder <> 0 участвуют в отображении в шаблоне */
@@ -76,10 +76,37 @@ class ProductTemplateDecorator implements IDecorator
                     $key = (int)$unit['switchSortOrder'];
                     $pUnits[ $key ] = $unit;
                     
+                    //print_r($unit);
                     //коэффициент пересчета из базовой еденицы продажи в данную отображаемую еденицу
                     $saleToUIKoef = $produnitsCalcGateway->getBaseToUnitKoef($product_id, 'isSaleBase', $unit_id);
+                    
                     $pUnits[$key]['sale_to_ui_koef'] = $saleToUIKoef;
+                    
+                    //$pUnits[$key]['ui_step']=15;
 
+                    $array_koef = (array) $saleToUIKoef;
+                    $z=0;
+                    $koef_numerator=1;
+                    $koef_denomirator=1;
+                    foreach($array_koef as $koef_item){
+                        if($z){
+                            $koef_denomirator=$koef_item;
+                        }else{
+                            $koef_numerator=$koef_item;
+                        }
+                        $z++;
+                    }
+                    $pUnits[$key]['nom']=$koef_numerator;
+                    $pUnits[$key]['denom']=$koef_denomirator;
+
+                    $koef_d=$koef_numerator/$koef_denomirator;
+                    if($product_info['quantity']>0){
+                        $pUnits[$key]['mincount']=ceil(1*$koef_d);
+                    }else{
+                        $pUnits[$key]['mincount']=ceil($product_info['mincount']*$koef_d);
+                    }
+
+                    //print_r($pUnits[$key]);
                     //текстовые строки
                     $pUnits[$key]['showName'] = ($unit['name_price'])?$unit['name_price']:$unit['name'];
                     $pUnits[$key]['name_plural'] =($unit['name_plural'])?$unit['name_plural']:$unit['name'];
@@ -140,6 +167,10 @@ class ProductTemplateDecorator implements IDecorator
         $data['saleUnit'] = $saleUnit;
         $data['sale_to_price_koef'] = $saleToPriceKoef;
 
+        
+        $data['optLimit']=$product_info['wholesale_threshold'];
+        $data['mincount']=$product_info['mincount'];
+        
 
         //prodstrings - строки справочной информации по упаковкам
         $stringsGateway = new ProdUnitStrings($registry);
@@ -231,13 +262,30 @@ class ProductTemplateDecorator implements IDecorator
                 $location['longitude'] = '';
             }
         }
+        
+        
+
+        /**Доставка */
+        //print_r($data['pUnits']);
+        $base_weight=0;
+        foreach($data['pUnits'] as $unit){
+            if($unit['isPackageBase']){
+                $base_weight=$unit['weight'];
+            }
+        }
+
+        $data['baseWeight']=$base_weight;
+
+        //$base_count=$product_info['mincount'];
+        //$data['delivery_text']=$registry->get('model_catalog_product')->getDelivery($product_id,$base_weight,$base_count);
 
         $data['footer'] = $registry->get('load')->controller('common/footer');
 
         $ruleId = $registry->get('config')->get(ReviewAdminModule::CONFIG_KEY_RULE_ID);
         $data['rules'] = $registry->get('url')->link('information/information', 'information_id=' . $ruleId);
-
+        
         return $data;
 
     }
+    
 }

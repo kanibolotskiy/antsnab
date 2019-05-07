@@ -332,8 +332,10 @@ class ControllerCatalogCategory extends Controller {
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_layout'] = $this->language->get('entry_layout');
 		$data['entry_isseo'] = $this->language->get('entry_isseo');
+		$data['entry_showdiscount'] = $this->language->get('entry_showdiscount');
+
 		$data['entry_notshowisseo'] = $this->language->get('entry_notshowisseo');
-		
+		$data['entry_benefits'] = $this->language->get('entry_benefits');
 
 		$data['entry_bottom_text'] = $this->language->get('entry_bottom_text');
 		
@@ -505,6 +507,32 @@ class ControllerCatalogCategory extends Controller {
 			$data['notshowisseo'] = $category_info['notshowisseo'];
 		} else {
 			$data['notshowisseo'] = 0;
+		}
+
+		if (isset($this->request->post['showdiscount'])) {
+			$data['showdiscount'] = $this->request->post['showdiscount'];
+		} elseif (!empty($category_info)) {
+			$data['showdiscount'] = $category_info['showdiscount'];
+		} else {
+			$data['showdiscount'] = 0;
+		}
+		
+
+		$this->load->model('catalog/product');
+		if (isset($this->request->post['product_benefit'])) {
+			$products_bene = $this->request->post['product_benefit'];
+		} elseif (isset($this->request->get['category_id'])) {
+			$products_bene = $this->model_catalog_product->getProductBenefits($this->request->get['category_id'],'product_benefits');
+		} else {
+			$products_bene = array();
+		}
+		
+		$data['product_benefits'] = array();
+		foreach ($products_bene as $product_bene) {
+			$data['product_benefits'][] = array(
+				'benefit_id'=>$product_bene['benefit_id'],
+				'name'=>$product_bene['name']
+			);
 		}
 
 		
@@ -719,6 +747,9 @@ class ControllerCatalogCategory extends Controller {
 				'indent'      => $indent,
 				'isseo'		  => $result['isseo'],
 				'notshowisseo'=> $result['notshowisseo'],
+				'showdiscount'=> $result['showdiscount'],
+				
+
 			);
 
 			if ($category_id == $result['category_id']) {

@@ -125,7 +125,24 @@
                       <textarea name="category_description[<?php echo $language['language_id']; ?>][bottom_text]" rows="5" placeholder="<?php echo $entry_bottom_text; ?>" id="input-meta-keyword<?php echo $language['language_id']; ?>" class="form-control summernote"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['bottom_text'] : ''; ?></textarea>
                     </div>
                   </div>
-
+                  
+                  <div class="form-group">
+                      <label class="col-sm-2 control-label" for="input-showdiscount">
+                          <?php echo $entry_showdiscount; ?>
+                      </label>
+                      <div class="col-sm-1">
+                      <div class="checkbox">
+                          <label>
+                          <?php if($showdiscount) { ?>
+                          <input  type="checkbox" name="showdiscount" value="1" checked="checked" id="input-showdiscount" />
+                          <?php } else { ?>
+                          <input type="checkbox" name="showdiscount" value="1" id="input-showdiscount" />
+                          <?php } ?>
+                          &nbsp; </label>
+                      </div>
+                      </div>
+                      
+                  </div>
                 </div>
                 <?php } ?>
               </div>
@@ -146,6 +163,8 @@
                   </select>
                 </div>
               </div>
+
+              
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-isfinal">
                     <span data-toggle="tooltip">
@@ -234,6 +253,20 @@
                   </div>
                 </div>
               </div>
+              <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-benefits"><?php echo $entry_benefits; ?></span></label>
+                  <div class="col-sm-10">
+                      <input type="text" name="benefits" value="" placeholder="<?php echo $entry_benefits; ?>" id="input-benefits" class="form-control" />
+                      <div id="product-benefits" class="well well-sm" style="height: 150px; overflow: auto;">
+                          <?php foreach ($product_benefits as $product_benefit) { ?>
+                              <div id="product-benefit<?php echo $product_benefit['benefit_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_benefit['name']; ?>
+                                  <input type="hidden" name="product_benefit[]" value="<?php echo $product_benefit['benefit_id']; ?>" />
+                              </div>
+                          <?php } ?>
+                      </div>
+                  </div>
+              </div>
+              
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-keyword"><span data-toggle="tooltip" title="<?php echo $help_keyword; ?>"><?php echo $entry_keyword; ?></span></label>
                 <div class="col-sm-10">
@@ -345,6 +378,34 @@
   <?php } ?>
   //--></script>
   <script type="text/javascript"><!--
+    $('#product-benefits').delegate('.fa-minus-circle', 'click', function () {
+        $(this).parent().remove();
+    });
+
+    $('input[name=\'benefits\']').autocomplete({
+        'source': function (request, response) {
+            $.ajax({
+                url: 'index.php?route=catalog/product/autocomplete_benefits&token=<?php echo $token; ?>&filter_name=' + encodeURIComponent(request),
+                dataType: 'json',
+                success: function (json) {
+                    response($.map(json, function (item) {
+                        return {
+                            label: item['name'],
+                            value: item['product_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function (item) {
+            $('input[name=\'benefits\']').val('');
+
+            $('#product-benefit' + item['value']).remove();
+
+            $('#product-benefits').append('<div id="product-benefit' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_benefit[]" value="' + item['value'] + '" /></div>');
+        }
+    });
+    
 $('input[name=\'path\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({

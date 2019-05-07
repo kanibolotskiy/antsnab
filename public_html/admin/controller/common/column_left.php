@@ -142,7 +142,45 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()		
 				);					
 			}
+
+			//Преимущества
+			if ($this->user->hasPermission('access', 'catalog/benefits')) {		
+				
+				$dopinfo_arr[] = array(
+					'name'	   => $this->language->get('text_benefits'),
+					'href'     => $this->url->link('catalog/benefits', 'token=' . $this->session->data['token'], true),
+					'children' => array()		
+				);					
+			}
 			
+			//Курьеры
+			if ($this->user->hasPermission('access', 'catalog/couriers')) {		
+				
+				$dopinfo_arr[] = array(
+					'name'	   => $this->language->get('text_courier'),
+					'href'     => $this->url->link('catalog/couriers', 'token=' . $this->session->data['token'], true),
+					'children' => array()		
+				);					
+			}
+			//Документы
+			if ($this->user->hasPermission('access', 'catalog/docs')) {		
+				
+				$dopinfo_arr[] = array(
+					'name'	   => $this->language->get('text_docs'),
+					'href'     => $this->url->link('catalog/docs', 'token=' . $this->session->data['token'], true),
+					'children' => array()		
+				);					
+			}
+
+			if ($dopinfo_arr) {
+				$catalog[] = array(
+					'name'	   => $this->language->get('text_dopinfo'),
+					'href'     => '',
+					'children' => $dopinfo_arr
+				);
+			}
+
+
 			if ($catalog) {
 				$data['menus'][] = array(
 					'id'       => 'menu-catalog',

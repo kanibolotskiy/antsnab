@@ -122,10 +122,12 @@
                             <span class="prehead_val">г. Москва<span class="hide_mb">, Высоковольтный проезд, дом 1, стр. 43</span></span>
                         </div>
                     </a>
+                    <div class="preheader_divider"></div>
                     <div class="prehead_work">
                         <span class="prehead_cap">Мы работаем:</span>
                         <span class="prehead_val"><?= $worktime ?></span>
                     </div>
+                    <div class="preheader_divider _second"></div>
                     <a href="#" class="js-call" rel="nofollow">
                         <div class="prehead_call">
                             <span class="prehead_val order_call">Заказать звонок</span>

@@ -17,9 +17,8 @@ class ControllerInformationInformation extends Controller {
 		} else {
 			$information_id = 0;
 		}
-
+		
 		$information_info = $this->model_catalog_information->getInformation($information_id);
-
 		if ($information_info) {
 
 			if ($information_info['meta_title']) {
@@ -57,7 +56,6 @@ class ControllerInformationInformation extends Controller {
 			}
 			$data['files']=$information_files;
 			
-
 			$data['button_continue'] = $this->language->get('button_continue');
 
 			$data['description'] = html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');

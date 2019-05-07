@@ -1,8 +1,24 @@
 import {Quantity} from './lib/quantity.es6.js';
 import './lib/formsubmit.js';
-
 var Fraction = require('fraction.js');
 //var format = require('number-format.js');
+
+
+function getPlural(number, one, two) {///1,ведра,вёдер
+    let n = Math.abs(number);
+
+    if(n==11){
+        return two;
+    }else{
+        n %= 10;
+        if (n === 1) {
+            return one;
+        }else{
+            return two;
+        }
+    }
+    
+  }
 function number_format(number, decimals, dec_point, thousands_sep) {
     number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
     var n = !isFinite(+number) ? 0 : +number,
@@ -25,6 +41,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
     }
     return s.join(dec);
 }
+
 /** Карточка */
 /** init switching ui in specification (product) page */
 if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
@@ -79,6 +96,12 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
         }
        
         function togglePrices($activeEl) {
+            //console.log("okk");
+            
+            
+            //data-sale_to_ui_koef
+            
+
             var $price = $('#price'),
                 price = parseFloat($price.attr('data-value')),
                 $wholeSalePrice = $('#wholesale_price'),
@@ -88,8 +111,28 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                 uiPrice = saleToPriceKoef.div(saleToUiKoef).mul(price),
                 uiWholeSalePrice = saleToPriceKoef.div(saleToUiKoef).mul(wholeSalePrice),
                 currency = $('#priceSwitcher').attr('data-currency_symbol');
-
+                
             
+            var plural1=$("#priceSwitcher .active").attr("data-ui_name_genitive");
+            var plural2=$("#priceSwitcher .active").attr("data-ui_name_plural");
+            var mincount = $('#priceSwitcher .active').attr('data-ui_minimum');
+
+            var opt_limit=$("#priceSwitcher").attr("data-opt_limit")
+            var count_limit=Math.ceil(opt_limit*saleToUiKoef);
+            //console.log(mincount);
+
+            //var count_limit_min=Math.ceil(mincount*saleToUiKoef);
+
+
+            var plural_str=getPlural(count_limit,plural1,plural2);
+
+            var plural_min_count_str=getPlural(mincount,plural1,plural2);
+
+            $("#opt_limit").html("от "+count_limit+" "+plural_str);
+
+            $("#rosn_limit").html("от " + mincount + " " + plural_min_count_str);
+            //console.log();
+
             var isInt = ( uiPrice.valueOf() - parseInt(uiPrice.valueOf()) === 0 ),
                 formatStr = isInt?'### ###.':'### ###,##';
                 //console.log(formatStr+"+"+currency+"+"+uiPrice.valueOf());
@@ -168,4 +211,62 @@ $('#button-review').formSubmit({
     error: function(data){},
 });
 
-;
+$('#file').on('change', function () {
+    var filename = this.files[0].name;
+    $('#filename').html(filename);
+    $('#filename').closest(".modal_form_row").removeClass("error");
+});
+$("#discount_form .required").change(function(){
+    $(this).parent().removeClass("error");
+});
+$("#discount_form input[type='submit']").click(function(e){
+    e.preventDefault();
+    
+    var flag_order=true;
+    var frm=$("#discount_form");
+    
+    var input_email=frm.find("input[name='email']")
+    
+    frm.find(".required").each(function(){
+        var itm=$(this);
+        if($.trim(itm.val())==""){
+            flag_order=false;
+            itm.parent().addClass("error");
+        }else{
+            itm.parent().removeClass("error");
+        }
+    });
+    if($.trim($("#file").val())==""){
+        $("#file").closest(".modal_form_row").addClass("error");
+    }else{
+        $("#file").closest(".modal_form_row").removeClass("error");
+    }
+
+    var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+    if(pattern.test(input_email.val())){
+        input_email.parent().removeClass("error");
+    }else{
+        input_email.parent().addClass("error");        
+    }
+
+    var data = new FormData($('#discount_form')[0]);
+    if(flag_order){
+        
+        $.ajax({
+            url: '/index.php?route=product/product/sendOptForm/',
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'POST',
+            type: 'POST', // For jQuery < 1.9
+            dataType: 'json',
+            success: function(data){
+                console.log(data);
+                $(".wrp_modal_body").hide();
+                $(".wrp_modal_thsnk").show();
+            }
+        });
+    }
+
+});

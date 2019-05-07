@@ -6,6 +6,13 @@
  * YML основан на стандарте XML (Extensible Markup Language)
  * описание формата YML http://partner.market.yandex.ru/legal/tt/
  */
+
+
+use WS\Override\Controller\IDecorator;
+use WS\Override\Gateway\ProdUnits\ProdUnits;
+use WS\Override\Gateway\ProdUnits\ProdUnitStrings;
+use WS\Override\Gateway\ProdUnits\ProdUnitsCalc;
+
 class ControllerExtensionFeedYandexMarket extends Controller {
 	private $shop = array();
 	private $currencies = array();
@@ -57,7 +64,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 			}
 
 			//Опции доставки
-			$this->setDeliveryOptions();
+			//$this->setDeliveryOptions();
 			
 			// Категории
 			$categories = $this->model_extension_feed_yandex_market->getCategory($allowed_categories);
@@ -77,31 +84,108 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 
 			//$products = $this->model_extension_feed_yandex_market->getProduct($allow_cat_str, $out_of_stock_id, $vendor_required);
 
+			$produnitsGateway = new ProdUnits($this->registry);
+			$produnitsCalcGateway = new ProdUnitsCalc($this->registry);
+			$this->load->model('catalog/product');
 
+			//$weight=$this->request->post['weight'];
+			//$product_id=$this->request->post['product_id'];
+			//$delivery_info = $this->model_catalog_product->getDelivery($product_id,$weight);
+			$delivery_weights=$this->model_catalog_product->getDeliveryDocs();
+			$delivery_weights_rev=array_reverse($delivery_weights,true);
 
+			$z=0;
 			foreach ($products as $product) {
+				
+
+				$prodUnits = $produnitsGateway->getUnitsByProduct($product['product_id']);
+				$price=0;
+				$weight=0;
+				//echo $product['product_id'];
+				//print_r($prodUnits);
+				foreach($prodUnits as $prodUnit){
+					if($prodUnit['isPackageBase']==1){
+						if($prodUnit['isPriceBase']==1){
+							$price=$prodUnit['price'];
+						}else{
+							$price=$prodUnit['price']*$prodUnit['calcKoef'];
+						}
+						$weight=$prodUnit['weight'];
+						
+					}
+				}
+				if(!$price){
+					$price=$product['price'];
+				}
+				$del_price=0;
+				foreach($delivery_weights_rev as $del_weight=>$key){
+					if($weight<=$del_weight){
+						$del_price=$key[0];
+					}
+				}
+				
+				$del_price_val = preg_replace('~[^0-9]+~','',$del_price);
+				//echo $del_price_val."<br/>";
 				$data = array();
+
+				
+				
+				//$delivery_price=$this->model_catalog_product->getDelivery($product['product_id'],$weight);
+				//$data['sales_notes']=$delivery_price;
 
 				// Атрибуты товарного предложения
 				$data['id'] = $product['product_id'];
 //				$data['type'] = 'vendor.model';
-				$data['available'] = ($product['quantity'] > 0 || $product['stock_status_id'] == $in_stock_id);
+				//$data['available'] = ($product['quantity'] > 0 || $product['stock_status_id'] == $in_stock_id);
+				$data['available'] =($product['quantity'] > 0);
 //				$data['bid'] = 10;
 //				$data['cbid'] = 15;
 
 				// Параметры товарного предложения
 				//."&utm_source=market&utm_medium=cpc"
 				$data['url'] = $this->url->link('product/product', 'path=' . $this->getPath($product['category_id']) . '&product_id=' . $product['product_id'])."?utm_source=market&utm_medium=cpc";
-				$data['price'] = $this->currency->convert($this->tax->calculate($product['price'], $product['tax_class_id']), $shop_currency, $offers_currency);
+				
+				$data['price'] = $this->currency->convert($this->tax->calculate($price, $product['tax_class_id']), $shop_currency, $offers_currency);
+
 				$data['currencyId'] = $offers_currency;
 				$data['categoryId'] = $product['category_id'];
 				$data['delivery'] = 'true';
+				
+				if($product['quantity'] > 0){
+					$data['pickup'] = 'true';
+					$data['delivery-options'] = Array(
+						'option'=>Array(
+							"cost"=>$del_price_val,
+							"days"=>"1",
+							"order-before"=>"14"
+						)
+					);
+				}else{
+					$data['delivery-options'] = Array(
+						'option'=>Array(
+							"cost"=>$del_price_val,
+							"days"=>"1-3"
+						)
+					);
+					//<option cost="300" days="1" order-before="18"/>
+					/*$data['delivery'] = array(
+						array(
+							'name'=>'Wi-Fi',
+							'value'=>'есть'
+						), array(
+					*/
+				}
+				//<option cost="300" days="1" order-before="18"/>
+				
+
 //				$data['local_delivery_cost'] = 100;
 				$data['name'] = $product['meta_h1'];
 				$data['vendor'] = $product['manufacturer'];
 				$data['vendorCode'] = $product['model'];
 				$data['model'] = $product['name'];
 				$data['description'] = $product['description'];
+				$data['sales_notes']='Стоимость доставки может отличаться в зависимости от количества заказанного товара, склада отгрузки и адреса доставки.';
+
 //				$data['manufacturer_warranty'] = 'true';
 //				$data['barcode'] = $product['sku'];
 				if ($product['image']) {
@@ -126,6 +210,8 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 				);
 */
 				$this->setOffer($data);
+				
+				
 			}
 
 			//$this->categories = array_filter($this->categories, array($this, "filterCategory"));
@@ -155,8 +241,10 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 			<option cost="600" days="1-3" order-before="16"/>
 		</delivery-options>
 	 */
-		return true;
+		//return true;
+		return $del_array;
 	}
+
 
 	/**
 	 * Методы формирования YML
@@ -259,11 +347,13 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 	 * @param array $data - массив параметров товарного предложения
 	 */
 	private function setOffer($data) {
+		//print_r($data);
+		
 		$offer = array();
-
+		
 		$attributes = array('id', 'type', 'available', 'bid', 'cbid', 'param');
 		$attributes = array_intersect_key($data, array_flip($attributes));
-
+		
 		foreach ($attributes as $key => $value) {
 			switch ($key)
 			{
@@ -296,10 +386,10 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 					break;
 			}
 		}
-
+		
 		$type = isset($offer['type']) ? $offer['type'] : '';
 
-		$allowed_tags = array('url'=>0, 'buyurl'=>0, 'price'=>1, 'wprice'=>0, 'currencyId'=>1, 'xCategory'=>0, 'categoryId'=>1, 'picture'=>0, 'store'=>0, 'pickup'=>0, 'delivery'=>0, 'deliveryIncluded'=>0, 'local_delivery_cost'=>0, 'orderingTime'=>0);
+		$allowed_tags = array('url'=>0, 'buyurl'=>0, 'price'=>1, 'wprice'=>0, 'currencyId'=>1, 'xCategory'=>0, 'categoryId'=>1, 'picture'=>0, 'store'=>0, 'pickup'=>0, 'delivery'=>0, 'delivery-options'=>0, 'deliveryIncluded'=>0, 'local_delivery_cost'=>0, 'orderingTime'=>0);
 
 		switch ($type) {
 			case 'vendor.model':
@@ -334,11 +424,12 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 		$allowed_tags = array_merge($allowed_tags, array('aliases'=>0, 'additional'=>0, 'description'=>0, 'sales_notes'=>0, 'promo'=>0, 'manufacturer_warranty'=>0, 'country_of_origin'=>0, 'downloadable'=>0, 'adult'=>0, 'barcode'=>0));
 
 		$required_tags = array_filter($allowed_tags);
-
+		
 		if (sizeof(array_intersect_key($data, $required_tags)) != sizeof($required_tags)) {
 			return;
 		}
-
+		
+		
 		$data = array_intersect_key($data, $allowed_tags);
 //		if (isset($data['tarifplan']) && !isset($data['provider'])) {
 //			unset($data['tarifplan']);
@@ -350,7 +441,11 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 		// поэтому важно соблюдать его в соответствии с порядком описанным в DTD
 		$offer['data'] = array();
 		foreach ($allowed_tags as $key => $value) {
-			$offer['data'][$key] = $this->prepareField($data[$key]);
+			if(is_array($data[$key])){
+				$offer['data'][$key] = $data[$key];
+			}else{
+				$offer['data'][$key] = $this->prepareField($data[$key]);
+			}
 		}
 
 		$this->offers[] = $offer;
@@ -371,6 +466,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 		$yml .= $this->array2Tag($this->shop);
 
 		// опции доставки
+		/*
 		$yml .= '<delivery-options>' . $this->eol;
 		//print_r($this->deliveries);
 		
@@ -379,7 +475,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 		}
 		
 		$yml .= '</delivery-options>' . $this->eol;
-		
+		*/
 
 		// валюты
 		$yml .= '<currencies>' . $this->eol;
@@ -399,8 +495,11 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 
 		// товарные предложения
 		$yml .= '<offers>' . $this->eol;
+		
 		foreach ($this->offers as $offer) {
+			
 			$tags = $this->array2Tag($offer['data']);
+			
 			unset($offer['data']);
 			if (isset($offer['param'])) {
 				$tags .= $this->array2Param($offer['param']);
@@ -427,7 +526,11 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 	private function getElement($attributes, $element_name, $element_value = '') {
 		$retval = '<' . $element_name . ' ';
 		foreach ($attributes as $key => $value) {
-			$retval .= $key . '="' . $value . '" ';
+			if(is_array($value)){
+
+			}else{
+				$retval .= $key . '="' . $value . '" ';
+			}
 		}
 		$retval .= $element_value ? '>' . $this->eol . $element_value . '</' . $element_name . '>' : '/>';
 		$retval .= $this->eol;
@@ -444,7 +547,22 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 	private function array2Tag($tags) {
 		$retval = '';
 		foreach ($tags as $key => $value) {
-			$retval .= '<' . $key . '>' . $value . '</' . $key . '>' . $this->eol;
+			if(!is_array($value)){
+				$retval .= '<' . $key . '>' . $value . '</' . $key . '>' . $this->eol;
+			}else{
+				//echo "!".$key."!";
+				foreach($value as $key_arr=>$item_arr){
+					$str="";
+					foreach($item_arr as $itm=>$key){
+						$str.=' '.$itm.'="'.$key.'"';
+					}
+					$str="<".$key_arr.$str."></".$key_arr.">";
+				}
+				//echo $key."==".$value;
+				
+				$retval="<delivery-options>".$str."</delivery-options>";
+				//$retval .= '<' . $key . '><option cost="te"></option></' . $key . '>' . $this->eol;
+			}
 		}
 
 		return $retval;
