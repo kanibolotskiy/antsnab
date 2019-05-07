@@ -616,7 +616,7 @@ class ModelCatalogProduct extends Model {
 		foreach ($query->rows as $result) {
 			$delivery_weights[$result['weight']]=Array(
 				$result['price'],
-				$result['name'],
+				($result['caption']?$result['caption']:$result['name']),
 				$result['description']
 			);
 		}
@@ -676,8 +676,9 @@ class ModelCatalogProduct extends Model {
 
 			$delday_text='1-3 дня';
 			$del_price='по запросу';
-
+			
 			$del_caption=$doc_data['name'];
+			
 			$del_text=$doc_data['description'];
 			
 		}

@@ -292,7 +292,8 @@ class ControllerCatalogCouriers extends Controller {
     
                 
 
-            $data['entry_name'] = $this->language->get('entry_name_couriers');
+			$data['entry_name'] = $this->language->get('entry_name_couriers');
+			$data['entry_caption'] = $this->language->get('entry_caption');
             $data['entry_description'] = $this->language->get('entry_description');
             $data['entry_sort_order'] = $this->language->get('entry_sort_order');
 			$data['entry_weight'] = $this->language->get('entry_weight');
@@ -355,12 +356,15 @@ class ControllerCatalogCouriers extends Controller {
             }
             if(isset($courier_info)){
                 $data['courier']=$courier_info['name'];
-                $data['courier_description']=$courier_info['description'];
+				$data['courier_description']=$courier_info['description'];
+				$data['courier_caption']=$courier_info['caption'];
             }else{
                 $data['courier']='';
-                $data['courier_description']='';
+				$data['courier_description']='';
+				$data['courier_caption']='';
             }
 
+			
             //print_r($benefit_info);
 
            

@@ -21830,10 +21830,14 @@ $(".js_modal").click(function(e){
     $(".wrp_modal_body").show();
     $(".wrp_modal_thsnk").hide();
 
+    $("html").css("overflow", "hidden");
+    $("html").css("margin-right", "17px");
+
     $("."+modal).fadeIn(200);
 });
 $(".modal_close,.modal_overlay").click(function(){
     $(".modal").fadeOut(200);
+    $("html").css({"overflow":"inherit","margin-right":"0"});
 });
 
 $(".bene_item").click(function(){

@@ -143,16 +143,20 @@
                                                         <?php if($pUnits[1]['force_step_by_one'] == 1):?>
                                                         data-ui_step = "1"
                                                         <?php endif; ?>
+                                                        <?php if (isset($pUnits[2])){ ?>
+                                                            <?php if (( $quantity_stock<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){ ?>
+                                                                data-ui_step = "<?=$pUnits[2]['denom']?>"
+                                                                if($pUnits[1]['mincount']<$pUnits[2]['denom']){
+                                                                    data-ui_minimum = "<?=$pUnits[2]['denom']?>"
+                                                                }else{
+                                                                    data-ui_minimum = "<?=$pUnits[1]['mincount']?>"
+                                                                }
+                                                            <?php }else{ ?>
+                                                                    data-ui_minimum = "<?=$pUnits[1]['mincount']?>"
+                                                            <?php }?>
 
-                                                        <?php if (( $quantity_stock<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){ ?>
-                                                            data-ui_step = "<?=$pUnits[2]['denom']?>"
-                                                            if($pUnits[1]['mincount']<$pUnits[2]['denom']){
-                                                                data-ui_minimum = "<?=$pUnits[2]['denom']?>"
-                                                            }else{
-                                                                data-ui_minimum = "<?=$pUnits[1]['mincount']?>"
-                                                            }
-                                                        <?php }else{ ?>
-                                                                data-ui_minimum = "<?=$pUnits[1]['mincount']?>"
+                                                        <?php }else{?>
+                                                            data-ui_minimum = "<?=$pUnits[1]['mincount']?>"
                                                         <?php }?>
                                                         data-nom=<?=$pUnits[1]['nom']?>
                                                         data-denom=<?=$pUnits[1]['denom']?>
@@ -456,13 +460,16 @@
             </div>
 
             <div class="modal modal_delivery_pay">
+                
                 <div class="modal-block">
+                    
                     <div class="modal_overlay"></div>
                     <div class="modal-content">
                         <div class="modal_close"></div>
                         <div class="modal_caption"><?=$delivery_cost_caption?></div>
                         <div class="modal_text content-text"><?=$delivery_cost_text?></div>
                     </div>
+                
                 </div>
             </div>
 

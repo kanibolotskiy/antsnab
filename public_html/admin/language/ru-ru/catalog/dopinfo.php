@@ -45,6 +45,7 @@ $_['entry_weight']              = 'Грузоподъемность, до';
 $_['entry_price']               = 'Цена, от';
 
 
+$_['entry_caption']             = 'Заголовок';
 $_['entry_description']         = 'Описание';
 
 
