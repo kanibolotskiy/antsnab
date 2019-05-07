@@ -146,10 +146,10 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 				$data['url'] = $this->url->link('product/product', 'path=' . $this->getPath($product['category_id']) . '&product_id=' . $product['product_id'])."?utm_source=market&utm_medium=cpc";
 				
 				$data['price'] = $this->currency->convert($this->tax->calculate($price, $product['tax_class_id']), $shop_currency, $offers_currency);
-
 				$data['currencyId'] = $offers_currency;
 				$data['categoryId'] = $product['category_id'];
 				$data['delivery'] = 'true';
+
 				
 				if($product['quantity'] > 0){
 					$data['pickup'] = 'true';
@@ -167,14 +167,8 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 							"days"=>"1-3"
 						)
 					);
-					//<option cost="300" days="1" order-before="18"/>
-					/*$data['delivery'] = array(
-						array(
-							'name'=>'Wi-Fi',
-							'value'=>'есть'
-						), array(
-					*/
 				}
+				
 				//<option cost="300" days="1" order-before="18"/>
 				
 
@@ -209,6 +203,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 					)
 				);
 */
+				//print_r($data);
 				$this->setOffer($data);
 				
 				
@@ -560,7 +555,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 				}
 				//echo $key."==".$value;
 				
-				$retval="<delivery-options>".$str."</delivery-options>";
+				$retval.="<delivery-options>".$str."</delivery-options>";
 				//$retval .= '<' . $key . '><option cost="te"></option></' . $key . '>' . $this->eol;
 			}
 		}
