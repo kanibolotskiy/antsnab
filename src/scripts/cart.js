@@ -48,7 +48,7 @@ function getDelivery(){
         dataType: 'json',
         success: function(json) {
             if(json['success']){
-                var str_delivery='<span class="nowrap">'+json['date_delivery']+'</span>, '+json['price_delivery'];
+                var str_delivery='<span class="nowrap">'+json['date_delivery']+'</span>,<br/>'+json['price_delivery'];
                 $("#delivery_text").html(str_delivery);
 
                 $("#caption_delivery").html(json['caption_delivery']);
