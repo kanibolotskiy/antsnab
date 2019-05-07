@@ -3075,7 +3075,7 @@ input[name="workemail"] { display: none !important; }
   .btn-nav { order: 5; }
   .tel a { margin-bottom: 0; }
   .logo_slogan { display: inline-block; }
-  .modal .modal-block { align-items: initial; } }
+  .modal .modal-block { align-items: initial !important; } }
 
 @media screen and (max-width: 640px) { .preheader_divider { display: none; }
   .preheader_info { font-size: 13px; }
