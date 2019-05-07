@@ -675,7 +675,7 @@ class ModelCatalogProduct extends Model {
 			$doc_data=$this->getDocsData(1);
 
 			$delday_text='1-3 дня';
-			$del_price='<br/>по запросу';
+			$del_price='по запросу';
 
 			$del_caption=$doc_data['name'];
 			$del_text=$doc_data['description'];

@@ -5351,7 +5351,7 @@ background-position:left center;background-repeat:no-repeat;
 .modal_form_row .error{display:none;    margin-bottom: 5px;}
 .modal_form_row.error .error{display:block;}
 .wrp_modal_thsnk{display:none;}
-
+.modal_text table{    table-layout: fixed;}
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{
         width: 100%;

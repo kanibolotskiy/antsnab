@@ -3043,6 +3043,8 @@ input[name="workemail"] { display: none !important; }
 
 .wrp_modal_thsnk { display: none; }
 
+.modal_text table { table-layout: fixed; }
+
 @media screen and (max-width: 1200px) { .price-list .select-list ul.list > li { width: 100%; }
   .sidebar { margin-right: 20px; }
   .prehead_cap { display: none; } }
