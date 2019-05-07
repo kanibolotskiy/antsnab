@@ -56,7 +56,7 @@
 			<div class="col-sm-10">
               <div class="well well-sm" style="height: 150px; overflow: auto;">
                 <?php foreach ($categories as $category) { ?>
-                <div class="checkbox">
+                <div class="checkbox cat_isseo_<?php echo $category['isseo'];?>">
                   <label>
                     <?php if (in_array($category['category_id'], $yandex_market_categories)) { ?>
 						<input type="checkbox" name="yandex_market_categories[]" value="<?php echo $category['category_id']; ?>" checked="checked" />
