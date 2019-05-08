@@ -694,16 +694,27 @@ class ModelCatalogProduct extends Model {
 		$query = $this->db->query("SELECT * from dopinfo_docs where doc_id='". (int)$doc_id."'");
 		return $query->row;
 	}
+	public function getDiscountData($doc_id){
+		$query = $this->db->query("SELECT * from dopinfo_discounts where discount_id='". (int)$doc_id."'");
+		return $query->row;
+	}
+	
+
 	public function showDiscountProduct($product_id){
-		$query = $this->db->query("SELECT showdiscount from " . DB_PREFIX . "product where product_id='". (int)$product_id."'");
-		$showDiscountProduct=$query->row['showdiscount'];
-		if(!$showDiscountProduct){
+
+		$query = $this->db->query("SELECT discount from " . DB_PREFIX . "product where product_id='". (int)$product_id."'");
+		$showDiscountProduct=$query->row['discount'];
+		
+		
+		if($showDiscountProduct==0){
 			$query_cat = $this->db->query("SELECT category_id from " . DB_PREFIX . "product_to_category where main_category=1 AND product_id=" . (int)$product_id." LIMIT 1");
 			$cat_id=$query_cat->row["category_id"];
 			
-			$query = $this->db->query("SELECT showdiscount FROM " . DB_PREFIX . "category where category_id='".(int)$cat_id."'");
-			$showDiscountProduct=$query->row['showdiscount'];
+			$query = $this->db->query("SELECT discount FROM " . DB_PREFIX . "category where category_id='".(int)$cat_id."'");
+			$showDiscountProduct=$query->row['discount'];
+		
 		}
+		
 		return $showDiscountProduct;
 	}
 

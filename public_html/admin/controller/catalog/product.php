@@ -1174,15 +1174,24 @@ class ControllerCatalogProduct extends Controller {
 		//Скидки
 		
 		$this->load->model('catalog/discounts');
+		$data['discounts']=[];
+		$data['discounts'][]=Array("discount_id"=>-1,"name"=>"Не показывать");
+		$discounts=$this->model_catalog_discounts->getDiscounts();
+		///print_r($discounts);
+		foreach($discounts as $discount){
+			$data['discounts'][] = Array(
+				'discount_id'=>$discount['discount_id'],
+				'name'=>$discount['name']
+
+			);
+		}
 		
-    $data['discounts'] = $this->model_catalog_discounts->getDiscounts();
-		
-		if (isset($this->request->post['discount_id'])) {
-			$data['discount_id'] = $this->request->post['discount_id'];
+		if (isset($this->request->post['discount'])) {
+			$data['discount'] = $this->request->post['discount'];
 		} elseif (!empty($product_info)) {
-			$data['discount_id'] = $product_info['discount'];
+			$data['discount'] = $product_info['discount'];
 		} else {
-			$data['discount_id'] = 0;
+			$data['discount'] = 0;
 		}
 
 		if (isset($this->request->post['manufacturer'])) {

@@ -140,7 +140,7 @@
                             <?php } ?>
                         </select>
                     </div>
-                </div>
+                  </div>
                 </div>
                 <?php } ?>
               </div>

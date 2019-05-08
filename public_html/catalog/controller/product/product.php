@@ -717,14 +717,18 @@ class ControllerProductProduct extends Controller {
 				);
 			}
 			
-			/*$show_discount_form=$this->model_catalog_product->showDiscountProduct($product_id);
-			$data['discount_form']=$show_discount_form;
-			if($show_discount_form){
-				$discountData=$this->model_catalog_product->getDocsData(3);
-				$data['discount_caption']=$discountData['name'];
-				$data['discount_text']=html_entity_decode($discountData['description']);
+
+			$show_discount_form=$this->model_catalog_product->showDiscountProduct($product_id);
+			if($show_discount_form>0){
+				$data['discount_form']=1;
+				if($show_discount_form){
+					$discountData=$this->model_catalog_product->getDiscountData($show_discount_form);
+					$data['discount_caption']=$discountData['name'];
+					$data['discount_text']=html_entity_decode($discountData['description']);
+				}
+			}else{
+				$data['discount_form']=0;
 			}
-			*/
 			//$data['benefits']["description"]=html_entity_decode($data['benefits']["description"]);
 			
 			$nostockData=$this->model_catalog_product->getDocsData(1);
