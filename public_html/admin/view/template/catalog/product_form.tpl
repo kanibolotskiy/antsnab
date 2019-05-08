@@ -1467,7 +1467,7 @@
                             response($.map(json, function (item) {
                                 return {
                                     label: item['name'],
-                                    value: item['product_id']
+                                    value: item['benefit_id']
                                 }
                             }));
                         }
