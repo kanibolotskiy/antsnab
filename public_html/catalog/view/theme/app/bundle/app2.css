@@ -3075,8 +3075,8 @@ input[name="workemail"] { display: none !important; }
   .btn-nav { order: 5; }
   .tel a { margin-bottom: 0; }
   .logo_slogan { display: inline-block; }
-  .modal .modal-block { align-items: initial !important; display: block !important; }
-  .modal .modal-content { padding: 30px 20px; } }
+  .modal .modal-block { /*align-items:initial!important;display:block!important;*/ margin: 0 !important; padding: 0 !important; }
+  .modal .modal-content { padding: 30px 15px 10px !important; } }
 
 @media screen and (max-width: 640px) { .bene_item { width: 48%; }
   .preheader_divider { display: none; }

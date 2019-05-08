@@ -408,24 +408,26 @@
                                     <i class="error">Необходимо заполнить</i>
                                     <div class="file">
                                         <div class="file-block">
-                                            <div id="filename">Прикрепить рекзизиты</div>
+                                            <div id="filename">Прикрепить реквизиты</div>
                                             <input id="file" type="file" value="" name="download">
                                         </div>
                                     </div>
                                     
                                 </div>
-                                <div class="modal_form_link">
-                                    <p>Нажимая на кнопку Отправить, я даю <a target="_blank" href="agreement/">согласие на обработку персональных данных</a></p>
-                                </div>
+                                
 
                                 <input value="" name="workemail" type="text" placeholder="Рабочий email"/>
-
+                                
                                 <input
                                     type ="submit"
                                     class="g-recaptcha"
                                     data-sitekey="<?= $captcha_key ?>"
                                     data-callback="submitDiscountForm" value="Отправить"/>
-                            
+                                    
+                                <div class="modal_form_link">
+                                    <p>Нажимая на кнопку Отправить, я даю <a target="_blank" href="agreement/">согласие на обработку персональных данных</a></p>
+                                </div>
+
                                 </form>
                             </div>
                         </div>

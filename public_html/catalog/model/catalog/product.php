@@ -722,12 +722,12 @@ class ModelCatalogProduct extends Model {
     {
 		
 		$this->load->language('extension/module/optform');
-
+		$data=[];
 		$data["logo"]= $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
 
 		
 		//$this->load->model('checkout/order');
-		$data=[];
+		
 		$data["caption"]=$this->language->get('text_caption');
 		$subject=$this->language->get('text_subject');
 		
@@ -747,7 +747,7 @@ class ModelCatalogProduct extends Model {
 		$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
 		$mail->smtp_port = $this->config->get('config_mail_smtp_port');
 		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
+		
 		
 		$mail->setTo($this->config->get('config_email_opt'));
 

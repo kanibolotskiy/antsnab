@@ -995,7 +995,7 @@ class ControllerProductProduct extends Controller {
 		$data['email']=$this->request->post['email'];
 		$data['site']=$this->request->post['site'];
 		*/
-		if(trim($data['workemail']=="")){
+		if(trim($this->request->post['workemail']=="")){
 			$this->model_catalog_product->sendMailOpt($this->request->post);
 		}
 		$json['success']="ok";
