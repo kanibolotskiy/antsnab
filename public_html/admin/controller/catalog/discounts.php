@@ -1,13 +1,13 @@
 <?php
-class ControllerCatalogBenefits extends Controller {
+class ControllerCatalogDiscounts extends Controller {
 	private $error = array();
 
 	public function index() {
         $this->load->language('catalog/dopinfo');
 
-		$this->document->setTitle($this->language->get('heading_title_benefits'));
+		$this->document->setTitle($this->language->get('heading_title_discounts'));
 
-		$this->load->model('catalog/benefits');
+		$this->load->model('catalog/discounts');
 		$this->getList();
 	}
     protected function getList() {
@@ -51,14 +51,14 @@ class ControllerCatalogBenefits extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title_benefits'),
-			'href' => $this->url->link('catalog/benefits', 'token=' . $this->session->data['token'] . $url, true)
+			'text' => $this->language->get('heading_title_discounts'),
+			'href' => $this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['add'] = $this->url->link('catalog/benefits/add', 'token=' . $this->session->data['token'] . $url, true);
-		$data['delete'] = $this->url->link('catalog/benefits/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['add'] = $this->url->link('catalog/discounts/add', 'token=' . $this->session->data['token'] . $url, true);
+		$data['delete'] = $this->url->link('catalog/discounts/delete', 'token=' . $this->session->data['token'] . $url, true);
 
-		$data['benefits'] = array();
+		$data['discounts'] = array();
 
 		$filter_data = array(
 			'sort'  => $sort,
@@ -67,31 +67,29 @@ class ControllerCatalogBenefits extends Controller {
 			'limit' => $this->config->get('config_limit_admin')
 		);
 
-        $benefits_total=10;
+        $discounts_total=10;
 
-        
-        
-		$benefits_total = $this->model_catalog_benefits->getTotalBenefits();
+		$discounts_total = $this->model_catalog_discounts->getTotalDiscounts();
 
-		$results = $this->model_catalog_benefits->getBenefits($filter_data);
+		$results = $this->model_catalog_discounts->getDiscounts($filter_data);
 
 		foreach ($results as $result) {
-			$data['benefits'][] = array(
-				'benefit_id' => $result['benefit_id'],
+			$data['discounts'][] = array(
+				'discount_id' => $result['discount_id'],
 				'name'            => $result['name'],
 				'sort_order'      => $result['sort_order'],
-				'edit'            => $this->url->link('catalog/benefits/edit', 'token=' . $this->session->data['token'] . '&benefit_id=' . $result['benefit_id'] . $url, true)
+				'edit'            => $this->url->link('catalog/discounts/edit', 'token=' . $this->session->data['token'] . '&discount_id=' . $result['discount_id'] . $url, true)
 			);
 		}
     
 
-		$data['heading_title'] = $this->language->get('heading_title_benefits');
+		$data['heading_title'] = $this->language->get('heading_title_discounts');
 
-		$data['text_list'] = $this->language->get('text_list_benefits');
+		$data['text_list'] = $this->language->get('text_list_discounts');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
-		$data['column_name'] = $this->language->get('column_name_benefits');
+		$data['column_name'] = $this->language->get('column_name_discounts');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
 
@@ -131,8 +129,8 @@ class ControllerCatalogBenefits extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('catalog/benefits', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
-		$data['sort_sort_order'] = $this->url->link('catalog/benefits', 'token=' . $this->session->data['token'] . '&sort=sort_order' . $url, true);
+		$data['sort_name'] = $this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
+		$data['sort_sort_order'] = $this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . '&sort=sort_order' . $url, true);
 
 		$url = '';
 
@@ -145,14 +143,14 @@ class ControllerCatalogBenefits extends Controller {
 		}
 
 		$pagination = new Pagination();
-		$pagination->total = $benefits_total;
+		$pagination->total = $discounts_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('catalog/benefits', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($benefits_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($benefits_total - $this->config->get('config_limit_admin'))) ? $benefits_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $benefits_total, ceil($benefits_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($discounts_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($discounts_total - $this->config->get('config_limit_admin'))) ? $discounts_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $discounts_total, ceil($discounts_total / $this->config->get('config_limit_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -161,18 +159,18 @@ class ControllerCatalogBenefits extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
         
-        $this->response->setOutput($this->load->view('catalog/benefits_list', $data));
+        $this->response->setOutput($this->load->view('catalog/discounts_list', $data));
     }
     public function delete() {
 		$this->load->language('catalog/dopinfo');
 
-		$this->document->setTitle($this->language->get('heading_title_benefits'));
+		$this->document->setTitle($this->language->get('heading_title_discounts'));
 
-		$this->load->model('catalog/benefits');
+		$this->load->model('catalog/discounts');
         
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $benefit_id) {
-				$this->model_catalog_benefits->deleteBenefit($benefit_id);
+			foreach ($this->request->post['selected'] as $discount_id) {
+				$this->model_catalog_discounts->deleteDiscount($discount_id);
 			}
             
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -191,7 +189,7 @@ class ControllerCatalogBenefits extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-            $this->response->redirect($this->url->link('catalog/benefits', 'token=' . $this->session->data['token'] . $url, true));
+            $this->response->redirect($this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . $url, true));
             
 		}
        
@@ -201,12 +199,12 @@ class ControllerCatalogBenefits extends Controller {
     public function add() {
 		$this->load->language('catalog/dopinfo');
 
-		$this->document->setTitle($this->language->get('heading_title_benefits'));
+		$this->document->setTitle($this->language->get('heading_title_discounts'));
 
-		$this->load->model('catalog/benefits');
+		$this->load->model('catalog/discounts');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_benefits->addBenefit($this->request->post);
+			$this->model_catalog_discounts->addDiscount($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -224,7 +222,7 @@ class ControllerCatalogBenefits extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/benefits', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -232,12 +230,12 @@ class ControllerCatalogBenefits extends Controller {
 	public function edit() {
         $this->load->language('catalog/dopinfo');
         
-		$this->document->setTitle($this->language->get('heading_title_benefits'));
+		$this->document->setTitle($this->language->get('heading_title_discounts'));
 
-		$this->load->model('catalog/benefits');
+		$this->load->model('catalog/discounts');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_benefits->editBenefit($this->request->get['benefit_id'], $this->request->post);
+			$this->model_catalog_discounts->editDiscount($this->request->get['discount_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -255,7 +253,7 @@ class ControllerCatalogBenefits extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/benefits', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -274,10 +272,10 @@ class ControllerCatalogBenefits extends Controller {
             $this->document->addStyle('view/javascript/summernote/summernote.css');
         }
     
-            $data['heading_title'] = $this->language->get('heading_title_benefits');
+            $data['heading_title'] = $this->language->get('heading_title_discounts');
             
 
-            $data['text_form'] = $this->language->get('text_edit_benefits');
+            $data['text_form'] = $this->language->get('text_edit_discounts');
             /*
             $data['text_enabled'] = $this->language->get('text_enabled');
             $data['text_disabled'] = $this->language->get('text_disabled');
@@ -303,7 +301,7 @@ class ControllerCatalogBenefits extends Controller {
     
                 
 
-            $data['entry_name'] = $this->language->get('entry_name_benefits');
+            $data['entry_name'] = $this->language->get('entry_name_discounts');
             $data['entry_description'] = $this->language->get('entry_description');
             $data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
@@ -353,31 +351,31 @@ class ControllerCatalogBenefits extends Controller {
             );
     
             $data['breadcrumbs'][] = array(
-                'text' => $this->language->get('heading_title_benefits'),
-                'href' => $this->url->link('catalog/benefits', 'token=' . $this->session->data['token'] . $url, true)
+                'text' => $this->language->get('heading_title_discounts'),
+                'href' => $this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . $url, true)
             );
     
-            if (!isset($this->request->get['benefit_id'])) {
-                $data['action'] = $this->url->link('catalog/benefits/add', 'token=' . $this->session->data['token'] . $url, true);
+            if (!isset($this->request->get['discount_id'])) {
+                $data['action'] = $this->url->link('catalog/discounts/add', 'token=' . $this->session->data['token'] . $url, true);
             } else {
-                $data['action'] = $this->url->link('catalog/benefits/edit', 'token=' . $this->session->data['token'] . '&benefit_id=' . $this->request->get['benefit_id'] . $url, true);
+                $data['action'] = $this->url->link('catalog/discounts/edit', 'token=' . $this->session->data['token'] . '&discount_id=' . $this->request->get['discount_id'] . $url, true);
             }
     
-            $data['cancel'] = $this->url->link('catalog/benefits', 'token=' . $this->session->data['token'] . $url, true);
+            $data['cancel'] = $this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . $url, true);
             
             
-            if (isset($this->request->get['benefit_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-                $benefit_info = $this->model_catalog_benefits->getBenefit($this->request->get['benefit_id']);
+            if (isset($this->request->get['discount_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+                $discount_info = $this->model_catalog_discounts->getDiscount($this->request->get['discount_id']);
             }
-            if(isset($benefit_info)){
-                $data['benefit']=$benefit_info['name'];
-                $data['benefit_description']=$benefit_info['description'];
+            if(isset($discount_info)){
+                $data['discount']=$discount_info['name'];
+                $data['discount_description']=$discount_info['description'];
             }else{
-                $data['benefit']='';
-                $data['benefit_description']='';
+                $data['discount']='';
+                $data['discount_description']='';
             }
 
-            //print_r($benefit_info);
+            //print_r($discount_info);
 
            
 
@@ -443,8 +441,8 @@ class ControllerCatalogBenefits extends Controller {
 
             if (isset($this->request->post['sort_order'])) {
                 $data['sort_order'] = $this->request->post['sort_order'];
-            } elseif (!empty($benefit_info)) {
-                $data['sort_order'] = $benefit_info['sort_order'];
+            } elseif (!empty($discount_info)) {
+                $data['sort_order'] = $discount_info['sort_order'];
             } else {
                 $data['sort_order'] = '';
             }
@@ -453,23 +451,23 @@ class ControllerCatalogBenefits extends Controller {
             $data['header'] = $this->load->controller('common/header');
             $data['column_left'] = $this->load->controller('common/column_left');
             $data['footer'] = $this->load->controller('common/footer');
-            $this->response->setOutput($this->load->view('catalog/benefits_form', $data));
+            $this->response->setOutput($this->load->view('catalog/discounts_form', $data));
         }
 
     protected function validateForm() {
-        if (!$this->user->hasPermission('modify', 'catalog/benefits')) {
+        if (!$this->user->hasPermission('modify', 'catalog/discounts')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
         
         if ((utf8_strlen($this->request->post['name']) < 2) || (utf8_strlen($this->request->post['name']) > 64)) {
-            $this->error['name'] = $this->language->get('error_name_benefits');
+            $this->error['name'] = $this->language->get('error_name_discounts');
         }
         
         return !$this->error;
     }
     protected function validateDelete() {
-		if (!$this->user->hasPermission('modify', 'catalog/benefits')) {
+		if (!$this->user->hasPermission('modify', 'catalog/discounts')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -487,12 +485,11 @@ class ControllerCatalogBenefits extends Controller {
 */
 		return !$this->error;
 	}
-	//агтсешщт getBenefits
     public function autocomplete() {
 		$json = array();
 
 		if (isset($this->request->get['filter_name'])) {
-			$this->load->model('catalog/benefits');
+			$this->load->model('catalog/discounts');
 
 			$filter_data = array(
 				'filter_name' => $this->request->get['filter_name'],
@@ -500,11 +497,11 @@ class ControllerCatalogBenefits extends Controller {
 				'limit'       => 5
 			);
 
-			$results = $this->model_catalog_benefits->getBenefits($filter_data);
+			$results = $this->model_catalog_discounts->getDiscounts($filter_data);
 
 			foreach ($results as $result) {
 				$json[] = array(
-					'benefit_id' => $result['benefit_id'],
+					'discount_id' => $result['discount_id'],
 					'name'            => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
 				);
 			}

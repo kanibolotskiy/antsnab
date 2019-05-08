@@ -162,6 +162,17 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()		
 				);					
 			}
+
+			//Скидки
+			if ($this->user->hasPermission('access', 'catalog/discounts')) {		
+				
+				$dopinfo_arr[] = array(
+					'name'	   => $this->language->get('text_discount'),
+					'href'     => $this->url->link('catalog/discounts', 'token=' . $this->session->data['token'], true),
+					'children' => array()		
+				);					
+			}
+
 			//Документы
 			if ($this->user->hasPermission('access', 'catalog/docs')) {		
 				

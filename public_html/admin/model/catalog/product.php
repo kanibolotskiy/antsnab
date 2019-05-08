@@ -862,23 +862,7 @@ class ModelCatalogProduct extends Model
         */
     }
     
-    public function getBenefits($data = array())
-    {
-        $product_related_data = array();
-
-        $sql="SELECT * FROM dopinfo_benefits";
-        
-        if (!empty($data['filter_name'])) {
-            $sql .= " AND pd.name LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
-        }
-        if (!empty($data['limit'])) {
-            $sql .= " limit ".$data['limit'];
-        }
-
-        $query = $this->db->query($sql);
-
-        return $query->rows;
-    }
+    
     
 
 

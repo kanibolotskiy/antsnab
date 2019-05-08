@@ -104,8 +104,9 @@ $_['text_other_status']          	        = 'Другие статусы';
 $_['text_octeam_toolset']              		= 'OC Team';
 
 
-$_['text_dopinfo']              		= 'Информация';
-$_['text_benefits']              		= 'Преимущества';
-$_['text_courier']              		= 'Курьеры';
-$_['text_docs']              		    = 'Документы';
+$_['text_dopinfo']              		    = 'Информация';
+$_['text_benefits']              		    = 'Преимущества';
+$_['text_courier']              		    = 'Курьеры';
+$_['text_docs']              		        = 'Документы';
+$_['text_discount']              		    = 'Скидки';
 

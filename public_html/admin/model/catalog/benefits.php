@@ -37,7 +37,7 @@ class ModelCatalogBenefits extends Model {
 		
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+			$sql .= " where name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
 		}
 
 		$sort_data = array(
@@ -68,7 +68,6 @@ class ModelCatalogBenefits extends Model {
 
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
-
 		$query = $this->db->query($sql);
 
 		return $query->rows;

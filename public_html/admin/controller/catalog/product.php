@@ -690,6 +690,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_disseo'] = $this->language->get('entry_disseo');
 		$data['entry_video'] = $this->language->get('entry_video');
 		$data['entry_showdiscount'] = $this->language->get('entry_showdiscount');
+		$data['entry_discount'] = $this->language->get('entry_discount');
 		
 
 
@@ -855,6 +856,7 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['disseo'] = '';
 		}
+		/*
 		if (isset($this->request->post['showdiscount'])) {
 			$data['showdiscount'] = $this->request->post['showdiscount'];
 		} elseif (!empty($product_info)) {
@@ -862,7 +864,7 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['showdiscount'] = '';
 		}
-
+*/
 
 		if (isset($this->request->post['model'])) {
 			$data['model'] = $this->request->post['model'];
@@ -1142,6 +1144,7 @@ class ControllerCatalogProduct extends Controller {
 			$data['length_class_id'] = $this->config->get('config_length_class_id');
 		}
 
+		//Производители
 		$this->load->model('catalog/manufacturer');
 
     $data['manufacturers'] = $this->model_catalog_manufacturer->getManufacturers();
@@ -1167,6 +1170,35 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['manufacturer'] = '';
 		}
+		
+		//Скидки
+		/*
+		$this->load->model('catalog/discounts');
+		
+    $data['discounts'] = $this->model_catalog_discounts->getDiscounts();
+		
+		if (isset($this->request->post['discount_id'])) {
+			$data['discount_id'] = $this->request->post['discount_id'];
+		} elseif (!empty($product_info)) {
+			$data['discount_id'] = $product_info['discount_id'];
+		} else {
+			$data['discount_id'] = 0;
+		}
+*/
+		if (isset($this->request->post['manufacturer'])) {
+			$data['manufacturer'] = $this->request->post['manufacturer'];
+		} elseif (!empty($product_info)) {
+			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($product_info['manufacturer_id']);
+
+			if ($manufacturer_info) {
+				$data['manufacturer'] = $manufacturer_info['name'];
+			} else {
+				$data['manufacturer'] = '';
+			}
+		} else {
+			$data['manufacturer'] = '';
+		}
+		
 
 		// Categories
 		$this->load->model('catalog/category');
@@ -1651,7 +1683,7 @@ class ControllerCatalogProduct extends Controller {
 		$json = array();
 		
 		if (isset($this->request->get['filter_name'])) {
-			$this->load->model('catalog/product');
+			$this->load->model('catalog/benefits');
 
 			if (isset($this->request->get['filter_name'])) {
 				$filter_name = $this->request->get['filter_name'];
@@ -1664,11 +1696,11 @@ class ControllerCatalogProduct extends Controller {
 				'start'        => 0,
 				'limit'        => 10
 			);
-			$results = $this->model_catalog_product->getBenefits($filter_data);
+			$results = $this->model_catalog_benefits->getBenefits($filter_data);
 
 			foreach ($results as $result) {
 				$json[] = array(
-					'product_id' => $result['benefit_id'],
+					'benefit_id' => $result['benefit_id'],
 					'name'       => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
 				);
 			}

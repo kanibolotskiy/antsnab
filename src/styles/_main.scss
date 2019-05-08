@@ -5408,6 +5408,8 @@ background-position:left center;background-repeat:no-repeat;
 }
 
 @media screen and (max-width: 640px){
+    .bene_item{width:48%;}
+
     .preheader_divider{display:none;}
     .preheader_info{font-size:13px;}
     .logo_slogan{display:none;}
