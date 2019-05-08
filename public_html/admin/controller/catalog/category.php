@@ -509,6 +509,12 @@ class ControllerCatalogCategory extends Controller {
 			$data['notshowisseo'] = 0;
 		}
 		
+		//Скидки
+		
+		$this->load->model('catalog/discounts');
+		
+    $data['discounts'] = $this->model_catalog_discounts->getDiscounts();
+		
 		if (isset($this->request->post['discount'])) {
 			$data['discount'] = $this->request->post['discount'];
 		} elseif (!empty($category_info)) {
@@ -516,7 +522,6 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['discount'] = 0;
 		}
-		
 
 		$this->load->model('catalog/product');
 		if (isset($this->request->post['product_benefit'])) {

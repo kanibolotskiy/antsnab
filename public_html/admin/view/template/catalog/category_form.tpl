@@ -129,13 +129,13 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-discount"><?php echo $entry_discount; ?></label>
                     <div class="col-sm-10">
-                        <select id="input-discount" name="discount_id" class="form-control">
+                        <select id="input-discount" name="discount" class="form-control">
                             <option value="0" selected="selected"><?php echo $text_none; ?></option>
-                            <?php foreach ($discounts as $discount) { ?>
-                                <?php if ($discount['discount_id'] == $discount_id) { ?>
-                                    <option value="<?php echo $discount['discount_id']; ?>" selected="selected"><?php echo $discount['name']; ?></option>
+                            <?php foreach ($discounts as $discount_itm) { ?>
+                                <?php if ($discount_itm['discount_id'] == $discount) { ?>
+                                    <option value="<?php echo $discount_itm['discount_id']; ?>" selected="selected"><?php echo $discount_itm['name']; ?></option>
                                 <?php } else { ?>
-                                    <option value="<?php echo $discount['discount_id']; ?>"><?php echo $discount['name']; ?></option>
+                                    <option value="<?php echo $discount_itm['discount_id']; ?>"><?php echo $discount_itm['name']; ?></option>
                                 <?php } ?>
                             <?php } ?>
                         </select>
