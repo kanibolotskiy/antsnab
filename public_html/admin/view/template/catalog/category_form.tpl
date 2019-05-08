@@ -127,22 +127,20 @@
                   </div>
                   
                   <div class="form-group">
-                      <label class="col-sm-2 control-label" for="input-showdiscount">
-                          <?php echo $entry_showdiscount; ?>
-                      </label>
-                      <div class="col-sm-1">
-                      <div class="checkbox">
-                          <label>
-                          <?php if($showdiscount) { ?>
-                          <input  type="checkbox" name="showdiscount" value="1" checked="checked" id="input-showdiscount" />
-                          <?php } else { ?>
-                          <input type="checkbox" name="showdiscount" value="1" id="input-showdiscount" />
-                          <?php } ?>
-                          &nbsp; </label>
-                      </div>
-                      </div>
-                      
-                  </div>
+                    <label class="col-sm-2 control-label" for="input-discount"><?php echo $entry_discount; ?></label>
+                    <div class="col-sm-10">
+                        <select id="input-discount" name="discount_id" class="form-control">
+                            <option value="0" selected="selected"><?php echo $text_none; ?></option>
+                            <?php foreach ($discounts as $discount) { ?>
+                                <?php if ($discount['discount_id'] == $discount_id) { ?>
+                                    <option value="<?php echo $discount['discount_id']; ?>" selected="selected"><?php echo $discount['name']; ?></option>
+                                <?php } else { ?>
+                                    <option value="<?php echo $discount['discount_id']; ?>"><?php echo $discount['name']; ?></option>
+                                <?php } ?>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
                 </div>
                 <?php } ?>
               </div>

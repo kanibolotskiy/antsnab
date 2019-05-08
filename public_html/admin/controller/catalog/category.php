@@ -332,7 +332,7 @@ class ControllerCatalogCategory extends Controller {
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_layout'] = $this->language->get('entry_layout');
 		$data['entry_isseo'] = $this->language->get('entry_isseo');
-		$data['entry_showdiscount'] = $this->language->get('entry_showdiscount');
+		$data['entry_discount'] = $this->language->get('entry_discount');
 
 		$data['entry_notshowisseo'] = $this->language->get('entry_notshowisseo');
 		$data['entry_benefits'] = $this->language->get('entry_benefits');
@@ -508,13 +508,13 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['notshowisseo'] = 0;
 		}
-
-		if (isset($this->request->post['showdiscount'])) {
-			$data['showdiscount'] = $this->request->post['showdiscount'];
+		
+		if (isset($this->request->post['discount'])) {
+			$data['discount'] = $this->request->post['discount'];
 		} elseif (!empty($category_info)) {
-			$data['showdiscount'] = $category_info['showdiscount'];
+			$data['discount'] = $category_info['discount'];
 		} else {
-			$data['showdiscount'] = 0;
+			$data['discount'] = 0;
 		}
 		
 
@@ -747,7 +747,7 @@ class ControllerCatalogCategory extends Controller {
 				'indent'      => $indent,
 				'isseo'		  => $result['isseo'],
 				'notshowisseo'=> $result['notshowisseo'],
-				'showdiscount'=> $result['showdiscount'],
+				'discount'=> $result['discount'],
 				
 
 			);

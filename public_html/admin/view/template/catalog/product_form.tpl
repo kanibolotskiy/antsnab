@@ -143,23 +143,7 @@
                                             
                                         </div>
 
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label" for="input-showdiscount">
-                                                <?php echo $entry_showdiscount; ?>
-                                            </label>
-                                            <div class="col-sm-1">
-                                            <div class="checkbox">
-                                                <label>
-                                                <?php if($showdiscount) { ?>
-                                                <input  type="checkbox" name="showdiscount" value="1" checked="checked" id="input-showdiscount" />
-                                                <?php } else { ?>
-                                                <input type="checkbox" name="showdiscount" value="1" id="input-showdiscount" />
-                                                <?php } ?>
-                                                &nbsp; </label>
-                                            </div>
-                                            </div>
-                                            
-                                        </div>
+                                        
                                         
                                     </div>
                                 <?php } ?>
