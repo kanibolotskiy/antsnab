@@ -659,10 +659,15 @@ class ModelCatalogProduct extends Model {
 				$delday_text="сегодня";
 			}else{
 				$days=1;
+				//echo "work1=".$iswork."!";
+				$end = date('Ymd', strtotime('+'.($days+1).' days'));
+				$date_week = date('w', strtotime('+'.($days+1).' days'));
+				$iswork=file_get_contents ("https://isdayoff.ru/".$end);
 				while($iswork){
 					$end = date('Ymd', strtotime('+'.($days+1).' days'));
 					$date_week = date('w', strtotime('+'.($days+1).' days'));
 					$iswork=file_get_contents ("https://isdayoff.ru/".$end);
+					
 					$days++;
 				}
 				if($days==1){
