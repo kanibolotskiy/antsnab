@@ -56,7 +56,7 @@ class ControllerExtensionFeedYandexTurbo extends Controller {
 			}
 
 			//Опции доставки
-			$this->setDeliveryOptions();
+			//$this->setDeliveryOptions();
 			
 			// Категории
 			$categories = $this->model_extension_feed_yandex_market->getCategory();

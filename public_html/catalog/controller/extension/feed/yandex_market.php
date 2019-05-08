@@ -64,7 +64,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 			}
 
 			//Опции доставки
-			//$this->setDeliveryOptions();
+			$this->setDeliveryOptions();
 			
 			// Категории
 			$categories = $this->model_extension_feed_yandex_market->getCategory($allowed_categories);
@@ -461,7 +461,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 		$yml .= $this->array2Tag($this->shop);
 
 		// опции доставки
-		/*
+		
 		$yml .= '<delivery-options>' . $this->eol;
 		//print_r($this->deliveries);
 		
@@ -470,7 +470,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 		}
 		
 		$yml .= '</delivery-options>' . $this->eol;
-		*/
+		/**/
 
 		// валюты
 		$yml .= '<currencies>' . $this->eol;
