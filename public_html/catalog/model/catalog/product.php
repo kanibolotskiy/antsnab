@@ -623,7 +623,18 @@ class ModelCatalogProduct extends Model {
 		
 		return $delivery_weights;
 	}
-
+	public function isDayWork($date_str){
+		$query = $this->db->query("SELECT state FROM dayworks WHERE date='".$date_str."'");
+		if(count($query->rows)){
+			$iswork=$query->row['state'];
+		}else{
+			$iswork=file_get_contents ("https://isdayoff.ru/".$date_str);
+			//echo "INSERT INTO dayworks (date,state) values ('".$date_str."','".$iswork."')";
+			$this->db->query("INSERT INTO dayworks (date,state) values ('".$date_str."','".$iswork."')");
+		}
+		//print_r(count($query->rows));
+		return $iswork;
+	}
 	public function getDelivery($product_id, $weight_product){
 		$result=[];
 		/**Стоимость и сроки доставки */
@@ -650,7 +661,10 @@ class ModelCatalogProduct extends Model {
 				}
 			}
 			$date_str=date("Ymd");
-			$iswork=file_get_contents ("https://isdayoff.ru/".$date_str);
+
+			
+			//$iswork=file_get_contents ("https://isdayoff.ru/".$date_str);
+			$iswork=$this->isDayWork($date_str);
 			$date_week = date('w');
 			$hours=date("H");
 			$days=0;
@@ -658,19 +672,22 @@ class ModelCatalogProduct extends Model {
 			if(!$iswork and $hours<14){
 				$delday_text="сегодня";
 			}else{
-				$days=1;
+				$days=0;
 				//echo "work1=".$iswork."!";
 				$end = date('Ymd', strtotime('+'.($days+1).' days'));
 				$date_week = date('w', strtotime('+'.($days+1).' days'));
-				$iswork=file_get_contents ("https://isdayoff.ru/".$end);
+				//$iswork=file_get_contents ("https://isdayoff.ru/".$end);
+				$iswork=$this->isDayWork($end);
+
 				while($iswork){
 					$end = date('Ymd', strtotime('+'.($days+1).' days'));
 					$date_week = date('w', strtotime('+'.($days+1).' days'));
-					$iswork=file_get_contents ("https://isdayoff.ru/".$end);
+					//$iswork=file_get_contents ("https://isdayoff.ru/".$end);
+					$iswork=$this->isDayWork($end);
 					
 					$days++;
 				}
-				if($days==1){
+				if($days==0){
 					$delday_text="завтра";
 				}else{
 					$delday_text=$array_week[$date_week];

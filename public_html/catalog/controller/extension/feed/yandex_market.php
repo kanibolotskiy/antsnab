@@ -178,7 +178,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 				$data['vendorCode'] = $product['model'];
 				$data['model'] = $product['name'];
 				$data['description'] = $product['description'];
-				$data['sales_notes']='Стоимость доставки может отличаться в зависимости от количества заказанного товара, склада отгрузки и адреса доставки.';
+				$data['sales_notes']='Цена доставки зависит от адреса и веса товара';
 
 //				$data['manufacturer_warranty'] = 'true';
 //				$data['barcode'] = $product['sku'];
