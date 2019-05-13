@@ -1932,6 +1932,20 @@ button.show-more{
                     background-color: #E29B63;
                 }
             }
+            div{
+                display: block;
+                
+                font-size: 14px;
+                color: #fff;
+                background-color: #fff;
+                @include transition;
+                height: 40px;
+                width: 40px;
+                text-align: center;
+                line-height: 40px;
+                font-weight: bold;
+                background-color: #E29B63;
+            }
             a.active{
                 text-decoration: none;
                 @include transition;

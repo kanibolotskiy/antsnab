@@ -1,6 +1,7 @@
 <div id="pagination_container">
 <?php if ($pagination->getTotalNumberOfPages() != 0 && $pagination->getTotalNumberOfPages()>1 ): ?>
     <div class="page-navigation page-navigation2">
+   
         <ul>
             <?php if($pagination->getCurrentPageNumber()!==1) { ?>
                 <li class="first-child">
@@ -13,7 +14,8 @@
             <?php foreach ($pagination->getPages() as $p): ?> 
                 <li>
                     <?php if ($p == $pagination->getCurrentPageNumber()): ?>
-                        <a class="active numberbut" href="<?= $pageUrl($pagination->getPreviousPageNumber()) ?>"><?=$p?></a>
+                        <!--<a class="active numberbut" href="<?= $pageUrl($pagination->getPreviousPageNumber()) ?>"><?=$p?></a>-->
+                        <div class="active numberbut"><?=$p?></div>
                     <?php else: ?>
                         <a class="numberbut" href="<?= $pageUrl($p) ?>"><?=$p?></a>
                 <?php endif; ?>

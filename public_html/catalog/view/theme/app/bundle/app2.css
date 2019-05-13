@@ -1721,6 +1721,8 @@ button.show-more:hover { background-color: #EFEEEC; -webkit-transition: 0.4s; -m
 
 .page-navigation ul li a:hover { text-decoration: none; -webkit-transition: 0.4s; -moz-transition: 0.4s; -ms-transition: 0.4s; -o-transition: 0.4s; transition: 0.4s; color: #fff; font-weight: bold; background-color: #E29B63; }
 
+.page-navigation ul li div { display: block; font-size: 14px; color: #fff; background-color: #fff; -webkit-transition: 0.4s; -moz-transition: 0.4s; -ms-transition: 0.4s; -o-transition: 0.4s; transition: 0.4s; height: 40px; width: 40px; text-align: center; line-height: 40px; font-weight: bold; background-color: #E29B63; }
+
 .page-navigation ul li a.active { text-decoration: none; -webkit-transition: 0.4s; -moz-transition: 0.4s; -ms-transition: 0.4s; -o-transition: 0.4s; transition: 0.4s; color: #fff; font-weight: bold; background-color: #E29B63; }
 
 .page-navigation ul li.first-child a { font-size: 13px; color: #444444; width: auto; }

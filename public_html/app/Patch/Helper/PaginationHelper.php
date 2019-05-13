@@ -54,13 +54,13 @@ class PaginationHelper
      */
     public static function render(\Registry $registry, $baseUrl, Pagination $paginationModel) 
     {
+        
         $load = $registry->get('load');
         $document = $registry->get('document');
         $pageUrl = static::getPageUrl($baseUrl); 
 
         if (null !== $paginationModel->getPreviousPageNumber() ) {
-            $document->addLink($pageUrl($paginationModel->getPreviousPageNumber()), 'prev');
-            
+            $document->addLink($pageUrl($paginationModel->getPreviousPageNumber()), 'prev'); 
         }
  
         if (null !== $paginationModel->getNextPageNumber() ) {
