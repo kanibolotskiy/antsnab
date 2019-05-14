@@ -19243,7 +19243,6 @@ $(document).ready(function(){
                 $('#cart_preloader').fadeOut(200);
             },
             success: function(json) {
-                //console.log(json);
                 if (json['success']) {
                     var product = [{
                         "id": json['metrika_product_id'],
@@ -19260,7 +19259,6 @@ $(document).ready(function(){
                     
 
                     if(itm.hasClass("cart_button_buy")){
-                        console.log(json);
                         var total=json["total"];
                         $("#total_cart").css({"opacity":0});
                         $("#total_cart").text(total);
