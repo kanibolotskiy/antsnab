@@ -266,9 +266,9 @@
                                             <div class="state_stock_cap">Наличие на складе:</div>
                                             <div class="state_stock_val">
                                             <?php if($quantity_stock>0){?>
-                                                <span class="stock1 with_goal" goal="test_goal">Алтуфьево</span>
+                                                <span class="stock1 with_goal" goal="in-stock">Алтуфьево</span>
                                             <?php }else{ ?>
-                                                <span class="notinstock js_modal with_goal" goal="test_goal" data-modal="modal_delivery">Под заказ</span>
+                                                <span class="notinstock js_modal with_goal" goal="pre-order" data-modal="modal_delivery">Под заказ</span>
                                             <?php }?>
                                             </div>
                                         </div>
@@ -277,11 +277,11 @@
                                     <div class="state_stock_col">
                                         <div class="state_stock_col_info  _delivery">
                                             <div class="state_stock_cap">Доставка:</div>
-                                            <div class="state_stock_val js_modal with_goal" goal="test_goal" data-modal="modal_delivery_cost" id="delivery_text"></div>
+                                            <div class="state_stock_val js_modal with_goal" goal="delivery" data-modal="modal_delivery_cost" id="delivery_text"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="state_stock_link js_modal with_goal" goal="test_goal" data-modal="modal_delivery_pay">Способы оплаты и получения товара</div>
+                                <div class="state_stock_link js_modal with_goal" goal="payment-receipt" data-modal="modal_delivery_pay">Способы оплаты и получения товара</div>
                             </div>
 
                             <!--

@@ -18,7 +18,7 @@ $(document).ready(function(){
     $(".with_goal").click(function(){
         var goal=$(this).attr("goal");
         if(goal!=""){
-            console.log(goal);
+            //console.log(goal);
             ym(14496178, 'reachGoal', goal);
         }
     });
