@@ -161,6 +161,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 						)
 					);
 				}else{
+					$data['pickup'] = 'false';
 					$data['delivery-options'] = Array(
 						'option'=>Array(
 							"cost"=>$del_price_val,
