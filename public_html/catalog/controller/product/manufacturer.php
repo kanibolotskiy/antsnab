@@ -1,6 +1,7 @@
 <?php
 class ControllerProductManufacturer extends Controller {
 	public function index() {
+		
 		$this->load->language('product/manufacturer');
 
 		$this->load->model('catalog/manufacturer');
@@ -61,9 +62,11 @@ class ControllerProductManufacturer extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 
 		$this->response->setOutput($this->load->view('product/manufacturer_list', $data));
+		
 	}
 
 	public function info() {
+		/*
 		$this->load->language('product/manufacturer');
 
 		$this->load->model('catalog/manufacturer');
@@ -433,5 +436,36 @@ class ControllerProductManufacturer extends Controller {
 
 			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
+		*/
+		$this->load->language('information/information');
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_error'),
+			'href' => $this->url->link('information/information', 'information_id=1')
+		);
+
+		$this->document->setTitle($this->language->get('text_error'));
+
+		$data['heading_title'] = $this->language->get('text_error');
+
+		$data['text_error'] = $this->language->get('text_error');
+
+		$data['button_continue'] = $this->language->get('button_continue');
+
+		$data['continue'] = $this->url->link('common/home');
+
+		$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
+
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+
+		$this->response->setOutput($this->load->view('error/not_found', $data));
+
+		$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . '/1.1 404 Not Found');
+		$this->response->setOutput($this->load->view('error/not_found', $data));
+
 	}
 }

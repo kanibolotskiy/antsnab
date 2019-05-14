@@ -19,7 +19,7 @@ class ControllerInformationInformation extends Controller {
 		}
 		
 		$information_info = $this->model_catalog_information->getInformation($information_id);
-		if ($information_info) {
+		if (($information_info) and ($information_id!=15) and ($information_id!=17))  {
 
 			if ($information_info['meta_title']) {
 				$this->document->setTitle($information_info['meta_title']);
