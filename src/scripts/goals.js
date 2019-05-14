@@ -15,6 +15,13 @@ $(document).ready(function(){
         }
     });
 
+    $(".with_goal").click(function(){
+        var goal=$(this).attr("goal");
+        if(goal!=""){
+            console.log(goal);
+            ym(14496178, 'reachGoal', goal);
+        }
+    });
     $(".resp-tabs-list li").click(function(){
         var goal_data=$(this).attr("goal_data");
         if (typeof ym != 'undefined') {

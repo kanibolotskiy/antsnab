@@ -2,7 +2,7 @@
 class ModelCatalogBenefits extends Model {
 	public function addBenefit($data) {
 	
-		$this->db->query("INSERT INTO dopinfo_benefits SET name = '" . $this->db->escape($data['name']) . "',description='" . $this->db->escape($data['benefit_description']) . "', sort_order = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO dopinfo_benefits SET name = '" . $this->db->escape($data['name']) . "', goal='" . $this->db->escape($data['goal']) . "', description='" . $this->db->escape($data['benefit_description']) . "', sort_order = '" . (int)$data['sort_order'] . "'");
 		$benefit_id = $this->db->getLastId();
 
 		$this->cache->delete('benefit');
@@ -12,7 +12,7 @@ class ModelCatalogBenefits extends Model {
 
 	public function editBenefit($benefit_id, $data) {
 		
-		$this->db->query("UPDATE dopinfo_benefits SET name = '" . $this->db->escape($data['name']) . "', description='" . $this->db->escape($data['benefit_description']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE benefit_id = '" . (int)$benefit_id . "'");
+		$this->db->query("UPDATE dopinfo_benefits SET name = '" . $this->db->escape($data['name']) . "', goal='" . $this->db->escape($data['goal']) . "', description='" . $this->db->escape($data['benefit_description']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE benefit_id = '" . (int)$benefit_id . "'");
 		
 		$this->cache->delete('benefit');
 		

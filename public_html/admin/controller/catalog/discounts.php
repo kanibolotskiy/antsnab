@@ -276,33 +276,12 @@ class ControllerCatalogDiscounts extends Controller {
             
 
             $data['text_form'] = $this->language->get('text_edit_discounts');
-            /*
-            $data['text_enabled'] = $this->language->get('text_enabled');
-            $data['text_disabled'] = $this->language->get('text_disabled');
-            $data['text_default'] = $this->language->get('text_default');
-            $data['text_percent'] = $this->language->get('text_percent');
-            $data['text_amount'] = $this->language->get('text_amount');
-    
-            $data['entry_name'] = $this->language->get('entry_name');
-            $data['entry_description'] = $this->language->get('entry_description');
-            $data['entry_meta_title'] = $this->language->get('entry_meta_title');
-            $data['entry_meta_h1'] = $this->language->get('entry_meta_h1');
-            $data['entry_meta_description'] = $this->language->get('entry_meta_description');
-            $data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
-            $data['entry_keyword'] = $this->language->get('entry_keyword');
-            $data['entry_store'] = $this->language->get('entry_store');
-            $data['entry_keyword'] = $this->language->get('entry_keyword');
-            $data['entry_image'] = $this->language->get('entry_image');
-            $data['entry_sort_order'] = $this->language->get('entry_sort_order');
-            $data['entry_customer_group'] = $this->language->get('entry_customer_group');
-    
-            $data['help_keyword'] = $this->language->get('help_keyword');
-    */
-    
                 
 
             $data['entry_name'] = $this->language->get('entry_name_discounts');
-            $data['entry_description'] = $this->language->get('entry_description');
+			$data['entry_description'] = $this->language->get('entry_description');
+			$data['entry_goal'] = $this->language->get('entry_goal');
+
             $data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
             
@@ -321,14 +300,8 @@ class ControllerCatalogDiscounts extends Controller {
             } else {
                 $data['error_name'] = '';
             }
-            /*
-            if (isset($this->error['keyword'])) {
-                $data['error_keyword'] = $this->error['keyword'];
-            } else {
-                $data['error_keyword'] = '';
-            }
-            */
-            
+			
+			
             $url = '';
     
             if (isset($this->request->get['sort'])) {
@@ -369,76 +342,18 @@ class ControllerCatalogDiscounts extends Controller {
             }
             if(isset($discount_info)){
                 $data['discount']=$discount_info['name'];
-                $data['discount_description']=$discount_info['description'];
+				$data['discount_description']=$discount_info['description'];
+				$data['goal']=$discount_info['goal'];
+
             }else{
                 $data['discount']='';
-                $data['discount_description']='';
+                $data['goal']='';
             }
-
-            //print_r($discount_info);
-
-           
 
             $data['token'] = $this->session->data['token'];
             $data['ckeditor'] = $this->config->get('config_editor_default');
     
-            //print_r($data);
-            /*
-            $this->load->model('localisation/language');
-    
-            $data['languages'] = $this->model_localisation_language->getLanguages();
-    
-            $data['lang'] = $this->language->get('lang');
-    
-            if (isset($this->request->post['manufacturer_description'])) {
-                $data['manufacturer_description'] = $this->request->post['manufacturer_description'];
-            } elseif (isset($this->request->get['manufacturer_id'])) {
-                $data['manufacturer_description'] = $this->model_catalog_manufacturer->getManufacturerDescriptions($this->request->get['manufacturer_id']);
-            } else {
-                $data['manufacturer_description'] = array();
-            }
-    
-            $this->load->model('setting/store');
-    
-            $data['stores'] = $this->model_setting_store->getStores();
-    
-            if (isset($this->request->post['manufacturer_store'])) {
-                $data['manufacturer_store'] = $this->request->post['manufacturer_store'];
-            } elseif (isset($this->request->get['manufacturer_id'])) {
-                $data['manufacturer_store'] = $this->model_catalog_manufacturer->getManufacturerStores($this->request->get['manufacturer_id']);
-            } else {
-                $data['manufacturer_store'] = array(0);
-            }
-    
-            if (isset($this->request->post['keyword'])) {
-                $data['keyword'] = $this->request->post['keyword'];
-            } elseif (!empty($manufacturer_info)) {
-                $data['keyword'] = $manufacturer_info['keyword'];
-            } else {
-                $data['keyword'] = '';
-            }
-    
-            if (isset($this->request->post['image'])) {
-                $data['image'] = $this->request->post['image'];
-            } elseif (!empty($manufacturer_info)) {
-                $data['image'] = $manufacturer_info['image'];
-            } else {
-                $data['image'] = '';
-            }
-    
-            $this->load->model('tool/image');
-    
-            if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
-                $data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
-            } elseif (!empty($manufacturer_info) && is_file(DIR_IMAGE . $manufacturer_info['image'])) {
-                $data['thumb'] = $this->model_tool_image->resize($manufacturer_info['image'], 100, 100);
-            } else {
-                $data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-            }
-    
-            $data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-     */
-
+            
             if (isset($this->request->post['sort_order'])) {
                 $data['sort_order'] = $this->request->post['sort_order'];
             } elseif (!empty($discount_info)) {
@@ -471,18 +386,6 @@ class ControllerCatalogDiscounts extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-        /**Здесь добавить проверку, где уже использовались преимущества */
-        /*
-		$this->load->model('catalog/product');
-
-		foreach ($this->request->post['selected'] as $manufacturer_id) {
-			$product_total = $this->model_catalog_product->getTotalProductsByManufacturerId($manufacturer_id);
-
-			if ($product_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);
-			}
-		}
-*/
 		return !$this->error;
 	}
     public function autocomplete() {

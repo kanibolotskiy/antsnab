@@ -55,6 +55,8 @@ $_['entry_price']               = 'Цена, от';
 $_['entry_caption']             = 'Заголовок';
 $_['entry_description']         = 'Описание';
 
+$_['entry_goal']                = 'Цель';
+
 
 $_['entry_sort_order']          = 'Порядок сортировки';
 

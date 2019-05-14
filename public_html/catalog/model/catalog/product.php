@@ -594,7 +594,7 @@ class ModelCatalogProduct extends Model {
 		}
 	}
 	public function getProductBenefits($product_id) {
-		$query = $this->db->query("SELECT dbp.product_id,db.benefit_id,db.name,db.description FROM `dopinfo_benefits_to_product` dbp left join dopinfo_benefits db ON dbp.benefit_id=db.benefit_id WHERE dbp.product_id=" . (int)$product_id ." order by sort_order");
+		$query = $this->db->query("SELECT dbp.product_id,db.benefit_id,db.name,db.description,db.goal FROM `dopinfo_benefits_to_product` dbp left join dopinfo_benefits db ON dbp.benefit_id=db.benefit_id WHERE dbp.product_id=" . (int)$product_id ." order by sort_order");
 		$benefits_product=$query->rows;
 		
 		if(count($benefits_product)){
@@ -603,7 +603,7 @@ class ModelCatalogProduct extends Model {
 			$query_cat = $this->db->query("SELECT category_id from " . DB_PREFIX . "product_to_category where main_category=1 AND product_id=" . (int)$product_id." LIMIT 1");
 			$cat_id=$query_cat->row["category_id"];
 			
-			$query = $this->db->query("SELECT dbp.product_id,db.benefit_id,db.name,db.description FROM `dopinfo_benefits_to_product` dbp left join dopinfo_benefits db ON dbp.benefit_id=db.benefit_id WHERE dbp.product_id=" . (int)$cat_id ." order by sort_order");
+			$query = $this->db->query("SELECT dbp.product_id,db.benefit_id,db.name,db.description,db.goal FROM `dopinfo_benefits_to_product` dbp left join dopinfo_benefits db ON dbp.benefit_id=db.benefit_id WHERE dbp.product_id=" . (int)$cat_id ." order by sort_order");
 
 			return $query->rows;
 		}

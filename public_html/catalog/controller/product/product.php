@@ -713,7 +713,8 @@ class ControllerProductProduct extends Controller {
 			foreach($benefits_array as $benefit){
 				$data['benefits'][]=Array(
 					"name"=>$benefit['name'],
-					"description"=>html_entity_decode($benefit['description'])
+					"description"=>html_entity_decode($benefit['description']),
+					"goal"=>$benefit['goal']
 				);
 			}
 			
@@ -725,6 +726,7 @@ class ControllerProductProduct extends Controller {
 					$discountData=$this->model_catalog_product->getDiscountData($show_discount_form);
 					$data['discount_caption']=$discountData['name'];
 					$data['discount_text']=html_entity_decode($discountData['description']);
+					$data['discount_goal']=$discountData['goal'];
 				}
 			}else{
 				$data['discount_form']=0;

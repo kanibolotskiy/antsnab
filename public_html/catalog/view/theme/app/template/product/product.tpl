@@ -192,7 +192,7 @@
                                         </div>
                                         <?php if($discount_form){?>
                                         <div class="price_disc">
-                                            <div class="js_modal" data-modal="modal_discount">Получить скидку</div>
+                                            <div class="js_modal with_goal" goal="<?php echo $discount_goal;?>" data-modal="modal_discount">Получить скидку</div>
                                         </div>
                                         <?php }?>
                                     </div>
@@ -266,9 +266,9 @@
                                             <div class="state_stock_cap">Наличие на складе:</div>
                                             <div class="state_stock_val">
                                             <?php if($quantity_stock>0){?>
-                                                <span class="stock1">Алтуфьево</span>
+                                                <span class="stock1 with_goal" goal="test_goal">Алтуфьево</span>
                                             <?php }else{ ?>
-                                                <span class="notinstock js_modal" data-modal="modal_delivery">Под заказ</span>
+                                                <span class="notinstock js_modal with_goal" goal="test_goal" data-modal="modal_delivery">Под заказ</span>
                                             <?php }?>
                                             </div>
                                         </div>
@@ -277,11 +277,11 @@
                                     <div class="state_stock_col">
                                         <div class="state_stock_col_info  _delivery">
                                             <div class="state_stock_cap">Доставка:</div>
-                                            <div class="state_stock_val js_modal" data-modal="modal_delivery_cost" id="delivery_text"></div>
+                                            <div class="state_stock_val js_modal with_goal" goal="test_goal" data-modal="modal_delivery_cost" id="delivery_text"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="state_stock_link js_modal" data-modal="modal_delivery_pay">Способы оплаты и получения товара</div>
+                                <div class="state_stock_link js_modal with_goal" goal="test_goal" data-modal="modal_delivery_pay">Способы оплаты и получения товара</div>
                             </div>
 
                             <!--
@@ -311,7 +311,7 @@
                 <?php if($benefits) {?>
                     <div class="benefits">
                         <?php foreach($benefits as $benefit){ ?>
-                            <div class="bene_item">
+                            <div class="bene_item with_goal" goal="<?php echo $benefit['goal'];?>">
                                 <div class="bene_item_ico"></div>
                                 <div class="bene_item_val"><?php echo $benefit['name'];?></div>
                                 <div class="bene_item_desc"><?php echo $benefit['description'];?></div>
