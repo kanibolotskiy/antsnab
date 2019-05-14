@@ -18895,6 +18895,7 @@ function getDelivery(){
 function refresh_veiew_cart(json){
     
     if(json["success"]){
+        
         var total=json["total"];
         $("#total_cart").css({"opacity":0});
         $("#total_cart").text(total);
@@ -18926,6 +18927,7 @@ function refresh_veiew_cart(json){
     }
 }
 function refresh_cart(){
+    console.log("total");
     var data=$("#cart_form").serialize();
     $.ajax({
         url: '/index.php?route=checkout/cart/ajaxRefresh/',
@@ -19258,9 +19260,11 @@ $(document).ready(function(){
                     
 
                     if(itm.hasClass("cart_button_buy")){
+                        console.log(json);
                         var total=json["total"];
                         $("#total_cart").css({"opacity":0});
                         $("#total_cart").text(total);
+                        
                         $("#total_cart").animate({"opacity":1},100);
                         
                         var new_product=json["added_product"];

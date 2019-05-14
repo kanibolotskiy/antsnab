@@ -130,9 +130,11 @@ $(document).ready(function(){
                     
 
                     if(itm.hasClass("cart_button_buy")){
+                        console.log(json);
                         var total=json["total"];
                         $("#total_cart").css({"opacity":0});
                         $("#total_cart").text(total);
+                        
                         $("#total_cart").animate({"opacity":1},100);
                         
                         var new_product=json["added_product"];
