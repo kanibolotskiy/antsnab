@@ -19494,11 +19494,14 @@ function initAccordion() {
             ym(14496178, 'reachGoal', 'add-to-card');
         }
     });
+    /*
     $(".btn-request-call").click(function(){
         if (typeof ym != 'undefined') {
+            console.log("ok");
             ym(14496178, 'reachGoal', 'callme');
         };
     });
+    */
     $(".cart_button_buy").click(function(){
         if (typeof ym != 'undefined') {
             ym(14496178, 'reachGoal', 'related-products');

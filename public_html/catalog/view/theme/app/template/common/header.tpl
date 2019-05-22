@@ -128,7 +128,7 @@
                         <span class="prehead_val"><?= $worktime ?></span>
                     </div>
                     <div class="preheader_divider _second"></div>
-                    <a href="#" class="js-call" rel="nofollow">
+                    <a href="#" class="js-call with_goal" rel="nofollow" goal="callme">
                         <div class="prehead_call">
                             <span class="prehead_val order_call">Заказать звонок</span>
                         </div>
