@@ -920,58 +920,8 @@ class CartController extends \ControllerCheckoutCart
                     );
                 }
 
-                //$data["products_analog"]=$results_analog;
+                
             }
-            
-            //related products
-            /*
-            $this->load->model('catalog/product');
-            
-			foreach ($results as $result) {
-				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
-				} else {
-					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
-				}
-
-				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				} else {
-					$price = false;
-				}
-
-				if ((float)$result['special']) {
-					$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				} else {
-					$special = false;
-				}
-
-				if ($this->config->get('config_tax')) {
-					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price'], $this->session->data['currency']);
-				} else {
-					$tax = false;
-				}
-
-				if ($this->config->get('config_review_status')) {
-					$rating = (int)$result['rating'];
-				} else {
-					$rating = false;
-				}
-
-				$data['products'][] = array(
-					'product_id'  => $result['product_id'],
-					'thumb'       => $image,
-					'name'        => $result['name'],
-					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
-					'price'       => $price,
-					'special'     => $special,
-					'tax'         => $tax,
-					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
-					'rating'      => $rating,
-					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
-				);
-			}*/
-            
 
             $this->response->setOutput($this->load->view('checkout/cart', $data));
         } else {
@@ -1251,6 +1201,7 @@ class CartController extends \ControllerCheckoutCart
         }
         $data['success']=true;
         $data['total'] = $this->currency->format($orderSumTotal, $this->session->data['currency']);
+        
         $this->response->setOutput(json_encode($data));
     }
 
@@ -1259,6 +1210,7 @@ class CartController extends \ControllerCheckoutCart
         $order_data = array();
 
         //TOTALS
+        
         $totals = array();
         $taxes = $this->cart->getTaxes();
         $total = 0;
@@ -1270,12 +1222,13 @@ class CartController extends \ControllerCheckoutCart
             'total' => &$total
         );
 
+        
         $this->load->model('extension/extension');
 
         $sort_order = array();
 
         $results = $this->model_extension_extension->getExtensions('total');
-
+        //print_r($results);
         foreach ($results as $key => $value) {
             $sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
         }
@@ -1298,8 +1251,14 @@ class CartController extends \ControllerCheckoutCart
         }
 
         array_multisort($sort_order, SORT_ASC, $totals);
-
+        //print_r($totals);
         $order_data['totals'] = $totals;
+
+        /**Перерасчет опт */
+        $totals[1]['value']=100;
+        $totals[2]['value']=100;
+
+//print_r($totals);
 
         $order_data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
         $order_data['store_id'] = $this->config->get('config_store_id');
@@ -1395,6 +1354,26 @@ class CartController extends \ControllerCheckoutCart
                 );
             }
             
+            $produnitsGateway = new ProdUnits($this->registry);
+            $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
+            $prodUnits = $produnitsGateway->getUnitsByProduct($product['product_id']);
+            $priceUnit = null;
+            foreach ($prodUnits as $unit_id => $unit) {
+                if ($unit['isPriceBase'] == 1 && !$priceUnit) {
+                    $priceUnit = $unit;
+                    //коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
+                    $saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($product['product_id'], 'isSaleBase', $unit_id);
+                } elseif ($unit['isPriceBase'] == 1) {
+                    throw new \Exception('Too many price bases for product ' . $product['product_id']);
+                }
+            }
+            if (!$priceUnit) {
+                throw new \Exception('Price base wasnt found for product ' . $product['product_id']);
+            }
+
+            $wholesale_threshold_in_saleUnits = Fraction::fromFloat((float)$product['wholesale_threshold']); 
+            $wholesale_threshold = $wholesale_threshold_in_saleUnits->multiply($saleToPriceKoef)->toFloat(); 
+
             $order_data['products'][] = array(
                 'product_id' => $product['product_id'],
                 'name' => $product['name'],
@@ -1404,18 +1383,28 @@ class CartController extends \ControllerCheckoutCart
                 'quantity' => $product['quantity'],
                 'subtract' => $product['subtract'],
                 'price' => $product['price'],
+
+                'price_wholesale' => $product['price_wholesale'],
+                'wholesale_threshold'=>$wholesale_threshold,
+                /*
                 'price_wholesale' => $product['price_wholesale'],
                 'wholesale_threshold' => $product['wholesale_threshold'],
+                */
                 'total' => $product['total'],
                 'tax' => $this->tax->getTax($product['price'], $product['tax_class_id']),
                 'reward' => $product['reward']
             );
         }
+        /**Замена стандартного подсчета общего кол-ва */
+        /*$order_data['total']=Array("title"=>"Предварительная стоимость ",666,);
+        $order_data['total']=555;
+        $order_data['total']=-111;
+        */
 
         $order_data['vouchers'] = array();
 
         $order_data['comment'] = '';
-        $order_data['total'] = $total_data['total'];
+        //$order_data['total'] = $total_data['total'];
 
         $order_data['affiliate_id'] = 0;
         $order_data['commission'] = 0;
@@ -1483,8 +1472,12 @@ class CartController extends \ControllerCheckoutCart
             $order_data['accept_language'] = '';
         }
 
+        $order_data['pre_total']=666;
+        $order_data['total']=555;
+        $order_data['total_opt']=-111;
+
         $order_data['fax'] = '';
-        
+        //print_r($order_data);
         return $order_data;
     }
 
