@@ -86,6 +86,10 @@ class ModelCatalogProduct extends Model
             $discount = (float) $data['discount'];
         }
         
+        $consumption=0;
+        if (!empty($data['consumption'])) {
+            $consumption = (float) $data['consumption'];
+        }
 
         $price_wholesale = 0.0000;
         if (!empty($data['price_wholesale'])) {
@@ -108,10 +112,11 @@ class ModelCatalogProduct extends Model
         }
 
 
-        $sql = "update " . DB_PREFIX . "product set disseo = :disseo, discount = :discount, price_wholesale = :price_wholesale, wholesale_threshold=:wholesale_threshold, produnit_template_id=:produnit_template_id where product_id = :id";
+        $sql = "update " . DB_PREFIX . "product set consumption = :consumption, disseo = :disseo, discount = :discount, price_wholesale = :price_wholesale, wholesale_threshold=:wholesale_threshold, produnit_template_id=:produnit_template_id where product_id = :id";
         $res = $this->db->query($sql, [
             ':discount' => $discount,
             ':disseo' => $disseo,
+            ':consumption' => $consumption,
             ':price_wholesale' => $price_wholesale,
             ':wholesale_threshold' => $wholesale_threshold,
             ':produnit_template_id' => $produnit_template_id,

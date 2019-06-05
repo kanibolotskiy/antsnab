@@ -18816,6 +18816,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /***/ }),
 
 /***/ "./src/scripts/cart.js":
@@ -18927,7 +18928,6 @@ function refresh_veiew_cart(json){
     }
 }
 function refresh_cart(){
-    console.log("total");
     var data=$("#cart_form").serialize();
     $.ajax({
         url: '/index.php?route=checkout/cart/ajaxRefresh/',
@@ -19209,117 +19209,139 @@ $('body').delegate('#lazy-load_container','onLazyLoaded', function(e, $items){
     initBuyButtons($items.find('.buy'));
 });
 
+/*-----------------------------------------------------*/
+function add_to_cart(product_id, count_add, show_added){
+    $.ajax({
+        url:  '/index.php?route=checkout/cart/add',
+        type: 'post',
+        data: {
+            quantity: count_add,
+            product_id: product_id, 
+            show_added:show_added
+        },
+        dataType: 'json',
+        beforeSend: function() {
+            $('#cart_preloader').fadeIn(200);
+        },
+        complete: function() {
+            $('#cart_preloader').fadeOut(200);
+        },
+        success: function(json) {
+            if (json['success']) {
+                var product = [{
+                    "id": json['metrika_product_id'],
+                    "name": json['metrika_product_name'],
+                    "price": json['metrika_product_price'],
+                    "brand": json['metrika_product_manufacturer'],
+                    "category": json['metrika_product_category'],
+                    "quantity": json['metrika_product_quantity']
+                }];
+                dataLayer.push({"ecommerce": {"add": {"products": product}}});
+                
+
+                $('.basket').html(json['total_str']);
+                
+
+                //if(itm.hasClass("cart_button_buy")){
+                if(show_added){
+                    var total=json["total"];
+                    $("#total_cart").css({"opacity":0});
+                    $("#total_cart").text(total);
+                    
+                    $("#total_cart").animate({"opacity":1},100);
+                    
+                    var new_product=json["added_product"];
+                    var added_key=json["added_key"];
+
+                    var f_itm=$('[data-el_name="quantity['+added_key+']"]')
+                    if(f_itm.length){
+                        f_itm.closest(".basket-row").html(json["added_product"]);
+                    }else{
+                        $(".basket-block").append(json["added_product"]);
+                    }
+                    
+                    if( $('.qnt-container-cart').length > 0) {
+                        $('.qnt-container-cart.without_input').each(function(index){
+                            var $el = $(this),
+                                /** Имя единицы измерения в которой ведем учет и офрмляем заказ (priceUnit) */
+                                $priceUnitName = {
+                                    'ui_name': $el.attr('data-ui_name'),
+                                    'ui_name_plural': $el.attr('data-ui_name_plural'),
+                                    'ui_name_genitive': $el.attr('data-ui_name_genitive')
+                                },
+                                /** Коэффициент перевода из кратных единиц продажи (в которых продаем) в единицы учета */
+                                /** Необходимо здесь, тк плагин работает поверх кратных единиц продажи */
+                                $priceUnitKoef = $el.attr('data-sale_to_price_koef'),
+                                $priceUnitQuantity = $el.attr('data-price_quantity'),
+                                $inputName = $el.attr('data-el_name');
+                    
+                            _lib_quantity_es6_js__WEBPACK_IMPORTED_MODULE_0__["Quantity"].init($el, {
+                                'sale_to_ui_koef': $priceUnitKoef,
+                                'ui_names': $priceUnitName,
+                                'el_name': $inputName
+                            });
+                    
+                            var qntController = $el.data('quantity');
+                            qntController.setQuantityInUiUnits($priceUnitQuantity);
+                            $el.removeClass("without_input");
+                        });
+                    }
+                }
+
+                new Noty({
+                    text: json['success']+"<div class='notify_cart'><a href='card/'>Перейти в корзину</a></div>",
+                    type: 'warning',
+                    theme: 'relax',
+                    timeout: 3000, 
+                }).show();
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+}
+/*-----------------------------------------------------*/
 
 $(document).ready(function(){
+    /**Добавление товара из калькулятора #1 */
+    $("#add_calcdata_tocart1").click(function(){
+        /**Рассчитываемый товар */
+        add_to_cart($("#product_id").val(), $("#calc_out1").attr("data-count"), 1)
+
+        /**Праймер */
+        add_to_cart(770, $("#calc_out2").attr("data-count"), 1)
+    });
+    $("#add_calcdata_tocart2").click(function(){
+        /**Рассчитываемый товар */
+        add_to_cart($("#product_id").val(), $("#calc_out1").attr("data-count"), 1)
+    });
+    
+
     $(document).on('click','.buy',function(e){
         
         e.preventDefault();
         var show_added=0;
         var itm=$(this);
         if(itm.hasClass("cart_button_buy")){
-            show_added="show_added=1";
-        }
-
+            //show_added="show_added=1";
+            show_added=1;
+        }     
         
         var $container = $(this).parents('.quantity-buy'),
             qntController = $container.find('.qnt-widget').data('quantity'), 
             quantityInSaleUnits = qntController.getQuantityInSaleUnits(), 
             toPriceQuantityKoef = new Fraction( $(this).attr('data-sale_to_price_koef') ), 
             quantityInPriceUnits = toPriceQuantityKoef.mul(quantityInSaleUnits); 
-    
-        $.ajax({
-            url:  '/index.php?route=checkout/cart/add',
-            type: 'post',
-            data: {
-                quantity: quantityInPriceUnits.valueOf(),
-                product_id: $(this).attr('data-product_id'), 
-                show_added:show_added
-            },
-            dataType: 'json',
-            beforeSend: function() {
-                $('#cart_preloader').fadeIn(200);
-            },
-            complete: function() {
-                $('#cart_preloader').fadeOut(200);
-            },
-            success: function(json) {
-                if (json['success']) {
-                    var product = [{
-                        "id": json['metrika_product_id'],
-                        "name": json['metrika_product_name'],
-                        "price": json['metrika_product_price'],
-                        "brand": json['metrika_product_manufacturer'],
-                        "category": json['metrika_product_category'],
-                        "quantity": json['metrika_product_quantity']
-                    }];
-                    dataLayer.push({"ecommerce": {"add": {"products": product}}});
-                    
+        
+        
+        var product_id=$(this).attr('data-product_id');
+        var count_add=quantityInPriceUnits.valueOf();
 
-                    $('.basket').html(json['total_str']);
-                    
+        
+        add_to_cart(product_id, count_add,show_added);
 
-                    if(itm.hasClass("cart_button_buy")){
-                        var total=json["total"];
-                        $("#total_cart").css({"opacity":0});
-                        $("#total_cart").text(total);
-                        
-                        $("#total_cart").animate({"opacity":1},100);
-                        
-                        var new_product=json["added_product"];
-                        var added_key=json["added_key"];
-
-                        var f_itm=$('[data-el_name="quantity['+added_key+']"]')
-                        if(f_itm.length){
-                            f_itm.closest(".basket-row").html(json["added_product"]);
-                        }else{
-                            $(".basket-block").append(json["added_product"]);
-                        }
-                        //console.log();
-                        //data-el_name="quantity[132]"
-
-                        //new_product.
-                        
-                        
-                        if( $('.qnt-container-cart').length > 0) {
-                            $('.qnt-container-cart.without_input').each(function(index){
-                                var $el = $(this),
-                                    /** Имя единицы измерения в которой ведем учет и офрмляем заказ (priceUnit) */
-                                    $priceUnitName = {
-                                        'ui_name': $el.attr('data-ui_name'),
-                                        'ui_name_plural': $el.attr('data-ui_name_plural'),
-                                        'ui_name_genitive': $el.attr('data-ui_name_genitive')
-                                    },
-                                    /** Коэффициент перевода из кратных единиц продажи (в которых продаем) в единицы учета */
-                                    /** Необходимо здесь, тк плагин работает поверх кратных единиц продажи */
-                                    $priceUnitKoef = $el.attr('data-sale_to_price_koef'),
-                                    $priceUnitQuantity = $el.attr('data-price_quantity'),
-                                    $inputName = $el.attr('data-el_name');
-                        
-                                _lib_quantity_es6_js__WEBPACK_IMPORTED_MODULE_0__["Quantity"].init($el, {
-                                    'sale_to_ui_koef': $priceUnitKoef,
-                                    'ui_names': $priceUnitName,
-                                    'el_name': $inputName
-                                });
-                        
-                                var qntController = $el.data('quantity');
-                                qntController.setQuantityInUiUnits($priceUnitQuantity);
-                                $el.removeClass("without_input");
-                            });
-                        }
-                    }
-
-                    new Noty({
-                        text: json['success']+"<div class='notify_cart'><a href='card/'>Перейти в корзину</a></div>",
-                        type: 'warning',
-                        theme: 'relax',
-                        timeout: 3000, 
-                    }).show();
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
+        
     });
 });
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js-exposed")))
@@ -22048,8 +22070,16 @@ function getPlural(number, one, two) {///1,ведра,вёдер
             return two;
         }
     }
-    
-  }
+}
+/*Склонение по падежам*/
+function declOfNum(number, titles)
+{
+    var cases = [2, 0, 1, 1, 1, 2];
+    return titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];
+}
+function getFloat(itm_val){
+    return parseFloat(itm_val.replace(/,/, '.'));
+}
 function number_format(number, decimals, dec_point, thousands_sep) {
     number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
     var n = !isFinite(+number) ? 0 : +number,
@@ -22242,6 +22272,46 @@ $('#button-review').formSubmit({
     error: function(data){},
 });
 
+/**Грузоподъемность */
+$("#courier_select").on('change', function () {
+    var max_weight=$(this).val();
+    var weight=$("#priceSwitcher").attr("data-base_weight");
+
+    var unitpack1_count=Math.floor(max_weight/weight);
+
+    
+
+    var unitpack1=$(".unitpack1");
+    var unitpack2=$(".unitpack2");
+    
+    //console.log($(this).val());
+    if($(this).val()>0){
+        $(".wrap_table_data").fadeIn();
+    }else{
+        $(".wrap_table_data").fadeOut();
+    }
+    if(unitpack1.length){
+        if(unitpack1_count>0){            
+            var unitpack1_str=declOfNum(unitpack1_count, [unitpack1.attr("data-ui_name"),unitpack1.attr("data-ui_name_genitive"),unitpack1.attr("data-ui_name_plural")]);
+            $("#unitpack1_str").html(number_format(unitpack1_count,0,"."," ") + " "+unitpack1_str);
+        }else{
+            $("#unitpack1_str").html("-");
+        }
+    }
+    if(unitpack2.length){
+        if(unitpack1_count>0){
+            var unitpack2_count=Math.ceil(unitpack1_count*unitpack2.attr("data-nom")/unitpack2.attr("data-denom"));
+            //var unitpack2_count=Math.ceil(unitpack1_count*weight);
+            var unitpack2_str=declOfNum(unitpack2_count, [unitpack2.attr("data-ui_name"),unitpack2.attr("data-ui_name_genitive"),unitpack2.attr("data-ui_name_plural")]);
+            $("#unitpack2_str").html(number_format(unitpack2_count,0,"."," ") +" "+unitpack2_str);
+        }else{
+            $("#unitpack2_str").html("-");
+        }
+    }    
+
+});
+
+
 $('#file').on('change', function () {
     var filename = this.files[0].name;
     $('#filename').html(filename);
@@ -22301,6 +22371,70 @@ $("#discount_form input[type='submit']").click(function(e){
     }
 
 });
+$("#input_calc_1").on('keypress',function(e) {
+    if(e.which == 13) {
+        $("#button_calc_1").trigger('click');
+    }
+});
+$("#input_calc_2").on('keypress',function(e) {
+    if(e.which == 13) {
+        $("#button_calc_2").trigger('click');
+    }
+});
+$("#button_calc_1").click(function(){
+    var data_calc1=getFloat($("#calculator").attr("data-consumption"));
+    var data_calc2=getFloat($("#input_calc_1").val());
+    var data_calc3=getFloat($("#priceSwitcher").attr("data-base_weight"));
+
+
+    var total_consumption=data_calc1*data_calc2;
+    if(total_consumption>0){
+        
+        var unitpack1=$(".unitpack1");
+        var count_itm1=Math.ceil(total_consumption/data_calc3);
+        var unitpack1_str=declOfNum(count_itm1, [unitpack1.attr("data-ui_name"),unitpack1.attr("data-ui_name_genitive"),unitpack1.attr("data-ui_name_plural")]);
+
+        $("#calc_out1").html(number_format(count_itm1,0,"."," ")+" "+unitpack1_str);
+        $("#calc_out1").attr("data-count",count_itm1);
+
+        /**Расчет праймера */
+        var count_itm2=Math.ceil(data_calc2*0.5/data_calc3);
+        var unitpack2_str=declOfNum(count_itm2, ["ведро","ведра","вёдер"]);
+        $("#calc_out2").html(number_format(count_itm2,0,"."," ")+" "+unitpack2_str);
+        $("#calc_out2").attr("data-count",count_itm2);
+        $("#input_area").html(data_calc2+"м<sup>2</sup>");
+        $(".wrap_table_data").fadeIn(200);
+    }else{
+        $("#calc_out1").html("-");
+        $("#calc_out1").attr("data-count",0);
+
+        $("#calc_out2").html("-");
+        $("#calc_out2").attr("data-count",0);
+        $(".wrap_table_data").fadeOut(200);
+    }
+});
+
+$("#button_calc_2").click(function(){
+    var data_calc1=getFloat($("#calculator").attr("data-consumption"));
+    var data_calc2=getFloat($("#input_calc_1").val());
+    var data_calc3=getFloat($("#priceSwitcher").attr("data-base_weight"));
+
+    var total_consumption=data_calc1*data_calc2;
+    if(total_consumption>0){
+        var unitpack1=$(".unitpack1");
+        var count_itm1=Math.ceil(total_consumption/data_calc3);
+        var unitpack1_str=declOfNum(count_itm1, [unitpack1.attr("data-ui_name"),unitpack1.attr("data-ui_name_genitive"),unitpack1.attr("data-ui_name_plural")]);
+        $("#calc_out1").html(number_format(count_itm1,0,"."," ")+" "+unitpack1_str);
+        $("#calc_out1").attr("data-count",count_itm1);
+        $("#input_area").html(data_calc2+"м<sup>2</sup>");
+        $(".wrap_table_data").fadeIn(200);
+    }else{
+        $("#calc_out1").html("-");
+        $("#calc_out1").attr("data-count",0);
+        $(".wrap_table_data").fadeOut(200);
+    }
+})
+
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js-exposed")))
 

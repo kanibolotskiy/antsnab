@@ -86,9 +86,8 @@ $_['entry_related']          	= 'Сопутствующие товары:';
 $_['entry_analog']          	= 'Аналоги:';
 $_['entry_benefits']          	= 'Преимущества:';
 $_['entry_mincount']          	= 'Минимальное кол-во для покупки:';
-$_['entry_discount']          	= 'Текст скидки:';
- 
-
+$_['entry_discount']            = 'Скидка:';
+$_['entry_consumption']         = 'Расход на м2:';
 
 
 $_['entry_tag']          		= 'Теги товара:';
@@ -128,6 +127,8 @@ $_['error_keyword']             = 'ВНИМАНИЕ: SEO keyword уже испо
 $_['tab_prodproperties'] = 'Свойства продукта';
 $_['tab_tabs'] = 'Вкладки';
 $_['tab_prices'] = 'Цены';
+$_['tab_calcs'] = 'Калькулятор';
+
 
 //ProdProperties
 $_['property_helptext'] = 'Если поле "значение" оставить незаполненным - будет использоватья значение по умолчанию.<br/>'

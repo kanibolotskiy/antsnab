@@ -1251,14 +1251,8 @@ class CartController extends \ControllerCheckoutCart
         }
 
         array_multisort($sort_order, SORT_ASC, $totals);
-        //print_r($totals);
-        $order_data['totals'] = $totals;
 
-        /**Перерасчет опт */
-        $totals[1]['value']=100;
-        $totals[2]['value']=100;
 
-//print_r($totals);
 
         $order_data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
         $order_data['store_id'] = $this->config->get('config_store_id');
@@ -1292,7 +1286,7 @@ class CartController extends \ControllerCheckoutCart
             $order_data['customer_group_id'] = 0;
             $order_data['firstname'] = $this->request->post['name'];
             $order_data['lastname'] = $this->request->post['name'];
-            $order_data['email'] = $this->request->post['email'];
+            $order_data['email'] = trim($this->request->post['email']);
             $order_data['telephone'] = $this->request->post['phone'];
             $order_data['custom_field'] = [];
         }
@@ -1338,7 +1332,7 @@ class CartController extends \ControllerCheckoutCart
         }
 
         $order_data['products'] = array();
-
+        $orderSumTotal=0;
         foreach ($this->cart->getProducts() as $product) {
             $option_data = array();
 
@@ -1353,6 +1347,12 @@ class CartController extends \ControllerCheckoutCart
                     'type' => $option['type']
                 );
             }
+            
+            $saleUnit_price = (float)$this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
+            $price = $this->currency->format($saleUnit_price, $this->session->data['currency']);
+
+            $saleUnit_price_wholesale = (float)$this->tax->calculate($product['price_wholesale'], $product['tax_class_id'], $this->config->get('config_tax'));
+            $price_wholesale = $this->currency->format($saleUnit_price_wholesale, $this->session->data['currency']);
             
             $produnitsGateway = new ProdUnits($this->registry);
             $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
@@ -1370,9 +1370,25 @@ class CartController extends \ControllerCheckoutCart
             if (!$priceUnit) {
                 throw new \Exception('Price base wasnt found for product ' . $product['product_id']);
             }
-
+            
             $wholesale_threshold_in_saleUnits = Fraction::fromFloat((float)$product['wholesale_threshold']); 
             $wholesale_threshold = $wholesale_threshold_in_saleUnits->multiply($saleToPriceKoef)->toFloat(); 
+
+            $prodQuantity =(float)$product['quantity'];
+            if ($prodQuantity >= $wholesale_threshold) {
+                $rowTotal = $saleUnit_price_wholesale * $prodQuantity; 
+                $isWholesale = true;
+                $total = $this->currency->format($rowTotal, $this->session->data['currency']);
+            } else {
+                $rowTotal = $saleUnit_price * $prodQuantity; 
+                $isWholesale = false;
+                $total = $this->currency->format($rowTotal, $this->session->data['currency']);
+            }
+            $orderSumTotal += $rowTotal;
+
+            
+
+            
 
             $order_data['products'][] = array(
                 'product_id' => $product['product_id'],
@@ -1396,10 +1412,10 @@ class CartController extends \ControllerCheckoutCart
             );
         }
         /**Замена стандартного подсчета общего кол-ва */
-        /*$order_data['total']=Array("title"=>"Предварительная стоимость ",666,);
-        $order_data['total']=555;
-        $order_data['total']=-111;
-        */
+        /**Перерасчет опт */
+        $totals[1]['value']=$orderSumTotal;
+        $totals[2]['value']=$totals[1]['value']-$totals[0]['value'];
+        $order_data['totals'] = $totals;
 
         $order_data['vouchers'] = array();
 
@@ -1471,13 +1487,8 @@ class CartController extends \ControllerCheckoutCart
         } else {
             $order_data['accept_language'] = '';
         }
-
-        $order_data['pre_total']=666;
-        $order_data['total']=555;
-        $order_data['total_opt']=-111;
-
+    
         $order_data['fax'] = '';
-        //print_r($order_data);
         return $order_data;
     }
 

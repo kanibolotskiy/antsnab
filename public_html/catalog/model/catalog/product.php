@@ -72,7 +72,8 @@ class ModelCatalogProduct extends Model {
 				'date_added'       => $query->row['date_added'],
 				'date_modified'    => $query->row['date_modified'],
 				'viewed'           => $query->row['viewed'],
-				'mincount'         => $query->row['mincount']
+				'mincount'         => $query->row['mincount'],
+				'consumption'	   => $query->row['consumption']
 			);
 		} else {
 			return false;
@@ -617,7 +618,9 @@ class ModelCatalogProduct extends Model {
 			$delivery_weights[$result['weight']]=Array(
 				$result['price'],
 				($result['caption']?$result['caption']:$result['name']),
-				$result['description']
+				$result['description'],
+				$result['weight']
+
 			);
 		}
 		
@@ -753,14 +756,16 @@ class ModelCatalogProduct extends Model {
 		$data["caption"]=$this->language->get('text_caption');
 		$subject=$this->language->get('text_subject');
 		
+		/*
 		$data["data_content"][]=array("Имя клиента",$data_post['name']);
 		$data["data_content"][]=array("Организация",$data_post['company']);
 		$data["data_content"][]=array("Телефон",$data_post['phone']);
 		$data["data_content"][]=array("Email",$data_post['email']);
 		$data["data_content"][]=array("Сайт",$data_post['site']);
 		$data["data_content"][]=array("Дата события",date("d.m.Y H:i"));
+		*/
+		$data_post['time']=date("d.m.Y H:i");
 		
-
 		$mail = new Mail();
 		$mail->protocol = $this->config->get('config_mail_protocol');
 		$mail->parameter = $this->config->get('config_mail_parameter');
@@ -787,12 +792,15 @@ class ModelCatalogProduct extends Model {
 			}
 			
 		}
-		$message = $this->load->view('extension/call_report', $data);
+		//$message = $this->load->view('extension/call_report', $data);
+		$message = $this->load->view('extension/call_report_txt', $data_post);
+
 
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 		$mail->setSubject($subject);
-		$mail->setHTML($message);
+		//$mail->setHTML($message);
+		$mail->setText($message);
 
 		$mail->send();
 		unlink($uploadfile);

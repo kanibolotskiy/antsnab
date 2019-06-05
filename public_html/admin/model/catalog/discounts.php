@@ -2,7 +2,7 @@
 class ModelCatalogDiscounts extends Model {
 	public function addDiscount($data) {
 	
-		$this->db->query("INSERT INTO dopinfo_discounts SET name = '" . $this->db->escape($data['name']) . "', description='" . $this->db->escape($data['discount_description']) . "', goal='" . $this->db->escape($data['goal']) . "', sort_order = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO dopinfo_discounts SET name = '" . $this->db->escape($data['name']) . "', description='" . $this->db->escape($data['discount_description']) . "', goal='" . $this->db->escape($data['goal']) . "', label='" . $this->db->escape($data['label']) . "', sort_order = '" . (int)$data['sort_order'] . "'");
 		$discount_id = $this->db->getLastId();
 
 		$this->cache->delete('discount');
@@ -12,7 +12,7 @@ class ModelCatalogDiscounts extends Model {
 
 	public function editDiscount($discount_id, $data) {
 		
-		$this->db->query("UPDATE dopinfo_discounts SET name = '" . $this->db->escape($data['name']) . "', description='" . $this->db->escape($data['discount_description']) . "', goal='" . $this->db->escape($data['goal']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE discount_id = '" . (int)$discount_id . "'");
+		$this->db->query("UPDATE dopinfo_discounts SET name = '" . $this->db->escape($data['name']) . "', description='" . $this->db->escape($data['discount_description']) . "', goal='" . $this->db->escape($data['goal']) . "', label='" . $this->db->escape($data['label']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE discount_id = '" . (int)$discount_id . "'");
 		
 		$this->cache->delete('discount');
 		

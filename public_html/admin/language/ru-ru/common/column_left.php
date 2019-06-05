@@ -109,4 +109,5 @@ $_['text_benefits']              		    = 'Преимущества';
 $_['text_courier']              		    = 'Курьеры';
 $_['text_docs']              		        = 'Документы';
 $_['text_discount']              		    = 'Скидки';
+$_['text_calcs']                  		    = 'Калькуляторы';
 

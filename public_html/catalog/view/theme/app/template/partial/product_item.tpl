@@ -29,6 +29,7 @@
                         data-ui_name="<?=$p['ui_unit_name']?>"
                         data-ui_name_plural="<?=$p['ui_unit_name_plural']?>"
                         data-ui_name_genitive="<?=$p['ui_unit_name_genitive']?>"
+                        
                         <?php if($p['ui_unit_force_step_by_one'] == 1):?>
                         data-ui_minimum="1"
                         data-ui_step= 1"

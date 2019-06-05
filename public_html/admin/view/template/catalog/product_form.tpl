@@ -33,6 +33,8 @@
                         <li><a href="#tab-prodproperties" data-toggle="tab"><?php echo $tab_prodproperties; ?></a></li>
                         <li><a href="#tab-tabs" data-toggle="tab"><?php echo $tab_tabs; ?></a></li>
                         <li><a href="#tab-prices" data-toggle="tab"><?php echo $tab_prices; ?></a></li>
+                        <li><a href="#tab-calcs" data-toggle="tab"><?php echo $tab_calcs; ?></a></li>
+
                         <li style="display:none"><a href="#tab-attribute" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
                         <li style="display:none"><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
                         <li style="display:none"><a href="#tab-recurring" data-toggle="tab"><?php echo $tab_recurring; ?></a></li>
@@ -428,6 +430,16 @@
                                             <?php } ?>
                                         <?php } ?>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane" id="tab-calcs">
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-consumption"><?php echo $entry_consumption; ?></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="consumption" value="<?php echo $consumption; ?>" placeholder="<?php echo $entry_consumption; ?>" id="input-consumption" class="form-control" />
                                 </div>
                             </div>
                         </div>

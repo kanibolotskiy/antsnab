@@ -738,6 +738,7 @@ class ControllerProductProduct extends Controller {
 					$data['discount_caption']=$discountData['name'];
 					$data['discount_text']=html_entity_decode($discountData['description']);
 					$data['discount_goal']=$discountData['goal'];
+					$data['discount_label']=$discountData['label'];
 				}
 			}else{
 				$data['discount_form']=0;
@@ -756,6 +757,19 @@ class ControllerProductProduct extends Controller {
 
 
 			$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
+
+			/**Калькулятор */
+			//print_r($product_info);
+			$data['calculator']="";
+			if($category_info['calc']){
+				//consumption 
+				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/app/template/calculators/calc_'.$category_info['calc'].'.tpl')) {
+					//$data['']=;
+					
+					$data['consumption']=$product_info['consumption'];
+					$data['calculator']=$this->load->view('calculators/calc_'.$category_info['calc'], $data);
+				}
+			}
 
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
 
@@ -1001,13 +1015,7 @@ class ControllerProductProduct extends Controller {
 	}
 	public function sendOptForm(){
 		$this->load->model('catalog/product');
-		/*
-		$data['name']=$this->request->post['name'];
-		$data['company']=$this->request->post['company'];
-		$data['phone']=$this->request->post['phone'];
-		$data['email']=$this->request->post['email'];
-		$data['site']=$this->request->post['site'];
-		*/
+		
 		if(trim($this->request->post['workemail']=="")){
 			$this->model_catalog_product->sendMailOpt($this->request->post);
 		}

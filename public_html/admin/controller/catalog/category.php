@@ -336,6 +336,7 @@ class ControllerCatalogCategory extends Controller {
 
 		$data['entry_notshowisseo'] = $this->language->get('entry_notshowisseo');
 		$data['entry_benefits'] = $this->language->get('entry_benefits');
+		$data['entry_calc'] = $this->language->get('entry_calc');
 
 		$data['entry_bottom_text'] = $this->language->get('entry_bottom_text');
 		
@@ -522,6 +523,21 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['discount'] = 0;
 		}
+
+		//Калькулятор
+	
+		$this->load->model('catalog/calcs');
+	
+		$data['calcs'] = $this->model_catalog_calcs->getCalcs();
+		
+		if (isset($this->request->post['calc'])) {
+			$data['calc'] = $this->request->post['calc'];
+		} elseif (!empty($category_info)) {
+			$data['calc'] = $category_info['calc'];
+		} else {
+			$data['calc'] = 0;
+		}
+	
 
 		$this->load->model('catalog/product');
 		if (isset($this->request->post['product_benefit'])) {

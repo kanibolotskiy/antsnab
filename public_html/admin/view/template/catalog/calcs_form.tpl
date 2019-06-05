@@ -24,12 +24,11 @@
                 <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_form; ?></h3>
             </div>
             <div class="panel-body">
-                <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-discount
-                " class="form-horizontal">
+                <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-calc" class="form-horizontal">
                     <div class="form-group required">
-                        <label class="col-sm-2 control-label" for="input-discount"><?php echo $entry_name; ?></label>
+                        <label class="col-sm-2 control-label" for="input-calc"><?php echo $entry_name; ?></label>
                         <div class="col-sm-10">
-                            <input type="text" name="name" value="<?php echo $discount; ?>" placeholder="<?php echo $entry_name; ?>" id="input-discount" class="form-control" />
+                            <input type="text" name="name" value="<?php echo $calc_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-calc" class="form-control" />
                             <?php if ($error_name) { ?>
                                 <div class="text-danger"><?php echo $error_name; ?></div>
                             <?php } ?>
@@ -39,24 +38,9 @@
                     <div class="form-group">
                       <label class="col-sm-2 control-label" for="input-description"><?php echo $entry_description; ?></label>
                       <div class="col-sm-10">
-                        <textarea name="discount_description" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control summernote"><?php echo isset($discount_description) ? $discount_description : ''; ?></textarea>
+                        <textarea name="calc_description" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control summernote"><?php echo isset($calc_description) ? $calc_description : ''; ?></textarea>
                       </div>
                     </div>
-                    
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label" for="input-goal"><?php echo $entry_goal; ?></label>
-                      <div class="col-sm-10">
-                        <input type="text" name="goal" value="<?php echo $goal; ?>" placeholder="<?php echo $entry_goal; ?>" id="input-goal" class="form-control" />
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label" for="input-label"><?php echo $entry_label; ?></label>
-                      <div class="col-sm-10">
-                        <input type="text" name="label" value="<?php echo $label; ?>" placeholder="<?php echo $entry_label; ?>" id="input-label" class="form-control" />
-                      </div>
-                    </div>
-
                     
                     <div class="form-group">
                       <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>

@@ -264,7 +264,23 @@
                       </div>
                   </div>
               </div>
-              
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-calc"><?php echo $entry_calc; ?></label>
+                <div class="col-sm-10">
+                    <select id="input-calc" name="calc" class="form-control">
+                        <option value="0" selected="selected"><?php echo $text_none; ?></option>
+                        <?php foreach ($calcs as $calc_itm) { ?>
+                            <?php if ($calc_itm['calc_id'] == $calc) { ?>
+                                <option value="<?php echo $calc_itm['calc_id']; ?>" selected="selected"><?php echo $calc_itm['name']; ?></option>
+                            <?php } else { ?>
+                                <option value="<?php echo $calc_itm['calc_id']; ?>"><?php echo $calc_itm['name']; ?></option>
+                            <?php } ?>
+                        <?php } ?>
+                    </select>
+                </div>
+              </div>
+
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-keyword"><span data-toggle="tooltip" title="<?php echo $help_keyword; ?>"><?php echo $entry_keyword; ?></span></label>
                 <div class="col-sm-10">

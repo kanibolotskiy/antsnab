@@ -3513,56 +3513,56 @@ button.show-more{
 }
 .calculator-block{
     border: 1px solid #EAE7E4;
-    padding: 20px 20px 0 20px;
-    margin-bottom: 30px;
-    form{
-        display: flex;
-        flex-wrap: wrap;
-        input[type="text"] {
-            display: block;
-            border: 1px solid #E8E5E2;
-            height: 48px;
-            width: 138px;
-            padding: 0 15px 0 15px;
-            background-color: transparent;
-            color: #666666;
-            font-size: 13px;
-            font-family: 'Open Sans AS', sans-serif;
-            margin-bottom: 20px;
-            margin-right: 10px;
-        }
-        span{
-            display: block;
-            color: #666666;
-            font-size: 13px;
-            margin-right: 45px;
-            margin-bottom: 20px;
-            line-height: 48px;
-            sup{
-                vertical-align: super;
-            }
-        }
-        input[type="submit"] {
-            display: block;
-            text-decoration: none;
-            cursor: pointer;
-            color: #ffffff;
-            font-weight: bold;
-            font-size: 14px;
-            width: 140px;
-            margin: 0 0 20px 0;
-            height: 48px;
-            border: none;
-            cursor: pointer;
-            background-color: #d3a06d;
-            text-align: center;
-            @include transition;
-            &:hover{
-                @include transition;
-                background-color: #c97c2f;
-            }
+    padding: 20px;
+    /*margin-bottom: 30px;*/
+    display: flex;
+    flex-wrap: wrap;
+
+    
+    input[type="text"] {
+        display: block;
+        border: 1px solid #E8E5E2;
+        height: 34px;
+        width: 138px;
+        padding: 0 15px 0 15px;
+        background-color: transparent;
+        color: #666666;
+        font-size: 13px;
+        font-family: 'Open Sans AS', sans-serif;
+        margin-right: 10px;
+    }
+    span{
+        display: block;
+        color: #000000;
+        font-size:14px;
+        margin-right: 45px;
+        line-height: 34px;
+        position:relative;
+        sup{
+            position:absolute;top:-5px;
+            vertical-align: super;
         }
     }
+    input[type="submit"] {
+        display: block;
+        text-decoration: none;
+        cursor: pointer;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 14px;
+        width: 140px;
+        height: 34px;
+        border: none;
+        cursor: pointer;
+        background-color: #d3a06d;
+        text-align: center;
+        @include transition;
+        &:hover{
+            @include transition;
+            background-color: #c97c2f;
+        }
+    }
+
 }
 a.print{
     display: block;
@@ -5365,7 +5365,61 @@ background-position:left center;background-repeat:no-repeat;
 .modal_form_row .error{display:none;    margin-bottom: 5px;}
 .modal_form_row.error .error{display:block;}
 .wrp_modal_thsnk{display:none;}
-.modal_text table{    table-layout: fixed;}
+.modal_text table{table-layout: fixed;}
+.wrap_table_data{overflow:auto;max-width:100%;}
+
+table.table_data{padding-right:1px;width:100%;}
+
+table.table_data td{color: #000000;
+    /* padding: 17px; */
+    text-align: center;
+    line-height: 28px;
+    vertical-align: middle;
+    /*border: 1px solid #E8E5E2;*/
+    border: 2px solid #999;
+
+    width:50%;
+    padding:10px 15px;
+    line-height: 18px;
+}
+table.table_data._calc_table_data td{width:initial;}
+
+table.table_data th{
+text-align: center;
+font-weight: bold;
+line-height: 28px;
+border:2px solid transparent;
+border-bottom: 2px solid #999;
+}
+table.table_data td._left{text-align:left;}
+table.table_data td a{color:#598ba6;}
+.wrap_table_data{display:none;margin-top:20px;}
+.button_calc{
+    padding-left: 15px;
+    padding-right: 15px;
+    display: inline-block;
+
+    text-decoration: none;
+    cursor: pointer;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 13px;
+    /*width: 108px;*/
+    height: 35px;
+    line-height: 35px;
+    background-color: #d3a06d;
+    text-align: center;
+    -webkit-transition: 0.4s;
+    -moz-transition: 0.4s;
+    -ms-transition: 0.4s;
+    -o-transition: 0.4s;
+    transition: 0.4s;}
+.button_calc:hover{
+    background-color: #c97c2f;
+}
+.to_cart_from_calc{float:right;margin-top:20px;}
+.calc_footer{margin-top:20px;position:relative;overflow:hidden;}
+.input_area{font-weight: bold;}
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{
         width: 100%;

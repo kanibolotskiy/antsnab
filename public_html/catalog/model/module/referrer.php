@@ -9,7 +9,7 @@ class ModelModuleReferrer extends Model {
             $referrer_id=$this->checkReferrer();
         }    
         if($referrer_id){
-            $sql="SELECT DISTINCT phone, email from " . DB_PREFIX . "referrer_patterns where pattern_id='".$referrer_id."'";
+            $sql="SELECT DISTINCT * from " . DB_PREFIX . "referrer_patterns where pattern_id='".$referrer_id."'";
             $query=$this->db->query($sql);
             $data=$query->row;
         }

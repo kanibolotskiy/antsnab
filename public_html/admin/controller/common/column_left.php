@@ -183,6 +183,16 @@ class ControllerCommonColumnLeft extends Controller {
 				);					
 			}
 
+			//Калькуляторы
+			if ($this->user->hasPermission('access', 'catalog/calcs')) {		
+				
+				$dopinfo_arr[] = array(
+					'name'	   => $this->language->get('text_calcs'),
+					'href'     => $this->url->link('catalog/calcs', 'token=' . $this->session->data['token'], true),
+					'children' => array()		
+				);					
+			}
+
 			if ($dopinfo_arr) {
 				$catalog[] = array(
 					'name'	   => $this->language->get('text_dopinfo'),

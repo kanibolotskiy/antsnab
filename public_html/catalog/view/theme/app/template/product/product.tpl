@@ -381,7 +381,9 @@
                             
                             <div class="modal_form">
                                 <form id="discount_form" action="#" method="post" enctype="multipart/form-data">
-                                
+                                <input name="label" type="text" placeholder="" value="<?php echo $discount_label;?>"/>
+                                <input name="product" type="text" placeholder="" value="<?php echo $heading_title;?>"/>
+
                                 <div class="modal_form_row">
                                     <i class="error">Необходимо заполнить</i>
                                     <input class="required" name="name" type="text" placeholder="Ваше имя"/>
@@ -485,7 +487,10 @@
                         <li goal_data="card-video">Видео</li>
                     <?php }?>
                     <li goal_data="card-pack">Упаковка</li>
-                    <li goal_data="card-calc">Калькулятор</li>
+                    
+                    <?php if($calculator){ ?>
+                        <li goal_data="card-calc">Калькулятор</li>
+                    <?php }?>
                     
                     <?php $i=0; foreach($tabs as $t){ ?>
                     <li goal_data="tabdat_<?php echo $i;?>"><?=$t['name']?></li>
@@ -563,125 +568,50 @@
                                 </table>
                             </div>
                             
-                            <?php /* @task  Нормы загрузки
-                            <div class="title">Нормы загрузки</div>
+                        </div>
+
+                        <?php if(isset($pUnits[2])) {?>
+                            <h2>Нормы загрузки в автотранспорт</h2>
+                            <div class="content-text">
+                                <p>Чтобы рассчитать какое количество материала можно безболезненно загрузить, выберите тип автомобиля.</p>
+                            </div>
+                            
+
                             <div class="tipe">
-                                <span>Выберите тип автомобиля:</span>
-                                <select id="seldef5" title="Каблучок (600 кг)">
-                                    <option>Газель (1,5 тонны)</option>
-                                    <option>Бычок (3 тонны)</option>
-                                    <option>Камаз (10 тонн)</option>
+                                <!--<span>Выберите тип автомобиля:</span>-->
+                                <select class="nice-select" id="courier_select">
+                                    <option value="0" selected>Выберите тип автомобиля...</option>
+
+                                    <?php foreach($couriers as $courier){ if ($baseWeight<=$courier['weight']){?>
+                                        <option value="<?php echo $courier['weight']?>"><?php echo $courier['name']?></option>
+                                    <?php }}?>
+                                    
                                 </select>
                             </div>
-                            <div class="table2">
-                                <table>
-                                    <tbody><tr class="text-row">
-                                            <th rowspan="2">Продукт</th>
-                                            <th colspan="2" class="car-norm car-norm-2576" style="display: table-cell;">
-                                                Загрузка в Каблучок (600 кг)
-                                            </th>
-                                            <th colspan="2" class="car-norm car-norm-2577" style="display: none;">
-                                                Загрузка в Газель (1,5 тонны)
-                                            </th>
-                                            <th colspan="2" class="car-norm car-norm-2578" style="display: none;">
-                                                Загрузка в Бычок (3 тонны)
-                                            </th>
-                                            <th colspan="2" class="car-norm car-norm-2579" style="display: none;">
-                                                Загрузка в ЗИЛ (5 тонн)
-                                            </th>
-                                            <th colspan="2" class="car-norm car-norm-2580" style="display: none;">
-                                                Загрузка в Камаз (10 тонн)
-                                            </th>
-                                            <th colspan="2" class="car-norm car-norm-2581" style="display: none;">
-                                                Загрузка в Камаз (20 тонн)
-                                            </th>
-                                        </tr>
-                                        <tr class="two-col">
-                                            <th>м<sup>2</sup></th>
-                                            <th>рулонов</th>
-                                        </tr>
-                                        <tr class="text-row">
-                                            <td class="w50p">Эластоизол Премиум ЭКП-5,0</td>
-                                            <td class="car-norm car-norm-2576 w25p" style="display: table-cell;">120</td>
-                                            <td class="car-norm car-norm-2576 w25p" style="display: table-cell;">12</td>
-                                            <td class="car-norm car-norm-2577 w25p" style="display: none;">300</td>
-                                            <td class="car-norm car-norm-2577 w25p" style="display: none;">30</td>
-                                            <td class="car-norm car-norm-2578 w25p" style="display: none;">600</td>
-                                            <td class="car-norm car-norm-2578 w25p" style="display: none;">60</td>
-                                            <td class="car-norm car-norm-2579 w25p" style="display: none;">1 000</td>
-                                            <td class="car-norm car-norm-2579 w25p" style="display: none;">100</td>
-                                            <td class="car-norm car-norm-2580 w25p" style="display: none;">2 000</td>
-                                            <td class="car-norm car-norm-2580 w25p" style="display: none;">200</td>
-                                            <td class="car-norm car-norm-2581 w25p" style="display: none;">4 000</td>
-                                            <td class="car-norm car-norm-2581 w25p" style="display: none;">400</td>
-                                        </tr>
-                                    </tbody></table>
+                            
+                            <div class="wrap_table_data">
+                            <table class="table_data">
+                                <thead>
+                                    <tr><th><?= $pUnits[1]['showName']?></th><th><?= $pUnits[2]['showName']?></th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="unitpack1_str">-</td>
+                                        <td id="unitpack2_str">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                             </div>
-                            */?> 
-
-                        </div>
+                            <div class="content-text">
+                                <p>Нормы загрузки материалов приведены справочно. Для точного расчета обращайтесь к <a target="_blank" title="Контакты" href="contacts/">нашим сотрудникам</a></p>
+                            </div>
+                        <?php }?>
                     </div>
-
+                    
                     <!-- TAB калькулятор -->
-                    <div>
-                        <div class="calculator">
-                            <?php /*<div class="title">Калькулятор загрузки</div>*/?>
-                            <p>В разработке</p>
-
-                            <?php /* @task калькулятор
-                            <p>Чтобы узнать сколько материала Эластоизол Премиум ЭКП-5,0 вам понадобится введите площадь изолируемой поверхности в квадратных метрах:</p>
-                            <div class="calculator-block">
-                                <form action="">
-                                    <input type="text" value="Площадь">
-                                    <span>м <sup>2</sup></span>
-                                    <input type="submit" value="Рассчитать">
-                                </form>
-                            </div>
-                            <p>Расчет необходимого количества материала Эластоизол Премиум ЭКП-5,0 на площадь 1 м2:</p>
-                            <div class="table">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <td>Показатель</td>
-                                            <td>Значение</td>
-                                            <td>Ед. измерения</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody><tr>
-                                            <td>Теплостойкость в течение 3 ч., не менее</td>
-                                            <td>30</td>
-                                            <td>°С</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Прочность сцепления с бетоном</td>
-                                            <td>0,15 (1,5)</td>
-                                            <td>Мпа (кгс/см²)</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Гибкость на стержне диаметром 10 мм. при температуре</td>
-                                            <td>-20</td>
-                                            <td>°С</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Содержание пылевидного наполнителя</td>
-                                            <td>0</td>
-                                            <td>% по массе</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Температурный диапазон применения</td>
-                                            <td>от +5 до +40</td>
-                                            <td>°С</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <p>В таблице представлен расчет для устройства однослойного гидроизоляционного или кровельного покрытия.
-                                Приведенные значения являются справочными, для более точного расчета необходимого количества материала и стоимости доставки обращайтесь к нашим сотрудникам.</p>
-                            <a href="" class="print">Распечатать</a>
-                            */?>
-                        </div>
-                    </div>
-                
+                    
+                    <?php if($calculator){echo $calculator;}?>
+                    
                     <!-- TAB кастомные -->
                     <?php foreach($tabs as $t): ?>
                     <div>

@@ -691,7 +691,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_video'] = $this->language->get('entry_video');
 		$data['entry_showdiscount'] = $this->language->get('entry_showdiscount');
 		$data['entry_discount'] = $this->language->get('entry_discount');
-		
+		$data['entry_consumption'] = $this->language->get('entry_consumption');
 
 
 		$data['help_keyword'] = $this->language->get('help_keyword');
@@ -737,6 +737,9 @@ class ControllerCatalogProduct extends Controller {
 		$data['tab_reward'] = $this->language->get('tab_reward');
 		$data['tab_design'] = $this->language->get('tab_design');
 		$data['tab_openbay'] = $this->language->get('tab_openbay');
+
+		$data['tab_calcs'] = $this->language->get('tab_calcs');
+		
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -1003,6 +1006,15 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['mincount'] = '';
 		}
+
+		if (isset($this->request->post['consumption'])) {
+			$data['consumption'] = $this->request->post['consumption'];
+		} elseif (!empty($product_info)) {
+			$data['consumption'] = $product_info['consumption'];
+		} else {
+			$data['consumption'] = '';
+		}
+		
 
 		$this->load->model('catalog/recurring');
 

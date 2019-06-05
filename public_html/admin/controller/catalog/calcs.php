@@ -1,13 +1,13 @@
 <?php
-class ControllerCatalogDiscounts extends Controller {
+class ControllerCatalogCalcs extends Controller {
 	private $error = array();
 
 	public function index() {
         $this->load->language('catalog/dopinfo');
 
-		$this->document->setTitle($this->language->get('heading_title_discounts'));
+		$this->document->setTitle($this->language->get('heading_title_calcs'));
 
-		$this->load->model('catalog/discounts');
+		$this->load->model('catalog/calcs');
 		$this->getList();
 	}
     protected function getList() {
@@ -51,14 +51,14 @@ class ControllerCatalogDiscounts extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title_discounts'),
-			'href' => $this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . $url, true)
+			'text' => $this->language->get('heading_title_calcs'),
+			'href' => $this->url->link('catalog/calcs', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['add'] = $this->url->link('catalog/discounts/add', 'token=' . $this->session->data['token'] . $url, true);
-		$data['delete'] = $this->url->link('catalog/discounts/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['add'] = $this->url->link('catalog/calcs/add', 'token=' . $this->session->data['token'] . $url, true);
+		$data['delete'] = $this->url->link('catalog/calcs/delete', 'token=' . $this->session->data['token'] . $url, true);
 
-		$data['discounts'] = array();
+		$data['calcs'] = array();
 
 		$filter_data = array(
 			'sort'  => $sort,
@@ -67,29 +67,30 @@ class ControllerCatalogDiscounts extends Controller {
 			'limit' => $this->config->get('config_limit_admin')
 		);
 
-        $discounts_total=10;
+        $calcs_total=10;
 
-		$discounts_total = $this->model_catalog_discounts->getTotalDiscounts();
+		$calcs_total = $this->model_catalog_calcs->getTotalCalcs();
 
-		$results = $this->model_catalog_discounts->getDiscounts($filter_data);
+		
+		$results = $this->model_catalog_calcs->getCalcs($filter_data);
 
 		foreach ($results as $result) {
-			$data['discounts'][] = array(
-				'discount_id' => $result['discount_id'],
+			$data['calcs'][] = array(
+				'calc_id' => $result['calc_id'],
 				'name'            => $result['name'],
 				'sort_order'      => $result['sort_order'],
-				'edit'            => $this->url->link('catalog/discounts/edit', 'token=' . $this->session->data['token'] . '&discount_id=' . $result['discount_id'] . $url, true)
+				'edit'            => $this->url->link('catalog/calcs/edit', 'token=' . $this->session->data['token'] . '&calc_id=' . $result['calc_id'] . $url, true)
 			);
 		}
-    
+    	
 
-		$data['heading_title'] = $this->language->get('heading_title_discounts');
+		$data['heading_title'] = $this->language->get('heading_title_calcs');
 
-		$data['text_list'] = $this->language->get('text_list_discounts');
+		$data['text_list'] = $this->language->get('text_list_calcs');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
-		$data['column_name'] = $this->language->get('column_name_discounts');
+		$data['column_name'] = $this->language->get('column_name_calcs');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
 
@@ -129,8 +130,8 @@ class ControllerCatalogDiscounts extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
-		$data['sort_sort_order'] = $this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . '&sort=sort_order' . $url, true);
+		$data['sort_name'] = $this->url->link('catalog/calcs', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
+		$data['sort_sort_order'] = $this->url->link('catalog/calcs', 'token=' . $this->session->data['token'] . '&sort=sort_order' . $url, true);
 
 		$url = '';
 
@@ -143,14 +144,14 @@ class ControllerCatalogDiscounts extends Controller {
 		}
 
 		$pagination = new Pagination();
-		$pagination->total = $discounts_total;
+		$pagination->total = $calcs_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->link('catalog/calcs', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($discounts_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($discounts_total - $this->config->get('config_limit_admin'))) ? $discounts_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $discounts_total, ceil($discounts_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($calcs_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($calcs_total - $this->config->get('config_limit_admin'))) ? $calcs_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $calcs_total, ceil($calcs_total / $this->config->get('config_limit_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -159,18 +160,18 @@ class ControllerCatalogDiscounts extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
         
-        $this->response->setOutput($this->load->view('catalog/discounts_list', $data));
+        $this->response->setOutput($this->load->view('catalog/calcs_list', $data));
     }
     public function delete() {
 		$this->load->language('catalog/dopinfo');
 
-		$this->document->setTitle($this->language->get('heading_title_discounts'));
+		$this->document->setTitle($this->language->get('heading_title_calcs'));
 
-		$this->load->model('catalog/discounts');
+		$this->load->model('catalog/calcs');
         
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $discount_id) {
-				$this->model_catalog_discounts->deleteDiscount($discount_id);
+			foreach ($this->request->post['selected'] as $calc_id) {
+				$this->model_catalog_calcs->deleteDoc($calc_id);
 			}
             
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -189,7 +190,7 @@ class ControllerCatalogDiscounts extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-            $this->response->redirect($this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . $url, true));
+            $this->response->redirect($this->url->link('catalog/calcs', 'token=' . $this->session->data['token'] . $url, true));
             
 		}
        
@@ -199,12 +200,12 @@ class ControllerCatalogDiscounts extends Controller {
     public function add() {
 		$this->load->language('catalog/dopinfo');
 
-		$this->document->setTitle($this->language->get('heading_title_discounts'));
+		$this->document->setTitle($this->language->get('heading_title_calcs'));
 
-		$this->load->model('catalog/discounts');
+		$this->load->model('catalog/calcs');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_discounts->addDiscount($this->request->post);
+			$this->model_catalog_calcs->addDoc($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -222,7 +223,7 @@ class ControllerCatalogDiscounts extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/calcs', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -230,12 +231,12 @@ class ControllerCatalogDiscounts extends Controller {
 	public function edit() {
         $this->load->language('catalog/dopinfo');
         
-		$this->document->setTitle($this->language->get('heading_title_discounts'));
+		$this->document->setTitle($this->language->get('heading_title_calcs'));
 
-		$this->load->model('catalog/discounts');
+		$this->load->model('catalog/calcs');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_discounts->editDiscount($this->request->get['discount_id'], $this->request->post);
+			$this->model_catalog_calcs->editDoc($this->request->get['calc_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -253,7 +254,7 @@ class ControllerCatalogDiscounts extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/calcs', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -271,18 +272,15 @@ class ControllerCatalogDiscounts extends Controller {
             $this->document->addScript('view/javascript/summernote/opencart.js');
             $this->document->addStyle('view/javascript/summernote/summernote.css');
         }
-    
-            $data['heading_title'] = $this->language->get('heading_title_discounts');
+			$this->load->model('catalog/calcs');
+            $data['heading_title'] = $this->language->get('heading_title_calcs');
             
 
-            $data['text_form'] = $this->language->get('text_edit_discounts');
+            $data['text_form'] = $this->language->get('text_edit_calcs');
                 
 
-            $data['entry_name'] = $this->language->get('entry_name_discounts');
-			$data['entry_description'] = $this->language->get('entry_description');
-			$data['entry_goal'] = $this->language->get('entry_goal');
-			$data['entry_label'] = $this->language->get('entry_label');
-
+            $data['entry_name'] = $this->language->get('entry_name_calcs');
+            $data['entry_description'] = $this->language->get('entry_description');
             $data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
             
@@ -301,8 +299,14 @@ class ControllerCatalogDiscounts extends Controller {
             } else {
                 $data['error_name'] = '';
             }
-			
-			
+            /*
+            if (isset($this->error['keyword'])) {
+                $data['error_keyword'] = $this->error['keyword'];
+            } else {
+                $data['error_keyword'] = '';
+            }
+            */
+            
             $url = '';
     
             if (isset($this->request->get['sort'])) {
@@ -325,42 +329,40 @@ class ControllerCatalogDiscounts extends Controller {
             );
     
             $data['breadcrumbs'][] = array(
-                'text' => $this->language->get('heading_title_discounts'),
-                'href' => $this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . $url, true)
+                'text' => $this->language->get('heading_title_calcs'),
+                'href' => $this->url->link('catalog/calcs', 'token=' . $this->session->data['token'] . $url, true)
             );
     
-            if (!isset($this->request->get['discount_id'])) {
-                $data['action'] = $this->url->link('catalog/discounts/add', 'token=' . $this->session->data['token'] . $url, true);
+            if (!isset($this->request->get['calc_id'])) {
+                $data['action'] = $this->url->link('catalog/calcs/add', 'token=' . $this->session->data['token'] . $url, true);
             } else {
-                $data['action'] = $this->url->link('catalog/discounts/edit', 'token=' . $this->session->data['token'] . '&discount_id=' . $this->request->get['discount_id'] . $url, true);
+                $data['action'] = $this->url->link('catalog/calcs/edit', 'token=' . $this->session->data['token'] . '&calc_id=' . $this->request->get['calc_id'] . $url, true);
             }
     
-            $data['cancel'] = $this->url->link('catalog/discounts', 'token=' . $this->session->data['token'] . $url, true);
+            $data['cancel'] = $this->url->link('catalog/calcs', 'token=' . $this->session->data['token'] . $url, true);
             
             
-            if (isset($this->request->get['discount_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-                $discount_info = $this->model_catalog_discounts->getDiscount($this->request->get['discount_id']);
-            }
-            if(isset($discount_info)){
-                $data['discount']=$discount_info['name'];
-				$data['discount_description']=$discount_info['description'];
-				$data['goal']=$discount_info['goal'];
-				$data['label']=$discount_info['label'];
+            if (isset($this->request->get['calc_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+                $calc_info = $this->model_catalog_calcs->getDoc($this->request->get['calc_id']);
+			}
+			
 
+            if(isset($calc_info)){
+                $data['calc_name']=$calc_info['name'];
+                $data['calc_description']=$calc_info['description'];
             }else{
-                $data['discount']='';
-				$data['goal']='';
-				$data['label']='';
+                $data['calc_name']='';
+                $data['calc_description']='';
             }
 
             $data['token'] = $this->session->data['token'];
             $data['ckeditor'] = $this->config->get('config_editor_default');
     
-            
+
             if (isset($this->request->post['sort_order'])) {
                 $data['sort_order'] = $this->request->post['sort_order'];
-            } elseif (!empty($discount_info)) {
-                $data['sort_order'] = $discount_info['sort_order'];
+            } elseif (!empty($calc_info)) {
+                $data['sort_order'] = $calc_info['sort_order'];
             } else {
                 $data['sort_order'] = '';
             }
@@ -369,59 +371,26 @@ class ControllerCatalogDiscounts extends Controller {
             $data['header'] = $this->load->controller('common/header');
             $data['column_left'] = $this->load->controller('common/column_left');
             $data['footer'] = $this->load->controller('common/footer');
-            $this->response->setOutput($this->load->view('catalog/discounts_form', $data));
+            $this->response->setOutput($this->load->view('catalog/calcs_form', $data));
         }
 
     protected function validateForm() {
-        if (!$this->user->hasPermission('modify', 'catalog/discounts')) {
+        if (!$this->user->hasPermission('modify', 'catalog/calcs')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
         
         if ((utf8_strlen($this->request->post['name']) < 2) || (utf8_strlen($this->request->post['name']) > 64)) {
-            $this->error['name'] = $this->language->get('error_name_discounts');
+            $this->error['name'] = $this->language->get('error_name_calcs');
         }
         
         return !$this->error;
     }
     protected function validateDelete() {
-		if (!$this->user->hasPermission('modify', 'catalog/discounts')) {
+		if (!$this->user->hasPermission('modify', 'catalog/calcs')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-
 		return !$this->error;
 	}
-    public function autocomplete() {
-		$json = array();
-
-		if (isset($this->request->get['filter_name'])) {
-			$this->load->model('catalog/discounts');
-
-			$filter_data = array(
-				'filter_name' => $this->request->get['filter_name'],
-				'start'       => 0,
-				'limit'       => 5
-			);
-
-			$results = $this->model_catalog_discounts->getDiscounts($filter_data);
-
-			foreach ($results as $result) {
-				$json[] = array(
-					'discount_id' => $result['discount_id'],
-					'name'            => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
-				);
-			}
-		}
-
-		$sort_order = array();
-
-		foreach ($json as $key => $value) {
-			$sort_order[$key] = $value['name'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $json);
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
+    
 }

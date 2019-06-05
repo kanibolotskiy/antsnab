@@ -99,6 +99,7 @@ class CategoryController extends \Controller
         /* @ИСПРАВИТЬ перенести ниже после проверки наличия category_info */
         $categories_seo = $this->model_catalog_category->getCategoresSeo($category_id);
 
+
         if (!$category_info) {
             $this->showNotFound();
             return;
@@ -116,6 +117,8 @@ class CategoryController extends \Controller
             $this->showProducts($category_id);
             return;
         }
+
+        
 
         $this->showCategories($category_id);
     }

@@ -97,7 +97,6 @@ function refresh_veiew_cart(json){
     }
 }
 function refresh_cart(){
-    console.log("total");
     var data=$("#cart_form").serialize();
     $.ajax({
         url: '/index.php?route=checkout/cart/ajaxRefresh/',
