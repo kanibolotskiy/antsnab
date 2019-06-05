@@ -617,9 +617,11 @@ class ModelCatalogProduct extends Model {
 		foreach ($query->rows as $result) {
 			$delivery_weights[$result['weight']]=Array(
 				$result['price'],
-				($result['caption']?$result['caption']:$result['name']),
+				$result['caption'],
 				$result['description'],
-				$result['weight']
+				$result['weight'],
+				$result['name']
+
 
 			);
 		}

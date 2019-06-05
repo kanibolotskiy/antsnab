@@ -266,10 +266,10 @@ class ProductTemplateDecorator implements IDecorator
         /**Курьеры */
         //$data["couriers"]=$registry->get('model_file_file')->getDeliveryDocs();
         $couriers=$registry->get('model_catalog_product')->getDeliveryDocs();
-
+        
         foreach($couriers as $courier){
             if($courier[3]<99999999){
-                $data["couriers"][]=Array("name"=>$courier[1],"weight"=>$courier[3]);
+                $data["couriers"][]=Array("name"=>$courier[4],"weight"=>$courier[3]);
             }
         }
         
