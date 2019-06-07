@@ -381,8 +381,8 @@
                             
                             <div class="modal_form">
                                 <form id="discount_form" action="#" method="post" enctype="multipart/form-data">
-                                <input name="label" type="text" placeholder="" value="<?php echo $discount_label;?>"/>
-                                <input name="product" type="text" placeholder="" value="<?php echo $heading_title;?>"/>
+                                <input name="label" type="hidden" placeholder="" value="<?php echo $discount_label;?>"/>
+                                <input name="product" type="hidden" placeholder="" value="<?php echo $heading_title;?>"/>
 
                                 <div class="modal_form_row">
                                     <i class="error">Необходимо заполнить</i>

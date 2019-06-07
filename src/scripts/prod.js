@@ -247,7 +247,8 @@ $("#courier_select").on('change', function () {
     }
     if(unitpack2.length){
         if(unitpack1_count>0){
-            var unitpack2_count=Math.ceil(unitpack1_count*unitpack2.attr("data-nom")/unitpack2.attr("data-denom"));
+            console.log(unitpack1_count+"*"+unitpack2.attr("data-sale_to_ui_koef")+"/"+unitpack1.attr("data-sale_to_ui_koef"))
+            var unitpack2_count=Math.ceil(unitpack1_count*unitpack2.attr("data-sale_to_ui_koef")/unitpack1.attr("data-sale_to_ui_koef"));
             //var unitpack2_count=Math.ceil(unitpack1_count*weight);
             var unitpack2_str=declOfNum(unitpack2_count, [unitpack2.attr("data-ui_name"),unitpack2.attr("data-ui_name_genitive"),unitpack2.attr("data-ui_name_plural")]);
             $("#unitpack2_str").html(number_format(unitpack2_count,0,"."," ") +" "+unitpack2_str);
@@ -318,17 +319,7 @@ $("#discount_form input[type='submit']").click(function(e){
     }
 
 });
-$("#input_calc_1").on('keypress',function(e) {
-    if(e.which == 13) {
-        $("#button_calc_1").trigger('click');
-    }
-});
-$("#input_calc_2").on('keypress',function(e) {
-    if(e.which == 13) {
-        $("#button_calc_2").trigger('click');
-    }
-});
-$("#button_calc_1").click(function(){
+function calc1(){
     var data_calc1=getFloat($("#calculator").attr("data-consumption"));
     var data_calc2=getFloat($("#input_calc_1").val());
     var data_calc3=getFloat($("#priceSwitcher").attr("data-base_weight"));
@@ -345,7 +336,7 @@ $("#button_calc_1").click(function(){
         $("#calc_out1").attr("data-count",count_itm1);
 
         /**Расчет праймера */
-        var count_itm2=Math.ceil(data_calc2*0.5/data_calc3);
+        var count_itm2=Math.ceil(data_calc2*0.5/16);
         var unitpack2_str=declOfNum(count_itm2, ["ведро","ведра","вёдер"]);
         $("#calc_out2").html(number_format(count_itm2,0,"."," ")+" "+unitpack2_str);
         $("#calc_out2").attr("data-count",count_itm2);
@@ -359,9 +350,8 @@ $("#button_calc_1").click(function(){
         $("#calc_out2").attr("data-count",0);
         $(".wrap_table_data").fadeOut(200);
     }
-});
-
-$("#button_calc_2").click(function(){
+}
+function calc2(){
     var data_calc1=getFloat($("#calculator").attr("data-consumption"));
     var data_calc2=getFloat($("#input_calc_1").val());
     var data_calc3=getFloat($("#priceSwitcher").attr("data-base_weight"));
@@ -380,5 +370,23 @@ $("#button_calc_2").click(function(){
         $("#calc_out1").attr("data-count",0);
         $(".wrap_table_data").fadeOut(200);
     }
+}
+
+$("#input_calc_1").on('keypress',function(e) {
+    if(e.which == 13) {
+        calc1();
+    }
+});
+$("#input_calc_2").on('keypress',function(e) {
+    if(e.which == 13) {
+        calc2()
+    }
+});
+$("#button_calc_1").click(function(){
+    calc1();
+});
+
+$("#button_calc_2").click(function(){
+    calc2()
 })
 
