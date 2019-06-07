@@ -224,13 +224,13 @@ $("#courier_select").on('change', function () {
     var max_weight=$(this).val();
     var weight=$("#priceSwitcher").attr("data-base_weight");
 
-    var unitpack1_count=Math.floor(max_weight/weight);
-
     
 
     var unitpack1=$(".unitpack1");
     var unitpack2=$(".unitpack2");
     
+    var unitpack1_count=Math.floor(max_weight*unitpack1.attr("data-sale_to_ui_koef")/weight);
+
     //console.log($(this).val());
     if($(this).val()>0){
         if (typeof ym != 'undefined') {
