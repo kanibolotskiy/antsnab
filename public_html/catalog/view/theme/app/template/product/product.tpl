@@ -253,7 +253,7 @@
                                         href="#" 
                                         data-product_id="<?=$product_id?>"
                                         data-sale_to_price_koef="<?=$sale_to_price_koef?>"
-                                        class="buy add-to-card">Купить</a>
+                                        class="buy add-to-card add-to-card-product">Купить</a>
                                     </div>
 
                                 <?php endif;?>

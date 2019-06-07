@@ -1,7 +1,19 @@
 $(document).ready(function(){
+    /*
     $(".add-to-card").click(function(){
         if (typeof ym != 'undefined') {
             ym(14496178, 'reachGoal', 'add-to-card');
+        }
+    });
+    */
+    $(".add-to-card-product").click(function(){
+        if (typeof ym != 'undefined') {
+            ym(14496178, 'reachGoal', 'add-to-card');
+        }
+    });
+    $(".add-to-card-catalog").click(function(){
+        if (typeof ym != 'undefined') {
+            ym(14496178, 'reachGoal', 'add-to-card-catalog');
         }
     });
     /*
@@ -25,6 +37,8 @@ $(document).ready(function(){
             ym(14496178, 'reachGoal', goal);
         }
     });
+    
+
     $(".resp-tabs-list li").click(function(){
         var goal_data=$(this).attr("goal_data");
         if (typeof ym != 'undefined') {

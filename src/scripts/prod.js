@@ -233,6 +233,10 @@ $("#courier_select").on('change', function () {
     
     //console.log($(this).val());
     if($(this).val()>0){
+        if (typeof ym != 'undefined') {
+            ym(14496178, 'reachGoal', 'loading-rates');
+        }
+
         $(".wrap_table_data").fadeIn();
     }else{
         $(".wrap_table_data").fadeOut();
@@ -247,7 +251,6 @@ $("#courier_select").on('change', function () {
     }
     if(unitpack2.length){
         if(unitpack1_count>0){
-            console.log(unitpack1_count+"*"+unitpack2.attr("data-sale_to_ui_koef")+"/"+unitpack1.attr("data-sale_to_ui_koef"))
             var unitpack2_count=Math.ceil(unitpack1_count*unitpack2.attr("data-sale_to_ui_koef")/unitpack1.attr("data-sale_to_ui_koef"));
             //var unitpack2_count=Math.ceil(unitpack1_count*weight);
             var unitpack2_str=declOfNum(unitpack2_count, [unitpack2.attr("data-ui_name"),unitpack2.attr("data-ui_name_genitive"),unitpack2.attr("data-ui_name_plural")]);
@@ -320,6 +323,10 @@ $("#discount_form input[type='submit']").click(function(e){
 
 });
 function calc1(){
+    if (typeof ym != 'undefined') {
+        ym(14496178, 'reachGoal', 'calc-use');
+    }
+
     var data_calc1=getFloat($("#calculator").attr("data-consumption"));
     var data_calc2=getFloat($("#input_calc_1").val());
     var data_calc3=getFloat($("#priceSwitcher").attr("data-base_weight"));
@@ -352,6 +359,9 @@ function calc1(){
     }
 }
 function calc2(){
+    if (typeof ym != 'undefined') {
+        ym(14496178, 'reachGoal', 'calc-use');
+    }
     var data_calc1=getFloat($("#calculator").attr("data-consumption"));
     var data_calc2=getFloat($("#input_calc_1").val());
     var data_calc3=getFloat($("#priceSwitcher").attr("data-base_weight"));

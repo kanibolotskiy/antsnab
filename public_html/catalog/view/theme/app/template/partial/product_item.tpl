@@ -36,7 +36,7 @@
                         <?php endif; ?>
                     >
                     </div>
-                    <a href="" class="buy add-to-card"
+                    <a href="" class="buy add-to-card add-to-card-catalog"
                         data-product_id="<?=$p['product_id']?>" 
                         data-sale_to_price_koef="<?=$p['sale_to_price_koef']?>">
                         Купить

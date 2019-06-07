@@ -177,14 +177,25 @@ $(document).ready(function(){
     /**Добавление товара из калькулятора #1 */
     $("#add_calcdata_tocart1").click(function(){
         /**Рассчитываемый товар */
-        add_to_cart($("#product_id").val(), $("#calc_out1").attr("data-count"), 1)
+        add_to_cart($("#product_id").val(), $("#calc_out1").attr("data-count"), 1);
 
         /**Праймер */
-        add_to_cart(770, $("#calc_out2").attr("data-count"), 1)
+        add_to_cart(770, $("#calc_out2").attr("data-count"), 1);
+
+        /**Цель*/
+        if (typeof ym != 'undefined') {
+            ym(14496178, 'reachGoal', 'calc-cart');
+        }
+
     });
     $("#add_calcdata_tocart2").click(function(){
         /**Рассчитываемый товар */
-        add_to_cart($("#product_id").val(), $("#calc_out1").attr("data-count"), 1)
+        add_to_cart($("#product_id").val(), $("#calc_out1").attr("data-count"), 1);
+
+        /**Цель*/
+        if (typeof ym != 'undefined') {
+            ym(14496178, 'reachGoal', 'calc-cart');
+        }
     });
     
 
