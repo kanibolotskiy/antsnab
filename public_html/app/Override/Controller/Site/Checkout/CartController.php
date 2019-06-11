@@ -1399,7 +1399,6 @@ class CartController extends \ControllerCheckoutCart
                 'quantity' => $product['quantity'],
                 'subtract' => $product['subtract'],
                 'price' => $product['price'],
-
                 'price_wholesale' => $product['price_wholesale'],
                 'wholesale_threshold'=>$wholesale_threshold,
                 /*

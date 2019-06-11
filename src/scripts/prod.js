@@ -251,29 +251,9 @@ $("#courier_select").on('change', function () {
     }
     if(unitpack2.length){
         if(unitpack1_count>0){
-            //var unitpack2_count=Math.ceil(unitpack1_count*unitpack2.attr("data-sale_to_ui_koef")/unitpack1.attr("data-sale_to_ui_koef"));
-
-            //var unitpack2_count=Math.ceil(unitpack1_count*weight);
-            //console.log(unitpack1_count+"*"+unitpack2.attr("data-sale_to_ui_koef")+"/"+unitpack1.attr("data-sale_to_ui_koef"));
-            //console.log(eval(unitpack1_count+"*"+unitpack2.attr("data-sale_to_ui_koef")+"/"+unitpack1.attr("data-sale_to_ui_koef")));
-            //console.log(Math.ceil(eval(unitpack1_count+"*"+unitpack2.attr("data-sale_to_ui_koef")+"/"+unitpack1.attr("data-sale_to_ui_koef"))));
-
-            //var unitpack2_count=parseInt(Math.ceil(eval(unitpack1_count*unitpack2.attr("data-sale_to_ui_koef")/unitpack1.attr("data-sale_to_ui_koef"))));
-
-            console.log(unitpack1_count+"*"+unitpack2.attr("data-sale_to_ui_koef")+"/"+unitpack1.attr("data-sale_to_ui_koef"));
             var unitpack2_count=Math.ceil(unitpack1_count*unitpack2.attr("data-nom") / unitpack2.attr("data-denom") /unitpack1.attr("data-sale_to_ui_koef"));
-
-            //eval("var unitpack2_count="+Math.ceil(unitpack1_count*unitpack2.attr("data-sale_to_ui_koef")/unitpack1.attr("data-sale_to_ui_koef")));
-
-            //console.log("!"+unitpack2_count+"!");
-
-            //var unitpack2_count=Math.ceil(unitpack1_count*unitpack2.attr("data-nom")/unitpack2.attr("data-denom"));
-            //var unitpack2_count=eval("1/12");
-            console.log(unitpack2_count);
             var unitpack2_str=declOfNum(unitpack2_count, [unitpack2.attr("data-ui_name"),unitpack2.attr("data-ui_name_genitive"),unitpack2.attr("data-ui_name_plural")]);
             $("#unitpack2_str").html(number_format(unitpack2_count,0,"."," ") +" "+unitpack2_str);
-            
-
         }else{
             $("#unitpack2_str").html("-");
         }
