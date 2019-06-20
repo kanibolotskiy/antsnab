@@ -204,7 +204,8 @@ class ControllerCommonCart extends Controller {
             $priceUnit = null;
             foreach ($prodUnits as $unit_id => $unit) {
                 if ($unit['isPriceBase'] == 1 && !$priceUnit) {
-                    $priceUnit = $unit;
+					$priceUnit = $unit;
+					
                     //коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
                     $saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($product['product_id'], 'isSaleBase', $unit_id);
                 } elseif ($unit['isPriceBase'] == 1) {
@@ -215,6 +216,7 @@ class ControllerCommonCart extends Controller {
                 throw new \Exception('Price base wasnt found for product ' . $product['product_id']);
             }
 
+			
             $wholesale_threshold_in_saleUnits = Fraction::fromFloat((float)$product['wholesale_threshold']); 
             $wholesale_threshold = $wholesale_threshold_in_saleUnits->multiply($saleToPriceKoef)->toFloat(); 
 
@@ -263,7 +265,7 @@ class ControllerCommonCart extends Controller {
 		}else{
 			$data['total_str'] = sprintf($this->language->get('text_items_empty'), $productsCount, $productsCountStr, $this->currency->format($orderSumTotal, $this->session->data['currency']));
 		}
-
+		
 		return $this->load->view('common/cart', $data);
 	}
 

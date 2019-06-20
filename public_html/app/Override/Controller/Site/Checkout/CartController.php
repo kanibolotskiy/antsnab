@@ -218,12 +218,18 @@ class CartController extends \ControllerCheckoutCart
                     foreach ($prodUnits as $unit_id => $unit) {
                         if ($unit['isPriceBase'] == 1 && !$priceUnit) {
                             $priceUnit = $unit;
+
                             //коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
                             $saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($product['product_id'], 'isSaleBase', $unit_id);
                         } elseif ($unit['isPriceBase'] == 1) {
                             throw new \Exception('Too many price bases for product ' . $product['product_id']);
                         }
+
+                        
                     }
+
+                    
+
                     if (!$priceUnit) {
                         throw new \Exception('Price base wasnt found for product ' . $product['product_id']);
                     }
@@ -296,6 +302,7 @@ class CartController extends \ControllerCheckoutCart
                         'reward' => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
     
                         /** @added */
+
                         'price' => $price,
                         'price_wholesale' => $price_wholesale,
                         'isWholesale' => $isWholesale,
@@ -521,7 +528,7 @@ class CartController extends \ControllerCheckoutCart
             $data['products'] = array();
 
             $products = $this->cart->getProducts();
-//print_r($products);
+
             $orderSumTotal = 0;
 
             $propGateway = new ProdProperties($this->registry);
@@ -591,7 +598,57 @@ class CartController extends \ControllerCheckoutCart
                     } elseif ($unit['isPriceBase'] == 1) {
                         throw new \Exception('Too many price bases for product ' . $product['product_id']);
                     }
+                    if (0 != $unit['switchSortOrder']) {
+                        $key = (int)$unit['switchSortOrder'];
+    
+                        
+                        $saleToUIKoef = $produnitsCalcGateway->getBaseToUnitKoef($product['product_id'], 'isSaleBase', $unit_id);
+                        $array_koef = (array) $saleToUIKoef;
+                        $z=0;
+                        $koef_numerator=1;
+                        $koef_denomirator=1;
+                        foreach($array_koef as $koef_item){
+                            if($z){
+                                $koef_denomirator=$koef_item;
+                            }else{
+                                $koef_numerator=$koef_item;
+                            }
+                            $z++;
+                        }
+                        $pUnits[$key]['nom']=$koef_numerator;
+                        $pUnits[$key]['denom']=$koef_denomirator;
+    
+                        $koef_d=$koef_numerator/$koef_denomirator;
+                        if($product['quantity_in_store']>0){
+                            $pUnits[$key]['mincount']=ceil(1*$koef_d);
+                        }else{
+                            $pUnits[$key]['mincount']=ceil($product['mincount']*$koef_d);
+                        }
+    
+                    }                    
                 }
+
+                $step=1;
+        
+                
+                if (isset($pUnits[2])){
+                
+                    if (( $product['quantity_in_store']<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){
+                        $step = $pUnits[2]['denom'];
+                        
+                        if($pUnits[1]['mincount']<$pUnits[2]['denom']){
+                            $mincount = $pUnits[2]['denom'];
+                        }else{
+                            $mincount = $pUnits[1]['mincount'];
+                        }
+                    }else{
+                        $mincount = $pUnits[1]['mincount'];
+                    }
+    
+                }else{
+                    $mincount = $pUnits[1]['mincount'];
+                }
+
                 if (!$priceUnit) {
                     throw new \Exception('Price base wasnt found for product ' . $product['product_id']);
                 }
@@ -665,11 +722,7 @@ class CartController extends \ControllerCheckoutCart
                 }
                 //echo "product_id=".$product['cart_id']."|quantity=".$product['quantity']."<br/>";
                 
-                if($product['stock']){
-                    $mincount=1;
-                }else{
-                    $mincount=$product['mincount'];
-                }
+              
                 $data['products'][] = array(
                     'cart_id' => $product['cart_id'],
                     'thumb' => $image,
@@ -695,7 +748,8 @@ class CartController extends \ControllerCheckoutCart
                     'location' => html_entity_decode($product['location']),
                     'properties' => $previewProperties,
                     'href' => $this->url->link('product/product', 'product_id=' . $product['product_id']),
-                    'mincount'=>$mincount
+                    'mincount'=>$mincount,
+                    'step'=>$step
                 );
             }
 

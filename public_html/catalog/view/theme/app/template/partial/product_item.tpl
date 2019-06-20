@@ -23,6 +23,7 @@
             </div>
             <meta itemprop="priceCurrency" content="RUB">
             <div class="quantity-buy">
+    
                 <?php if(empty($p['unit_errors'])): ?>
                     <div class="qnt-container"
                         data-sale_to_ui_koef="<?=$p['sale_to_ui_koef']?>"
@@ -30,10 +31,14 @@
                         data-ui_name_plural="<?=$p['ui_unit_name_plural']?>"
                         data-ui_name_genitive="<?=$p['ui_unit_name_genitive']?>"
                         
+                        data-ui_step = "<?=$p['step']?>"
+                        data-ui_minimum = "<?=$p['mincount']?>"
+
                         <?php if($p['ui_unit_force_step_by_one'] == 1):?>
                         data-ui_minimum="1"
                         data-ui_step= 1"
                         <?php endif; ?>
+
                     >
                     </div>
                     <a href="" class="buy add-to-card add-to-card-catalog"

@@ -61,6 +61,58 @@ class ProductListHelper extends \Model
             $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
             $prodUnits = $produnitsGateway->getUnitsByProduct($result['product_id']);
 
+            //print_r($result);
+            foreach ($prodUnits as $unit_id => $unit) {
+                if (0 != $unit['switchSortOrder']) {
+                    $key = (int)$unit['switchSortOrder'];
+
+                    
+                    $saleToUIKoef = $produnitsCalcGateway->getBaseToUnitKoef($result['product_id'], 'isSaleBase', $unit_id);
+                    $array_koef = (array) $saleToUIKoef;
+                    $z=0;
+                    $koef_numerator=1;
+                    $koef_denomirator=1;
+                    foreach($array_koef as $koef_item){
+                        if($z){
+                            $koef_denomirator=$koef_item;
+                        }else{
+                            $koef_numerator=$koef_item;
+                        }
+                        $z++;
+                    }
+                    $pUnits[$key]['nom']=$koef_numerator;
+                    $pUnits[$key]['denom']=$koef_denomirator;
+
+                    $koef_d=$koef_numerator/$koef_denomirator;
+                    if($result['quantity']>0){
+                        $pUnits[$key]['mincount']=ceil(1*$koef_d);
+                    }else{
+                        $pUnits[$key]['mincount']=ceil($result['mincount']*$koef_d);
+                    }
+
+                }
+            
+            }
+            
+            $step=1;
+            if (isset($pUnits[2])){
+
+                if (( $result['quantity']<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){
+                    $step = $pUnits[2]['denom'];
+                    if($pUnits[1]['mincount']<$pUnits[2]['denom']){
+                        $mincount = $pUnits[2]['denom'];
+                    }else{
+                        $mincount = $pUnits[1]['mincount'];
+                    }
+                }else{
+                    $mincount = $pUnits[1]['mincount'];
+                }
+
+            }else{
+                $mincount = $pUnits[1]['mincount'];
+            }
+            
+
             $priceUnit = null;
             $uiUnit = null;
             $unitErrors = [];
@@ -133,6 +185,7 @@ class ProductListHelper extends \Model
             }
 
             $path = $this->hierarhy->getPath($result['main_category']);
+
             $products[] = array(
                 'product_id' => $result['product_id'],
                 'unit_errors' => empty($unitErrors)?null:$unitErrors,
@@ -147,6 +200,8 @@ class ProductListHelper extends \Model
                 'ui_unit_name_plural' => $uiUnit?$uiUnit['name_plural']:null, 
                 'ui_unit_name_genitive' => $uiUnit?$uiUnit['name_package_dimension']:null,
 
+                'mincount'=>$mincount,
+                'step'=>$step,
                 'thumb' => $image,
                 //'name' => $result['meta_h1'],
                 'name' => $result['name'],

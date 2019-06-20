@@ -272,7 +272,8 @@ class Cart {
 					'height'          => $product_query->row['height'],
 					'length_class_id' => $product_query->row['length_class_id'],
 					'recurring'       => $recurring,
-					'mincount' 		  => $product_query->row['mincount']
+					'mincount' 		  => $product_query->row['mincount'],
+					'quantity_in_store'=>$product_query->row['quantity'],
 				);
 			} else {
 				$this->remove($cart['cart_id']);

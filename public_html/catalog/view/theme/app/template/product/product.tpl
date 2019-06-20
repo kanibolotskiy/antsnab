@@ -146,11 +146,11 @@
                                                         <?php if (isset($pUnits[2])){ ?>
                                                             <?php if (( $quantity_stock<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){ ?>
                                                                 data-ui_step = "<?=$pUnits[2]['denom']?>"
-                                                                if($pUnits[1]['mincount']<$pUnits[2]['denom']){
+                                                                <?php if($pUnits[1]['mincount']<$pUnits[2]['denom']){ ?>
                                                                     data-ui_minimum = "<?=$pUnits[2]['denom']?>"
-                                                                }else{
+                                                                <?php }else{ ?>
                                                                     data-ui_minimum = "<?=$pUnits[1]['mincount']?>"
-                                                                }
+                                                                <?php } ?>
                                                             <?php }else{ ?>
                                                                     data-ui_minimum = "<?=$pUnits[1]['mincount']?>"
                                                             <?php }?>

@@ -389,9 +389,7 @@ class CategoryController extends \Controller
             $filter = '';
         }
 
-        /** @ИСПРАВИТЬ - это что за магические цифры?????????!!!!!!!! */
-        //$sort_selected=0;
-
+    
         $sort = '';
         $order = '';
         $sort_selected="";

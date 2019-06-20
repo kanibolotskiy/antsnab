@@ -105,6 +105,7 @@ class ProductTemplateDecorator implements IDecorator
                     }else{
                         $pUnits[$key]['mincount']=ceil($product_info['mincount']*$koef_d);
                     }
+                    //echo "!".$pUnits[$key]['mincount']."!";
 
                     //print_r($pUnits[$key]);
                     //текстовые строки
