@@ -19026,6 +19026,7 @@ $(function(){
     });
 
     $("#order_form input[type='submit']").click(function(e){
+        
         e.preventDefault();
         
         var flag_order=true;
@@ -19044,14 +19045,21 @@ $(function(){
         }else{
             input_name.prev().fadeOut(100);
         }
-        
+         
+        var phone_str=$.trim(input_phone.val());
         if($.trim(input_phone.val())==""){
             flag_order=false; 
             input_phone.prev().fadeIn(100);
-
         }else{
-            input_phone.prev().fadeOut(100);            
+            if(phone_str.indexOf("_")!=-1){
+                flag_order=false; 
+                input_phone.prev().fadeIn(100);
+            }else{
+                input_phone.prev().fadeOut(100);            
+            }
+            
         }
+
         /*
         if(($.trim(input_phone.val())!="")||($.trim(input_email.val())!="")){
             input_phone.prev().fadeOut(100);
@@ -19080,7 +19088,6 @@ $(function(){
         }else{
             input_address.prev().fadeOut(100);            
         }
-        
 
         if(flag_order){    
             $.ajax({
@@ -22329,29 +22336,9 @@ $("#courier_select").on('change', function () {
     }
     if(unitpack2.length){
         if(unitpack1_count>0){
-            //var unitpack2_count=Math.ceil(unitpack1_count*unitpack2.attr("data-sale_to_ui_koef")/unitpack1.attr("data-sale_to_ui_koef"));
-
-            //var unitpack2_count=Math.ceil(unitpack1_count*weight);
-            //console.log(unitpack1_count+"*"+unitpack2.attr("data-sale_to_ui_koef")+"/"+unitpack1.attr("data-sale_to_ui_koef"));
-            //console.log(eval(unitpack1_count+"*"+unitpack2.attr("data-sale_to_ui_koef")+"/"+unitpack1.attr("data-sale_to_ui_koef")));
-            //console.log(Math.ceil(eval(unitpack1_count+"*"+unitpack2.attr("data-sale_to_ui_koef")+"/"+unitpack1.attr("data-sale_to_ui_koef"))));
-
-            //var unitpack2_count=parseInt(Math.ceil(eval(unitpack1_count*unitpack2.attr("data-sale_to_ui_koef")/unitpack1.attr("data-sale_to_ui_koef"))));
-
-            console.log(unitpack1_count+"*"+unitpack2.attr("data-sale_to_ui_koef")+"/"+unitpack1.attr("data-sale_to_ui_koef"));
             var unitpack2_count=Math.ceil(unitpack1_count*unitpack2.attr("data-nom") / unitpack2.attr("data-denom") /unitpack1.attr("data-sale_to_ui_koef"));
-
-            //eval("var unitpack2_count="+Math.ceil(unitpack1_count*unitpack2.attr("data-sale_to_ui_koef")/unitpack1.attr("data-sale_to_ui_koef")));
-
-            //console.log("!"+unitpack2_count+"!");
-
-            //var unitpack2_count=Math.ceil(unitpack1_count*unitpack2.attr("data-nom")/unitpack2.attr("data-denom"));
-            //var unitpack2_count=eval("1/12");
-            console.log(unitpack2_count);
             var unitpack2_str=declOfNum(unitpack2_count, [unitpack2.attr("data-ui_name"),unitpack2.attr("data-ui_name_genitive"),unitpack2.attr("data-ui_name_plural")]);
             $("#unitpack2_str").html(number_format(unitpack2_count,0,"."," ") +" "+unitpack2_str);
-            
-
         }else{
             $("#unitpack2_str").html("-");
         }

@@ -195,6 +195,7 @@ $(function(){
     });
 
     $("#order_form input[type='submit']").click(function(e){
+        
         e.preventDefault();
         
         var flag_order=true;
@@ -213,14 +214,21 @@ $(function(){
         }else{
             input_name.prev().fadeOut(100);
         }
-        
+         
+        var phone_str=$.trim(input_phone.val());
         if($.trim(input_phone.val())==""){
             flag_order=false; 
             input_phone.prev().fadeIn(100);
-
         }else{
-            input_phone.prev().fadeOut(100);            
+            if(phone_str.indexOf("_")!=-1){
+                flag_order=false; 
+                input_phone.prev().fadeIn(100);
+            }else{
+                input_phone.prev().fadeOut(100);            
+            }
+            
         }
+
         /*
         if(($.trim(input_phone.val())!="")||($.trim(input_email.val())!="")){
             input_phone.prev().fadeOut(100);
@@ -249,7 +257,6 @@ $(function(){
         }else{
             input_address.prev().fadeOut(100);            
         }
-        
 
         if(flag_order){    
             $.ajax({
