@@ -40,7 +40,11 @@ class CategoryController extends \Controller
         $this->load->model('tool/image');
 
         if (isset($this->request->get['page'])) {
-            $page = $this->request->get['page'];
+            if($this->request->get['page']){
+                $page = ($this->request->get['page'])*1;
+            }else{
+                $page=1;
+            }
         } else {
             $page = 1;
         }
