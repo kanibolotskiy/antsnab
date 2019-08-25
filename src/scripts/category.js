@@ -76,7 +76,7 @@ if( $('.qnt-container').length > 0 ) {
 
 $('body').delegate('#lazy-load_container','onLazyLoaded', function(e, $items){
     initQuantityContainers($items.find('.qnt-container'));
-    initBuyButtons($items.find('.buy'));
+    //initBuyButtons($items.find('.buy'));
 });
 
 /*-----------------------------------------------------*/
@@ -171,9 +171,9 @@ function add_to_cart(product_id, count_add, show_added){
         }
     });
 }
-/*-----------------------------------------------------*/
 
 $(document).ready(function(){
+
     /**Добавление товара из калькулятора #1 */
     $("#add_calcdata_tocart1").click(function(){
         /**Рассчитываемый товар */
@@ -188,11 +188,8 @@ $(document).ready(function(){
         }
 
     });
-    $("#add_calcdata_tocart2").click(function(){
-        /**Рассчитываемый товар */
+    $("#add_calcdata_tocart2").click(function(){        
         add_to_cart($("#product_id").val(), $("#calc_out1").attr("data-count"), 1);
-
-        /**Цель*/
         if (typeof ym != 'undefined') {
             ym(14496178, 'reachGoal', 'calc-cart');
         }

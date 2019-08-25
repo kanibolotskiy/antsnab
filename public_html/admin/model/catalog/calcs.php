@@ -2,7 +2,7 @@
 class ModelCatalogCalcs extends Model {
 	public function addDoc($data) {
 	
-		$this->db->query("INSERT INTO dopinfo_calcs SET name = '" . $this->db->escape($data['name']) . "',description='" . $this->db->escape($data['calc_description']) . "', sort_order = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO dopinfo_calcs SET name = '" . $this->db->escape($data['name']) . "',description='" . $this->db->escape($data['calc_description']) . "', sort_order = '" . (int)$data['sort_order'] . "', nomer = '" . (int)$data['nomer']."'");
 		//echo "INSERT INTO dopinfo_calcs SET name = '" . $this->db->escape($data['name']) . "',description='" . $this->db->escape($data['calc_description']) . "', sort_order = '" . (int)$data['sort_order'] . "'";
 		$calc_id = $this->db->getLastId();
 
@@ -13,7 +13,7 @@ class ModelCatalogCalcs extends Model {
 
 	public function editDoc($calc_id, $data) {
 		
-		$this->db->query("UPDATE dopinfo_calcs SET name = '" . $this->db->escape($data['name']) . "', description='" . $this->db->escape($data['calc_description']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE calc_id = '" . (int)$calc_id . "'");
+		$this->db->query("UPDATE dopinfo_calcs SET name = '" . $this->db->escape($data['name']) . "', description='" . $this->db->escape($data['calc_description']) . "', sort_order = '" . (int)$data['sort_order'] . "', nomer = '" . (int)$data['nomer']."' WHERE calc_id = '" . (int)$calc_id . "'");
 		
 		$this->cache->delete('calc');
 		
@@ -76,4 +76,13 @@ class ModelCatalogCalcs extends Model {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM dopinfo_calcs");
 		return $query->row['total'];
 	}
+	public function getCalcCategory($categoryId=0){
+		$query = $this->db->query("SELECT dc.calc_id FROM oc_category oc inner join dopinfo_calcs dc on oc.calc=dc.calc_id where oc.category_id=".$categoryId);
+		$calc_id=0;
+		if(isset($query->row['calc_id'])){
+			$calc_id=$query->row['calc_id'];
+		}
+		return $calc_id;
+	}
+
 }

@@ -3513,7 +3513,7 @@ button.show-more{
 }
 .calculator-block{
     border: 1px solid #EAE7E4;
-    padding: 20px;
+    padding: 20px 20px 10px;
     /*margin-bottom: 30px;*/
     display: flex;
     flex-wrap: wrap;
@@ -3534,8 +3534,8 @@ button.show-more{
     span{
         display: block;
         color: #000000;
-        font-size:14px;
-        margin-right: 45px;
+        font-size:13px;
+        margin-right: 20px;
         line-height: 34px;
         position:relative;
         sup{
@@ -5420,6 +5420,15 @@ table.table_data td a{color:#598ba6;}
 .to_cart_from_calc{float:right;margin-top:20px;}
 .calc_footer{margin-top:20px;position:relative;overflow:hidden;}
 .input_area{font-weight: bold;}
+.calculator-block_col{display:flex;
+    margin-bottom:10px;
+    width:190px;
+    display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+    display: -webkit-flex;}
+.resp-tabs-container img{max-width:100%;height:auto;}
+.calc_hint{display:none;}
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{
         width: 100%;

@@ -1005,6 +1005,7 @@ class CartController extends \ControllerCheckoutCart
 
             $this->response->setOutput($this->load->view('error/not_found', $data));
         }
+        //print_r($products);
     }
 
     private function validateOrderForm($post)
@@ -1139,14 +1140,21 @@ class CartController extends \ControllerCheckoutCart
         
         // Update
         
+        //print_r($products);
+
 		if (!empty($this->request->post['quantity'])) {
             
 			foreach ($this->request->post['quantity'] as $key => $value) {
+                
                 foreach($products as $product){
+                    
                     if($product['cart_id']==$key){
                         $delta=$product['quantity']-$value;
+                        //echo $product['quantity'];//."-".$value."|";
                         $delta_val=abs($delta);
                         if($delta>0){
+                            //echo $product['cart_id']."==".$key."|";
+                            //echo "!".$key."!".$value."|".$delta;
                             //echo "убавить";
                             $returned_data['metrika_action']="remove";
                             $returned_data['metrika_product_id']=$product['product_id'];
@@ -1155,6 +1163,7 @@ class CartController extends \ControllerCheckoutCart
                             $returned_data['metrika_product_quantity']=$delta_val;
                         }
                         if($delta<0){
+                            
                             //echo "добавить";
                             $returned_data['metrika_action']="add";
                             $returned_data['metrika_product_id']=$product['product_id'];

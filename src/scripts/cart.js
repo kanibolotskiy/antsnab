@@ -22,7 +22,7 @@ if( $('.qnt-container-cart').length > 0) {
             'el_name': $inputName,
             'ui_minimum':$el.attr('data-ui_minimum')
         });
-
+        
         var qntController = $el.data('quantity');
         qntController.setQuantityInUiUnits($priceUnitQuantity);
         $el.removeClass("without_input");
@@ -98,6 +98,20 @@ function refresh_veiew_cart(json){
 }
 function refresh_cart(){
     var data=$("#cart_form").serialize();
+    //console.log("refresh_cart");
+    //console.log(data);
+/*
+    var data='';
+    $(".basket-row").each(function(){
+        var qnt_itm=$(this).find(".qnt-container ");
+        var itm_count=$(this).find(".qnt").val();
+        data+="&"+qnt_itm.attr("data-el_name")+"="+itm_count;
+        //key=$(this).attr("data-cartid");
+        //var data="key="+key;
+    });
+    //console.log(data);
+*/
+
     $.ajax({
         url: '/index.php?route=checkout/cart/ajaxRefresh/',
         data: data,

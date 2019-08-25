@@ -25,7 +25,9 @@ class Quantity {
     constructor(view, opts) {
         
         var rosn_limit=$("#data-rosn_limit").attr("data-rosn_limit");
+        
         //console.log("var1="+rosn_limit*)
+        //console.log(opts);
         this._options = {
             /** SaleQuantity options */
             'sale_step': opts.sale_step? parseFloat(opts.sale_step) : 1,
@@ -34,6 +36,7 @@ class Quantity {
             /** Injected uis' quantity options */
             'sale_to_ui_koef': opts.sale_to_ui_koef ? new Fraction(opts.sale_to_ui_koef) : new Fraction(1),
             'ui_minimum': opts.ui_minimum ? parseFloat(opts.ui_minimum) : null, 
+            //'ui_val': opts.ui_minimum ? parseFloat(opts.ui_minimum) : null, 
             'ui_step': opts.ui_step ? parseFloat(opts.ui_step) : null,
             'ui_names': opts.ui_names || {}
 
@@ -42,6 +45,7 @@ class Quantity {
         
         this.view = view;
         this.model = new SaleQuantityModel(this._options.sale_minimum, this._options.sale_step) ;
+        //console.log(this._options.ui_minimum);
         this.model.setUiModel(this._options.sale_to_ui_koef, this._options.ui_minimum, this._options.ui_step);
 
         this._registerEvents();
@@ -294,6 +298,7 @@ class SaleQuantityModel {
         
         this._uiModel = new UiQuantityModel(uiStep, uiMinimum);
         this._uiModel.value = koef.mul(this._quantity);
+        
         this._uiKoef = koef;
 
         this._refresh();
@@ -316,6 +321,7 @@ class UiQuantityModel {
         this._step = step;
         this._minimum = minimum;
         this._value = this._minimum;
+
     }
 
     get value() {
@@ -372,8 +378,9 @@ class QuantityView {
         var elName = (name)?name:QuantityView.inputName + Math.random();
         this._elName = elName;
 
+        /* id="product_count_add"*/
         this.$el.html('<div class="' + QuantityView.minusButClass + '"></div>\
-             <input class="qnt" id="product_count_add" type="text" name="' + elName + '" />\
+             <input class="qnt" type="text" name="' + elName + '" />\
              <span class="' + QuantityView.unameClass + '"></span>\
              <div class="'+ QuantityView.plusButClass + '"></div>');
     }

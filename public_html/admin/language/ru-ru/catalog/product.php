@@ -87,7 +87,18 @@ $_['entry_analog']          	= 'Аналоги:';
 $_['entry_benefits']          	= 'Преимущества:';
 $_['entry_mincount']          	= 'Минимальное кол-во для покупки:';
 $_['entry_discount']            = 'Скидка:';
+
 $_['entry_consumption']         = 'Расход на м2:';
+$_['entry_calc_data1']          = 'Расход на п.м.:';
+$_['entry_calc_data2']          = 'Плотность:';
+$_['entry_calc_data3']          = 'Поправочный коэффициент:';
+$_['entry_calc_data4']          = 'Выход из баллона:';
+
+
+
+$_['entry_calc_category']       = 'Калькулятор для категории:';
+$_['entry_calc_product']        = 'Калькулятор для продукта:';
+
 
 
 $_['entry_tag']          		= 'Теги товара:';

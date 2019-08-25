@@ -759,17 +759,35 @@ class ControllerProductProduct extends Controller {
 			$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
 
 			/**Калькулятор */
-			//print_r($product_info);
 			$data['calculator']="";
+			//print_r($product_info);
+			$calc_nomer=0;
+			if($product_info['calc']){
+				$calc_nomer=$product_info['calc'];
+			}else{
+				if($category_info['calc']){
+					$calc_nomer=$category_info['calc'];
+				}
+			}
+
+			if($calc_nomer){
+				$data['consumption']=$product_info['consumption'];
+				$data['calc_data1']=$product_info['calc_data1'];
+				$data['calc_data2']=$product_info['calc_data2'];
+				$data['calc_data3']=$product_info['calc_data3'];
+				$data['calc_data4']=$product_info['calc_data4'];
+				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/app/template/calculators/calc_'.$calc_nomer.'.tpl')) {
+					$data['calculator']=$this->load->view('calculators/calc_'.$calc_nomer, $data);
+				}
+			}
+			/*
 			if($category_info['calc']){
 				//consumption 
 				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/app/template/calculators/calc_'.$category_info['calc'].'.tpl')) {
-					//$data['']=;
-					
 					$data['consumption']=$product_info['consumption'];
 					$data['calculator']=$this->load->view('calculators/calc_'.$category_info['calc'], $data);
 				}
-			}
+			}*/
 
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
 

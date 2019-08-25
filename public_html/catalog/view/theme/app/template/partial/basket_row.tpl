@@ -38,7 +38,7 @@
         </li>
         <li>
             <div 
-                class="qnt-container without_input"
+                class="qnt-container-cart"
                 data-el_name="quantity[<?php echo $product['cart_id']; ?>]"
                 data-sale_to_price_koef="<?=$product['saleToPriceKoef']?>" 
                 data-ui_name="<?=$product['priceUnit']['name']?>"

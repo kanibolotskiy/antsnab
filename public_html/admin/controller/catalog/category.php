@@ -525,7 +525,6 @@ class ControllerCatalogCategory extends Controller {
 		}
 
 		//Калькулятор
-	
 		$this->load->model('catalog/calcs');
 	
 		$data['calcs'] = $this->model_catalog_calcs->getCalcs();

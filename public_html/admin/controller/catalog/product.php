@@ -692,6 +692,13 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_showdiscount'] = $this->language->get('entry_showdiscount');
 		$data['entry_discount'] = $this->language->get('entry_discount');
 		$data['entry_consumption'] = $this->language->get('entry_consumption');
+		$data['entry_calc_data1'] = $this->language->get('entry_calc_data1');
+		$data['entry_calc_data2'] = $this->language->get('entry_calc_data2');
+		$data['entry_calc_data3'] = $this->language->get('entry_calc_data3');
+		$data['entry_calc_data4'] = $this->language->get('entry_calc_data4');
+
+		$data['entry_calc_category'] = $this->language->get('entry_calc_category');
+		$data['entry_calc_product'] = $this->language->get('entry_calc_product');
 
 
 		$data['help_keyword'] = $this->language->get('help_keyword');
@@ -1007,6 +1014,8 @@ class ControllerCatalogProduct extends Controller {
 			$data['mincount'] = '';
 		}
 
+
+		/**Данные для калькуляторов */
 		if (isset($this->request->post['consumption'])) {
 			$data['consumption'] = $this->request->post['consumption'];
 		} elseif (!empty($product_info)) {
@@ -1015,6 +1024,35 @@ class ControllerCatalogProduct extends Controller {
 			$data['consumption'] = '';
 		}
 		
+		if (isset($this->request->post['calc_data1'])) {
+			$data['calc_data1'] = $this->request->post['calc_data1'];
+		} elseif (!empty($product_info)) {
+			$data['calc_data1'] = $product_info['calc_data1'];
+		} else {
+			$data['calc_data1'] = '';
+		}
+
+		if (isset($this->request->post['calc_data2'])) {
+			$data['calc_data2'] = $this->request->post['calc_data2'];
+		} elseif (!empty($product_info)) {
+			$data['calc_data2'] = $product_info['calc_data2'];
+		} else {
+			$data['calc_data2'] = '';
+		}
+		if (isset($this->request->post['calc_data3'])) {
+			$data['calc_data3'] = $this->request->post['calc_data3'];
+		} elseif (!empty($product_info)) {
+			$data['calc_data3'] = $product_info['calc_data3'];
+		} else {
+			$data['calc_data3'] = '';
+		}
+		if (isset($this->request->post['calc_data4'])) {
+			$data['calc_data4'] = $this->request->post['calc_data4'];
+		} elseif (!empty($product_info)) {
+			$data['calc_data4'] = $product_info['calc_data4'];
+		} else {
+			$data['calc_data4'] = '';
+		}
 
 		$this->load->model('catalog/recurring');
 
@@ -1189,7 +1227,6 @@ class ControllerCatalogProduct extends Controller {
 		$data['discounts']=[];
 		$data['discounts'][]=Array("discount_id"=>-1,"name"=>"Не показывать");
 		$discounts=$this->model_catalog_discounts->getDiscounts();
-		///print_r($discounts);
 		foreach($discounts as $discount){
 			$data['discounts'][] = Array(
 				'discount_id'=>$discount['discount_id'],
@@ -1206,6 +1243,9 @@ class ControllerCatalogProduct extends Controller {
 			$data['discount'] = 0;
 		}
 
+		
+
+		
 		if (isset($this->request->post['manufacturer'])) {
 			$data['manufacturer'] = $this->request->post['manufacturer'];
 		} elseif (!empty($product_info)) {
@@ -1247,6 +1287,21 @@ class ControllerCatalogProduct extends Controller {
 			$data['product_category'] = $this->model_catalog_product->getProductCategories($this->request->get['product_id']);
 		} else {
 			$data['product_category'] = array();
+		}
+
+		//Калькулятор (категория)
+		$this->load->model('catalog/calcs');
+		$data['calcs']=$this->model_catalog_calcs->getCalcs();
+		
+		
+		$data['calc_category_id'] = $this->model_catalog_calcs->getCalcCategory($data['main_category_id']);
+		
+		if (isset($this->request->post['calc_product'])) {
+			$data['calc_product_id'] = $this->request->post['calc_product'];
+		} elseif (!empty($product_info)) {
+			$data['calc_product_id'] = $product_info['calc'];
+		} else {
+			$data['calc_product_id'] = 0;
 		}
 
 		$this->load->model('catalog/filter');

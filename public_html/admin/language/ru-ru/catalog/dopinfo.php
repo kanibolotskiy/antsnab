@@ -66,6 +66,7 @@ $_['entry_description']         = 'Описание';
 $_['entry_goal']                = 'Цель';
 $_['entry_discount']            = 'Скидка';
 $_['entry_label']               = 'Метка';
+$_['entry_nomer']               = 'Номер калькулятора';
 
 
 

@@ -279,7 +279,9 @@ class ControllerCatalogCalcs extends Controller {
             $data['text_form'] = $this->language->get('text_edit_calcs');
                 
 
-            $data['entry_name'] = $this->language->get('entry_name_calcs');
+			$data['entry_name'] = $this->language->get('entry_name_calcs');
+			$data['entry_nomer'] = $this->language->get('entry_nomer');
+
             $data['entry_description'] = $this->language->get('entry_description');
             $data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
@@ -365,6 +367,14 @@ class ControllerCatalogCalcs extends Controller {
                 $data['sort_order'] = $calc_info['sort_order'];
             } else {
                 $data['sort_order'] = '';
+			}
+			
+			if (isset($this->request->post['nomer'])) {
+                $data['nomer'] = $this->request->post['nomer'];
+            } elseif (!empty($calc_info)) {
+                $data['nomer'] = $calc_info['nomer'];
+            } else {
+                $data['nomer'] = '';
             }
            
             

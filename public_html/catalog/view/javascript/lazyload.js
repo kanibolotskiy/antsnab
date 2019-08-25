@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function(){
     function showMoreHandler(e) {
         e.preventDefault();
@@ -5,6 +6,26 @@ document.addEventListener("DOMContentLoaded", function(){
             $self = $(this),
             $container = $($self.attr('data-container')),
             $paginContainer = $($self.attr('data-pagincontainer'));
+        
+        var data_pagenum=$(this).attr("data-pagenum");
+        window.location.hash = "page"+data_pagenum;
+        /*
+        var base_href=$("link[rel='canonical']").attr("href");
+        var data_pagenum=$(this).attr("data-pagenum");
+
+        var stateData = {
+            scrollTop: $(window).scrollTop()
+        };
+        var href=base_href+"?load_pages="+data_pagenum;
+        var stateObj = { scrollTop: "500px" };
+        history.pushState(stateObj, null, href);
+        $(window).hashchange();
+        */
+        //history.pushState({page:href},null,href);
+        
+        //console.log(stateData)
+        //window.history.pushState(stateData, 'title', 'page2.html');
+        //e.preventDefault();
 
         $.get(endPoint)
             .done(function(dataJson){
@@ -44,7 +65,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
             })
             .fail(function(){
-                alert('Server Error');
+                //alert('Server Error');
+                console.log('Server Error');
             });
     };
     $('#showMore').on('click', showMoreHandler);

@@ -73,7 +73,12 @@ class ModelCatalogProduct extends Model {
 				'date_modified'    => $query->row['date_modified'],
 				'viewed'           => $query->row['viewed'],
 				'mincount'         => $query->row['mincount'],
-				'consumption'	   => $query->row['consumption']
+				'calc'	   		   => $query->row['calc'],
+				'consumption'	   => $query->row['consumption'],
+				'calc_data1'	   => $query->row['calc_data1'],
+				'calc_data2'	   => $query->row['calc_data2'],
+				'calc_data3'	   => $query->row['calc_data3'],
+				'calc_data4'	   => $query->row['calc_data4']
 			);
 		} else {
 			return false;

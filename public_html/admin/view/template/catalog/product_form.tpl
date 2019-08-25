@@ -435,13 +435,69 @@
                         </div>
                         
                         <div class="tab-pane" id="tab-calcs">
-                            
                             <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-calc_category"><?php echo $entry_calc_category; ?></label>
+                                <div class="col-sm-10">
+                                    <select id="input-calc_category" name="calc_category" class="form-control" disabled>
+                                        <option value="0" selected="selected"><?php echo $text_none; ?></option>
+                                        <?php foreach ($calcs as $calc_itm) { ?>
+                                            <?php if ($calc_itm['calc_id'] == $calc_category_id) { ?>
+                                                <option value="<?php echo $calc_itm['calc_id']; ?>" selected="selected"><?php echo $calc_itm['name']; ?></option>
+                                            <?php } else { ?>
+                                                <option value="<?php echo $calc_itm['calc_id']; ?>"><?php echo $calc_itm['name']; ?></option>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-calc"><?php echo $entry_calc_product; ?></label>
+                                <div class="col-sm-10">
+                                    <select id="input-calc" name="calc" class="form-control">
+                                        <option value="0" selected="selected"><?php echo $text_none; ?></option>
+                                        <?php foreach ($calcs as $calc_itm) { ?>
+                                            <?php if ($calc_itm['calc_id'] == $calc_product_id) { ?>
+                                                <option value="<?php echo $calc_itm['calc_id']; ?>" selected="selected"><?php echo $calc_itm['name']; ?></option>
+                                            <?php } else { ?>
+                                                <option value="<?php echo $calc_itm['calc_id']; ?>"><?php echo $calc_itm['name']; ?></option>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group show_calc show_calc_1 show_calc_2">
                                 <label class="col-sm-2 control-label" for="input-consumption"><?php echo $entry_consumption; ?></label>
                                 <div class="col-sm-10">
                                     <input type="text" name="consumption" value="<?php echo $consumption; ?>" placeholder="<?php echo $entry_consumption; ?>" id="input-consumption" class="form-control" />
                                 </div>
                             </div>
+                            <div class="form-group show_calc show_calc_3">
+                                <label class="col-sm-2 control-label" for="input-calc_data1"><?php echo $entry_calc_data1; ?></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="calc_data1" value="<?php echo $calc_data1; ?>" placeholder="<?php echo $entry_calc_data1; ?>" id="input-calc_data1" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group show_calc show_calc_4">
+                                <label class="col-sm-2 control-label" for="input-calc_data2"><?php echo $entry_calc_data2; ?></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="calc_data2" value="<?php echo $calc_data2; ?>" placeholder="<?php echo $entry_calc_data2; ?>" id="input-calc_data2" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group show_calc show_calc_4">
+                                <label class="col-sm-2 control-label" for="input-calc_data3"><?php echo $entry_calc_data3; ?></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="calc_data3" value="<?php echo $calc_data3; ?>" placeholder="<?php echo $entry_calc_data3; ?>" id="input-calc_data3" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group show_calc show_calc_5">
+                                <label class="col-sm-2 control-label" for="input-calc_data4"><?php echo $entry_calc_data4; ?></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="calc_data4" value="<?php echo $calc_data4; ?>" placeholder="<?php echo $entry_calc_data4; ?>" id="input-calc_data4" class="form-control" />
+                                </div>
+                            </div>
+
                         </div>
                         <div class="tab-pane" id="tab-links">
                             <div class="form-group">
@@ -1283,7 +1339,27 @@
 <?php } ?>
                                 //--></script>
         <script type="text/javascript"><!--
-     // Manufacturer
+            
+            function setCalcView(){
+                $(".show_calc").hide();
+                var calc_nomer=$("#input-calc").val();
+                var calc_nomer_final=0;
+                if(calc_nomer!=0){
+                    calc_nomer_final=calc_nomer;
+                }else{
+                    calc_nomer_final=$("#input-calc_category").val();
+                }
+                $(".show_calc_"+calc_nomer_final).show();
+
+            }
+
+            //Калькуляторы
+            setCalcView();
+            $("#input-calc").change(function(){
+                setCalcView();
+            });
+
+            // Manufacturer
             $('input[name=\'manufacturer\']').autocomplete({
                 'source': function (request, response) {
                     $.ajax({
