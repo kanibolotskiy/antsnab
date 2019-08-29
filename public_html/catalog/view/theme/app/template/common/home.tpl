@@ -25,7 +25,7 @@
                 <?php foreach ($rootCategoriesBrands as $category): ?>
                     <li>
                         <div class="production-block">
-                            <a href="<?= $category_['href'] ?>">
+                            <a href="<?= $category['href'] ?>">
                                 <div class="img-production">
                                     <img src="<?= $category['image'] ?>" alt="<?= $category['name'] ?>" title="<?= $category['name'] ?>" />
                                 </div>
