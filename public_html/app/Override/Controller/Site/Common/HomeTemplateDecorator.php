@@ -37,6 +37,7 @@ class HomeTemplateDecorator implements IDecorator
         $registry->get('load')->model('tool/image');
         $model_tool_image = $registry->get('model_tool_image');
         $config = $registry->get('config');
+
         foreach( $categoryNodes as $node ) {
             $href = $registry->get('url')->link('product/category', 'path=' . $registry->get('hierarhy')->getPath($node->getId()));
             if (!empty( $node->get('image') ) ) {
@@ -52,11 +53,21 @@ class HomeTemplateDecorator implements IDecorator
                     $config->get($config->get('config_theme') . '_image_category_height')
                 );
             }
-            $data['rootCategories'][] = [
-                'name' => $node->get('name'),
-                'href' => $href,
-                'image' => $resizedImage
-            ];
+            
+            if($node->get('isbrand')){
+                $data['rootCategoriesBrands'][] = [
+                    'name' => $node->get('name'),
+                    'href' => $href,
+                    'image' => $resizedImage
+                ];
+            }else{
+                $data['rootCategories'][] = [
+                    'name' => $node->get('name'),
+                    'href' => $href,
+                    'image' => $resizedImage
+                ];
+            }
+            
         }
 
         //mobile articles and news

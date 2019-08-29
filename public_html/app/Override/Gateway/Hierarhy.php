@@ -54,7 +54,7 @@ class Hierarhy extends \Model
     {
         $language_id = (int) $this->config->get('config_language_id');
 
-        $sql = "select c.category_id, c.image, c.parent_id, cd.name, c.isfinal, c.isseo "
+        $sql = "select c.category_id, c.image, c.parent_id, cd.name, c.isfinal, c.isseo, c.isbrand "
             . "from " . DB_PREFIX . "category as c "
             . "left join " . DB_PREFIX . "category_description as cd on cd.category_id = c.category_id "
             . "where language_id = :language_id and c.status=1 and c.category_id<>0 and c.category_id<>:root "

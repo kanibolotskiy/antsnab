@@ -8,7 +8,12 @@ document.addEventListener("DOMContentLoaded", function(){
             $paginContainer = $($self.attr('data-pagincontainer'));
         
         var data_pagenum=$(this).attr("data-pagenum");
-        window.location.hash = "page"+data_pagenum;
+
+        
+        //window.location.hash = "page"+data_pagenum;
+
+        //window.history.replaceState('', '', 'http://antsnab.cp06038.tmweb.ru/products/mastics/cold/?&pages=2');
+
         /*
         var base_href=$("link[rel='canonical']").attr("href");
         var data_pagenum=$(this).attr("data-pagenum");

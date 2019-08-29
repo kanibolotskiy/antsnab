@@ -68,6 +68,7 @@ class CategoryController extends \Controller
             }
             
             $category_final_info = $this->model_catalog_category->getCategory($category_id);
+
             if(isset($category_final_info["bottom_text"])){
                 $this->data['bottom_text'] = html_entity_decode($category_final_info["bottom_text"]);
             }else{
@@ -240,6 +241,10 @@ class CategoryController extends \Controller
         $this->data['sort_selected']=$sort_selected;
         $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
         $productsHelper = new ProductListHelper($this->registry);
+        //print_r($filter_data);
+        //$filter_data['limit']=18;
+        
+
         $this->data['products'] = $productsHelper->getProducts($filter_data);
 
         if(!$showPropertyTable){

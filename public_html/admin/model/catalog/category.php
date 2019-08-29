@@ -8,13 +8,16 @@ class ModelCatalogCategory extends Model
         if(!isset($data['isseo'])){
             $data['isseo']=0;
         }
+        if(!isset($data['isbrand'])){
+            $data['isbrand']=0;
+        }
         if(!isset($data['notshowisseo'])){
             $data['notshowisseo']=0;
         }
 
         
 
-        $this->db->query("INSERT INTO " . DB_PREFIX . "category SET parent_id = '" . (int) $data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int) $data['top'] : 0) . "', `column` = '" . (int) $data['column'] . "', sort_order = '" . (int) $data['sort_order'] . "', status = '" . (int) $data['status'] . "', isseo = '" . (int) $data['isseo'] . "',discount = '" . (int) $data['discount'] . "', notshowisseo = '" . (int) $data['notshowisseo'] . "', calc = '" . (int) $data['calc'] . "', date_modified = NOW(), date_added = NOW()");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "category SET parent_id = '" . (int) $data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int) $data['top'] : 0) . "', `column` = '" . (int) $data['column'] . "', sort_order = '" . (int) $data['sort_order'] . "', status = '" . (int) $data['status'] . "', isseo = '" . (int) $data['isseo'] . "',isbrand = '" . (int) $data['isbrand'] . "', discount = '" . (int) $data['discount'] . "', notshowisseo = '" . (int) $data['notshowisseo'] . "', calc = '" . (int) $data['calc'] . "', date_modified = NOW(), date_added = NOW()");
 
         $category_id = $this->db->getLastId();
 
@@ -72,6 +75,9 @@ class ModelCatalogCategory extends Model
         if(!isset($data['isseo'])){
             $data['isseo']=0;
         }
+        if(!isset($data['isbrand'])){
+            $data['isbrand']=0;
+        }
         if(!isset($data['notshowisseo'])){
             $data['notshowisseo']=0;
         }
@@ -86,7 +92,7 @@ class ModelCatalogCategory extends Model
         if(!isset($data['bottom_text'])){
             $data['bottom_text']='';
         }
-        $this->db->query("UPDATE " . DB_PREFIX . "category SET parent_id = '" . (int) $data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int) $data['top'] : 0) . "', `column` = '" . (int) $data['column'] . "', sort_order = '" . (int) $data['sort_order'] . "', status = '" . (int) $data['status'] . "', isseo = '" . (int) $data['isseo'] . "',discount = '" . (int) $data['discount'] . "', notshowisseo = '" . (int) $data['notshowisseo'] . "', calc = '" . (int) $data['calc'] . "', date_modified = NOW() WHERE category_id = '" . (int) $category_id . "'");
+        $this->db->query("UPDATE " . DB_PREFIX . "category SET parent_id = '" . (int) $data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int) $data['top'] : 0) . "', `column` = '" . (int) $data['column'] . "', sort_order = '" . (int) $data['sort_order'] . "', status = '" . (int) $data['status'] . "', isseo = '" . (int) $data['isseo'] . "', isbrand = '" . (int) $data['isbrand'] . "', discount = '" . (int) $data['discount'] . "', notshowisseo = '" . (int) $data['notshowisseo'] . "', calc = '" . (int) $data['calc'] . "', date_modified = NOW() WHERE category_id = '" . (int) $category_id . "'");
 
         if (isset($data['image'])) {
             $this->db->query("UPDATE " . DB_PREFIX . "category SET image = '" . $this->db->escape($data['image']) . "' WHERE category_id = '" . (int) $category_id . "'");
@@ -281,7 +287,7 @@ class ModelCatalogCategory extends Model
     //@task move to override, isfinal added, pathname filter, isfinal filter added
     public function getCategories($data = array())
     {
-        $sql = "SELECT c1.isseo,c1.isfinal, cp.category_id AS category_id, GROUP_CONCAT(cd1.name ORDER BY cp.level SEPARATOR '&nbsp;&nbsp;&gt;&nbsp;&nbsp;') AS name, c1.parent_id, c1.sort_order, c1.status,(select count(product_id) as product_count from " . DB_PREFIX . "product_to_category pc where pc.category_id = c1.category_id) as product_count FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "category c1 ON (cp.category_id = c1.category_id) LEFT JOIN " . DB_PREFIX . "category c2 ON (cp.path_id = c2.category_id) LEFT JOIN " . DB_PREFIX . "category_description cd1 ON (cp.path_id = cd1.category_id) LEFT JOIN " . DB_PREFIX . "category_description cd2 ON (cp.category_id = cd2.category_id) WHERE cd1.language_id = '" . (int) $this->config->get('config_language_id') . "' AND cd2.language_id = '" . (int) $this->config->get('config_language_id') . "'";
+        $sql = "SELECT c1.isseo, c1.isbrand, c1.isfinal, cp.category_id AS category_id, GROUP_CONCAT(cd1.name ORDER BY cp.level SEPARATOR '&nbsp;&nbsp;&gt;&nbsp;&nbsp;') AS name, c1.parent_id, c1.sort_order, c1.status,(select count(product_id) as product_count from " . DB_PREFIX . "product_to_category pc where pc.category_id = c1.category_id) as product_count FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "category c1 ON (cp.category_id = c1.category_id) LEFT JOIN " . DB_PREFIX . "category c2 ON (cp.path_id = c2.category_id) LEFT JOIN " . DB_PREFIX . "category_description cd1 ON (cp.path_id = cd1.category_id) LEFT JOIN " . DB_PREFIX . "category_description cd2 ON (cp.category_id = cd2.category_id) WHERE cd1.language_id = '" . (int) $this->config->get('config_language_id') . "' AND cd2.language_id = '" . (int) $this->config->get('config_language_id') . "'";
 
         if (!empty($data['filter_name'])) {
             $sql .= " AND cd2.name LIKE '%" . $this->db->escape($data['filter_name']) . "%'";

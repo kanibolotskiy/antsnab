@@ -70,6 +70,24 @@
                   </div>
 
                   <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-isbrand">
+                        <?php echo $entry_isbrand; ?>
+                    </label>
+                    <div class="col-sm-1">
+                      <div class="checkbox">
+                        <label>
+                          <?php if($isbrand) { ?>
+                          <input  type="checkbox" name="isbrand" value="1" checked="checked" id="input-isbrand" />
+                          <?php } else { ?>
+                          <input type="checkbox" name="isbrand" value="1" id="input-isbrand" />
+                          <?php } ?>
+                          &nbsp; </label>
+                      </div>
+                    </div>
+                    
+                  </div>
+
+                  <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-notshowisseo">
                         <?php echo $entry_notshowisseo; ?>
                     </label>

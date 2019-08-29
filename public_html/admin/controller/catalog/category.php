@@ -332,6 +332,8 @@ class ControllerCatalogCategory extends Controller {
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_layout'] = $this->language->get('entry_layout');
 		$data['entry_isseo'] = $this->language->get('entry_isseo');
+		$data['entry_isbrand'] = $this->language->get('entry_isbrand');
+
 		$data['entry_discount'] = $this->language->get('entry_discount');
 
 		$data['entry_notshowisseo'] = $this->language->get('entry_notshowisseo');
@@ -501,6 +503,16 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['isseo'] = 0;
 		}
+
+		if (isset($this->request->post['isbrand'])) {
+			$data['isbrand'] = $this->request->post['isbrand'];
+		} elseif (!empty($category_info)) {
+			$data['isbrand'] = $category_info['isbrand'];
+		} else {
+			$data['isbrand'] = 0;
+		}
+
+		
 
 		if (isset($this->request->post['notshowisseo'])) {
 			$data['notshowisseo'] = $this->request->post['notshowisseo'];

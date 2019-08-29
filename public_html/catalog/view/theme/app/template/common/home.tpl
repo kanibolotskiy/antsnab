@@ -20,6 +20,21 @@
                     </li>
                 <?php endforeach ?>
             </ul>
+            <h1>Товары по брендам</h1>
+            <ul>
+                <?php foreach ($rootCategoriesBrands as $category): ?>
+                    <li>
+                        <div class="production-block">
+                            <a href="<?= $category_['href'] ?>">
+                                <div class="img-production">
+                                    <img src="<?= $category['image'] ?>" alt="<?= $category['name'] ?>" title="<?= $category['name'] ?>" />
+                                </div>
+                                <span><?= $category['name'] ?></span>
+                            </a>
+                        </div>
+                    </li>
+                <?php endforeach ?>
+            </ul>
         </div>
         <!-- @task1 как управлять мобильными из админки? - только кэш или переверстывать двойная нагрузка на сервер -->
         <?php echo $content_bottom; ?>
