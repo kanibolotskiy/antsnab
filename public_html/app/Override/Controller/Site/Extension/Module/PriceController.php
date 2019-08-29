@@ -105,8 +105,7 @@ class PriceController extends \Controller
         }
 
         foreach($secondCategories as $cat) {
-            //echo "id=".$cat->get('category_id')."|isseo=".$cat->get('isseo')."<br/>";
-            if(!$cat->get('isseo')){
+            if((!$cat->get('isseo')) and (!$cat->get('isbrand'))){
                 $lists['l2'][$cat->get('name')] = $cat->get('category_id');
             }
         }
