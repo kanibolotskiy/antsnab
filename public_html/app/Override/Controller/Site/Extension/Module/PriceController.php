@@ -93,7 +93,9 @@ class PriceController extends \Controller
         $firstActive = (null==$firstActive)?$firstCategories[0]->get('category_id'):$firstActive;
         $lists['active'][] = $firstActive;
         foreach($firstCategories as $cat) {
-            $lists['l1'][ $cat->get('name') ] =  $cat->get('category_id');
+            if(!$cat->get('isbrand')){
+                $lists['l1'][ $cat->get('name') ] =  $cat->get('category_id');
+            }
         }
 
         $secondParentNode = $this->hierarhy->getNodeById($firstActive);
