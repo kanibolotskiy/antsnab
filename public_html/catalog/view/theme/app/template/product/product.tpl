@@ -664,6 +664,7 @@
                             <div class="give-feedback">
                                 <div class="title-give-feedback">Оставить отзыв</div>
                                 <form id="form-review" method="post">
+                                    <input type="hidden" name="star" value="5" id="star_value"/>
                                     <div class = "row">
                                         <span>Имя: 
                                             <i id="error_author" class="error"></i>
@@ -684,9 +685,23 @@
                                         <input value="" type = "text" name="company" placeholder="<?= $entry_company ?>">
                                     </div>
                                     <div class = "row">
-                                        <span>Отзыв:
-                                            <i id="error_text" class="error"></i>
-                                        </span>
+                                        <div class="wrp_star">
+                                            
+                                            <span>Отзыв:
+                                                <i id="error_text" class="error"></i>
+                                            </span>
+                                            <div class="wrp_star_rating">
+                                                <span class="rating_caption">Рейтинг:</span>
+                                                <div class="rating_stars">
+                                                    <div class="rating_star" rel="1"></div>
+                                                    <div class="rating_star" rel="2"></div>
+                                                    <div class="rating_star" rel="3"></div>
+                                                    <div class="rating_star" rel="4"></div>
+                                                    <div class="rating_star" rel="5"></div>
+                                                </div>
+                                                <div class="rating_stars_value">(<span id="rating_stars_value">5</span>)</div>
+                                            </div>
+                                        </div>
                                         <textarea  placeholder="<?= $entry_text ?>" name="text"></textarea>
                                     </div>
                                     <div class = "agreement">

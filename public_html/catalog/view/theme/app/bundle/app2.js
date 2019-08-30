@@ -22651,6 +22651,38 @@ function calc5(){
     }
 
 }
+$(".rating_star").mouseenter(function(){
+    $(".rating_star").removeClass("_hide").removeClass("_current");
+    $(this).addClass("_current");
+    $(this).prevAll().addClass("_hide");
+    $(this).nextAll().addClass("_hide");
+    var rel=$(this).attr("rel");
+    $("#rating_stars_value").html(rel);
+});
+
+$(".rating_stars").mouseenter(function(){
+    $(this).addClass("active");
+});
+$(".rating_stars").mouseleave(function(){
+    if(!$(".rating_star._rate").length){
+        $(".rating_star").removeClass("_hide").removeClass("_current");    
+        $("#rating_stars_value").html(5);
+        $("#star_value").val(5);
+    }
+    $(this).removeClass("active");
+});
+$(".rating_star").click(function(){
+    $(this).addClass("_rate");
+    $(this).prevAll().addClass("_rate");
+    $(this).nextAll().addClass("_gray");
+    $(".rating_stars").removeClass("active");
+    var rel=$(this).attr("rel");
+    $("#rating_stars_value").html(rel);
+
+});
+
+
+
 $("#input_calc_1").on('keypress',function(e) {
     if(e.which == 13) {
         calc1();
