@@ -280,13 +280,17 @@ class ProductTemplateDecorator implements IDecorator
         /**Доставка */
         //print_r($data['pUnits']);
         $base_weight=0;
+        $base_vol=0;
         foreach($data['pUnits'] as $unit){
             if($unit['isPackageBase']){
                 $base_weight=$unit['weight'];
+                $base_vol=$unit['calcKoef'];
+                
             }
         }
 
         $data['baseWeight']=$base_weight;
+        $data['baseVol']=$base_vol;
 
         //$base_count=$product_info['mincount'];
         //$data['delivery_text']=$registry->get('model_catalog_product')->getDelivery($product_id,$base_weight,$base_count);

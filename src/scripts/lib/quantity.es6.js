@@ -26,8 +26,6 @@ class Quantity {
         
         var rosn_limit=$("#data-rosn_limit").attr("data-rosn_limit");
         
-        //console.log("var1="+rosn_limit*)
-        //console.log(opts);
         this._options = {
             /** SaleQuantity options */
             'sale_step': opts.sale_step? parseFloat(opts.sale_step) : 1,

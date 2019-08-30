@@ -403,14 +403,12 @@ function calc3(){
         $("#input_area1").html(data_calc1);
         $("#input_area2").html(data_calc2);
         $("#input_area3").html(data_calc3);
-        var data_calc_count=getFloat($("#priceSwitcher").attr("data-base_weight"));
+        var data_calc_count=getFloat($("#priceSwitcher").attr("data-base_vol"));
         if(!data_calc_count){
             data_calc_count=1;
         }
         var calc_rez=Math.ceil(total_value/data_calc_count);
-        console.log(total_value+"/"+data_calc_count)
-        console.log(calc_rez);
-
+        
         var unitpack1=$(".unitpack1");
         //var count_itm1=Math.ceil(total_value/data_calc3);
        
@@ -420,7 +418,20 @@ function calc3(){
         
         $(".wrap_table_data").fadeIn(200);
     
+        
         var min_count=$("#priceSwitcher").attr("data-rosn_limit");
+
+        var denom=1;
+        if($("#priceSwitcher").children(".unitpack1").attr("data-ui_step")!=undefined){
+            denom=$("#priceSwitcher").children(".unitpack1").attr("data-ui_step")*1;
+        }
+        min_count=min_count*denom;
+        
+/*
+        console.log($("#priceSwitcher").attr("data-denom"))
+        console.log("TUT="+min_count);
+        console.log(calc_rez+"<"+min_count);
+*/
         if(calc_rez<min_count){
             $(".calc_hint").fadeIn();
             $("#calc_out2").html(min_count);

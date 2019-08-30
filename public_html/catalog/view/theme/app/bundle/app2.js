@@ -18851,6 +18851,7 @@ if( $('.qnt-container-cart').length > 0) {
             'sale_to_ui_koef': $priceUnitKoef,
             'ui_names': $priceUnitName,
             'el_name': $inputName,
+            'ui_step':$el.attr('data-ui_step'),
             'ui_minimum':$el.attr('data-ui_minimum')
         });
         
@@ -18929,20 +18930,7 @@ function refresh_veiew_cart(json){
 }
 function refresh_cart(){
     var data=$("#cart_form").serialize();
-    //console.log("refresh_cart");
-    //console.log(data);
-/*
-    var data='';
-    $(".basket-row").each(function(){
-        var qnt_itm=$(this).find(".qnt-container ");
-        var itm_count=$(this).find(".qnt").val();
-        data+="&"+qnt_itm.attr("data-el_name")+"="+itm_count;
-        //key=$(this).attr("data-cartid");
-        //var data="key="+key;
-    });
-    //console.log(data);
-*/
-
+    
     $.ajax({
         url: '/index.php?route=checkout/cart/ajaxRefresh/',
         data: data,
@@ -21342,9 +21330,7 @@ function () {
   function Quantity(view, opts) {
     _classCallCheck(this, Quantity);
 
-    var rosn_limit = $("#data-rosn_limit").attr("data-rosn_limit"); //console.log("var1="+rosn_limit*)
-    //console.log(opts);
-
+    var rosn_limit = $("#data-rosn_limit").attr("data-rosn_limit");
     this._options = {
       /** SaleQuantity options */
       'sale_step': opts.sale_step ? parseFloat(opts.sale_step) : 1,
@@ -22504,14 +22490,12 @@ function calc3(){
         $("#input_area1").html(data_calc1);
         $("#input_area2").html(data_calc2);
         $("#input_area3").html(data_calc3);
-        var data_calc_count=getFloat($("#priceSwitcher").attr("data-base_weight"));
+        var data_calc_count=getFloat($("#priceSwitcher").attr("data-base_vol"));
         if(!data_calc_count){
             data_calc_count=1;
         }
         var calc_rez=Math.ceil(total_value/data_calc_count);
-        console.log(total_value+"/"+data_calc_count)
-        console.log(calc_rez);
-
+        
         var unitpack1=$(".unitpack1");
         //var count_itm1=Math.ceil(total_value/data_calc3);
        
@@ -22521,7 +22505,20 @@ function calc3(){
         
         $(".wrap_table_data").fadeIn(200);
     
+        
         var min_count=$("#priceSwitcher").attr("data-rosn_limit");
+
+        var denom=1;
+        if($("#priceSwitcher").children(".unitpack1").attr("data-ui_step")!=undefined){
+            denom=$("#priceSwitcher").children(".unitpack1").attr("data-ui_step")*1;
+        }
+        min_count=min_count*denom;
+        
+/*
+        console.log($("#priceSwitcher").attr("data-denom"))
+        console.log("TUT="+min_count);
+        console.log(calc_rez+"<"+min_count);
+*/
         if(calc_rez<min_count){
             $(".calc_hint").fadeIn();
             $("#calc_out2").html(min_count);

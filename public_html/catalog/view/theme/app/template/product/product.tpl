@@ -137,7 +137,7 @@
                                             
                                             
                                                 <ul id="priceSwitcher"
-                                                    data-currency_symbol="<?=$currencySymb?>" data-base_weight="<?=$baseWeight?>" data-opt_limit="<?=$optLimit?>" data-rosn_limit="<?=$mincount?>"> 
+                                                    data-currency_symbol="<?=$currencySymb?>" data-base_vol="<?=$baseVol?>" data-base_weight="<?=$baseWeight?>" data-opt_limit="<?=$optLimit?>" data-rosn_limit="<?=$mincount?>"> 
 
                                                     <li class="unitpack1" data-sale_to_ui_koef="<?=$pUnits[1]['sale_to_ui_koef']?>" 
                                                         <?php if($pUnits[1]['force_step_by_one'] == 1):?>
