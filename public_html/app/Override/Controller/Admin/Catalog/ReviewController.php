@@ -642,7 +642,7 @@ class ReviewController extends \ControllerCatalogReview
             $this->error['company'] = $this->language->get('error_company');
         }
 
-        if( 1 != preg_match('~^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$~', $this->request->post['email']) ) {
+        if( 1 != preg_match('~^([A-z0-9_-]+\.)*[A-z0-9_-]+@[A-z0-9_-]+(\.[A-z0-9_-]+)*\.[A-z]{2,6}$~', $this->request->post['email']) ) {
             $this->error['email'] = $this->language->get('error_email');
         }
 
