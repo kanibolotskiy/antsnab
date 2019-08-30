@@ -8,7 +8,14 @@
         <?php if (!empty($products)): ?>
             <div class="catalog-info">
                 <h1 class="title"><?= $heading_title ?></h1>
-                <?= $description ?>
+                <div class="wrp_description">
+                    <?php if($catalog_brand_img) {?>
+                        <div class="catalog-info_img">
+                            <img src="<?php echo $catalog_brand_img;?>" alt="<?= $heading_title ?>"/>
+                        </div>
+                    <?php }?>
+                    <?= $description ?>
+                </div>
             </div>
 
             <?php if(isset($categories_isseo)) {?>

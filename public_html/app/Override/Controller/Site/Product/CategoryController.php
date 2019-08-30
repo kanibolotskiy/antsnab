@@ -91,6 +91,16 @@ class CategoryController extends \Controller
         $this->data["cat_view1"]=$cat_view1;
         $this->data["cat_view2"]=$cat_view2;
         $this->data["cat_view_class"]=$cat_view_class;
+        
+        //print_r($category_final_info);
+        
+        $image_brand = $this->model_tool_image->resize($category_final_info["image"], 100, 100);
+
+		$this->data['catalog_brand_img'] = $image_brand;
+            
+            
+        
+        //echo $catalog_brand
 
         $gateway = new FinalCategory($this->registry);
         $isCategoryFinal = $gateway->isCategoryFinal($category_id);
@@ -99,7 +109,6 @@ class CategoryController extends \Controller
         $category_info = $this->model_catalog_category->getCategory($category_id);
         /* @ИСПРАВИТЬ перенести ниже после проверки наличия category_info */
         $categories_seo = $this->model_catalog_category->getCategoresSeo($category_id);
-
 
         if (!$category_info) {
             $this->showNotFound();

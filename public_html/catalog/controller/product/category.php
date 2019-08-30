@@ -258,6 +258,7 @@ class ControllerProductCategory extends Controller {
 
 			$url = '';
 			$data['bottom_text'] = 'test';
+
 			if (isset($this->request->get['filter'])) {
 				$url .= '&filter=' . $this->request->get['filter'];
 			}
@@ -411,6 +412,8 @@ class ControllerProductCategory extends Controller {
 
 			$this->response->setOutput($this->load->view('product/category', $data));
 		} else {
+
+
 			$url = '';
 
 			if (isset($this->request->get['path'])) {

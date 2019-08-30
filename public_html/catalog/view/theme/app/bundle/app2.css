@@ -3077,6 +3077,10 @@ table.table_data td a { color: #598ba6; }
 
 .calc_hint { display: none; }
 
+.wrp_description { position: relative; overflow: hidden; }
+
+.catalog-info_img { float: right; margin-left: 20px; }
+
 @media screen and (max-width: 1200px) { .price-list .select-list ul.list > li { width: 100%; }
   .sidebar { margin-right: 20px; }
   .prehead_cap { display: none; } }
