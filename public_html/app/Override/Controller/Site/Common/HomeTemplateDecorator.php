@@ -54,12 +54,14 @@ class HomeTemplateDecorator implements IDecorator
                 );
             }
             
-            if($node->get('isbrand')){
-                $data['rootCategoriesBrands'][] = [
-                    'name' => $node->get('name'),
-                    'href' => $href,
-                    'image' => $resizedImage
-                ];
+            if($node->get('isseo')){
+                if($node->get('isbrand')){
+                    $data['rootCategoriesBrands'][] = [
+                        'name' => $node->get('name'),
+                        'href' => $href,
+                        'image' => $resizedImage
+                    ];
+                }
             }else{
                 $data['rootCategories'][] = [
                     'name' => $node->get('name'),
@@ -67,7 +69,6 @@ class HomeTemplateDecorator implements IDecorator
                     'image' => $resizedImage
                 ];
             }
-            
         }
 
         //mobile articles and news

@@ -91,7 +91,8 @@ class CategoryController extends \Controller
         $this->data["cat_view1"]=$cat_view1;
         $this->data["cat_view2"]=$cat_view2;
         $this->data["cat_view_class"]=$cat_view_class;
-                
+            
+        $this->data['catalog_brand_img']='';
         if($category_final_info["isbrand"]){
             $image_brand = $this->model_tool_image->resize($category_final_info["image"], 100, 100);
             $this->data['catalog_brand_img'] = $image_brand;
