@@ -443,6 +443,15 @@ class CategoryController extends \Controller
         } else {
             $limit = (int) $this->config->get($this->config->get('config_theme') . '_product_limit');
         }
+        
+        
+        if (isset($this->request->get['load_pages'])) {
+            $end = (int) $this->request->get['load_pages'];
+        }else{
+            $end = 1;
+        }
+
+        //echo "end=".$end;
 
         $filter_data = array(
             'filter_category_id' => $category_id,
@@ -450,7 +459,7 @@ class CategoryController extends \Controller
             'sort' => $sort,
             'order' => $order,
             'start' => ($page - 1) * $limit,
-            'limit' => $limit
+            'limit' => $end*$limit
         );
         return $filter_data;
     }

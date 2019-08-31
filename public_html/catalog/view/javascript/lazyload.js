@@ -1,37 +1,24 @@
 
 document.addEventListener("DOMContentLoaded", function(){
+    $(window).bind('popstate', function(event){
+        console.log("popstate");
+    });
+    
     function showMoreHandler(e) {
         e.preventDefault();
         var endPoint = $(this).attr('data-href'),
             $self = $(this),
             $container = $($self.attr('data-container')),
             $paginContainer = $($self.attr('data-pagincontainer'));
-        
+
+            
         var data_pagenum=$(this).attr("data-pagenum");
 
-        
-        //window.location.hash = "page"+data_pagenum;
-
-        //window.history.replaceState('', '', 'http://antsnab.cp06038.tmweb.ru/products/mastics/cold/?&pages=2');
-
-        /*
         var base_href=$("link[rel='canonical']").attr("href");
-        var data_pagenum=$(this).attr("data-pagenum");
-
-        var stateData = {
-            scrollTop: $(window).scrollTop()
-        };
         var href=base_href+"?load_pages="+data_pagenum;
-        var stateObj = { scrollTop: "500px" };
-        history.pushState(stateObj, null, href);
-        $(window).hashchange();
-        */
-        //history.pushState({page:href},null,href);
-        
-        //console.log(stateData)
-        //window.history.pushState(stateData, 'title', 'page2.html');
-        //e.preventDefault();
+        history.pushState({page:href}, null, href);
 
+        
         $.get(endPoint)
             .done(function(dataJson){
                 var data = $.parseJSON(dataJson);
@@ -70,7 +57,6 @@ document.addEventListener("DOMContentLoaded", function(){
 
             })
             .fail(function(){
-                //alert('Server Error');
                 console.log('Server Error');
             });
     };

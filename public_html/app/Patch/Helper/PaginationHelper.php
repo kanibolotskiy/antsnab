@@ -41,6 +41,10 @@ class PaginationHelper
             // не используем эти возможности библиотеки, нам не нужны сами записи, только странички
             return []; 
         });
+        //$page=3;
+        if(isset($_GET['load_pages'])){
+            $page=(int)$_GET['load_pages'];
+        }
         $pagination = $paginator->paginate($page);
         return $pagination;
     }
@@ -85,7 +89,6 @@ class PaginationHelper
         if( !$isAjax ) {
             $document->addScript('/catalog/view/javascript/lazyload.js');
         }
-
         return $load->view(static::LAZY_PAGINATION_TEMPLATE, ['pagination' => $paginationModel, 'pageUrl' => $pageUrl]);
     }
 
