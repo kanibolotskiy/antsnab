@@ -22191,11 +22191,6 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
         }
        
         function togglePrices($activeEl) {
-            //console.log("okk");
-            
-            
-            //data-sale_to_ui_koef
-            
 
             var $price = $('#price'),
                 price = parseFloat($price.attr('data-value')),
@@ -22214,10 +22209,6 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
 
             var opt_limit=$("#priceSwitcher").attr("data-opt_limit")
             var count_limit=Math.ceil(opt_limit*saleToUiKoef);
-            //console.log(mincount);
-
-            //var count_limit_min=Math.ceil(mincount*saleToUiKoef);
-
 
             var plural_str=getPlural(count_limit,plural1,plural2);
 
@@ -22226,13 +22217,10 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
             $("#opt_limit").html("от "+count_limit+" "+plural_str);
 
             $("#rosn_limit").html("от " + mincount + " " + plural_min_count_str);
-            //console.log();
 
             var isInt = ( uiPrice.valueOf() - parseInt(uiPrice.valueOf()) === 0 ),
                 formatStr = isInt?'### ###.':'### ###,##';
-                //console.log(formatStr+"+"+currency+"+"+uiPrice.valueOf());
-                //console.log(format(formatStr + currency, uiPrice.valueOf() ));
-
+         
                 var price_val=uiPrice.valueOf();
                 var opt_price_val=uiWholeSalePrice.valueOf();
                 var price_str='';
@@ -22317,8 +22305,6 @@ $("#courier_select").on('change', function () {
     var unitpack2=$(".unitpack2");
     
     var unitpack1_count=Math.floor(max_weight*unitpack1.attr("data-sale_to_ui_koef")/weight);
-
-    //console.log($(this).val());
     if($(this).val()>0){
         if (typeof ym != 'undefined') {
             ym(14496178, 'reachGoal', 'loading-rates');
@@ -22616,7 +22602,6 @@ function calc5(){
         data_calc_count=1;
     }
 
-    //var total_value=data_calc1*data_calc2*data_calc3/data_calc_count/10;
     var total_value=data_calc1*data_calc2*data_calc3/10/data_product4;
     total_value=Math.ceil(total_value*100)/100;
     
@@ -22673,33 +22658,12 @@ $(".rating_stars").mouseleave(function(){
     $("#rating_stars_value").html(star_value);
     var i=0;
     $(".rating_star").each(function(){
-        console.log(i+">"+star_value);
         if(i>=star_value){
 
             $(this).addClass("_hide");
         }
         i++;
     });
-    /*
-    for(i=1;i<=5;i++){
-        if(i>=star_value){
-
-        }
-    }
-    */
-    //$(".rating_star").removeClass("_gray");
-    //$(".rating_star").removeClass("_current").removeClass("_hide");
-    /*
-    if(!$(".rating_star._rate").length){
-        //$(".rating_star").removeClass("_hide");//.removeClass("_current");    
-        $("#rating_stars_value").html(5);
-        $("#star_value").val(5);
-    }else{
-
-    }
-    $(this).removeClass("active");
-    $(".rating_star").removeClass("_current").removeClass("_hide");
-    */
 });
 $(".rating_star").click(function(){
     $(this).addClass("_rate");
