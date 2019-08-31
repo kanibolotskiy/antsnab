@@ -553,7 +553,10 @@ class ControllerProductProduct extends Controller {
 			
 
 			$data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
-			$data['rating'] = (int)$product_info['rating'];
+			
+
+			//$ratingValue
+			//echo "!".$data['rating']."!";
 
 			// Captcha
 			if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('review', (array)$this->config->get('config_captcha_page'))) {
@@ -568,13 +571,14 @@ class ControllerProductProduct extends Controller {
 			$data['captcha_key'] = $this->config->get('google_captcha_key');
 			
 			$data['reviews']=[];
+			$summary_reviews=0;
 			foreach ($results as $result) {
 				$data['reviews'][] = array(
 					'review_id'  => $result['review_id'],
 					'name'       => $result['name'],
 					'text'       => $result['text'],
 					'about'      => $result['name'],
-					'about_txt'      => $result['name'],
+					'about_txt'  => $result['name'],
 					'date'       => $result['date_added'],
 					'answer'     => $result['answer'],
 					'author'     => $result['author'],
@@ -583,8 +587,18 @@ class ControllerProductProduct extends Controller {
 					'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 					//'edit'       => $this->url->link('catalog/review/edit',  '&review_id=' . $result['review_id'] . $url, true)
 				);
-
+				$summary_reviews+=$result['rating'];
 			}
+
+			//$data['rating'] = (int)$product_info['rating'];
+			$count_reviews=count($data['reviews']);
+			$data['ratingSum']=$summary_reviews;
+			if($count_reviews){
+				$data['ratingValue']=round($summary_reviews/$count_reviews,2);
+			}else{
+				$data['ratingValue']=5;
+			}
+
 
 
 			//current page

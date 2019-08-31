@@ -97,8 +97,11 @@ class ModelCatalogReview extends Model
     public function addReview($product_id, $data)
     {
        /* $this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['name']) . "', customer_id = '" . (int) $this->customer->getId() . "', product_id = '" . (int) $product_id . "', text = '" . $this->db->escape($data['text']) . "', rating = '" . (int) $data['rating'] . "', date_added = NOW()");*/
-
-         $this->db->query("INSERT INTO " . DB_PREFIX . "review SET sended=0, company ='" . $this->db->escape($data['company']) . "', email = '" . $this->db->escape($data['email']) . "', author = '" . $this->db->escape($data['author']) . "', customer_id = '" . (int) $this->customer->getId() . "', product_id = '" . (int) $product_id . "', text = '" . $this->db->escape($data['text']) . "', date_added = NOW()");
+        $rating=0;
+        if($data['rating']){
+            $rating=(int) $data['rating'];
+        }
+        $this->db->query("INSERT INTO " . DB_PREFIX . "review SET sended=0, company ='" . $this->db->escape($data['company']) . "', email = '" . $this->db->escape($data['email']) . "', author = '" . $this->db->escape($data['author']) . "', customer_id = '" . (int) $this->customer->getId() . "', product_id = '" . (int) $product_id . "', text = '" . $this->db->escape($data['text']) . "', rating = '" . $rating . "', date_added = NOW()");
 
 
         $review_id = $this->db->getLastId();

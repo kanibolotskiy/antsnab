@@ -22508,24 +22508,31 @@ function calc3(){
         
         var min_count=$("#priceSwitcher").attr("data-rosn_limit");
 
-        var denom=1;
+        var step=1;
         if($("#priceSwitcher").children(".unitpack1").attr("data-ui_step")!=undefined){
-            denom=$("#priceSwitcher").children(".unitpack1").attr("data-ui_step")*1;
+            step=$("#priceSwitcher").children(".unitpack1").attr("data-ui_step")*1;
         }
-        min_count=min_count*denom;
+        min_count=min_count*step;
         
-/*
-        console.log($("#priceSwitcher").attr("data-denom"))
-        console.log("TUT="+min_count);
-        console.log(calc_rez+"<"+min_count);
-*/
         if(calc_rez<min_count){
+            $("#calc_hint_caption").html("мин. для заказа");
             $(".calc_hint").fadeIn();
             $("#calc_out2").html(min_count);
             $("#calc_out1").attr("data-count",min_count);
         }else{
-            $(".calc_hint").fadeOut();
-            $("#calc_out1").attr("data-count",calc_rez);
+            if(min_count>1){
+                $("#calc_hint_caption").html("кратно упаковкам");
+                var step_count=Math.ceil(calc_rez/min_count);
+                $("#calc_out2").html(step_count*min_count);
+                
+                $(".calc_hint").fadeIn(200);
+                $("#calc_out1").attr("data-count",step_count*min_count);
+            }else{
+                $(".calc_hint").fadeOut(200);
+                $("#calc_out1").attr("data-count",calc_rez);
+            }
+            
+            
         }
 
     }else{
@@ -22658,24 +22665,50 @@ $(".rating_star").mouseenter(function(){
 });
 
 $(".rating_stars").mouseenter(function(){
-    $(this).addClass("active");
+    $(".rating_star").removeClass("_rate");
 });
 $(".rating_stars").mouseleave(function(){
+    $(".rating_star").removeClass("_current").removeClass("_hide");
+    var star_value=$("#star_value").val();
+    $("#rating_stars_value").html(star_value);
+    var i=0;
+    $(".rating_star").each(function(){
+        console.log(i+">"+star_value);
+        if(i>=star_value){
+
+            $(this).addClass("_hide");
+        }
+        i++;
+    });
+    /*
+    for(i=1;i<=5;i++){
+        if(i>=star_value){
+
+        }
+    }
+    */
+    //$(".rating_star").removeClass("_gray");
+    //$(".rating_star").removeClass("_current").removeClass("_hide");
+    /*
     if(!$(".rating_star._rate").length){
-        $(".rating_star").removeClass("_hide").removeClass("_current");    
+        //$(".rating_star").removeClass("_hide");//.removeClass("_current");    
         $("#rating_stars_value").html(5);
         $("#star_value").val(5);
+    }else{
+
     }
     $(this).removeClass("active");
+    $(".rating_star").removeClass("_current").removeClass("_hide");
+    */
 });
 $(".rating_star").click(function(){
     $(this).addClass("_rate");
     $(this).prevAll().addClass("_rate");
-    $(this).nextAll().addClass("_gray");
+    $(this).nextAll().addClass("_hide");
     $(".rating_stars").removeClass("active");
     var rel=$(this).attr("rel");
     $("#rating_stars_value").html(rel);
-
+    $("#star_value").val(rel);
 });
 
 

@@ -36,11 +36,11 @@
                 
                 
                 <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" style="display:none">
-                    <meta itemprop="ratingValue" content="5" />
+                    <meta itemprop="ratingValue" content="<?=$ratingValue?>" />
                     <meta itemprop="bestRating" content="5"/>
                     <meta itemprop="worstRating" content="1"/>
                     <meta itemprop="ratingCount" content="<?php echo count($reviews);?>" />
-                    <meta itemprop="reviewCount" content="<?php echo count($reviews);?>" />
+                    <meta itemprop="reviewCount" content="<?=$ratingSum?>" />
                 </div>
 
 
@@ -630,11 +630,11 @@
                                         <meta itemprop="itemReviewed" content="<?= $r['about_txt'] ?>"/>
 
                                         <span itemprop="reviewRating" itemscope="" itemtype="http://schema.org/Rating">
-                                            <meta itemprop="ratingValue" content="5">
+                                            <meta itemprop="ratingValue" content="<?= $r['rating'] ?>">
                                             <meta itemprop="worstRating" content="1">
                                             <meta itemprop="bestRating" content="5">
-                                            
                                         </span>
+
                                         <div class = "review">
                                             <div class = "top">
                                                 <span itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -642,7 +642,21 @@
                                                 </span>
                                                 <p><?= $r['date_added'] ?></p>
                                             </div>
-                                            <span itemprop="reviewBody"><?= $r['text'] ?></span>
+                                            
+                                            <div class="rating_stars _reviews">
+                                                
+                                                <?php for($i=1;$i<=5;$i++){?>
+                                                    
+                                                    <?php if($i<=$r['rating']){?>
+                                                        <div class="star_block"></div>
+                                                    <?php }else{?>
+                                                        <div class="star_block _hide"></div>
+                                                    <?php }?>
+
+                                                <?php }?>
+                                            </div>
+
+                                            <div class="reviewBody" itemprop="reviewBody"><?= $r['text'] ?></div>
                                         </div>
                                         <?php if (!empty($r['answer'])): ?>
                                             <div class = "review answer-review">
@@ -664,7 +678,7 @@
                             <div class="give-feedback">
                                 <div class="title-give-feedback">Оставить отзыв</div>
                                 <form id="form-review" method="post">
-                                    <input type="hidden" name="star" value="5" id="star_value"/>
+                                    
                                     <div class = "row">
                                         <span>Имя: 
                                             <i id="error_author" class="error"></i>
@@ -691,13 +705,14 @@
                                                 <i id="error_text" class="error"></i>
                                             </span>
                                             <div class="wrp_star_rating">
+                                                <input type="hidden" name="rating" value="5" id="star_value"/>
                                                 <span class="rating_caption">Рейтинг:</span>
                                                 <div class="rating_stars">
-                                                    <div class="rating_star" rel="1"></div>
-                                                    <div class="rating_star" rel="2"></div>
-                                                    <div class="rating_star" rel="3"></div>
-                                                    <div class="rating_star" rel="4"></div>
-                                                    <div class="rating_star" rel="5"></div>
+                                                    <div class="star_block rating_star _rate" rel="1"></div>
+                                                    <div class="star_block rating_star _rate" rel="2"></div>
+                                                    <div class="star_block rating_star _rate" rel="3"></div>
+                                                    <div class="star_block rating_star _rate" rel="4"></div>
+                                                    <div class="star_block rating_star _rate" rel="5"></div>
                                                 </div>
                                                 <div class="rating_stars_value">(<span id="rating_stars_value">5</span>)</div>
                                             </div>
