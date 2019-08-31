@@ -22423,11 +22423,24 @@ function calc1(){
         $("#calc_out2").attr("data-count",count_itm2);
         $("#input_area").html(data_calc2+"м<sup>2</sup>");
         $(".wrap_table_data").fadeIn(200);
+
+        var min_count=$("#priceSwitcher").attr("data-rosn_limit");
+        if(total_consumption<min_count){
+            $(".calc_hint").fadeIn();
+            
+            $("#calc_out1").attr("data-count",min_count);
+            $("#calc_out3").html(min_count);
+        }else{
+            $(".calc_hint").fadeOut();
+            $("#calc_out1").attr("data-count",total_consumption);
+        }
+
     }else{
         $("#calc_out1").html("-");
         $("#calc_out1").attr("data-count",0);
 
         $("#calc_out2").html("-");
+        $("#calc_out3").html("-");
         $("#calc_out2").attr("data-count",0);
         $(".wrap_table_data").fadeOut(200);
     }
@@ -22447,10 +22460,26 @@ function calc2(){
         var unitpack1=$(".unitpack1");
         var count_itm1=Math.ceil(total_consumption/data_calc3);
         var unitpack1_str=declOfNum(count_itm1, [unitpack1.attr("data-ui_name"),unitpack1.attr("data-ui_name_genitive"),unitpack1.attr("data-ui_name_plural")]);
+        
         $("#calc_out1").html(number_format(count_itm1,0,"."," ")+" "+unitpack1_str);
-        $("#calc_out1").attr("data-count",count_itm1);
+        //$("#calc_out1").attr("data-count",count_itm1);
         $("#input_area").html(data_calc2+"м<sup>2</sup>");
         $(".wrap_table_data").fadeIn(200);
+
+        var min_count=$("#priceSwitcher").attr("data-rosn_limit");
+
+        console.log(min_count)
+        
+        if(total_consumption<min_count){
+            $(".calc_hint").fadeIn();
+            
+            $("#calc_out1").attr("data-count",min_count);
+            $("#calc_out2").html(min_count);
+        }else{
+            $(".calc_hint").fadeOut();
+            $("#calc_out1").attr("data-count",total_consumption);
+        }
+
     }else{
         $("#calc_out1").html("-");
         $("#calc_out1").attr("data-count",0);
@@ -22459,7 +22488,7 @@ function calc2(){
 }
 function calc3(){
     if (typeof ym != 'undefined') {
-        ym(14496178, 'reachGoal', 'calc-use');
+            ym(14496178, 'reachGoal', 'calc-use');
     }
 
     var data_product1=getFloat($("#calculator").attr("calc_data1"));
@@ -22473,62 +22502,52 @@ function calc3(){
 
 
     if(total_value>0){
-        $("#input_area1").html(data_calc1);
-        $("#input_area2").html(data_calc2);
-        $("#input_area3").html(data_calc3);
-        var data_calc_count=getFloat($("#priceSwitcher").attr("data-base_vol"));
-        if(!data_calc_count){
-            data_calc_count=1;
-        }
-        var calc_rez=Math.ceil(total_value/data_calc_count);
-        
-        var unitpack1=$(".unitpack1");
-        //var count_itm1=Math.ceil(total_value/data_calc3);
-       
-        var unitpack1_str=declOfNum(calc_rez, [unitpack1.attr("data-ui_name"),unitpack1.attr("data-ui_name_genitive"),unitpack1.attr("data-ui_name_plural")]);
-        $("#calc_out1").html(number_format(calc_rez,0,"."," ")+" "+unitpack1_str);
-        
-        
-        $(".wrap_table_data").fadeIn(200);
-    
-        
-        var min_count=$("#priceSwitcher").attr("data-rosn_limit");
-
-        var step=1;
-        if($("#priceSwitcher").children(".unitpack1").attr("data-ui_step")!=undefined){
-            step=$("#priceSwitcher").children(".unitpack1").attr("data-ui_step")*1;
-        }
-        min_count=min_count*step;
-        
-        if(calc_rez<min_count){
-            $("#calc_hint_caption").html("мин. для заказа");
-            $(".calc_hint").fadeIn();
-            $("#calc_out2").html(min_count);
-            $("#calc_out1").attr("data-count",min_count);
-        }else{
-            if(min_count>1){
-                $("#calc_hint_caption").html("кратно упаковкам");
-                var step_count=Math.ceil(calc_rez/min_count);
-                $("#calc_out2").html(step_count*min_count);
-                
-                $(".calc_hint").fadeIn(200);
-                $("#calc_out1").attr("data-count",step_count*min_count);
-            }else{
-                $(".calc_hint").fadeOut(200);
-                $("#calc_out1").attr("data-count",calc_rez);
+            $("#input_area1").html(data_calc1);
+            $("#input_area2").html(data_calc2);
+            $("#input_area3").html(data_calc3);
+            var data_calc_count=getFloat($("#priceSwitcher").attr("data-base_vol"));
+            if(!data_calc_count){
+                    data_calc_count=1;
             }
-            
-            
-        }
+            var calc_rez=Math.ceil(total_value/data_calc_count);
 
+            var unitpack1=$(".unitpack1");
+            //var count_itm1=Math.ceil(total_value/data_calc3);
+
+            var unitpack1_str=declOfNum(calc_rez, [unitpack1.attr("data-ui_name"),unitpack1.attr("data-ui_name_genitive"),unitpack1.attr("data-ui_name_plural")]);
+            $("#calc_out1").html(number_format(calc_rez,0,"."," ")+" "+unitpack1_str);
+            $(".wrap_table_data").fadeIn(200);
+            var min_count=$("#priceSwitcher").attr("data-rosn_limit");
+
+            var step=1;
+            if($("#priceSwitcher").children(".unitpack1").attr("data-ui_step")!=undefined){
+                    step=$("#priceSwitcher").children(".unitpack1").attr("data-ui_step")*1;
+            }
+            min_count=min_count*step;
+
+            if(calc_rez<min_count){
+                    $("#calc_hint_caption").html("мин. для заказа");
+                    $(".calc_hint").fadeIn();
+                    $("#calc_out2").html(min_count);
+                    $("#calc_out1").attr("data-count",min_count);
+            }else{
+                    if(min_count>1){
+                            $("#calc_hint_caption").html("кратно упаковкам");
+                            var step_count=Math.ceil(calc_rez/min_count);
+                            $("#calc_out2").html(step_count*min_count);
+
+                            $(".calc_hint").fadeIn(200);
+                            $("#calc_out1").attr("data-count",step_count*min_count);
+                    }else{
+                            $(".calc_hint").fadeOut(200);
+                            $("#calc_out1").attr("data-count",calc_rez);
+                    }
+            }
     }else{
-
-        $("#input_area1").html("-");
-        $("#input_area2").html("-");
-        $("#input_area3").html("-");
-
-        //$("#calc_out1").attr("data-count",0);
-        $(".wrap_table_data").fadeOut(200);
+            $("#input_area1").html("-");
+            $("#input_area2").html("-");
+            $("#input_area3").html("-");
+            $(".wrap_table_data").fadeOut(200);
     }
 
 }
