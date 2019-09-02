@@ -78,10 +78,7 @@
                     <div class="cart_similar_info">
                         <div class="cart_similar_img">
                             <a target="_blank" title="<?=$product_result['href']?>" href="<?=$product_result['href']?>">
-                                <!--<img src="<?=$product_result['image']?>" />-->
-                                <img src="https://ant-snab.ru/image/cache/catalog/images/products/mastics/cold/mastika-proof/mastikapruf-120x1203.jpg" />
-                                
-
+                                <img src="<?=$product_result['image']?>" />
                             </a>
                         </div>
                         <div class="cart_similar_price"><?=$product_result['price']?></div>
