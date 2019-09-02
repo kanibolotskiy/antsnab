@@ -81,6 +81,7 @@ $('body').delegate('#lazy-load_container','onLazyLoaded', function(e, $items){
 
 /*-----------------------------------------------------*/
 function add_to_cart(product_id, count_add, show_added){
+    
     $.ajax({
         url:  '/index.php?route=checkout/cart/add',
         type: 'post',
@@ -97,6 +98,7 @@ function add_to_cart(product_id, count_add, show_added){
             $('#cart_preloader').fadeOut(200);
         },
         success: function(json) {
+            
             if (json['success']) {
                 var product = [{
                     "id": json['metrika_product_id'],
@@ -114,6 +116,7 @@ function add_to_cart(product_id, count_add, show_added){
 
                 //if(itm.hasClass("cart_button_buy")){
                 if(show_added){
+                    
                     var total=json["total"];
                     $("#total_cart").css({"opacity":0});
                     $("#total_cart").text(total);
@@ -125,13 +128,19 @@ function add_to_cart(product_id, count_add, show_added){
 
                     var f_itm=$('[data-el_name="quantity['+added_key+']"]')
                     if(f_itm.length){
-                        f_itm.closest(".basket-row").html(json["added_product"]);
+                        //var added_itm=$(json["added_product"]);
+                        //console.log(added_itm.html())
+
+                        f_itm.closest(".basket-row").replaceWith(json["added_product"]);
                     }else{
                         $(".basket-block").append(json["added_product"]);
                     }
                     
                     if( $('.qnt-container-cart').length > 0) {
+                        
                         $('.qnt-container-cart.without_input').each(function(index){
+                            
+
                             var $el = $(this),
                                 /** Имя единицы измерения в которой ведем учет и офрмляем заказ (priceUnit) */
                                 $priceUnitName = {
@@ -201,23 +210,24 @@ $(document).ready(function(){
         e.preventDefault();
         var show_added=0;
         var itm=$(this);
-        if(itm.hasClass("cart_button_buy")){
-            //show_added="show_added=1";
+        if(itm.hasClass("cart_similar_button")){
             show_added=1;
-        }     
-        
-        var $container = $(this).parents('.quantity-buy'),
+            var product_id=$(this).attr('data-product_id');
+            
+            add_to_cart(product_id, 1, show_added);
+        }else{
+            var $container = $(this).parent('.quantity-buy'),
             qntController = $container.find('.qnt-widget').data('quantity'), 
             quantityInSaleUnits = qntController.getQuantityInSaleUnits(), 
             toPriceQuantityKoef = new Fraction( $(this).attr('data-sale_to_price_koef') ), 
             quantityInPriceUnits = toPriceQuantityKoef.mul(quantityInSaleUnits); 
-        
-        
-        var product_id=$(this).attr('data-product_id');
-        var count_add=quantityInPriceUnits.valueOf();
 
-        
-        add_to_cart(product_id, count_add,show_added);
+            var product_id=$(this).attr('data-product_id');
+            var count_add=quantityInPriceUnits.valueOf();
+            add_to_cart(product_id, count_add,0);
+        }
+     
+     
 
         
     });

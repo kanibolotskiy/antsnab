@@ -1,7 +1,7 @@
 import {Quantity} from './lib/quantity.es6.js';
 
 if( $('.qnt-container-cart').length > 0) {
-    $('.qnt-container-cart').each(function(index){
+    $('.qnt-container-cart.without_input').each(function(index){
         var $el = $(this),
             /** Имя единицы измерения в которой ведем учет и офрмляем заказ (priceUnit) */
             $priceUnitName = {
@@ -145,6 +145,11 @@ $(function(){
     $(".basket-row").each(function(){
         check_opt_notification($(this));
     });
+
+    $(".cart_similar_button").click(function(){
+
+    });
+
     getDelivery();
     $(document).on("click",".actionbutton.del",function(){
         var key=$(this).attr("data-cartid");

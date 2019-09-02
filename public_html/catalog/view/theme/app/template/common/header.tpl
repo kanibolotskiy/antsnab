@@ -43,7 +43,7 @@
         <?php } ?>
         
     </head>
-    <body>
+    <body class="<?=$class?>">
         <?php if (true === $thank_you): ?>
             <!-- Thank you form -->
             <div class="popup thank-you visible" >
@@ -113,29 +113,33 @@
         </div>
 
         <a href="#" class="up" rel="nofollow"></a>
-        <div class="preheader">
-            <div class="container">
-                <div class="preheader_info">
-                    <a href="contacts/" >
-                        <div class="prehead_address">
-                            <span class="prehead_cap">Офис:</span>
-                            <span class="prehead_val">г. Москва<span class="hide_mb">, Высоковольтный проезд, дом 1, стр. 43</span></span>
+        
+        <?php if($class != "checkout-cart"){ ?>
+            <div class="preheader">
+                <div class="container">
+                    <div class="preheader_info">
+                        <a href="contacts/" >
+                            <div class="prehead_address">
+                                <span class="prehead_cap">Офис:</span>
+                                <span class="prehead_val">г. Москва<span class="hide_mb">, Высоковольтный проезд, дом 1, стр. 43</span></span>
+                            </div>
+                        </a>
+                        <div class="preheader_divider"></div>
+                        <div class="prehead_work">
+                            <span class="prehead_cap">Мы работаем:</span>
+                            <span class="prehead_val"><?= $worktime ?></span>
                         </div>
-                    </a>
-                    <div class="preheader_divider"></div>
-                    <div class="prehead_work">
-                        <span class="prehead_cap">Мы работаем:</span>
-                        <span class="prehead_val"><?= $worktime ?></span>
+                        <div class="preheader_divider _second"></div>
+                        <a href="#" class="js-call with_goal" rel="nofollow" goal="callme">
+                            <div class="prehead_call">
+                                <span class="prehead_val order_call">Заказать звонок</span>
+                            </div>
+                        </a>
                     </div>
-                    <div class="preheader_divider _second"></div>
-                    <a href="#" class="js-call with_goal" rel="nofollow" goal="callme">
-                        <div class="prehead_call">
-                            <span class="prehead_val order_call">Заказать звонок</span>
-                        </div>
-                    </a>
                 </div>
             </div>
-        </div>
+        <?php }?>
+
         <header class="header container">
             
             <div class="wrap_logo">
@@ -170,9 +174,11 @@
                 
             </div>
 
-            <div class="header_email">
-                <a href="mailto:<?= $email_site ?>"><?= $email_site ?></a>
-            </div>
+            <?php if($class != "checkout-cart"){ ?>
+                <div class="header_email">
+                    <a href="mailto:<?= $email_site ?>"><?= $email_site ?></a>
+                </div>
+            <?php }?>
             <!--
             <div class="line"></div>
             <div class="schedule">
@@ -184,7 +190,9 @@
             
             <a class="btn-request-call">Заказать звонок</a>
             -->
-            <?= $cart ?>
+            <?php if($class != "checkout-cart"){ ?>
+                <?= $cart ?>
+            <?php }?>
             <a class="btn-nav">
                 <span>
                     <b></b>

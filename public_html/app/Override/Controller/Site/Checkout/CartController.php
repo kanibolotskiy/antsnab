@@ -287,6 +287,29 @@ class CartController extends \ControllerCheckoutCart
                             );
                         }
                     }
+
+                    $step=1;
+                    $mincount=1;
+                    
+                    $product_related_results = $this->model_catalog_product->getProductRelated($product['product_id'],true,4,'product_related');
+                    $product_related=[];
+                    foreach($product_related_results as $related_result){
+                        
+                        if ($related_result['image']) {
+                            $image_rel = $this->model_tool_image->myResize($related_result['image'], 30,30,2);
+                        } else {
+                            $image_rel = $this->model_tool_image->resize('placeholder.png', 30,30,2);
+                        }
+
+                        $product_related[]=array(
+                            'product_id' => $related_result['product_id'],
+                            'meta_h1' => $related_result['meta_h1'],
+                            'name' => $related_result['name'],
+                            'href' => $this->url->link('product/product', 'product_id=' . $related_result['product_id']),
+                            'image' => $image_rel, 
+                            'price' => $this->currency->format($this->tax->calculate($related_result['price'], $related_result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+                        );
+                    }
                     
                     $data['product'] = array(
                         'cart_id' => $product['cart_id'],
@@ -312,7 +335,10 @@ class CartController extends \ControllerCheckoutCart
                         'saleToPriceKoef' => $saleToPriceKoef,
                         'location' => $product['location'],
                         'properties' => $previewProperties,
-                        'href' => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+                        'href' => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+                        'mincount'=>$mincount,
+                        'step'=>$step,
+                        'product_related'=>$product_related
                     );
                     /*------------------------------------------------*/
                     
@@ -535,6 +561,8 @@ class CartController extends \ControllerCheckoutCart
             $produnitsGateway = new ProdUnits($this->registry);
             $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
 
+            $this->load->model('catalog/product');
+
             foreach ($products as $product) {
                 $product_total = 0;
 
@@ -720,9 +748,27 @@ class CartController extends \ControllerCheckoutCart
                         }
                     }
                 }
-                //echo "product_id=".$product['cart_id']."|quantity=".$product['quantity']."<br/>";
-                
-              
+
+                $product_related_results = $this->model_catalog_product->getProductRelated($product['product_id'],true,4,'product_related');
+                $product_related=[];
+                foreach($product_related_results as $related_result){
+                    
+                    if ($related_result['image']) {
+                        $image_rel = $this->model_tool_image->myResize($related_result['image'], 30,30,2);
+                    } else {
+                        $image_rel = $this->model_tool_image->resize('placeholder.png', 30,30,2);
+                    }
+
+                    $product_related[]=array(
+                        'product_id' => $related_result['product_id'],
+                        'meta_h1' => $related_result['meta_h1'],
+                        'name' => $related_result['name'],
+                        'href' => $this->url->link('product/product', 'product_id=' . $related_result['product_id']),
+                        'image' => $image_rel, 
+                        'price' => $this->currency->format($this->tax->calculate($related_result['price'], $related_result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+                    );
+                }
+
                 $data['products'][] = array(
                     'cart_id' => $product['cart_id'],
                     'thumb' => $image,
@@ -749,7 +795,8 @@ class CartController extends \ControllerCheckoutCart
                     'properties' => $previewProperties,
                     'href' => $this->url->link('product/product', 'product_id=' . $product['product_id']),
                     'mincount'=>$mincount,
-                    'step'=>$step
+                    'step'=>$step,
+                    'product_related'=>$product_related
                 );
             }
 
@@ -814,11 +861,15 @@ class CartController extends \ControllerCheckoutCart
             $data['column_right'] = $this->load->controller('common/column_right');
             $data['content_top'] = $this->load->controller('common/content_top');
             $data['content_bottom'] = $this->load->controller('common/content_bottom');
+            
             $data['footer'] = $this->load->controller('common/footer');
             $data['header'] = $this->load->controller('common/header');
+            
 
-            $this->load->model('catalog/product');
+            
 
+           
+            /*
             //related products
             $data["products_analog"]=[];
             $product_ids=[];
@@ -828,16 +879,6 @@ class CartController extends \ControllerCheckoutCart
             }
             if(is_array($product_ids)){
                 $products_str=implode(",",$product_ids);
-
-                /*    
-                $results_rl = $this->model_catalog_product->getProductRelated($products_str,true,4,'product_related',$products_str);
-
-                $exclude_ids=array_merge($product_ids,array_keys($results_rl));
-                $exclude_str=implode(",",$exclude_ids);
-                
-                $results_an = $this->model_catalog_product->getProductRelated($products_str,true,2,'product_analogs',$exclude_str);
-                $results_analog=array_merge($results_rl, $results_an);
-                */
                 $results_analog = $this->model_catalog_product->getProductRelated($products_str,true,4,'product_related',$products_str);
                 
                 foreach ($results_analog as $result) {
@@ -976,8 +1017,10 @@ class CartController extends \ControllerCheckoutCart
 
                 
             }
+            */
 
             $this->response->setOutput($this->load->view('checkout/cart', $data));
+
         } else {
             $data['heading_title'] = $this->language->get('heading_title');
 

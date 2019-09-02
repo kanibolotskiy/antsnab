@@ -444,7 +444,7 @@ class ModelCatalogProduct extends Model {
 		if($rand){
 			$order_rand="ORDER BY RAND() LIMIT ".$limit;
 		}
-
+		$exclude_sql="";
 		if($exclude_ids){
 			$exclude_sql=" AND p.product_id NOT IN (".$exclude_ids.")";
 		}

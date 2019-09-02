@@ -1,4 +1,10 @@
 <div class="basket-row">
+    <?php if(!$product['stock']){?>
+        <div class="basket-row_info">
+            <p>Нет в наличии</p>
+            <p class="cart_del">Доставка 1-3 дня</p>
+        </div>
+    <?php }?>
     <ul>
         <li>
             <?php if ($product['thumb']) { ?>
@@ -38,7 +44,7 @@
         </li>
         <li>
             <div 
-                class="qnt-container-cart"
+                class="qnt-container-cart without_input"
                 data-el_name="quantity[<?php echo $product['cart_id']; ?>]"
                 data-sale_to_price_koef="<?=$product['saleToPriceKoef']?>" 
                 data-ui_name="<?=$product['priceUnit']['name']?>"
@@ -63,4 +69,30 @@
             </div>
         </li>
     </ul>
+    <div class="cart_similar_block">
+        <div class="similar_block_caption">Вам может пригодиться:</div>
+        <ul class="cart_similar_block_products">
+            <?php foreach($product['product_related'] as $product_result){?>
+                <li>
+                    <div class="cart_similar_cap"><a target="_blank" title="<?=$product_result['href']?>" href="<?=$product_result['href']?>"><?=$product_result['name']?></a></div>
+                    <div class="cart_similar_info">
+                        <div class="cart_similar_img">
+                            <a target="_blank" title="<?=$product_result['href']?>" href="<?=$product_result['href']?>">
+                                <!--<img src="<?=$product_result['image']?>" />-->
+                                <img src="https://ant-snab.ru/image/cache/catalog/images/products/mastics/cold/mastika-proof/mastikapruf-120x1203.jpg" />
+                                
+
+                            </a>
+                        </div>
+                        <div class="cart_similar_price"><?=$product_result['price']?></div>
+                        <div class="cart_similar_button buy" data-product_id="<?=$product_result['product_id']?>">+<div>
+
+                    </div>
+                    <div class="cart_similar_info_add">
+                        
+                    </div>
+                </li>
+            <?php }?>
+        </ul>
+    </div>
 </div>

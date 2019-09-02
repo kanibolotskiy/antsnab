@@ -24,6 +24,10 @@
                     <strong class="recalc intotal"><?php echo $total['title']; ?>: <span id="total_cart"><?php echo $total['text']; ?></span></strong>
                 <?php endforeach; ?>
 
+                <div class="cart_description content-text">
+                    <?php echo $cart_text;?>
+                </div>
+                
                 <div class="ordering">
                     <form id="order_form" method="post" enctype="multipart/form-data" >
                         
@@ -73,11 +77,9 @@
                     </form>
                 </div>
             </div>
-            <div class="cart_description content-text">
-                <?php echo $cart_text;?>
-            </div>
-
             
+
+            <!--
             <div class="mentioned-products mentioned-products2">
                 <?php if( $products_analog):?>
                 <div class="title">Сопутствующие товары</div>
@@ -126,6 +128,7 @@
                 </ul>
                 <?php endif;?>
             </div>
+            -->
         </div>
         <?php echo $content_bottom; ?>
     </div>

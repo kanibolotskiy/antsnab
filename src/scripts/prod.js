@@ -381,8 +381,6 @@ function calc2(){
 
         var min_count=$("#priceSwitcher").attr("data-rosn_limit");
 
-        console.log(min_count)
-        
         if(total_consumption<min_count){
             $(".calc_hint").fadeIn();
             
