@@ -296,9 +296,9 @@ class CartController extends \ControllerCheckoutCart
                     foreach($product_related_results as $related_result){
                         
                         if ($related_result['image']) {
-                            $image_rel = $this->model_tool_image->myResize($related_result['image'], 30,30,2);
+                            $image_rel = $this->model_tool_image->myResize($related_result['image'], 40,40,2);
                         } else {
-                            $image_rel = $this->model_tool_image->resize('placeholder.png', 30,30,2);
+                            $image_rel = $this->model_tool_image->resize('placeholder.png', 40,40,2);
                         }
 
                         $product_related[]=array(
@@ -749,14 +749,14 @@ class CartController extends \ControllerCheckoutCart
                     }
                 }
 
-                $product_related_results = $this->model_catalog_product->getProductRelated($product['product_id'],true,4,'product_related');
+                $product_related_results = $this->model_catalog_product->getProductRelated($product['product_id'],true,6,'product_related');
                 $product_related=[];
                 foreach($product_related_results as $related_result){
                     
                     if ($related_result['image']) {
-                        $image_rel = $this->model_tool_image->myResize($related_result['image'], 30,30,2);
+                        $image_rel = $this->model_tool_image->myResize($related_result['image'], 40,40,2);
                     } else {
-                        $image_rel = $this->model_tool_image->resize('placeholder.png', 30,30,2);
+                        $image_rel = $this->model_tool_image->resize('placeholder.png', 40,40,2);
                     }
 
                     $product_related[]=array(

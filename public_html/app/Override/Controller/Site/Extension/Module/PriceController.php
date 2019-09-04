@@ -93,7 +93,7 @@ class PriceController extends \Controller
         $firstActive = (null==$firstActive)?$firstCategories[0]->get('category_id'):$firstActive;
         $lists['active'][] = $firstActive;
         foreach($firstCategories as $cat) {
-            if(!$cat->get('isbrand')){
+            if((!$cat->get('isseo')) and (!$cat->get('isbrand'))){
                 $lists['l1'][ $cat->get('name') ] =  $cat->get('category_id');
             }
         }

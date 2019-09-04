@@ -5546,11 +5546,16 @@ table.table_data td a{color:#598ba6;}
     margin-top:10px;
     width: 160px !important;
     max-width:160px;min-width:160px;
-    margin-right:10px;border-right: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    /*
+    margin-right:10px;
     padding-top: 5px;
     padding-bottom: 5px;
+    */
+    box-sizing:border-box;
+    padding:10px 5px;
 }
-.cart_similar_img{width:40px;float:left;}
+.cart_similar_img{width:40px;height:40px;float:left;}
 .cart_similar_block_products .qnt-container-cart{float:left;width:110px;margin-right:0;
     
 }
@@ -5579,7 +5584,7 @@ display:flex;justify-content:space-between;align-items: center;
     -webkit-box-pack: justify;
 }
 .cart_similar_button{
-    margin-right: 10px;
+    /*margin-right: 10px;*/
     text-align:center;color:#fff;
     background:#d3a06d;
     transition:0.3s;
@@ -5610,6 +5615,8 @@ display:flex;justify-content:space-between;align-items: center;
 .checkout-cart .container.main.fixed-nav {padding-top:0;}
 .checkout-cart .footer-info{width:400px;float: right;}
 .checkout-cart .footer-right{position:relative;overflow:hidden;}
+.checkout-cart .container.main{border-top:1px solid #E29B63;padding-top:10px;}
+.checkout-cart .container-nav{display:none;}
 
 body.freeze{overflow:auto!important;}
 
@@ -5630,7 +5637,9 @@ body.freeze{overflow:auto!important;}
     .state_stock_cap{white-space:initial;}
 }
 @media screen and (max-width: 980px){
-    
+    .cart_similar_block_products li:nth-child(5){display:none;}
+    .cart_similar_block_products li:nth-child(6){display:none;}
+
 
     .bene_item{width:33%;}
     .wrap_price-for{flex-direction:column;align-items:initial;}
@@ -5672,7 +5681,19 @@ body.freeze{overflow:auto!important;}
 
 }
 
+@media screen and (max-width: 750px){
+    .cart_similar_block_products li{
+        width:49%!important;max-width:initial;min-width:initial;
+        margin-right:0;
+    }
+    .cart_similar_block_products li:nth-child(even){
+        border-right: 0;
+    }
+    
+}
 @media screen and (max-width: 640px){
+    
+
     .bene_item{width:48%;}
     .checkout-cart .footer-info{width:initial;}
     .preheader_divider{display:none;}
@@ -5730,4 +5751,5 @@ body.freeze{overflow:auto!important;}
     .footer a.mail{display:inline-block;}
     .description-mini{margin-top:10px;}
     .tab-block ul li .catalog-description{padding-left:15px;}
+    .checkout-cart .btn-nav {top: 115px;}
 }
