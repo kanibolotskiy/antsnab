@@ -736,26 +736,9 @@ class ModelCheckoutOrder extends Model {
 
 				$text .= $language->get('text_new_footer') . "\n\n";
 
-				if($order_info['email']){
-					$mail = new Mail();
-					$mail->protocol = $this->config->get('config_mail_protocol');
-					$mail->parameter = $this->config->get('config_mail_parameter');
-					$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-					$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-					$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-					$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-					$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
-					$mail->setTo($order_info['email']);
-					$mail->setFrom($this->config->get('config_email'));
-					$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
-					$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
-					$mail->setHtml($this->load->view('mail/order', $data));
-					$mail->setText($text);
-					$mail->send();
-				}
-				// Admin Alert Mail
 				
+
+				// Admin Alert Mail
 				if (in_array('order', (array)$this->config->get('config_mail_alert'))) {
 					$subject = sprintf($language->get('text_subject_admin'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'), $order_id);
 					$data['text_capred']='';
@@ -831,11 +814,32 @@ class ModelCheckoutOrder extends Model {
 					/**UTM метки */
 					$this->load->model('module/referrer');
 					$contact_data_referrer=$this->model_module_referrer->getContactsReferrer();
-					$data['utm_source']=$contact_data_referrer['utm_source'];
-					$data['utm_medium']=$contact_data_referrer['utm_medium'];
-					$data['utm_campaign']=$contact_data_referrer['utm_campaign'];
-					$data['utm_content']=$contact_data_referrer['utm_content'];
-					$data['utm_term']=$contact_data_referrer['utm_term'];
+
+					if(isset($contact_data_referrer['utm_source'])){
+						$data['utm_source']=$contact_data_referrer['utm_source'];
+					}else{
+						$data['utm_source']="";
+					}
+					if(isset($contact_data_referrer['utm_medium'])){
+						$data['utm_medium']=$contact_data_referrer['utm_medium'];
+					}else{
+						$data['utm_medium']="";
+					}
+					if(isset($contact_data_referrer['utm_campaign'])){
+						$data['utm_campaign']=$contact_data_referrer['utm_campaign'];
+					}else{
+						$data['utm_campaign']="";
+					}
+					if(isset($contact_data_referrer['utm_content'])){
+						$data['utm_content']=$contact_data_referrer['utm_content'];
+					}else{
+						$data['utm_content']="";
+					}
+					if(isset($contact_data_referrer['utm_term'])){
+						$data['utm_term']=$contact_data_referrer['utm_term'];
+					}else{
+						$data['utm_term']="";
+					}
 
 					$mail = new Mail();
 					$mail->protocol = $this->config->get('config_mail_protocol');
@@ -871,6 +875,26 @@ class ModelCheckoutOrder extends Model {
 					}
 				}
 				
+				//User Alert Mail
+				if($order_info['email']){
+					$mail = new Mail();
+					$mail->protocol = $this->config->get('config_mail_protocol');
+					$mail->parameter = $this->config->get('config_mail_parameter');
+					$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+					$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+					$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+					$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+					$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
+					$mail->setTo($order_info['email']);
+					$mail->setFrom($this->config->get('config_email'));
+					$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+					$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
+					$mail->setHtml($this->load->view('mail/order', $data));
+					$mail->setText($text);
+					$mail->send();
+				}
+
 				// Send Admins SMS if configure
 				if ($this->config->get('config_sms_alert')) {
 					$options = array(
