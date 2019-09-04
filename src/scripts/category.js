@@ -213,7 +213,10 @@ $(document).ready(function(){
         if(itm.hasClass("cart_similar_button")){
             show_added=1;
             var product_id=$(this).attr('data-product_id');
-            
+            /**Цель*/
+            if (typeof ym != 'undefined') {
+                ym(14496178, 'reachGoal', 'related-products');
+            }
             add_to_cart(product_id, 1, show_added);
         }else{
             var $container = $(this).parent('.quantity-buy'),

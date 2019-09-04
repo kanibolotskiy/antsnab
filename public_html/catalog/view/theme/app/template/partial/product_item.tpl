@@ -2,14 +2,17 @@
     <div class="catalog-block">
         <div class="catalog-img">
             <a href="<?= $p['href'] ?>"><img itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" itemprop="image"></a>
+            <a href="<?= $p['href'] ?>" title="<?= $p['name'] ?>" class="more_product">Подробнее</a>
         </div>
+        
+
         <div class="catalog-description">
             <a class="title-product" href="<?= $p['href'] ?>" itemprop="name">
                 <?= $p['name'] ?>
             </a>
             <div class="description" itemprop="description"><p><?= $p['descriptionPreview'] ?></p></div>
             <div class="complement">
-               
+            
                 <?php foreach ($p['properties'] as $prop): ?>
                     <span>
                         <?= $prop['name'] ?>:&nbsp;<strong><?= $prop['val'] ?>&nbsp;<?= $prop['unit'] ?></strong>
