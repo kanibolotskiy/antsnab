@@ -141,6 +141,7 @@ class ReviewpageController extends \Controller
         $result = [];
         foreach ($reviews as $review) {
             $result[] = [ 
+                'rating' => $review['rating'],
                 'author' => $review['author'],
                 'text' => $review['text'],
                 'about' => '"Сервисе"',//$review['about'],
