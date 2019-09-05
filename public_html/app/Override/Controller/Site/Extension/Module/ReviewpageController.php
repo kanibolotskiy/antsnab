@@ -26,7 +26,8 @@ class ReviewpageController extends \Controller
             $json = array();
             if ($this->validateForm($this->request->post)) {
                 $newData = $this->request->post;
-                $newData['rating'] = $defaultRaiting;
+                
+                //$newData['rating'] = $defaultRaiting;
                 $result = $this->model_catalog_review->addCompanyReview($newData);
                 if($result) {
                     $json['success'] = "Отзыв сохранен";
