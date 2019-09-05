@@ -6,7 +6,7 @@
 
         <div class="calculator-block">
             
-            <input type="text" placeholder="Площадь" id="input_calc_1">
+            <input type="number" placeholder="Площадь" id="input_calc_1">
             <span>м<sup>2</sup></span>
             <div id="button_calc_1" class="button_calc">Рассчитать</div>
         

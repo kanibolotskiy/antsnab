@@ -1,7 +1,7 @@
 <div class="basket-row">
     <?php if(!$product['stock']){?>
         <div class="basket-row_info">
-            <p>Нет в наличии</p>
+            <p>Под заказ</p>
             <p class="cart_del">Доставка 1-3 дня</p>
         </div>
     <?php }?>
@@ -74,12 +74,12 @@
         <ul class="cart_similar_block_products">
             <?php foreach($product['product_related'] as $product_result){?>
                 <li>
-                    <div class="cart_similar_cap"><a target="_blank" title="<?=$product_result['href']?>" href="<?=$product_result['href']?>"><?=$product_result['name']?></a></div>
+                    <div class="cart_similar_cap">
+                        <?=$product_result['name']?>
+                    </div>
                     <div class="cart_similar_info">
                         <div class="cart_similar_img">
-                            <a target="_blank" title="<?=$product_result['href']?>" href="<?=$product_result['href']?>">
-                                <img src="<?=$product_result['image']?>" />
-                            </a>
+                            <img src="<?=$product_result['image']?>" />
                         </div>
                         <div class="cart_similar_price"><?=$product_result['price']?></div>
                         <div class="cart_similar_button buy" data-product_id="<?=$product_result['product_id']?>">+<div>
