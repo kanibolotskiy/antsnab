@@ -15,7 +15,7 @@
 
             <?php }?>
         </div>
-        <div class="reviewBody"<?= $r['text'] ?></div>
+        <div class="reviewBody"><?= $r['text'] ?></div>
     </div>
     <?php if (!empty($r['answer'])): ?>
         <div class = "review answer-review">
