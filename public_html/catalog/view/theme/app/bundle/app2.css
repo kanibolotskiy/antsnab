@@ -3250,7 +3250,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 
 @media screen and (max-width: 860px) { .header { flex: 1 0 auto; }
   .header .wrap_logo { order: 1; width: 50%; margin-bottom: 10px; }
-  .header .basket { order: 2; }
+  .header .basket { order: 2; width: 50%; }
   .header .tel { order: 3; width: 50%; }
   .header .header_email { order: 4; }
   .tel a { text-align: left; }

@@ -7,15 +7,15 @@
         <div class="calculator-block">
             
             <div class="calculator-block_col">
-                <input type="text" placeholder="Длина шва" id="input_calc_41">
+                <input type="number" placeholder="Длина шва" id="input_calc_41">
                 <span>п.м.</span>
             </div>
             <div class="calculator-block_col">
-                <input type="text" placeholder="Ширина шва" id="input_calc_42">
+                <input type="number" placeholder="Ширина шва" id="input_calc_42">
                 <span>см</span>
             </div>
             <div class="calculator-block_col">
-                <input type="text" placeholder="Глубина шва" id="input_calc_43">
+                <input type="number" placeholder="Глубина шва" id="input_calc_43">
                 <span>см</span>
             </div>
             <div id="button_calc_4" class="button_calc">Рассчитать</div>

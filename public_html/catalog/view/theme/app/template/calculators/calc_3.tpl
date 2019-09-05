@@ -6,15 +6,15 @@
 
         <div class="calculator-block">
             <div class="calculator-block_col">
-                <input type="text" placeholder="Длина шва" id="input_calc_31">
+                <input type="number" placeholder="Длина шва" id="input_calc_31">
                 <span>п.м.</span>
             </div>
             <div class="calculator-block_col">
-                <input type="text" placeholder="Ширина шва" id="input_calc_32">
+                <input type="number" placeholder="Ширина шва" id="input_calc_32">
                 <span>мм</span>
             </div>
             <div class="calculator-block_col">
-                <input type="text" placeholder="Толщина слоя" id="input_calc_33">
+                <input type="number" placeholder="Толщина слоя" id="input_calc_33">
                 <span>мм</span>
             </div>
             <div id="button_calc_3" class="button_calc">Рассчитать</div>
