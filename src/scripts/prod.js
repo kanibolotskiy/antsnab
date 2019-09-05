@@ -345,7 +345,7 @@ function calc1(){
             $("#calc_out3").html(min_count);
         }else{
             $(".calc_hint").fadeOut();
-            $("#calc_out1").attr("data-count",total_consumption);
+            //$("#calc_out1").attr("data-count",count_itm1);
         }
 
     }else{
