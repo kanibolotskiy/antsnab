@@ -24,9 +24,23 @@
                 <input value="<?= $entry_company ?>" type = "text" name="company" placeholder="Введите название организации"/>
             </div>
             <div class = "row">
-                <span>Отзыв:
-                    <i id="error_text" class="error"></i>
-                </span>
+                <div class="wrp_star">
+                    <span>Отзыв:
+                        <i id="error_text" class="error"></i>
+                    </span>
+                    <div class="wrp_star_rating">
+                        <input type="hidden" name="rating" value="5" id="star_value"/>
+                        <span class="rating_caption">Рейтинг:</span>
+                        <div class="rating_stars">
+                            <div class="star_block rating_star _rate" rel="1"></div>
+                            <div class="star_block rating_star _rate" rel="2"></div>
+                            <div class="star_block rating_star _rate" rel="3"></div>
+                            <div class="star_block rating_star _rate" rel="4"></div>
+                            <div class="star_block rating_star _rate" rel="5"></div>
+                        </div>
+                        <div class="rating_stars_value">(<span id="rating_stars_value">5</span>)</div>
+                    </div>
+                </div>
                     <textarea  placeholder="Поделитесь своим мнением о нашей компании" name="text"><?= $entry_text ?></textarea>
             </div>
             <div class = "agreement">
