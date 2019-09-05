@@ -32,9 +32,10 @@ class ModelExtensionModuleCallform extends Model
 
     protected function sendMail($data)
     {
+        
         if (in_array(static::CONFIG_ALERT_IDENTITY, (array) $this->config->get('config_mail_alert'))) {
             $this->load->language('extension/module/callform');
-
+            
 
             //$subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
@@ -57,30 +58,77 @@ class ModelExtensionModuleCallform extends Model
             </tr>
             </table>';
             */
-            $data["logo"]= $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
+            //$data["logo"]= $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
+
+            //$data_message['logo']=$this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
+            $data_message['logo']='https://ant-snab.ru/image/catalog/logo.jpg';
+
 
             $this->load->model('checkout/order');
             if($this->model_checkout_order->OfficeWorkTime()){
-                $data["caption"]=$this->language->get('text_caption_worktime');
+                $data_message["caption"]=$this->language->get('text_caption_worktime');
                 $subject=$this->language->get('text_subject_worktime');
 
                 //Инициировать звонок
             }else{
-                $data["caption"]=$this->language->get('text_caption_notworktime');
+                $data_message["caption"]=$this->language->get('text_caption_notworktime');
                 $subject=$this->language->get('text_subject_notworktime');
             }
             
-            
-            //$data["data"]=date("d.m.Y H:i");
-
-            $data["data_content"][]=array("Имя клиента",$data['name']);
-            $data["data_content"][]=array("Телефон",$data['phone']);
-            $data["data_content"][]=array("Сообщение",$data['text']);
-            $data["data_content"][]=array("Дата события",date("d.m.Y H:i"));
+            $data_message["data"]=date("d.m.Y H:i");
+            $data_message["data_content"][]=array("Имя клиента",$data['name']);
+            $data_message["data_content"][]=array("Телефон",$data['phone']);
+            $data_message["data_content"][]=array("Сообщение",$data['text']);
+            $data_message["data_content"][]=array("Дата события",date("d.m.Y H:i"));
             
 
-            $message = $this->load->view('extension/call_report', $data);
+            $message = $this->load->view('extension/call_report', $data_message);
+            
+            $mail = new Mail();
+            $mail->protocol = $this->config->get('config_mail_protocol');
+            $mail->parameter = $this->config->get('config_mail_parameter');
+            $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+            $mail->smtp_username = $this->config->get('config_mail_smtp_username');
+            $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+            $mail->smtp_port = $this->config->get('config_mail_smtp_port');
+            $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+            $mail->setTo("kanibolotskiy@gmail.com");
+            $mail->setFrom($this->config->get('config_email'));
+            $mail->setHTML($message);
+            $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+            $mail->setSubject($subject);
+            $mail->send();
 
+            
+/*
+            //$message = $this->load->view('extension/call_report', $data);
+            
+            $data_message["data_content"][]=array("Имя клиента",$data['name']);
+            $data_message["data_content"][]=array("Телефон",$data['phone']);
+            $data_message["data_content"][]=array("Сообщение",$data['text']);
+            $data_message["data_content"][]=array("Дата события",date("d.m.Y H:i"));
+
+            $message = $this->load->view('extension/call_report', $data_message);
+            
+            $mail = new Mail();
+            $mail->setFrom($this->config->get('config_email'));
+            $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+            $mail->setSubject($subject);
+            
+            $mail->setHTML($message);
+                        
+            $mail->protocol = $this->config->get('config_mail_protocol');
+            $mail->parameter = $this->config->get('config_mail_parameter');
+            $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+            $mail->smtp_username = $this->config->get('config_mail_smtp_username');
+            $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+            $mail->smtp_port = $this->config->get('config_mail_smtp_port');
+            $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+            $mail->setTo("kanibolotskiy@gmail.com");
+            $mail->send();
+            
+            
+            
             $mail = new Mail();
             $mail->protocol = $this->config->get('config_mail_protocol');
             $mail->parameter = $this->config->get('config_mail_parameter');
@@ -92,23 +140,26 @@ class ModelExtensionModuleCallform extends Model
 
             //$mail->setTo($this->config->get('config_email'));
             $mail->setTo($this->config->get('config_email_call'));
-
             $mail->setFrom($this->config->get('config_email'));
             $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
             $mail->setSubject($subject);
             $mail->setHTML($message);
+            
+            /*
             $mail->send();
-
             // Send to additional alert emails
             $emails = explode(',', $this->config->get('config_alert_email'));
-
+            
             foreach ($emails as $email) {
                 if ($email && preg_match($this->config->get('config_mail_regexp'), $email)) {
                     $mail->setTo($email);
                     $mail->send();
                 }
             }
+            */
+                   
         }
+        return true;
     }
 
     /** @task move to module installation */

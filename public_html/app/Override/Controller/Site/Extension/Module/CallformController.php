@@ -23,25 +23,35 @@ class CallformController extends \Controller
      */
     public function index()
     {
+        
         $data = array();
-        $data['show_thankyou'] = false;
+        //$data['show_thankyou'] = false;
         $this->formError = array();
         if ($this->request->server['REQUEST_METHOD'] == 'POST') {
             if ($this->validateCallForm($this->request->post)) {
                 $this->load->model('extension/module/callform');
+                
                 $result = $this->model_extension_module_callform->add($this->request->post);
+                
                 if ($result) {
-                    $data['show_thankyou'] = true;
+                    $data['success']=true;
+                    //$data['show_thankyou'] = true;
                 }
             }
         }
-        $data['workemail']='';
+        //$data['workemail']='';
         $data['errors'] = $this->formError;
-        $data['data'] = $this->request->post;
-        $redirect = $this->request->post['redirect'];
+        //$data['data'] = $this->request->post;
+        //$redirect = $this->request->post['redirect'];
 
-        $this->session->data['callform'] = $data;
+        //$this->session->data['callform'] = $data;
+        /*
         $this->response->redirect($redirect);
+        */
+
+        //$json["success"]=true;
+        $this->response->setOutput(json_encode($data));
+
     }
 
     public function validateCallForm()

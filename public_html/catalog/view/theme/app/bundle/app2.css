@@ -1697,15 +1697,15 @@ ul.tabset li.active:last-child a, ul.tabset li:last-child a.active { text-decora
 
 .qnt-widget .LeftButton { width: 28px; background: url(../img/minus.png) no-repeat 50% 50%; cursor: pointer; height: 38px; }
 
-.qnt-widget .unameVal { margin-left: 3px; font-size: 10px; max-width: 48px; }
+.qnt-widget .unameVal { margin-left: 3px; font-size: 10px; max-width: 48px; color: #000; }
 
 .qnt-widget input.qnt { width: 40px; overflow: hidden; font-size: 13px; color: #444444; text-align: center; border: none; height: 38px; background: transparent; }
 
 .qnt-widget .RightButton { width: 28px; height: 38px; background: url(../img/plus.png) no-repeat 50% 50%; cursor: pointer; }
 
-a.buy { margin-top: 0px; display: block; text-decoration: none; cursor: pointer; color: #ffffff; font-weight: bold; font-size: 15px; width: 152px; height: 40px; line-height: 40px; background-color: #d3a06d; text-align: center; -webkit-transition: background-color 0.4s; -moz-transition: background-color 0.4s; -ms-transition: background-color 0.4s; -o-transition: background-color 0.4s; transition: background-color 0.4s; }
+.buy { margin-top: 0px; display: block; text-decoration: none; cursor: pointer; color: #ffffff; font-weight: bold; font-size: 15px; width: 152px; height: 40px; line-height: 40px; background-color: #d3a06d; text-align: center; -webkit-transition: background-color 0.4s; -moz-transition: background-color 0.4s; -ms-transition: background-color 0.4s; -o-transition: background-color 0.4s; transition: background-color 0.4s; }
 
-a.buy:hover { background-color: #c97c2f; -webkit-transition: 0.4s; -moz-transition: 0.4s; -ms-transition: 0.4s; -o-transition: 0.4s; transition: 0.4s; }
+.buy:hover { background-color: #c97c2f; -webkit-transition: 0.4s; -moz-transition: 0.4s; -ms-transition: 0.4s; -o-transition: 0.4s; transition: 0.4s; }
 
 button.show-more { display: block; width: 100%; cursor: pointer; text-decoration: none; text-align: center; border: 1px solid #EFEEEC; background-color: #fff; height: 45px; line-height: 43px; color: #666666; font-size: 14px; -webkit-transition: 0.4s; -moz-transition: 0.4s; -ms-transition: 0.4s; -o-transition: 0.4s; transition: 0.4s; margin-bottom: 25px; }
 
@@ -2495,7 +2495,7 @@ a.print:hover { -webkit-transition: 0.4s; -moz-transition: 0.4s; -ms-transition:
   .select-list ul li { width: 100%; margin-bottom: 20px; }
   .tab-block ul li .catalog-description { text-align: center; }
   .tab-block ul li .qnt-widget { width: 100%; margin: 0 0 10px 0; }
-  .tab-block ul li .catalog-block .catalog-description a.buy { width: 100%; }
+  .tab-block ul li .catalog-block .catalog-description .buy { width: 100%; }
   .tab-block .quantity-buy { padding: 0 20px; width: 100%; margin-top: 20px; } }
 
 @media screen and (max-width: 500px) { /*.logo{ left:10px; margin-left: 0; position: absolute; top:10px; } .basket{ position: absolute; top: 19px; right: 10px; }*/
@@ -2676,7 +2676,7 @@ html:focus, body:focus { background: none; -webkit-tap-highlight-color: rgba(0, 
 
 .tab-block.tab-block2 ul li a.more { bottom: 30px; left: 20px; right: initial; }
 
-.tab-block.tab-block2 a.buy { margin-top: 10px; }
+.tab-block.tab-block2 .buy { margin-top: 10px; }
 
 .bread_mob { display: none; }
 
@@ -2812,7 +2812,7 @@ html:focus, body:focus { background: none; -webkit-tap-highlight-color: rgba(0, 
 .quantity-buy-block .qnt-widget{float:left;}
 .card-product-container .right .quantity-buy a.buy{float:right;}
 */
-a.buy { display: inline-block; vertical-align: top; }
+.buy { display: inline-block; vertical-align: top; }
 
 .resp-tab-content { padding: 0 !important; }
 
@@ -2840,7 +2840,7 @@ a.buy { display: inline-block; vertical-align: top; }
 
 .cart_quantity-buy .qnt-widget { width: 100%; margin-bottom: 10px; margin-right: 0; }
 
-.cart_quantity-buy a.buy { font-size: 13px; width: 100%; }
+.cart_quantity-buy .buy { font-size: 13px; width: 100%; }
 
 .empty_cart_block { display: none; }
 
@@ -2872,7 +2872,7 @@ a.buy { display: inline-block; vertical-align: top; }
 
 .clear { clear: both; }
 
-.tab-block.tab-block2 a.buy { width: 100%; }
+.tab-block.tab-block2 .buy { width: 100%; }
 
 .tab-block.tab-block2 .qnt-widget { margin-right: 0; }
 
@@ -3192,9 +3192,26 @@ body.freeze { overflow: auto !important; }
 
 .tab-block.tab-block2 ul li .catalog-img { position: relative; overflow: hidden; }
 
-.tab-block ul li .catalog-img a.more_product { margin-top: 10px; float: left; margin-left: 20px; display: block; text-decoration: none; color: #666666; font-size: 13px; /* float: left; */ background: url(../img/btn.png) no-repeat 100% 50%; min-height: 20px; line-height: 20px; padding-right: 30px; }
+.tab-block ul li .catalog-img div.more_product { margin-top: 10px; float: left; margin-left: 20px; display: block; color: #666666; font-size: 13px; /* float: left; */ background: url(../img/btn.png) no-repeat 100% 50%; min-height: 20px; line-height: 20px; padding-right: 30px; }
 
-.tab-block ul li .catalog-img a.more_product:hover { text-decoration: underline; }
+.full_item_link { text-decoration: none; }
+
+.catalog-block_caption { display: block; color: #000000; font-size: 15px; line-height: 20px; margin-bottom: 16px; height: 40px; overflow: hidden; font-size: 15px; }
+
+.tab-block.tab-block2 .catalog-block_caption { position: absolute; top: 10px; left: 20px; right: 20px; }
+
+.full_item_link:hover div.more_product, .full_item_link:hover .catalog-block_caption { text-decoration: underline; }
+
+/* .tab-block ul li .catalog-img a.more_product:hover{ text-decoration: underline; } */
+.clr { clear: both; }
+
+.call_submit { display: block; text-decoration: none; cursor: pointer; color: #ffffff; font-weight: bold; font-size: 14px; width: 180px; margin: 0 auto; height: 40px; border: none; cursor: pointer; background-color: #d3a06d; text-align: center; -webkit-transition: 0.4s; -moz-transition: 0.4s; -ms-transition: 0.4s; -o-transition: 0.4s; transition: 0.4s; line-height: 40px; }
+
+.call_submit:hover { background: #c97c2f; }
+
+.popup_caption { display: block; text-align: center; font-weight: bold; font-size: 19px; line-height: 26px; margin-bottom: 20px; }
+
+.row_cap { display: block; font-size: 13px; color: #000000; margin-bottom: 12px; }
 
 @media screen and (max-width: 1200px) { .price-list .select-list ul.list > li { width: 100%; }
   .sidebar { margin-right: 20px; }

@@ -1832,7 +1832,8 @@ ul.tabset li:last-child a.active {
 .qnt-widget .unameVal {
     margin-left: 3px;
     font-size:10px;
-   max-width:48px;
+    max-width:48px;
+    color:#000;
 }
 
 .qnt-widget input.qnt
@@ -1854,7 +1855,7 @@ ul.tabset li:last-child a.active {
     cursor:pointer;
 }
 
-a.buy{
+.buy{
     margin-top: 0px;
     display: block;
     text-decoration: none;
@@ -4422,7 +4423,7 @@ a.print{
         margin: 0 0 10px 0;
     }
 
-    .tab-block ul li .catalog-block .catalog-description a.buy {
+    .tab-block ul li .catalog-block .catalog-description .buy {
         width: 100%;
     }
 
@@ -4813,7 +4814,7 @@ filter: grayscale(1); /* W3C */
 .tab-block.tab-block2 ul li a.more{bottom: 30px;left: 20px;right:initial;}
 
 
-.tab-block.tab-block2 a.buy{margin-top:10px;}
+.tab-block.tab-block2 .buy{margin-top:10px;}
 .bread_mob{display:none;}
 .bread_desc{display:inline-block;}
 .breadcrumbs a{display:inline-block;line-height: 18px;}
@@ -5052,7 +5053,7 @@ filter: grayscale(1); /* W3C */
 .card-product-container .right .quantity-buy a.buy{float:right;}
 */
 
-a.buy{display:inline-block;vertical-align: top;}
+.buy{display:inline-block;vertical-align: top;}
 .resp-tab-content{padding:0!important;}
 .in-stock{display:block;padding:10px 20px 7px!important;}
 .card-product-container .right{padding-bottom:10px!important;}
@@ -5103,7 +5104,7 @@ a.buy{display:inline-block;vertical-align: top;}
 }
 .cart_quantity-buy{margin-left:10px;margin-right:10px;display:block;}
 .cart_quantity-buy .qnt-widget{width:100%;margin-bottom:10px;margin-right:0;}
-.cart_quantity-buy a.buy{font-size:13px;width:100%;}
+.cart_quantity-buy .buy{font-size:13px;width:100%;}
 .empty_cart_block{display:none;}
 .empty_cart_block p {
     display: block;
@@ -5139,7 +5140,7 @@ a.buy{display:inline-block;vertical-align: top;}
 .nice-select{height:30px;font-size:13px;}
 .clear{clear:both;}
 
-.tab-block.tab-block2 a.buy{width:100%;}
+.tab-block.tab-block2 .buy{width:100%;}
 .tab-block.tab-block2 .qnt-widget{margin-right:0;}
 .notinstock{margin-bottom: 4px;/*font-weight: bold;*/font-size: 13px;}
 
@@ -5632,11 +5633,11 @@ body.freeze{overflow:auto!important;}
     margin-top: 55px;
 }
 .tab-block.tab-block2 ul li .catalog-img{position:relative;overflow:hidden;}
-.tab-block ul li .catalog-img a.more_product{
+
+.tab-block ul li .catalog-img div.more_product{
     margin-top:10px;
     float:left;margin-left:20px;
     display: block;
-    text-decoration: none;
     color: #666666;
     font-size: 13px;
     /* float: left; */
@@ -5645,11 +5646,73 @@ body.freeze{overflow:auto!important;}
     line-height: 20px;
     padding-right: 30px;
 }
+.full_item_link{text-decoration:none;}
+
+.catalog-block_caption{
+    display: block;
+    color: #000000;
+    font-size: 15px;
+    line-height: 20px;
+    margin-bottom: 16px;
+    height: 40px;
+    overflow: hidden;
+    font-size: 15px;
+}
+.tab-block.tab-block2 .catalog-block_caption{
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    right: 20px;
+}
+
+.full_item_link:hover div.more_product,.full_item_link:hover .catalog-block_caption{text-decoration:underline;}
+
+
+
+/*
 .tab-block ul li .catalog-img a.more_product:hover{
     text-decoration: underline;
 }
-
-
+*/
+.clr{clear:both;}
+.call_submit{
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 14px;
+    width: 180px;
+    margin: 0 auto;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    background-color: #d3a06d;
+    text-align: center;
+    -webkit-transition: 0.4s;
+    -moz-transition: 0.4s;
+    -ms-transition: 0.4s;
+    -o-transition: 0.4s;
+    transition: 0.4s;
+    line-height:40px;
+}
+.call_submit:hover{
+    background:#c97c2f;
+}
+.popup_caption{
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    font-size: 19px;
+    line-height: 26px;
+    margin-bottom: 20px;
+}
+.row_cap{
+    display: block;
+    font-size: 13px;
+    color: #000000;
+    margin-bottom: 12px;
+}
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{
         width: 100%;

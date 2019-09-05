@@ -44,63 +44,62 @@
         
     </head>
     <body class="<?=$class?>">
-        <?php if (true === $thank_you): ?>
-            <!-- Thank you form -->
-            <div class="popup thank-you visible" >
-                <div class="close"></div>
-                <div class="popup-block">
-                    <div class="popup-content">
-                        <div class="close2"></div>
-                        <span>Благодарим вас за обращение!</span>
-                        <!--@task1 to css-->
-                        <p style="text-align: center">Мы свяжемся с вами в ближайшее время!</p>
-                    </div>
-                </div>
-            </div>
-        <?php endif; ?>
-        <?php $visible = (!empty($form_errors) ) ? 'visible' : ''; ?>
-        <div class="popup <?= $visible ?>">
+        
+        <div class="popup thank-you" >
             <div class="close"></div>
             <div class="popup-block">
                 <div class="popup-content">
                     <div class="close2"></div>
+                    <span>Благодарим вас за обращение!</span>
+                    <!--@task1 to css-->
+                    <p style="text-align: center">Мы свяжемся с вами в ближайшее время!</p>
+                </div>
+            </div>
+        </div>
+        <div class="popup popup_call">
+            <div class="close"></div>
+            <div class="popup-block">
+                <div id="ajax_loader_call" class="ajax_loader" style="display: none;">
+                    <div class="loader-classic">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="popup-content">
+                    <div class="close2"></div>
                     <form id="call_form" action="<?= $action ?>" method="post">
-                        <input type="hidden" name="redirect" value="<?= $redirect ?>"/>
-
-                        <span>Оставьте свои данные и сообщение, мы свяжемся с Вами в ближайшее время</span>
-
-                        <?php if (isset($form_errors['name'])): ?>
-                            <i class="error"><?= $form_errors['name'] ?></i>
-                            <input value="<?= $form_data['name'] ?>" class="error" name="name" type="text" placeholder="Имя"/>
-                        <?php else: ?>    
-                            <input value="<?= $form_data['name'] ?>" name="name" type="text" placeholder="Имя"/>
-                        <?php endif; ?>
-
-                        <?php if (isset($form_errors['phone'])): ?>
-                            <i class="error"><?= $form_errors['phone'] ?></i>
-                            <input value="<?= $form_data['phone'] ?>" class="error" name="phone" type="text" placeholder="Телефон"/>
-                        <?php else: ?>    
-                            <input  value="<?= $form_data['phone'] ?>" name="phone" type="text" placeholder="Телефон"/>
-                        <?php endif; ?>
-                        
+                        <div class="popup_caption">Оставьте свои данные и сообщение, мы свяжемся с Вами в ближайшее время</div>
 
                         <input value="<?= $form_data['workemail'] ?>" name="workemail" type="text" placeholder="Рабочий email"/>
 
-                        <?php if (isset($form_errors['text'])): ?>
-                            <i class="error"><?= $form_errors['text'] ?></i>
-                            <textarea placeholder="Сообщение" class="error" name="text"><?= $form_data['text'] ?></textarea>
-                        <?php else: ?>    
-                            <textarea placeholder="Сообщение" name="text"><?= $form_data['text'] ?></textarea>
-                        <?php endif; ?>
-                         <!--<input
-                            type ="submit"
-                            
-                            data-callback="submitCallForm" value="Отправить"/>-->
+                        <div class="row">
+                            <div class="row_cap">Имя:<i class="error name"></i></div>
+                            <input value="<?= $form_data['name'] ?>" name="name" type="text" placeholder="Введите Ваше имя"/>
+                        </div>
+                        <div class="row">
+                            <div class="row_cap">Телефон:<i class="error phone"></i></div>
+                            <input value="<?= $form_data['phone'] ?>" name="phone" type="text" placeholder="Введите телефон"/>
+                        </div>
+                        <div class="row">
+                            <div class="row_cap">Сообщение:</div>
+                            <textarea placeholder="Введите Ваше сообщение" name="text"><?= $form_data['text'] ?></textarea>
+                        </div>
+                        <!--
                         <input
                             type ="submit"
                             class="g-recaptcha"
                             data-sitekey="<?= $captcha_key ?>"
                             data-callback="submitCallForm" value="Отправить"/>
+                        -->
+                        <div class="call_submit">Отправить</div>
                     </form>
                     <script type="text/javascript">
                         function submitCallForm()

@@ -1,15 +1,14 @@
 <li itemscope itemtype="http://schema.org/Offer">
+    <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>">
     <div class="catalog-block">
         <div class="catalog-img">
-            <a href="<?= $p['href'] ?>"><img itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" itemprop="image"></a>
-            <a href="<?= $p['href'] ?>" title="<?= $p['name'] ?>" class="more_product">Подробнее</a>
+            <img itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" itemprop="image" />
+            <div class="more_product">Подробнее</div>
         </div>
-        
+        <div class="clr"></div>
 
         <div class="catalog-description">
-            <a class="title-product" href="<?= $p['href'] ?>" itemprop="name">
-                <?= $p['name'] ?>
-            </a>
+            <div class="catalog-block_caption"><?= $p['name'] ?></div>
             <div class="description" itemprop="description"><p><?= $p['descriptionPreview'] ?></p></div>
             <div class="complement">
             
@@ -44,11 +43,11 @@
 
                     >
                     </div>
-                    <a href="" class="buy add-to-card add-to-card-catalog"
+                    <div class="buy add-to-card add-to-card-catalog"
                         data-product_id="<?=$p['product_id']?>" 
                         data-sale_to_price_koef="<?=$p['sale_to_price_koef']?>">
                         Купить
-                    </a>
+                    </div>
                 <?php else: ?>
                     <?php foreach($p['unit_errors'] as $e): ?>
                         <?=$e . "<br/>"?>
@@ -57,4 +56,5 @@
             </div>
         </div>
     </div>
+    </a>
 </li>

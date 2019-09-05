@@ -182,7 +182,11 @@ function add_to_cart(product_id, count_add, show_added){
 }
 
 $(document).ready(function(){
-
+    $(document).on("click",".full_item_link",function(e){
+        if($(e.target).closest(".quantity-buy").length){
+            e.preventDefault();
+        }
+    });
     /**Добавление товара из калькулятора #1 */
     $("#add_calcdata_tocart1").click(function(){
         /**Рассчитываемый товар */
