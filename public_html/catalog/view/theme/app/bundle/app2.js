@@ -22463,28 +22463,42 @@ function calc1(){
         var unitpack1=$(".unitpack1");
         var count_itm1=Math.ceil(total_consumption/data_calc3);
         var unitpack1_str=declOfNum(count_itm1, [unitpack1.attr("data-ui_name"),unitpack1.attr("data-ui_name_genitive"),unitpack1.attr("data-ui_name_plural")]);
-
+        
         $("#calc_out1").html(number_format(count_itm1,0,"."," ")+" "+unitpack1_str);
-        $("#calc_out1").attr("data-count",count_itm1);
-
-        /**Расчет праймера */
-        var count_itm2=Math.ceil(data_calc2*0.5/16);
-        var unitpack2_str=declOfNum(count_itm2, ["ведро","ведра","вёдер"]);
-        $("#calc_out2").html(number_format(count_itm2,0,"."," ")+" "+unitpack2_str);
-        $("#calc_out2").attr("data-count",count_itm2);
+        //$("#calc_out1").attr("data-count",count_itm1);
         $("#input_area").html(data_calc2+"м<sup>2</sup>");
         $(".wrap_table_data").fadeIn(200);
 
-        var min_count=$("#priceSwitcher").attr("data-rosn_limit");
-        if(total_consumption<min_count){
+        //var min_count=$("#priceSwitcher").attr("data-rosn_limit");
+        var min_count=unitpack1.attr("data-ui_minimum");
+        
+        if(count_itm1<min_count){
             $(".calc_hint").fadeIn();
-            
             $("#calc_out1").attr("data-count",min_count);
-            $("#calc_out3").html(min_count);
+            $("#calc_out2").html(min_count);
         }else{
             $(".calc_hint").fadeOut();
-            //$("#calc_out1").attr("data-count",count_itm1);
+            $("#calc_out1").attr("data-count",count_itm1);
         }
+
+        /*
+        var unitpack1=$(".unitpack1");
+        var count_itm1=Math.ceil(total_consumption/data_calc3);
+        var unitpack1_str=declOfNum(count_itm1, [unitpack1.attr("data-ui_name"),unitpack1.attr("data-ui_name_genitive"),unitpack1.attr("data-ui_name_plural")]);
+        var min_count=unitpack1.attr("data-ui_minimum");
+
+        $("#calc_out1").html(number_format(count_itm1,0,"."," ")+" "+unitpack1_str);
+        $("#calc_out1").attr("data-count",count_itm1);
+*/
+
+        //Расчет праймера
+        var count_itm2=Math.ceil(data_calc2*0.5/16);
+        var unitpack2_str=declOfNum(count_itm2, ["ведро","ведра","вёдер"]);
+        $("#calc_out3").html(number_format(count_itm2,0,"."," ")+" "+unitpack2_str);
+        $("#calc_out3").attr("data-count",count_itm2);
+        $("#input_area").html(data_calc2+"м<sup>2</sup>");
+        $(".wrap_table_data").fadeIn(200);
+        
 
     }else{
         $("#calc_out1").html("-");
