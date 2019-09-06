@@ -3,7 +3,6 @@
     <div class="catalog-block">
         <div class="catalog-img">
             <img itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" itemprop="image" />
-            <div class="more_product">Подробнее</div>
         </div>
         <div class="clr"></div>
 
@@ -48,12 +47,15 @@
                         data-sale_to_price_koef="<?=$p['sale_to_price_koef']?>">
                         Купить
                     </div>
+                    
+
                 <?php else: ?>
                     <?php foreach($p['unit_errors'] as $e): ?>
                         <?=$e . "<br/>"?>
                     <?php endforeach; ?>
                 <?php endif;?>
             </div>
+            <div class="more_product">Подробнее</div>
         </div>
     </div>
     </a>

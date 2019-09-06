@@ -11,10 +11,13 @@
                     <li>
                         <div class="production-block">
                             <a href="<?= $category['href'] ?>">
+                                <span><?= $category['name'] ?></span>
                                 <div class="img-production">
                                     <img src="<?= $category['image'] ?>" alt="<?= $category['name'] ?>" title="<?= $category['name'] ?>" />
                                 </div>
-                                <span><?= $category['name'] ?></span>
+                                <div class="main_category_link">
+                                    <a href="<?= $category['href'] ?>" class="more">Смотреть все</a>
+                                </div>
                             </a>
                         </div>
                     </li>
