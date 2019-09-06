@@ -3124,8 +3124,6 @@ table.table_data td a { color: #598ba6; }
 
 .similar_block_caption { margin-top: 10px; font-size: 12px; font-weight: bold; }
 
-.cart_similar_cap { padding-right: 5px; }
-
 .basket-block .basket-row ul.cart_similar_block_products { /*align-items: center; display: flex justify-content: flex-start; flex-wrap: wrap; display:block;position:relative;overflow:hidden; */ align-items: baseline; display: flex; flex-wrap: wrap; justify-content: start; }
 
 .cart_similar_block_products button { width: 100px; height: 24px; background: #d3a06d; }
