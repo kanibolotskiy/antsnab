@@ -3156,7 +3156,7 @@ table.table_data td a { color: #598ba6; }
 
 .cart_similar_price { white-space: nowrap; line-height: 24px; }
 
-.cart_similar_cap { height: 32px; overflow: hidden; font-size: 11px !important; line-height: 15px; }
+.cart_similar_cap { height: 32px; overflow: hidden; font-size: 11px !important; line-height: 15px; text-align: center !important; }
 
 .cart_similar_block ul li span { margin-bottom: 0 !important; }
 
