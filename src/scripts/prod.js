@@ -555,10 +555,33 @@ function calc5(){
     
         var min_count=$("#priceSwitcher").attr("data-rosn_limit");
         
+        var step=1;
+        if($("#priceSwitcher").children(".unitpack1").attr("data-ui_step")!=undefined){
+                step=$("#priceSwitcher").children(".unitpack1").attr("data-ui_step")*1;
+        }
+        min_count=min_count*step;
+        
+        //console.log(step);
+
         if(calc_rez<min_count){
             $(".calc_hint").fadeIn();
             $("#calc_out2").html(min_count);
             $("#calc_out1").attr("data-count",min_count);
+
+            if(min_count>1){
+                $("#calc_hint_caption").html("кратно упаковкам");
+                var step_count=Math.ceil(calc_rez/step);
+                console.log(step_count);
+
+                $("#calc_out2").html(step_count*min_count);
+
+                $(".calc_hint").fadeIn(200);
+                $("#calc_out1").attr("data-count",step_count*min_count);
+            }else{
+                $(".calc_hint").fadeOut(200);
+                $("#calc_out1").attr("data-count",calc_rez);
+            }
+            
         }else{
             $(".calc_hint").fadeOut();
             $("#calc_out1").attr("data-count",calc_rez);
