@@ -1612,7 +1612,7 @@ ul.tabset li.active:last-child a, ul.tabset li:last-child a.active { text-decora
 
 .tab-block2 ul li .catalog-block { border: 2px solid #EFEEEC; overflow: hidden; display: block; position: relative; /*height: 100%;*/ }
 
-.tab-block2 ul li .catalog-block .catalog-img { margin: 10px auto; /* width: 100%; height: 200px; position: static; */ }
+.tab-block2 ul li .catalog-block .catalog-img { margin: 13px auto; /* width: 100%; height: 200px; position: static; */ }
 
 .tab-block2 ul li .catalog-block .catalog-img:after { display: none; }
 
