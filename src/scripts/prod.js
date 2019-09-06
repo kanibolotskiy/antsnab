@@ -380,14 +380,16 @@ function calc2(){
         $("#input_area").html(data_calc2+"м<sup>2</sup>");
         $(".wrap_table_data").fadeIn(200);
 
-        var min_count=$("#priceSwitcher").attr("data-rosn_limit");
-        if(total_consumption<min_count){
+        //var min_count=$("#priceSwitcher").attr("data-rosn_limit");
+        var min_count=unitpack1.attr("data-ui_minimum");
+        
+        if(count_itm1<min_count){
             $(".calc_hint").fadeIn();
             $("#calc_out1").attr("data-count",min_count);
             $("#calc_out2").html(min_count);
         }else{
             $(".calc_hint").fadeOut();
-            $("#calc_out1").attr("data-count",total_consumption);
+            $("#calc_out1").attr("data-count",count_itm1);
         }
 
     }else{
