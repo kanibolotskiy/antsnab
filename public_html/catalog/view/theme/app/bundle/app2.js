@@ -22519,10 +22519,9 @@ function calc2(){
         $(".wrap_table_data").fadeIn(200);
 
         var min_count=$("#priceSwitcher").attr("data-rosn_limit");
-
+        console.log(min_count);
         if(total_consumption<min_count){
             $(".calc_hint").fadeIn();
-            
             $("#calc_out1").attr("data-count",min_count);
             $("#calc_out2").html(min_count);
         }else{
@@ -22576,22 +22575,22 @@ function calc3(){
             min_count=min_count*step;
 
             if(calc_rez<min_count){
-                    $("#calc_hint_caption").html("мин. для заказа");
-                    $(".calc_hint").fadeIn();
-                    $("#calc_out2").html(min_count);
-                    $("#calc_out1").attr("data-count",min_count);
+                $("#calc_hint_caption").html("мин. для заказа");
+                $(".calc_hint").fadeIn();
+                $("#calc_out2").html(min_count);
+                $("#calc_out1").attr("data-count",min_count);
             }else{
-                    if(min_count>1){
-                            $("#calc_hint_caption").html("кратно упаковкам");
-                            var step_count=Math.ceil(calc_rez/min_count);
-                            $("#calc_out2").html(step_count*min_count);
+                if(min_count>1){
+                        $("#calc_hint_caption").html("кратно упаковкам");
+                        var step_count=Math.ceil(calc_rez/min_count);
+                        $("#calc_out2").html(step_count*min_count);
 
-                            $(".calc_hint").fadeIn(200);
-                            $("#calc_out1").attr("data-count",step_count*min_count);
-                    }else{
-                            $(".calc_hint").fadeOut(200);
-                            $("#calc_out1").attr("data-count",calc_rez);
-                    }
+                        $(".calc_hint").fadeIn(200);
+                        $("#calc_out1").attr("data-count",step_count*min_count);
+                }else{
+                        $(".calc_hint").fadeOut(200);
+                        $("#calc_out1").attr("data-count",calc_rez);
+                }
             }
     }else{
             $("#input_area1").html("-");
@@ -22699,30 +22698,23 @@ function calc5(){
         }
         min_count=min_count*step;
         
-        //console.log(step);
-
         if(calc_rez<min_count){
             $(".calc_hint").fadeIn();
             $("#calc_out2").html(min_count);
             $("#calc_out1").attr("data-count",min_count);
-
+            $("#calc_hint_caption").html("мин. для заказа");            
+        }else{
             if(min_count>1){
                 $("#calc_hint_caption").html("кратно упаковкам");
-                var step_count=Math.ceil(calc_rez/step);
-                console.log(step_count);
-
+                var step_count=Math.ceil(calc_rez/min_count);
                 $("#calc_out2").html(step_count*min_count);
 
                 $(".calc_hint").fadeIn(200);
                 $("#calc_out1").attr("data-count",step_count*min_count);
             }else{
-                $(".calc_hint").fadeOut(200);
-                $("#calc_out1").attr("data-count",calc_rez);
+                    $(".calc_hint").fadeOut(200);
+                    $("#calc_out1").attr("data-count",calc_rez);
             }
-            
-        }else{
-            $(".calc_hint").fadeOut();
-            $("#calc_out1").attr("data-count",calc_rez);
         }
     }else{
         $("#input_area1").html("-");

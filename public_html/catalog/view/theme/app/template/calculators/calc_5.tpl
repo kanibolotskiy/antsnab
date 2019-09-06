@@ -36,7 +36,7 @@
                         <td class="_left">Материала <?=$heading_title?> вам понадобится:</td>
                         <td class="nowrap">
                             <div id="calc_out1" data-count="0">-</div>
-                            <div class="calc_hint">мин. для заказа <span id="calc_out2"></span></div>
+                            <div class="calc_hint"><span id="calc_hint_caption">мин. для заказа</span> <span id="calc_out2"></span></div>
                         </td>
                     </tr>
                 </tbody>
