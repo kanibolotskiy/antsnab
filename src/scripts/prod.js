@@ -310,6 +310,7 @@ $("#discount_form input[type='submit']").click(function(e){
 function calc1(){
     if (typeof ym != 'undefined') {
         ym(14496178, 'reachGoal', 'calc-use');
+        console.log('calc-use');
     }
 
     var data_calc1=getFloat($("#calculator").attr("data-consumption"));
