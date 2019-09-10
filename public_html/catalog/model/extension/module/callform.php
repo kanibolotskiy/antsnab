@@ -92,71 +92,13 @@ class ModelExtensionModuleCallform extends Model
             $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
             $mail->smtp_port = $this->config->get('config_mail_smtp_port');
             $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-            $mail->setTo("kanibolotskiy@gmail.com");
-            $mail->setFrom($this->config->get('config_email'));
-            $mail->setHTML($message);
-            $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-            $mail->setSubject($subject);
-            $mail->send();
-
-            
-/*
-            //$message = $this->load->view('extension/call_report', $data);
-            
-            $data_message["data_content"][]=array("Имя клиента",$data['name']);
-            $data_message["data_content"][]=array("Телефон",$data['phone']);
-            $data_message["data_content"][]=array("Сообщение",$data['text']);
-            $data_message["data_content"][]=array("Дата события",date("d.m.Y H:i"));
-
-            $message = $this->load->view('extension/call_report', $data_message);
-            
-            $mail = new Mail();
-            $mail->setFrom($this->config->get('config_email'));
-            $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-            $mail->setSubject($subject);
-            
-            $mail->setHTML($message);
-                        
-            $mail->protocol = $this->config->get('config_mail_protocol');
-            $mail->parameter = $this->config->get('config_mail_parameter');
-            $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-            $mail->smtp_username = $this->config->get('config_mail_smtp_username');
-            $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-            $mail->smtp_port = $this->config->get('config_mail_smtp_port');
-            $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-            $mail->setTo("kanibolotskiy@gmail.com");
-            $mail->send();
-            
-            
-            
-            $mail = new Mail();
-            $mail->protocol = $this->config->get('config_mail_protocol');
-            $mail->parameter = $this->config->get('config_mail_parameter');
-            $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-            $mail->smtp_username = $this->config->get('config_mail_smtp_username');
-            $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-            $mail->smtp_port = $this->config->get('config_mail_smtp_port');
-            $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
-            //$mail->setTo($this->config->get('config_email'));
             $mail->setTo($this->config->get('config_email_call'));
             $mail->setFrom($this->config->get('config_email'));
+            $mail->setHTML($message);
             $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
             $mail->setSubject($subject);
-            $mail->setHTML($message);
-            
-            /*
             $mail->send();
-            // Send to additional alert emails
-            $emails = explode(',', $this->config->get('config_alert_email'));
-            
-            foreach ($emails as $email) {
-                if ($email && preg_match($this->config->get('config_mail_regexp'), $email)) {
-                    $mail->setTo($email);
-                    $mail->send();
-                }
-            }
-            */
+
                    
         }
         return true;

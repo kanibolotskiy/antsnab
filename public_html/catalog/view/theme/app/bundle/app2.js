@@ -22458,10 +22458,13 @@ function calc1(){
     }
 
     var total_consumption=data_calc1*data_calc2;
+    console.log(total_consumption);
     if(total_consumption>0){
         
+
         var unitpack1=$(".unitpack1");
         var count_itm1=Math.ceil(total_consumption/data_calc3);
+        
         var unitpack1_str=declOfNum(count_itm1, [unitpack1.attr("data-ui_name"),unitpack1.attr("data-ui_name_genitive"),unitpack1.attr("data-ui_name_plural")]);
         
         $("#calc_out1").html(number_format(count_itm1,0,"."," ")+" "+unitpack1_str);
