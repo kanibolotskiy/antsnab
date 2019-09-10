@@ -3537,7 +3537,7 @@ button.show-more{
         display: block;
         border: 1px solid #E8E5E2;
         height: 34px;
-        width: 110px;
+        width: 140px;
         padding: 0 15px 0 15px;
         background-color: transparent;
         color: #666666;
@@ -5740,6 +5740,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 }
 .tab-block.tab-block3 .more_product{margin-left:0;}
 .tab-block.tab-block3.tab-block2 .more_product{margin:10px auto 0;}
+#input_calc_1,#input_calc_2{width:110px;}
 
 
 @media screen and (max-width: 1200px){
@@ -5796,7 +5797,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 @media screen and (max-width: 860px){
     .header {flex: 1 0 auto;}
     .header .wrap_logo{order:1;width:50%;    margin-bottom: 10px;}
-    .header .basket{order:2;width:50%;}
+    .header .basket{order:2;max-width:50%;}
     .header .tel{order:3;width:50%;}
     .header .header_email{order:4;}
     .tel a{text-align:left;}
