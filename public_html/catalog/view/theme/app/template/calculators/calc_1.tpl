@@ -3,14 +3,15 @@
         <div class="content-text">
             <p>Для расчета необходимого количества материала введите площадь изолируемой поверхности.</p>
         </div>
+        <div class="wrap_calculator-block">
+            <div class="calculator-block">
+                <input type="number" placeholder="Площадь" id="input_calc_1" class="inputCalc">
+                <span>м<sup>2</sup></span>
+                <div id="button_calc_1" class="button_calc">Рассчитать</div>    
+            </div>
+            <div class="calculator-block_error">Заполните все поля</div>
+        </div>
 
-        <div class="calculator-block">
-            
-            <input type="number" placeholder="Площадь" id="input_calc_1">
-            <span>м<sup>2</sup></span>
-            <div id="button_calc_1" class="button_calc">Рассчитать</div>
-        
-        </div>  
         <div class="wrap_table_data">
             <div class="content-text">
                 <p>Расчет необходимого количества материалов для гидроизоляции на площадь <span class="input_area" id="input_area">-</span></p>

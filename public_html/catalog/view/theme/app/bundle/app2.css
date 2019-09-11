@@ -2238,7 +2238,7 @@ button.show-more:hover { background-color: #EFEEEC; -webkit-transition: 0.4s; -m
 
 .calculator p { display: block; font-size: 14px; line-height: 24px; color: #000; margin-bottom: 20px; }
 
-.calculator-block { border: 1px solid #EAE7E4; padding: 20px 20px 10px; /*margin-bottom: 30px;*/ display: flex; flex-wrap: wrap; }
+.calculator-block { /*border: 1px solid #EAE7E4;*/ padding: 15px 20px; /*margin-bottom: 30px;*/ display: flex; flex-wrap: wrap; }
 
 .calculator-block input[type="text"] { display: block; border: 1px solid #E8E5E2; height: 34px; width: 138px; padding: 0 15px 0 15px; background-color: transparent; color: #666666; font-size: 13px; font-family: 'Open Sans AS', sans-serif; margin-right: 10px; }
 
@@ -3224,6 +3224,10 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 .tab-block.tab-block3.tab-block2 .more_product { margin: 10px auto 0; }
 
 #input_calc_1, #input_calc_2 { width: 110px; }
+
+.calculator-block_error { color: red; font-size: 13px; margin-left: 20px; position: relative; margin-bottom: 10px; display: none; }
+
+.wrap_calculator-block { border: 1px solid #EAE7E4; position: relative; }
 
 @media screen and (max-width: 1200px) { .price-list .select-list ul.list > li { width: 100%; }
   .sidebar { margin-right: 20px; }

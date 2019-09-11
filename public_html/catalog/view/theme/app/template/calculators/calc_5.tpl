@@ -4,22 +4,24 @@
             <p>Для расчета необходимого количества материала введите параметры заполняемого шва:</p>
         </div>
 
-        <div class="calculator-block">
-            
-            <div class="calculator-block_col">
-                <input type="number" placeholder="Длина шва" id="input_calc_51">
-                <span>п.м.</span>
+        <div class="wrap_calculator-block">
+            <div class="calculator-block">  
+                <div class="calculator-block_col">
+                    <input class="inputCalc" type="number" placeholder="Длина шва" id="input_calc_51">
+                    <span>п.м.</span>
+                </div>
+                <div class="calculator-block_col">
+                    <input class="inputCalc" type="number" placeholder="Ширина шва" id="input_calc_52">
+                    <span>см</span>
+                </div>
+                <div class="calculator-block_col">
+                    <input class="inputCalc" type="number" placeholder="Глубина шва" id="input_calc_53">
+                    <span>см</span>
+                </div>
+                <div id="button_calc_5" class="button_calc">Рассчитать</div>
             </div>
-            <div class="calculator-block_col">
-                <input type="number" placeholder="Ширина шва" id="input_calc_52">
-                <span>см</span>
-            </div>
-            <div class="calculator-block_col">
-                <input type="number" placeholder="Глубина шва" id="input_calc_53">
-                <span>см</span>
-            </div>
-            <div id="button_calc_5" class="button_calc">Рассчитать</div>
-        </div>  
+            <div class="calculator-block_error">Заполните все поля</div>
+        </div>
         <div class="wrap_table_data">
             <div class="content-text">
                 <p>Расчет необходимого количества материалов для заполнения шва длиной <span class="input_area" id="input_area1">-</span> п.м., шириной <span class="input_area" id="input_area2">-</span> см, глубиной <span class="input_area" id="input_area3">-</span> см:

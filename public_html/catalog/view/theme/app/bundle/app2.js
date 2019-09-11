@@ -22449,13 +22449,25 @@ function calc1(){
     if (typeof ym != 'undefined') {
         ym(14496178, 'reachGoal', 'calc-use');
     }
-
+    var flag_error=false;
+    $(".inputCalc").each(function(){
+        if($(this).val()==""){
+            flag_error=true;
+        }
+    });
+    if(flag_error){
+        $(".calculator-block_error").fadeIn(150);
+    }else{
+        $(".calculator-block_error").fadeOut(150);
+    }
+    
     var data_calc1=getFloat($("#calculator").attr("data-consumption"));
     var data_calc2=getFloat($("#input_calc_1").val());
     var data_calc3=getFloat($("#priceSwitcher").attr("data-base_weight"));
     if(!data_calc3){
         data_calc3=1;
     }
+ 
 
     var total_consumption=data_calc1*data_calc2;
     if(total_consumption>0){
@@ -22514,6 +22526,17 @@ function calc2(){
     if (typeof ym != 'undefined') {
         ym(14496178, 'reachGoal', 'calc-use');
     }
+    var flag_error=false;
+    $(".inputCalc").each(function(){
+        if($(this).val()==""){
+            flag_error=true;
+        }
+    });
+    if(flag_error){
+        $(".calculator-block_error").fadeIn(100);
+    }else{
+        $(".calculator-block_error").fadeOut(100);
+    }
 
     var data_calc1=getFloat($("#calculator").attr("data-consumption"));
     var data_calc2=getFloat($("#input_calc_1").val());
@@ -22553,6 +22576,18 @@ function calc2(){
 function calc3(){
     if (typeof ym != 'undefined') {
             ym(14496178, 'reachGoal', 'calc-use');
+    }
+
+    var flag_error=false;
+    $(".inputCalc").each(function(){
+        if($(this).val()==""){
+            flag_error=true;
+        }
+    });
+    if(flag_error){
+        $(".calculator-block_error").fadeIn(100);
+    }else{
+        $(".calculator-block_error").fadeOut(100);
     }
 
     var data_product1=getFloat($("#calculator").attr("calc_data1"));
@@ -22619,6 +22654,18 @@ function calc4(){
     if (typeof ym != 'undefined') {
         ym(14496178, 'reachGoal', 'calc-use');
     }
+    var flag_error=false;
+    $(".inputCalc").each(function(){
+        if($(this).val()==""){
+            flag_error=true;
+        }
+    });
+    if(flag_error){
+        $(".calculator-block_error").fadeIn(100);
+    }else{
+        $(".calculator-block_error").fadeOut(100);
+    }
+
     var data_product2=getFloat($("#calculator").attr("calc_data2"));
     var data_product3=getFloat($("#calculator").attr("calc_data3"));
 
@@ -22672,6 +22719,18 @@ function calc5(){
     if (typeof ym != 'undefined') {
         ym(14496178, 'reachGoal', 'calc-use');
     }
+    var flag_error=false;
+    $(".inputCalc").each(function(){
+        if($(this).val()==""){
+            flag_error=true;
+        }
+    });
+    if(flag_error){
+        $(".calculator-block_error").fadeIn(100);
+    }else{
+        $(".calculator-block_error").fadeOut(100);
+    }
+    
     var data_product4=getFloat($("#calculator").attr("calc_data4"));
 
 

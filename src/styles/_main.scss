@@ -3519,8 +3519,8 @@ button.show-more{
     }
 }
 .calculator-block{
-    border: 1px solid #EAE7E4;
-    padding: 20px 20px 10px;
+    /*border: 1px solid #EAE7E4;*/
+    padding: 15px 20px;
     /*margin-bottom: 30px;*/
     display: flex;
     flex-wrap: wrap;
@@ -5747,6 +5747,18 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 .tab-block.tab-block3.tab-block2 .more_product{margin:10px auto 0;}
 #input_calc_1,#input_calc_2{width:110px;}
 
+.calculator-block_error{
+    color: red;
+    font-size: 13px;
+    margin-left: 20px;
+    position: relative;
+    margin-bottom:10px;
+    display:none;
+}
+.wrap_calculator-block{
+    border: 1px solid #EAE7E4;
+    position: relative;
+}
 
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{

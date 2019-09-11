@@ -4,22 +4,25 @@
             <p>Для расчета необходимого количества материала введите параметры герметизируемого шва:</p>
         </div>
 
-        <div class="calculator-block">
-            <div class="calculator-block_col">
-                <input type="number" placeholder="Длина шва" id="input_calc_31">
-                <span>п.м.</span>
+        <div class="wrap_calculator-block">
+            <div class="calculator-block">
+                <div class="calculator-block_col">
+                    <input class="inputCalc" type="number" placeholder="Длина шва" id="input_calc_31">
+                    <span>п.м.</span>
+                </div>
+                <div class="calculator-block_col">
+                    <input class="inputCalc" type="number" placeholder="Ширина шва" id="input_calc_32">
+                    <span>мм</span>
+                </div>
+                <div class="calculator-block_col">
+                    <input class="inputCalc" type="number" placeholder="Толщина слоя" id="input_calc_33">
+                    <span>мм</span>
+                </div>
+                <div id="button_calc_3" class="button_calc">Рассчитать</div>
             </div>
-            <div class="calculator-block_col">
-                <input type="number" placeholder="Ширина шва" id="input_calc_32">
-                <span>мм</span>
-            </div>
-            <div class="calculator-block_col">
-                <input type="number" placeholder="Толщина слоя" id="input_calc_33">
-                <span>мм</span>
-            </div>
-            <div id="button_calc_3" class="button_calc">Рассчитать</div>
-        
-        </div>  
+            <div class="calculator-block_error">Заполните все поля</div>
+        </div>
+
         <div class="wrap_table_data">
             <div class="content-text">
                 <p>Расчет необходимого количества материалов для герметизации шва длиной <span class="input_area" id="input_area1">-</span> п.м., шириной <span class="input_area" id="input_area2">-</span> мм, с толщиной слоя <span class="input_area" id="input_area3">-</span> мм:</p>
