@@ -292,7 +292,7 @@ class ControllerNewsBlogArticle extends Controller {
 
 			$template_default='article.tpl';
 			if ($settings && $settings['template_article']) $template_default=$settings['template_article'];
-
+			
 			$this->response->setOutput($this->load->view('newsblog/'.$template_default, $data));
 		} else {
 			$url = '';

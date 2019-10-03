@@ -7,6 +7,7 @@ class ControllerProductProduct extends Controller {
 		$json = array();
 		
 		$this->load->model('catalog/product');
+		$this->load->model('catalog/information');
 
 		$weight=$this->request->post['weight'];
 		$product_id=$this->request->post['product_id'];
@@ -21,11 +22,10 @@ class ControllerProductProduct extends Controller {
 			$price_ico=' <div class="rur">i</div>';
 		}
 		*/
-
-		$json['text_delivery']=html_entity_decode($delivery_info['text_delivery']);
+			
+		//$json['text_delivery']=html_entity_decode($delivery_info['text_delivery']);
 		
-		
-
+		$json['text_delivery']=$this->model_catalog_information->cleanText($delivery_info['text_delivery']);
 		$json['success']=true;
 		$this->response->setOutput(json_encode($json));
     }

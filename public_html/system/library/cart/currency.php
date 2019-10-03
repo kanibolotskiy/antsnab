@@ -26,7 +26,12 @@ class Currency {
 			$currency="RUB";
 		}
 		$symbol_left = $this->currencies[$currency]['symbol_left'];
-		$symbol_right = $this->currencies[$currency]['symbol_right'];
+		//$symbol_right = $this->currencies[$currency]['symbol_right'];
+		if($currency=="RUB"){
+			$symbol_right=" <div class='rur'>i</div>";
+		}else{
+			$symbol_right = $this->currencies[$currency]['symbol_right'];
+		}
 		$decimal_place = $this->currencies[$currency]['decimal_place'];
 
 		if (!$value) {

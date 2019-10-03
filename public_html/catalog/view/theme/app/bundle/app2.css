@@ -3229,6 +3229,8 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 
 .wrap_calculator-block { border: 1px solid #EAE7E4; position: relative; }
 
+.textBold { font-weight: bold; }
+
 @font-face { font-family: 'rublregular'; src: url("../fonts/rouble-webfont.eot"); src: url("../fonts/rouble-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/rouble-webfont.woff2") format("woff2"), url("../fonts/rouble-webfont.woff") format("woff"), url("../fonts/rouble-webfont.ttf") format("truetype"); font-weight: normal; font-style: normal; }
 
 .rur { font-family: 'rublregular'; }
