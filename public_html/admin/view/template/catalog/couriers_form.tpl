@@ -49,6 +49,21 @@
                         </div>
                     </div>
 
+
+                    <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-price_ico"><?php echo $entry_price_ico; ?></label>
+                        <div class="col-sm-10">
+                            <label>
+                                <?php if ($price_ico) { ?>
+                                <input  type="checkbox" name="price_ico" value="1" checked="checked" id="input-price_ico" />
+                                <?php } else { ?>
+                                <input type="checkbox" name="price_ico" value="1" id="input-price_ico" />
+                                <?php } ?>
+                                &nbsp; </label>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-caption"><?php echo $entry_caption; ?></label>
                         <div class="col-sm-10">

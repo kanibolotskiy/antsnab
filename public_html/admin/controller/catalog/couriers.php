@@ -298,7 +298,9 @@ class ControllerCatalogCouriers extends Controller {
             $data['entry_sort_order'] = $this->language->get('entry_sort_order');
 			$data['entry_weight'] = $this->language->get('entry_weight');
 			$data['entry_price'] = $this->language->get('entry_price');
-            
+			$data['entry_price_ico'] = $this->language->get('entry_price_ico');
+			
+			
 
             $data['button_save'] = $this->language->get('button_save');
             $data['button_cancel'] = $this->language->get('button_cancel');
@@ -355,11 +357,13 @@ class ControllerCatalogCouriers extends Controller {
                 $courier_info = $this->model_catalog_couriers->getCourier($this->request->get['courier_id']);
             }
             if(isset($courier_info)){
-                $data['courier']=$courier_info['name'];
+				$data['courier']=$courier_info['name'];
+				$data['price_ico']=$courier_info['price_ico'];
 				$data['courier_description']=$courier_info['description'];
 				$data['courier_caption']=$courier_info['caption'];
             }else{
-                $data['courier']='';
+				$data['courier']='';
+				$data['price_ico']='';
 				$data['courier_description']='';
 				$data['courier_caption']='';
             }

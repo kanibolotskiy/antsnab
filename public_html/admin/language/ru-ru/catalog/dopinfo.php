@@ -58,6 +58,7 @@ $_['entry_name_calcs']          = 'Название калькулятора';
 
 $_['entry_weight']              = 'Грузоподъемность, до';
 $_['entry_price']               = 'Цена, от';
+$_['entry_price_ico']           = 'Иконка RUB';
 
 
 $_['entry_caption']             = 'Заголовок';

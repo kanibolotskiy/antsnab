@@ -625,9 +625,8 @@ class ModelCatalogProduct extends Model {
 				$result['caption'],
 				$result['description'],
 				$result['weight'],
-				$result['name']
-
-
+				$result['name'],
+				$result['price_ico']
 			);
 		}
 		
@@ -657,7 +656,7 @@ class ModelCatalogProduct extends Model {
 		$del_price="";
 		$del_caption="";
 		$del_text="";
-		
+		$del_ico="";
 		
 		$product=$this->getProduct($product_id);
 
@@ -668,12 +667,10 @@ class ModelCatalogProduct extends Model {
 					$del_price=$key[0];
 					$del_caption=$key[1];
 					$del_text=$key[2];
+					$del_ico=$key[5];
 				}
 			}
 			$date_str=date("Ymd");
-
-			
-			//$iswork=file_get_contents ("https://isdayoff.ru/".$date_str);
 			$iswork=$this->isDayWork($date_str);
 			$date_week = date('w');
 			$hours=date("H");
@@ -683,16 +680,13 @@ class ModelCatalogProduct extends Model {
 				$delday_text="сегодня";
 			}else{
 				$days=0;
-				//echo "work1=".$iswork."!";
 				$end = date('Ymd', strtotime('+'.($days+1).' days'));
 				$date_week = date('w', strtotime('+'.($days+1).' days'));
-				//$iswork=file_get_contents ("https://isdayoff.ru/".$end);
 				$iswork=$this->isDayWork($end);
 
 				while($iswork){
 					$end = date('Ymd', strtotime('+'.($days+1).' days'));
 					$date_week = date('w', strtotime('+'.($days+1).' days'));
-					//$iswork=file_get_contents ("https://isdayoff.ru/".$end);
 					$iswork=$this->isDayWork($end);
 					
 					$days++;
@@ -715,9 +709,10 @@ class ModelCatalogProduct extends Model {
 			
 		}
 		$result['date_delivery']=$delday_text;
-		$result['price_delivery']=$del_price;
+		$result['price_delivery']=$del_price.($del_ico?' <div class="rur">i</div>':'');
 		$result['caption_delivery']=$del_caption;
 		$result['text_delivery']=$del_text;
+		
 
 		//return '<span class="nowrap">'.$delday_text.',</span> <span class="nowrap">'.$del_price.'</span>';
 		return $result;

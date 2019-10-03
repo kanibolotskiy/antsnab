@@ -1,8 +1,12 @@
 <?php
 class ModelCatalogCouriers extends Model {
 	public function addCourier($data) {
-	
-		$this->db->query("INSERT INTO dopinfo_couriers SET name = '" . $this->db->escape($data['name']) . "',description='" . $this->db->escape($data['courier_description']) . "', caption='" . $this->db->escape($data['courier_caption']) . "', weight = '" . $this->db->escape($data['weight']) . "', price = '" . $this->db->escape($data['price']) . "', sort_order = '" . (int)$data['sort_order'] . "'");
+		if(isset($data["price_ico"])){
+			$price_ico=$data["price_ico"];
+		}else{
+			$price_ico=0;
+		}
+		$this->db->query("INSERT INTO dopinfo_couriers SET name = '" . $this->db->escape($data['name']) . "',description='" . $this->db->escape($data['courier_description']) . "', caption='" . $this->db->escape($data['courier_caption']) . "', weight = '" . $this->db->escape($data['weight']) . "', price = '" . $this->db->escape($data['price']) . "', price_ico = '" . $price_ico . "', sort_order = '" . (int)$data['sort_order'] . "'");
 		$courier_id = $this->db->getLastId();
 
 		$this->cache->delete('courier');
@@ -11,8 +15,12 @@ class ModelCatalogCouriers extends Model {
 	}
 
 	public function editCourier($courier_id, $data) {
-		
-		$this->db->query("UPDATE dopinfo_couriers SET name = '" . $this->db->escape($data['name']) . "', description='" . $this->db->escape($data['courier_description']) . "', caption='" . $this->db->escape($data['courier_caption']) . "', weight = '" . $this->db->escape($data['weight']) . "', price = '" . $this->db->escape($data['price']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE courier_id = '" . (int)$courier_id . "'");
+		if(isset($data["price_ico"])){
+			$price_ico=$data["price_ico"];
+		}else{
+			$price_ico=0;
+		}
+		$this->db->query("UPDATE dopinfo_couriers SET name = '" . $this->db->escape($data['name']) . "', description='" . $this->db->escape($data['courier_description']) . "', caption='" . $this->db->escape($data['courier_caption']) . "', weight = '" . $this->db->escape($data['weight']) . "', price = '" . $this->db->escape($data['price']) . "', price_ico = '" . $price_ico . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE courier_id = '" . (int)$courier_id . "'");
 		
 		$this->cache->delete('courier');
 		

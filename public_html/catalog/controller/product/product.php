@@ -15,7 +15,15 @@ class ControllerProductProduct extends Controller {
 		$json['date_delivery']=$delivery_info['date_delivery'];
 		$json['price_delivery']=$delivery_info['price_delivery'];
 		$json['caption_delivery']=$delivery_info['caption_delivery'];
+		/*
+		$price_ico='';
+		if($delivery_info['price_ico']){
+			$price_ico=' <div class="rur">i</div>';
+		}
+		*/
+
 		$json['text_delivery']=html_entity_decode($delivery_info['text_delivery']);
+		
 		
 
 		$json['success']=true;
@@ -768,6 +776,8 @@ class ControllerProductProduct extends Controller {
 
 			$delcostData=$this->model_catalog_product->getDocsData(5);
 			$data['delivery_cost_caption']=$delcostData['name'];
+
+			
 			$data['delivery_cost_text']=html_entity_decode($delcostData['description']);
 
 
