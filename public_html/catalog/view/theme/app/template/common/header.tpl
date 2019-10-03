@@ -18,7 +18,7 @@
         <meta name="robots" content="noyaca" />
 
 
-        <link href="/catalog/view/theme/app/bundle/app2.css" rel="stylesheet">
+        <link href="/catalog/view/theme/app/bundle/app2.css?v1.01" rel="stylesheet">
         <?php if ($description) { ?>
             <meta name="description" content="<?php echo $description; ?>" />
         <?php } ?>
