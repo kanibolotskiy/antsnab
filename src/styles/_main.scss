@@ -5136,11 +5136,17 @@ filter: grayscale(1); /* W3C */
 .done_order_number{margin-top: 40px;text-align:center;font-size: 21px;font-weight: bold;margin-top:20px;}
 
 
-.tovar_main_image{border: 2px solid #EFEEEC;display:block;}
 .tovar_main_image a{display:block;text-align:center;}
-.tovar_mini_image{border: 2px solid #EFEEEC;display:block;width:24%;}
+.tovar_mini_image{border: 2px solid #EFEEEC;display:inline-block;width:24%;
+    margin-bottom: 1%;
+    margin-right: 1%;
+}
 
-.tovar_mini_gallery{display: flex;
+.tovar_mini_gallery{
+    margin-right: -1%;
+    font-size: 0;
+    /*
+    display: flex;
     display: -webkit-box;
 	display: -moz-box;
 	display: -ms-flexbox;
@@ -5149,7 +5155,10 @@ filter: grayscale(1); /* W3C */
     -webkit-justify-content: space-between;
     -ms-flex-pack: justify;
     justify-content: space-between;
-    -webkit-box-pack: justify;}
+    -webkit-box-pack: justify;
+*/}
+.tovar_mini_image a{display:block;text-align:center;}
+
 .tovar_mini_image img,.tovar_main_image img{max-width:100%;height:auto;}
 .tab-block ul li .catalog-img {width: 207px;}
 .tab-block.tab-block2 ul li .catalog-img {width: auto;}
@@ -5759,6 +5768,22 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
     border: 1px solid #EAE7E4;
     position: relative;
 }
+
+@font-face {
+    font-family: 'rublregular';
+    src: url('../fonts/rouble-webfont.eot');
+    src: url('../fonts/rouble-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/rouble-webfont.woff2') format('woff2'),
+         url('../fonts/rouble-webfont.woff') format('woff'),
+         url('../fonts/rouble-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+ 
+.rur {font-family: 'rublregular';}
+div.rur{display:inline;}
+
+
 
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{

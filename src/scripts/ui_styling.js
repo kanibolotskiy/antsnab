@@ -9,5 +9,5 @@ import './lib/jquery.fancybox.min';
 $(document).ready(function(){
     $('input[name="phone"]').inputmask("+7 9999999999",{ "clearIncomplete": true });
     $('select').niceSelect();
-    $("input[name='search']").attr('autocomplete','off');
+    //$("input[name='search']").attr('autocomplete','off');
 });

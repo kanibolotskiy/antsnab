@@ -206,11 +206,12 @@
                                         <?php if($pUnitsErrors):?>
                                             HAS ERRORS, SEE ABOVE
                                         <?php else: ?>
+
                                         <div class="help_cont"> 
                                             <strong id="wholesale_price" data-value="<?=$price_wholesale?>"><?=$price_wholesale_val?>
-                                            </strong>
-                                            
+                                            </strong>                                            
                                         </div>
+                                        
                                         <span id="priceWholesaleDescr">
                                         </span>
                                         <?php endif;?>
@@ -790,7 +791,7 @@
                                 <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
                             </a>
                             <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
-                            <strong><?=$p['price']?></strong>
+                            <strong><?=$p['price']?> <div class="rur">i</div></strong>
                             <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
                         </div>
                     </li>

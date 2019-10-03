@@ -427,17 +427,17 @@ class ControllerProductProduct extends Controller {
 
 			$results = $this->model_catalog_product->getProductImages($this->request->get['product_id']);
 
-			$count_images=0;
+			//$count_images=0;
 			foreach ($results as $result) {
-				if($count_images<4){
+				//if($count_images<4){
 					$data['images'][] = array(
 						//'popup' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_popup_width'), $this->config->get($this->config->get('config_theme') . '_image_popup_height')),
 						//'popup' => $this->model_tool_image->resize($result['image'],1000,750),
 						'popup' => $this->model_tool_image->myResize($result['image'],1000,750,1,'watermark.png'),
 						'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_additional_width'), $this->config->get($this->config->get('config_theme') . '_image_additional_height'))
 					);
-				}
-				$count_images++;
+				//}
+				//$count_images++;
 			}
 
 			$data['video_link']='';
@@ -679,8 +679,10 @@ class ControllerProductProduct extends Controller {
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 					$price_val=$this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'));
-					$price = $this->currency->format($price_val, $this->session->data['currency']);
-					
+					//$price = $this->currency->format($price_val, );
+					$price = number_format($price_val,0,".", " ");
+
+	
 				} else {
 					$price = false;
 					$price_val=0;
@@ -719,7 +721,6 @@ class ControllerProductProduct extends Controller {
 					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 				);
 			}
-
 
 			$data['tags'] = array();
 

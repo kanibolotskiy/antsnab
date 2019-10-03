@@ -19,7 +19,7 @@
                 
             </div>
             <div class="price">
-                <span>Цена от <strong itemprop="price" content="<?=$p['price_val']?>"><?=$p['price']?></strong></span>
+                <span>Цена от <strong itemprop="price" content="<?=$p['price_val']?>"><?=$p['price']?> <div class="rur">i</div></strong></span>
                 
             </div>
             <meta itemprop="priceCurrency" content="RUB">

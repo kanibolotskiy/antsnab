@@ -160,7 +160,8 @@ class ProductListHelper extends \Model
                                 ->multiply( Fraction::fromFloat($price) )
                                 ->toFloat();
                     $price_val = $this->tax->calculate($uiPrice, $result['tax_class_id'], $this->config->get('config_tax'));
-                    $price = $this->currency->format($price_val, $this->session->data['currency']);
+                    //$price = $this->currency->format($price_val, $this->session->data['currency']);
+                    $price = number_format($price_val,0,".", " ");
                     
                 } else {
                     $price = false;

@@ -113,7 +113,8 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                 saleToUiKoef = new Fraction($activeEl.attr('data-sale_to_ui_koef')),
                 uiPrice = saleToPriceKoef.div(saleToUiKoef).mul(price),
                 uiWholeSalePrice = saleToPriceKoef.div(saleToUiKoef).mul(wholeSalePrice),
-                currency = $('#priceSwitcher').attr('data-currency_symbol');
+                //currency = $('#priceSwitcher').attr('data-currency_symbol');
+                currency = '<div class="rur">i</div>';
                 
             
             var plural1=$("#priceSwitcher .active").attr("data-ui_name_genitive");
@@ -144,14 +145,14 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                 }else{
                     price_str = number_format(price_val, 2, ",", " ") + " " + currency
                 }
-                $price.text(price_str);
+                $price.html(price_str);
 
                 if(opt_price_val-parseInt(opt_price_val)===0){
                     opt_price_str = number_format(opt_price_val, 0, ",", " ") + " " + currency 
                 }else{
                     opt_price_str = number_format(opt_price_val, 2, ",", " ") + " " + currency
                 }
-                $wholeSalePrice.text(opt_price_str);
+                $wholeSalePrice.html(opt_price_str);
 
                 //$price.text(number_format(uiPrice.valueOf(), 2, ",", " ") + " " + currency);
           //  $price.text( format(formatStr + currency, uiPrice.valueOf() ) );
