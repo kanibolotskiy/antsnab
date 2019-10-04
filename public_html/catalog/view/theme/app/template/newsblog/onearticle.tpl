@@ -6,7 +6,7 @@
         <?php echo $content_top; ?>
         
         <div class="article">
-            <div class="title"><?php echo $heading_title; ?></div>
+            <h1 class="title"><?php echo $heading_title; ?></h1>
             <?php if ($thumb) { ?>
                 <div class="img-article">
                     <img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" />
