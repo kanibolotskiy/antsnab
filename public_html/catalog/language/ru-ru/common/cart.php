@@ -6,7 +6,7 @@
 //$_['text_empty']     = '<span class="left">В корзине <br>пока пусто</span><strong class="right">%s</strong>';
 
 $_['text_items']               = '<span class="left">В корзине %s<br> %s </span><strong class="right">%s</strong>';
-$_['text_items_empty']         = '<span class="left">В корзине <br>пока пусто</span><strong class="right">0 ₽</strong>';
+$_['text_items_empty']         = '<span class="left">В корзине <br>пока пусто</span><strong class="right">0 <div class="rur">i</div></strong>';
 
 
 $_['text_cart']      = 'Открыть корзину';
