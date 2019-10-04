@@ -1,7 +1,7 @@
  <?php foreach ($categories as $categoryId => $catData): ?>
     <tr>
         <td colspan="4" class="text-row">
-            <h3><a href="<?=$catData['href']?>"><?=$catData['name']?></a></h3>
+            <h2><a href="<?=$catData['href']?>"><?=$catData['name']?></a></h2>
         </td>
     </tr>
         <?php foreach ($catData['products'] as $prodData) :  ?>
