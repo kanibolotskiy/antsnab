@@ -2741,6 +2741,8 @@ html:focus, body:focus { background: none; -webkit-tap-highlight-color: rgba(0, 
 
 .content-text .table-responsive table tr td { font-size: 14px; color: #000000; border: 1px solid #E8E5E2; }
 
+.content-text img { max-width: 100%; }
+
 .content_inner b, .content_inner strong { font-weight: bold; }
 
 .content_inner li { font-size: 14px; color: #000; line-height: 18px; margin-bottom: 10px; }
