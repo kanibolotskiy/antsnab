@@ -113,6 +113,16 @@ class CategoryController extends \Controller
             $this->document->setDescription($category_info['meta_description']);
             $this->document->setKeywords($category_info['meta_keyword']);
 
+            $catalog_page=1;
+            if(isset($_GET["page"])){
+                $catalog_page=$_GET["page"];
+            }
+            if($catalog_page>1){
+                $data["article_page"]=". Страница ".$catalog_page;
+            }else{
+                $data["article_page"]="";
+            }
+
             if ($category_info['meta_h1']) {
                 $data['heading_title'] = $category_info['meta_h1'];
             } else {

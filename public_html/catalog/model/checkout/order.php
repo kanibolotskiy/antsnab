@@ -624,15 +624,19 @@ class ModelCheckoutOrder extends Model {
 							'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
 						);
 					}
-					
+					/*
+					'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
+					*/
+				
 					$data['products'][] = array(
 						'name'     => $product['name'],
 						'model'    => $product['model'],
 						'option'   => $option_data,
 						'quantity' => $product['quantity'],
 						'unit'	   => $unit_str,
-						'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-						'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
+						'price'	   => number_format($product['price'],0,"."," ")." р.",
+						'total'	   => number_format($product['price'] * $product['quantity'],0,"."," ")." р.",
 					);
 				}
 
@@ -653,10 +657,12 @@ class ModelCheckoutOrder extends Model {
 
 				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
 
+				//'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']),
+
 				foreach ($order_total_query->rows as $total) {
 					$data['totals'][] = array(
 						'title' => $total['title'],
-						'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']),
+						'text' 	=> number_format($total['value'],0,"."," ")." р."
 					);
 				}
 

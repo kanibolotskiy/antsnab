@@ -31,6 +31,7 @@ class CategoryController extends \Controller
         $this->load->model('catalog/category');
         $this->load->model('catalog/product');
         $this->load->model('tool/image');
+        $this->load->model('catalog/information');
 
         $this->data['breadcrumbs'] = array();
 
@@ -69,14 +70,23 @@ class CategoryController extends \Controller
             
             $category_final_info = $this->model_catalog_category->getCategory($category_id);
 
-            if(isset($category_final_info["bottom_text"])){
-                $this->data['bottom_text'] = html_entity_decode($category_final_info["bottom_text"]);
+            $catalog_page=1;
+            if(isset($_GET["page"])){
+                $catalog_page=$_GET["page"];
+            }
+            //if((isset($category_final_info["bottom_text"]))and($catalog_page>1))){
+            if((isset($category_final_info["bottom_text"]))and($catalog_page==1)){
+                //$this->data['bottom_text'] = html_entity_decode($category_final_info["bottom_text"]);
+                
+                $this->data['bottom_text'] = $this->model_catalog_information->cleanText($category_final_info["bottom_text"]);
             }else{
                 $this->data['bottom_text'] = '';
             }
         } else {
             $category_id = 0;
         }
+
+
 
         $cat_view1="active";
         $cat_view2="";
@@ -349,13 +359,26 @@ class CategoryController extends \Controller
             $this->document->setTitle($category_info['name']);
         }
         $this->document->setDescription($category_info['meta_description']);
-        $this->document->setKeywords($category_info['meta_keyword']);
+        if($category_info['meta_keyword']){
+            $this->document->setKeywords($category_info['meta_keyword']);
+        }else{
+            $this->document->setKeywords($category_info['meta_h1']);
+        }
 
+        $catalog_page=1;
+        if(isset($_GET["page"])){
+            $catalog_page=$_GET["page"]*1;
+        }
+        
         if ($category_info['meta_h1']) {
             $this->data['heading_title'] = $category_info['meta_h1'];
         } else {
             $this->data['heading_title'] = $category_info['name'];
         }
+        if($catalog_page>1){
+            $this->data['heading_title']=$this->data['heading_title'].". Страница ".$catalog_page;
+        }
+        
 
         $this->data['text_refine'] = $this->language->get('text_refine');
         $this->data['text_empty'] = $this->language->get('text_empty');

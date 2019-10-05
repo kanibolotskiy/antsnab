@@ -102,9 +102,11 @@
 
 
             </div>
-            <div class="bottom_text content-text">
-                <?php echo $bottom_text; ?>
-            </div>
+            <?php if($bottom_text){ ?>
+                <div class="bottom_text content-text">
+                    <?php echo $bottom_text; ?>
+                </div>
+            <?php }?>
         <?php else: ?>
             <h1>Товаров не найдено</h1>
         <?php endif; ?>

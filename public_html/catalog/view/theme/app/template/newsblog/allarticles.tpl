@@ -13,7 +13,7 @@
         <?php echo $content_top; ?>
         <div class="news-container staty-container">
             <?php if( !empty($articles) ):?>
-                    <h1 class="title">Статьи</h1>
+                    <h1 class="title">Статьи<?php echo $article_page;?></h1>
                     <?php if( !empty($subCats) ):?>
                     <select id="seldef1" >
                         <?php foreach($subCats as $sc): ?>

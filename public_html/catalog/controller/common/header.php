@@ -24,11 +24,26 @@ class ControllerCommonHeader extends Controller {
 			$this->document->addLink($server . 'image/' . $this->config->get('config_icon'), 'icon');
 		}
 
-		$data['title'] = $this->document->getTitle();
+		
 
 		$data['base'] = $server;
-		$data['description'] = $this->document->getDescription();
-		$data['keywords'] = $this->document->getKeywords();
+
+		$catalog_page=1;
+		if(isset($_GET["page"])){
+			$catalog_page=$_GET["page"];
+		}
+
+		
+		if($catalog_page==1){
+			$data['description'] = $this->document->getDescription();
+			$data['keywords'] = $this->document->getKeywords();
+			$data['title'] = str_replace("[+page+]","", $this->document->getTitle());
+		}else{
+			$data['title'] = str_replace("[+page+]",". Страница ".$catalog_page, $this->document->getTitle());
+			$data['description'] = "";
+			$data['keywords'] = "";
+		}
+
 		$data['links'] = $this->document->getLinks();
 		$data['styles'] = $this->document->getStyles();
 		$data['scripts'] = $this->document->getScripts();

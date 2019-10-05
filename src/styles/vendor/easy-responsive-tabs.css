@@ -34,7 +34,7 @@ h2.resp-accordion {
 .resp-tab-active {
 	/*border: 1px solid #5AB1D0 !important;*/
 	border-bottom: none;
-    margin-bottom: -2px !important;
+    /*margin-bottom: -2px !important;*/
     padding: 13px 15px 15px 15px !important;
 	/*border-top: 4px solid #5AB1D0 !important;
     border-bottom: 0px #fff solid !important;

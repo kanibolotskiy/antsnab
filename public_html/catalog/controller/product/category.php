@@ -257,7 +257,7 @@ class ControllerProductCategory extends Controller {
 			}
 
 			$url = '';
-			$data['bottom_text'] = 'test';
+			
 
 			if (isset($this->request->get['filter'])) {
 				$url .= '&filter=' . $this->request->get['filter'];

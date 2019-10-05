@@ -47,7 +47,7 @@
                                         <li>
                                             <div class="catalog-block">
                                                 <div class="catalog-img">
-                                                    <a href="<?= $c['href'] ?>"><img src="<?= $c['thumb'] ?>" alt="img"></a>
+                                                    <a href="<?= $c['href'] ?>"><img src="<?= $c['thumb'] ?>" title="<?= $c['name']?>" alt="<?= $c['name']?>"></a>
                                                 </div>
                                                 <div class="catalog-description">
                                                     <a class="title-product" href="<?= $c['href'] ?>">
@@ -71,49 +71,10 @@
                                         </li>
                                     <?php endforeach; ?>
                                 </ul>
-                                <!--<div class="title-catalog">
-                                   Мастики, праймеры, битум 
-                                </div>
-                                <ul><li></li></ul> 
-                                -->
+                                
                             </div>
                         </div> 
-                        <!--
-                        <div id="m1tab2">
-                            <div class="tab-block">
-                                <div class="title-catalog">
-                                    &nbsp;
-                                 </div>
-                                <ul>
-                                    <?php foreach ($categories as $c): ?>
-                                        <li>
-                                            <div class="catalog-block">
-                                                <div class="catalog-img">
-                                                    <a href="<?= $c['href'] ?>"><img src="<?= $c['thumb'] ?>" alt="<?=$c['name']?>"></a>
-                                                </div>
-                                                <div class="catalog-description">
-                                                    <a class="title-product" href="<?= $c['href'] ?>">
-                                                        <?= $c['name'] ?>
-                                                    </a>
-                                                    <p>
-                                                    <?= $c['description'] ?>
-                                                    </p>
-                                                    <div class="tags">
-                                                        <?php foreach( $c['sub'] as $sub ): ?>
-                                                            <a href="<?=$sub['href']?>">
-                                                                <?=$sub['name']?>
-                                                            </a>
-                                                        <?php endforeach;?>
-                                                    </div> 
-                                                </div> 
-                                                <a href="<?= $c['href'] ?>" class="more">Подробнее</a> 
-                                            </div> 
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </div>
-                        </div> 
-                        -->
+                       
                     </div>
                 </div>
             </div>

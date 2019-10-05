@@ -15,7 +15,7 @@
                         <?php endif;?>
                             
                             <a href="<?php echo $banner['link']; ?>" title="<?php echo $banner['title']; ?>">
-                            <img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>">
+                            <img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" title="<?php echo $banner['title']; ?>">
                             <div class="slide-block">
                                 <span><?php echo $banner['title']; ?></span>
                                 <?=$banner['descr'];?>

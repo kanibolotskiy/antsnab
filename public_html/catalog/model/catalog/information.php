@@ -1,13 +1,36 @@
 <?php
 class ModelCatalogInformation extends Model {
-	public function cleanText($text){
-		$text=html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+	private function cleanInternalUrl($matches){
+		$a = $matches[0];
+		//echo "!".$this->data['base']."!";
 
-		$text_arr=explode("<a",$text);
-		for($i=0;$i<count($text_arr);$i++){
-			
+		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			$site_url = $this->config->get('config_ssl');
+		} else {
+			$site_url = $this->config->get('config_url');
 		}
 
+		//$site_url = $base;
+	
+		if (strpos($a, 'rel') === false){
+			$a = preg_replace("%(href=\S(?!$site_url))%i", 'rel="nofollow" $1', $a);
+		} elseif (preg_match("%href=\S(?!$site_url)%i", $a)){
+			$a = preg_replace('/rel=S(?!nofollow)\S*/i', 'rel="nofollow"', $a);
+		}
+		return $a;
+	}
+	public function cleanText($text){
+		$text=html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+		/*
+		$text_arr=explode("<a",$text);
+		for($i=0;$i<count($text_arr);$i++){
+
+		}
+		*/
+		//$html = preg_replace('/(alt=")(.*?)(")/i', '$1'.$post_title.'$3', $text);
+		//$html = str_replace('/>', 'title="'.$post_title.'" />', $html);
+
+		$text = preg_replace_callback('/<a[^>]+/', array($this, 'cleanInternalUrl'), $text);
 		
 		$text=str_replace("₽","<div class='rur'>i</div>",$text);
 		$text=str_replace('<b ','<span class="textBold"',$text);

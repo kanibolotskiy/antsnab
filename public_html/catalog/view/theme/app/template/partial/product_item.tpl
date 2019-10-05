@@ -2,7 +2,7 @@
     <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>">
     <div class="catalog-block">
         <div class="catalog-img">
-            <img itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" itemprop="image" />
+            <img itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" title="<?= $p['name'] ?>" itemprop="image" />
         </div>
         <div class="clr"></div>
 

@@ -6,7 +6,7 @@
                         alt="<?php echo $article['name']; ?>" 
                         title="<?php echo $article['name']; ?>" />
             </a>
-            <span><?php echo $article['date']?></span>
+            <time><?php echo $article['date']?></time>
         </div>
     <?php } ?>
     <div class="news-description">

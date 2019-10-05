@@ -182,7 +182,7 @@ class ArticleController extends \Controller
             $data['description'] = $this->model_catalog_information->cleanText($article_info['description']);
 
             //$data['description'] = html_entity_decode($article_info['description'], ENT_QUOTES, 'UTF-8');
-
+            
             $data['images'] = array();
             
             $results = $this->model_newsblog_article->getArticleImages($newsblog_article_id);
