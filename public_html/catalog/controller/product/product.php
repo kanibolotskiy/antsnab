@@ -321,11 +321,24 @@ class ControllerProductProduct extends Controller {
 			$seoTitlePrice = number_format((float)$product_info['price_wholesale'] ? $product_info['price_wholesale'] : $product_info['price'],0,"."," ")." р.";
 
 			$seoTitle=str_replace('[+price]',$seoTitlePrice ,$seoTitle);
-		
+
+			if ($product_info['meta_h1']) {
+				$meta_h1 = $product_info['meta_h1'];
+			} else {
+				$meta_h1 = $product_info['name'];
+			}
+
 			$this->document->setTitle($seoTitle);
 
 			$this->document->setDescription($product_info['meta_description']);
-			$this->document->setKeywords($product_info['meta_keyword']);
+			if($product_info['meta_keyword']){
+				$this->document->setKeywords($product_info['meta_keyword']);
+			}else{
+				$this->document->setKeywords($meta_h1);
+			}
+			
+			$data['heading_title'] = $meta_h1;
+
 			$this->document->addLink($this->url->link('product/product', 'product_id=' . $this->request->get['product_id']), 'canonical');
 			//$this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific-popup.css');
 
@@ -337,11 +350,7 @@ class ControllerProductProduct extends Controller {
 			
 			
 
-			if ($product_info['meta_h1']) {
-				$data['heading_title'] = $product_info['meta_h1'];
-			} else {
-				$data['heading_title'] = $product_info['name'];
-			}
+			
 			
 			$data['text_select'] = $this->language->get('text_select');
 			$data['text_manufacturer'] = $this->language->get('text_manufacturer');

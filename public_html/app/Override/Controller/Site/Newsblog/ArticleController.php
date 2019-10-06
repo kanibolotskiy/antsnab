@@ -128,10 +128,20 @@ class ArticleController extends \Controller
             $this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific-popup.css');
 
             if ($article_info['meta_h1']) {
-                $data['heading_title'] = $article_info['meta_h1'];
-            } else {
-                $data['heading_title'] = $article_info['name'];
+				$meta_h1 = $article_info['meta_h1'];
+			} else {
+				$meta_h1 = $article_info['name'];
             }
+            
+            $data['heading_title'] = $meta_h1;
+
+            if($article_info['meta_keyword']){
+				$this->document->setKeywords($article_info['meta_keyword']);
+			}else{
+				$this->document->setKeywords($meta_h1);
+            }
+            
+
 
             $data['text_tags'] = $this->language->get('text_tags');
             $data['text_related'] = $this->language->get('text_related');

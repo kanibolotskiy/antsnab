@@ -13,9 +13,9 @@ class ModelCatalogInformation extends Model {
 		//$site_url = $base;
 	
 		if (strpos($a, 'rel') === false){
-			$a = preg_replace("%(href=\S(?!$site_url))%i", 'rel="nofollow" $1', $a);
+			$a = preg_replace("%(href=\S(?!$site_url))%i", 'rel="nofollow noopener" target="_blank" $1', $a);
 		} elseif (preg_match("%href=\S(?!$site_url)%i", $a)){
-			$a = preg_replace('/rel=S(?!nofollow)\S*/i', 'rel="nofollow"', $a);
+			$a = preg_replace('/rel=S(?!nofollow)\S*/i', 'rel="nofollow noopener" target="_blank"', $a);
 		}
 		return $a;
 	}
