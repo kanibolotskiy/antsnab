@@ -108,6 +108,25 @@
                       </div>
                     </div>
                   </div>
+<!--
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-noindex">
+                        <?php echo $entry_noindex; ?>
+                    </label>
+                    <div class="col-sm-1">
+                      <div class="checkbox">
+                        <label>
+                        <?php if (isset($information_description[$language['language_id']]['noindex'])){?>
+                          <input type="checkbox" name="information_description[<?php echo $language['language_id']; ?>][noindex]"  <?php echo ($information_description[$language['language_id']]['noindex']?'checked="checked"':'') ; ?> value="1" id="input-noindex" />
+                        <?php }else{?>
+                          <input type="checkbox" name="information_description[<?php echo $language['language_id']; ?>][noindex]" value="1" id="input-noindex" />
+                        <?php }?>
+                          &nbsp; </label>
+                        
+                      </div>
+                    </div>
+                  </div>
+-->
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-download"><span data-toggle="tooltip" title="<?php echo $help_download; ?>"><?php echo $entry_download; ?></span></label>
                     <div class="col-sm-10">

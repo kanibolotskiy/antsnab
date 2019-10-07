@@ -92,6 +92,11 @@
                             <div class="row_cap">Сообщение:</div>
                             <textarea placeholder="Введите Ваше сообщение" name="text"><?= $form_data['text'] ?></textarea>
                         </div>
+                        <div class="row_cap">
+                            <p>Нажимая на кнопку Заказать, я даю <a target="_blank" href="<?php echo $personaldata;?>">согласие на обработку персональных данных</a></p>
+                        </div>
+
+
                         <!--
                         <input
                             type ="submit"

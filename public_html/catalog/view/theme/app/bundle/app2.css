@@ -3220,6 +3220,10 @@ body.freeze { overflow: auto !important; }
 
 .row_cap { display: block; font-size: 13px; color: #000000; margin-bottom: 12px; }
 
+.row_cap a { color: #4965ed; }
+
+.row_cap a:hover { text-decoration: none; }
+
 .checkout-cart .footer-left, .checkout-cart .footer-right { width: initial !important; }
 
 input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
