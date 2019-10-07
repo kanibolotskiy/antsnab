@@ -3,7 +3,7 @@
 <?php $i=0;foreach ($breadcrumbs as $breadcrumb) { ?>
     
     <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-        <meta property="position" content="<?php echo $i+1;?>">
+        <meta itemprop="position" content="<?php echo $i+1;?>" />
         <?php if(!$i){?>
             <a property="item" typeof="WebPage" href="<?php echo $breadcrumb['href'];?>">
                 <span class="bread_desc" property="name"><?php echo $breadcrumb['text'];?></span>
