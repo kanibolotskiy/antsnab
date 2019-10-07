@@ -1,7 +1,8 @@
-<div class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
-<!--<div class="breadcrumbs" vocab="http://schema.org/" typeof="BreadcrumbList">-->
-    <?php $i=0;foreach ($breadcrumbs as $breadcrumb) { ?>
-    <span class="itembread" property="itemListElement" typeof="ListItem">
+<ol class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+
+<?php $i=0;foreach ($breadcrumbs as $breadcrumb) { ?>
+    
+    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
         <meta property="position" content="<?php echo $i+1;?>">
         <?php if(!$i){?>
             <a property="item" typeof="WebPage" href="<?php echo $breadcrumb['href'];?>">
@@ -19,7 +20,7 @@
                 </span>
             <?php }?>
         <?php }?>
-    </span>	
+    </li>	
     
     <?php $i++;} ?>
-</div>
+</ul>
