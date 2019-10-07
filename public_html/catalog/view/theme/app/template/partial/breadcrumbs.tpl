@@ -12,7 +12,7 @@
             </a>
         <?php } else{ ?>
             <?php if($i!=(count($breadcrumbs)-1)){?>
-                <a itemprop="item" href="?php echo $breadcrumb['href'];?>">
+                <a itemprop="item" href="<?php echo $breadcrumb['href'];?>">
                     <span itemprop="name"><?php echo $breadcrumb['text'];?></span>
                 </a>
             <?php }else{ ?>
