@@ -4,7 +4,7 @@
         <span class="catalog-opener"></span>
     </a>
     <div class="accordion">
-        <ul class="simple-accordion">
+        <ul class="simple-accordion"  itemscope itemtype="http://www.schema.org/SiteNavigationElement">
         
         <?php foreach ($categories as $parent) { ?>
                 
@@ -21,23 +21,23 @@
                     <div class="slide">
                         <ul>
                             <?php foreach ($parent['child'] as $child) { ?>
-                                    <li>
+                                    <li itemprop="name">
 
                                     <?php if ($category_id == $child['category_id']) { ?>
-                                    <a class="active" href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a>
+                                    <a itemprop="url" class="active" href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a>
                                     <?php } else { ?>
-                                    <a href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a>
+                                    <a itemprop="url" href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a>
                                     <?php } ?>
 
                                     <!-- @task1 to scss remove -->
                                     <?php if (!empty($child['child'])) : ?>
                                         <ul style="margin-left:20px">
                                             <?php foreach ($child['child'] as $sub) : ?>
-                                                <li>
+                                                <li itemprop="name">
                                                     <?php if ($category_id == $sub['category_id']) { ?>
-                                                    <a class="active" href="<?php echo $sub['href']; ?>"><?php echo $sub['name']; ?></a>
+                                                    <a itemprop="url" class="active" href="<?php echo $sub['href']; ?>"><?php echo $sub['name']; ?></a>
                                                     <?php } else { ?>
-                                                    <a href="<?php echo $sub['href']; ?>"><?php echo $sub['name']; ?></a>
+                                                    <a itemprop="url" href="<?php echo $sub['href']; ?>"><?php echo $sub['name']; ?></a>
                                                     <?php } ?>
                                                 </li>
                                             <?php endforeach ?>
