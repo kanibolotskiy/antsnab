@@ -16,8 +16,8 @@
                     <span itemprop="name"><?php echo $breadcrumb['text'];?></span>
                 </a>
             <?php }else{ ?>
-                <span itemprop="item">
-                    <span itemprop="name" href="<?php echo $breadcrumb['href'];?>"><?php echo $breadcrumb['text'];?></span>
+                <span itemprop="item" href="<?php echo $breadcrumb['href'];?>">
+                    <span itemprop="name"><?php echo $breadcrumb['text'];?></span>
                 </span>
             <?php }?>
         <?php }?>
