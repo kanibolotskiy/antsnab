@@ -2642,10 +2642,13 @@ html:focus, body:focus { background: none; -webkit-tap-highlight-color: rgba(0, 
 
 .breadcrumbs a { color: #666; position: relative; }
 
-.breadcrumbs > span:after { content: ''; background-repeat: no-repeat; background-image: url(../img/arr.png); width: 12px; height: 9px; margin: 0 5px; display: inline-block; vertical-align: middle; }
+.breadcrumbs > li { display: inline-block; }
 
-.breadcrumbs > span:last-child:after { display: none; }
+.breadcrumbs > li:after { content: ''; background-repeat: no-repeat; background-image: url(../img/arr.png); width: 12px; height: 9px; margin: 0 5px; display: inline-block; vertical-align: middle; }
 
+.breadcrumbs > li:last-child:after { display: none; }
+
+/* .breadcrumbs>span:after { content: ''; background-repeat: no-repeat; background-image: url(../img/arr.png); width: 12px; height: 9px; margin: 0 5px; display: inline-block; vertical-align: middle; } .breadcrumbs > span:last-child:after{display:none;} */
 .bread_mob .material-icons { vertical-align: middle; font-size: 20px; }
 
 .bread_mob_home { background: url(../img/home_ico.svg); vertical-align: middle; width: 15px; height: 15px; }

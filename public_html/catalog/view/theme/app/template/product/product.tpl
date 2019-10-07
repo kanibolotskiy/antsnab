@@ -3,30 +3,35 @@
     <input type="hidden" id="product_id" value="<?=$product_id?>"/>
     <?= $column_left ?>
     <div class="content">
-        <div class="breadcrumbs" vocab="http://schema.org/" typeof="BreadcrumbList">
+        <ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+
             <?php $i=0;foreach ($breadcrumbs as $breadcrumb) { ?>
-            <span class="itembread" property="itemListElement" typeof="ListItem">
-                <meta property="position" content="<?php echo $i+1;?>">
+            
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <meta itemprop="position" content="<?php echo $i+1;?>" />
                 <?php if(!$i){?>
-                    <a property="item" typeof="WebPage" href="<?php echo $breadcrumb['href'];?>">
-                        <span class="bread_desc" property="name"><?php echo $breadcrumb['text'];?></span>
+                    <a itemprop="item" href="<?php echo $breadcrumb['href'];?>">
+                
+                        <span class="bread_desc" itemprop="name"><?php echo $breadcrumb['text'];?></span>
                         <span class="bread_mob bread_mob_home"></span>
                     </a>
                 <?php } else{ ?>
                     <?php if($i!=(count($breadcrumbs)-1)){?>
-                        <a property="item" typeof="WebPage" href="<?php echo $breadcrumb['href'];?>">
-                            <span property="name"><?php echo $breadcrumb['text'];?></span>
+                        <a itemprop="item" href="<?php echo $breadcrumb['href'];?>">
+                            <span itemprop="name"><?php echo $breadcrumb['text'];?></span>
                         </a>
                     <?php }else{ ?>
-                        <span property="item" typeof="WebPage" href="<?php echo $breadcrumb['href'];?>">
-                            <span property="name"><?php echo $breadcrumb['text'];?></span>
+                        <span itemprop="name">
+                            <?php echo $breadcrumb['text'];?>
                         </span>
+
+                        
                     <?php }?>
                 <?php }?>
-            </span>	
+            </li>	
             
             <?php $i++;} ?>
-        </div>
+        </ul>
 
         <?php echo $content_top; ?>
         <div class="item_card_product" itemscope itemtype="http://schema.org/Product">

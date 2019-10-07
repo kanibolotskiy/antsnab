@@ -1,4 +1,4 @@
-<ol class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
 
 <?php $i=0;foreach ($breadcrumbs as $breadcrumb) { ?>
     
