@@ -29,7 +29,12 @@ class ModelCatalogInformation extends Model {
 			if(isset($value['notinmap'])){
 				$sql_notinmap=', notinmap = "' . $value['notinmap'].'"';
 			}
-			$this->db->query("INSERT INTO " . DB_PREFIX . "information_description SET information_id = '" . (int)$information_id . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($value['title']) . "', description = '" . $this->db->escape($value['description']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'".$sql_notinmap);
+			$sql_noindex='';
+			if(isset($value['noindex'])){
+				$sql_noindex=', noindex = "' . $value['noindex'].'"';
+			}
+
+			$this->db->query("INSERT INTO " . DB_PREFIX . "information_description SET information_id = '" . (int)$information_id . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($value['title']) . "', description = '" . $this->db->escape($value['description']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'".$sql_notinmap.$sql_noindex);
 		}
 
 		if (isset($data['information_store'])) {
@@ -71,7 +76,12 @@ class ModelCatalogInformation extends Model {
 			if(isset($value['notinmap'])){
 				$sql_notinmap=', notinmap = "' . $value['notinmap'].'"';
 			}
-			$this->db->query("INSERT INTO " . DB_PREFIX . "information_description SET information_id = '" . (int)$information_id . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($value['title']) . "', description = '" . $this->db->escape($value['description']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'".$sql_notinmap);
+			$sql_noindex='';
+			if(isset($value['noindex'])){
+				$sql_noindex=', noindex = "' . $value['noindex'].'"';
+			}
+
+			$this->db->query("INSERT INTO " . DB_PREFIX . "information_description SET information_id = '" . (int)$information_id . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($value['title']) . "', description = '" . $this->db->escape($value['description']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'".$sql_notinmap.$sql_noindex);
 		}
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_to_store WHERE information_id = '" . (int)$information_id . "'");
@@ -180,7 +190,8 @@ class ModelCatalogInformation extends Model {
 				'meta_h1'          => $result['meta_h1'],
 				'meta_description' => $result['meta_description'],
 				'meta_keyword'     => $result['meta_keyword'],
-				'notinmap'     => $result['notinmap']
+				'notinmap'     => $result['notinmap'],
+				'noindex'     => $result['noindex']
 			);
 		}
 

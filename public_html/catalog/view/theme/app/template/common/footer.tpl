@@ -1,4 +1,5 @@
 <footer class="footer">
+
     <div class="container" itemscope itemtype="http://schema.org/Organization">
         <div itemprop="url" href="<?php echo $home;?>" content="<?php echo $home;?>" style="display:none;"></div>
         <div itemprop="logo" itemscope style="display:none;" itemtype="https://schema.org/ImageObject">
@@ -41,36 +42,18 @@
         </div>
         <div class="footer-right">
             <nav class="footer-nav">
-                <ul>
+                <ul class="simple-accordion"  itemscope itemtype="http://www.schema.org/SiteNavigationElement">
                     <?php foreach ($top_menu as $item) : ?>
 
                         <?php if($item['isactive']){?>
-                            <li class="active">
+                            <li class="active" itemprop="name">
                                 <span><?php echo $item['name']; ?></span>
                             </li>
                         <?php }else{?>
-                            <li class="menu_li">
-                                <a href="<?php echo $item['href']; ?>"><?php echo $item['name']; ?></a>
+                            <li class="menu_li" itemprop="name">
+                                <a itemprop="url" href="<?php echo $item['href']; ?>"><?php echo $item['name']; ?></a>
                             </li>
                         <?php }?>
-
-                        <!--
-                        <?php $active = ($item['isactive']) ? 'class="active"' : ""; ?>
-                        
-                        <?php if (isset($item['target']) && trim($item['target']) != "") { ?>
-                            <li>
-                                <a <?= $active ?> href="<?php echo $item['href']; ?>" target="<?php echo $item['target']; ?>">
-                                    <?php echo $item['name']; ?>
-                                </a>
-                            </li>
-                        <?php } else { ?>
-                            <li>
-                                <a <?= $active ?> href="<?php echo $item['href']; ?>">
-                                    <?php echo $item['name']; ?>
-                                </a>
-                            </li>
-                        <?php } ?>
-                        -->
                     <?php endforeach; ?>
                 </ul>
             </nav>
