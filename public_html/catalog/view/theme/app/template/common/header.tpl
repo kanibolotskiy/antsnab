@@ -207,7 +207,7 @@
         </header>
         <div class="container container-nav">
             <nav class="nav">
-                <ul>
+                <ul itemscope itemtype="http://www.schema.org/SiteNavigationElement">
                     <?php $cnt = 0; $ttl = count($top_menu);?>
                     <?php foreach ($top_menu as $item) : ?>
                         <?php 
@@ -219,12 +219,12 @@
                         ?>
                         
                         <?php if($item['isactive']){?>
-                            <li class="active">
+                            <li class="active" itemprop="name">
                                 <span><?php echo $item['name']; ?></span>
                             </li>
                         <?php }else{?>
-                            <li class="menu_li">
-                                <a href="<?php echo $item['href']; ?>" <?php echo $target; ?>><?php echo $item['name']; ?></a>
+                            <li class="menu_li" itemprop="name">
+                                <a itemprop="url" href="<?php echo $item['href']; ?>" <?php echo $target; ?>><?php echo $item['name']; ?></a>
                             </li>
                         <?php }?>
 
