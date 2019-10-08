@@ -1,13 +1,14 @@
-<li itemscope itemtype="http://schema.org/Offer">
+<!--<li itemscope itemtype="http://schema.org/Offer">-->
+<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
     <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>">
-    <div class="catalog-block">
+    <div class="catalog-block" itemprop="item" itemscope itemtype="http://schema.org/Product">
         <div class="catalog-img">
             <img itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" title="<?= $p['name'] ?>" itemprop="image" />
         </div>
         <div class="clr"></div>
 
         <div class="catalog-description">
-            <div class="catalog-block_caption"><?= $p['name'] ?></div>
+            <div class="catalog-block_caption" itemprop="name"><?= $p['name'] ?></div>
             <div class="description" itemprop="description"><p><?= $p['descriptionPreview'] ?></p></div>
             <div class="complement">
             
@@ -19,10 +20,10 @@
                 
             </div>
             <div class="price">
-                <span>Цена от <strong itemprop="price" content="<?=$p['price_val']?>"><?=$p['price']?> <div class="rur">i</div></strong></span>
+                <span>Цена от <strong content="<?=$p['price_val']?>"><?=$p['price']?> <div class="rur">i</div></strong></span>
                 
             </div>
-            <meta itemprop="priceCurrency" content="RUB">
+
             <div class="quantity-buy">
     
                 <?php if(empty($p['unit_errors'])): ?>
