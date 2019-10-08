@@ -44,6 +44,7 @@ class ControllerCommonHeader extends Controller {
 			$data['description'] = "";
 			$data['keywords'] = "";
 		}
+		$data['noindex'] = $this->document->getNoindex();
 
 		$data['links'] = $this->document->getLinks();
 		$data['styles'] = $this->document->getStyles();

@@ -7,6 +7,14 @@ class Document {
 	private $styles = array();
 	private $scripts = array();
 	private $og_image;
+	private $noindex;
+
+	public function setNoindex($noindex) {
+		$this->noindex = $noindex;
+	}
+	public function getNoindex() {
+		return $this->noindex;
+	}
 
 	public function setTitle($title) {
 		$this->title = $title;

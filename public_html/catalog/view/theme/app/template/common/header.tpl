@@ -25,6 +25,11 @@
         <?php if ($keywords) { ?>
             <meta name="keywords" content= "<?php echo $keywords; ?>" />
         <?php } ?>
+
+        <?php if (isset($noindex)) { ?>
+            <?php echo $noindex;?>
+        <?php } ?>
+
         <meta property="og:title" content="<?php echo $title; ?>" />
         <meta property="og:type" content="article" />
         <meta property="og:locale" content="ru_RU" />

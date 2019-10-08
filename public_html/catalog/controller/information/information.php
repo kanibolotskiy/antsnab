@@ -20,6 +20,8 @@ class ControllerInformationInformation extends Controller {
 		
 		$information_info = $this->model_catalog_information->getInformation($information_id);
 		if (($information_info) and ($information_id!=15) and ($information_id!=17))  {
+			//echo "!".$information_info['noindex']."!";
+			//$this->document->setTitle($information_info['meta_title']);
 
 			if ($information_info['meta_title']) {
 				$this->document->setTitle($information_info['meta_title']);
@@ -29,7 +31,12 @@ class ControllerInformationInformation extends Controller {
 
 			$this->document->setDescription($information_info['meta_description']);
 			$this->document->setKeywords($information_info['meta_keyword']);
-
+			
+			if($information_info['noindex']){
+				$this->document->setNoindex('<meta name="robots" content="noindex">');
+			}
+			
+			
 			$data['breadcrumbs'][] = array(
 				'text' => $information_info['title'],
 				'href' => $this->url->link('information/information', 'information_id=' .  $information_id)
