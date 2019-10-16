@@ -317,7 +317,9 @@ class ControllerCommonFavorite extends Controller {
         //echo "ok1";
         //return "ok2";
 
-		echo $this->load->view('common/favorite', $data);
+        //echo $this->load->view('common/favorite', $data);
+        return $this->load->view('common/favorite', $data);
+        
 	}
 
 	public function info() {
