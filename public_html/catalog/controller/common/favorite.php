@@ -52,7 +52,7 @@ class ControllerCommonFavorite extends Controller {
         $data['products']=[];
        
         foreach($products_arr as $itm){
-             /*
+            
             $product=$this->model_catalog_product->getProduct($itm);
             //print_r($product);
             $properties = $propGateway->getPropertiesWithProductValues($product['product_id'], 'order by sortOrder ASC');
@@ -74,6 +74,7 @@ class ControllerCommonFavorite extends Controller {
             $propGateway = new ProdProperties($this->registry);
             $prodUnits = $produnitsGateway->getUnitsByProduct($product['product_id']);
             $priceUnit = null;
+             /*
             foreach ($prodUnits as $unit_id => $unit) {
                 if ($unit['isPriceBase'] == 1 && !$priceUnit) {
                     $priceUnit = $unit;
