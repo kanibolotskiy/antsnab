@@ -204,10 +204,10 @@ class ControllerCommonFavorite extends Controller {
                 'step'=>$step
             );
         }
-        //echo $this->load->view('common/favorite', $data);
+        //
         */
-
-        return $this->load->view('common/favorite', $data);
+        echo $this->load->view('common/favorite', $data);
+        //return $this->load->view('common/favorite', $data);
         
 	}
 
