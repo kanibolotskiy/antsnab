@@ -144,7 +144,7 @@ class ControllerCommonFavorite extends Controller {
 
             $wholesale_threshold_in_saleUnits = Fraction::fromFloat((float)$product['wholesale_threshold']); 
             $wholesale_threshold = $wholesale_threshold_in_saleUnits->multiply($saleToPriceKoef)->toFloat(); 
-
+/*
             // Display prices
             if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
                 
@@ -176,7 +176,7 @@ class ControllerCommonFavorite extends Controller {
             } else {
                 $image = '';
             }
-/*            
+            
             //$price = $product['price'];
 
             $data['products'][] = array(
