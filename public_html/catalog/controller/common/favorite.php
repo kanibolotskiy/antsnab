@@ -10,7 +10,7 @@ class ControllerCommonFavorite extends Controller {
         
         $ttl="Избранное";
         $data=[];
-        /*
+        
 		$this->load->language('common/favorite');
 		//$this->document->setTitle($this->language->get('heading_title'));
         $this->document->setTitle($ttl);
@@ -26,7 +26,7 @@ class ControllerCommonFavorite extends Controller {
 			'text' => $ttl
         );
         
-
+/*
         //$data['heading_title'] = $this->language->get('heading_title');
         $data['heading_title'] = $ttl;
         $data['footer'] = $this->load->controller('common/footer');
