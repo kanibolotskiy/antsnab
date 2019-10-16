@@ -1403,7 +1403,7 @@ div.title:after { content: ''; display: block; position: absolute; height: 40px;
 
 .img-production img { max-height: 100%; max-width: 100%; display: block; margin: 0 auto; top: 50%; position: relative; -webkit-transform: translate(0, -50%); -moz-transform: translate(0, -50%); -ms-transform: translate(0, -50%); -o-transform: translate(0, -50%); transform: translate(0, -50%); }
 
-.reviews { margin: 0 0 33px; }
+.reviews { margin: 0 0 33px; overflow: hidden; }
 
 .reviews .title { margin-bottom: 32px; }
 
