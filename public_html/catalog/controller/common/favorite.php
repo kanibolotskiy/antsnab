@@ -200,7 +200,7 @@ class ControllerCommonFavorite extends Controller {
 
             
             //$price = $product['price'];
-/*
+
             $data['products'][] = array(
                 'product_id' => $itm,
                 'thumb' => $image,
@@ -229,7 +229,7 @@ class ControllerCommonFavorite extends Controller {
                 'mincount'=>$mincount,
                 'step'=>$step
             );
-*/
+
         }
         //
         
