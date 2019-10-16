@@ -3474,7 +3474,7 @@ footer .prehead_call { line-height: 22px; cursor: pointer; margin-top: 3px; }
 
 .mentioned-products .label_discount { padding-left: 5px; padding-right: 5px; }
 
-.telephone_link { color: #000; text-decoration: none; }
+.telephone_link { color: #000 !important; text-decoration: none !important; display: inline !important; }
 
 @media screen and (max-width: 1200px) { .price-list .select-list ul.list > li { width: 100%; }
   .sidebar { /*margin-right: 20px;*/ }
