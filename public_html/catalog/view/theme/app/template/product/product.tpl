@@ -87,7 +87,9 @@
                                 <?php if($discount){?>
                                     <div class="label_discount _label" title="Сегодня этот товар продается со скидкой"><?php echo $discount;?>%</div>
                                 <?php }?>
-                                <div class="agg_rating"><?php echo $rating?></div>
+                                <?php if($rating){?>
+                                    <div class="agg_rating"><?php echo $rating?></div>
+                                <?php }?>
 
                                 <?php if ($thumb) { ?>
                                     
