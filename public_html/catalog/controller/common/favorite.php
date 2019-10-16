@@ -28,6 +28,7 @@ class ControllerCommonFavorite extends Controller {
         
 
         //$data['heading_title'] = $this->language->get('heading_title');
+        
         $data['heading_title'] = $ttl;
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');
@@ -50,7 +51,7 @@ class ControllerCommonFavorite extends Controller {
         $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
         $propGateway = new ProdProperties($this->registry);
         $data['products']=[];
-       
+        /*
         foreach($products_arr as $itm){
             
             $product=$this->model_catalog_product->getProduct($itm);
@@ -208,7 +209,7 @@ class ControllerCommonFavorite extends Controller {
 
         }
         //
-       
+        */
         echo $this->load->view('common/favorite', $data);
         //return $this->load->view('common/favorite', $data);
         
