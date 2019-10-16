@@ -141,7 +141,7 @@ class ControllerCommonFavorite extends Controller {
             if (!$priceUnit) {
                 throw new \Exception('Price base wasnt found for product ' . $product['product_id']);
             }
-/*
+
             $wholesale_threshold_in_saleUnits = Fraction::fromFloat((float)$product['wholesale_threshold']); 
             $wholesale_threshold = $wholesale_threshold_in_saleUnits->multiply($saleToPriceKoef)->toFloat(); 
 
@@ -176,7 +176,7 @@ class ControllerCommonFavorite extends Controller {
             } else {
                 $image = '';
             }
-            
+/*            
             //$price = $product['price'];
 
             $data['products'][] = array(
