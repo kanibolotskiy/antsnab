@@ -37,7 +37,7 @@ class ControllerCommonFavorite extends Controller {
 
         $this->load->model('catalog/information');
         $this->load->model('catalog/product');
-        
+        $this->load->model('tool/image');
 
         $favorite_page=$this->model_catalog_product->getDocsData(6);
         //print_r($favorite_page);
@@ -173,13 +173,13 @@ class ControllerCommonFavorite extends Controller {
                 $price = false;
                 $total = false;
             }
-
+*/
             if ($product['image']) {
-                $image = $this->model_tool_image->resize($product['image'], $this->config->get($this->config->get('config_theme') . '_image_cart_width'), $this->config->get($this->config->get('config_theme') . '_image_cart_height'));
+                $image = $this->model_tool_image->resize($product['image'], 120,120);
             } else {
                 $image = '';
             }
-            */
+            
             $saleUnit_price = (float)$this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
             $price = $this->currency->format($saleUnit_price, $this->session->data['currency']);
 

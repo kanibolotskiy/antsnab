@@ -72,7 +72,7 @@
             <?php endif; ?>
             
             <?php  
-                include __DIR__ . '/../partial/feedbackform.tpl';
+                include __DIR__ . '/partial/feedbackform.tpl';
             ?>
 
         </div>
