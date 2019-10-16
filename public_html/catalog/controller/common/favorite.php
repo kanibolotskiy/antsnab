@@ -26,7 +26,7 @@ class ControllerCommonFavorite extends Controller {
 			'text' => $ttl
         );
         
-/*
+
         //$data['heading_title'] = $this->language->get('heading_title');
         $data['heading_title'] = $ttl;
         $data['footer'] = $this->load->controller('common/footer');
@@ -42,7 +42,7 @@ class ControllerCommonFavorite extends Controller {
         //print_r($favorite_page);
         $data['favorite_content']=$this->model_catalog_information->cleanText($favorite_page["description"]);
 
-
+/*
 
         $this->load->language('catalog/product');
 
