@@ -109,12 +109,12 @@
         </div>
     </div>
 </footer>
-<script src="/catalog/view/theme/app/bundle/app2.js"></script>
+<script src="/catalog/view/theme/app/bundle/app2.js?v0.1"></script>
 <!--<script src="https://www.google.com/recaptcha/api.js"></script>-->
 
     <!-- @task1 Счетчики, виджеты (comagic) -->
 <?php foreach ($scripts as $script) { ?>
-    <script src="<?php echo $script; ?>?v0.1" type="text/javascript"></script>
+    <script src="<?php echo $script; ?>" type="text/javascript"></script>
 <?php } ?>
 <?php foreach ($analytics as $analytic) { ?>
     <?php echo $analytic; ?>
