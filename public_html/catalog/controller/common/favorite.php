@@ -146,11 +146,12 @@ class ControllerCommonFavorite extends Controller {
             $wholesale_threshold = $wholesale_threshold_in_saleUnits->multiply($saleToPriceKoef)->toFloat(); 
 
             // Display prices
+            /*
             if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
                 
                 //$saleUnit_price = (float)$this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
                 //$price = $this->currency->format($saleUnit_price, $this->session->data['currency']);
-/*
+
                 $saleUnit_price_wholesale = (float)$this->tax->calculate($product['price_wholesale'], $product['tax_class_id'], $this->config->get('config_tax'));
                 $price_wholesale = $this->currency->format($saleUnit_price_wholesale, $this->session->data['currency']);
 
@@ -166,7 +167,7 @@ class ControllerCommonFavorite extends Controller {
                     $isWholesale = false;
                     $total = $this->currency->format($rowTotal, $this->session->data['currency']);
                 }
-                */
+                
 
             } else {
                 $price = false;
@@ -177,6 +178,26 @@ class ControllerCommonFavorite extends Controller {
             } else {
                 $image = '';
             }
+            */
+            $saleUnit_price = (float)$this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
+            $price = $this->currency->format($saleUnit_price, $this->session->data['currency']);
+
+            $saleUnit_price_wholesale = (float)$this->tax->calculate($product['price_wholesale'], $product['tax_class_id'], $this->config->get('config_tax'));
+            $price_wholesale = $this->currency->format($saleUnit_price_wholesale, $this->session->data['currency']);
+
+            
+            //@added @task
+            $prodQuantity =(float)$product['quantity'];
+            if ($prodQuantity >= $wholesale_threshold) {
+                $rowTotal = $saleUnit_price_wholesale * $prodQuantity; 
+                $isWholesale = true;
+                $total = $this->currency->format($rowTotal, $this->session->data['currency']);
+            } else {
+                $rowTotal = $saleUnit_price * $prodQuantity; 
+                $isWholesale = false;
+                $total = $this->currency->format($rowTotal, $this->session->data['currency']);
+            }
+
             
             //$price = $product['price'];
 /*
