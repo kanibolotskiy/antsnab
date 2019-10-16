@@ -74,7 +74,7 @@ class ControllerCommonFavorite extends Controller {
             $propGateway = new ProdProperties($this->registry);
             $prodUnits = $produnitsGateway->getUnitsByProduct($product['product_id']);
             $priceUnit = null;
-             /*
+            
             foreach ($prodUnits as $unit_id => $unit) {
                 if ($unit['isPriceBase'] == 1 && !$priceUnit) {
                     $priceUnit = $unit;
@@ -112,7 +112,7 @@ class ControllerCommonFavorite extends Controller {
 
                 }                    
             }
-
+ /*
             $step=1;
     
             
