@@ -9,6 +9,8 @@ class ControllerCommonFavorite extends Controller {
 	public function index() {
         
         $ttl="Избранное";
+        $data=[];
+        /*
 		$this->load->language('common/favorite');
 		//$this->document->setTitle($this->language->get('heading_title'));
         $this->document->setTitle($ttl);
@@ -178,11 +180,11 @@ class ControllerCommonFavorite extends Controller {
                 'thumb' => $image,
                 'name' => $product['name'],
 
-                /** @added */
+                
                 'meta_h1' => $product['meta_h1'],
                 'model' => $product['model'],
                 'quantity' => $mincount,
-                /** @added */
+                
                 'price_val'=>$product['price'],
                 'price_wholesale_val'=>$product['price_wholesale'],
                 'price' => $price,
@@ -203,6 +205,8 @@ class ControllerCommonFavorite extends Controller {
             );
         }
         //echo $this->load->view('common/favorite', $data);
+        */
+
         return $this->load->view('common/favorite', $data);
         
 	}
