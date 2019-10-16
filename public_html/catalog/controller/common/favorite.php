@@ -144,7 +144,7 @@ class ControllerCommonFavorite extends Controller {
 
             $wholesale_threshold_in_saleUnits = Fraction::fromFloat((float)$product['wholesale_threshold']); 
             $wholesale_threshold = $wholesale_threshold_in_saleUnits->multiply($saleToPriceKoef)->toFloat(); 
-/*
+
             // Display prices
             if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
                 
@@ -154,7 +154,7 @@ class ControllerCommonFavorite extends Controller {
                 $saleUnit_price_wholesale = (float)$this->tax->calculate($product['price_wholesale'], $product['tax_class_id'], $this->config->get('config_tax'));
                 $price_wholesale = $this->currency->format($saleUnit_price_wholesale, $this->session->data['currency']);
 
-
+                /*
                 //@added @task
                 $prodQuantity =(float)$product['quantity'];
                 if ($prodQuantity >= $wholesale_threshold) {
@@ -166,6 +166,7 @@ class ControllerCommonFavorite extends Controller {
                     $isWholesale = false;
                     $total = $this->currency->format($rowTotal, $this->session->data['currency']);
                 }
+                */
 
             } else {
                 $price = false;
@@ -207,7 +208,7 @@ class ControllerCommonFavorite extends Controller {
                 'mincount'=>$mincount,
                 'step'=>$step
             );
-*/
+
         }
         //
         
