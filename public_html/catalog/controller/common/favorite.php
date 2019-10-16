@@ -75,7 +75,7 @@ class ControllerCommonFavorite extends Controller {
             $propGateway = new ProdProperties($this->registry);
             $prodUnits = $produnitsGateway->getUnitsByProduct($product['product_id']);
             $priceUnit = null;
-            /*
+            
             foreach ($prodUnits as $unit_id => $unit) {
                 if ($unit['isPriceBase'] == 1 && !$priceUnit) {
                     $priceUnit = $unit;
@@ -115,6 +115,7 @@ class ControllerCommonFavorite extends Controller {
             }
  
             $step=1;
+            $mincount=1;
     
             
             if (isset($pUnits[2])){
@@ -140,7 +141,7 @@ class ControllerCommonFavorite extends Controller {
             if (!$priceUnit) {
                 throw new \Exception('Price base wasnt found for product ' . $product['product_id']);
             }
-
+/*
             $wholesale_threshold_in_saleUnits = Fraction::fromFloat((float)$product['wholesale_threshold']); 
             $wholesale_threshold = $wholesale_threshold_in_saleUnits->multiply($saleToPriceKoef)->toFloat(); 
 
