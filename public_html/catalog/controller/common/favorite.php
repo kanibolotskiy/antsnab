@@ -128,20 +128,6 @@ class ControllerCommonFavorite extends Controller {
             }else{
                 $mincount = $pUnits[1]['mincount'];
             }
-            /*
-            foreach ($prodUnits as $unit_id => $unit) {
-                if ($unit['isPriceBase'] == 1 && !$priceUnit) {
-                    $priceUnit = $unit;
-
-                    //коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
-                    $saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($product['product_id'], 'isSaleBase', $unit_id);
-                } elseif ($unit['isPriceBase'] == 1) {
-                    throw new \Exception('Too many price bases for product ' . $product['product_id']);
-                }
-
-                
-            }
-            */
 
             
 
@@ -216,107 +202,6 @@ class ControllerCommonFavorite extends Controller {
                 'step'=>$step
             );
         }
-        //print_r($data['products']);
-        /*
-        $data['products'][] = array(
-            'cart_id'   => $product['cart_id'],
-            'thumb'     => $image,
-            'name'      => $product['name'],
-            'model'     => $product['model'],
-            'option'    => $option_data,
-            'recurring' => $recurring,
-            'quantity'  => $product['quantity'],
-            'stock'     => $product['stock'] ,
-            'reward'    => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
-            'price'     => $price,
-            'total'     => $total,
-            'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id'])
-        );
-        */
-
-		/*
-		$products = $this->cart->getProducts();
-
-        $data['products']=[];
-        $orderSumTotal = 0;
-        foreach ($products as $product) {
-            $produnitsGateway = new ProdUnits($this->registry);
-            $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
-            $prodUnits = $produnitsGateway->getUnitsByProduct($product['product_id']);
-            $priceUnit = null;
-            foreach ($prodUnits as $unit_id => $unit) {
-                if ($unit['isPriceBase'] == 1 && !$priceUnit) {
-					$priceUnit = $unit;
-					
-                    //коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
-                    $saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($product['product_id'], 'isSaleBase', $unit_id);
-                } elseif ($unit['isPriceBase'] == 1) {
-                    throw new \Exception('Too many price bases for product ' . $product['product_id']);
-                }
-            }
-            if (!$priceUnit) {
-                throw new \Exception('Price base wasnt found for product ' . $product['product_id']);
-            }
-
-			
-            $wholesale_threshold_in_saleUnits = Fraction::fromFloat((float)$product['wholesale_threshold']); 
-            $wholesale_threshold = $wholesale_threshold_in_saleUnits->multiply($saleToPriceKoef)->toFloat(); 
-
-            // Display prices
-            if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-                
-                $saleUnit_price = (float)$this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
-                $price = $this->currency->format($saleUnit_price, $this->session->data['currency']);
-
-                $saleUnit_price_wholesale = (float)$this->tax->calculate($product['price_wholesale'], $product['tax_class_id'], $this->config->get('config_tax'));
-                $price_wholesale = $this->currency->format($saleUnit_price_wholesale, $this->session->data['currency']);
-
-
-                //@added @task
-                $prodQuantity =(float)$product['quantity'];
-                if ($prodQuantity >= $wholesale_threshold) {
-                    $rowTotal = $saleUnit_price_wholesale * $prodQuantity; 
-                    $isWholesale = true;
-                    $total = $this->currency->format($rowTotal, $this->session->data['currency']);
-                } else {
-                    $rowTotal = $saleUnit_price * $prodQuantity; 
-                    $isWholesale = false;
-                    $total = $this->currency->format($rowTotal, $this->session->data['currency']);
-				}
-                $orderSumTotal += $rowTotal;
-                
-            } else {
-                $price = false;
-                $total = false;
-            }
-		}
-
-		$data['cart'] = $this->url->link('checkout/cart');
-		$data['total'] = $this->currency->format($orderSumTotal, $this->session->data['currency']);
-		$data['checkout'] = $this->url->link('checkout/checkout', '', true);
-
-		$productsCount = $this->cart->countProductTypes();
-		$productsCountStr = ProdUnitStrings::plural($productsCount, 
-						'вид товара', 'вида товара', 'видов товара');
-
-//$_['text_items']               = '<span class="left">В корзине %s<br> %s </span><strong class="right">%s</strong>';
-//$_['text_items_empty']         = '<span class="left">В корзине <br>пока пусто</span><strong class="right">0 ₽</strong>';
-
-		if($productsCount){
-			$data['total_str'] = sprintf($this->language->get('text_items'), $productsCount, $productsCountStr, $this->currency->format($orderSumTotal, $this->session->data['currency']));
-		}else{
-			$data['total_str'] = sprintf($this->language->get('text_items_empty'), $productsCount, $productsCountStr, $this->currency->format($orderSumTotal, $this->session->data['currency']));
-		}
-		
-		
-		$favorite_arr=json_decode($_COOKIE["favorite"]);
-		$data['favorite_count'] = count($favorite_arr);
-		
-        $data['test']='test';
-        */
-        //echo "ok1";
-        //return "ok2";
-
         //echo $this->load->view('common/favorite', $data);
         return $this->load->view('common/favorite', $data);
         

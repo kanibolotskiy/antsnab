@@ -16,9 +16,9 @@
                         </p>
                     </li>
                     <li>
-                        <p><?= $telephone ?></p>
+                        <p><a class="telephone_link" href="tel:<?= $telephone ?>"><?= $telephone ?></a></p>
                         <?php if (!empty($fax)): ?>
-                            <p><?= $fax ?> — бесплатно по РФ</p>
+                            <p><a class="telephone_link" href="tel:<?= $fax ?>"><?= $fax ?></a> — бесплатно по РФ</p>
                         <?php endif; ?>
                     </li>
                     <li>
