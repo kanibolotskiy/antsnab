@@ -42,7 +42,7 @@ class ControllerCommonFavorite extends Controller {
         //print_r($favorite_page);
         $data['favorite_content']=$this->model_catalog_information->cleanText($favorite_page["description"]);
 
-/*
+
 
         $this->load->language('catalog/product');
 
@@ -50,7 +50,9 @@ class ControllerCommonFavorite extends Controller {
         $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
         $propGateway = new ProdProperties($this->registry);
         $data['products']=[];
+       
         foreach($products_arr as $itm){
+             /*
             $product=$this->model_catalog_product->getProduct($itm);
             //print_r($product);
             $properties = $propGateway->getPropertiesWithProductValues($product['product_id'], 'order by sortOrder ASC');
@@ -203,9 +205,10 @@ class ControllerCommonFavorite extends Controller {
                 'mincount'=>$mincount,
                 'step'=>$step
             );
+             */
         }
         //
-        */
+       
         echo $this->load->view('common/favorite', $data);
         //return $this->load->view('common/favorite', $data);
         
