@@ -46,27 +46,30 @@
             <div class="quantity-buy">
     
                 <?php if(empty($p['unit_errors'])): ?>
-                    <div class="qnt-container"
-                        data-sale_to_ui_koef="<?=$p['sale_to_ui_koef']?>"
-                        data-ui_name="<?=$p['ui_unit_name']?>"
-                        data-ui_name_plural="<?=$p['ui_unit_name_plural']?>"
-                        data-ui_name_genitive="<?=$p['ui_unit_name_genitive']?>"
-                        
-                        data-ui_step = "<?=$p['step']?>"
-                        data-ui_minimum = "<?=$p['mincount']?>"
+                    <div class="wrp_qnt-container">
+                        <div class="qnt-container"
+                            data-sale_to_ui_koef="<?=$p['sale_to_ui_koef']?>"
+                            data-ui_name="<?=$p['ui_unit_name']?>"
+                            data-ui_name_plural="<?=$p['ui_unit_name_plural']?>"
+                            data-ui_name_genitive="<?=$p['ui_unit_name_genitive']?>"
+                            
+                            data-ui_step = "<?=$p['step']?>"
+                            data-ui_minimum = "<?=$p['mincount']?>"
 
-                        <?php if($p['ui_unit_force_step_by_one'] == 1):?>
-                        data-ui_minimum="1"
-                        data-ui_step= 1"
-                        <?php endif; ?>
+                            <?php if($p['ui_unit_force_step_by_one'] == 1):?>
+                            data-ui_minimum="1"
+                            data-ui_step= 1"
+                            <?php endif; ?>
 
-                    >
+                        >
+                        </div>
+                        <div title="Добавить в корзину" class="buy add-to-card add-to-card-catalog"
+                            data-product_id="<?=$p['product_id']?>" 
+                            data-sale_to_price_koef="<?=$p['sale_to_price_koef']?>">
+                            Добавить в корзину
+                        </div>
                     </div>
-                    <div title="Добавить в корзину" class="buy add-to-card add-to-card-catalog"
-                        data-product_id="<?=$p['product_id']?>" 
-                        data-sale_to_price_koef="<?=$p['sale_to_price_koef']?>">
-                        Добавить в корзину
-                    </div>
+                    
                     <div class="wrap_oneclick" title="Для быстрого заказа введите свой телефон">
                         <form action="#" id="oneclickform" class="oneclickform">
                             <input type="hidden" name="product" value="<?= $p['name'] ?>"/>
@@ -82,6 +85,7 @@
                     <?php endforeach; ?>
                 <?php endif;?>
             </div>
+            <div class="clr_buy"></div>
             <div class="more_product">Подробнее</div>
         </div>
     </div>

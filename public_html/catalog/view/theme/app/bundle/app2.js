@@ -22870,6 +22870,10 @@ $( document ).ready(function() {
         }
     });
     $(".favorite").click(function(e){
+        if (typeof ym != 'undefined') {
+            ym(14496178, 'reachGoal', 'favorite');
+        }
+        
         e.preventDefault();
         //var item_id=$(this).closest(".catalog_item_product").attr("rel");
         var item_id=$(this).attr("rel");

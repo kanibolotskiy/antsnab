@@ -1810,8 +1810,18 @@ ul.tabset li:last-child a.active {
     }
 }
 .quantity-buy{
+    /*
     display: flex;
     flex-wrap: wrap;
+    */
+    flex-direction: column;
+    display: flex;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    max-width: 100%;
+    float: left;
 }
 /*
 .tab-block3 .quantity-buy{
@@ -6270,10 +6280,27 @@ transition: 0.4s;
     line-height: 20px;
     padding-right: 30px;
 }
-.tab-block.tab-block3 .buy{width:170px;}
+.tab-block.tab-block3 .buy{/*width:170px;width:100%;*/padding-right: 10px;
+    width: 100%;
+    padding-left: 10px;
+    white-space: nowrap;
+}
+.tab-block.tab-block3 .wrp_qnt-container{
+    display: flex;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    /* max-width: 100%; */
+    justify-content: space-between;
+}
+.tab-block.tab-block2 .wrp_qnt-container{display:block;}
+
+.tab-block.tab-block3 .quantity-buy{float:left;}
+
 .tab-block.tab-block3.tab-block2 .buy{width:100%;}
 
-.tab-block.tab-block3 .wrap_oneclick{width:310px;}
+.tab-block.tab-block3 .wrap_oneclick{width:100%;}
 .tab-block.tab-block3 #onclickButton span{display:inline;}
 
 .tab-block.tab-block2 .wrap_oneclick{width:auto;}
@@ -6287,6 +6314,9 @@ transition: 0.4s;
 .wrap_footer_catalog .footer_menu_li a{margin-right:10px;}
 .mentioned-products .label_discount{padding-left:5px;padding-right:5px;}
 .telephone_link{color:#666666!important;text-decoration:none!important;display:inline!important;}
+
+.clr_buy{clear:both;}
+
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{
         width: 100%;
@@ -6372,6 +6402,7 @@ transition: 0.4s;
     width:120px;margin:5px auto;
 }
 @media screen and (max-width: 750px){
+    
     .wrap_footer_catalog{
         display:block!important;
     }
@@ -6405,6 +6436,14 @@ transition: 0.4s;
     
 }
 @media screen and (max-width: 640px){
+    .cat_item_price{text-align:center;}
+    .cat_item_price > div{display:inline-block;float:none;}
+    .tab-block.tab-block3 .wrp_favorite{
+        display: block;
+        position: relative;
+        left:initial;right:initial;bottom:initial;
+    }
+    .wrp_qnt-container{display:block;flex-direction:column;}
     .cart_similar_button{margin: 10px auto 5px;}
 
     footer .prehead_call{
