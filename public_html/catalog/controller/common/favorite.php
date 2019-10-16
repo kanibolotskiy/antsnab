@@ -148,8 +148,8 @@ class ControllerCommonFavorite extends Controller {
             // Display prices
             if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
                 
-                $saleUnit_price = (float)$this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
-                $price = $this->currency->format($saleUnit_price, $this->session->data['currency']);
+                //$saleUnit_price = (float)$this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
+                //$price = $this->currency->format($saleUnit_price, $this->session->data['currency']);
 /*
                 $saleUnit_price_wholesale = (float)$this->tax->calculate($product['price_wholesale'], $product['tax_class_id'], $this->config->get('config_tax'));
                 $price_wholesale = $this->currency->format($saleUnit_price_wholesale, $this->session->data['currency']);
