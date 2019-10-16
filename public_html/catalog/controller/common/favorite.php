@@ -169,7 +169,6 @@ class ControllerCommonFavorite extends Controller {
                 $price = false;
                 $total = false;
             }
-/*
             if ($product['image']) {
                 $image = $this->model_tool_image->resize($product['image'], $this->config->get($this->config->get('config_theme') . '_image_cart_width'), $this->config->get($this->config->get('config_theme') . '_image_cart_height'));
             } else {
@@ -177,7 +176,7 @@ class ControllerCommonFavorite extends Controller {
             }
             
             //$price = $product['price'];
-
+/*
             $data['products'][] = array(
                 'product_id' => $itm,
                 'thumb' => $image,
@@ -206,7 +205,7 @@ class ControllerCommonFavorite extends Controller {
                 'mincount'=>$mincount,
                 'step'=>$step
             );
-             */
+*/
         }
         //
        
