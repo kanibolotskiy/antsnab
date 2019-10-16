@@ -42,13 +42,30 @@ class ProductTemplateDecorator implements IDecorator
             $data['price_val'] = false;
         }
 
+        $discount=0;
         if ($registry->get('customer')->isLogged() || !$registry->get('config')->get('config_customer_price')) {
             $data['price_wholesale'] = $registry->get('tax')->calculate($product_info['price_wholesale'], $product_info['tax_class_id'], $registry->get('config')->get('config_tax'));
             $data['price_wholesale_val']=$registry->get('currency')->format((float)$data['price_wholesale'] ? $data['price_wholesale'] : $product_info['price_wholesale'], $registry->get('session')->data['currency']);
+            
+            if($product_info['price_wholesaleold']*1){
+                $discount = (int)(($product_info['price_wholesale']/$product_info['price_wholesaleold']-1)*100);
+            }
+
         } else {
             $data['price_wholesale'] = false;
             $data['price_wholesale_val'] = false;
         }
+        
+        $data['discount'] = $discount;
+
+        $favorite_arr=json_decode($_COOKIE["favorite"]);
+        
+        if(in_array($product_id, $favorite_arr)){
+            $fav_active=' active';
+        }else{
+            $fav_active='';
+        }
+        $data['favorite'] = $fav_active;
 
         $data['currencySymb'] = $registry->get('currency')->getSymbolRight($registry->get('session')->data['currency']);
         $data['wholesale_threshold'] = (int)$product_info['wholesale_threshold'];

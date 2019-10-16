@@ -19,8 +19,13 @@ class ControllerCommonFooter extends Controller {
 		$data['text_order'] = $this->language->get('text_order');
 		$data['text_wishlist'] = $this->language->get('text_wishlist');
 		$data['text_newsletter'] = $this->language->get('text_newsletter');
+		
+		
+
 
 		$this->load->model('catalog/information');
+
+		$data['priceRange']=$this->model_catalog_information->minmaxPrice();//'100rub-1000rub';
 
 		$data['informations'] = array();
 
@@ -85,7 +90,20 @@ class ControllerCommonFooter extends Controller {
 			$this->model_tool_online->addOnline($ip, $this->customer->getId(), $url, $referer);
 		}
 		
-		
+		$this->load->model('catalog/category');
+		$categories=$this->model_catalog_category->getCategories(71);
+
+		foreach($categories as $category){
+			$data["foot_categories"][]=Array(
+				'name' => $category["name"],
+				'href' => $this->url->link('product/category', 'path=' .  $category['category_id'])
+			);
+		}
+		//print_r($data["foot_categories"]);
+
+		//$registry->get('load')->model('extension/module/menueditor');
+		//$data['top_menu'] = $registry->get('model_extension_module_menueditor')->getEntries();
+			
 		return $this->load->view('common/footer', $data);
 	
 	}

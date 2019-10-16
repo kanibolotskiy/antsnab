@@ -378,7 +378,7 @@ class QuantityView {
 
         /* id="product_count_add"*/
         this.$el.html('<div class="' + QuantityView.minusButClass + '"></div>\
-             <input class="qnt" type="text" name="' + elName + '" />\
+             <input class="qnt" type="number" name="' + elName + '" />\
              <span class="' + QuantityView.unameClass + '"></span>\
              <div class="'+ QuantityView.plusButClass + '"></div>');
     }

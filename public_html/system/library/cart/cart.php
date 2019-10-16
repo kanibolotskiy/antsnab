@@ -238,7 +238,7 @@ class Cart {
 				} else {
 					$recurring = false;
 				}
-
+			
 				$product_data[] = array(
 					'cart_id'         => $cart['cart_id'],
 					'product_id'      => $product_query->row['product_id'],
@@ -256,7 +256,10 @@ class Cart {
 					'stock'           => $stock,
                     //@added
 					'price'           => ($price + $option_price),
-                    'price_wholesale' => ($price_wholesale + $option_price),
+					'price_wholesale' => ($price_wholesale + $option_price),
+					'priceold'           => $product_query->row['priceold'],
+					'price_wholesaleold' => $product_query->row['price_wholesaleold'],
+
                     'wholesale_threshold' => $product_query->row['wholesale_threshold'],
 					'total'           => ($price + $option_price) * $cart['quantity'],
 					'total_wholesale'           => ($price_wholesale + $option_price) * $cart['quantity'],

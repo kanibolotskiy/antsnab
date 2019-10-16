@@ -12,7 +12,9 @@ class ControllerProductProduct extends Controller {
 		$weight=$this->request->post['weight'];
 		$product_id=$this->request->post['product_id'];
 		$delivery_info = $this->model_catalog_product->getDelivery($product_id,$weight);
-    
+	
+		//print_r($delivery_info);
+	
 		$json['date_delivery']=$delivery_info['date_delivery'];
 		$json['price_delivery']=$delivery_info['price_delivery'];
 		$json['caption_delivery']=$delivery_info['caption_delivery'];
@@ -406,6 +408,8 @@ class ControllerProductProduct extends Controller {
 			}else{
 				$data['stock'] = $this->language->get('stock_byorder');
 			}
+			$data['rating'] = round($product_info['rating'],1);
+			
 
 
 			/*
@@ -486,6 +490,16 @@ class ControllerProductProduct extends Controller {
 
 
 			$data['price_wholesale'] = $product_info['price_wholesale'];
+
+			if($product_info['priceold']){
+				$data['priceold'] = number_format($product_info['priceold'],0,"."," ");
+			}
+			
+			if($product_info['price_wholesaleold']){
+				$data['price_wholesaleold'] = number_format($product_info['price_wholesaleold'],0,"."," ");
+			}
+			
+
 
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 				$data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
@@ -721,11 +735,16 @@ class ControllerProductProduct extends Controller {
 				}
 
 				if ($this->config->get('config_review_status')) {
-					$rating = (int)$result['rating'];
+					//$rating = (int)$result['rating'];
+					$rating = round($result['rating'],1);
 				} else {
 					$rating = false;
 				}
-				
+				$discount=0;
+				if($result['price_wholesaleold']*1){
+					$discount = (int)(($result['price_wholesale']/$result['price_wholesaleold']-1)*100);
+				}
+
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
@@ -738,7 +757,8 @@ class ControllerProductProduct extends Controller {
 					'tax'         => $tax,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'rating'      => $rating,
-					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+					'discount'	  => $discount
 				);
 			}
 
@@ -1079,5 +1099,19 @@ class ControllerProductProduct extends Controller {
 		$this->response->setOutput(json_encode($json));
 
 	}
+
+	public function sendOneForm(){
+		$this->load->model('catalog/product');
+		
+		$json = array();
+		if(trim($this->request->post['workemail']=="")){
+			$this->model_catalog_product->sendMailOne($this->request->post);
+		}
+		$json["success"]=true;
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 
 }

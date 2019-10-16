@@ -1335,6 +1335,19 @@
                   </div>
                 </div>
 
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-email_one"><?php echo $entry_email_one; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_email_one" value="<?php echo $config_email_one; ?>" placeholder="<?php echo $entry_email_one; ?>" id="input-email_one" class="form-control" />
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-email_feedback"><?php echo $entry_email_feedback; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_email_feedback" value="<?php echo $config_email_feedback; ?>" placeholder="<?php echo $entry_email_feedback; ?>" id="input-email_feedback" class="form-control" />
+                  </div>
+                </div>
 
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-mail-alert-email"><span data-toggle="tooltip" title="<?php echo $help_mail_alert_email; ?>"><?php echo $entry_mail_alert_email; ?></span></label>

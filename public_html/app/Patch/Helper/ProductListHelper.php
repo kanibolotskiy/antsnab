@@ -25,8 +25,16 @@ class ProductListHelper extends \Model
 
         $results = $this->model_catalog_product->getProducts($filter_data);
         $products = [];
+        
+        $favorite_arr=json_decode($_COOKIE["favorite"]);
 
         foreach ($results as $result) {
+            if(in_array($result['product_id'], $favorite_arr)){
+                $fav_active=' active';
+            }else{
+                $fav_active='';
+            }
+            
             if ($result['image']) {
                 //$image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_category_width'), $this->config->get($this->config->get('config_theme') . '_image_category_height'));
                 $image = $this->model_tool_image->myResize($result['image'], 200, 200,2);
@@ -36,7 +44,8 @@ class ProductListHelper extends \Model
 
 
             if ($this->config->get('config_review_status')) {
-                $rating = (int) $result['rating'];
+                //$rating = (int) $result['rating'];
+                $rating = round($result['rating'],2);
             } else {
                 $rating = false;
             }
@@ -132,6 +141,9 @@ class ProductListHelper extends \Model
             $saleToPriceKoef = null;
             $saleToUiKoef = null;
             $tax = null;
+            $priceold=0;
+            $discount_label=0;
+
             if( !$unitErrors ) {
                 if (count($uiUnitAr) == 0 ) {
                     $uiUnit = array_shift($saleUnitAr);
@@ -166,7 +178,11 @@ class ProductListHelper extends \Model
                 } else {
                     $price = false;
                 }
-
+                
+                if($result['price_wholesaleold']*1){
+                    $priceold = number_format($result['price_wholesaleold'],0,"."," ");
+                    $discount_label = (int)(($result['price_wholesale']/$result['price_wholesaleold']-1)*100);
+                }
 
                 if ((float) $result['special']) {
                     $uiUnitSpecial = 
@@ -210,15 +226,18 @@ class ProductListHelper extends \Model
                 'descriptionPreview' => utf8_substr(strip_tags(html_entity_decode($result['location'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '...',
                 'price_val'=>$price_val,
                 'price' => $price??0,
+                'priceold' => $priceold,
                 'special' => $special??0,
                 'tax' => $tax,
                 'minimum' => ($result['minimum'] > 0) ? $result['minimum'] : 1,
                 'rating' => $rating,
                 'properties' => $previewProperties,
-                'href' => $this->url->link('product/product', 'path=' . $path . '&product_id=' . $result['product_id'])
+                'href' => $this->url->link('product/product', 'path=' . $path . '&product_id=' . $result['product_id']),
+                'favorite'=>$fav_active,
+                'discount_label'=>$discount_label
+
             );
         }
-
         return $products;
     }
 }

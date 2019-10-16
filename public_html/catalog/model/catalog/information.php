@@ -61,4 +61,12 @@ class ModelCatalogInformation extends Model {
 			return 0;
 		}
 	}
+	public function minmaxPrice(){
+		$query = $this->db->query("SELECT min(price) as min_price, max(price) as max_price FROM " . DB_PREFIX . "product WHERE price>0");
+		if ($query->num_rows) {
+			return round($query->row['min_price'],0).'rub-'.round($query->row['max_price'],0).'rub';
+		}else{
+			return 0;
+		}
+	}
 }

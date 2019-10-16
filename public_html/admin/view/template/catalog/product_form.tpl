@@ -385,6 +385,14 @@
                                     <input type="text" name="price" value="<?php echo $price; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control" />
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-priceold"><?php echo $entry_priceold; ?></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="priceold" value="<?php echo $priceold; ?>" placeholder="<?php echo $entry_priceold; ?>" id="input-priceold" class="form-control" />
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-price_wholesale">
                                     <?php echo $entry_price_wholesale; ?>
@@ -393,6 +401,16 @@
                                     <input type="text" name="price_wholesale" value="<?php echo $price_wholesale; ?>" placeholder="<?php echo $entry_price_wholesale; ?>" id="input-price_wholesale" class="form-control" />
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-price_wholesaleold">
+                                    <?php echo $entry_price_wholesaleold; ?>
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="price_wholesaleold" value="<?php echo $price_wholesaleold; ?>" placeholder="<?php echo $entry_price_wholesaleold; ?>" id="input-price_wholesaleold" class="form-control" />
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-wholesale_threshold"><?php echo $entry_wholesale_threshold; ?></label>
                                 <div class="col-sm-10">

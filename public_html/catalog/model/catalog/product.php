@@ -64,7 +64,7 @@ class ModelCatalogProduct extends Model {
 				'height'           => $query->row['height'],
 				'length_class_id'  => $query->row['length_class_id'],
 				'subtract'         => $query->row['subtract'],
-				'rating'           => round($query->row['rating']),
+				'rating'           => round($query->row['rating'],1),
 				'reviews'          => $query->row['reviews'] ? $query->row['reviews'] : 0,
 				'minimum'          => $query->row['minimum'],
 				'sort_order'       => $query->row['sort_order'],
@@ -78,7 +78,10 @@ class ModelCatalogProduct extends Model {
 				'calc_data1'	   => $query->row['calc_data1'],
 				'calc_data2'	   => $query->row['calc_data2'],
 				'calc_data3'	   => $query->row['calc_data3'],
-				'calc_data4'	   => $query->row['calc_data4']
+				'calc_data4'	   => $query->row['calc_data4'],
+
+				'priceold'     			=> $query->row['priceold'],
+				'price_wholesaleold'	=> $query->row['price_wholesaleold'],
 			);
 		} else {
 			return false;
@@ -748,7 +751,7 @@ class ModelCatalogProduct extends Model {
 	public function sendMailOpt($data_post)
     {
 		
-		$this->load->language('extension/module/optform');
+		$this->load->language('extension/module/productform');
 		$data=[];
 		$data["logo"]= $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
 
@@ -806,6 +809,67 @@ class ModelCatalogProduct extends Model {
 
 		$mail->send();
 		unlink($uploadfile);
-    }
+	}
+
+	public function sendMailOne($data_post)
+    {
+		
+		$this->load->language('extension/module/productform');
+		$data=[];
+		$data["logos"]= $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
+		
+		//$data_post['time']=date("d.m.Y H:i");
+		$data["caption"]=$this->language->get('text_caption_one');
+
+
+
+		//$data["data_content"][]=array("Имя клиента",$data_post['name']);
+		//$data["data_content"][]=array("Организация",$data_post['company']);
+
+		$data["data_content"][]=array("Телефон",$data_post['phone']);
+		$data["data_content"][]=array("Товар",$data_post['product']);
+		$data["data_content"][]=array("Дата события",date("d.m.Y H:i"));
+
+		/**UTM метки */
+		$this->load->model('module/referrer');
+		$contact_data_referrer=$this->model_module_referrer->getContactsReferrer();
+
+		
+		$data["data_utm"][]=Array('utm_source',isset($contact_data_referrer['utm_source'])?isset($contact_data_referrer['utm_source']):"");
+
+		$data["data_utm"][]=Array('utm_medium',isset($contact_data_referrer['utm_medium'])?isset($contact_data_referrer['utm_medium']):"");
+		$data["data_utm"][]=Array('utm_campaign',isset($contact_data_referrer['utm_campaign'])?isset($contact_data_referrer['utm_campaign']):"");
+		$data["data_utm"][]=Array('utm_content',isset($contact_data_referrer['utm_content'])?isset($contact_data_referrer['utm_content']):"");
+		$data["data_utm"][]=Array('utm_term',isset($contact_data_referrer['utm_term'])?isset($contact_data_referrer['utm_term']):"");
+		
+		$subject=$this->language->get('text_subject_one');
+		
+		
+		$mail = new Mail();
+		$mail->protocol = $this->config->get('config_mail_protocol');
+		$mail->parameter = $this->config->get('config_mail_parameter');
+		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+		$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+		$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+		
+		
+		$mail->setTo($this->config->get('config_email_one'));
+		
+		$message = $this->load->view('extension/one_report', $data);
+		//$message="ok";
+
+		$mail->setFrom($this->config->get('config_email'));
+		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+		$mail->setSubject($subject);
+		$mail->setHTML($message);
+		//$mail->setText($message);
+
+		$mail->send();
+		/**/
+		
+	}
+	
 
 }

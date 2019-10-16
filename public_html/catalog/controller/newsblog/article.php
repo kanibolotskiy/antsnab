@@ -57,7 +57,7 @@ class ControllerNewsBlogArticle extends Controller {
 	            //for no errors with versions < 20160920
 				if ($category_info['settings']) {
 					$settings=unserialize($category_info['settings']);
-
+					
 		            $images_size_articles_big=array($settings['images_size_articles_big_width'],$settings['images_size_articles_big_height']);
 		            $images_size_articles_small=array($settings['images_size_articles_small_width'],$settings['images_size_articles_small_height']);
 	            }

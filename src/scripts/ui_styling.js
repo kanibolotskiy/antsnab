@@ -7,7 +7,11 @@ import Inputmask from "./lib/jquery.inputmask.bundle.min.js";
 import './lib/jquery.fancybox.min';
 
 $(document).ready(function(){
-    $('input[name="phone"]').inputmask("+7 9999999999",{ "clearIncomplete": true });
+    $('input[name="phone"]').inputmask("+7 9999999999",{ 
+        "clearIncomplete": true,
+        "alias": 'numeric', 
+        "allowMinus": false
+    });
     $('select').niceSelect();
     //$("input[name='search']").attr('autocomplete','off');
 });

@@ -16,6 +16,10 @@
                 <?php }?>
             </div>
         <?php }?>
+        <?php if($feedbackform){ 
+            include __DIR__ . '/../partial/feedbackform.tpl';
+        }?>
+
         <?php echo $content_bottom; ?>
         
     </div>

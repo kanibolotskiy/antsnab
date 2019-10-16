@@ -85,6 +85,8 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_email_order'] = $this->language->get('entry_email_order');
 		$data['entry_email_call'] = $this->language->get('entry_email_call');
 		$data['entry_email_opt'] = $this->language->get('entry_email_opt');
+		$data['entry_email_one'] = $this->language->get('entry_email_one');
+		$data['entry_email_feedback'] = $this->language->get('entry_email_feedback');		
 		
 
 
@@ -590,8 +592,16 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_email_opt'] = $this->config->get('config_email_opt');
 		}
-		
-
+		if (isset($this->request->post['config_email_one'])) {
+			$data['config_email_one'] = $this->request->post['config_email_one'];
+		} else {
+			$data['config_email_one'] = $this->config->get('config_email_one');
+		}
+		if (isset($this->request->post['config_email_feedback'])) {
+			$data['config_email_feedback'] = $this->request->post['config_email_feedback'];
+		} else {
+			$data['config_email_feedback'] = $this->config->get('config_email_feedback');
+		}
 
 		if (isset($this->request->post['config_telephone'])) {
 			$data['config_telephone'] = $this->request->post['config_telephone'];

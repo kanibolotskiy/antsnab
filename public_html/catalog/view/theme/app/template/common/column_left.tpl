@@ -1,8 +1,8 @@
 <div class="sidebar">
 <?=$search?>
-    <?php if ($modules) { ?>
-        <?php foreach ($modules as $module) { ?>
-            <?php echo $module; ?>
-        <?php } ?>
+<?php if ($modules) { ?>
+    <?php foreach ($modules as $module) { ?>
+        <?php echo $module; ?>
     <?php } ?>
+<?php } ?>
 </div>

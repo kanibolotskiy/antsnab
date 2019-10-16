@@ -18,7 +18,7 @@
         <meta name="robots" content="noyaca" />
 
 
-        <link href="/catalog/view/theme/app/bundle/app2.css?v1.04" rel="stylesheet">
+        <link href="/catalog/view/theme/app/bundle/app2.css?v1.05" rel="stylesheet">
         <?php if ($description) { ?>
             <meta name="description" content="<?php echo $description; ?>" />
         <?php } ?>
@@ -49,18 +49,95 @@
         
     </head>
     <body class="<?=$class?>">
-        
+        <!--
         <div class="popup thank-you" >
             <div class="close"></div>
             <div class="popup-block">
                 <div class="popup-content">
                     <div class="close2"></div>
                     <span>Благодарим вас за обращение!</span>
-                    <!--@task1 to css-->
                     <p style="text-align: center">Мы свяжемся с вами в ближайшее время!</p>
                 </div>
             </div>
         </div>
+        -->
+
+        <div class="modal modal_one">
+            <div class="modal-block">
+                <div class="modal_overlay"></div>
+                <div class="modal-content">
+                    <div class="modal_close"></div>
+                    <div class="modal_caption">Спасибо за обращение</div>
+                    <div class="modal_text content-text" style="text-align:center;">Мы Вам перезвоним в ближайшее время</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal modal_thanks">
+            <div class="modal-block">
+                <div class="modal_overlay"></div>
+                <div class="modal-content">
+                    <div class="modal_close"></div>
+                    <div class="popup_caption">Благодарим вас за обращение!</div>
+                    <p style="text-align: center">Мы свяжемся с вами в ближайшее время!</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal modal_call">
+            <div class="modal-block">
+                <div class="modal_overlay"></div>
+                <div class="modal-content">
+                    <div id="ajax_loader_call" class="ajax_loader" style="display: none;">
+                        <div class="loader-classic">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="modal_close"></div>
+                    <div class="wrp_modal_body">
+                        
+                        <form id="call_form" action="<?= $action ?>" method="post">
+                            <div class="popup_caption">Оставьте свои данные и сообщение, мы свяжемся с Вами в ближайшее время</div>
+
+                            <input value="<?= $form_data['workemail'] ?>" name="workemail" type="text" placeholder="Рабочий email"/>
+
+                            <div class="row">
+                                <div class="row_cap">Имя:<i class="error name"></i></div>
+                                <input value="<?= $form_data['name'] ?>" name="name" type="text" placeholder="Введите Ваше имя"/>
+                            </div>
+                            <div class="row">
+                                <div class="row_cap">Телефон:<i class="error phone"></i></div>
+                                <input value="<?= $form_data['phone'] ?>" name="phone" type="tel" placeholder="Введите телефон"/>
+                            </div>
+                            <div class="row">
+                                <div class="row_cap">Сообщение:</div>
+                                <textarea placeholder="Введите Ваше сообщение" name="text"><?= $form_data['text'] ?></textarea>
+                            </div>
+                            <div class="row_cap">
+                                <p>Нажимая на кнопку Отправить, я даю <a target="_blank" href="<?php echo $personaldata;?>">согласие на обработку персональных данных</a></p>
+                            </div>
+                            <div class="call_submit" id="call_submit">Отправить</div>
+                        </form>
+                        <script type="text/javascript">
+                            function submitCallForm()
+                            {
+                                $('#call_form').submit();
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--
         <div class="popup popup_call">
             <div class="close"></div>
             <div class="popup-block">
@@ -91,24 +168,15 @@
                         </div>
                         <div class="row">
                             <div class="row_cap">Телефон:<i class="error phone"></i></div>
-                            <input value="<?= $form_data['phone'] ?>" name="phone" type="text" placeholder="Введите телефон"/>
+                            <input value="<?= $form_data['phone'] ?>" name="phone" type="tel" placeholder="Введите телефон"/>
                         </div>
                         <div class="row">
                             <div class="row_cap">Сообщение:</div>
                             <textarea placeholder="Введите Ваше сообщение" name="text"><?= $form_data['text'] ?></textarea>
                         </div>
                         <div class="row_cap">
-                            <p>Нажимая на кнопку Заказать, я даю <a target="_blank" href="<?php echo $personaldata;?>">согласие на обработку персональных данных</a></p>
+                            <p>Нажимая на кнопку Отправить, я даю <a target="_blank" href="<?php echo $personaldata;?>">согласие на обработку персональных данных</a></p>
                         </div>
-
-
-                        <!--
-                        <input
-                            type ="submit"
-                            class="g-recaptcha"
-                            data-sitekey="<?= $captcha_key ?>"
-                            data-callback="submitCallForm" value="Отправить"/>
-                        -->
                         <div class="call_submit">Отправить</div>
                     </form>
                     <script type="text/javascript">
@@ -120,6 +188,7 @@
                 </div>
             </div>
         </div>
+        -->
 
         <a href="#" class="up" rel="nofollow"></a>
         
@@ -141,7 +210,7 @@
                         <div class="preheader_divider _second"></div>
                         <a href="#" class="js-call with_goal" rel="nofollow" goal="callme">
                             <div class="prehead_call">
-                                <span class="prehead_val order_call">Заказать звонок</span>
+                                <span class="prehead_val order_call js_modal" data-modal="modal_call">Заказать звонок</span>
                             </div>
                         </a>
                     </div>
@@ -202,6 +271,7 @@
             <?php if($class != "checkout-cart"){ ?>
                 <?= $cart ?>
             <?php }?>
+            
             <a class="btn-nav">
                 <span>
                     <b></b>

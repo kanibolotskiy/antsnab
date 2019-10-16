@@ -33,14 +33,19 @@ if( $('.qnt-container-cart').length > 0) {
 function getDelivery(){
     var koef=$("#priceSwitcher .active").attr("data-sale_to_ui_koef")*1;
     var base_weight=$("#priceSwitcher").attr("data-base_weight")*1;
+    
     var product_id=$("#product_id").val();
     //console.log(koef);
     if(!koef){
         koef=1;
     }
-    var base_count=$("#product_count_add").val()/koef;
-    var weight=base_count*base_weight;
+    var qnt=$(".quantity-buy .qnt").val()
 
+    //var base_count=$("#product_count_add").val()/koef;
+    var base_count=qnt/koef;
+
+    var weight=base_count*base_weight;
+    console.log($("#product_count_add").val()+"/"+koef);
     //var data={};
     $.ajax({
         url: '/index.php?route=product/product/ajaxDelivery/',
@@ -64,15 +69,25 @@ function getDelivery(){
 }
 
 function refresh_veiew_cart(json){
-    
     if(json["success"]){
         
         var total=json["total"];
         $("#total_cart").css({"opacity":0});
-        $("#total_cart").text(total);
-        $(".basket").html(json['total_str']);
+        $("#total_cart").html(total);
+        
+        $(".basket_link").html(json['total_str']);
 
         $("#total_cart").animate({"opacity":1},100);
+
+        if(json["econom"]==0){
+            $(".intotal.economy").hide();
+        }else{
+            $(".intotal.economy").show(200);
+            $("#ecosum").css({"opacity":0});
+            $("#ecosum").html(json["econom"]);
+            $("#ecosum").animate({"opacity":1},200);
+            //$("#ecosum").fadeOut(200);
+        }
         
         var products=json["products"];
         if(products.length){
@@ -106,7 +121,6 @@ function refresh_cart(){
         type: 'POST',
         dataType: 'json',
         success: function(json) {
-            
             if (typeof dataLayer != 'undefined') {
                 var product = [{
                     "id": json['metrika_product_id'],
@@ -135,20 +149,17 @@ function check_opt_notification(itm){
     
     if((row_count>=opt_limit*80/100) && (row_count<opt_limit)){
         itm.find(".opt_limit_notification_value").html(opt_limit-row_count);
-        //itm.find(".opt_limit-row_count").html();
         itm.find(".opt_limit_notification").fadeIn(200);
     }else{
         itm.find(".opt_limit_notification").fadeOut(200);
     }
 }
 $(function(){
+   
     $(".basket-row").each(function(){
         check_opt_notification($(this));
     });
 
-    $(".cart_similar_button").click(function(){
-
-    });
 
     getDelivery();
     $(document).on("click",".actionbutton.del",function(){

@@ -1,7 +1,11 @@
 <div class="catalog-product">
     <a href="<?=$root?>" class="catalog-btn">
         <?=$heading_title?>
-        <span class="catalog-opener"></span>
+        <div class="catalog-opener">
+            <div class="catalog-opener_line catalog-opener_line1"></div>
+            <div class="catalog-opener_line catalog-opener_line2"></div>
+            <div class="catalog-opener_line catalog-opener_line3"></div>
+        </div>
     </a>
     <div class="accordion">
         <ul class="simple-accordion"  itemscope itemtype="http://www.schema.org/SiteNavigationElement">

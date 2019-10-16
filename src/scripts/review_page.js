@@ -20,7 +20,6 @@ $('#button-review_page').formSubmit({
     },
     success: function(json) {
         if (json['error']) {
-            console.log(json);
             for(var err in json['error']){
                 $("#error_"+err).html(json['error'][err]);
             }

@@ -46,6 +46,8 @@ $_['entry_email_recall']               = 'E-Mail для отзывов';
 $_['entry_email_order']                = 'E-Mail для заказов';
 $_['entry_email_call']                 = 'E-Mail для заказа звонка';
 $_['entry_email_opt']                  = 'E-Mail заявки на опт';
+$_['entry_email_one']                  = 'E-Mail для заказа в 1 клик';
+$_['entry_email_feedback']              = 'E-Mail для обратной связи';
 
 
 $_['entry_telephone']                  = 'Телефон:';

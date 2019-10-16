@@ -6,6 +6,9 @@ $_['error_text'] = 'Поле должно быть не более 2000 симв
 
 $_['text_subject_worktime'] = 'Заказ звонка с сайта';
 $_['text_subject_notworktime'] = 'Пропущенный звонок с сайта';
+$_['text_subject_feedback'] = 'Обратная связь';
 
 $_['text_caption_worktime'] = 'Заказ звонка с сайта';
 $_['text_caption_notworktime'] = 'Пропущенный звонок с сайта';
+
+$_['text_caption_feedback'] = 'Обратная связь';

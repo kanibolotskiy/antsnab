@@ -1,5 +1,6 @@
 $(document).ready(function(){
-    $(".call_submit").click(function(){
+
+    $("#call_submit").click(function(){
         var data=$("#call_form").serialize();
         $.ajax({
             url:  '/index.php?route=extension/module/callform',
@@ -14,8 +15,8 @@ $(document).ready(function(){
             },
             success: function(json) {
                 if(json['success']){
-                    $(".popup").hide();
-                    $(".popup.thank-you").show();
+                    $(".modal").hide();
+                    $(".modal_thanks").fadeIn(200);
                 }else{
                     for(var err in json["errors"]){
                         $("#call_form .error."+err).html(json["errors"][err]);
@@ -24,8 +25,36 @@ $(document).ready(function(){
                 
             }
         })
-
     });
+
+    $("#feedback_submit").click(function(){
+        var data=$("#feedbackform").serialize();
+        $.ajax({
+            url:  '/index.php?route=extension/module/feedback',
+            type: 'post',
+            data: data,
+            dataType: 'json',
+            beforeSend: function() {
+                $('#ajax_loader_feedback').fadeIn(200);
+            },
+            complete: function() {
+                $('#ajax_loader_feedback').fadeOut(200);
+            },
+            success: function(json) {
+                if(json['success']){
+                    $(".modal_thanks").fadeIn(200);
+                    $("#feedbackform")[0].reset();
+                }else{
+                    for(var err in json["errors"]){
+                        $("#feedbackform .error."+err).html(json["errors"][err]);
+                    }
+                }
+                
+            }
+        })
+    });
+
+
     /**Попапы*/
     $(".btn-request-call").click(function () {
         $(".popup").css("display", "block");

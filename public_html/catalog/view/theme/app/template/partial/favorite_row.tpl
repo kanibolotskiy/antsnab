@@ -1,10 +1,4 @@
-<div class="basket-row">
-    <?php if(!$product['stock']){?>
-        <div class="basket-row_info">
-            <p>Под заказ</p>
-            <p class="cart_del">Доставка 1-3 дня</p>
-        </div>
-    <?php }?>
+<div class="basket-row fav_row" data-product_id="<?=$product['product_id']?>" price="<?=$product['price_val']?>" price_opt="<?=$product['price_wholesale_val']?>">
     <ul>
         <li>
             <?php if ($product['thumb']) { ?>
@@ -47,7 +41,7 @@
         <li>
             <div 
                 class="qnt-container-cart without_input"
-                data-el_name="quantity[<?php echo $product['cart_id']; ?>]"
+                data-el_name="quantity"
                 data-sale_to_price_koef="<?=$product['saleToPriceKoef']?>" 
                 data-ui_name="<?=$product['priceUnit']['name']?>"
                 data-ui_step = "<?=$product['step']?>"
@@ -61,37 +55,22 @@
         </li>
         <li>
             <span>Сумма</span>
-            <div class="recalc"><?php echo $product['total']; ?></div>
+            <div class="recalc"><span class="recal_tll"><?php echo $product['total']; ?></span> <div class="rur">i</div></div>
         </li>
         <li>
-            <div
-                data-cartid="<?php echo $product['cart_id']; ?>"
-                class="actionbutton del">
+            <div class="cart_similar_button">+<div>
+
+                </div>
+                <div class="cart_similar_info_add">
+                    
+                </div>
+            </div>
+            
+            <div class="favdel del">
                 <i class="fa fa-close fa-xs"></i>
             </div>
+            
         </li>
     </ul>
-    <div class="cart_similar_block">
-        <div class="similar_block_caption">Вам может пригодиться:</div>
-        <ul class="cart_similar_block_products">
-            <?php foreach($product['product_related'] as $product_result){?>
-                <li>
-                    <div class="cart_similar_cap">
-                        <?=$product_result['name']?>
-                    </div>
-                    <div class="cart_similar_info">
-                        <div class="cart_similar_img">
-                            <img src="<?=$product_result['image']?>" />
-                        </div>
-                        <div class="cart_similar_price"><?=$product_result['price']?></div>
-                        <div class="cart_similar_button buy" data-product_id="<?=$product_result['product_id']?>">+<div>
-
-                    </div>
-                    <div class="cart_similar_info_add">
-                        
-                    </div>
-                </li>
-            <?php }?>
-        </ul>
-    </div>
+    
 </div>

@@ -647,6 +647,9 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_quantity'] = $this->language->get('entry_quantity');
 		$data['entry_stock_status'] = $this->language->get('entry_stock_status');
 		$data['entry_price'] = $this->language->get('entry_price');
+		$data['entry_priceold'] = $this->language->get('entry_priceold');
+		$data['entry_price_wholesaleold'] = $this->language->get('entry_price_wholesaleold');
+
 		$data['entry_tax_class'] = $this->language->get('entry_tax_class');
 		$data['entry_points'] = $this->language->get('entry_points');
 		$data['entry_option_points'] = $this->language->get('entry_option_points');
@@ -1005,6 +1008,25 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['price'] = '';
 		}
+
+		//print_r($product_info);
+
+		if (isset($this->request->post['priceold'])) {
+			$data['priceold'] = $this->request->post['priceold'];
+		} elseif (!empty($product_info)) {
+			$data['priceold'] = $product_info['priceold'];
+		} else {
+			$data['priceold'] = '';
+		}
+
+		if (isset($this->request->post['price_wholesaleold'])) {
+			$data['price_wholesaleold'] = $this->request->post['price_wholesaleold'];
+		} elseif (!empty($product_info)) {
+			$data['price_wholesaleold'] = $product_info['price_wholesaleold'];
+		} else {
+			$data['price_wholesaleold'] = '';
+		}
+
 
 		if (isset($this->request->post['mincount'])) {
 			$data['mincount'] = $this->request->post['mincount'];
@@ -1786,4 +1808,5 @@ class ControllerCatalogProduct extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+	
 }

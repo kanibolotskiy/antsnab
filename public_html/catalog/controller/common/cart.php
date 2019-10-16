@@ -266,6 +266,11 @@ class ControllerCommonCart extends Controller {
 			$data['total_str'] = sprintf($this->language->get('text_items_empty'), $productsCount, $productsCountStr, $this->currency->format($orderSumTotal, $this->session->data['currency']));
 		}
 		
+		
+		$favorite_arr=json_decode($_COOKIE["favorite"]);
+		$data['favorite_count'] = count($favorite_arr);
+
+
 		return $this->load->view('common/cart', $data);
 	}
 

@@ -70,6 +70,11 @@
                     </div>
                 </div>
             <?php endif; ?>
+            
+            <?php  
+                include __DIR__ . '/../partial/feedbackform.tpl';
+            ?>
+
         </div>
     </div>
 </div>

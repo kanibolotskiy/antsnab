@@ -61,6 +61,12 @@ class ControllerInformationInformation extends Controller {
 					);
 				}
 			}
+			if($information_id==4){
+				$data['feedbackform']=true;
+			}else{
+				$data['feedbackform']=false;
+			}
+
 			$data['files']=$information_files;
 			
 			$data['button_continue'] = $this->language->get('button_continue');

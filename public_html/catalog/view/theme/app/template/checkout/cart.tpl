@@ -4,9 +4,8 @@
     <div class="content">
         <?php echo $content_top; ?>
         <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
-        <div class="title">
-            Корзина покупок
-        </div>
+        <h1 class="title">Корзина покупок</h1>
+        
         <div id="empty_cart_block" class="empty_cart_block">
             <?php echo $empty_cart; ?>
         </div>
@@ -20,9 +19,19 @@
                     </div>
                 </form>
 
-                <?php foreach ($totals as $total): ?>
-                    <strong class="recalc intotal"><?php echo $total['title']; ?>: <span id="total_cart"><?php echo $total['text']; ?></span></strong>
-                <?php endforeach; ?>
+                
+                <div class="summary_total_block">
+                    <?php foreach ($totals as $total): ?>
+                        <div class="recalc intotal"><?php echo $total['title']; ?>: <span id="total_cart"><?php echo $total['text']; ?></span></div>
+                    <?php endforeach; ?>
+                    
+                    
+
+                    <div class="recalc intotal economy" style="<?php if($ecosum==0){echo 'display:none';}?>" > 
+                        Вы сэкономили: <span><span id="ecosum"><?php echo $ecosum;?></span> <div class="rur">i</div></span>
+                    </div>
+                
+                </div>
 
                 <div class="cart_description content-text">
                     <?php echo $cart_text;?>
@@ -40,7 +49,7 @@
 
                             <div class="form-group">
                                 <i class="error">Необходимо заполнить</i>
-                                <input value="<?= $form_data['phone'] ?>" name="phone" type="text" placeholder="Введите телефон"/>                            
+                                <input value="<?= $form_data['phone'] ?>" name="phone" type="tel" placeholder="Введите телефон"/>                            
                             </div>
 
                             <div class="form-group">
@@ -93,7 +102,7 @@
                                 <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
                             </a>
                             <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
-                            <strong><?=$p['price']?></strong>
+                            <div><?=$p['price']?></div>
                             
                             <div class="quantity-buy cart_quantity-buy">
                                 <?php if(empty($p['unit_errors'])): ?>

@@ -84,6 +84,11 @@
 
                         <div class="left">
                             <div class="tovar_main_image">
+                                <?php if($discount){?>
+                                    <div class="label_discount _label" title="Сегодня этот товар продается со скидкой"><?php echo $discount;?>%</div>
+                                <?php }?>
+                                <div class="agg_rating"><?php echo $rating?></div>
+
                                 <?php if ($thumb) { ?>
                                     
                                     <a class="" data-fancybox="gallery" data-caption="<?php echo $heading_title.'. #1'; ?>"
@@ -94,6 +99,7 @@
                                             alt="<?php echo $heading_title; ?>" />
                                     </a>
                                 <?php } ?>
+                                <div title="Добавить товар в избранное" class="favorite <?php echo $favorite;?>" rel="<?php echo $product_id;?>"></div>
                             </div>
                             
                             <div class="thumb__nav">
@@ -212,9 +218,16 @@
                                             HAS ERRORS, SEE ABOVE
                                         <?php else: ?>
 
-                                        <div class="help_cont"> 
-                                            <strong id="wholesale_price" data-value="<?=$price_wholesale?>"><?=$price_wholesale_val?>
-                                            </strong>                                            
+                                        <div class="help_cont <?php if($price_wholesaleold){echo "_oldprice";}?>"> 
+                                            <div class="wrp_price_i">
+                                                <strong class="price_i" id="wholesale_price" data-value="<?=$price_wholesale?>"><?=$price_wholesale_val?>
+                                                </strong>
+                                                <?php if($price_wholesaleold){?>
+                                                    <div class="product_old_price">
+                                                        <?=$price_wholesaleold?> <div class="rur">i</div>
+                                                    </div>
+                                                <?php }?>
+                                            </div>
                                         </div>
                                         
                                         <span id="priceWholesaleDescr">
@@ -236,10 +249,17 @@
 
                                     <!-- Розничная цена -->
                                     <div class="wholesale wholesale2">
-                                        <div class="wholesale-price">
-                                        
-                                            <strong id="price"  data-value="<?=$price?>"><?=$price_val?>
-                                            </strong><br/>
+                                        <div class="wholesale-price <?php if($priceold){echo "_oldprice";}?>">
+                                            <div class="wrp_price_i">
+                                                <strong class="price_i" id="price"  data-value="<?=$price?>"><?=$price_val?>
+                                                </strong>
+                                                <?php if($priceold){?>
+                                                    <div class="product_old_price ">
+                                                        <?=$priceold?> <div class="rur">i</div>
+                                                    </div>
+                                                <?php }?>
+                                            </div>
+                                            <br/>
                                             <span id="priceDescr">
                                             </span>
                                         </div>
@@ -259,8 +279,17 @@
                                         href="#" 
                                         data-product_id="<?=$product_id?>"
                                         data-sale_to_price_koef="<?=$sale_to_price_koef?>"
-                                        class="buy add-to-card add-to-card-product">Купить</a>
+                                        class="buy add-to-card add-to-card-product">В корзину</a>
                                     </div>
+                                    <div class="wrap_oneclick">
+                                        <form action="#" id="oneclickform" class="oneclickform">
+                                            <input type="hidden" name="product" value="<?=$heading_title?>"/>
+                                            <input type="text" class="workemail" name="workemail"/>
+                                            <input type="tel" class="onclickInput" placeholder="Введите телефон" name="phone"/>
+                                            <button type="submit" class="onclickButton" id="onclickButton">Купить в 1 клик</button>
+                                        </form>
+                                    </div>
+                                    
 
                                 <?php endif;?>
                             <!--</div>--> 
@@ -402,7 +431,7 @@
 
                                 <div class="modal_form_row">
                                     <i class="error">Необходимо заполнить</i>
-                                    <input class="required" name="phone" type="text" placeholder="Телефон"/>
+                                    <input class="required" name="phone" type="tel" placeholder="Телефон"/>
                                 </div>
                                 <div class="modal_form_row">
                                     <i class="error">Некорректный Email</i>
@@ -793,11 +822,20 @@
                 
                     <?php foreach( $products as $p):?>
                     <li>
+                        <?php if($p['discount']){?>
+                            <div class="label_discount _label"><?php echo $p['discount'];?>%</div>
+                        <?php }?>
                         <div class="products-block">
+                            <?php if($p["rating"]){?>
+                                <div class="agg_rating"><?php echo $p["rating"];?></div>
+                            <?php }?>
+                            
+                            <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
+
                             <a href="<?=$p['href']?>" class="img-production">
                                 <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
                             </a>
-                            <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
+                            
                             <strong><?=$p['price']?> <div class="rur">i</div></strong>
                             <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
                         </div>

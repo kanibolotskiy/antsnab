@@ -77,6 +77,7 @@ class ModelCatalogProduct extends Model
 
     private function updateCustomFields($product_id, $data)
     {
+
         $disseo=0;
         if (!empty($data['disseo'])) {
             $disseo = (float) $data['disseo'];
@@ -112,6 +113,17 @@ class ModelCatalogProduct extends Model
             $price_wholesale = (float) $data['price_wholesale'];
         }
 
+        $priceold = 0.0000;
+        if (!empty($data['priceold'])) {
+            $priceold = (float) $data['priceold'];
+        }
+
+        $price_wholesaleold = 0.0000;
+        if (!empty($data['price_wholesaleold'])) {
+            $price_wholesaleold = (float) $data['price_wholesaleold'];
+        }
+
+
         $wholesale_threshold = 0.0000;
         if (!empty($data['wholesale_threshold'])) {
             $wholesale_threshold = (float) $data['wholesale_threshold'];
@@ -128,7 +140,7 @@ class ModelCatalogProduct extends Model
         }
 
 
-        $sql = "update " . DB_PREFIX . "product set consumption = :consumption, calc_data1 = :calc_data1, calc_data2 = :calc_data2, calc_data3 = :calc_data3, calc_data4 = :calc_data4, disseo = :disseo, discount = :discount, price_wholesale = :price_wholesale, wholesale_threshold=:wholesale_threshold, produnit_template_id=:produnit_template_id where product_id = :id";
+        $sql = "update " . DB_PREFIX . "product set consumption = :consumption, calc_data1 = :calc_data1, calc_data2 = :calc_data2, calc_data3 = :calc_data3, calc_data4 = :calc_data4, disseo = :disseo, discount = :discount, price_wholesale = :price_wholesale, priceold = :priceold, price_wholesaleold = :price_wholesaleold, wholesale_threshold=:wholesale_threshold, produnit_template_id=:produnit_template_id where product_id = :id";
         $res = $this->db->query($sql, [
             ':discount' => $discount,
             ':disseo' => $disseo,
@@ -138,6 +150,8 @@ class ModelCatalogProduct extends Model
             ':calc_data3' => $calc_data3,
             ':calc_data4' => $calc_data4,
             ':price_wholesale' => $price_wholesale,
+            ':priceold' => $priceold,
+            ':price_wholesaleold' => $price_wholesaleold,
             ':wholesale_threshold' => $wholesale_threshold,
             ':produnit_template_id' => $produnit_template_id,
             ':id' => $product_id
