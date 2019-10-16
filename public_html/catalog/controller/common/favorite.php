@@ -51,7 +51,7 @@ class ControllerCommonFavorite extends Controller {
         $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
         $propGateway = new ProdProperties($this->registry);
         $data['products']=[];
-        /*
+        
         foreach($products_arr as $itm){
             
             $product=$this->model_catalog_product->getProduct($itm);
@@ -75,7 +75,7 @@ class ControllerCommonFavorite extends Controller {
             $propGateway = new ProdProperties($this->registry);
             $prodUnits = $produnitsGateway->getUnitsByProduct($product['product_id']);
             $priceUnit = null;
-            
+            /*
             foreach ($prodUnits as $unit_id => $unit) {
                 if ($unit['isPriceBase'] == 1 && !$priceUnit) {
                     $priceUnit = $unit;
@@ -206,10 +206,10 @@ class ControllerCommonFavorite extends Controller {
                 'mincount'=>$mincount,
                 'step'=>$step
             );
-
+*/
         }
         //
-        */
+        
         echo $this->load->view('common/favorite', $data);
         //return $this->load->view('common/favorite', $data);
         
