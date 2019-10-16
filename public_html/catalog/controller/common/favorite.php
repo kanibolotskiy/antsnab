@@ -153,8 +153,8 @@ class ControllerCommonFavorite extends Controller {
 
                 $saleUnit_price_wholesale = (float)$this->tax->calculate($product['price_wholesale'], $product['tax_class_id'], $this->config->get('config_tax'));
                 $price_wholesale = $this->currency->format($saleUnit_price_wholesale, $this->session->data['currency']);
-
-                /*
+/*
+                
                 //@added @task
                 $prodQuantity =(float)$product['quantity'];
                 if ($prodQuantity >= $wholesale_threshold) {
@@ -179,7 +179,7 @@ class ControllerCommonFavorite extends Controller {
             }
             
             //$price = $product['price'];
-
+/*
             $data['products'][] = array(
                 'product_id' => $itm,
                 'thumb' => $image,
@@ -208,7 +208,7 @@ class ControllerCommonFavorite extends Controller {
                 'mincount'=>$mincount,
                 'step'=>$step
             );
-
+*/
         }
         //
         
