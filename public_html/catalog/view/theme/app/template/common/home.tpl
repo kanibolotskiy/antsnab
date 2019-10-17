@@ -4,37 +4,7 @@
     <div class="content">
         <?php echo $content_top; ?>
         
-        <!--
-        <div class="wrp_benefits_main">
-            <div class="benefits_main_caption">С нами работают, потому что</div>
-            <div class="benefits_main">
-                <div class="benefits_main_row">
-                    <div class="benefits_main_row_info">
-                        <div class="benefits_main_row_img"><img src="http://antsnab.cp06038.tmweb.ru/image/cache/no_image-160x200.png"/></div>
-                        <div class="benefits_main_row_cap">Преимущество</div>
-                    </div>
-                </div>
-                <div class="benefits_main_row">
-                    <div class="benefits_main_row_info">
-                        <div class="benefits_main_row_img"><img src="http://antsnab.cp06038.tmweb.ru/image/cache/no_image-160x200.png"/></div>
-                        <div class="benefits_main_row_cap">Преимущество</div>
-                    </div>
-                </div>
-                <div class="benefits_main_row">
-                    <div class="benefits_main_row_info">
-                        <div class="benefits_main_row_img"><img src="http://antsnab.cp06038.tmweb.ru/image/cache/no_image-160x200.png"/></div>
-                        <div class="benefits_main_row_cap">Преимущество</div>
-                    </div>
-                </div>
-                <div class="benefits_main_row">
-                    <div class="benefits_main_row_info">
-                        <div class="benefits_main_row_img"><img src="http://antsnab.cp06038.tmweb.ru/image/cache/no_image-160x200.png"/></div>
-                        <div class="benefits_main_row_cap">Преимущество</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        -->
+        
         <div class="our-production">
             <h1 >Наша продукция</h1>
             <ul>

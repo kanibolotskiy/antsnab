@@ -3389,7 +3389,7 @@ footer .prehead_call { line-height: 22px; cursor: pointer; margin-top: 3px; }
 
 .wrp_benefits_main { margin-top: 20px; margin-bottom: 20px; }
 
-.benefits_main { position: relative; overflow: hidden; }
+.benefits_main { position: relative; overflow: hidden; margin-top: 20px; }
 
 .benefits_main_row { width: 25%; float: left; margin-bottom: 20px; }
 
@@ -3399,7 +3399,7 @@ footer .prehead_call { line-height: 22px; cursor: pointer; margin-top: 3px; }
 
 .benefits_main_row_info img { max-width: 100%; height: auto; }
 
-.benefits_main_row_cap { font-size: 15px; text-align: center; }
+.benefits_main_row_cap { font-size: 15px; text-align: center; margin-top: 15px; }
 
 .benefits_main_caption { font-size: 16px; font-weight: bold; }
 
@@ -3484,6 +3484,12 @@ footer .prehead_call { line-height: 22px; cursor: pointer; margin-top: 3px; }
 
 .clr_buy { clear: both; }
 
+.benefits_main_row { max-width: 300px; }
+
+.benefits_main_row_img { text-align: center; border-radius: 500px; overflow: hidden; }
+
+.benefits_main_row_info img { max-width: 100%; height: auto; padding: 25px; }
+
 @media screen and (max-width: 1200px) { .price-list .select-list ul.list > li { width: 100%; }
   .sidebar { /*margin-right: 20px;*/ }
   .content { padding-left: 20px; }
@@ -3510,8 +3516,7 @@ footer .prehead_call { line-height: 22px; cursor: pointer; margin-top: 3px; }
   .soc ul { justify-content: center; -webkit-justify-content: center; -ms-flex-pack: center; justify-content: center; -webkit-box-pack: center; }
   .footer .container { display: block; }
   .prehead_work { display: none; }
-  .preheader_divider._second { display: none; }
-  .benefits_main_row { width: 50%; } }
+  .preheader_divider._second { display: none; } }
 
 @media screen and (max-width: 860px) { .header { flex: 1 0 auto; }
   .header .wrap_logo { order: 1; width: 50%; margin-bottom: 10px; }
@@ -3542,7 +3547,8 @@ footer .prehead_call { line-height: 22px; cursor: pointer; margin-top: 3px; }
   .cart_similar_block_products li:nth-child(even) { border-right: 0; }
   .basket-block .basket-row ul.cart_similar_block_products { justify-content: space-between; } }
 
-@media screen and (max-width: 640px) { .cat_item_price { text-align: center; }
+@media screen and (max-width: 640px) { .benefits_main_row { width: 50%; }
+  .cat_item_price { text-align: center; }
   .cat_item_price > div { display: inline-block; float: none; }
   .tab-block.tab-block3 .wrp_favorite { display: block; position: relative; left: initial; right: initial; bottom: initial; }
   .wrp_qnt-container { display: block; flex-direction: column; }
@@ -3589,7 +3595,7 @@ footer .prehead_call { line-height: 22px; cursor: pointer; margin-top: 3px; }
   .tab-block ul li .catalog-description { padding-left: 15px; }
   .checkout-cart .btn-nav { top: 115px; } }
 
-/* Stick Nav */
+/*Stick Nav */
 .container.main { /*for right calculation of .offset in js*/ position: relative; }
 
 .collapse { text-align: center; display: none; }
