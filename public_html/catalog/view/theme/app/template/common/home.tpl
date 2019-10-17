@@ -40,6 +40,9 @@
                 <?php endforeach ?>
             </ul>
             <h2 class="title">Статьи</h2>
+            <div class="content-text">
+                <p>В разделе <a href="news/">новости</a> всегда можно узнать об изменениях в ассортименте, актуальных ценах и значимых событиях в жизни компании. Раздел <a href="articles/">статьи</a> постоянно пополняется интересными и нужными публикациями. А если вопросы все же останутся, то их всегда можно задать нашим <a href="contacts/">менеджерам.</a></p>
+            </div>
             <ul class="main_articles">
                 <?php  foreach ($articles as $article) : ?>
                     <?php include __DIR__ . "/../partial/item_allarticles.tpl" ?> 
