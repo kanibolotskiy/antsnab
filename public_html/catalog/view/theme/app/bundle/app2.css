@@ -1689,6 +1689,8 @@ ul.tabset li.active:last-child a, ul.tabset li:last-child a.active { text-decora
 
 .quantity-buy { /* display: flex; flex-wrap: wrap; */ flex-direction: column; display: flex; display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; max-width: 100%; float: left; }
 
+.quantity-buy.quantity-buy_product { flex-direction: row; }
+
 /* .tab-block3 .quantity-buy{ //position: absolute; //bottom: 20px; //left: 0; padding: 0 20px; width: 100%; margin-top:20px; } .tab-block3 .quantity-buy .qnt-widget { width: 100%; margin-right: 0; } */
 .tab-block2 ul li .catalog-block { padding-bottom: 60px; }
 
@@ -3196,6 +3198,8 @@ table.table_data td a { color: #598ba6; }
 
 .checkout-cart .btn-nav { display: none; }
 
+.checkout-cart footer .prehead_call { display: none; }
+
 body.freeze { overflow: auto !important; }
 
 .tab-block.tab-block2 ul li .catalog-description a.title-product { position: absolute; top: 10px; left: 20px; right: 20px; }
@@ -3208,7 +3212,7 @@ body.freeze { overflow: auto !important; }
 
 .full_item_link { text-decoration: none; }
 
-.catalog-block_caption { display: block; color: #000000; font-size: 15px; line-height: 20px; margin-bottom: 16px; height: 40px; overflow: hidden; font-size: 15px; font-weight: bold; margin-left: 18px; }
+.catalog-block_caption { display: block; color: #000000; font-size: 15px; line-height: 20px; margin-bottom: 16px; height: 40px; overflow: hidden; font-size: 15px; font-weight: bold; /*margin-left:18px;*/ margin-left: 5px; }
 
 .tab-block.tab-block2 .catalog-block_caption { position: absolute; top: 10px; left: 20px; right: 35px; text-align: center; }
 
@@ -3491,6 +3495,8 @@ footer .prehead_call { line-height: 22px; cursor: pointer; margin-top: 3px; }
 .benefits_main_row_img { text-align: center; border-radius: 500px; overflow: hidden; }
 
 .benefits_main_row_info img { max-width: 100%; height: auto; padding: 25px; }
+
+.catalog_item_product .label_discount { padding-left: 5px; padding-right: 5px; }
 
 @media screen and (max-width: 1200px) { .price-list .select-list ul.list > li { width: 100%; }
   .sidebar { /*margin-right: 20px;*/ }

@@ -19486,8 +19486,9 @@ $(document).ready(function(){
             }
             add_to_cart(product_id, 1, show_added);
         }else{
-            var $container = $(this).parent('.quantity-buy'),
+            var $container = $(this).closest('.quantity-buy'),
             qntController = $container.find('.qnt-widget').data('quantity'), 
+
             quantityInSaleUnits = qntController.getQuantityInSaleUnits(), 
             toPriceQuantityKoef = new Fraction( $(this).attr('data-sale_to_price_koef') ), 
             quantityInPriceUnits = toPriceQuantityKoef.mul(quantityInSaleUnits); 
