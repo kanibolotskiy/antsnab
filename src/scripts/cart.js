@@ -45,7 +45,7 @@ function getDelivery(){
     var base_count=qnt/koef;
 
     var weight=base_count*base_weight;
-    console.log($("#product_count_add").val()+"/"+koef);
+    //console.log($("#product_count_add").val()+"/"+koef);
     //var data={};
     $.ajax({
         url: '/index.php?route=product/product/ajaxDelivery/',

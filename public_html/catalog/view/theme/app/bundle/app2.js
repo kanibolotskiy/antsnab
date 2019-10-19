@@ -18876,7 +18876,7 @@ function getDelivery(){
     var base_count=qnt/koef;
 
     var weight=base_count*base_weight;
-    console.log($("#product_count_add").val()+"/"+koef);
+    //console.log($("#product_count_add").val()+"/"+koef);
     //var data={};
     $.ajax({
         url: '/index.php?route=product/product/ajaxDelivery/',
@@ -22871,10 +22871,7 @@ $( document ).ready(function() {
         }
     });
     $(".favorite").click(function(e){
-        if (typeof ym != 'undefined') {
-            console.log('goal:favorite');
-            ym(14496178, 'reachGoal', 'favorite');
-        }
+        
         
         e.preventDefault();
         //var item_id=$(this).closest(".catalog_item_product").attr("rel");
@@ -22902,6 +22899,9 @@ $( document ).ready(function() {
             favorite_str=JSON.stringify(new_favorite_arr);
             fav_count=new_favorite_arr.length;
         }else{
+            if (typeof ym != 'undefined') {
+                ym(14496178, 'reachGoal', 'favorite');
+            }
             $(this).addClass("active");
             favorite_arr[favorite_arr.length]=item_id;
             favorite_str=JSON.stringify(favorite_arr);
