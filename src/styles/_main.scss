@@ -5757,7 +5757,9 @@ body.freeze{overflow:auto!important;}
     right: 20px;
 }
 .tab-block.tab-block2 ul li .catalog-img{
-    margin-top: 60px;
+    /*margin-top: 60px;*/
+    margin-top: 70px;
+
 }
 .tab-block.tab-block2 ul li .catalog-img{position:relative;overflow:hidden;}
 
@@ -5782,16 +5784,15 @@ body.freeze{overflow:auto!important;}
     display: block;
     color: #000000;
     font-size: 15px;
-    line-height: 20px;
+    line-height: 18px;
     margin-bottom: 16px;
-    height: 40px;
+    height: 54px;
     overflow: hidden;
     font-size: 15px;
     font-weight:bold;
-    /*margin-left:18px;*/
-    margin-left:5px;
-
+    margin-left:18px;
 }
+
 .tab-block.tab-block2 .catalog-block_caption{
     position: absolute;
     top: 10px;
@@ -6340,7 +6341,6 @@ transition: 0.4s;
     height: auto;
     padding: 25px;
 }
-.catalog_item_product .label_discount{padding-left:5px;padding-right:5px;}
 
 @media screen and (max-width: 1200px){
     .price-list .select-list ul.list>li{

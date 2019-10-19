@@ -3204,7 +3204,7 @@ body.freeze { overflow: auto !important; }
 
 .tab-block.tab-block2 ul li .catalog-description a.title-product { position: absolute; top: 10px; left: 20px; right: 20px; }
 
-.tab-block.tab-block2 ul li .catalog-img { margin-top: 60px; }
+.tab-block.tab-block2 ul li .catalog-img { /*margin-top: 60px;*/ margin-top: 70px; }
 
 .tab-block.tab-block2 ul li .catalog-img { position: relative; overflow: hidden; }
 
@@ -3212,7 +3212,7 @@ body.freeze { overflow: auto !important; }
 
 .full_item_link { text-decoration: none; }
 
-.catalog-block_caption { display: block; color: #000000; font-size: 15px; line-height: 20px; margin-bottom: 16px; height: 40px; overflow: hidden; font-size: 15px; font-weight: bold; /*margin-left:18px;*/ margin-left: 5px; }
+.catalog-block_caption { display: block; color: #000000; font-size: 15px; line-height: 18px; margin-bottom: 16px; height: 54px; overflow: hidden; font-size: 15px; font-weight: bold; margin-left: 18px; }
 
 .tab-block.tab-block2 .catalog-block_caption { position: absolute; top: 10px; left: 20px; right: 35px; text-align: center; }
 
@@ -3495,8 +3495,6 @@ footer .prehead_call { line-height: 22px; cursor: pointer; margin-top: 3px; }
 .benefits_main_row_img { text-align: center; border-radius: 500px; overflow: hidden; }
 
 .benefits_main_row_info img { max-width: 100%; height: auto; padding: 25px; }
-
-.catalog_item_product .label_discount { padding-left: 5px; padding-right: 5px; }
 
 @media screen and (max-width: 1200px) { .price-list .select-list ul.list > li { width: 100%; }
   .sidebar { /*margin-right: 20px;*/ }
