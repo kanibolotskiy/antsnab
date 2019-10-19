@@ -1792,7 +1792,7 @@ button.show-more:hover { background-color: #EFEEEC; -webkit-transition: 0.4s; -m
 
 .mentioned-products ul li .products-block .img-production { height: 180px; }
 
-.mentioned-products ul li .products-block a.title-product { display: block; text-align: center; text-decoration: underline; color: #000000; font-size: 14px; margin-top: 10px; padding-left: 20px; /* margin-bottom: 15px; */ line-height: 20px; /* max-height: 66px; */ height: 40px; overflow: hidden; overflow: hidden; padding-left: 20px !important; padding-right: 20px !important; }
+.mentioned-products ul li .products-block a.title-product { display: block; text-align: center; text-decoration: underline; color: #000000; font-size: 14px; margin-top: 10px; padding-left: 20px; /* margin-bottom: 15px; */ /*line-height: 20px;*/ line-height: 16px; height: 56px; /* max-height: 66px; */ /*height: 40px;*/ overflow: hidden; overflow: hidden; padding-left: 20px !important; padding-right: 20px !important; }
 
 .mentioned-products ul li .products-block a.title-product:hover { text-decoration: none; }
 
