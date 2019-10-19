@@ -22872,6 +22872,7 @@ $( document ).ready(function() {
     });
     $(".favorite").click(function(e){
         if (typeof ym != 'undefined') {
+            console.log('goal:favorite');
             ym(14496178, 'reachGoal', 'favorite');
         }
         
