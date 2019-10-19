@@ -3212,7 +3212,9 @@ body.freeze { overflow: auto !important; }
 
 .full_item_link { text-decoration: none; }
 
-.catalog-block_caption { display: block; color: #000000; font-size: 15px; line-height: 18px; margin-bottom: 16px; height: 54px; overflow: hidden; font-size: 15px; font-weight: bold; margin-left: 18px; }
+.catalog-block_caption { display: block; color: #000000; font-size: 15px; line-height: 18px; margin-bottom: 16px; height: 54px; overflow: hidden; font-size: 15px; font-weight: bold; margin-left: 0; }
+
+.tab-block.tab-block3 { margin-left: 18px; }
 
 .tab-block.tab-block2 .catalog-block_caption { position: absolute; top: 10px; left: 20px; right: 35px; text-align: center; }
 
