@@ -3498,6 +3498,8 @@ footer .prehead_call { line-height: 22px; cursor: pointer; margin-top: 3px; }
 
 .benefits_main_row_info img { max-width: 100%; height: auto; padding: 25px; }
 
+.catalog_item_product .label_discount { padding: 5px; }
+
 @media screen and (max-width: 1200px) { .price-list .select-list ul.list > li { width: 100%; }
   .sidebar { /*margin-right: 20px;*/ }
   .content { padding-left: 20px; }
