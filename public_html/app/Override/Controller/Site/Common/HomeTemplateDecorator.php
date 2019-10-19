@@ -105,7 +105,7 @@ class HomeTemplateDecorator implements IDecorator
         $filter_data=Array(
             "limit"=>3,
             "start"=>0,
-            "order"=>"DESC",
+            "sort"=>"RAND()",
             'filter_category_id' => 2,
             'filter_sub_category' => true,);
         
