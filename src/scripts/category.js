@@ -176,13 +176,15 @@ function add_to_cart(product_id, count_add, show_added){
                         });
                     }
                 }
-
+                
                 new Noty({
                     text: json['success']+"<div class='notify_cart'><a href='card/'>Перейти в корзину</a></div>",
                     type: 'warning',
                     theme: 'relax',
                     timeout: 3000, 
                 }).show();
+                
+                
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -207,6 +209,7 @@ function add_favorite_to_cart(product_id, count_add){
                 theme: 'relax',
                 timeout: 3000, 
             }).show();
+            
             $('.basket_link').html(json['total_str']);
         }
     });
@@ -282,7 +285,7 @@ $(document).ready(function(){
         });
     });
 
-    $(".cart_similar_button").click(function(){
+    $(".cart_favorite_button").click(function(){
         var fav_itm=$(this).closest(".fav_row");
         var product_id=fav_itm.attr("data-product_id")
         var count_add=fav_itm.find(".qnt").val();
@@ -315,17 +318,17 @@ $(document).ready(function(){
             ym(14496178, 'reachGoal', 'calc-cart');
         }
     });
-    
 
     $(document).on('click','.buy',function(e){
         
+
         e.preventDefault();
         var show_added=0;
         var itm=$(this);
+        
         if(itm.hasClass("cart_similar_button")){
             show_added=1;
             var product_id=$(this).attr('data-product_id');
-            /**Цель*/
             if (typeof ym != 'undefined') {
                 ym(14496178, 'reachGoal', 'related-products');
             }
@@ -342,9 +345,5 @@ $(document).ready(function(){
             var count_add=quantityInPriceUnits.valueOf();
             add_to_cart(product_id, count_add,0);
         }
-     
-     
-
-        
     });
 });

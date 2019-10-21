@@ -58,7 +58,7 @@
             <div class="recalc"><span class="recal_tll"><?php echo $product['total']; ?></span> <div class="rur">i</div></div>
         </li>
         <li>
-            <div class="cart_similar_button">+<div>
+            <div class="cart_favorite_button">+<div>
 
                 </div>
                 <div class="cart_similar_info_add">

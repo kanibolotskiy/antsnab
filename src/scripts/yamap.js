@@ -29,10 +29,7 @@ $(document).ready(function(){
     $(".map_tab").click(function(e){
         e.preventDefault();
         if(!$(this).hasClass("active")){
-            
             rel=$(this).attr("rel");
-            console.log(rel);
-
             $(".map_block").hide();
             $("#"+rel).fadeIn();
             $(".map_tab").removeClass("active");

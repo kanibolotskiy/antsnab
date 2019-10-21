@@ -98,6 +98,9 @@ class ControllerExtensionFeedYandexTurbo extends Controller {
 
 				$data['url'] = $this->url->link('product/product', 'path=' . $this->getPath($product['category_id']) . '&product_id=' . $product['product_id']);
 				$data['price'] = $this->currency->convert($this->tax->calculate($product['price'], $product['tax_class_id']), $shop_currency, $offers_currency);
+				if($product['priceold']){
+					$data['oldprice'] = $this->currency->convert($this->tax->calculate($product['priceold'], $product['tax_class_id']), $shop_currency, $offers_currency);	
+				}
 				$data['currencyId'] = $offers_currency;
 				$data['categoryId'] = $product['category_id'];
 
@@ -330,7 +333,7 @@ class ControllerExtensionFeedYandexTurbo extends Controller {
 
 		$type = isset($offer['type']) ? $offer['type'] : '';
 
-		$allowed_tags = array('url'=>0, 'buyurl'=>0, 'price'=>1, 'wprice'=>0, 'currencyId'=>1, 'xCategory'=>0, 'categoryId'=>1, 'picture'=>0, 'store'=>0, 'pickup'=>0, 'delivery'=>0, 'deliveryIncluded'=>0, 'local_delivery_cost'=>0, 'orderingTime'=>0,'min-quantity'=>1);
+		$allowed_tags = array('url'=>0, 'buyurl'=>0, 'price'=>1, 'wprice'=>0, 'currencyId'=>1, 'xCategory'=>0, 'categoryId'=>1, 'picture'=>0, 'store'=>0, 'pickup'=>0, 'delivery'=>0, 'deliveryIncluded'=>0, 'local_delivery_cost'=>0, 'orderingTime'=>0,'min-quantity'=>1,'oldprice'=>1);
 
 		switch ($type) {
 			case 'vendor.model':

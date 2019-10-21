@@ -538,6 +538,7 @@ function calc5(){
 
 }
 $( document ).ready(function() {
+
     $(".favdel").click(function(){
         
         var item_id=$(this).closest(".fav_row").attr("data-product_id");

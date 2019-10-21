@@ -158,9 +158,10 @@ class CartController extends \ControllerCheckoutCart
             }
 
             if (!$json) {
+                //print_r($product_info);
                 $pr_id=$this->request->post['product_id'];
-
-                $this->cart->add($pr_id, $quantity, $option, $recurring_id);
+                //echo $product_info['mincount'].">".$quantity;
+                
                 
                 
                 $json['metrika_product_id']=$pr_id;
@@ -169,7 +170,7 @@ class CartController extends \ControllerCheckoutCart
                 $json['metrika_product_manufacturer']=$product_info['manufacturer'];
 
                 $main_category_id=$product_info['main_category'];
-
+                
                 $this->load->model('catalog/category');
                 $main_category_info = $this->model_catalog_category->getCategory($main_category_id);
                 $categories_names=[];
@@ -195,6 +196,177 @@ class CartController extends \ControllerCheckoutCart
                 $json['metrika_product_quantity']=$quantity;
                 
 
+                $produnitsGateway = new ProdUnits($this->registry);
+                $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
+                $propGateway = new ProdProperties($this->registry);
+                $prodUnits = $produnitsGateway->getUnitsByProduct($pr_id);
+                $priceUnit = null;
+                $koef_d=1;
+
+                foreach ($prodUnits as $unit_id => $unit) {
+                    if ($unit['isPriceBase'] == 1 && !$priceUnit) {
+                        $priceUnit = $unit;
+                        //print_r($unit);
+                        //коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
+                        $saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($pr_id, 'isSaleBase', $unit_id);
+
+                        $array_koef = (array) $saleToPriceKoef;
+                        $z=0;
+                        $koef_numerator=1;
+                        $koef_denomirator=1;
+                        foreach($array_koef as $koef_item){
+                            if($z){
+                                $koef_denomirator=$koef_item;
+                            }else{
+                                $koef_numerator=$koef_item;
+                            }
+                            $z++;
+                        }
+                        
+
+                        $koef_d=$koef_numerator/$koef_denomirator;
+                        
+                        
+                    } elseif ($unit['isPriceBase'] == 1) {
+                        throw new \Exception('Too many price bases for product ' . $pr_id);
+                    }
+                    
+                    
+                }
+                
+                if(($product_info['mincount']*$koef_d)>$quantity){
+                    $quantity=$product_info['mincount']*$koef_d;
+                }
+
+                $this->cart->add($pr_id, $quantity, $option, $recurring_id);
+
+                if($this->request->post['show_added']){
+                    
+                    $products = $this->cart->getProducts();
+                    $i=0;
+                    foreach($products as $pr){
+                
+                        if($pr["product_id"]==$this->request->post['product_id']){
+                            $product=$products[$i];
+                        }
+                        $i++;
+                    }
+                    $this->load->model('tool/image');
+                    if ($product['image']) {
+                        //$image = $this->model_tool_image->resize($product['image'], $this->config->get($this->config->get('config_theme') . '_image_cart_width'), $this->config->get($this->config->get('config_theme') . '_image_cart_height'));
+                        //$image = $this->model_tool_image->myResize($product['image'], $this->config->get($this->config->get('config_theme') . '_image_cart_width'), $this->config->get($this->config->get('config_theme') . '_image_cart_height'),1);
+                        $image = $this->model_tool_image->myResize($product['image'], 120,120,3);
+                        
+                    } else {
+                        $image = '';
+                    }
+                    $recurring = '';
+                    
+                    $properties = $propGateway->getPropertiesWithProductValues($product['product_id'], 'order by sortOrder ASC');
+                    $previewProperties = array();
+                    foreach ($properties as $p) {
+                        if ($p['showInProdPreview']) {
+                            $previewProperties[] = array(
+                                'name' => $p['cat_name'],
+                                'val' => htmlspecialchars_decode($p['val'],ENT_QUOTES),
+                                'unit' => $p['cat_unit']
+                            );
+                        }
+                    }
+                    
+                    $product_related_results = $this->model_catalog_product->getProductRelated($product['product_id'],true,4,'product_related');
+                    $product_related=[];
+                    foreach($product_related_results as $related_result){
+                        
+                        if ($related_result['image']) {
+                            $image_rel = $this->model_tool_image->myResize($related_result['image'], 40,40,2);
+                        } else {
+                            $image_rel = $this->model_tool_image->resize('placeholder.png', 40,40,2);
+                        }
+
+                        $product_related[]=array(
+                            'product_id' => $related_result['product_id'],
+                            'meta_h1' => $related_result['meta_h1'],
+                            'name' => $related_result['name'],
+                            'href' => $this->url->link('product/product', 'product_id=' . $related_result['product_id']),
+                            'image' => $image_rel, 
+                            'price' => $this->currency->format($this->tax->calculate($related_result['price'], $related_result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+                        );
+                    }
+                    
+                    if (!$priceUnit) {
+                        throw new \Exception('Price base wasnt found for product ' . $product['product_id']);
+                    }
+    
+                    $wholesale_threshold_in_saleUnits = Fraction::fromFloat((float)$product['wholesale_threshold']); 
+                    $wholesale_threshold = $wholesale_threshold_in_saleUnits->multiply($saleToPriceKoef)->toFloat(); 
+                    //print_r($wholesale_threshold_in_saleUnits);
+                    // Display prices
+                    if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+                        
+                        $saleUnit_price = (float)$this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
+                        $price = $this->currency->format($saleUnit_price, $this->session->data['currency']);
+    
+                        $saleUnit_price_wholesale = (float)$this->tax->calculate($product['price_wholesale'], $product['tax_class_id'], $this->config->get('config_tax'));
+                        $price_wholesale = $this->currency->format($saleUnit_price_wholesale, $this->session->data['currency']);
+    
+    
+                        //@added @task
+                        $prodQuantity =(float)$product['quantity'];
+                        if ($prodQuantity >= $wholesale_threshold) {
+                            $rowTotal = $saleUnit_price_wholesale * $prodQuantity; 
+                            $isWholesale = true;
+                            $total = $this->currency->format($rowTotal, $this->session->data['currency']);
+                        } else {
+                            $rowTotal = $saleUnit_price * $prodQuantity; 
+                            $isWholesale = false;
+                            $total = $this->currency->format($rowTotal, $this->session->data['currency']);
+                        }
+    
+                    } else {
+                        $price = false;
+                        $total = false;
+                    }
+                    $step=1;
+                    $mincount=$product['mincount']*$koef_d;
+                    $data['product'] = array(
+                        'cart_id' => $product['cart_id'],
+                        'thumb' => $image,
+                        'name' => $product['name'],
+    
+                        /// @added 
+                        'meta_h1' => $product['meta_h1'],
+                        'model' => $product['model'],
+                        'recurring' => $recurring,
+                        'quantity' => $product['quantity'],
+                        'stock' => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
+                        'reward' => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
+    
+                        /// @added 
+
+                        'price' => $price,
+                        'price_wholesale' => $price_wholesale,
+                        'priceold' => $product['priceold'],
+                        'price_wholesaleold' => $product['price_wholesaleold'],
+
+                        'isWholesale' => $isWholesale,
+                        'wholesale_threshold' => $product['wholesale_threshold'],
+                        'total' => $total,
+                        'priceUnit'=> $priceUnit,
+                        'saleToPriceKoef' => $saleToPriceKoef,
+                        'location' => $product['location'],
+                        'properties' => $previewProperties,
+                        'href' => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+                        'mincount'=>$mincount,
+                        'step'=>$step,
+                        'product_related'=>$product_related
+                    );
+                    $json['added_product']=$this->load->view('partial/basket_row', $data);
+                    $json['added_key']=$product['cart_id'];
+                }
+
+                //print_r($this->request->post['show_added']);
+                /*
                 if($this->request->post['show_added']){
                     $products = $this->cart->getProducts();
                     $i=0;
@@ -209,7 +381,7 @@ class CartController extends \ControllerCheckoutCart
                     
 
                     //$json['added_product']=$products[count($products)-1];
-                    /*------------------------------------------------*/
+                    ///////////////////////////////////////////////////////
                     $produnitsGateway = new ProdUnits($this->registry);
                     $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
                     $propGateway = new ProdProperties($this->registry);
@@ -218,13 +390,31 @@ class CartController extends \ControllerCheckoutCart
                     foreach ($prodUnits as $unit_id => $unit) {
                         if ($unit['isPriceBase'] == 1 && !$priceUnit) {
                             $priceUnit = $unit;
-
+                            //print_r($unit);
                             //коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
                             $saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($product['product_id'], 'isSaleBase', $unit_id);
+
+                            $array_koef = (array) $saleToPriceKoef;
+                            $z=0;
+                            $koef_numerator=1;
+                            $koef_denomirator=1;
+                            foreach($array_koef as $koef_item){
+                                if($z){
+                                    $koef_denomirator=$koef_item;
+                                }else{
+                                    $koef_numerator=$koef_item;
+                                }
+                                $z++;
+                            }
+                            
+
+                            $koef_d=$koef_numerator/$koef_denomirator;
+                            
+                            
                         } elseif ($unit['isPriceBase'] == 1) {
                             throw new \Exception('Too many price bases for product ' . $product['product_id']);
                         }
-
+                        
                         
                     }
 
@@ -236,7 +426,7 @@ class CartController extends \ControllerCheckoutCart
     
                     $wholesale_threshold_in_saleUnits = Fraction::fromFloat((float)$product['wholesale_threshold']); 
                     $wholesale_threshold = $wholesale_threshold_in_saleUnits->multiply($saleToPriceKoef)->toFloat(); 
-    
+                    //print_r($wholesale_threshold_in_saleUnits);
                     // Display prices
                     if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
                         
@@ -289,7 +479,7 @@ class CartController extends \ControllerCheckoutCart
                     }
 
                     $step=1;
-                    $mincount=1;
+                    $mincount=$product['mincount']*$koef_d;
                     
                     $product_related_results = $this->model_catalog_product->getProductRelated($product['product_id'],true,4,'product_related');
                     $product_related=[];
@@ -316,7 +506,7 @@ class CartController extends \ControllerCheckoutCart
                         'thumb' => $image,
                         'name' => $product['name'],
     
-                        /** @added */
+                        /// @added 
                         'meta_h1' => $product['meta_h1'],
                         'model' => $product['model'],
                         'recurring' => $recurring,
@@ -324,7 +514,7 @@ class CartController extends \ControllerCheckoutCart
                         'stock' => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
                         'reward' => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
     
-                        /** @added */
+                        /// @added 
 
                         'price' => $price,
                         'price_wholesale' => $price_wholesale,
@@ -343,13 +533,13 @@ class CartController extends \ControllerCheckoutCart
                         'step'=>$step,
                         'product_related'=>$product_related
                     );
-                    /*------------------------------------------------*/
+                    ///////////////////////////
                     
                     //echo "!".$this->load->view('partial/basket_row', $data)."!";
                     $json['added_product']=$this->load->view('partial/basket_row', $data);
                     $json['added_key']=$product['cart_id'];
                 }
-                
+                */
                 //modified
                 $json['success'] = sprintf($this->language->get('text_success'), $product_info['name'], $this->url->link('checkout/cart'));
 
