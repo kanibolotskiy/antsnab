@@ -1,4 +1,10 @@
 <?php
+use Phospr\Fraction;
+use WS\Override\Gateway\ProdUnits\ProdUnits;
+use WS\Override\Gateway\ProdUnits\ProdUnitsCalc;
+use WS\Override\Gateway\ProdUnits\ProdUnitStrings;
+use WS\Override\Gateway\ProdProperties; 
+use WS\Patch\Helper\QueryHelper;
 class ControllerProductProduct extends Controller {
 	private $error = array();
 
@@ -54,20 +60,22 @@ class ControllerProductProduct extends Controller {
             }
           }
 		  
-		  /**Добавляем учут минимального количества*/
+		  /**Добавляем учет минимального количества*/
 		$produnitsGateway = new ProdUnits($this->registry);
+		
 		$produnitsCalcGateway = new ProdUnitsCalc($this->registry);
 		$propGateway = new ProdProperties($this->registry);
-		$prodUnits = $produnitsGateway->getUnitsByProduct($pr_id);
+		$prodUnits = $produnitsGateway->getUnitsByProduct($product_id);
 		$priceUnit = null;
 		$koef_d=1;
 
+		 
 		foreach ($prodUnits as $unit_id => $unit) {
 			if ($unit['isPriceBase'] == 1 && !$priceUnit) {
 				$priceUnit = $unit;
 				//print_r($unit);
 				//коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
-				$saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($pr_id, 'isSaleBase', $unit_id);
+				$saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($product_id, 'isSaleBase', $unit_id);
 
 				$array_koef = (array) $saleToPriceKoef;
 				$z=0;
@@ -87,7 +95,7 @@ class ControllerProductProduct extends Controller {
 				
 				
 			} elseif ($unit['isPriceBase'] == 1) {
-				throw new \Exception('Too many price bases for product ' . $pr_id);
+				throw new \Exception('Too many price bases for product ' . $product_id);
 			}
 			
 			
@@ -96,7 +104,7 @@ class ControllerProductProduct extends Controller {
 		if(($product_info['mincount']*$koef_d)>$quantity){
 			$quantity=$product_info['mincount']*$koef_d;
 		}
-				
+			
 
           $this->cart->add($product_id, $quantity, $option, $recurring_id);
     
