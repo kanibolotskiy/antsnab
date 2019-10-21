@@ -117,7 +117,7 @@ class ControllerExtensionFeedYandexTurbo extends Controller {
 				$data['description'] = $product['description'];
 				$data['min-quantity'] = $mincount;
 				if($sales_notes){
-					$data['sales_notes']=$sales_notes;
+					//$data['sales_notes']=$sales_notes;
 				}
 				
 				if ($product['image']) {
