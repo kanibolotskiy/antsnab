@@ -85,8 +85,10 @@ class ControllerExtensionFeedYandexTurbo extends Controller {
 			
 			foreach ($products as $product) {
 				$mincount=1;
+				$sales_notes="";
 				if($product["mincount"]){
 					$mincount=$product["mincount"];
+					$sales_notes="Минимальный заказ - ".$mincount;
 				}
 
 				$data = array();
@@ -114,7 +116,9 @@ class ControllerExtensionFeedYandexTurbo extends Controller {
 				$data['model'] = $product['name'];
 				$data['description'] = $product['description'];
 				$data['min-quantity'] = $mincount;
-
+				if($sales_notes){
+					$data['sales_notes']=$sales_notes;
+				}
 				
 				if ($product['image']) {
 					//$data['picture'][] = HTTP_SERVER.'image/'.$product['image'];

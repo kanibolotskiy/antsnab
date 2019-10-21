@@ -53,7 +53,51 @@ class ControllerProductProduct extends Controller {
               exit;
             }
           }
-    
+		  
+		  /**Добавляем учут минимального количества*/
+		$produnitsGateway = new ProdUnits($this->registry);
+		$produnitsCalcGateway = new ProdUnitsCalc($this->registry);
+		$propGateway = new ProdProperties($this->registry);
+		$prodUnits = $produnitsGateway->getUnitsByProduct($pr_id);
+		$priceUnit = null;
+		$koef_d=1;
+
+		foreach ($prodUnits as $unit_id => $unit) {
+			if ($unit['isPriceBase'] == 1 && !$priceUnit) {
+				$priceUnit = $unit;
+				//print_r($unit);
+				//коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
+				$saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($pr_id, 'isSaleBase', $unit_id);
+
+				$array_koef = (array) $saleToPriceKoef;
+				$z=0;
+				$koef_numerator=1;
+				$koef_denomirator=1;
+				foreach($array_koef as $koef_item){
+					if($z){
+						$koef_denomirator=$koef_item;
+					}else{
+						$koef_numerator=$koef_item;
+					}
+					$z++;
+				}
+				
+
+				$koef_d=$koef_numerator/$koef_denomirator;
+				
+				
+			} elseif ($unit['isPriceBase'] == 1) {
+				throw new \Exception('Too many price bases for product ' . $pr_id);
+			}
+			
+			
+		}
+		
+		if(($product_info['mincount']*$koef_d)>$quantity){
+			$quantity=$product_info['mincount']*$koef_d;
+		}
+				
+
           $this->cart->add($product_id, $quantity, $option, $recurring_id);
     
           unset($this->session->data['shipping_method']);

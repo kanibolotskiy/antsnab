@@ -81,7 +81,6 @@
                                 <span></span>
                             </div>
                         </div> 
-
                         <div class="left">
                             <div class="tovar_main_image">
                                 <?php if($discount){?>

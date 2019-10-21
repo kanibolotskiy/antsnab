@@ -19429,7 +19429,7 @@ $(document).ready(function(){
     $(".fav_row .RightButton").click(function(){
         change_favorite_sum();
     });
-
+    
     
     $("#add_all_favorites").click(function(){
         $(".fav_row").each(function(){
