@@ -283,11 +283,11 @@
                                         class="buy add-to-card add-to-card-product">В корзину</a>
                                     </div>
                                     <div class="wrap_oneclick">
-                                        <form action="#" id="oneclickform" class="oneclickform">
+                                        <form action="#" class="oneclickform">
                                             <input type="hidden" name="product" value="<?=$heading_title?>"/>
                                             <input type="text" class="workemail" name="workemail"/>
                                             <input type="tel" class="onclickInput" placeholder="Введите телефон" name="phone"/>
-                                            <button type="submit" class="onclickButton" id="onclickButton">Купить в 1 клик</button>
+                                            <button type="submit" class="onclickButton">Купить в 1 клик</button>
                                         </form>
                                     </div>
                                     

@@ -71,11 +71,11 @@
                     </div>
                     
                     <div class="wrap_oneclick" title="Для быстрого заказа введите свой телефон">
-                        <form action="#" id="oneclickform" class="oneclickform">
+                        <form action="#" class="oneclickform">
                             <input type="hidden" name="product" value="<?= $p['name'] ?>"/>
                             <input type="text" class="workemail" name="workemail"/>
                             <input type="tel" class="onclickInput" placeholder="Ваш телефон" name="phone"/>
-                            <button title="Купить в 1 клик" type="submit" class="onclickButton" id="onclickButton">Купить<span> в 1 клик</span></button>
+                            <button title="Купить в 1 клик" type="submit" class="onclickButton">Купить<span> в 1 клик</span></button>
                         </form>
                     </div>
 

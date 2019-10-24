@@ -22921,15 +22921,19 @@ $( document ).ready(function() {
         $.cookie('favorite', favorite_str, { expires: 30, path: '/' });
     });
 
-    $("#onclickButton").click(function(e){
+    $(".onclickButton").click(function(e){
         e.preventDefault();
         //console.log("ok");
-        var itm_phone=$(".onclickInput");
+        var frm=$(this).closest(".oneclickform");
+
+        var itm_phone=frm.find(".onclickInput");
+        $(".onclickInput").removeClass("error");
+
         if(itm_phone.val()==""){
             itm_phone.addClass("error");
         }else{
             itm_phone.removeClass("error");
-            var data=$("#oneclickform").serialize();
+            var data=frm.serialize();
             $.ajax({
                 url: '/index.php?route=product/product/sendOneForm/',
                 data: data,
@@ -22942,7 +22946,7 @@ $( document ).ready(function() {
                     //$(".popup.thank-youone").addClass("visible");
                     $(".modal").hide();
                     $(".modal_one").fadeIn(200);
-                    $(".onclickInput").val("");
+                    frm.find(".onclickInput").val("");
                     if (typeof ym != 'undefined') {
                         ym(14496178, 'reachGoal', '1click');
                     }

@@ -3216,7 +3216,7 @@ body.freeze { overflow: auto !important; }
 
 .tab-block.tab-block3 { margin-left: 18px; }
 
-.tab-block.tab-block2 .catalog-block_caption { position: absolute; top: 10px; left: 20px; right: 35px; text-align: center; }
+.tab-block.tab-block2 .catalog-block_caption { position: absolute; top: 10px; left: 35px; right: 35px; text-align: center; }
 
 .full_item_link:hover div.more_product, .full_item_link:hover .catalog-block_caption { text-decoration: underline; }
 
@@ -3470,11 +3470,11 @@ footer .prehead_call { line-height: 22px; cursor: pointer; margin-top: 3px; }
 
 .tab-block.tab-block3 .wrap_oneclick { width: 100%; }
 
-.tab-block.tab-block3 #onclickButton span { display: inline; }
+.tab-block.tab-block3 .onclickButton span { display: inline; }
 
 .tab-block.tab-block2 .wrap_oneclick { width: auto; }
 
-.tab-block.tab-block2 #onclickButton span { display: none; }
+.tab-block.tab-block2 .onclickButton span { display: none; }
 
 .footer_catalog_caption a { color: #333; text-decoration: none; }
 
