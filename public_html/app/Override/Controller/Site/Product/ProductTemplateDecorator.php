@@ -43,9 +43,9 @@ class ProductTemplateDecorator implements IDecorator
         }
 
         $discount=0;
-        $dicsount_val1=0;
-        $dicsount_val2=0;
-        
+        $discount_val1=0;
+        $discount_val2=0;
+
         if ($registry->get('customer')->isLogged() || !$registry->get('config')->get('config_customer_price')) {
             $data['price_wholesale'] = $registry->get('tax')->calculate($product_info['price_wholesale'], $product_info['tax_class_id'], $registry->get('config')->get('config_tax'));
             $data['price_wholesale_val']=$registry->get('currency')->format((float)$data['price_wholesale'] ? $data['price_wholesale'] : $product_info['price_wholesale'], $registry->get('session')->data['currency']);
