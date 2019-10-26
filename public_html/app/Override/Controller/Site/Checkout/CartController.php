@@ -695,6 +695,7 @@ class CartController extends \ControllerCheckoutCart
         $this->load->language('checkout/cart');
 
         $this->document->setTitle($this->language->get('heading_title'));
+        $this->document->setNoindex(true);
 
         $data['breadcrumbs'] = array();
 

@@ -8,7 +8,7 @@ class ControllerAccountRegister extends Controller {
 		}
 
 		$this->load->language('account/register');
-
+		$this->document->setNoindex(true);
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.js');

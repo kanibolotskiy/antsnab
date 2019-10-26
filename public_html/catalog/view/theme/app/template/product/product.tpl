@@ -84,7 +84,7 @@
                         <div class="left">
                             <div class="tovar_main_image">
                                 <?php if($discount){?>
-                                    <div class="label_discount _label" title="Сегодня этот товар продается со скидкой"><?php echo $discount;?>%</div>
+                                    <div class="label_discount _label" title="Сегодня этот товар продается со скидкой" id="discount_val" discount_val1="<?php echo $discount_val1;?>" discount_val2="<?php echo $discount_val2;?>"><?php echo $discount;?>%</div>
                                 <?php }?>
                                 <?php if($rating){?>
                                     <div class="agg_rating"><?php echo $rating?></div>
@@ -224,7 +224,7 @@
                                                 <strong class="price_i" id="wholesale_price" data-value="<?=$price_wholesale?>"><?=$price_wholesale_val?>
                                                 </strong>
                                                 <?php if($price_wholesaleold){?>
-                                                    <div class="product_old_price">
+                                                    <div class="product_old_price product_old_price1">
                                                         <?=$price_wholesaleold?> <div class="rur">i</div>
                                                     </div>
                                                 <?php }?>
@@ -255,7 +255,7 @@
                                                 <strong class="price_i" id="price"  data-value="<?=$price?>"><?=$price_val?>
                                                 </strong>
                                                 <?php if($priceold){?>
-                                                    <div class="product_old_price ">
+                                                    <div class="product_old_price product_old_price2">
                                                         <?=$priceold?> <div class="rur">i</div>
                                                     </div>
                                                 <?php }?>

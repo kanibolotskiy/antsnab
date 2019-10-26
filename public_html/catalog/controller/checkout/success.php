@@ -3,7 +3,7 @@ class ControllerCheckoutSuccess extends Controller {
 	public function index() {
 		$this->load->language('checkout/success');
 		$order_id='';
-		
+		$this->document->setNoindex(true);
 		if (isset($this->session->data['order_id'])) {
 			
 			$this->cart->clear();

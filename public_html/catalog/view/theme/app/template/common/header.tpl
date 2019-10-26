@@ -15,7 +15,7 @@
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
-        <meta name="robots" content="noyaca" />
+        
 
 
         <link href="/catalog/view/theme/app/bundle/app2.css?v1.12" rel="stylesheet">
@@ -27,7 +27,9 @@
         <?php } ?>
 
         <?php if (isset($noindex)) { ?>
-            <?php echo $noindex;?>
+            <meta name="robots" content="noindex" />
+        <?php }else{ ?>
+            <meta name="robots" content="noyaca" />
         <?php } ?>
 
         <meta property="og:title" content="<?php echo $title; ?>" />

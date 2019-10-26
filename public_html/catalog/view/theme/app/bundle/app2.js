@@ -22440,6 +22440,35 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                 }
                 $wholeSalePrice.html(opt_price_str);
 
+                if($("#discount_val").length){
+                    var discount_val1=$("#discount_val").attr("discount_val1")*(-1);
+                    var discount_val2=$("#discount_val").attr("discount_val2")*(-1);
+
+                    var pr1=opt_price_val+opt_price_val*discount_val1/(100-discount_val1);
+                    var pr2=price_val+price_val*discount_val2/(100-discount_val2);
+                    var pr1_str="";
+                    var pr2_str="";
+
+                    if(pr1-parseInt(pr1)===0){
+                        pr1_str = number_format(pr1, 0, ",", " ") + " " + currency 
+                    }else{
+                        pr1_str = number_format(pr1, 2, ",", " ") + " " + currency
+                    }
+                    if(pr2-parseInt(pr2)===0){
+                        pr2_str = number_format(pr2, 0, ",", " ") + " " + currency 
+                    }else{
+                        pr2_str = number_format(pr2, 2, ",", " ") + " " + currency
+                    }
+                    $(".product_old_price1").html(pr1_str);
+                    $(".product_old_price2").html(pr2_str);
+
+                    //console.log(discount_val);
+                    //console.log(price_val*(1+discount_val/100))
+
+                    //console.log(price_val+"+"+opt_price_val);
+                }
+                
+
                 //$price.text(number_format(uiPrice.valueOf(), 2, ",", " ") + " " + currency);
           //  $price.text( format(formatStr + currency, uiPrice.valueOf() ) );
 /*

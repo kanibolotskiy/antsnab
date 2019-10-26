@@ -9,7 +9,7 @@ class ControllerAccountLogin extends Controller {
 		if (!empty($this->request->get['token'])) {
 			$this->customer->logout();
 			$this->cart->clear();
-
+			$this->document->setNoindex(true);
 			unset($this->session->data['order_id']);
 			unset($this->session->data['payment_address']);
 			unset($this->session->data['payment_method']);

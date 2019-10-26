@@ -7,7 +7,7 @@ use WS\Override\Gateway\ProdProperties;
 use WS\Patch\Helper\QueryHelper;
 class ControllerCommonFavorite extends Controller {
 	public function index() {
-        
+        $this->document->setNoindex(true);
         $ttl="Избранное";
         $data=[];
         
@@ -26,7 +26,7 @@ class ControllerCommonFavorite extends Controller {
 			'text' => $ttl
         );
         
-
+        $this->document->setNoindex(true);
         //$data['heading_title'] = $this->language->get('heading_title');
         
         $data['heading_title'] = $ttl;
