@@ -22449,6 +22449,9 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                     var pr1_str="";
                     var pr2_str="";
 
+                    pr1=pr1.toFixed(2);
+                    pr2=pr2.toFixed(2);
+
                     if(pr1-parseInt(pr1)===0){
                         pr1_str = number_format(pr1, 0, ",", " ") + " " + currency 
                     }else{
