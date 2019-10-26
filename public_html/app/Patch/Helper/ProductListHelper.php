@@ -27,7 +27,7 @@ class ProductListHelper extends \Model
         $products = [];
         
         $favorite_arr=json_decode($_COOKIE["favorite"]);
-
+        //print_r($results);
         foreach ($results as $result) {
             if(in_array($result['product_id'], $favorite_arr)){
                 $fav_active=' active';
@@ -47,8 +47,9 @@ class ProductListHelper extends \Model
                 //$rating = (int) $result['rating'];
                 $rating = round($result['rating'],2);
             } else {
-                $rating = false;
+                $rating = 0;
             }
+            
             
             $properties = $propGateway->getPropertiesWithProductValues($result['product_id'], 'order by sortOrder ASC');
             $previewProperties = array();
@@ -231,6 +232,7 @@ class ProductListHelper extends \Model
                 'tax' => $tax,
                 'minimum' => ($result['minimum'] > 0) ? $result['minimum'] : 1,
                 'rating' => $rating,
+                'reviews' => $result['reviews'],
                 'properties' => $previewProperties,
                 'href' => $this->url->link('product/product', 'path=' . $path . '&product_id=' . $result['product_id']),
                 'favorite'=>$fav_active,

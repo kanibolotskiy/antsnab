@@ -3,7 +3,8 @@
         <div class="label_discount _label" title="Сегодня этот товар продается со скидкой"><?php echo $p['discount_label'];?>%</div>
     <?php }?>
     <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>">
-    <div class="catalog-block" itemprop="item" itemscope itemtype="http://schema.org/Product">
+    <div class="catalog-block" itemprop="item" itemscope itemtype="http://schema.org/Offer">
+
         <?php if($p["rating"]){?>
             <div class="agg_rating"><?php echo $p["rating"];?></div>
         <?php }?>
