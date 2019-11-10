@@ -1,0 +1,683 @@
+<modification>
+	<name>Downloads for Product</name>
+	<code>downloads-product</code>
+	<version>2.2</version>
+	<author>opencart2x.ru</author>
+	<link>https://opencart2x.ru</link>
+	<file path="admin/model/catalog/product.php">
+        <operation error="skip">
+            <search><![CDATA[
+				$product_id = $this->db->getLastId();
+            ]]></search>
+            <add position="after"><![CDATA[
+				if (isset($data['product_file'])) {
+					$this->load->model('file/file');
+					$this->model_file_file->addProductFiles($product_id, $data['product_file']);
+				}			
+			]]></add>
+        </operation>
+	</file>
+	
+    <file path="admin/view/template/catalog/product_form.tpl">
+        <operation error="skip">
+            <search><![CDATA[
+				</form>
+            ]]></search>
+            <add position="before" offset="1"><![CDATA[
+				<?php echo $file_to_product; ?>
+			]]></add>
+        </operation>
+		
+        <operation error="skip">
+            <search><![CDATA[
+				<li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
+			]]></search>
+            <add position="after"><![CDATA[
+				<li><a href="#tab-file" data-toggle="tab"><?php echo $tab_file; ?></a></li>
+			]]></add>
+        </operation>		
+	</file>
+	
+	<file path="admin/controller/catalog/product.php">
+        <operation error="skip">
+            <search><![CDATA[
+				public function edit() {
+            ]]></search>
+            <add position="after"><![CDATA[
+				
+				$this->load->model('file/file');
+				if (isset($this->request->post['delete'])){	
+					$this->model_file_file->deleteProductFiles($this->request->post['delete']);
+				}	
+				if (isset($this->request->post['product_file'])){
+					$this->model_file_file->addProductFiles($this->request->get['product_id'], $this->request->post['product_file']);
+				}
+			]]></add>
+        </operation>
+		
+        <operation error="skip">
+            <search><![CDATA[
+				public function delete() {
+            ]]></search>
+            <add position="after"><![CDATA[
+				 
+				$this->load->model('file/file');	
+				if (isset($this->request->post['selected'])) {
+					foreach ($this->request->post['selected'] as $product_id) {
+						$this->model_file_file->deleteProductFilesForProduct_id($product_id);
+					}
+				}
+			]]></add>
+        </operation>	
+	
+        <operation error="skip">
+            <search><![CDATA[
+				if (isset($this->request->post['product_description'])) {
+            ]]></search>
+            <add position="before"><![CDATA[
+				
+				$this->language->load('catalog/file');
+				$data['tab_file'] = $this->language->get('tab_file');
+			]]></add>
+        </operation>
+		
+        <operation error="skip">
+            <search><![CDATA[ 
+				$this->response->setOutput($this->load->view('catalog/product_form', $data));
+            ]]></search>
+            <add position="before"><![CDATA[
+				$data['file_to_product'] = $this->load->controller('file/file');
+			]]></add>
+        </operation>		
+	</file>
+	
+	<file path="catalog/view/theme/*/template/product/product.tpl">
+        <operation error="skip">
+            <search><![CDATA[
+				<?php echo $content_top; ?>
+            ]]></search>
+            <add position="after"><![CDATA[
+				<?php if(!$config_file_block_positions or ($config_file_block_positions == 'file_block_position_top' and $file_to_product and !$config_file_block_custom_positions_block)) echo $file_to_product;  ?>
+			]]></add>
+        </operation>
+
+        <operation error="skip">
+            <search><![CDATA[
+				<li class="active"><a href="#tab-description" data-toggle="tab"><?php echo $tab_description; ?></a></li>
+            ]]></search>
+            <add position="before" offset="2"><![CDATA[
+				<?php if($config_file_block_positions == 'file_block_position_after_images' and $file_to_product and !$config_file_block_custom_positions_block) echo $file_to_product;  ?>
+			]]></add>
+        </operation>		
+		
+        <operation error="skip">
+            <search><![CDATA[
+				<?php if ($options) { ?>
+            ]]></search>
+            <add position="before" index="1"><![CDATA[
+				<?php if($config_file_block_positions == 'file_block_position_before_options' and $file_to_product and !$config_file_block_custom_positions_block) echo $file_to_product; ?>
+			]]></add>
+        </operation>		
+	
+        <operation error="skip">
+            <search><![CDATA[
+				<ul class="nav nav-tabs">
+            ]]></search>
+            <add position="before"><![CDATA[
+				<?php if($config_file_block_positions == 'file_block_position_before_tabs' and $file_to_product and !$config_file_block_custom_positions_block) echo $file_to_product;  ?>
+			]]></add>
+        </operation>		
+	
+        <operation error="skip">
+            <search><![CDATA[
+				<li><a href="#tab-review" data-toggle="tab"><?php echo $tab_review; ?></a></li>
+            ]]></search>
+            <add position="after" offset="1"><![CDATA[
+				<?php if($config_file_block_positions == 'file_block_position_in_tabs' and $file_to_product and !$config_file_block_custom_positions_block){ ?>
+				  <li><a href="#tab-file" data-toggle="tab"><?php echo $tab_file; ?></a></li>
+				<?php } ?>
+			]]></add>
+        </operation>
+
+        <operation error="skip"> 
+            <search><![CDATA[
+				<?php echo $text_login; ?>
+            ]]></search>
+            <add position="after" offset="4"><![CDATA[
+			  <?php if($config_file_block_positions == 'file_block_position_in_tabs' and $file_to_product and !$config_file_block_custom_positions_block){ ?>
+			  <div class="tab-pane" id="tab-file">
+				<?php echo $file_to_product; ?>
+			  </div>
+			  <?php } ?> 
+			]]></add>
+        </operation>		
+
+        <operation error="skip">
+            <search><![CDATA[
+				<?php if ($products) { ?>
+            ]]></search>
+            <add position="before"><![CDATA[
+				<?php if($config_file_block_positions == 'file_block_position_after_tabs' and $file_to_product and !$config_file_block_custom_positions_block){ ?>
+				  <?php echo $file_to_product; ?>
+				<?php } ?>
+			]]></add>
+        </operation>		
+		
+        <operation error="skip">
+            <search><![CDATA[
+				<?php echo $footer; ?>
+            ]]></search>
+            <add position="before"><![CDATA[
+				<?php if($file and $config_file_block_custom_positions_block){ ?>
+				  <script>
+					$(document).ready(function(){
+						$('<?php echo $config_file_block_custom_positions_block; ?>').<?php echo $config_file_block_custom_positions; ?>($('#files_block').html());
+					});
+				  </script>
+				  <div id="files_block" style="display:none;"><?php echo $file_to_product; ?></div>
+				<?php } ?>
+			]]></add>
+        </operation>
+		
+	</file>	
+	
+	<file path="catalog/controller/common/header.php">
+        <operation error="skip">
+            <search><![CDATA[
+				public function index() {
+            ]]></search>
+            <add position="after"><![CDATA[
+				
+				$this->load->model('file/file');
+				$this->model_file_file->checkDBTables();
+			]]></add>
+        </operation>	
+	</file>
+	
+	<file path="catalog/controller/product/product.php">
+        <operation error="skip">
+            <search><![CDATA[
+				$this->response->setOutput($this->load->view('product/product', $data));
+            ]]></search>
+            <add position="before"><![CDATA[
+				
+				$this->language->load('file/file'); 
+				$data['tab_file'] = $this->language->get('tab_file');
+				$data['config_file_block_positions'] = $this->config->get('config_file_block_positions');
+				$data['config_file_block_custom_positions'] = $this->config->get('config_file_block_custom_positions');
+				$data['config_file_block_custom_positions_block'] = $this->config->get('config_file_block_custom_positions_block');
+			]]></add>
+        </operation>
+		 
+        <operation error="skip">
+            <search><![CDATA[
+				$data['content_bottom'] = $this->load->controller('common/content_bottom');
+            ]]></search>
+            <add position="after"><![CDATA[
+				$data['file_to_product'] = $this->load->controller('file/file'); 
+			]]></add>
+        </operation>
+	</file>   
+	
+	<file path="admin/view/template/setting/setting.tpl">
+        <operation error="skip">
+            <search><![CDATA[
+			  <li><a href="#tab-server" data-toggle="tab"><?php echo $tab_server; ?></a></li>
+           ]]></search>
+            <add position="after"><![CDATA[ 
+			 
+				<li><a href="#tab-files" data-toggle="tab"><?php echo $tab_files; ?></a></li>	
+			]]></add>
+        </operation>
+		
+        <operation error="skip">
+            <search><![CDATA[
+				<div class="tab-pane" id="tab-server">
+            ]]></search>
+            <add position="before"><![CDATA[
+				
+				<div class="tab-pane" id="tab-files">
+				  <table class="form"> 
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="entry_file_block_position"><?php echo $entry_file_block_position; //размещение в карточке товара ?></label>
+					  <div class="col-sm-9">
+						<select name="config_file_block_positions" id="entry_file_block_position" class="form-control"> <?php //список позиций ?>
+						  <?php foreach($config_file_block_positions as $position){ ?>
+							<option value="<?php echo $position['position']; ?>" <?php if($position['position'] == $config_file_block_position){ ?>selected="selected"<?php } ?>><?php echo $position['name']; ?></option>
+						  <?php } ?>
+						</select>
+					  </div>
+					</div>
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_file_block_custom_positions"><?php echo $entry_file_block_custom_position; //размещение после отпределенного блока ?></label>
+					  <div class="col-sm-4">
+						<select name="config_file_block_custom_positions" id="config_file_block_custom_positions" class="form-control">
+							<option value="before" <?php if($config_file_block_custom_positions == 'before'){ ?>selected="selected"<?php } ?>><?php echo $file_block_custom_position_before; ?></option>
+							<option value="prepend" <?php if($config_file_block_custom_positions == 'prepend'){ ?>selected="selected"<?php } ?>><?php echo $file_block_custom_position_top; ?></option>
+							<option value="append" <?php if($config_file_block_custom_positions == 'append'){ ?>selected="selected"<?php } ?>><?php echo $file_block_custom_position_bottom; ?></option>						
+							<option value="after" <?php if($config_file_block_custom_positions == 'after'){ ?>selected="selected"<?php } ?>><?php echo $file_block_custom_position_after; ?></option>
+						</select>	
+					  </div>	
+					  <div class="col-sm-5">
+						<input type="text" class="form-control" name="config_file_block_custom_positions_block" placeholder="<?php echo $entry_file_block_custom_positions_block_placeholder; ?>" value="<?php echo $config_file_block_custom_positions_block; ?>" size="52" />
+					  </div>
+					</div>					
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_file_block_title"><span data-toggle="tooltip" title="" data-original-title="<?php echo $entry_file_block_title_t; ?>"><?php echo $entry_file_block_title; //заголовок блока файлов ?></span></label>
+					  <div class="col-sm-9"><input type="text" class="form-control" name="config_file_block_title" id="config_file_block_title" placeholder="<?php echo $entry_file_block_title_placeholder; ?>" value="<?php echo $config_file_block_title; ?>" size="75" /></div>
+					</div>
+					<div class="form-group">  
+					  <label class="col-sm-3 control-label" for="config_file_block_title_tag"><span data-toggle="tooltip" title="" data-original-title="<?php echo $entry_file_block_title_tag_t; ?>"><?php echo $entry_file_block_title_tag; //обворачиваем заголовок в тег ?></span></label>
+					  <div class="col-sm-9"><input type="text" class="form-control" name="config_file_block_title_tag" id="config_file_block_title_tag" placeholder="<?php echo $entry_file_block_title_tag_placeholder; ?>" value="<?php echo $config_file_block_title_tag; ?>" size="25" /></div>
+					</div>
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_file_block_title_style"><span data-toggle="tooltip" title="" data-original-title="<?php echo $entry_file_block_title_font_t; ?>"><?php echo $entry_file_block_title_font; //шрифт ?></span></label>
+					  <div class="col-sm-9">
+						<input type="text" class="form-control" id="config_file_block_title_style" name="config_file_block_title_style" placeholder="<?php echo $entry_file_block_title_font_placeholder; ?>" value="<?php echo $config_file_block_title_style; ?>"  size="25" />
+					  </div>
+					</div>
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_file_block_title_color"><span data-toggle="tooltip" title="" data-original-title="<?php echo $entry_file_block_title_color_t; ?>"><?php echo $entry_file_block_title_color; //цвет заголовка ?></span></label>					
+					  <div class="col-sm-9">
+						<input type="text" class="form-control" id="config_file_block_title_color" name="config_file_block_title_color" placeholder="<?php echo $entry_file_block_title_color_placeholder; ?>" value="<?php echo $config_file_block_title_color; ?>"  size="25" />
+					  </div>
+					</div>
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_file_block_title_margin"><span data-toggle="tooltip" title="" data-original-title="<?php echo $entry_file_block_title_margin_t; ?>"><?php echo $entry_file_block_title_margin; //margin заголовка ?></span></label>					
+					  <div class="col-sm-9">
+						<input type="text" class="form-control" id="config_file_block_title_margin" name="config_file_block_title_margin" placeholder="<?php echo $entry_file_block_title_margin_placeholder; ?>" value="<?php echo $config_file_block_title_margin; ?>"  size="25" />
+					  </div>
+					</div>			
+					<div class="form-group"> 
+					  <label class="col-sm-3 control-label" for="config_file_block_width"><span data-toggle="tooltip" title="" data-original-title="<?php echo $entry_file_block_width_t; ?>"><?php echo $entry_file_block_width; //ширина блока ?></span></label>
+					  <div class="col-sm-9">
+						<input type="text" class="form-control" id="config_file_block_width" name="config_file_block_width" placeholder="<?php echo $entry_file_block_width_placeholder; ?>" value="<?php echo $config_file_block_width; ?>"  size="25" />
+					  </div>
+					</div>			
+					<div class="form-group">   
+					  <label class="col-sm-3 control-label" for="config_file_block_margin"><span data-toggle="tooltip" title="" data-original-title="<?php echo $entry_file_block_margin_t; ?>"><?php echo $entry_file_block_margin; //отступы блока ?></span></label>
+					  <div class="col-sm-9">
+						<input type="text" class="form-control" id="config_file_block_margin" name="config_file_block_margin" placeholder="<?php echo $entry_file_block_margin_placeholder; ?>" value="<?php echo $config_file_block_margin; ?>" size="25" />
+					  </div>
+					</div>
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_file_block_padding"><span data-toggle="tooltip" title="" data-original-title="<?php echo $entry_file_block_padding_t; ?>"><?php echo $entry_file_block_padding; //внутренние отступы блока ?></span></label>
+					  <div class="col-sm-9">
+						<input type="text" class="form-control" id="config_file_block_padding" name="config_file_block_padding" placeholder="<?php echo $entry_file_block_padding_placeholder; ?>" value="<?php echo $config_file_block_padding; ?>" size="25" />
+					  </div>
+					</div>	
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_file_block_border"><span data-toggle="tooltip" title="" data-original-title="<?php echo $entry_file_block_border_t; ?>"><?php echo $entry_file_block_border; //рамка ?></span></label>					
+					  <div class="col-sm-9">
+						<input type="text" class="form-control" id="config_file_block_border" name="config_file_block_border" placeholder="<?php echo $entry_file_block_border_placeholder; ?>" value="<?php echo $config_file_block_border; ?>" size="25" />
+					  </div>
+					</div>
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_file_block_radius"><span data-toggle="tooltip" title="" data-original-title="<?php echo $entry_file_block_radius_t; ?>"><?php echo $entry_file_block_radius; //скругление блока ?></span></label>					
+					  <div class="col-sm-9">
+						<input type="text" class="form-control" id="config_file_block_radius" name="config_file_block_radius" placeholder="<?php echo $entry_file_block_radius_placeholder; ?>" value="<?php echo $config_file_block_radius; ?>" size="25" />
+					  </div>
+					</div>			
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_file_block_a_style"><span data-toggle="tooltip" title="" data-original-title="<?php echo $entry_file_block_a_style_t; ?>"><?php echo $entry_file_block_a_style; //стиль ссылки ?></span></label>
+					  <div class="col-sm-9">
+						<input type="text" class="form-control" id="config_file_block_a_style" name="config_file_block_a_style" placeholder="<?php echo $entry_file_block_a_style_placeholder; ?>" value="<?php echo $config_file_block_a_style; ?>" size="25" />
+					  </div>
+					</div>
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_file_block_a_color"><span data-toggle="tooltip" title="" data-original-title="<?php echo $entry_file_block_a_color_t; ?>"><?php echo $entry_file_block_a_color; //цвет ссылки ?></span></label>
+					  <div class="col-sm-9">
+						<input type="text" class="form-control" id="config_file_block_a_color" name="config_file_block_a_color" placeholder="<?php echo $entry_file_block_a_color_placeholder; ?>" value="<?php echo $config_file_block_a_color; ?>" size="25" />
+					  </div>
+					</div>			
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_file_block_a_margin"><span data-toggle="tooltip" title="" data-original-title="<?php echo $entry_file_block_a_margin_t; ?>"><?php echo $entry_file_block_a_margin; //Отступы ссылки ?></span></label>					
+					  <div class="col-sm-9">
+						<input type="text" class="form-control" id="config_file_block_a_margin" name="config_file_block_a_margin" placeholder="<?php echo $entry_file_block_a_margin_placeholder; ?>" value="<?php echo $config_file_block_a_margin; ?>" size="25" />
+					  </div>
+					</div>			
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_file_default_image_size_width"><span data-toggle="tooltip" title="" data-original-title="<?php echo $entry_file_default_image_size_t; ?>"><?php echo $entry_file_default_image_size; //размер изображений по умолчанию ?></span></label>						
+					  <div class="col-sm-4">
+						<input type="text" class="form-control" class="form-control" name="config_file_default_image_size_width" placeholder="50" size="3" value="<?php echo $config_file_default_image_size_width; ?>" />
+					  </div>
+					  <div class="col-sm-1" style="text-align:center;font-size:22px;">
+						x
+					  </div>
+					  <div class="col-sm-4">
+						<input type="text" class="form-control" name="config_file_default_image_size_height" placeholder="50" size="3" value="<?php echo $config_file_default_image_size_height; ?>" />
+					  </div>
+					</div>
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_file_block_a_decoration"><?php echo $entry_file_block_a_decoration; ?></label>
+					  <div class="col-sm-9">
+						<select name="config_file_block_a_decoration" id="config_file_block_a_decoration" class="form-control"> <?php //да или нет ?> 
+						  <?php if($config_file_block_a_decoration){ ?>
+							<option value="1" selected="selected"><?php echo $config_file_yes; ?></option>
+							<option value="0"><?php echo $config_file_no; ?></option>
+						  <?php }else{ ?>
+							<option value="1"><?php echo $config_file_yes; ?></option>
+							<option value="0" selected="selected"><?php echo $config_file_no; ?></option>				  
+						  <?php } ?>
+						</select>
+					  </div>
+					</div>				
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_file_block_a_title"><?php echo $entry_file_block_a_title; //отображать title у ссылок? ?></label>
+					  <div class="col-sm-9">
+						<select name="config_file_block_a_title" id="config_file_block_a_title" class="form-control"> <?php //да или нет ?> 
+						  <?php if($config_file_block_a_title){ ?>
+							<option value="1" selected="selected"><?php echo $config_file_yes; ?></option>
+							<option value="0"><?php echo $config_file_no; ?></option>
+						  <?php }else{ ?>
+							<option value="1"><?php echo $config_file_yes; ?></option>
+							<option value="0" selected="selected"><?php echo $config_file_no; ?></option>				  
+						  <?php } ?>
+						</select>
+					  </div>
+					</div>		
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_file_block_index"><span data-toggle="tooltip" data-original-title="<?php echo $entry_file_block_index_t; ?>"><?php echo $entry_file_block_index; //Индексировать блок? ?></span></label>
+					  <div class="col-sm-9">
+						<select name="config_file_block_index" id="config_file_block_index" class="form-control"> <?php //да или нет ?> 
+						  <?php if($config_file_block_index){ ?>
+							<option value="1" selected="selected"><?php echo $config_file_yes; ?></option>
+							<option value="0"><?php echo $config_file_no; ?></option>
+						  <?php }else{ ?>
+							<option value="1"><?php echo $config_file_yes; ?></option>
+							<option value="0" selected="selected"><?php echo $config_file_no; ?></option>				  
+						  <?php } ?>
+						</select>
+					  </div>
+					</div>
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_customer_group_file"><span data-toggle="tooltip" data-original-title="<?php echo $entry_customer_group_t; ?>"><?php echo $entry_customer_group; ?></span></label>
+					  <div class="col-sm-9">
+						<div class="well well-sm" style="height: 150px; overflow: auto;">
+						  <?php $class = 'odd'; ?>
+						  <?php foreach ($customer_groups as $customer_group) { ?>
+						  <div class="checkbox" id="config_customer_group_file">
+							<label>
+								<?php if (in_array($customer_group['customer_group_id'], $config_customer_group_file)) { ?>
+								<input type="checkbox" name="config_customer_group_file[]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
+								<?php echo $customer_group['name']; ?>
+								<?php } else { ?>
+								<input type="checkbox" name="config_customer_group_file[]" value="<?php echo $customer_group['customer_group_id']; ?>" />
+								<?php echo $customer_group['name']; ?>
+								<?php } ?>
+							</label>
+						  </div>
+						  <?php } ?>
+						</div>
+						<?php if ($error_customer_group_display) { ?>
+						<div class="text-danger"><?php echo $error_customer_group_display; ?></div>
+						<?php } ?>
+					  </div>
+					</div>					
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_file_block_class"><span data-toggle="tooltip" data-original-title="<?php echo $entry_file_block_class_t; ?>"><?php echo $entry_file_block_class; //класс блока с файлами ?></span></label>					
+					  <div class="col-sm-9"><input id="config_file_block_class" class="form-control" type="text" name="config_file_block_class" placeholder="<?php echo $entry_file_block_class_placeholder; ?>" value="<?php echo $config_file_block_class; ?>" size="25" /></div>
+					</div>				
+					<div class="form-group">
+					  <label class="col-sm-3 control-label" for="config_file_block_styles"><span data-toggle="tooltip" data-original-title="<?php echo $entry_file_block_styles_t; ?>"><?php echo $entry_file_block_styles; //Стили блока ?></span></label>					
+					  <div class="col-sm-9">
+						<textarea id="config_file_block_styles" class="form-control" rows="5" name="config_file_block_styles"><?php echo $config_file_block_styles; ?></textarea>
+					  </div>
+					</div>			
+				  </table>		  
+				</div>	
+			]]></add>
+        </operation>		
+	</file> 			
+			
+	<file path="admin/controller/setting/setting.php">
+        <operation error="skip">
+            <search><![CDATA[
+				$this->document->setTitle($this->language->get('heading_title'));
+            ]]></search>
+            <add position="after"><![CDATA[
+				
+				$this->language->load('catalog/file'); 
+				$data['tab_files'] 						= $this->language->get('tab_files');
+				$data['entry_file_block_position'] 		= $this->language->get('entry_file_block_position');
+				$data['entry_file_block_title'] 			= $this->language->get('entry_file_block_title');
+				$data['entry_file_block_title_t'] 			= $this->language->get('entry_file_block_title_t');
+				$data['entry_file_block_title_tag'] 		= $this->language->get('entry_file_block_title_tag');
+				$data['entry_file_block_title_tag_t'] 		= $this->language->get('entry_file_block_title_tag_t');
+				$data['entry_file_block_location'] 		= $this->language->get('entry_file_block_location');
+				$data['config_file_before'] 				= $this->language->get('config_file_before');
+				$data['config_file_after'] 				= $this->language->get('config_file_after');
+				$data['entry_file_default_image_size']	= $this->language->get('entry_file_default_image_size');
+				$data['entry_file_block_class'] 			= $this->language->get('entry_file_block_class');
+				$data['entry_file_block_a_title'] 		= $this->language->get('entry_file_block_a_title');
+				$data['config_file_yes'] 					= $this->language->get('config_file_yes');
+				$data['config_file_no'] 					= $this->language->get('config_file_no');
+				$data['entry_file_block_index'] 			= $this->language->get('entry_file_block_index');
+				$data['entry_file_block_styles'] 			= $this->language->get('entry_file_block_styles');	
+				$data['entry_file_block_title_font'] 		= $this->language->get('entry_file_block_title_font');
+				$data['entry_file_block_title_font_t'] 		= $this->language->get('entry_file_block_title_font_t');
+				$data['entry_file_block_margin'] 			= $this->language->get('entry_file_block_margin');
+				$data['entry_file_block_padding']			= $this->language->get('entry_file_block_padding');
+				$data['entry_file_block_border']			= $this->language->get('entry_file_block_border');
+				$data['entry_file_block_a_style']			= $this->language->get('entry_file_block_a_style');
+				$data['entry_file_block_width']			= $this->language->get('entry_file_block_width');
+				$data['entry_file_block_title_color']		= $this->language->get('entry_file_block_title_color');
+				$data['entry_file_block_title_margin']	= $this->language->get('entry_file_block_title_margin');
+				$data['entry_file_block_radius']			= $this->language->get('entry_file_block_radius');
+				$data['entry_file_block_a_color']			= $this->language->get('entry_file_block_a_color');
+				$data['entry_file_block_a_margin']		= $this->language->get('entry_file_block_a_margin');
+				$data['entry_file_block_a_decoration']	= $this->language->get('entry_file_block_a_decoration');
+				$data['entry_file_block_title_placeholder']			= $this->language->get('entry_file_block_title_placeholder');
+				$data['entry_file_block_title_tag_placeholder']		= $this->language->get('entry_file_block_title_tag_placeholder');
+				$data['entry_file_block_title_font_placeholder']		= $this->language->get('entry_file_block_title_font_placeholder');
+				$data['entry_file_block_title_color_placeholder']		= $this->language->get('entry_file_block_title_color_placeholder');
+				$data['entry_file_block_title_margin_placeholder']	= $this->language->get('entry_file_block_title_margin_placeholder');
+				$data['entry_file_block_width_placeholder']			= $this->language->get('entry_file_block_width_placeholder');
+				$data['entry_file_block_margin_placeholder']			= $this->language->get('entry_file_block_margin_placeholder');
+				$data['entry_file_block_padding_placeholder']			= $this->language->get('entry_file_block_padding_placeholder');
+				$data['entry_file_block_border_placeholder']			= $this->language->get('entry_file_block_border_placeholder');
+				$data['entry_file_block_radius_placeholder']			= $this->language->get('entry_file_block_radius_placeholder');
+				$data['entry_file_block_a_style_placeholder']			= $this->language->get('entry_file_block_a_style_placeholder');
+				$data['entry_file_block_a_color_placeholder']			= $this->language->get('entry_file_block_a_color_placeholder');
+				$data['entry_file_block_a_margin_placeholder']		= $this->language->get('entry_file_block_a_margin_placeholder');
+				$data['entry_file_block_class_placeholder']			= $this->language->get('entry_file_block_class_placeholder');
+				$data['entry_customer_group']							= $this->language->get('entry_customer_group');
+				$data['support']										= $this->language->get('support');	
+				$data['entry_file_block_custom_position']				= $this->language->get('entry_file_block_custom_position');	
+				$data['file_block_custom_position_before']			= $this->language->get('file_block_custom_position_before');	
+				$data['file_block_custom_position_top']				= $this->language->get('file_block_custom_position_top');	
+				$data['file_block_custom_position_bottom']			= $this->language->get('file_block_custom_position_bottom');	
+				$data['file_block_custom_position_after']				= $this->language->get('file_block_custom_position_after');	
+				$data['entry_file_block_custom_positions_block_placeholder'] = $this->language->get('entry_file_block_custom_positions_block_placeholder');	
+				
+				$data['entry_file_block_title_color_t'] = $this->language->get('entry_file_block_title_color_t');	
+				$data['entry_file_block_title_margin_t'] = $this->language->get('entry_file_block_title_margin_t');	
+				$data['entry_file_block_width_t'] = $this->language->get('entry_file_block_width_t');	
+				$data['entry_file_block_margin_t'] = $this->language->get('entry_file_block_margin_t');	
+				$data['entry_file_block_border_t'] = $this->language->get('entry_file_block_border_t');	
+				$data['entry_file_block_radius_t'] = $this->language->get('entry_file_block_radius_t');	
+				$data['entry_file_block_a_style_t'] = $this->language->get('entry_file_block_a_style_t');	
+				$data['entry_file_block_a_color_t'] = $this->language->get('entry_file_block_a_color_t');	
+				$data['entry_file_block_a_margin_t'] = $this->language->get('entry_file_block_a_margin_t');	
+				$data['entry_file_default_image_size_t'] = $this->language->get('entry_file_default_image_size_t');	
+				$data['entry_file_block_index_t'] = $this->language->get('entry_file_block_index_t');	
+				$data['entry_customer_group_t'] = $this->language->get('entry_customer_group_t');	
+				$data['entry_file_block_class_t'] = $this->language->get('entry_file_block_class_t');	
+				$data['entry_file_block_padding_t'] = $this->language->get('entry_file_block_padding_t');	
+				$data['entry_file_block_styles_t'] = $this->language->get('entry_file_block_styles_t');	
+				
+				
+				$data['config_file_block_position'] = $this->config->get('config_file_block_positions');
+				$data['config_file_block_custom_positions'] = $this->config->get('config_file_block_custom_positions');
+				
+				//positions on product page
+				$config_file_block_positions_array = array(
+					"file_block_position_top",
+					"file_block_position_after_images",
+					"file_block_position_before_options",
+					"file_block_position_before_tabs",
+					"file_block_position_in_tabs",
+					"file_block_position_after_tabs"
+				);
+				
+				$data['config_file_block_positions'] = array();
+				
+				foreach($config_file_block_positions_array as $item){
+					$data['config_file_block_positions'][] = array(
+						'position' => $item,
+						'name' => $this->language->get($item)
+					);
+				}
+
+				$version = explode(".",VERSION);
+				if($version[1] > 0){
+					$this->load->model('customer/customer_group');
+					$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
+				}else{
+					$this->load->model('sale/customer_group');
+					$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
+				}
+				
+				if (isset($this->request->post['config_customer_group_file'])) {
+					$data['config_customer_group_file'] = $this->request->post['config_customer_group_file'];
+				} elseif ($this->config->get('config_customer_group_file')) {
+					$data['config_customer_group_file'] = $this->config->get('config_customer_group_file');	
+				} else {
+					$data['config_customer_group_file'] = array();			
+				}
+
+				if (isset($this->request->post['config_file_block_custom_positions'])) {
+					$data['config_file_block_custom_positions'] = $this->request->post['config_file_block_custom_positions'];
+				} else {
+					$data['config_file_block_custom_positions'] = $this->config->get('config_file_block_custom_positions');
+				}
+
+				if (isset($this->request->post['config_file_block_custom_positions_block'])) {
+					$data['config_file_block_custom_positions_block'] = $this->request->post['config_file_block_custom_positions_block'];
+				} else {
+					$data['config_file_block_custom_positions_block'] = $this->config->get('config_file_block_custom_positions_block');
+				}
+				
+				if (isset($this->request->post['config_file_block_title'])) {
+					$data['config_file_block_title'] = $this->request->post['config_file_block_title'];
+				} else {
+					$data['config_file_block_title'] = $this->config->get('config_file_block_title');
+				}
+			
+				if (isset($this->request->post['config_file_block_title_color'])) {
+					$data['config_file_block_title_color'] = $this->request->post['config_file_block_title_color'];
+				} else {
+					$data['config_file_block_title_color'] = $this->config->get('config_file_block_title_color');
+				}
+				
+				if (isset($this->request->post['config_file_block_title_margin'])) {
+					$data['config_file_block_title_margin'] = $this->request->post['config_file_block_title_margin'];
+				} else {
+					$data['config_file_block_title_margin'] = $this->config->get('config_file_block_title_margin');
+				}
+
+				if (isset($this->request->post['config_file_block_radius'])) {
+					$data['config_file_block_radius'] = $this->request->post['config_file_block_radius'];
+				} else {
+					$data['config_file_block_radius'] = $this->config->get('config_file_block_radius');
+				}
+
+				if (isset($this->request->post['config_file_block_a_color'])) {
+					$data['config_file_block_a_color'] = $this->request->post['config_file_block_a_color'];
+				} else {
+					$data['config_file_block_a_color'] = $this->config->get('config_file_block_a_color');
+				}
+
+				if (isset($this->request->post['config_file_block_a_margin'])) {
+					$data['config_file_block_a_margin'] = $this->request->post['config_file_block_a_margin'];
+				} else {
+					$data['config_file_block_a_margin'] = $this->config->get('config_file_block_a_margin');
+				}
+
+				if (isset($this->request->post['config_file_block_a_decoration'])) {
+					$data['config_file_block_a_decoration'] = $this->request->post['config_file_block_a_decoration'];
+				} else {
+					$data['config_file_block_a_decoration'] = $this->config->get('config_file_block_a_decoration');
+				}		
+			
+				if (isset($this->request->post['config_file_block_title_tag'])) {
+					$data['config_file_block_title_tag'] = $this->request->post['config_file_block_title_tag'];
+				} else {
+					$data['config_file_block_title_tag'] = $this->config->get('config_file_block_title_tag');
+				}	
+
+				if (isset($this->request->post['config_file_block_title_style'])) {
+					$data['config_file_block_title_style'] = $this->request->post['config_file_block_title_style'];
+				} else {
+					$data['config_file_block_title_style'] = $this->config->get('config_file_block_title_style');
+				}	
+
+				if (isset($this->request->post['config_file_block_width'])) {
+					$data['config_file_block_width'] = $this->request->post['config_file_block_width'];
+				} else {
+					$data['config_file_block_width'] = $this->config->get('config_file_block_width');
+				}	
+		 
+				if (isset($this->request->post['config_file_block_margin'])) {
+					$data['config_file_block_margin'] = $this->request->post['config_file_block_margin'];
+				} else {
+					$data['config_file_block_margin'] = $this->config->get('config_file_block_margin'); 
+				}			
+		 
+				if (isset($this->request->post['config_file_block_padding'])) {
+					$data['config_file_block_padding'] = $this->request->post['config_file_block_padding'];
+				} else {
+					$data['config_file_block_padding'] = $this->config->get('config_file_block_padding');
+				}			
+				
+				if (isset($this->request->post['config_file_block_border'])) {
+					$data['config_file_block_border'] = $this->request->post['config_file_block_border'];
+				} else {
+					$data['config_file_block_border'] = $this->config->get('config_file_block_border');
+				}		
+				
+				if (isset($this->request->post['config_file_block_a_style'])) {
+					$data['config_file_block_a_style'] = $this->request->post['config_file_block_a_style'];
+				} else {
+					$data['config_file_block_a_style'] = $this->config->get('config_file_block_a_style');
+				}			
+
+				if (isset($this->request->post['config_file_default_image_size_width'])) {
+					$data['config_file_default_image_size_width'] = $this->request->post['config_file_default_image_size_width'];
+				} else {
+					$data['config_file_default_image_size_width'] = $this->config->get('config_file_default_image_size_width');
+				}
+
+				if (isset($this->request->post['config_file_default_image_size_height'])) {
+					$data['config_file_default_image_size_height'] = $this->request->post['config_file_default_image_size_height'];
+				} else {
+					$data['config_file_default_image_size_height'] = $this->config->get('config_file_default_image_size_height');
+				}
+				
+				if (isset($this->request->post['config_file_block_class'])) {
+					$data['config_file_block_class'] = $this->request->post['config_file_block_class'];
+				} else {
+					$data['config_file_block_class'] = $this->config->get('config_file_block_class');
+				}
+				
+				if (isset($this->request->post['config_file_block_a_title'])) {
+					$data['config_file_block_a_title'] = $this->request->post['config_file_block_a_title'];
+				} else {
+					$data['config_file_block_a_title'] = $this->config->get('config_file_block_a_title');
+				}
+
+				if (isset($this->request->post['config_file_block_index'])) {
+					$data['config_file_block_index'] = $this->request->post['config_file_block_index'];
+				} else {
+					$data['config_file_block_index'] = $this->config->get('config_file_block_index');
+				}		
+
+				if (isset($this->request->post['config_file_block_styles'])) {
+					$data['config_file_block_styles'] = $this->request->post['config_file_block_styles'];
+				} else {
+					$data['config_file_block_styles'] = $this->config->get('config_file_block_styles');
+				}			
+			]]></add>
+        </operation>
+	</file> 	
+</modification>
