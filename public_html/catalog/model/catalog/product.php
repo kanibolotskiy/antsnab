@@ -846,12 +846,12 @@ class ModelCatalogProduct extends Model {
 		$contact_data_referrer=$this->model_module_referrer->getContactsReferrer();
 
 		
-		$data["data_utm"][]=Array('utm_source',isset($contact_data_referrer['utm_source'])?isset($contact_data_referrer['utm_source']):"");
+		$data["data_utm"][]=Array('utm_source',isset($contact_data_referrer['utm_source'])?$contact_data_referrer['utm_source']:"");
 
-		$data["data_utm"][]=Array('utm_medium',isset($contact_data_referrer['utm_medium'])?isset($contact_data_referrer['utm_medium']):"");
-		$data["data_utm"][]=Array('utm_campaign',isset($contact_data_referrer['utm_campaign'])?isset($contact_data_referrer['utm_campaign']):"");
-		$data["data_utm"][]=Array('utm_content',isset($contact_data_referrer['utm_content'])?isset($contact_data_referrer['utm_content']):"");
-		$data["data_utm"][]=Array('utm_term',isset($contact_data_referrer['utm_term'])?isset($contact_data_referrer['utm_term']):"");
+		$data["data_utm"][]=Array('utm_medium',isset($contact_data_referrer['utm_medium'])?$contact_data_referrer['utm_medium']:"");
+		$data["data_utm"][]=Array('utm_campaign',isset($contact_data_referrer['utm_campaign'])?$contact_data_referrer['utm_campaign']:"");
+		$data["data_utm"][]=Array('utm_content',isset($contact_data_referrer['utm_content'])?$contact_data_referrer['utm_content']:"");
+		$data["data_utm"][]=Array('utm_term',isset($contact_data_referrer['utm_term'])?$contact_data_referrer['utm_term']:"");
 		
 		$subject=$this->language->get('text_subject_one');
 		
