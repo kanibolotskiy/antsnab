@@ -215,16 +215,44 @@ class SearchController extends \Controller
 			);
 		}
 
+		
+
+		/*
+		echo "!".$url_search."!";
+		*/
+		
+		//print_r($products_search);
+		
+
 		$data['products'] = array();
 
-		if (isset($this->request->get['search']) || isset($this->request->get['tag'])) {
+		if (isset($this->request->get['text'])) {
+			$url_search="https://catalogapi.site.yandex.net/v1.0?apikey=4a4f0a45-0b05-437e-b0dc-5edca1573563&text=".$this->request->get['text']."&searchid=2365979";
+			//echo $url_search;
+			$products_search=file_get_contents($url_search);
+			$products_search_arr=json_decode($products_search,TRUE);
+//print_r($products_search_arr["documents"]);
+			$product_ids=[];
+			foreach($products_search_arr["documents"] as $itm){
+				$product_ids[]=$itm['id'];
+			}
+
+			//$filter_data = $this->getFilter($category_id, $limit, $page);
+			$filter_data['product_ids']=implode(",",$product_ids);
+			$filter_data['sort']="ids";
+			$filter_data['order']="ids";
+
 			
-			$filter_data = $this->getFilter($category_id, $limit, $page);
-			
+
             $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
             $productsHelper = new ProductListHelper($this->registry);
-			$results = $productsHelper->getProducts($filter_data);
+			//$results = $productsHelper->getProducts($filter_data);
 			
+			
+			
+			//$filter_data['sort']="ids";
+			$results = $productsHelper->getProducts($filter_data);
+
             $data['products'] = $results;
 			
 			$url = '';

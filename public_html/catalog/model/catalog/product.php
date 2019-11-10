@@ -186,6 +186,10 @@ class ModelCatalogProduct extends Model {
 		if (!empty($data['filter_manufacturer_id'])) {
 			$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer_id'] . "'";
 		}
+		
+		if (!empty($data['product_ids'])) {
+			$sql .= " AND p.product_id in (" . $data['product_ids'] . ")";
+		}
 
 		$sql .= " GROUP BY p.product_id";
 
@@ -212,9 +216,15 @@ class ModelCatalogProduct extends Model {
 			if($data['sort']=="price"){
 				$sort_by=" p.price";
 			}
+			if($data['sort']=="ids"){
+				$sort_by="FIELD(p.product_id, ".$data['product_ids'].")";
+			}
 			
 			if($data['order']=="DESC"){
 				$sort_dir = " DESC";
+			}
+			if($data['order']=="ids"){
+				$sort_dir = "";
 			}
 		}
 		$sql .= " ORDER BY ".$sort_by.$sort_dir;
