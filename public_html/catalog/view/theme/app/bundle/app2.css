@@ -3458,7 +3458,7 @@ footer .prehead_call { line-height: 22px; cursor: pointer; margin-top: 3px; }
 
 .wrp_main_articles a.more { display: block; text-decoration: none; color: #666666; font-size: 13px; float: left; background: url(../img/btn.png) no-repeat 100% 50%; min-height: 20px; line-height: 20px; padding-right: 30px; }
 
-.tab-block.tab-block3 .buy { /*width:170px;width:100%;*/ padding-right: 10px; width: 100%; padding-left: 10px; white-space: nowrap; }
+.tab-block.tab-block3 .buy { /*width:170px;width:100%;padding-right: 10px;*/ width: 100%; /*padding-left: 10px;*/ white-space: nowrap; }
 
 .tab-block.tab-block3 .wrp_qnt-container { display: flex; display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; /* max-width: 100%; */ justify-content: space-between; }
 

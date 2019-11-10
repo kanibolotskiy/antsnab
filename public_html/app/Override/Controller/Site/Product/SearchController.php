@@ -16,8 +16,8 @@ class SearchController extends \Controller
 
 		$this->load->model('tool/image');
 		
-		if (isset($this->request->get['search'])) {
-			$search = $this->request->get['search'];
+		if (isset($this->request->get['text'])) {
+			$search = $this->request->get['text'];
 		} else {
 			$search = '';
 		}
@@ -72,8 +72,8 @@ class SearchController extends \Controller
 			$limit = $this->config->get($this->config->get('config_theme') . '_product_limit');
 		}
 
-		if (isset($this->request->get['search'])) {
-			$this->document->setTitle($this->language->get('heading_title') .  ' - ' . $this->request->get['search']);
+		if (isset($this->request->get['text'])) {
+			$this->document->setTitle($this->language->get('heading_title') .  ' - ' . $this->request->get['text']);
 		} elseif (isset($this->request->get['tag'])) {
 			$this->document->setTitle($this->language->get('heading_title') .  ' - ' . $this->language->get('heading_tag') . $this->request->get['tag']);
 		} else {
@@ -89,8 +89,8 @@ class SearchController extends \Controller
         
 		$url = '';
 
-		if (isset($this->request->get['search'])) {
-			$url .= '&search=' . urlencode(html_entity_decode($this->request->get['search'], ENT_QUOTES, 'UTF-8'));
+		if (isset($this->request->get['text'])) {
+			$url .= '&text=' . urlencode(html_entity_decode($this->request->get['text'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['tag'])) {
@@ -130,8 +130,8 @@ class SearchController extends \Controller
 			'href' => $this->url->link('product/search', $url)
 		);
 
-		if (isset($this->request->get['search'])) {
-			$data['heading_title'] = $this->language->get('heading_title') .  ' - ' . $this->request->get['search'];
+		if (isset($this->request->get['text'])) {
+			$data['heading_title'] = $this->language->get('heading_title') .  ' - ' . $this->request->get['text'];
 		} else {
 			$data['heading_title'] = $this->language->get('heading_title');
 		}

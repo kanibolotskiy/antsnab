@@ -585,7 +585,9 @@ class ModelCatalogProduct extends Model {
 		if (!empty($data['filter_manufacturer_id'])) {
 			$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer_id'] . "'";
 		}
-
+		if (!empty($data['product_ids'])) {
+			$sql .= " AND p.product_id in (" . $data['product_ids'] . ")";
+		}
 		$query = $this->db->query($sql);
 
 		return $query->row['total'];
