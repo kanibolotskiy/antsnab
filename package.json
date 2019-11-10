@@ -44,7 +44,7 @@
     "fraction.js": "^4.0.10",
     "inputmask": "^4.0.0",
     "jcf": "^1.2.3",
-    "jquery": "^2.2.4",
+    "jquery": "^3.4.0",
     "jquery-nice-select": "file:src/repo/jquery-nice-select",
     "jquery-touchswipe": "^1.6.18",
     "magnific-popup": "^1.1.0",
