@@ -18,12 +18,7 @@
                             <li class="select_view select_view2 <?php echo $cat_view2;?>" rel="view2"></li>
                         </ul>
                     </div>
-                    <!--
-                    <ul class="tabset">
-                        <li><a id="prodgrid" href="#" class="active"></a></li>
-                        <li><a id="prodlist" href="#"></a></li>
-                    </ul>
-                    -->
+                    
                     <div class="tab-list">
                         <div class="tab-block tab-block3 <?php echo $cat_view_class;?>" >
                             <ul id="lazy-load_container">
@@ -34,8 +29,6 @@
                         </div>
                     </div>
                     
-                    <?php echo $paginationLazy ?>
-                    <?php echo $pagination; ?>
                 </div>
             <?php } else { ?>
                 <p><?php echo $text_empty; ?></p>

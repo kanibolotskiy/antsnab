@@ -228,34 +228,35 @@ class SearchController extends \Controller
 
 		if (isset($this->request->get['text'])) {
 			$url_search="https://catalogapi.site.yandex.net/v1.0?apikey=4a4f0a45-0b05-437e-b0dc-5edca1573563&text=".urlencode($this->request->get['text'])."&searchid=2365979";
-			//echo "!".$this->request->get['text']."!".urlencode($this->request->get['text'])."!";
-			//echo $url_search;
 			$products_search=file_get_contents($url_search);
 			$products_search_arr=json_decode($products_search,TRUE);
-//print_r($products_search_arr["documents"]);
 			$product_ids=[];
-			foreach($products_search_arr["documents"] as $itm){
-				$product_ids[]=$itm['id'];
+			$product_total=0;
+			if(isset($products_search_arr["documents"])){
+				foreach($products_search_arr["documents"] as $itm){
+					$product_ids[]=$itm['id'];
+				}
+				//echo "!".count($product_ids)."!";
+
+				//$filter_data = $this->getFilter($category_id, $limit, $page);
+				$filter_data['product_ids']=implode(",",$product_ids);
+				$filter_data['sort']="ids";
+				$filter_data['order']="ids";
+
+				$filter_data['limit']=99;
+				$filter_data['start']=0;
+
+				$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
+				$productsHelper = new ProductListHelper($this->registry);
+				//$results = $productsHelper->getProducts($filter_data);
+				
+				
+				
+				//$filter_data['sort']="ids";
+				$results = $productsHelper->getProducts($filter_data);
+
+				$data['products'] = $results;
 			}
-
-			//$filter_data = $this->getFilter($category_id, $limit, $page);
-			$filter_data['product_ids']=implode(",",$product_ids);
-			$filter_data['sort']="ids";
-			$filter_data['order']="ids";
-
-			
-
-            $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
-            $productsHelper = new ProductListHelper($this->registry);
-			//$results = $productsHelper->getProducts($filter_data);
-			
-			
-			
-			//$filter_data['sort']="ids";
-			$results = $productsHelper->getProducts($filter_data);
-
-            $data['products'] = $results;
-			
 			$url = '';
 
 			if (isset($this->request->get['search'])) {
