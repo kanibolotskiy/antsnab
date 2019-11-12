@@ -3609,6 +3609,10 @@ footer .prehead_call { line-height: 22px; cursor: pointer; margin-top: 3px; }
 
 #ya-site-form0 .ya-site-form__search-input { padding: 0 !important; }
 
+.img-article time { display: block; position: absolute; top: 18px; left: 18px; background-color: #E29B63; text-align: center; font-size: 12px; color: #ffffff; height: 20px; line-height: 20px; padding: 0 7px; }
+
+.img-article time._hidden, .news-img time._hidden { display: none; }
+
 /*Stick Nav */
 .container.main { /*for right calculation of .offset in js*/ position: relative; }
 

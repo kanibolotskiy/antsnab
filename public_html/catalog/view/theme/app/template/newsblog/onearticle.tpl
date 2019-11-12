@@ -12,8 +12,9 @@
                     <img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" />
                     <?php if ($show_cat_name): ?>
                         <span><?= $cat_name ?></span>
+                        <time class="_hidden"><?= $date ?></time>
                     <?php else: ?>
-                        <span><?= $date ?></span>
+                        <time><?= $date ?></time>
                     <?php endif; ?>
                 </div>
             <?php } ?>

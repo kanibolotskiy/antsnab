@@ -22,6 +22,7 @@
                             title="<?php echo $article['name']; ?>" />
                 </a>
                 <span><?=$article['cat_name']?></span>
+                <time class="_hidden"><?=$article['date']?></time>
             </div>
         <?php } ?>
         <div class="news-description">

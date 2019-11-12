@@ -1,4 +1,3 @@
-<?php print_r($article);?>
 <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
     <div class="news-block" itemprop="item" itemscope="" itemtype="http://schema.org/NewsArticle">
         <meta itemprop="author" content='ООО "ТК Ант-Снаб"'/>
@@ -23,6 +22,7 @@
                             title="<?php echo $article['name']; ?>" />
                 </a>
                 <span><?=$article['cat_name']?></span>
+                <time class="_hidden"><?=$article['date']?></time>
             </div>
         <?php } ?>
         <div class="news-description">

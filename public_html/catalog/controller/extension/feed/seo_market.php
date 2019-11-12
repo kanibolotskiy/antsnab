@@ -111,6 +111,12 @@ class ControllerExtensionFeedSeoMarket extends Controller {
 					//$data['picture'] = $this->model_tool_image->resize($product['image'], 100, 100);
 					$data['picture'] = HTTP_SERVER.'image/'.$product['image'];
 				}
+				$data['param'] = array(
+					array(
+						'name'=>'Артикул',
+						'value'=>$product['sku']
+					)
+				);
 /*
 				// пример структуры массива для вывода параметров
 				$data['param'] = array(
