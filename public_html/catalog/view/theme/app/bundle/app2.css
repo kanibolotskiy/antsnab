@@ -3613,6 +3613,12 @@ footer .prehead_call { line-height: 22px; cursor: pointer; margin-top: 3px; }
 
 .img-article time._hidden, .news-img time._hidden { display: none; }
 
+.tab-list { margin-left: -18px; }
+
+#ya-site-form0 .ya-site-suggest-items li { border-bottom: 1px solid #ddd; }
+
+#ya-site-form0 .ya-site-suggest-items li > span { padding: 5px 10px; }
+
 /*Stick Nav */
 .container.main { /*for right calculation of .offset in js*/ position: relative; }
 
