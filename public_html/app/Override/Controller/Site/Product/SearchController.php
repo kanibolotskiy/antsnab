@@ -227,12 +227,30 @@ class SearchController extends \Controller
 		$data['products'] = array();
 
 		if (isset($this->request->get['text'])) {
-			$url_search="https://catalogapi.site.yandex.net/v1.0?apikey=4a4f0a45-0b05-437e-b0dc-5edca1573563&text=".urlencode($this->request->get['text'])."&searchid=2365979";
+			
+			$page_str="";
+			if (isset($this->request->get['page'])) {
+				$page_str="&page=".$this->request->get['page'];
+			}
+			
+			$url_search="https://catalogapi.site.yandex.net/v1.0?apikey=4a4f0a45-0b05-437e-b0dc-5edca1573563&text=".urlencode($this->request->get['text'])."&searchid=2365979&per_page=9".$page_str;
+			//$url_search="https://catalogapi.site.yandex.net/v1.0?apikey=4a4f0a45-0b05-437e-b0dc-5edca1573563&text=".urlencode($this->request->get['text'])."&searchid=2365979&page=3";
+
 			$products_search=file_get_contents($url_search);
 			$products_search_arr=json_decode($products_search,TRUE);
+			//print_r($products_search_arr);
+
 			$product_ids=[];
 			$product_total=0;
 			if(isset($products_search_arr["documents"])){
+				//print_r($products_search_arr);
+				if(isset($products_search_arr["docsTotal"])){
+					$docsTotal=$products_search_arr["docsTotal"];
+				}else{
+					$docsTotal=0;
+				}
+				
+
 				foreach($products_search_arr["documents"] as $itm){
 					$product_ids[]=$itm['id'];
 				}
@@ -257,6 +275,12 @@ class SearchController extends \Controller
 
 				$data['products'] = $results;
 			}
+			$url = '';
+			if (isset($this->request->get['text'])) {
+				$url .= '&text=' . urlencode(html_entity_decode($this->request->get['text'], ENT_QUOTES, 'UTF-8'));
+			}
+
+			/*
 			$url = '';
 
 			if (isset($this->request->get['search'])) {
@@ -340,7 +364,7 @@ class SearchController extends \Controller
 				'value' => 'p.model-DESC',
 				'href'  => $this->url->link('product/search', 'sort=p.model&order=DESC' . $url)
 			);
-
+			
 			$url = '';
 
 			if (isset($this->request->get['search'])) {
@@ -418,8 +442,10 @@ class SearchController extends \Controller
 			if (isset($this->request->get['limit'])) {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
-
-            /** Pagination */
+			*/
+			
+			/** Pagination */
+			$product_total=40;
             $paginationBaseUrl = $this->url->link('product/search', $url);
             $lazyLoadBaseUrl = $this->url->link('product/search/showmore', $url);
             $paginationModel = PaginationHelper::getPaginationModel($product_total, (int)$limit, (int)$page);

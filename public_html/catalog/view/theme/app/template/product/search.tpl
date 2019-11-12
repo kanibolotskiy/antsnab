@@ -29,6 +29,8 @@
                         </div>
                     </div>
                     
+                    <?php echo $pagination; ?>
+
                 </div>
             <?php } else { ?>
                 <p><?php echo $text_empty; ?></p>
