@@ -32,12 +32,14 @@ class UnitsAjaxController extends \Controller
 
     public function save()
     {
+        
         if (!$this->request->post['id'] || 'new' == $this->request->post['id']) {
             return $this->add();
         }
 
         $result = null;
-        var_dump($this->request->post);
+        //var_dump($this->request->post);
+        
         $error = $this->validate($this->request->post);
 
         if (empty($error)) {
@@ -52,6 +54,7 @@ class UnitsAjaxController extends \Controller
         $json = ['result' => $result, 'error' => $error];
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
+        
     }
 
     public function add()

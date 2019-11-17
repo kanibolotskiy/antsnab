@@ -76,6 +76,7 @@ class ProdUnitsController extends \Controller
 
     public function edit()
     {
+        
        if ( ($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validatePermissions() &&  isset( $this->request->get['template_id'] ) ) {
            if( $this->validateForm() ) {
 
@@ -83,7 +84,7 @@ class ProdUnitsController extends \Controller
                 $template_id = $this->request->get['template_id'];
                 $gateway = new ProdUnitTemplates($this->registry);
                 $res = $gateway->update($updateData,  $template_id);
-
+                
                 if( $res ) {
                     $this->session->data['success'] = $this->language->get('text_success');
                     $redirect_url =  $this->data['filter'] = $this->url->link('extension/module/produnits', 'token=' . $this->session->data['token'], 'SSL');
@@ -100,6 +101,7 @@ class ProdUnitsController extends \Controller
 
     public function getForm()
     {
+        
         $this->validatePermissions();
 
         $this->load->language('extension/module/produnits');
@@ -128,8 +130,11 @@ class ProdUnitsController extends \Controller
             $this->data['priceBase'] = $unitsGateway->getBase('isPriceBase', $template_id)['unit_id'];
             $this->data['saleBase'] = $unitsGateway->getBase('isSaleBase', $template_id)['unit_id'];
             $this->data['packageBase'] = $unitsGateway->getBase('isPackageBase', $template_id)['unit_id'];
+        
             $template = $templatesGateWay->getTemplate($template_id);
         }
+        
+
 
         //FIELDS
         if (isset($this->request->post['name'])) {
@@ -166,7 +171,6 @@ class ProdUnitsController extends \Controller
              ->addBreadcrumb($br_url, $this->data['form_title']);
 
         $this->data['cancel'] = $this->url->link('extension/module/produnits', 'token=' . $this->session->data['token'] . '&category_id=' . $template_id, 'SSL');
-
         $this->response->setOutput($this->load->view('extension/module/produnits/form.tpl', $this->data));
     }
 

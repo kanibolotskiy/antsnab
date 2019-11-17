@@ -190,6 +190,7 @@ $(window).on('load', function () {
             },
 
             saveRow: function (el) {
+                console.log("tut");
                 var id = $(el).attr('data-id'),
                     token = $('#token').val(),
                     row = $(el).parents('tr'),
@@ -208,7 +209,8 @@ $(window).on('load', function () {
                                 name_in_package: $('input[data-name="name_in_package"]', row).val(),
                                 package_width: $('input[data-name="package_width"]', row).val(),
                                 package_length: $('input[data-name="package_length"]', row).val(),
-                                package_height: $('input[data-name="package_height"]', row).val()
+                                package_height: $('input[data-name="package_height"]', row).val(),
+                                force_step_by_one: $('input[data-name="force_step_by_one"]', row).prop("checked")
                               }, 
                     url = '/admin/index.php?route=extension/module/produnits/saveunit&token=' + token,
                     params = {

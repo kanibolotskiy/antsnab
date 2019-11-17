@@ -13,6 +13,25 @@
         </div>
         {% } %}
 
+        <br/>
+        <label>
+
+        {% if(o['force_step_by_one']){ %}
+            <input type="checkbox" style="margin-right: 5px;display: inline-block;vertical-align:sub;"
+               data-name="force_step_by_one" 
+               checked="checked"
+               class="form-control"/>
+                <span>Кратно</span>
+            </label>
+        {% } else { %}
+            <input type="checkbox" style="margin-right: 5px;display: inline-block;vertical-align:sub;"
+               data-name="force_step_by_one" 
+               class="form-control"/>
+                <span>Кратно</span>
+            </label>
+        {% } %}
+        
+        
     </td>
 
     <td class="col-xs-1">

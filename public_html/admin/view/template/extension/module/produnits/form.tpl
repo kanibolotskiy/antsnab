@@ -33,7 +33,6 @@
             </div>
             <div class="panel-body">
                 <input type="hidden" id="token" value="<?=$token?>"/>
-                
                     <ul class="nav nav-tabs">
                         <li class="active">
                             <a href="#tab-templ" data-toggle="tab">

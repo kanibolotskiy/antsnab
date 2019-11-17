@@ -6,8 +6,10 @@
         <?php echo $content_top; ?>
         
         <h1><?php echo $heading_title; ?></h1>
-        <h2><?php echo $text_search; ?></h2>
+        
         <?php if ($products) { ?>
+            <h2><?php echo $text_search; ?></h2>
+
             <div class="catalog-tab">
                 <?php /* <div class="row">
                     @task OUR FILTERS HERE 
@@ -33,7 +35,40 @@
 
             </div>
         <?php } else { ?>
-            <p><?php echo $text_empty; ?></p>
+            <h2>К сожалению по вашему запросу ничего не найдено</h2>
+            <div class="content-text emptysearch-text">
+                <p>Мы сожалеем, но нам не удалось найти в <a href="products/">каталоге</a> товары, соответствующие вашему запросу.</p>
+                <p>Пожалуйста проверьте правильность запроса и попробуйте еще раз.</p>
+            </div>
+
+            <?php if($products_popular){ ?>
+            <h2>Популярные товары</h2>
+                <div class="mentioned-products mentioned-products2">
+                    <ul>
+                        <?php foreach ($products_popular as $p): ?>
+                            <li>
+                                <?php if($p['discount']){?>
+                                    <div class="label_discount _label"><?php echo $p['discount'];?>%</div>
+                                <?php }?>
+                                <div class="products-block">
+                                    <?php if($p["rating"]){?>
+                                        <div class="agg_rating"><?php echo $p["rating"];?></div>
+                                    <?php }?>
+                                    
+                                    <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
+
+                                    <a href="<?=$p['href']?>" class="img-production">
+                                        <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+                                    </a>
+                                    
+                                    <strong><?=$p['price']?> <div class="rur">i</div></strong>
+                                    <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php }?>
         <?php } ?>
     
         <?php echo $content_bottom; ?>

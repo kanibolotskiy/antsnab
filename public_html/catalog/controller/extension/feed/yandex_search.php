@@ -6,7 +6,7 @@
  * YML основан на стандарте XML (Extensible Markup Language)
  * описание формата YML http://partner.market.yandex.ru/legal/tt/
  */
-class ControllerExtensionFeedSeoMarket extends Controller {
+class ControllerExtensionFeedYandexSearch extends Controller {
 	private $shop = array();
 	private $currencies = array();
 	private $categories = array();
@@ -80,7 +80,7 @@ class ControllerExtensionFeedSeoMarket extends Controller {
 			$products = $this->model_extension_feed_yandex_market->getProduct($allow_cat_str, $out_of_stock_id, $vendor_required);
 
 
-
+			print_r($products);
 			foreach ($products as $product) {
 				$data = array();
 
@@ -99,19 +99,20 @@ class ControllerExtensionFeedSeoMarket extends Controller {
 				$data['currencyId'] = $offers_currency;
 				$data['categoryId'] = $product['category_id'];
 				$data['delivery'] = 'true';
-//				$data['local_delivery_cost'] = 100;
 				$data['name'] = $product['meta_h1'];
 				$data['vendor'] = $product['manufacturer'];
 				$data['vendorCode'] = $product['model'];
 				$data['model'] = $product['name'];
 				$data['description'] = $product['description'];
-//				$data['manufacturer_warranty'] = 'true';
-//				$data['barcode'] = $product['sku'];
 				if ($product['image']) {
-					//$data['picture'] = $this->model_tool_image->resize($product['image'], 100, 100);
 					$data['picture'] = HTTP_SERVER.'image/'.$product['image'];
 				}
-				
+				$data['param'] = array(
+					array(
+						'name'=>'Артикул',
+						'value'=>$product['sku']
+					)
+				);
 /*
 				// пример структуры массива для вывода параметров
 				$data['param'] = array(
@@ -131,8 +132,6 @@ class ControllerExtensionFeedSeoMarket extends Controller {
 */
 				$this->setOffer($data);
 			}
-
-			//$this->categories = array_filter($this->categories, array($this, "filterCategory"));
 
 			$this->response->addHeader('Content-Type: application/xml');
 			$this->response->setOutput($this->getYml());

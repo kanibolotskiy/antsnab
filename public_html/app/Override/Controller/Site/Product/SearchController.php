@@ -5,7 +5,117 @@ use WS\Patch\Helper\ProductListHelper;
 use WS\Patch\Helper\PaginationHelper;
 
 class SearchController extends \Controller
-{
+{	
+	public function liveSearch(){
+		$json["suggestions"]=[];
+		if(isset($this->request->get['query'])){
+			$url_search="https://catalogapi.site.yandex.net/v1.0?apikey=4a4f0a45-0b05-437e-b0dc-5edca1573563&text=".urlencode($this->request->get['query'])."&searchid=2365979&per_page=10";
+			$products_search=file_get_contents($url_search);
+			$products_search_arr=json_decode($products_search,TRUE);	
+			
+			/*
+			$product_ids=[];
+			$json["suggestions"]=array(
+				["value"=>"test1","data"=>"test2"],
+				["value"=>"test3","data"=>"test4"],
+			);
+*/
+			if(isset($products_search_arr['documents'])){
+				foreach($products_search_arr["documents"] as $itm){
+					
+					//$json["suggestions"][]='<a href="'.($this->url->link('product/product', 'product_id=' . $itm['id'])).'">'.$itm['name'].'</a>';
+					$json["suggestions"][]=array("value"=>"test1","data"=>"test2");
+					/*
+					$product_ids[]=Array(
+						"id" => $itm['id'],
+						"name" => $itm['name'],
+						"href" => $this->url->link('product/product', 'product_id=' . $itm['id'])
+					);
+					*/
+				}	
+			}
+			/*
+			$json["suggestions"]=array(
+				["value"=>"test1","data"=>"test2"],
+				["value"=>"test3","data"=>"test4"],
+			);
+			*/
+		}
+		//return "ok";
+		/*		
+		suggestions
+
+		$json["success"]=true;
+		$json["data"]=[];
+		if(isset($this->request->post['query'])){
+			$url_search="https://catalogapi.site.yandex.net/v1.0?apikey=4a4f0a45-0b05-437e-b0dc-5edca1573563&text=".urlencode($this->request->post['query'])."&searchid=2365979&per_page=10";
+			$products_search=file_get_contents($url_search);
+			$products_search_arr=json_decode($products_search,TRUE);	
+			$product_ids=[];
+			if(isset($products_search_arr['documents'])){
+				foreach($products_search_arr["documents"] as $itm){
+					$product_ids[]=Array(
+						"id" => $itm['id'],
+						"name" => $itm['name'],
+						"href" => $this->url->link('product/product', 'product_id=' . $itm['id'])
+					);
+				}	
+			}
+			$json["success"]=true;
+			$json["data"]=$product_ids;
+			
+		}else{
+			return json_encode($json);
+		}
+		
+		$json={
+			"suggestions": [
+				{
+					"value": "Guilherand-Granges",
+					"data": "750"
+				},
+				{
+					"value": "Paris 01",
+					"data": "750"
+				},
+				{
+					"value": "Paris 02",
+					"data": "750"
+				},
+				{
+					"value": "Paris 03",
+					"data": "750"
+				},
+				{
+					"value": "Paris 04",
+					"data": "750"
+				},
+				{
+					"value": "Paris 05",
+					"data": "750"
+				},
+				{
+					"value": "Paris 06",
+					"data": "750"
+				},
+				{
+					"value": "Paris 07",
+					"data": "750"
+				},
+				{
+					"value": "Paris 08",
+					"data": "750"
+				},
+				{
+					"value": "Paris 09",
+					"data": "750"
+				}
+			]
+		}*/
+		
+		echo json_encode($json);
+		//echo $json;
+	}
     public function index()
     {
         $this->load->language('product/search');
@@ -230,7 +340,7 @@ class SearchController extends \Controller
 			
 			$page_str="";
 			if (isset($this->request->get['page'])) {
-				$page_str="&page=".$this->request->get['page'];
+				$page_str="&page=".($this->request->get['page']-1);
 			}
 			
 			$url_search="https://catalogapi.site.yandex.net/v1.0?apikey=4a4f0a45-0b05-437e-b0dc-5edca1573563&text=".urlencode($this->request->get['text'])."&searchid=2365979&per_page=9".$page_str;
@@ -249,7 +359,9 @@ class SearchController extends \Controller
 				}else{
 					$docsTotal=0;
 				}
-				
+				//print_r($products_search_arr);
+				//$product_total=count($results);
+				$product_total=$products_search_arr["docsTotal"];
 
 				foreach($products_search_arr["documents"] as $itm){
 					$product_ids[]=$itm['id'];
@@ -264,7 +376,7 @@ class SearchController extends \Controller
 				$filter_data['limit']=99;
 				$filter_data['start']=0;
 
-				$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
+				//$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 				$productsHelper = new ProductListHelper($this->registry);
 				//$results = $productsHelper->getProducts($filter_data);
 				
@@ -272,8 +384,70 @@ class SearchController extends \Controller
 				
 				//$filter_data['sort']="ids";
 				$results = $productsHelper->getProducts($filter_data);
-
+				
+				
 				$data['products'] = $results;
+			}else{
+				$products_popular=$this->model_catalog_product->getProductsPopular(4);
+				
+				foreach ($products_popular as $product_popular_id) {
+					$result=$this->model_catalog_product->getProduct($product_popular_id);
+					if ($result['image']) {
+						//$image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
+						$image = $this->model_tool_image->myResize($result['image'], 200,200,1);
+					} else {
+						$image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
+					}
+	
+					if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+						$price_val=$this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'));
+						//$price = $this->currency->format($price_val, );
+						$price = number_format($price_val,0,".", " ");
+	
+		
+					} else {
+						$price = false;
+						$price_val=0;
+					}
+	
+					if ((float)$result['special']) {
+						$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					} else {
+						$special = false;
+					}
+	
+					if ($this->config->get('config_tax')) {
+						$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price'], $this->session->data['currency']);
+					} else {
+						$tax = false;
+					}
+	
+					if ($this->config->get('config_review_status')) {
+						$rating = round($result['rating'],1);
+					} else {
+						$rating = false;
+					}
+					$discount=0;
+					if($result['price_wholesaleold']*1){
+						$discount = (int)(($result['price_wholesale']/$result['price_wholesaleold']-1)*100);
+					}
+	
+					$data['products_popular'][] = array(
+						'product_id'  => $result['product_id'],
+						'thumb'       => $image,
+						'name'        => $result['name'],
+						'meta_h1'     => $result['meta_h1'],
+						'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
+						'price'       => $price,
+						'price_val'	  => $price_val,
+						'special'     => $special,
+						'tax'         => $tax,
+						'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
+						'rating'      => $rating,
+						'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+						'discount'	  => $discount
+					);
+				}
 			}
 			$url = '';
 			if (isset($this->request->get['text'])) {
@@ -445,7 +619,7 @@ class SearchController extends \Controller
 			*/
 			
 			/** Pagination */
-			$product_total=40;
+			//$product_total=40;
             $paginationBaseUrl = $this->url->link('product/search', $url);
             $lazyLoadBaseUrl = $this->url->link('product/search/showmore', $url);
             $paginationModel = PaginationHelper::getPaginationModel($product_total, (int)$limit, (int)$page);

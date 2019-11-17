@@ -111,9 +111,8 @@ class ProdUnits extends \Model
         if (null !== $order) {
             $sql .= " " . $order;
         }
-
         $res = $this->db->query($sql, [':tplid' => $templateId]);
-
+        
 
         return $res->rows;
     }
@@ -169,11 +168,20 @@ class ProdUnits extends \Model
 
     public function saveUnit($data)
     {
+        //print_r($data);
+        
         $calcKoef = ($data['calcKoef'] === '') ? null : (float) str_replace(',', '.', $data['calcKoef']);
         $weight = ($data['weight'] === '') ? null : (float) str_replace(',', '.', $data['weight']);
         $calcRel = ($data['calcRel'] === '') ? null : (int) $data['calcRel'];
-
-
+        
+        
+        if($data["force_step_by_one"]){
+            $force_step_by_one=1;
+        }else{
+            $force_step_by_one=0;
+        }
+        
+        //echo "force_step_by_one=".$force_step_by_one;
 
         $query = "UPDATE produnit_unit set 
                     name = :name,
@@ -188,8 +196,10 @@ class ProdUnits extends \Model
                     weight = :weight,
                     package_width = :package_width,
                     package_length = :package_length,
-                    package_height = :package_height
+                    package_height = :package_height,
+                    force_step_by_one = :force_step_by_one
                  WHERE unit_id = :unit_id";
+
         $res = $this->db->query($query, [
             ':name' => $data['name'],
             ':name_price' => $data['name_price'],
@@ -204,7 +214,8 @@ class ProdUnits extends \Model
             ':package_width' => $data['package_width'],
             ':package_length' => $data['package_length'],
             ':package_height' => $data['package_height'],
-            ':unit_id' => $data['id']
+            ':unit_id' => $data['id'],
+            ':force_step_by_one' => $force_step_by_one
             ]);
 
         return $data['id'];

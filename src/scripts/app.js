@@ -24,5 +24,6 @@ import './review_page.js';
 import './yamap';
 import './ui_styling';
 import './goals';
+import './search';
 
 
