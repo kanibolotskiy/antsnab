@@ -6,6 +6,7 @@
  * YML основан на стандарте XML (Extensible Markup Language)
  * описание формата YML http://partner.market.yandex.ru/legal/tt/
  */
+use WS\Override\Gateway\ProdTabs;
 class ControllerExtensionFeedYandexSearch extends Controller {
 	private $shop = array();
 	private $currencies = array();
@@ -79,8 +80,6 @@ class ControllerExtensionFeedYandexSearch extends Controller {
 
 			$products = $this->model_extension_feed_yandex_market->getProduct($allow_cat_str, $out_of_stock_id, $vendor_required);
 
-
-			print_r($products);
 			foreach ($products as $product) {
 				$data = array();
 
@@ -96,6 +95,24 @@ class ControllerExtensionFeedYandexSearch extends Controller {
 				
 				$data['price'] = $this->currency->convert($this->tax->calculate($product['price_wholesale'], $product['tax_class_id']), $shop_currency, $offers_currency);
 
+
+				$prodTabsGateway = new ProdTabs($this->registry);
+				$tabs = $prodTabsGateway->getTabsWithProductTexts($product['product_id'], 'order by sortOrder');
+				//$data['tabs'] = [];
+				$tabs_str="";
+				foreach ($tabs as $t) {
+					if (!$t['prod_hide']) {
+						$tabs_str.=$t['cat_name'].":".html_entity_decode($t['val']);
+						/*
+						$data['tabs'][] = [
+							'id'   => $t['category_prodtab_id'],
+							'name' => $t['cat_name'],
+							'text' => html_entity_decode($t['val'])
+						];
+						*/
+					}
+				}
+				
 				$data['currencyId'] = $offers_currency;
 				$data['categoryId'] = $product['category_id'];
 				$data['delivery'] = 'true';
@@ -103,7 +120,7 @@ class ControllerExtensionFeedYandexSearch extends Controller {
 				$data['vendor'] = $product['manufacturer'];
 				$data['vendorCode'] = $product['model'];
 				$data['model'] = $product['name'];
-				$data['description'] = $product['description'];
+				$data['description'] = $product['description'].$tabs_str;
 				if ($product['image']) {
 					$data['picture'] = HTTP_SERVER.'image/'.$product['image'];
 				}
