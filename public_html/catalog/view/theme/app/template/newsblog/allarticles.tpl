@@ -32,7 +32,7 @@
                     <div class="staty-list">
                         <ul id="lazy-load_container">
                             <?php  foreach ($articles as $article) : ?>
-                            <?php include __DIR__ . "/../partial/item_allarticles.tpl" ?> 
+                            <?php include __DIR__ . "/partial/item_allarticles.tpl" ?> 
                             <?php endforeach; ?>
                         </ul>
                     </div>
