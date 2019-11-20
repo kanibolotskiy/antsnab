@@ -25,8 +25,10 @@ class ProductListHelper extends \Model
 
         $results = $this->model_catalog_product->getProducts($filter_data);
         $products = [];
-        
-        $favorite_arr=json_decode($_COOKIE["favorite"]);
+        $favorite_arr=[];
+        if(isset($_COOKIE["favorite"])){
+            $favorite_arr=json_decode($_COOKIE["favorite"]);
+        }
         //print_r($results);
         foreach ($results as $result) {
             if(in_array($result['product_id'], $favorite_arr)){
