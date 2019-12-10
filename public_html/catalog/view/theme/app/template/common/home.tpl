@@ -47,7 +47,7 @@
             <h2 class="title">Статьи</h2>
             <ul class="main_articles">
                 <?php  foreach ($articles as $article) : ?>
-                    <?php include __DIR__ . "/../partial/item_allarticles.tpl" ?> 
+                    <?php include __DIR__ . "/../newsblog/partial/item_allarticles.tpl" ?> 
                 <?php endforeach; ?>
             </ul>
             <div class="wrp_main_articles">
