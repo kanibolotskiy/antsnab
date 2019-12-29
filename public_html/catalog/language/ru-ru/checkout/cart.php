@@ -6,8 +6,8 @@ $_['heading_title']            = 'Корзина покупок';
 $_['text_success']             = 'Товар %s добавлен в вашу корзину!';
 $_['text_remove']              = 'Корзина успешно обновлена!';
 $_['text_login']               = 'Вам необходимо <a href="%s">авторизоваться</a> или <a href="%s">создать аккаунт</a> для просмотра цен!';
-$_['text_items']               = '<span class="left">В корзине %s<br> %s </span><strong class="right">%s</strong>';
-$_['text_items_empty']         = '<span class="left">В корзине <br>пока пусто</span><strong class="right">0 <div class="rur">i</div></strong>';
+$_['text_items']               = '<span class="left">%s %s</span><strong class="right">%s</strong>';
+$_['text_items_empty']         = '<span class="left">В корзине <br>пока пусто</span><strong class="right"></strong>';
 
 $_['text_points']              = 'Призовые баллы: %s';
 $_['text_next']                = 'Воспользуйтесь дополнительными возможностями';

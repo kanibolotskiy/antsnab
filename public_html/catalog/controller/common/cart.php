@@ -251,19 +251,25 @@ class ControllerCommonCart extends Controller {
 
 		$data['cart'] = $this->url->link('checkout/cart');
 		$data['total'] = $this->currency->format($orderSumTotal, $this->session->data['currency']);
+		$data['total_count'] = $orderSumTotal;
 		$data['checkout'] = $this->url->link('checkout/checkout', '', true);
 
 		$productsCount = $this->cart->countProductTypes();
 		$productsCountStr = ProdUnitStrings::plural($productsCount, 
-						'вид товара', 'вида товара', 'видов товара');
+						'товар', 'товара', 'товаров');
+
+		//$productsCountStr = ProdUnitStrings::plural($productsCount, 
+		//				'вид товара', 'вида товара', 'видов товара');
 
 //$_['text_items']               = '<span class="left">В корзине %s<br> %s </span><strong class="right">%s</strong>';
 //$_['text_items_empty']         = '<span class="left">В корзине <br>пока пусто</span><strong class="right">0 ₽</strong>';
 
 		if($productsCount){
 			$data['total_str'] = sprintf($this->language->get('text_items'), $productsCount, $productsCountStr, $this->currency->format($orderSumTotal, $this->session->data['currency']));
+			//$data['total_str'] = $productsCountStr;
 		}else{
 			$data['total_str'] = sprintf($this->language->get('text_items_empty'), $productsCount, $productsCountStr, $this->currency->format($orderSumTotal, $this->session->data['currency']));
+			//$data['total_str'] = $this->language->get('text_items_empty');
 		}
 
 		$favorite_arr=[];

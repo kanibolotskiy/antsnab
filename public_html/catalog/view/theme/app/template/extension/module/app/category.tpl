@@ -12,15 +12,14 @@
         
         <?php foreach ($categories as $parent) { ?>
                 
-            
-
                 <?php if ( in_array($parent['category_id'], $openeditems) ) { ?>
-                <li class="active">
+                <li class="active _active">
                 <?php } else { ?>
                 <li>
                 <?php } ?>
-                <a href="#" class="opener"><?php echo $parent['name']; ?></a>
-
+                <div class="catalog_arrow"></div>
+                <a href="<?php echo $parent['href']?>" class="main_category"><?php echo $parent['name']; ?></a>
+                    
                 <?php if (!empty($parent['child'])) { ?>
                     <div class="slide">
                         <ul>
@@ -72,5 +71,6 @@
             </svg>
         </div> 
     </div>
+    <div class="catalog_hide"><span>Свернуть каталог</span></div>
 </div>
 

@@ -92,7 +92,7 @@ class CartController extends \ControllerCheckoutCart
                 //$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));
 				$productsCount = $this->cart->countProductTypes();
 				$productsCountStr = ProdUnitStrings::plural($productsCount, 
-								'вид товара', 'вида товара', 'видов товара');
+								'товара', 'товара', 'товаров');
 				$json['total'] = sprintf($this->language->get('text_items'), $productsCount, $productsCountStr, $this->currency->format($total, $this->session->data['currency']));
 		}
 
@@ -637,7 +637,7 @@ class CartController extends \ControllerCheckoutCart
                 //$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));
 				$productsCount = $this->cart->countProductTypes();
 				$productsCountStr = ProdUnitStrings::plural($productsCount, 
-                                'вид товара', 'вида товара', 'видов товара');
+                                'товар', 'товара', 'товаров');
 
                 
                 

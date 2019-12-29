@@ -81,8 +81,6 @@ $('body').delegate('#lazy-load_container','onLazyLoaded', function(e, $items){
 
 /*-----------------------------------------------------*/
 function add_to_cart(product_id, count_add, show_added){
-    
-
     $.ajax({
         url:  '/index.php?route=checkout/cart/add',
         type: 'post',
@@ -101,6 +99,7 @@ function add_to_cart(product_id, count_add, show_added){
         success: function(json) {
             //console.log(json);
             if (json['success']) {
+                $(".basket").addClass("bask_full");
                 var product = [{
                     "id": json['metrika_product_id'],
                     "name": json['metrika_product_name'],

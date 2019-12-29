@@ -33,6 +33,7 @@ class ControllerCommonFavorite extends Controller {
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
+        $products_arr=[];
         $products_arr=json_decode($_COOKIE["favorite"]);
 
         $this->load->model('catalog/information');

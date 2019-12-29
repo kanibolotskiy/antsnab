@@ -18,7 +18,7 @@
         
 
 
-        <link href="/catalog/view/theme/app/bundle/app2.css?v1.13" rel="stylesheet">
+        <link href="/catalog/view/theme/app/bundle/app2.css?v1.15" rel="stylesheet">
         <?php if ($description) { ?>
             <meta name="description" content="<?php echo $description; ?>" />
         <?php } ?>
@@ -50,19 +50,8 @@
         <?php } ?>
         
     </head>
-    <body class="<?=$class?>">
-        <!--
-        <div class="popup thank-you" >
-            <div class="close"></div>
-            <div class="popup-block">
-                <div class="popup-content">
-                    <div class="close2"></div>
-                    <span>Благодарим вас за обращение!</span>
-                    <p style="text-align: center">Мы свяжемся с вами в ближайшее время!</p>
-                </div>
-            </div>
-        </div>
-        -->
+    <body class="<?=$class?> <?php echo ($class == 'checkout-cart'?'_hmenu _hfixed':'');?>">
+      
 
         <div class="modal modal_one">
             <div class="modal-block">
@@ -139,58 +128,7 @@
             </div>
         </div>
 
-        <!--
-        <div class="popup popup_call">
-            <div class="close"></div>
-            <div class="popup-block">
-                <div id="ajax_loader_call" class="ajax_loader" style="display: none;">
-                    <div class="loader-classic">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
-                <div class="popup-content">
-                    <div class="close2"></div>
-                    <form id="call_form" action="<?= $action ?>" method="post">
-                        <div class="popup_caption">Оставьте свои данные и сообщение, мы свяжемся с Вами в ближайшее время</div>
-
-                        <input value="<?= $form_data['workemail'] ?>" name="workemail" type="text" placeholder="Рабочий email"/>
-
-                        <div class="row">
-                            <div class="row_cap">Имя:<i class="error name"></i></div>
-                            <input value="<?= $form_data['name'] ?>" name="name" type="text" placeholder="Введите Ваше имя"/>
-                        </div>
-                        <div class="row">
-                            <div class="row_cap">Телефон:<i class="error phone"></i></div>
-                            <input value="<?= $form_data['phone'] ?>" name="phone" type="tel" placeholder="Введите телефон"/>
-                        </div>
-                        <div class="row">
-                            <div class="row_cap">Сообщение:</div>
-                            <textarea placeholder="Введите Ваше сообщение" name="text"><?= $form_data['text'] ?></textarea>
-                        </div>
-                        <div class="row_cap">
-                            <p>Нажимая на кнопку Отправить, я даю <a target="_blank" href="<?php echo $personaldata;?>">согласие на обработку персональных данных</a></p>
-                        </div>
-                        <div class="call_submit">Отправить</div>
-                    </form>
-                    <script type="text/javascript">
-                        function submitCallForm()
-                        {
-                            $('#call_form').submit();
-                        }
-                    </script>
-                </div>
-            </div>
-        </div>
-        -->
+        
 
         <a href="#" class="up" rel="nofollow"></a>
         
@@ -204,85 +142,81 @@
                                 <span class="prehead_val">г. Москва<span class="hide_mb">, Высоковольтный проезд, дом 1, стр. 43</span></span>
                             </div>
                         </a>
-                        <div class="preheader_divider"></div>
+                        <!--<div class="preheader_divider"></div>-->
                         <div class="prehead_work">
                             <span class="prehead_cap">Мы работаем:</span>
                             <span class="prehead_val"><?= $worktime ?></span>
                         </div>
-                        <div class="preheader_divider _second"></div>
-                        <a href="#" class="js-call with_goal" rel="nofollow" goal="callme">
-                            <div class="prehead_call">
-                                <span class="prehead_val order_call js_modal" data-modal="modal_call">Заказать звонок</span>
-                            </div>
-                        </a>
+                        
                     </div>
                 </div>
             </div>
         <?php }?>
-
-        <header class="header container">
-            
-            <div class="wrap_logo">
-                <strong class="logo">
-                    <?php if ($logo) { ?>
-                        <?php if ($home == $og_url) { ?>
-                            <img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" />
-                        <?php } else { ?>
-                            <a href="<?php echo $home; ?>" title="<?php echo $name; ?>">
-                                <img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" />
-                            </a>
-                        <?php } ?>
-
-                    <?php } else { ?>
+        <div class="wrp_header">
+            <header class="header container">
+                
+                <div class="wrap_logo">
+                    <strong class="logo">
                         <?php if ($home == $og_url) { ?>
                             <div class="logo_bg"></div>
+                            <div class="logo_cap"></div>
+                            <div class="logo_caption">строительные материалы</div>
                         <?php } else { ?>
-                            <a href="<?php echo $home; ?>"><div class="logo_bg"></div></a>
+                            <a href="<?php echo $home; ?>">
+                                <div class="logo_bg"></div>
+                                <div class="logo_cap"></div>
+                                <div class="logo_caption">строительные материалы</div>
+                            </a>
                         <?php } ?>
-                    <?php } ?>
-                </strong>
-                <div class="logo_slogan">
-                    Производство и продажа<br/>стройматериалов
+                    </strong>
+                    <!--
+                    <div class="logo_slogan">
+                        Производство и продажа<br/>стройматериалов
+                    </div>
+                    -->
                 </div>
-            </div>
-
-            <div class="tel">
-                <a rel="nofollow" href="tel:<?php echo $telephone; ?>"><?php echo $telephone; ?></a>
-                <?php if($telephone2){ ?>
-                    <a rel="nofollow" href="tel:<?= $telephone2 ?>">&nbsp;&nbsp;<?= $telephone2 ?></a>
+                <?php if($class != "checkout-cart"){ ?>
+                    <div class="header_email">
+                        <a href="mailto:<?= $email_site ?>"><?= $email_site ?></a>
+                    </div>
                 <?php }?>
-                
-            </div>
-
-            <?php if($class != "checkout-cart"){ ?>
-                <div class="header_email">
-                    <a href="mailto:<?= $email_site ?>"><?= $email_site ?></a>
+                <div class="tel">
+                    <a rel="nofollow" href="tel:<?php echo $telephone; ?>"><?php echo $telephone; ?></a>
+                    <?php if($telephone2){ ?>
+                        <a rel="nofollow" href="tel:<?= $telephone2 ?>">&nbsp;&nbsp;<?= $telephone2 ?></a>
+                    <?php }?>
+                    
                 </div>
-            <?php }?>
-            <!--
-            <div class="line"></div>
-            <div class="schedule">
-                <span>Мы работаем:</span>
-                <p>
-                    <?= $worktime ?>
-                </p>
-            </div>
-            
-            <a class="btn-request-call">Заказать звонок</a>
-            -->
-            <?php if($class != "checkout-cart"){ ?>
-                <?= $cart ?>
-            <?php }?>
-            
-            <a class="btn-nav">
-                <span>
-                    <b></b>
-                    <b></b>
-                    <b></b>
-                </span>
-            </a>
-        </header>
+                <a href="#" class="js-call with_goal" rel="nofollow" goal="callme">
+                    <div class="prehead_call">
+                        <span class="prehead_val order_call js_modal" data-modal="modal_call">Заказать звонок</span>
+                    </div>
+                </a>
+                
+                <?php if($class != "checkout-cart"){ ?>
+                    <?= $cart ?>
+                <?php }?>
+                <div class="mob_menu">
+                    <div class="mob_menu_block"></div>
+                </div>
+                <!--
+                <a class="btn-nav">
+                    <span>
+                        <b></b>
+                        <b></b>
+                        <b></b>
+                    </span>
+                </a>
+                -->
+            </header>
+        </div>
+        <div class="table_block_header">
+            <div class="table_catalog"><span>Каталог</span></div>
+        </div>
+        <div class="empty_block_header"></div>
+
         <div class="container container-nav">
+            <div class="container-nav_close"></div>
             <nav class="nav">
                 <ul itemscope itemtype="http://www.schema.org/SiteNavigationElement">
                     <?php $cnt = 0; $ttl = count($top_menu);?>
@@ -311,6 +245,25 @@
                         <?php endif;?>
                     <?php endforeach; ?>
                 </ul>
+                <div class="mobmenu_contacts">
+                    <div class="mobmenu_contacts_call">
+                        <span class="prehead_val order_call js_modal" data-modal="modal_call">Заказать звонок</span>
+                    </div>
+                    <div class="mobmenu_contacts_email">
+                        <a href="mailto:<?= $email_site ?>"><?= $email_site ?></a>
+                    </div>
+
+                    <div class="mobmenu_contacts_address">
+                        <a href="contacts/">г. Москва<span class="hide_mb">, Высоковольтный проезд, дом 1, стр. 43</span></a>
+                    </div>
+                    <div class="mobmenu_contacts_workcap">
+                        Мы работаем:
+                    </div>
+                    <div class="mobmenu_contacts_workval">
+                        <?= $worktime ?>
+                    </div>
+                </div>
+
             </nav>
         </div>
 

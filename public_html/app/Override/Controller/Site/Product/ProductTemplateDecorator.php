@@ -66,8 +66,11 @@ class ProductTemplateDecorator implements IDecorator
         $data['discount_val1'] = $discount_val1;
         $data['discount_val2'] = $discount_val2;
         
-
-        $favorite_arr=json_decode($_COOKIE["favorite"]);
+        if(isset($_COOKIE["favorite"])){
+            $favorite_arr=json_decode($_COOKIE["favorite"]);
+        }else{
+            $favorite_arr=[];
+        }
         
         if(in_array($product_id, $favorite_arr)){
             $fav_active=' active';

@@ -1,7 +1,6 @@
+/*
 import './lib/jquery.accordion';
 import 'jquery-touchswipe';
-
-/* Навигация в сайдбаре */
 (function($){
    var  slideDuration = 300,
           stickBreakpoint = 800,
@@ -64,7 +63,6 @@ import 'jquery-touchswipe';
             return $('body').hasClass(freezeClass);
         },
 
-        /** @see https://stackoverflow.com/questions/986763/jquery-how-to-determine-that-a-div-is-scrolled-down user2226623*/ 
         isScrolledBottom = function() {
             var totalHeight = $accordeon[0].scrollHeight,
                 scrollPosition = $accordeon.height() + $accordeon.scrollTop();
@@ -116,7 +114,6 @@ function initAccordion() {
 		collapsible:true,
 		animSpeed: 300,
 
-        /*Подтягиваем вьюпорт под пункты меню если нужно*/
         afterOpenHandler: function(options, $item) {
             var accordion = this,
                 accordionCont = accordion.parent('div');
@@ -127,11 +124,43 @@ function initAccordion() {
                 accordionCont.animate({scrollTop: accordionCont.scrollTop()+$item.position().top}, "slow");
 
             //in desktop mode
-            /*} else if( $(window).scrollTop() > $item.offset().top ) {
-                $(window).animate( {scrollTop: $item.offset().top} );*/
-            } 
+            //} else if( $(window).scrollTop() > $item.offset().top ) {
+            //    $(window).animate( {scrollTop: $item.offset().top} );
+            //} 
         }
 	});
 }
+*/
+$(document).ready(function(){
+    $(".catalog_arrow").click(function(){
+        var itm=$(this).closest("li");
+        if(itm.hasClass("_active")){
+            itm.find(".slide").slideUp(200);
+            itm.removeClass("_active");
+        }else{
+            $(".simple-accordion li").removeClass("_active");
+            $(".slide").slideUp(200);
+            itm.find(".slide").slideDown(200);
+            itm.addClass("_active");
+        }
+    });
+    
 
+    $(".table_catalog").click(function(){
+        $(this).toggleClass("active");
+        $(".catalog-product").toggleClass("active");
+        $("body").toggleClass("_lmenu");
+    });
+    $(".catalog_hide").click(function(){
+        $(".catalog-product").removeClass("active");
+        $(".table_catalog").removeClass("active");
+        $("body").removeClass("_lmenu");
+    });
 
+    $(document).on("focusin",".ya-site-form__input-text",function(){
+        $("#search").addClass("active");
+    });
+    $(document).on("focusout",".ya-site-form__input-text",function(){
+        $("#search").removeClass("active");
+    })
+})
