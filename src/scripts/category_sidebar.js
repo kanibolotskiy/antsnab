@@ -139,7 +139,7 @@ $(document).ready(function(){
             itm.removeClass("_active");
         }else{
             $(".simple-accordion li").removeClass("_active");
-            $(".slide").slideUp(200);
+            $(".sidebar .slide").slideUp(200);
             itm.find(".slide").slideDown(200);
             itm.addClass("_active");
         }
