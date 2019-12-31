@@ -1519,6 +1519,12 @@
             $('#product-analog').delegate('.fa-minus-circle', 'click', function () {
                 $(this).parent().remove();
             });
+            $('#product-benefits').delegate('.fa-minus-circle', 'click', function () {
+                $(this).parent().remove();
+            });
+            $('#product-related').delegate('.fa-minus-circle', 'click', function () {
+                $(this).parent().remove();
+            });
 
             $('input[name=\'related\']').autocomplete({
                 'source': function (request, response) {
@@ -1544,9 +1550,7 @@
                 }
             });
 
-            $('#product-benefits').delegate('.fa-minus-circle', 'click', function () {
-                $(this).parent().remove();
-            });
+            
 
             $('input[name=\'benefits\']').autocomplete({
                 'source': function (request, response) {

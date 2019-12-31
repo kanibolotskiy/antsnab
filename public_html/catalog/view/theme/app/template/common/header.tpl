@@ -235,7 +235,7 @@
                             </li>
                         <?php }else{?>
                             <li class="menu_li" itemprop="name">
-                                <a itemprop="url" href="<?php echo $item['href']; ?>" <?php echo $target; ?>><?php echo $item['name']; ?></a>
+                                <a itemprop="url" href="<?php echo $item['href']; ?>" <?php echo $target; ?>><span><?php echo $item['name']; ?></span></a>
                             </li>
                         <?php }?>
 

@@ -30,6 +30,8 @@ class ModelCatalogInformation extends Model {
 		//$html = preg_replace('/(alt=")(.*?)(")/i', '$1'.$post_title.'$3', $text);
 		//$html = str_replace('/>', 'title="'.$post_title.'" />', $html);
 
+		//$text = preg_replace('/(alt=")(.*?)(")/i', '$1'.$post_title.'$3', $text);
+
 		$text = preg_replace_callback('/<a[^>]+/', array($this, 'cleanInternalUrl'), $text);
 		
 		$text=str_replace("₽","<div class='rur'>i</div>",$text);
