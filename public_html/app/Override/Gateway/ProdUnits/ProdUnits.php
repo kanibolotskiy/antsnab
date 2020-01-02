@@ -174,11 +174,14 @@ class ProdUnits extends \Model
         $weight = ($data['weight'] === '') ? null : (float) str_replace(',', '.', $data['weight']);
         $calcRel = ($data['calcRel'] === '') ? null : (int) $data['calcRel'];
         
-        
-        if($data["force_step_by_one"]){
+        //echo "!".$data["force_step_by_one"]."!";
+        //echo "*".($data["force_step_by_one"]=="false")."*";
+        if($data["force_step_by_one"]=="true"){
             $force_step_by_one=1;
+            //echo "ok1";
         }else{
             $force_step_by_one=0;
+            //echo "ok2";
         }
         
         //echo "force_step_by_one=".$force_step_by_one;
@@ -199,7 +202,7 @@ class ProdUnits extends \Model
                     package_height = :package_height,
                     force_step_by_one = :force_step_by_one
                  WHERE unit_id = :unit_id";
-
+        //echo $query;
         $res = $this->db->query($query, [
             ':name' => $data['name'],
             ':name_price' => $data['name_price'],
