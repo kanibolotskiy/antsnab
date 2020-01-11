@@ -122,7 +122,7 @@
         </div>
     </div>
 </footer>
-<script src="/catalog/view/theme/app/bundle/app2.js?v0.7"></script>
+<script src="/catalog/view/theme/app/bundle/app2.js?v2"></script>
 <!--<script src="https://www.google.com/recaptcha/api.js"></script>-->
 
     <!-- @task1 Счетчики, виджеты (comagic) -->
