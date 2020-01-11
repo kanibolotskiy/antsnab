@@ -113,12 +113,13 @@ class ProductTemplateDecorator implements IDecorator
         
         try {
             foreach ($prodUnits as $unit_id => $unit) {
-                /*
+                
                 // единицы измерения с sortorder <> 0 участвуют в отображении в шаблоне 
                 if (0 != $unit['switchSortOrder']) {
+                    
                     $key = (int)$unit['switchSortOrder'];
                     $pUnits[ $key ] = $unit;
-                    
+                    /*
                     //print_r($unit);
                     //коэффициент пересчета из базовой еденицы продажи в данную отображаемую еденицу
                     $saleToUIKoef = $produnitsCalcGateway->getBaseToUnitKoef($product_id, 'isSaleBase', $unit_id);
@@ -167,9 +168,9 @@ class ProductTemplateDecorator implements IDecorator
                     }
                         
                     $pUnits[$key]['relStr'] = $relStr;
-
+                    */
                 }
-*/
+
                 //параллельно ищем $priceUnit (базовая единица цен) - нужна как отдельная переменная
                 //для передачи стоимостей в корзину
                 if ($unit['isPriceBase'] == 1 && !$priceUnit) {
