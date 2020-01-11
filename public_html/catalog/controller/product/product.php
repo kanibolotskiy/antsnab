@@ -712,7 +712,7 @@ class ControllerProductProduct extends Controller {
 
 			$data['product_link'] = $this->url->link('product/product', 'product_id=' . $this->request->get['product_id']);
 
-
+/*
 			$data['quantity_stock']=$product_info['quantity'];
 			if ($product_info['quantity'] > 0) {
 				$data['stock'] = $this->language->get('stock_avail');
@@ -763,7 +763,7 @@ class ControllerProductProduct extends Controller {
 				//$count_images++;
 			}
 			
-			/*
+			
 			$data['video_link']='';
 			$data['video_img']='';
 			$data['labels']=$this->model_catalog_product->getProductLabels($product_info);
