@@ -66,6 +66,7 @@ class ProdUnitsCalc extends \Model
          * от $baseUnitId до $toId и расчитать коэффициент. Если нет - ищем в обратную сторону
          * от $toId к $baseUnitId и берем обратное число
          */  
+        /*
         $koef = $this->unitToUnit($units, $baseUnitId, $toId);
         if (null === $koef) {
             $koef = Fraction::fromFloat(1.0);
@@ -75,7 +76,8 @@ class ProdUnitsCalc extends \Model
         if (null === $koef) {
             throw new Exception('cant calculate koefficient from ' . $toId . ' to ' . $base . ' direction ' . (int)$direction);
         }
-
+        */
+        $koef=1;
         return $koef;
     }
 
