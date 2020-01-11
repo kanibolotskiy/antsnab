@@ -24,6 +24,7 @@ class ProductTemplateDecorator implements IDecorator
     
     public function process($data, $registry)
     {
+        
         $request = $registry->get('request');
 
         if (isset($request->get['product_id'])) {
@@ -35,17 +36,10 @@ class ProductTemplateDecorator implements IDecorator
 
         $product_info = $registry->get('model_catalog_product')->getProduct($product_id);
 
-        /*
-        if ($registry->get('customer')->isLogged() || !$registry->get('config')->get('config_customer_price')) {
-            
-        } else {
-            
-        }
-*/
         $discount=0;
         $discount_val1=0;
         $discount_val2=0;
-
+/*
         if ($registry->get('customer')->isLogged() || !$registry->get('config')->get('config_customer_price')) {
             $data['price_wholesale'] = $registry->get('tax')->calculate($product_info['price_wholesale'], $product_info['tax_class_id'], $registry->get('config')->get('config_tax'));
             $data['price_wholesale_val']=$registry->get('currency')->format((float)$data['price_wholesale'] ? $data['price_wholesale'] : $product_info['price_wholesale'], $registry->get('session')->data['currency']);
@@ -110,7 +104,7 @@ class ProductTemplateDecorator implements IDecorator
         $produnitsCalcGateway = new ProdUnitsCalc($registry);
         $prodUnits = $produnitsGateway->getUnitsByProduct($product_id);
         
-        /** make array for using in template */
+        //make array for using in template
         $pUnits = [];
         $pUnitsErrors = null;
         $priceUnit = null;
@@ -119,7 +113,7 @@ class ProductTemplateDecorator implements IDecorator
         
         try {
             foreach ($prodUnits as $unit_id => $unit) {
-                /** единицы измерения с sortorder <> 0 участвуют в отображении в шаблоне */
+                // единицы измерения с sortorder <> 0 участвуют в отображении в шаблоне 
                 if (0 != $unit['switchSortOrder']) {
                     $key = (int)$unit['switchSortOrder'];
                     $pUnits[ $key ] = $unit;
@@ -312,7 +306,7 @@ class ProductTemplateDecorator implements IDecorator
             }
         }
         
-        /**Курьеры */
+        //Курьеры
         //$data["couriers"]=$registry->get('model_file_file')->getDeliveryDocs();
         $couriers=$registry->get('model_catalog_product')->getDeliveryDocs();
         
@@ -325,7 +319,7 @@ class ProductTemplateDecorator implements IDecorator
         //print_r($dt);
         
 
-        /**Доставка */
+        //Доставка
         //print_r($data['pUnits']);
         $base_weight=0;
         $base_vol=0;
@@ -347,7 +341,7 @@ class ProductTemplateDecorator implements IDecorator
 
         $ruleId = $registry->get('config')->get(ReviewAdminModule::CONFIG_KEY_RULE_ID);
         $data['rules'] = $registry->get('url')->link('information/information', 'information_id=' . $ruleId);
-        
+        */
         return $data;
 
     }
