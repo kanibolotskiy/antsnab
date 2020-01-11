@@ -57,13 +57,6 @@ class ControllerProductProduct extends Controller {
 		} else {
 			$b_patch=$this->config->get('config_url').'image/';
 		}
-		/*
-		if ($product_info['image']) {
-			$data['popup'] = $this->model_tool_image->myResize($product_info['image'], 1000,750,1,'water.png');
-		} else {
-			$data['popup'] = '';
-		}
-		*/
 		
 		$data['images'] = array();
 
@@ -401,6 +394,7 @@ class ControllerProductProduct extends Controller {
 		$this->load->model('catalog/review');
 
 		if (isset($this->request->get['path'])) {
+			
 			$path = '';
 
 			$parts = explode('_', (string)$this->request->get['path']);
@@ -453,6 +447,7 @@ class ControllerProductProduct extends Controller {
 			}
 		}
 
+		
 		$this->load->model('file/file');
 		$files_data = $this->model_file_file->getProductFiles($this->request->get['product_id']);
 		foreach ($files_data as $file) {
@@ -633,7 +628,7 @@ class ControllerProductProduct extends Controller {
 			}
 
 			//price_wholesale
-			/**Подставляем оптовую цену в Title */
+			//Подставляем оптовую цену в Title
 			//$seoTitlePrice=$this->currency->format((float)$product_info['price_wholesale'] ? $product_info['price_wholesale'] : $product_info['price'], $this->session->data['currency']);
 			
 			$seoTitlePrice = number_format((float)$product_info['price_wholesale'] ? $product_info['price_wholesale'] : $product_info['price'],0,"."," ")." р.";
@@ -726,18 +721,6 @@ class ControllerProductProduct extends Controller {
 			}
 			$data['rating'] = round($product_info['rating'],1);
 			
-
-
-			/*
-			if ($product_info['quantity'] <= 0) {
-				$data['stock'] = $product_info['stock_status'];
-			} elseif ($this->config->get('config_stock_display')) {
-				$data['stock'] = $product_info['quantity'];
-			} else {
-				$data['stock'] = $this->language->get('text_instock');
-			}
-			*/
-
 			$this->load->model('tool/image');
 
 			if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
@@ -779,7 +762,8 @@ class ControllerProductProduct extends Controller {
 				//}
 				//$count_images++;
 			}
-
+			
+			/*
 			$data['video_link']='';
 			$data['video_img']='';
 			$data['labels']=$this->model_catalog_product->getProductLabels($product_info);
@@ -789,19 +773,7 @@ class ControllerProductProduct extends Controller {
 				if(isset($matches[0])){
 				$video_id=$matches[0];
 				$data['video_link'] = $product_info['video'];
-				/*
-				$video_id = explode("?v=", $data['video_link']); // For videos like http://www.youtube.com/watch?v=...
-				if (empty($video_id[1]))
-					$video_id = explode("/v/", $data['video_link']); // For videos like http://www.youtube.com/watch/v/..
-					
-				print_r($video_id);
-		
-
-				$video_id = explode("&", $video_id[1]); // Deleting any other params
-
-				$video_id = $video_id[0];
-				*/
-
+				
 				$data['video_img']='//img.youtube.com/vi/'.$video_id.'/sddefault.jpg';
 				}
 			}
@@ -987,7 +959,7 @@ class ControllerProductProduct extends Controller {
 	
 			$data['pagination'] = $pagination->render();
 
-			/**Отзывы */
+			//Отзывы
 			$data['text_thankyou_header'] = $this->language->get('text_thankyou_header');
         	$data['text_thankyou'] = $this->language->get('text_thankyou');
 			$data['share'] = $this->url->link('product/product', 'product_id=' . (int)$this->request->get['product_id']);
@@ -996,18 +968,7 @@ class ControllerProductProduct extends Controller {
 
 			$data['products'] = array();
 			
-			/** @task move to override */
-			//Добавлен второй параметр - количество возвращаемых результатов (и RAND)
-			/*
-			$results_related = $this->model_catalog_product->getProductRelated($this->request->get['product_id'],2);
-			if(is_array($results_related)){
-				$exclude_tovar=implode(",",array_keys($results_related));
-			}
-			$results_recommends = $this->model_catalog_product->getProductRecommend($this->request->get['product_id'],2,$exclude_tovar);
-
-			$results=array_merge($results_related, $results_recommends);
-			*/
-
+			
 			unset($exclude_ids);
 			
 
@@ -1138,7 +1099,7 @@ class ControllerProductProduct extends Controller {
 
 			$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
 
-			/**Калькулятор */
+			//Калькулятор
 			$data['calculator']="";
 			//print_r($product_info);
 			$calc_nomer=0;
@@ -1160,14 +1121,7 @@ class ControllerProductProduct extends Controller {
 					$data['calculator']=$this->load->view('calculators/calc_'.$calc_nomer, $data);
 				}
 			}
-			/*
-			if($category_info['calc']){
-				//consumption 
-				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/app/template/calculators/calc_'.$category_info['calc'].'.tpl')) {
-					$data['consumption']=$product_info['consumption'];
-					$data['calculator']=$this->load->view('calculators/calc_'.$category_info['calc'], $data);
-				}
-			}*/
+			
 
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
 
@@ -1177,6 +1131,7 @@ class ControllerProductProduct extends Controller {
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
+			*/
 			$this->response->setOutput($this->load->view('product/product', $data));
 		} else {
 			$url = '';
@@ -1255,6 +1210,7 @@ class ControllerProductProduct extends Controller {
 
 			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
+		
 	}
 
 	public function review() {
