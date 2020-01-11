@@ -509,7 +509,7 @@ class ControllerProductProduct extends Controller {
 				);
 			}
 		}
-		/*
+		
 		if (isset($this->request->get['search']) || isset($this->request->get['tag'])) {
 			$url = '';
  
@@ -555,7 +555,7 @@ class ControllerProductProduct extends Controller {
 				'href' => $this->url->link('product/search', $url)
 			);
 		}
-
+		/*
 		if (isset($this->request->get['product_id'])) {
 			$product_id = (int)$this->request->get['product_id'];
 		} else {
