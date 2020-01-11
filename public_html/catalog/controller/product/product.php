@@ -1134,8 +1134,10 @@ class ControllerProductProduct extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 			//echo "ok";
-			$data1["test"]="test";
-			$this->response->setOutput($this->load->view('product/product', $data1));
+			//$data1["test"]="test";
+
+			//$this->response->setOutput($this->load->view('product/product', $data));
+			$this->response->setOutput($this->load->view('product/product_new', $data));
 		} else {
 			$url = '';
 
