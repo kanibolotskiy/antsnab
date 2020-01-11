@@ -110,7 +110,7 @@ class ProductTemplateDecorator implements IDecorator
         $priceUnit = null;
         $saleUnit = null;
         $saleToPriceKoef = null;
-        /*
+        
         try {
             foreach ($prodUnits as $unit_id => $unit) {
                 // единицы измерения с sortorder <> 0 участвуют в отображении в шаблоне 
@@ -203,7 +203,7 @@ class ProductTemplateDecorator implements IDecorator
         } catch (\Exception $e) {
             $pUnitsErrors = $e->getMessage();
         }
-
+        /*
         $data['pUnits'] = $pUnits;
         $data['pUnitsErrors'] = $pUnitsErrors;
         $data['priceUnit'] = $priceUnit;
