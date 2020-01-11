@@ -630,7 +630,7 @@ class ControllerProductProduct extends Controller {
 			//price_wholesale
 			//Подставляем оптовую цену в Title
 			//$seoTitlePrice=$this->currency->format((float)$product_info['price_wholesale'] ? $product_info['price_wholesale'] : $product_info['price'], $this->session->data['currency']);
-			
+			/*
 			$seoTitlePrice = number_format((float)$product_info['price_wholesale'] ? $product_info['price_wholesale'] : $product_info['price'],0,"."," ")." р.";
 
 			$seoTitle=str_replace('[+price]',$seoTitlePrice ,$seoTitle);
@@ -712,7 +712,7 @@ class ControllerProductProduct extends Controller {
 
 			$data['product_link'] = $this->url->link('product/product', 'product_id=' . $this->request->get['product_id']);
 
-/*
+
 			$data['quantity_stock']=$product_info['quantity'];
 			if ($product_info['quantity'] > 0) {
 				$data['stock'] = $this->language->get('stock_avail');
