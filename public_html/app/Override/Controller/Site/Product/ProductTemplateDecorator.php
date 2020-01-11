@@ -169,7 +169,7 @@ class ProductTemplateDecorator implements IDecorator
                     $pUnits[$key]['relStr'] = $relStr;
 
                 }
-
+*/
                 //параллельно ищем $priceUnit (базовая единица цен) - нужна как отдельная переменная
                 //для передачи стоимостей в корзину
                 if ($unit['isPriceBase'] == 1 && !$priceUnit) {
@@ -187,7 +187,7 @@ class ProductTemplateDecorator implements IDecorator
                 } elseif ($unit['isSaleBase'] == 1) {
                     throw new \Exception('Too many price bases for product ' . $product_id);
                 }
-                */
+                
             }
 
             if (!isset($pUnits[1])) {
