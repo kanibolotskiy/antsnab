@@ -567,7 +567,7 @@ class ControllerProductProduct extends Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 		
 		if ($product_info) {
-			/*
+			
 			$url = '';
 			
 			if (isset($this->request->get['path'])) {
@@ -617,7 +617,7 @@ class ControllerProductProduct extends Controller {
 			if (isset($this->request->get['limit'])) {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
-
+/*
 			$data['breadcrumbs'][] = array(
 				'text' => $product_info['name'],
 				'href' => $this->url->link('product/product', $url . '&product_id=' . $this->request->get['product_id'])
@@ -1134,7 +1134,7 @@ class ControllerProductProduct extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 			*/
-			print_r($data);
+			
 			$this->response->setOutput($this->load->view('product/product', $data));
 		} else {
 			$url = '';
