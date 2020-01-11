@@ -100,7 +100,8 @@ class HomeTemplateDecorator implements IDecorator
         $mainInfo = $registry->get('model_catalog_information')->getInformationMain();
 
         $video_id='';
-        if isset($mainInfo["video"]){
+        $data['main_video']='';
+        if (isset($mainInfo["video"])){
             if($mainInfo["video"]){
                 preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $mainInfo["video"], $matches);
                 if(isset($matches[0])){
@@ -109,11 +110,10 @@ class HomeTemplateDecorator implements IDecorator
             }
             if($video_id){
                 $data['main_video'] = 'https://www.youtube.com/embed/'.$video_id;
-            }else{
-                $data['main_video'] = '';
             }
         }
-        if isset($mainInfo["description"]){
+        $data['seo_text']='';
+        if (isset($mainInfo["description"])){
             $data['seo_text'] = $registry->get('model_catalog_information')->cleanText($mainInfo["description"]);
         }
     
