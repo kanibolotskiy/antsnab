@@ -127,12 +127,12 @@ class ProductTemplateDecorator implements IDecorator
                     $pUnits[$key]['sale_to_ui_koef'] = $saleToUIKoef;
                     
                     //$pUnits[$key]['ui_step']=15;
-
+/*
                     $array_koef = (array) $saleToUIKoef;
                     $z=0;
                     $koef_numerator=1;
                     $koef_denomirator=1;
-                    /*
+                    
                     
                     foreach($array_koef as $koef_item){
                         if($z){
