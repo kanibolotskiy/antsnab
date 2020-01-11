@@ -125,7 +125,7 @@ class ProductTemplateDecorator implements IDecorator
                     //echo $product_id."|'isSaleBase'!".$unit_id;
                     
                     $saleToUIKoef = $produnitsCalcGateway->getBaseToUnitKoef($product_id, 'isSaleBase', $unit_id);
-                    /*
+                    
                     $pUnits[$key]['sale_to_ui_koef'] = $saleToUIKoef;
                     
                     //$pUnits[$key]['ui_step']=15;
@@ -173,7 +173,7 @@ class ProductTemplateDecorator implements IDecorator
                     }
                         
                     $pUnits[$key]['relStr'] = $relStr;
-                    */
+                    
                 }
 
                 //параллельно ищем $priceUnit (базовая единица цен) - нужна как отдельная переменная

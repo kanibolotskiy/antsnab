@@ -68,7 +68,7 @@ class ProdUnitsCalc extends \Model
          */  
         
         $koef = $this->unitToUnit($units, $baseUnitId, $toId);
-        echo "!".$koef."!";
+        
         if (null === $koef) {
             $koef = Fraction::fromFloat(1.0);
             $koef =  $koef->divide($this->unitToUnit($units, $toId, $baseUnitId));
