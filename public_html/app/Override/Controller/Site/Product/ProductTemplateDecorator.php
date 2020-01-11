@@ -76,7 +76,7 @@ class ProductTemplateDecorator implements IDecorator
             $fav_active='';
         }
         $data['favorite'] = $fav_active;
-        /*
+        
 
         if(isset($_COOKIE["compare"])){
             $compare_arr=json_decode($_COOKIE["compare"]);
@@ -110,7 +110,7 @@ class ProductTemplateDecorator implements IDecorator
         $priceUnit = null;
         $saleUnit = null;
         $saleToPriceKoef = null;
-        
+        /*
         try {
             foreach ($prodUnits as $unit_id => $unit) {
                 // единицы измерения с sortorder <> 0 участвуют в отображении в шаблоне 
