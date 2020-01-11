@@ -1137,7 +1137,7 @@ class ControllerProductProduct extends Controller {
 			//$data1["test"]="test";
 
 			$this->response->setOutput($this->load->view('product/product', $data));
-			//$this->response->setOutput($this->load->view('product/product_new', $data));
+			
 		} else {
 			$url = '';
 
