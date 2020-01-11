@@ -68,16 +68,18 @@ class ProdUnitsCalc extends \Model
          */  
         /*
         $koef = $this->unitToUnit($units, $baseUnitId, $toId);
+        */
+        $koef=1;
         if (null === $koef) {
             $koef = Fraction::fromFloat(1.0);
             $koef =  $koef->divide($this->unitToUnit($units, $toId, $baseUnitId));
         }
-
+        
         if (null === $koef) {
             throw new Exception('cant calculate koefficient from ' . $toId . ' to ' . $base . ' direction ' . (int)$direction);
         }
-        */
-        $koef=1;
+        
+        
         return $koef;
     }
 
