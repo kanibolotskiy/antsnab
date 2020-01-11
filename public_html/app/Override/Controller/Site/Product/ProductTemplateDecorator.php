@@ -132,6 +132,8 @@ class ProductTemplateDecorator implements IDecorator
                     $z=0;
                     $koef_numerator=1;
                     $koef_denomirator=1;
+                    /*
+                    
                     foreach($array_koef as $koef_item){
                         if($z){
                             $koef_denomirator=$koef_item;
@@ -140,7 +142,6 @@ class ProductTemplateDecorator implements IDecorator
                         }
                         $z++;
                     }
-                    /*
                     
                     $pUnits[$key]['nom']=$koef_numerator;
                     $pUnits[$key]['denom']=$koef_denomirator;
