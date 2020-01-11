@@ -473,7 +473,7 @@ class ControllerProductProduct extends Controller {
 				);
 			}
 		}
-		/*
+		
 		$this->load->model('catalog/manufacturer');
 
 		if (isset($this->request->get['manufacturer_id'])) {
@@ -509,7 +509,7 @@ class ControllerProductProduct extends Controller {
 				);
 			}
 		}
-
+		/*
 		if (isset($this->request->get['search']) || isset($this->request->get['tag'])) {
 			$url = '';
  
