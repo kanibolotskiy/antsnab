@@ -1,5 +1,9 @@
 <?php
 class ModelCatalogInformation extends Model {
+	public function getBanner($banner_id){
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "banner_image WHERE banner_id='".$banner_id."'");
+		return $query->rows;
+	}
 	private function cleanInternalUrl($matches){
 		$a = $matches[0];
 		//echo "!".$this->data['base']."!";
@@ -31,6 +35,9 @@ class ModelCatalogInformation extends Model {
 		//$html = str_replace('/>', 'title="'.$post_title.'" />', $html);
 
 		//$text = preg_replace('/(alt=")(.*?)(")/i', '$1'.$post_title.'$3', $text);
+		$text = preg_replace('/alt="([^"]+)"/i', 'alt="$1" title="$1"', $text);
+		
+		
 
 		$text = preg_replace_callback('/<a[^>]+/', array($this, 'cleanInternalUrl'), $text);
 		
@@ -41,6 +48,11 @@ class ModelCatalogInformation extends Model {
 		$text=str_replace('</b>','</span>',$text);
 		$text=str_replace('</strong>','</span>',$text);
 		return $text;
+	}
+	public function getInformationMain() {
+		
+		$query = $this->db->query("SELECT DISTINCT * FROM dopinfo_main where doc_id = '1'");
+		return $query->row;
 	}
 	public function getInformation($information_id) {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "information i LEFT JOIN " . DB_PREFIX . "information_description id ON (i.information_id = id.information_id) LEFT JOIN " . DB_PREFIX . "information_to_store i2s ON (i.information_id = i2s.information_id) WHERE i.information_id = '" . (int)$information_id . "' AND id.language_id = '" . (int)$this->config->get('config_language_id') . "' AND i2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND i.status = '1'");

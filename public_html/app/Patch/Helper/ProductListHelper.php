@@ -25,18 +25,35 @@ class ProductListHelper extends \Model
 
         $results = $this->model_catalog_product->getProducts($filter_data);
         $products = [];
+        
+
         $favorite_arr=[];
         if(isset($_COOKIE["favorite"])){
             $favorite_arr=json_decode($_COOKIE["favorite"]);
         }
-        //print_r($results);
+        
+        $compare_arr=[];
+        if(isset($_COOKIE["compare"])){
+            $compare_arr=json_decode($_COOKIE["compare"]);
+        }
+
         foreach ($results as $result) {
+            
+            
             if(in_array($result['product_id'], $favorite_arr)){
                 $fav_active=' active';
             }else{
                 $fav_active='';
             }
-            
+            if(in_array($result['product_id'], $compare_arr)){
+                $compare_active=' active';
+            }else{
+                $compare_active='';
+            }
+
+            //$labels=[];
+            $labels = $this->model_catalog_product->getProductLabels($result);
+
             if ($result['image']) {
                 //$image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_category_width'), $this->config->get($this->config->get('config_theme') . '_image_category_height'));
                 $image = $this->model_tool_image->myResize($result['image'], 200, 200,2);
@@ -73,6 +90,8 @@ class ProductListHelper extends \Model
             $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
             $prodUnits = $produnitsGateway->getUnitsByProduct($result['product_id']);
 
+            
+            
             //print_r($result);
             foreach ($prodUnits as $unit_id => $unit) {
                 if (0 != $unit['switchSortOrder']) {
@@ -238,8 +257,8 @@ class ProductListHelper extends \Model
                 'properties' => $previewProperties,
                 'href' => $this->url->link('product/product', 'path=' . $path . '&product_id=' . $result['product_id']),
                 'favorite'=>$fav_active,
-                'discount_label'=>$discount_label
-
+                'compare'=>$compare_active,
+                'labels'=>$labels
             );
         }
         return $products;

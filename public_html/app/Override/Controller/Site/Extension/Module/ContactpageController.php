@@ -98,10 +98,22 @@ class ContactpageController extends \Controller
             $data['telephone'] = $this->config->get('config_telephone');
 			$data['fax'] = $this->config->get('config_fax');
         }
-        
+        $data['requisites'] = html_entity_decode($this->config->get('config_req'));
+
         $data['open'] = nl2br($this->config->get('config_open'));
         $data['comment'] = $this->config->get('config_comment');
         //$data['email_site'] = $this->config->get('config_email_site');
+
+        $data['link_vk']=$this->config->get('config_soc_vk');
+        $data['link_fb']=$this->config->get('config_soc_fb');
+        $data['link_tw']=$this->config->get('config_soc_tw');
+        $data['link_in']=$this->config->get('config_soc_in');
+
+        $data['m_telegram']=$this->config->get('config_m_telegram');
+        $data['m_whatsapp']=$this->config->get('config_m_whatsapp');
+        $data['m_viber']=$this->config->get('config_m_viber');
+
+        
 
         $data['locations'] = array();
 
@@ -166,7 +178,28 @@ class ContactpageController extends \Controller
                 $location['longitude'] = '';
             }
         }
+
+        $this->load->model('catalog/information');
+        $sklads = $this->model_catalog_information->getBanner(9);
+        $data['sklads']=[];
+        foreach($sklads as $sklad){
+            $data['sklads'][]=Array(
+                "title"=>$sklad["title"],
+                "image"=>$this->model_tool_image->resize($sklad["image"], 1000,750, 1),
+                "thumb"=>$this->model_tool_image->resize($sklad["image"], 300, 300, 1)
+            );
+        }
+        //$data['sklads']=
         
+        /*
+        $data['sklads']=Array(
+            Array("image"=>"catalog/image/sklad/image55.png","title"=>"test1"),
+            Array("image"=>"catalog/image/sklad/image56.png","title"=>"test2"),
+            Array("image"=>"catalog/image/sklad/image55.png","title"=>"test3"),
+            Array("image"=>"catalog/image/sklad/image55.png","title"=>"test4"),
+            Array("image"=>"catalog/image/sklad/image55.png","title"=>"test5"),
+        );
+        */
 
         $yamap = 'https://api-maps.yandex.ru/2.0/?lang=ru_RU&load=package.standard';
         //$this->document->addScript($yamap, 'footer');

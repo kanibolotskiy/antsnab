@@ -132,6 +132,10 @@ function initAccordion() {
 }
 */
 $(document).ready(function(){
+    $(".catalog_opens").click(function(){
+        $(".catalog-product .accordion").slideToggle(200);
+    });
+
     $(".catalog_arrow").click(function(){
         var itm=$(this).closest("li");
         if(itm.hasClass("_active")){

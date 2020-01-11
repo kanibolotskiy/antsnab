@@ -1,8 +1,16 @@
 import {Quantity} from './lib/quantity.es6.js';
 import './lib/formsubmit.js';
 var Fraction = require('fraction.js');
+var $switchers;
+var $firstSwitcher;
 //var format = require('number-format.js');
 
+function scrollbarWidth() {
+    var documentWidth = parseInt(document.documentElement.clientWidth);
+    var windowsWidth = parseInt(window.innerWidth);
+    var scrollbarWidth = windowsWidth - documentWidth;
+    return scrollbarWidth;
+}
 
 function getPlural(number, one, two) {///1,ведра,вёдер
     let n = Math.abs(number);
@@ -18,6 +26,23 @@ function getPlural(number, one, two) {///1,ведра,вёдер
         }
     }
 }
+/**Дублируется в category.js */
+function initQuantityContainers($collection) {
+    $collection.each(function(index){
+        var $el = $(this);
+            Quantity.init($el, {
+                    'sale_to_ui_koef':$el.attr('data-sale_to_ui_koef'),
+                    'ui_step':$el.attr('data-ui_step'),
+                    'ui_minimum':$el.attr('data-ui_minimum'),
+                    'ui_names': {
+                        'ui_name': $el.attr('data-ui_name'),
+                        'ui_name_plural': $el.attr('data-ui_name_plural'),
+                        'ui_name_genitive': $el.attr('data-ui_name_genitive')
+                    }
+            });
+    });
+}
+
 /*Склонение по падежам*/
 function declOfNum(number, titles)
 {
@@ -50,172 +75,126 @@ function number_format(number, decimals, dec_point, thousands_sep) {
     return s.join(dec);
 }
 
-/** Карточка */
-/** init switching ui in specification (product) page */
-if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
-    (function() {
+function toggleSwitchHandler(e){
+    e.preventDefault();
+    var $el = $(this);
 
-        var $switchers = $('li','#priceSwitcher' ),
-            $firstSwitcher = $($switchers[0]);
-        // sale_to_price_koef = switcher.attr('data-sale_to_price_koef'),
-        
-        $switchers.on('click', toggleSwitchHandler);
-        $firstSwitcher.trigger('click');
+    $switchers.removeClass('active');
+    $el.addClass('active');
+    togglePriceDescr($el);
+    toggleQuantityInput($el);
+    togglePrices($el);
+}
 
-        function toggleSwitchHandler(e){
-            e.preventDefault();
-            var $el = $(this);
-        
-            $switchers.removeClass('active');
-            $el.addClass('active');
-            togglePriceDescr($el);
-            toggleQuantityInput($el);
-            togglePrices($el);
-        }
+function togglePriceDescr($activeEl) {
+    var ui_descr = $activeEl.attr('data-ui_descr');
+    $('#priceWholesaleDescr').html(ui_descr);
+    $('#priceDescr').html(ui_descr);
+}
 
-        function togglePriceDescr($activeEl) {
-            var ui_descr = $activeEl.attr('data-ui_descr');
-            $('#priceWholesaleDescr').html(ui_descr);
-            $('#priceDescr').html(ui_descr);
-        }
-        
-        function toggleQuantityInput($activeEl) {
-            var selector = '.qnt-container-spec',
-                $input = $(selector),
-                options = {
-                    'sale_to_ui_koef':$activeEl.attr('data-sale_to_ui_koef'),
-                    'ui_minimum':$activeEl.attr('data-ui_minimum'),
-                    'ui_step':$activeEl.attr('data-ui_step'),
-                    'ui_names': {
-                        'ui_name': $activeEl.attr('data-ui_name'),
-                        'ui_name_plural': $activeEl.attr('data-ui_name_plural'),
-                        'ui_name_genitive': $activeEl.attr('data-ui_name_genitive')
-                    }
-                };
-        
-            //check if input controller was inited
-            if( !$input.data('quantity')) {
-                Quantity.init(selector, options); 
-                return;
+function toggleQuantityInput($activeEl) {
+    var selector = '.qnt-container-spec',
+        $input = $(selector),
+        options = {
+            'sale_to_ui_koef':$activeEl.attr('data-sale_to_ui_koef'),
+            'ui_minimum':$activeEl.attr('data-ui_minimum'),
+            'ui_step':$activeEl.attr('data-ui_step'),
+            'ui_names': {
+                'ui_name': $activeEl.attr('data-ui_name'),
+                'ui_name_plural': $activeEl.attr('data-ui_name_plural'),
+                'ui_name_genitive': $activeEl.attr('data-ui_name_genitive')
             }
+        };
+
+    //check if input controller was inited
+    if( !$input.data('quantity')) {
+        Quantity.init(selector, options); 
+        return;
+    }
+
+    var controller = $input.data('quantity');
+    controller.switch(options.sale_to_ui_koef, options.ui_minimum, options.ui_step, options.ui_names);
+}
+
+function togglePrices($activeEl) {
+
+    var $price = $('#price'),
+        price = parseFloat($price.attr('data-value')),
+        $wholeSalePrice = $('#wholesale_price'),
+        wholeSalePrice = parseFloat($wholeSalePrice.attr('data-value')),
+        saleToPriceKoef = new Fraction($('#button-cart').attr('data-sale_to_price_koef')),
+        saleToUiKoef = new Fraction($activeEl.attr('data-sale_to_ui_koef')),
+        uiPrice = saleToPriceKoef.div(saleToUiKoef).mul(price),
+        uiWholeSalePrice = saleToPriceKoef.div(saleToUiKoef).mul(wholeSalePrice),
+        //currency = $('#priceSwitcher').attr('data-currency_symbol');
+        currency = '<div class="rur">i</div>';
         
-            var controller = $input.data('quantity');
-            controller.switch(options.sale_to_ui_koef, options.ui_minimum, options.ui_step, options.ui_names);
+    
+    var plural1=$("#priceSwitcher .active").attr("data-ui_name_genitive");
+    var plural2=$("#priceSwitcher .active").attr("data-ui_name_plural");
+    var mincount = $('#priceSwitcher .active').attr('data-ui_minimum');
+
+    var opt_limit=$("#priceSwitcher").attr("data-opt_limit")
+    var count_limit=Math.ceil(opt_limit*saleToUiKoef);
+
+    var plural_str=getPlural(count_limit,plural1,plural2);
+
+    var plural_min_count_str=getPlural(mincount,plural1,plural2);
+
+    $("#opt_limit").html("от "+count_limit+" "+plural_str);
+
+    $("#rosn_limit").html("от " + mincount + " " + plural_min_count_str);
+
+    var isInt = ( uiPrice.valueOf() - parseInt(uiPrice.valueOf()) === 0 ),
+        formatStr = isInt?'### ###.':'### ###,##';
+ 
+        var price_val=uiPrice.valueOf();
+        var opt_price_val=uiWholeSalePrice.valueOf();
+        var price_str='';
+        var opt_price_str='';
+
+        if(price_val-parseInt(price_val)===0){
+            price_str = number_format(price_val, 0, ",", " ") + " " + currency 
+        }else{
+            price_str = number_format(price_val, 2, ",", " ") + " " + currency
         }
-       
-        function togglePrices($activeEl) {
+        $price.html(price_str);
 
-            var $price = $('#price'),
-                price = parseFloat($price.attr('data-value')),
-                $wholeSalePrice = $('#wholesale_price'),
-                wholeSalePrice = parseFloat($wholeSalePrice.attr('data-value')),
-                saleToPriceKoef = new Fraction($('#button-cart').attr('data-sale_to_price_koef')),
-                saleToUiKoef = new Fraction($activeEl.attr('data-sale_to_ui_koef')),
-                uiPrice = saleToPriceKoef.div(saleToUiKoef).mul(price),
-                uiWholeSalePrice = saleToPriceKoef.div(saleToUiKoef).mul(wholeSalePrice),
-                //currency = $('#priceSwitcher').attr('data-currency_symbol');
-                currency = '<div class="rur">i</div>';
-                
-            
-            var plural1=$("#priceSwitcher .active").attr("data-ui_name_genitive");
-            var plural2=$("#priceSwitcher .active").attr("data-ui_name_plural");
-            var mincount = $('#priceSwitcher .active').attr('data-ui_minimum');
-
-            var opt_limit=$("#priceSwitcher").attr("data-opt_limit")
-            var count_limit=Math.ceil(opt_limit*saleToUiKoef);
-
-            var plural_str=getPlural(count_limit,plural1,plural2);
-
-            var plural_min_count_str=getPlural(mincount,plural1,plural2);
-
-            $("#opt_limit").html("от "+count_limit+" "+plural_str);
-
-            $("#rosn_limit").html("от " + mincount + " " + plural_min_count_str);
-
-            var isInt = ( uiPrice.valueOf() - parseInt(uiPrice.valueOf()) === 0 ),
-                formatStr = isInt?'### ###.':'### ###,##';
-         
-                var price_val=uiPrice.valueOf();
-                var opt_price_val=uiWholeSalePrice.valueOf();
-                var price_str='';
-                var opt_price_str='';
-
-                if(price_val-parseInt(price_val)===0){
-                    price_str = number_format(price_val, 0, ",", " ") + " " + currency 
-                }else{
-                    price_str = number_format(price_val, 2, ",", " ") + " " + currency
-                }
-                $price.html(price_str);
-
-                if(opt_price_val-parseInt(opt_price_val)===0){
-                    opt_price_str = number_format(opt_price_val, 0, ",", " ") + " " + currency 
-                }else{
-                    opt_price_str = number_format(opt_price_val, 2, ",", " ") + " " + currency
-                }
-                $wholeSalePrice.html(opt_price_str);
-
-                if($("#discount_val").length){
-                    var discount_val1=$("#discount_val").attr("discount_val1")*(-1);
-                    var discount_val2=$("#discount_val").attr("discount_val2")*(-1);
-
-                    var pr1=opt_price_val+opt_price_val*discount_val1/(100-discount_val1);
-                    var pr2=price_val+price_val*discount_val2/(100-discount_val2);
-                    var pr1_str="";
-                    var pr2_str="";
-
-                    pr1=pr1.toFixed(2);
-                    pr2=pr2.toFixed(2);
-
-                    if(pr1-parseInt(pr1)===0){
-                        pr1_str = number_format(pr1, 0, ",", " ") + " " + currency 
-                    }else{
-                        pr1_str = number_format(pr1, 2, ",", " ") + " " + currency
-                    }
-                    if(pr2-parseInt(pr2)===0){
-                        pr2_str = number_format(pr2, 0, ",", " ") + " " + currency 
-                    }else{
-                        pr2_str = number_format(pr2, 2, ",", " ") + " " + currency
-                    }
-                    $(".product_old_price1").html(pr1_str);
-                    $(".product_old_price2").html(pr2_str);
-
-                    //console.log(discount_val);
-                    //console.log(price_val*(1+discount_val/100))
-
-                    //console.log(price_val+"+"+opt_price_val);
-                }
-                
-
-                //$price.text(number_format(uiPrice.valueOf(), 2, ",", " ") + " " + currency);
-          //  $price.text( format(formatStr + currency, uiPrice.valueOf() ) );
-/*
-            var isInt = ( uiWholeSalePrice.valueOf() - parseInt(uiWholeSalePrice.valueOf()) === 0 ),
-                formatStr = isInt?'### ###.':'### ###,##';
-            //$wholeSalePrice.text( format (formatStr + ' ' + currency, uiWholeSalePrice.valueOf()) );
-                console.log(isInt);
-                $wholeSalePrice.text(number_format(uiWholeSalePrice.valueOf(), 2, ",", " ") + " " + currency);
-*/
-
+        if(opt_price_val-parseInt(opt_price_val)===0){
+            opt_price_str = number_format(opt_price_val, 0, ",", " ") + " " + currency 
+        }else{
+            opt_price_str = number_format(opt_price_val, 2, ",", " ") + " " + currency
         }
+        $wholeSalePrice.html(opt_price_str);
 
-    })()
+        if($("#discount_val").length){
+            var discount_val1=$("#discount_val").attr("discount_val1")*(-1);
+            var discount_val2=$("#discount_val").attr("discount_val2")*(-1);
+
+            var pr1=opt_price_val+opt_price_val*discount_val1/(100-discount_val1);
+            var pr2=price_val+price_val*discount_val2/(100-discount_val2);
+            var pr1_str="";
+            var pr2_str="";
+
+            pr1=pr1.toFixed(2);
+            pr2=pr2.toFixed(2);
+
+            if(pr1-parseInt(pr1)===0){
+                pr1_str = number_format(pr1, 0, ",", " ") + " " + currency 
+            }else{
+                pr1_str = number_format(pr1, 2, ",", " ") + " " + currency
+            }
+            if(pr2-parseInt(pr2)===0){
+                pr2_str = number_format(pr2, 0, ",", " ") + " " + currency 
+            }else{
+                pr2_str = number_format(pr2, 2, ",", " ") + " " + currency
+            }
+            $(".product_old_price1").html(pr1_str);
+            $(".product_old_price2").html(pr2_str);
+        }
 }
 
-if( $('.in-stock').length > 0) {
-    /** Авторесайз блока со складами под размер ноготков фоото */
-    /** @task - если отсутствуют ноготки - схлопывается при ресайзе */
-    /*
-    window.addEventListener('resize', function(){
-        var thumbNav = document.getElementsByClassName('thumb__nav')[0], 
-            thumbNavHeight = thumbNav.offsetHeight,
-            thumbMargin = parseFloat(getComputedStyle(thumbNav).marginTop),
-            thumbNavTotalHeight = thumbMargin + thumbNavHeight;
 
-        document.getElementById('prodRight').style.paddingBottom = thumbNavTotalHeight +  "px";
-        document.getElementsByClassName('in-stock')[0].style.height = thumbNavHeight + "px";
-    });
-    */
-}
 function calc1(){
     if (typeof ym != 'undefined') {
         ym(14496178, 'reachGoal', 'calc-use');
@@ -570,7 +549,33 @@ function calc5(){
 
 }
 $( document ).ready(function() {
+    if($('#priceSwitcher').length){
+        $switchers = $('li','#priceSwitcher' );
+        $firstSwitcher = $($switchers[0]);
+        
+        $switchers.on('click', toggleSwitchHandler);
+        $firstSwitcher.trigger('click');
+    }
 
+    
+/** Карточка */
+/** init switching ui in specification (product) page 
+if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
+    (function() {
+
+        var $switchers = $('li','#priceSwitcher' ),
+            $firstSwitcher = $($switchers[0]);
+        // sale_to_price_koef = switcher.attr('data-sale_to_price_koef'),
+        
+        $switchers.on('click', toggleSwitchHandler);
+        $firstSwitcher.trigger('click');
+
+        
+        
+
+    })()
+}
+*/
     $(".favdel").click(function(){
         
         var item_id=$(this).closest(".fav_row").attr("data-product_id");
@@ -606,7 +611,6 @@ $( document ).ready(function() {
 
         $.cookie('favorite', favorite_str, { expires: 30, path: '/' });
         $("#favorite").css({"opacity":0});
-        $("#favorite").html(fav_count);
         $("#favorite").animate({"opacity":1},200);
         $(this).closest(".basket-row").remove();
     });
@@ -616,11 +620,80 @@ $( document ).ready(function() {
             e.preventDefault();
         }
     });
-    $(".favorite").click(function(e){
-        
-        
+    $(".compare_link").click(function(e){
+        if($(this).hasClass("_empty")){
+            e.preventDefault();
+        }
+    });
+
+    $(document).on("click",".compare",function(e){
         e.preventDefault();
-        //var item_id=$(this).closest(".catalog_item_product").attr("rel");
+
+        var compare_itm=$(this);
+        compare_itm.addClass("fly_animate");
+        $(".compare_div").addClass("fly_animate");
+        setTimeout(function() {
+            compare_itm.removeClass("fly_animate");
+            $(".compare_div").removeClass("fly_animate");
+        }, 210);
+
+
+        var item_id=$(this).attr("rel");
+
+        var compare_str=$.cookie('compare');
+        if(compare_str!=null){
+            var compare_arr=JSON.parse(compare_str);
+        }else{
+            var compare_arr=[];
+        }
+        var compare_count=0;
+
+        if($(this).hasClass("active")){
+            $(this).removeClass("active");
+            var new_compare_arr=[];
+            var z=0;
+            for(var i=0;i<compare_arr.length;i++){
+                if(compare_arr[i]!=item_id){
+                    new_compare_arr[z]=compare_arr[i];
+                    z++;
+                }
+            }
+            compare_str=JSON.stringify(new_compare_arr);
+            compare_count=new_compare_arr.length;
+        }else{
+            if (typeof ym != 'undefined') {
+                ym(14496178, 'reachGoal', 'compare');
+            }
+            $(this).addClass("active");
+            compare_arr[compare_arr.length]=item_id;
+            compare_str=JSON.stringify(compare_arr);
+            compare_count=compare_arr.length;
+        }
+        if(compare_count==0){
+            $(".compare_link").addClass("_empty");
+        }else{
+            $(".compare_link").removeClass("_empty");
+        }
+
+
+        $("#compare").css({"opacity":0});
+        $("#compare").animate({"opacity":1},200);
+        $.cookie('compare', compare_str, { expires: 30, path: '/' });
+    });
+
+    $(document).on("click",".favorite",function(e){
+        var fav_itm=$(this);
+        
+
+        fav_itm.addClass("fly_animate");
+        $(".favorite_div").addClass("fly_animate");
+        setTimeout(function() {
+            fav_itm.removeClass("fly_animate");
+            $(".favorite_div").removeClass("fly_animate");
+        }, 210);
+
+
+        e.preventDefault();
         var item_id=$(this).attr("rel");
 
         var favorite_str=$.cookie('favorite');//$.cookie('cat_view', rel, { expires: 7, path: '/' });
@@ -629,7 +702,6 @@ $( document ).ready(function() {
         }else{
             var favorite_arr=[];
         }
-
         var fav_count=0;
 
         if($(this).hasClass("active")){
@@ -663,17 +735,68 @@ $( document ).ready(function() {
         $("#favorite").css({"opacity":0});
         $("#favorite").html(fav_count);
         $("#favorite").animate({"opacity":1},200);
-
         $.cookie('favorite', favorite_str, { expires: 30, path: '/' });
     });
 
-    $(".onclickButton").click(function(e){
+    
+    $(document).on("mouseenter",".wrap_oneclick",function(){
+        $(this).addClass("active");
+    });
+
+    $(document).on("mouseleave",".catalog_item_product",function(){
+        $(this).find(".wrap_oneclick").removeClass("active");
+    });
+
+    $(document).on("keyup",".onclickInput",function(){
+        var vl=$(this).val();
+        var itm=$(this).closest(".wrap_oneclick");
+
+        if(vl.indexOf("_")==-1){
+            //console.log("посылаем");
+            var frm=$(this).closest(".oneclickform");
+            var data=frm.serialize();
+            var itm_thanks=itm.find(".oneclick_thanks");
+
+            itm.find(".oneclick_loader").fadeIn(100);
+            itm.find(".oneclick_hover_ok").hide();
+            
+
+            $.ajax({
+                url: '/index.php?route=product/product/sendOneForm/',
+                data: data,
+                cache: false,
+                method: 'POST',
+                dataType: 'json',
+                success: function(data){
+
+                    itm.find(".oneclick_loader").hide();
+                    itm.find(".oneclick_hover_ok").fadeIn(100);
+                    frm.find(".onclickInput").val("");
+                    itm_thanks.fadeIn(100,function(){
+                        itm_thanks.delay(2000).fadeOut(200,function(){
+                            $(".wrap_oneclick").removeClass("active");
+                        });
+                        
+                    });
+
+                    if (typeof ym != 'undefined') {
+                        ym(14496178, 'reachGoal', '1click');
+                    }
+                }
+            });
+            
+        }
+        //console.log(vl+"="+vl.indexOf("_"));
+    });
+
+    /**/
+    $(document).on("click",".onclickButton",function(e){
         e.preventDefault();
         //console.log("ok");
         var frm=$(this).closest(".oneclickform");
 
-        var itm_phone=frm.find(".onclickInput");
-        $(".onclickInput").removeClass("error");
+        var itm_phone=frm.find(".onclickInputMain");
+        $(".onclickInputMain").removeClass("error");
 
         if(itm_phone.val()==""){
             itm_phone.addClass("error");
@@ -689,10 +812,17 @@ $( document ).ready(function() {
                 type: 'POST', // For jQuery < 1.9
                 dataType: 'json',
                 success: function(data){
+                    $(".oneclick_product_thanks").fadeIn(200,function(){
+                        frm.find(".onclickInputMain").val("");
+                        $(".oneclick_product_thanks").delay(2000).fadeOut(200);
+                    });
+
                     //$(".popup.thank-youone").addClass("visible");
+                    /*
                     $(".modal").hide();
                     $(".modal_one").fadeIn(200);
-                    frm.find(".onclickInput").val("");
+                    */
+                    
                     if (typeof ym != 'undefined') {
                         ym(14496178, 'reachGoal', '1click');
                     }
@@ -904,4 +1034,57 @@ $( document ).ready(function() {
     $("#button_calc_5").click(function(){
         calc5();
     });
+
+    $(document).on("click",".fast_preview_caption span",function(e){
+
+        e.preventDefault();
+        var product_id=$(this).closest(".catalog_item_product").attr("rel");
+        $.ajax({
+            url: '/index.php?route=product/product/getFastInfo/',
+            data: "&product_id="+product_id,
+            cache: false,
+            method: 'POST',
+            //dataType: 'json',
+            success: function(data) {
+                //console.log(data);
+                $("#modal_info_product").html(data);
+                $('input[name="phone"]').inputmask("+7 9999999999",{ 
+                    "clearIncomplete": true,
+                    "alias": 'numeric', 
+                    "allowMinus": false
+                });
+                
+                $(".modal").hide();
+                $(".modal_info").fadeIn(200);
+                
+                var sw=scrollbarWidth();
+                $("html").css("overflow", "hidden");
+                $("html").css("margin-right", sw+"px");
+                $("body._hfixed .wrp_header").css({"padding-right":sw+"px"});
+
+                //import {Quantity} from './lib/quantity.es6.js';
+                initQuantityContainers($('.qnt-container-modal'));
+                $switchers = $('li','#priceSwitcher' ),
+                $firstSwitcher = $($switchers[0]);
+                $switchers.on('click', toggleSwitchHandler);
+                $firstSwitcher.trigger('click');
+            }
+        });
+    });
+
+    $(document).on("click",".modal_info_product .tovar_mini_image",function(){
+        var itm=$(this);
+        if(!itm.hasClass("active")){
+            $(".tovar_mini_image").removeClass("active");
+            itm.addClass("active");
+            var rel=itm.attr("rel");
+            //console.log(rel);
+            var pop_image=$("#main_popup_product_image");
+            pop_image.css({"opacity":0});
+            pop_image.attr("src",rel);
+            pop_image.animate({"opacity":1},400);
+        }
+    });
+
+
 });

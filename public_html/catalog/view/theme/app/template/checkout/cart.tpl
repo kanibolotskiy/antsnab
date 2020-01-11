@@ -21,16 +21,18 @@
 
                 
                 <div class="summary_total_block">
+                    
                     <?php foreach ($totals as $total): ?>
                         <div class="recalc intotal"><?php echo $total['title']; ?>: <span id="total_cart"><?php echo $total['text']; ?></span></div>
                     <?php endforeach; ?>
-                    
                     
 
                     <div class="recalc intotal economy" style="<?php if($ecosum==0){echo 'display:none';}?>" > 
                         Вы сэкономили: <span><span id="ecosum"><?php echo $ecosum;?></span> <div class="rur">i</div></span>
                     </div>
-                
+                    <div class="order_weight">Вес заказа: <span><span id="order_weight"><?php echo $total_weight;?></span> кг</span></div>
+                    <div class="order_weight">Ориентировочная стоимость доставки: <span><span id="order_weight_cost"><?php echo $total_del;?></span> <div class="rur">i</div></span></div>
+
                 </div>
 
                 <div class="cart_description content-text">
@@ -57,6 +59,18 @@
                                 <input  value="<?= $form_data['email'] ?>" name="email" type="text" placeholder="Введите электронную почту"/>
                             </div>
 
+                            <div class="form-group">
+                                <i class="error">Неверный формат</i>
+                                <input class="inputInn" value="<?= $form_data['inn'] ?>" name="inn" type="text" placeholder="Введите ИНН"/>
+                            </div>
+                            <div class="file">
+                                <div class="file-block">
+                                    <div id="filename">я юрлицо, хочу прикрепить реквизиты</div>
+                                    <input id="file" type="file" value="" name="download">
+                                </div>
+                            </div>
+                            
+
                         </div>
                         <div class="row">
 
@@ -68,12 +82,7 @@
                                 <?php endif;?>
                                 <label for="2">Нужна доставка</label>
                             </div>
-                            <div class="file">
-                                <div class="file-block">
-                                    <div id="filename">я юрлицо, хочу прикрепить реквизиты</div>
-                                    <input id="file" type="file" value="" name="download">
-                                </div>
-                            </div>
+                            
                             <input type="submit" value="Заказать">
                         </div>
                         
@@ -87,57 +96,6 @@
                 </div>
             </div>
             
-
-            <!--
-            <div class="mentioned-products mentioned-products2">
-                <?php if( $products_analog):?>
-                <div class="title">Сопутствующие товары</div>
-                <ul>
-                
-                    <?php foreach( $products_analog as $p):?>
-                    
-                    <li>
-                        <div class="products-block">
-                            <a href="<?=$p['href']?>" class="img-production">
-                                <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
-                            </a>
-                            <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
-                            <div><?=$p['price']?></div>
-                            
-                            <div class="quantity-buy cart_quantity-buy">
-                                <?php if(empty($p['unit_errors'])): ?>
-                                    <div class="qnt-container"
-                                        data-sale_to_ui_koef="<?=$p['sale_to_ui_koef']?>"
-                                        data-ui_name="<?=$p['ui_unit_name']?>"
-                                        data-ui_name_plural="<?=$p['ui_unit_name_plural']?>"
-                                        data-ui_name_genitive="<?=$p['ui_unit_name_genitive']?>"
-                                        <?php if($p['ui_unit_force_step_by_one'] == 1):?>
-                                        data-ui_minimum="1"
-                                        data-ui_step= 1"
-                                        <?php endif; ?>
-                                    >
-                                    </div>
-                                    <a href="#" class="buy cart_button_buy"
-                                        data-product_id="<?=$p['product_id']?>" 
-                                        data-sale_to_price_koef="<?=$p['sale_to_price_koef']?>">
-                                        Купить
-                                    </a>
-                                <?php else: ?>
-                                    <?php foreach($p['unit_errors'] as $e): ?>
-                                        <?=$e . "<br/>"?>
-                                    <?php endforeach; ?>
-                                <?php endif;?>
-                            </div>
-                            
-                            
-                        </div>
-                        
-                    </li>
-                    <?php endforeach;?>
-                </ul>
-                <?php endif;?>
-            </div>
-            -->
         </div>
         <?php echo $content_bottom; ?>
     </div>

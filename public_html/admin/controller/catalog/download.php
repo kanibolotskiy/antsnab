@@ -497,8 +497,6 @@ class ControllerCatalogDownload extends Controller {
 			
 			//move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
 			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD_FILES . $file);
-			
-
 
 			$json['filename'] = $file;
 			$json['mask'] = $filename;

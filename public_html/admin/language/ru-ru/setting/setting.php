@@ -178,10 +178,12 @@ $_['text_seo_pro']					   = 'SeoPro';
 $_['entry_seo_url_type']			   = 'Тип ЧПУ:';
 $_['entry_seo_url_include_path']	   = 'ЧПУ товаров с категориями:';
 $_['entry_seo_url_include_path_help']  = '/category/subcategory/product (только для SeoPro)';
-$_['entry_seo_url_postfix']			       = 'Окончание ЧПУ';
-$_['entry_seo_url_postfix_help']	     = 'Например .html (только для SeoPro)';
+$_['entry_seo_url_postfix']			   = 'Окончание ЧПУ';
+$_['entry_seo_url_postfix_help']	   = 'Например .html (только для SeoPro)';
 $_['entry_seo_pro_utm']                = 'UTM-метки для SeoPro (только для карточки товара)';
 $_['entry_status']                     = 'Статус';
+$_['entry_req']                        = 'Реквизиты';
+ 
 
 // Help
 $_['help_geocode']                     = 'Укажите вручную Geocode вашего магазина, указав ширину и долготу. ПРИМЕР: (54.718681, 20.499113) БЕЗ СКОБОК И КАВЫЧЕК!';
@@ -300,3 +302,15 @@ $_['error_error_filename']             = 'Необходимо ввести им
 $_['error_malformed_filename']         = 'Ошибка связана с искажением Журнала ошибок!';
 $_['error_mail_regexp']                = 'Поле "Регулярное выражение для проверки e-mail" обязательное!';
 $_['error_encryption']                 = 'Ключ шифрования должен быть длиной от 32 до 1024 символов!';
+
+$_['tab_contacts']                     = 'Контакты';
+
+$_['entry_soc_vk']    = 'Ссылка (VK)';
+$_['entry_soc_tw']    = 'Ссылка (Twitter)';
+$_['entry_soc_fb']    = 'Ссылка (Facebook)';
+$_['entry_soc_in']    = 'Ссылка (Instagram)';
+
+$_['entry_m_telegram']    = 'Мессенджер (Telegram)';
+$_['entry_m_whatsapp']    = 'Мессенджер (Whatsapp)';
+$_['entry_m_viber']    = 'Мессенджер (Viber)';
+

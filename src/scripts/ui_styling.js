@@ -68,6 +68,46 @@ $(document).ready(function(){
     check_resize();
     check_scroll();
 
+    $("#contact_slider").slick({
+        appendArrows:$(".contact_slider_arrows"),
+        dots: false,
+        arrows:true,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 1,
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+          // You can unslick at a given breakpoint now by adding:
+          // settings: "unslick"
+          // instead of a settings object
+        ]
+    });
+
+    $('input[name="inn"]').inputmask("9999999999[99]",{
+        "clearIncomplete": true,
+    });
+
     $('input[name="phone"]').inputmask("+7 9999999999",{ 
         "clearIncomplete": true,
         "alias": 'numeric', 

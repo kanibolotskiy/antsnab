@@ -192,13 +192,13 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()		
 				);					
 			}
-			//Преимущества на главной
-			if ($this->user->hasPermission('access', 'catalog/benefits_main')) {		
-							
+
+			//Главная
+			if ($this->user->hasPermission('access', 'catalog/main')) {		
 				$dopinfo_arr[] = array(
-					'name'	   => $this->language->get('text_benefits_main'),
-					'href'     => $this->url->link('catalog/benefits_main', 'token=' . $this->session->data['token'], true),
-					'children' => array()		
+					'name'	   => $this->language->get('text_main'),
+					'href'     => $this->url->link('catalog/main', 'token=' . $this->session->data['token'], true),
+					'children' => array()
 				);					
 			}
 

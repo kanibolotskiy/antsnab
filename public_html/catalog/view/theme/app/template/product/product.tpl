@@ -1,6 +1,6 @@
 <?php echo $header; ?>
 <div class="container main">
-    <input type="hidden" id="product_id" value="<?=$product_id?>"/>
+    
     <?= $column_left ?>
     <div class="content">
         <ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
@@ -35,7 +35,7 @@
 
         <?php echo $content_top; ?>
         <div class="item_card_product" itemscope itemtype="http://schema.org/Product">
-            <div class="card-product">
+            <div class="card-product" id="product_id" product_id="<?=$product_id?>">
                 <h1 class="title" itemprop="name"><?=$heading_title?></h1>
                 <img itemprop="image" src="<?php echo $popup; ?>" style="display:none;">
                 
@@ -49,7 +49,7 @@
                 </div>
 
 
-                <div class="wrapper_product_cart">
+                <div class="wrapper_product_cart wrp_fly">
                     <div class="manufacturer">
                         <p>
                             <span itemprop="sku"><?=$sku?></span>
@@ -83,11 +83,20 @@
                         </div> 
                         <div class="left">
                             <div class="tovar_main_image">
-                                <?php if($discount){?>
-                                    <div class="label_discount _label" title="Сегодня этот товар продается со скидкой" id="discount_val" discount_val1="<?php echo $discount_val1;?>" discount_val2="<?php echo $discount_val2;?>"><?php echo $discount;?>%</div>
+        
+                                <?php if($labels){  ?>
+                                    <div class="item_labels">
+                                        <?php foreach($labels as $key=>$label){ ?>
+                                            <div class="item_label <?php echo $key;?>" title="<?php echo $label['title'];?>"><?php echo $label['label'];?></div>
+                                        <?php } ?>
+                                    </div>
                                 <?php }?>
+
                                 <?php if($rating){?>
-                                    <div class="agg_rating"><?php echo $rating?></div>
+                                    <div class="agg_rating">
+                                        <div class="agg_rating_ico"></div>
+                                        <div class="agg_rating_val"><?php echo $rating?></div>
+                                    </div>
                                 <?php }?>
 
                                 <?php if ($thumb) { ?>
@@ -95,12 +104,16 @@
                                     <a class="" data-fancybox="gallery" data-caption="<?php echo $heading_title.'. #1'; ?>"
                                     href="<?php echo $popup; ?>" 
                                     title="<?php echo $heading_title; ?>">
-                                        <img src="<?php echo $thumb; ?>"
+                                        <img class="wrp_fly_image" src="<?php echo $thumb; ?>"
                                             title="<?php echo $heading_title; ?>"
                                             alt="<?php echo $heading_title; ?>" />
                                     </a>
                                 <?php } ?>
-                                <div title="Добавить товар в избранное" class="favorite <?php echo $favorite;?>" rel="<?php echo $product_id;?>"></div>
+                                <div class="wrp_favorite">
+                                    <div title="Добавить товар в избранное" class="favorite <?php echo $favorite;?>" rel="<?php echo $product_id;?>"></div>
+                                    <div title="Добавить товар в сравнение" class="compare <?php echo $compare;?>" rel="<?php echo $product_id;?>"></div>
+                                </div>
+                                
                             </div>
                             
                             <div class="thumb__nav">
@@ -270,9 +283,11 @@
                                         </div>
                                     </div>
                                     <!-- // -->
-
+                                    
                                     <div class="quantity-buy quantity-buy_product">
-                                        <div class="quantity-buy-block">
+                                        
+                                        <div class="quantity-buy-block mincount_container">
+                                            <div class="min_count_hint" id="min_count_hint"><span>минимально для заказа</span></div>
                                             <div class="qnt-container-spec"></div>
                                         </div>
                                         <a data-loading-text="Добавление..." 
@@ -283,10 +298,11 @@
                                         class="buy add-to-card add-to-card-product">В корзину</a>
                                     </div>
                                     <div class="wrap_oneclick">
+                                        <div class="oneclick_product_thanks">Спасибо за обращение. Мы Вам перезвоним.</div>
                                         <form action="#" class="oneclickform">
                                             <input type="hidden" name="product" value="<?=$heading_title?>"/>
                                             <input type="text" class="workemail" name="workemail"/>
-                                            <input type="tel" class="onclickInput" placeholder="Введите телефон" name="phone"/>
+                                            <input type="tel" class="onclickInputMain" placeholder="Введите телефон" name="phone"/>
                                             <button type="submit" class="onclickButton">Купить в 1 клик</button>
                                         </form>
                                     </div>
@@ -344,11 +360,12 @@
                         </div>
                     </div>
                 </div>
+                
                 <?php if($benefits) {?>
                     <div class="benefits">
                         <?php foreach($benefits as $benefit){ ?>
                             <div class="bene_item with_goal" goal="<?php echo $benefit['goal'];?>">
-                                <div class="bene_item_ico"></div>
+                                <div class="bene_item_ico"><img src="<?php echo $benefit['filename'];?>"/></div>
                                 <div class="bene_item_val"><?php echo $benefit['name'];?></div>
                                 <div class="bene_item_desc"><?php echo $benefit['description'];?></div>
                             </div>
@@ -823,9 +840,18 @@
                 
                     <?php foreach( $products as $p):?>
                     <li>
+                        <?php if($p["labels"]){  ?>
+                            <div class="item_labels">
+                                <?php foreach($p["labels"] as $key=>$label){ ?>
+                                    <div class="item_label <?php echo $key;?>" title="<?php echo $label['title'];?>"><?php echo $label['label'];?></div>
+                                <?php } ?>
+                            </div>
+                        <?php }?>
+                        <!--
                         <?php if($p['discount']){?>
                             <div class="label_discount _label"><?php echo $p['discount'];?>%</div>
                         <?php }?>
+                        -->
                         <div class="products-block">
                             <?php if($p["rating"]){?>
                                 <div class="agg_rating"><?php echo $p["rating"];?></div>

@@ -10,9 +10,11 @@ class Quantity {
         if (undefined === opts) {
             opts = {};
         }
-
+        
         var $els = (selector instanceof jQuery)?selector:$(selector),
             elName = (opts.el_name)?opts.el_name:null; // не путать с opts.ui_names. el_name это аттрибут name input поля
+
+        
 
         $els.each(function () {
             let view = new QuantityView(this, elName),
@@ -23,9 +25,7 @@ class Quantity {
     }
     
     constructor(view, opts) {
-        
-        var rosn_limit=$("#data-rosn_limit").attr("data-rosn_limit");
-        
+        //var rosn_limit=$("#data-rosn_limit").attr("data-rosn_limit");
         this._options = {
             /** SaleQuantity options */
             'sale_step': opts.sale_step? parseFloat(opts.sale_step) : 1,

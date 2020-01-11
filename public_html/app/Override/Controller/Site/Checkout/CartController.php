@@ -669,6 +669,7 @@ class CartController extends \ControllerCheckoutCart
             'name' => '',
             'phone' => '',
             'email' => '',
+            'inn'=>'',
             'need_shipping' => 0,
             'shipping_address' => '',
         ];
@@ -777,7 +778,7 @@ class CartController extends \ControllerCheckoutCart
             $this->load->model('catalog/product');
 
             //print_r($products);
-
+            $totalWeight=0; 
             foreach ($products as $product) {
                 $product_total = 0;
 
@@ -832,10 +833,11 @@ class CartController extends \ControllerCheckoutCart
 
                 
                 
-                
+                $base_weight=0;
                 foreach ($prodUnits as $unit_id => $unit) {
                     if ($unit['isPriceBase'] == 1 && !$priceUnit) {
                         $priceUnit = $unit;
+                        $base_weight=$unit['weight'];
                         //коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
                         $saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($product['product_id'], 'isSaleBase', $unit_id);
                     } elseif ($unit['isPriceBase'] == 1) {
@@ -870,7 +872,7 @@ class CartController extends \ControllerCheckoutCart
     
                     }                    
                 }
-
+                
                 $step=1;
         
                 
@@ -912,6 +914,7 @@ class CartController extends \ControllerCheckoutCart
                     //@added @task
                     $orderSumEco=0;
                     $prodQuantity =(float)$product['quantity'];
+                    $totalWeight+=$prodQuantity*$base_weight;
                     if ($prodQuantity >= $wholesale_threshold) {
                         $rowTotal = $saleUnit_price_wholesale * $prodQuantity; 
 
@@ -1051,7 +1054,9 @@ class CartController extends \ControllerCheckoutCart
             );
 
             $data['ecosum']=number_format($orderSumEcoTotal,0,"."," ");
-
+            $data['total_weight']=$totalWeight;
+            $data['total_del']=$this->model_catalog_product->getDeliveryPrice($totalWeight);
+            
 
             $data['continue'] = $this->url->link('common/home');
             $data['checkout'] = $this->url->link('checkout/checkout', '', true);
@@ -1255,7 +1260,7 @@ class CartController extends \ControllerCheckoutCart
     /**Ajax обновление */
     public function ajaxRefresh($returned_data=[]){
         $json = array();
-
+        $this->load->model('catalog/product');
         $products = $this->cart->getProducts();
         
         // Update
@@ -1305,21 +1310,32 @@ class CartController extends \ControllerCheckoutCart
         $data['products']=[];
         $orderSumTotal = 0;
         $orderSumEcoTotal = 0;
-
+        $totalWeight=0;
         foreach ($products as $product) {
+            
             $produnitsGateway = new ProdUnits($this->registry);
             $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
             $prodUnits = $produnitsGateway->getUnitsByProduct($product['product_id']);
             $priceUnit = null;
+            $base_weight=0;
             foreach ($prodUnits as $unit_id => $unit) {
+                //print_r($unit);
+                /*if($unit['isPackageBase']){
+                    
+                    $base_vol=$unit['calcKoef'];
+                    //echo "vol=".$base_vol;
+                }*/
+
                 if ($unit['isPriceBase'] == 1 && !$priceUnit) {
                     $priceUnit = $unit;
                     //коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
+                    $base_weight=$unit['weight'];
                     $saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($product['product_id'], 'isSaleBase', $unit_id);
                 } elseif ($unit['isPriceBase'] == 1) {
                     throw new \Exception('Too many price bases for product ' . $product['product_id']);
                 }
             }
+            //echo "вес=".$base_weight;
             if (!$priceUnit) {
                 throw new \Exception('Price base wasnt found for product ' . $product['product_id']);
             }
@@ -1340,7 +1356,9 @@ class CartController extends \ControllerCheckoutCart
                 //@added @task
                 $orderSumEco=0;
                 $prodQuantity =(float)$product['quantity'];
+                $totalWeight+=$prodQuantity*$base_weight;
                 if ($prodQuantity >= $wholesale_threshold) {
+                    
                     $rowTotal = $saleUnit_price_wholesale * $prodQuantity; 
                     $isWholesale = true;
                     $total = $this->currency->format($rowTotal, $this->session->data['currency']);
@@ -1372,7 +1390,7 @@ class CartController extends \ControllerCheckoutCart
                 'price' => $price,
                 'price_wholesale' => $price_wholesale,
                 'isWholesale' => $isWholesale,
-                'total' => $total,
+                'total' => $total
             );
         }
         $this->load->language('checkout/cart');
@@ -1381,6 +1399,7 @@ class CartController extends \ControllerCheckoutCart
         $productsCount = $this->cart->countProductTypes();
 		$productsCountStr = ProdUnitStrings::plural($productsCount, 
                         'вид товара', 'вида товара', 'видов товара');
+        
         if($productsCount){
             $data['total_str'] = sprintf($this->language->get('text_items'), $productsCount, $productsCountStr, $this->currency->format($orderSumTotal, $this->session->data['currency']));
             $data['econom']=number_format($orderSumEcoTotal,0,"."," ");
@@ -1398,7 +1417,8 @@ class CartController extends \ControllerCheckoutCart
         }
         $data['success']=true;
         $data['total'] = $this->currency->format($orderSumTotal, $this->session->data['currency']);
-        
+        $data['total_weight']=$totalWeight;
+        $data['total_del']=$this->model_catalog_product->getDeliveryPrice($totalWeight);
         $this->response->setOutput(json_encode($data));
     }
 
@@ -1475,6 +1495,7 @@ class CartController extends \ControllerCheckoutCart
             $order_data['firstname'] = $customer_info['firstname'];
             $order_data['lastname'] = $customer_info['lastname'];
             $order_data['email'] = $customer_info['email'];
+            $order_data['inn'] = $customer_info['inn'];
             $order_data['telephone'] = $customer_info['telephone'];
             $order_data['fax'] = $customer_info['fax'];
             $order_data['custom_field'] = json_decode($customer_info['custom_field'], true);
@@ -1484,6 +1505,7 @@ class CartController extends \ControllerCheckoutCart
             $order_data['firstname'] = $this->request->post['name'];
             $order_data['lastname'] = $this->request->post['name'];
             $order_data['email'] = trim($this->request->post['email']);
+            $order_data['inn'] = trim($this->request->post['inn']);
             $order_data['telephone'] = $this->request->post['phone'];
             $order_data['custom_field'] = [];
         }

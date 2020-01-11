@@ -48,6 +48,10 @@ class FooterTemplateDecorator implements IDecorator
             $data['telephone2'] = $config->get('config_fax');
         }
         
+        $data['link_vk']=$config->get('config_soc_vk');
+        $data['link_fb']=$config->get('config_soc_fb');
+        $data['link_tw']=$config->get('config_soc_tw');
+        $data['link_in']=$config->get('config_soc_in');
 
         
         $data['confidence'] = $registry->get('url')->link('information/information', 'information_id=3');

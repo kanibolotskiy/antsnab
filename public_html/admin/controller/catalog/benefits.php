@@ -283,6 +283,11 @@ class ControllerCatalogBenefits extends Controller {
             $data['entry_name'] = $this->language->get('entry_name_benefits');
 			$data['entry_description'] = $this->language->get('entry_description');
 			$data['entry_goal'] = $this->language->get('entry_goal');
+			$data['entry_image'] = $this->language->get('entry_image');
+			$data['entry_filename'] = $this->language->get('entry_filename');
+			$data['button_upload'] = $this->language->get('button_upload');
+			$data['text_loading'] = $this->language->get('text_loading');
+
 
             $data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
@@ -346,11 +351,12 @@ class ControllerCatalogBenefits extends Controller {
                 $data['benefit']=$benefit_info['name'];
 				$data['benefit_description']=$benefit_info['description'];
 				$data['goal']=$benefit_info['goal'];
-
+				$data['filename']=$benefit_info['filename'];
             }else{
                 $data['benefit']='';
 				$data['benefit_description']='';
 				$data['goal']='';
+				$data['filename']='';
 			}
 			
             $data['token'] = $this->session->data['token'];

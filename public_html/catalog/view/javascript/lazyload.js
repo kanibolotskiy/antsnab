@@ -41,6 +41,11 @@ document.addEventListener("DOMContentLoaded", function(){
                     $container.append($item);
                     $item.slideDown('slow');
                     $items = $items.add($item);
+                    $('input[name="phone"]').inputmask("+7 9999999999",{ 
+                        "clearIncomplete": true,
+                        "alias": 'numeric', 
+                        "allowMinus": false
+                    });
                 });
                 
                 /** rerender shomore button */

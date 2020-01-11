@@ -1,22 +1,33 @@
-<li class="catalog_item_product" rel="<?= $p['product_id']?>" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-    <?php if($p['discount_label']){?>
-        <div class="label_discount _label" title="Сегодня этот товар продается со скидкой"><?php echo $p['discount_label'];?>%</div>
+<li class="catalog_item_product wrp_fly" rel="<?= $p['product_id']?>" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+    <?php if($p["labels"]){  ?>
+        <div class="item_labels">
+            <?php foreach($p["labels"] as $key=>$label){ ?>
+                <div class="item_label <?php echo $key;?>" title="<?php echo $label['title'];?>"><?php echo $label['label'];?></div>
+            <?php } ?>
+        </div>
     <?php }?>
+
     <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>">
     <div class="catalog-block" itemprop="item" itemscope itemtype="http://schema.org/Offer">
 
         <?php if($p["rating"]){?>
-            <div class="agg_rating"><?php echo $p["rating"];?></div>
+            <div class="agg_rating">
+                <div class="agg_rating_ico"></div>
+                <div class="agg_rating_val"><?php echo $p["rating"];?></div>
+            </div>
         <?php }?>
 
         <div class="catalog-img">
-            <img itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" title="<?= $p['name'] ?>" itemprop="image" />
+            <div class="fast_preview">
+                <div class="fast_preview_caption">
+                    <span>Быстрый просмотр</span>
+                </div>
+            </div>
+            <img class="wrp_fly_image" itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" title="<?= $p['name'] ?>" itemprop="image" />
         </div>
         <div class="wrp_favorite">
-            <div class=""></div>
-            
-            <div rel="<?= $p['product_id']?>" title="Добавить товар в избранное" class="favorite <?= $p['favorite'] ?>"></div>
-        
+            <div rel="<?= $p['product_id']?>" title="Добавить товар в избранное" class="favorite <?= $p['favorite'] ?>"></div>        
+            <div rel="<?= $p['product_id']?>" title="Добавить товар в сравнение" class="compare <?= $p['compare'] ?>"></div>
         </div>
         <div class="clr"></div>
 
@@ -47,7 +58,8 @@
             <div class="quantity-buy">
     
                 <?php if(empty($p['unit_errors'])): ?>
-                    <div class="wrp_qnt-container">
+                    <div class="wrp_qnt-container mincount_container">
+
                         <div class="qnt-container"
                             data-sale_to_ui_koef="<?=$p['sale_to_ui_koef']?>"
                             data-ui_name="<?=$p['ui_unit_name']?>"
@@ -64,6 +76,8 @@
 
                         >
                         </div>
+
+                        <div class="min_count_hint" <?php if($p['mincount']>1){echo 'style="display:block"';} ?>><span>минимально для заказа</span></div>
                         <div title="Добавить в корзину" class="buy add-to-card add-to-card-catalog"
                             data-product_id="<?=$p['product_id']?>" 
                             data-sale_to_price_koef="<?=$p['sale_to_price_koef']?>">
@@ -72,11 +86,22 @@
                     </div>
                     
                     <div class="wrap_oneclick" title="Для быстрого заказа введите свой телефон">
+                        <div class="oneclick_hover">
+                            <div class="oneclick_hover_ok"></div>
+                            <span>Купить в 1 клик
+                            <div class="oneclick_loader">
+                                <div class="loader-sonar">
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="oneclick_thanks">Спасибо за обращение</div>
                         <form action="#" class="oneclickform">
                             <input type="hidden" name="product" value="<?= $p['name'] ?>"/>
                             <input type="text" class="workemail" name="workemail"/>
                             <input type="tel" class="onclickInput" placeholder="Ваш телефон" name="phone"/>
-                            <button title="Купить в 1 клик" type="submit" class="onclickButton">Купить<span> в 1 клик</span></button>
+                            <!--<button title="Купить в 1 клик" type="submit" class="onclickButton">Купить<span> в 1 клик</span></button>-->
                         </form>
                     </div>
 

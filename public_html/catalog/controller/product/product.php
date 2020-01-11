@@ -8,6 +8,278 @@ use WS\Patch\Helper\QueryHelper;
 class ControllerProductProduct extends Controller {
 	private $error = array();
 
+	public function getFastInfo(){
+		$this->load->model('catalog/product');
+		$this->load->language('product/product');
+		
+		$registry=$this->registry;
+
+		$product_id=$this->request->post['product_id'];
+		$product_info = $this->model_catalog_product->getProduct($product_id);
+	
+		if ($product_info) {
+			if ($product_info['meta_h1']) {
+				$meta_h1 = $product_info['meta_h1'];
+			} else {
+				$meta_h1 = $product_info['name'];
+			}
+			$data['heading_title'] = $meta_h1;
+		}
+		$data['product_id'] = $product_id;
+		$data['sku'] = $product_info['sku'];
+		$data['manufacturer'] = $product_info['manufacturer'];
+		$data['description_mini'] = html_entity_decode($product_info['description_mini']);
+		$data['description'] = html_entity_decode($product_info['description']);
+		$data['price_wholesale'] = $product_info['price_wholesale'];
+		
+		
+
+
+		if($product_info['priceold']){
+			$data['priceold'] = number_format($product_info['priceold'],0,"."," ");
+		}
+		
+		if($product_info['price_wholesaleold']){
+			$data['price_wholesaleold'] = number_format($product_info['price_wholesaleold'],0,"."," ");
+		}
+
+		$data['quantity_stock']=$product_info['quantity'];
+		if ($product_info['quantity'] > 0) {
+			$data['stock'] = $this->language->get('stock_avail');
+		}else{
+			$data['stock'] = $this->language->get('stock_byorder');
+		}
+		$data['rating'] = round($product_info['rating'],1);
+
+		$this->load->model('tool/image'); 
+		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			$b_patch=$this->config->get('config_ssl').'image/';
+		} else {
+			$b_patch=$this->config->get('config_url').'image/';
+		}
+		/*
+		if ($product_info['image']) {
+			$data['popup'] = $this->model_tool_image->myResize($product_info['image'], 1000,750,1,'water.png');
+		} else {
+			$data['popup'] = '';
+		}
+		*/
+		
+		$data['images'] = array();
+
+		if ($product_info['image']) {
+			$data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get($this->config->get('config_theme') . '_image_thumb_width'), $this->config->get($this->config->get('config_theme') . '_image_thumb_height'));
+			$this->document->setOgImage($data['thumb']);
+		} else {
+			$data['thumb'] = '';
+		}
+		$data['images'][] = array(
+			'popup' => $this->model_tool_image->myResize($product_info['image'],$this->config->get($this->config->get('config_theme') . '_image_thumb_width'), $this->config->get($this->config->get('config_theme') . '_image_thumb_height')),
+			'thumb' => $this->model_tool_image->resize($product_info['image'], $this->config->get($this->config->get('config_theme') . '_image_additional_width'), $this->config->get($this->config->get('config_theme') . '_image_additional_height'))
+		);		
+
+		
+		
+		$results = $this->model_catalog_product->getProductImages($product_id);
+		foreach ($results as $result) {
+			$data['images'][] = array(
+				'popup' => $this->model_tool_image->myResize($result['image'],$this->config->get($this->config->get('config_theme') . '_image_thumb_width'), $this->config->get($this->config->get('config_theme') . '_image_thumb_height')),
+				'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_additional_width'), $this->config->get($this->config->get('config_theme') . '_image_additional_height'))
+			);
+		}
+		
+		$discount=0;
+        $discount_val1=0;
+        $discount_val2=0;
+
+        if ($registry->get('customer')->isLogged() || !$registry->get('config')->get('config_customer_price')) {
+            $data['price_wholesale'] = $registry->get('tax')->calculate($product_info['price_wholesale'], $product_info['tax_class_id'], $registry->get('config')->get('config_tax'));
+            $data['price_wholesale_val']=$registry->get('currency')->format((float)$data['price_wholesale'] ? $data['price_wholesale'] : $product_info['price_wholesale'], $registry->get('session')->data['currency']);
+            $data['price'] = $registry->get('tax')->calculate($product_info['price'], $product_info['tax_class_id'], $registry->get('config')->get('config_tax'));
+            $data['price_val']=$registry->get('currency')->format((float)$data['price'] ? $data['price'] : $product_info['price'], $registry->get('session')->data['currency']);
+
+            if($product_info['price_wholesaleold']*1){
+                $discount_val1=(($product_info['price_wholesale']/$product_info['price_wholesaleold']-1)*100);
+                $discount_val2=(($product_info['price']/$product_info['priceold']-1)*100);
+
+                $discount = (int)$discount_val1;
+            }
+
+        } else {
+            $data['price_wholesale'] = false;
+            $data['price_wholesale_val'] = false;
+            $data['price'] = false;
+            $data['price_val'] = false;
+        }
+        
+		$data['labels']=$this->model_catalog_product->getProductLabels($product_info);
+		
+        $data['discount_val1'] = $discount_val1;
+        $data['discount_val2'] = $discount_val2;
+        
+		
+		if(isset($_COOKIE["favorite"])){
+            $favorite_arr=json_decode($_COOKIE["favorite"]);
+        }else{
+            $favorite_arr=[];
+		}
+		if(isset($_COOKIE["compare"])){
+            $compare_arr=json_decode($_COOKIE["compare"]);
+        }else{
+            $compare_arr=[];
+        }
+        
+        if(in_array($product_id, $favorite_arr)){
+            $fav_active=' active';
+        }else{
+            $fav_active='';
+		}
+		if(in_array($product_id, $compare_arr)){
+            $compare_active=' active';
+        }else{
+            $compare_active='';
+		}
+
+        $data['favorite'] = $fav_active;
+		$data['compare'] = $compare_active;
+
+        $data['currencySymb'] = $registry->get('currency')->getSymbolRight($registry->get('session')->data['currency']);
+		$data['wholesale_threshold'] = (int)$product_info['wholesale_threshold'];
+		
+		//produnits - единицы измерения
+        $produnitsGateway = new ProdUnits($registry);
+        $produnitsCalcGateway = new ProdUnitsCalc($registry);
+        $prodUnits = $produnitsGateway->getUnitsByProduct($product_id);
+        
+        $pUnits = [];
+        $pUnitsErrors = null;
+        $priceUnit = null;
+        $saleUnit = null;
+		$saleToPriceKoef = null;
+		
+        $base_weight=0;
+        $base_vol=0;
+        
+
+        
+		
+
+        try {
+            foreach ($prodUnits as $unit_id => $unit) {
+				if($unit['isPackageBase']){
+					$base_weight=$unit['weight'];
+					$base_vol=$unit['calcKoef'];
+					
+				}
+                if (0 != $unit['switchSortOrder']) {
+                    $key = (int)$unit['switchSortOrder'];
+                    $pUnits[ $key ] = $unit;
+                    
+                    //print_r($unit);
+                    //коэффициент пересчета из базовой еденицы продажи в данную отображаемую еденицу
+                    $saleToUIKoef = $produnitsCalcGateway->getBaseToUnitKoef($product_id, 'isSaleBase', $unit_id);
+                    
+                    $pUnits[$key]['sale_to_ui_koef'] = $saleToUIKoef;
+                    
+                    //$pUnits[$key]['ui_step']=15;
+
+                    $array_koef = (array) $saleToUIKoef;
+                    $z=0;
+                    $koef_numerator=1;
+                    $koef_denomirator=1;
+                    foreach($array_koef as $koef_item){
+                        if($z){
+                            $koef_denomirator=$koef_item;
+                        }else{
+                            $koef_numerator=$koef_item;
+                        }
+                        $z++;
+                    }
+                    $pUnits[$key]['nom']=$koef_numerator;
+                    $pUnits[$key]['denom']=$koef_denomirator;
+
+                    $koef_d=$koef_numerator/$koef_denomirator;
+                    if($product_info['quantity']>0){
+                        $pUnits[$key]['mincount']=ceil(1*$koef_d);
+                    }else{
+                        $pUnits[$key]['mincount']=ceil($product_info['mincount']*$koef_d);
+                    }
+                    //echo "!".$pUnits[$key]['mincount']."!";
+
+                    //print_r($pUnits[$key]);
+                    //текстовые строки
+                    $pUnits[$key]['showName'] = ($unit['name_price'])?$unit['name_price']:$unit['name'];
+                    $pUnits[$key]['name_plural'] =($unit['name_plural'])?$unit['name_plural']:$unit['name'];
+
+                    //строка описания цен. Например: "ведро, 16 кг"
+                    if ($unit['calcKoef'] &&
+                        $unit['calcRel'] &&
+                        $unit['to_name_plural']) {
+                        if ($unit['calcRel'] > 1) {
+                            $relStr = $unit['name'] . ', ' . (float)$unit['calcKoef'] . ' ' . $unit['to_name_plural'];
+                        }
+                    } else {
+                        $relStr = $unit['name'];
+                    }
+                        
+                    $pUnits[$key]['relStr'] = $relStr;
+
+                }
+
+                //параллельно ищем $priceUnit (базовая единица цен) - нужна как отдельная переменная
+                //для передачи стоимостей в корзину
+                if ($unit['isPriceBase'] == 1 && !$priceUnit) {
+                    $priceUnit = $unit; 
+                    //коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
+                    $saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($product_id, 'isSaleBase', $unit_id);
+
+                } elseif ($unit['isPriceBase'] == 1) {
+                    throw new \Exception('Too many price bases for product ' . $product_id);
+                }
+
+                if ($unit['isSaleBase'] == 1 && !$saleUnit) {
+                    $saleUnit = $unit; 
+
+                } elseif ($unit['isSaleBase'] == 1) {
+                    throw new \Exception('Too many price bases for product ' . $product_id);
+                }
+            }
+
+            if (!isset($pUnits[1])) {
+                throw new \Exception('No one unit wasnt set for product');
+            }
+            
+            if (!$priceUnit) {
+                throw new \Exception('Price base wasnt found for product ' . $product_id);
+            }
+
+            if (!$saleUnit) {
+                throw new \Exception('Sale base wasnt found for product ' . $product_id);
+            }
+
+        } catch (\Exception $e) {
+            $pUnitsErrors = $e->getMessage();
+		}
+		
+		$delivery_info = $this->model_catalog_product->getDelivery($product_id,$base_weight);
+		$data["delivery_text"]='<span class="nowrap">'.$delivery_info['date_delivery'].'</span><br/>'.$delivery_info['price_delivery'];
+
+		$data['baseWeight']=$base_weight;
+		$data['baseVol']=$base_vol;
+
+        $data['pUnits'] = $pUnits;
+        $data['pUnitsErrors'] = $pUnitsErrors;
+        $data['priceUnit'] = $priceUnit;
+        $data['saleUnit'] = $saleUnit;
+        $data['sale_to_price_koef'] = $saleToPriceKoef;
+		
+        
+        $data['optLimit']=$product_info['wholesale_threshold'];
+        $data['mincount']=$product_info['mincount'];
+		$this->response->setOutput($this->load->view('partial/product_info', $data));
+
+	}
+	
 	public function ajaxDelivery(){
 		
 		$json = array();
@@ -19,24 +291,16 @@ class ControllerProductProduct extends Controller {
 		$product_id=$this->request->post['product_id'];
 		$delivery_info = $this->model_catalog_product->getDelivery($product_id,$weight);
 	
-		//print_r($delivery_info);
-	
 		$json['date_delivery']=$delivery_info['date_delivery'];
 		$json['price_delivery']=$delivery_info['price_delivery'];
 		$json['caption_delivery']=$delivery_info['caption_delivery'];
-		/*
-		$price_ico='';
-		if($delivery_info['price_ico']){
-			$price_ico=' <div class="rur">i</div>';
-		}
-		*/
-			
-		//$json['text_delivery']=html_entity_decode($delivery_info['text_delivery']);
+		
 		
 		$json['text_delivery']=$this->model_catalog_information->cleanText($delivery_info['text_delivery']);
 		$json['success']=true;
 		$this->response->setOutput(json_encode($json));
-    }
+	}
+	
 	public function addtocart() {
 		
 		
@@ -518,6 +782,8 @@ class ControllerProductProduct extends Controller {
 
 			$data['video_link']='';
 			$data['video_img']='';
+			$data['labels']=$this->model_catalog_product->getProductLabels($product_info);
+
 			if($product_info['video']){
 				preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $product_info['video'], $matches);
 				if(isset($matches[0])){
@@ -796,6 +1062,8 @@ class ControllerProductProduct extends Controller {
 				if($result['price_wholesaleold']*1){
 					$discount = (int)(($result['price_wholesale']/$result['price_wholesaleold']-1)*100);
 				}
+				
+				$labels = $this->model_catalog_product->getProductLabels($result);
 
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
@@ -810,6 +1078,7 @@ class ControllerProductProduct extends Controller {
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'rating'      => $rating,
 					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+					'labels'	  => $labels,
 					'discount'	  => $discount
 				);
 			}
@@ -827,12 +1096,14 @@ class ControllerProductProduct extends Controller {
 				}
 			}
 			$benefits_array=$this->model_catalog_product->getProductBenefits($product_id);
+			//print_r($benefits_array);
 			$data['benefits']=[];
 			foreach($benefits_array as $benefit){
 				$data['benefits'][]=Array(
 					"name"=>$benefit['name'],
 					"description"=>html_entity_decode($benefit['description']),
-					"goal"=>$benefit['goal']
+					"goal"=>$benefit['goal'],
+					"filename"=>"files/".$benefit['filename']
 				);
 			}
 			

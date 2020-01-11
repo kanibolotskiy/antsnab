@@ -1,7 +1,7 @@
         
 <div class="wrapper_basket">
     <div class="header_compare">
-        <a href="compare/">
+        <a class="compare_link <?php echo ($compare_count==0?"_empty":"");?>" href="compare/">
             <div class="compare_div"></div>
         </a>
     </div>

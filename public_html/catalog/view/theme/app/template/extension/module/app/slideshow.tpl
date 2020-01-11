@@ -9,16 +9,18 @@
                     <?php foreach ($banners as $banner) { ?>
                     <?php $counter++; ?>
                         <?php if( 1 == $counter): ?>
-                        <div class="slide c1 active">
+                        <div class="slide c1 active" style="background-image:url(<?php echo $banner['image']; ?>)">
                         <?php else: ?>
-                        <div class="slide c<?=$counter?>">
+                        <div class="slide c<?=$counter?>" style="background-image:url(<?php echo $banner['image']; ?>)">
                         <?php endif;?>
                             
                             <a href="<?php echo $banner['link']; ?>" title="<?php echo $banner['title']; ?>">
-                            <img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" title="<?php echo $banner['title']; ?>">
+                            <!--<img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" title="<?php echo $banner['title']; ?>">-->
                             <div class="slide-block">
-                                <span><?php echo $banner['title']; ?></span>
-                                <?=$banner['descr'];?>
+                                <div class="slide-block-border">
+                                    <div class="slide-block_caption"><?=$banner['title'];?></div>
+                                    <div class="slide-block_text"><?=$banner['descr'];?></div>
+                                </div>
                             </div>
                             </a>
                         </div>

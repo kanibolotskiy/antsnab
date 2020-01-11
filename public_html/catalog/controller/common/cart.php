@@ -278,6 +278,13 @@ class ControllerCommonCart extends Controller {
 		}
 		$data['favorite_count'] = count($favorite_arr);
 		
+		$compare_arr=[];
+		if(isset($_COOKIE["compare"])){
+			$compare_arr=json_decode($_COOKIE["compare"]);
+		}
+		$data['compare_count'] = count($compare_arr);
+
+		
 
 		return $this->load->view('common/cart', $data);
 	}

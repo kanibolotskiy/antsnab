@@ -93,10 +93,25 @@ class HomeTemplateDecorator implements IDecorator
         $config=$registry->get("config");
         
 
-//print_r($config->get('config_theme'));
+
         $articles_image_size=array($config->get($config->get('config_theme') . '_image_product_width'),$config->get($config->get('config_theme') . '_image_product_height'));
         $category_image_size=array($config->get($config->get('config_theme') . '_image_category_width'),$config->get($config->get('config_theme') . '_image_category_height'));
         
+        $mainInfo = $registry->get('model_catalog_information')->getInformationMain();
+
+        $video_id='';
+        if($mainInfo["video"]){
+            preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $mainInfo["video"], $matches);
+            if(isset($matches[0])){
+                $video_id=$matches[0];
+            }
+        }
+        if($video_id){
+            $data['main_video'] = 'https://www.youtube.com/embed/'.$video_id;
+        }else{
+            $data['main_video'] = '';
+        }
+        $data['seo_text'] = $registry->get('model_catalog_information')->cleanText($mainInfo["description"]);
 
         $data['articles'] = array();
         $loader->model('newsblog/article');

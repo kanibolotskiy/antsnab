@@ -50,14 +50,23 @@
                     </div>
                     
                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-filename"><?php echo $entry_filename; ?></label>
+                        <div class="col-sm-10">
+                        <div class="input-group">
+                            <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" class="form-control" />
+                            <span class="input-group-btn">
+                            <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+                            </span> </div>
+                        </div>
+                    </div>
+                    
+
+                    <div class="form-group">
                       <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
                       <div class="col-sm-10">
                         <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
                       </div>
                     </div>
-
-                    
-                    
                 </form>
             </div>
         </div>
@@ -66,4 +75,55 @@
     
 
   </div>
-                <?php echo $footer; ?>
+                
+<script type="text/javascript"><!--
+$('#button-upload').on('click', function() {
+	$('#form-upload').remove();
+	
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+
+	$('#form-upload input[name=\'file\']').trigger('click');
+	
+	if (typeof timer != 'undefined') {
+    	clearInterval(timer);
+	}
+	
+	timer = setInterval(function() {
+		if ($('#form-upload input[name=\'file\']').val() != '') {
+			clearInterval(timer);		
+			
+			$.ajax({
+				url: 'index.php?route=catalog/download/upload&token=<?php echo $token; ?>',
+				type: 'post',		
+				dataType: 'json',
+				data: new FormData($('#form-upload')[0]),
+				cache: false,
+				contentType: false,
+				processData: false,		
+				beforeSend: function() {
+					$('#button-upload').button('loading');
+				},
+				complete: function() {
+					$('#button-upload').button('reset');
+				},	
+				success: function(json) {
+					if (json['error']) {
+						alert(json['error']);
+					}
+								
+					if (json['success']) {
+						alert(json['success']);
+						
+						$('input[name=\'filename\']').val(json['filename']);
+						$('input[name=\'mask\']').val(json['mask']);
+					}
+				},			
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+		}
+	}, 500);
+});
+//--></script>                
+<?php echo $footer; ?>

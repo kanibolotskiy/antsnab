@@ -53,6 +53,7 @@ $(window).on('load', function () {
 })
 */
 
+/**Дублируется в prod.js */
 function initQuantityContainers($collection) {
     $collection.each(function(index){
         var $el = $(this);
@@ -80,7 +81,7 @@ $('body').delegate('#lazy-load_container','onLazyLoaded', function(e, $items){
 });
 
 /*-----------------------------------------------------*/
-function add_to_cart(product_id, count_add, show_added){
+function add_to_cart(product_id, count_add, show_added, fly_to_cart=false){
     $.ajax({
         url:  '/index.php?route=checkout/cart/add',
         type: 'post',
@@ -175,15 +176,29 @@ function add_to_cart(product_id, count_add, show_added){
                         });
                     }
                 }
-                
-                new Noty({
-                    text: json['success']+"<div class='notify_cart'><a href='card/'>Перейти в корзину</a></div>",
-                    type: 'warning',
-                    theme: 'relax',
-                    timeout: 3000, 
-                }).show();
-                
-                
+                if(fly_to_cart){
+                    var fly_itm_img=fly_to_cart.find(".wrp_fly_image");
+                    var fly_itm=$("#fly_item");
+                    var tstart=fly_itm_img.offset().top-$(document).scrollTop();
+                    
+
+                    var lfinal=$(".wrapper_basket .basket").offset().left;
+                    var tfinal=$(".wrapper_basket .basket").position().top;
+
+                    fly_itm.css({"opacity":1,"width":fly_itm_img.width(),"height":fly_itm_img.height(),"left":fly_itm_img.offset().left,"top":tstart,"background-image":"url("+fly_itm_img.attr("src")+")"});
+
+                    fly_itm.animate({"top":tfinal,"left":lfinal,"width":0,"height":0,"opacity":0},400);
+                    //fly_to_cart.find(".wrp_fly_image").css({"opacity":0});
+
+                }else{
+                    new Noty({
+                        //text: json['success']+"<div class='notify_cart'><a href='card/'>Перейти в корзину</a></div>",
+                        text: json['success']+"<div class='notify_cart'></div>",
+                        type: 'warning',
+                        theme: 'relax',
+                        timeout: 3000, 
+                    }).show();
+                } 
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -264,6 +279,7 @@ function change_favorite_sum(){
     });
 }
 $(document).ready(function(){
+
     $(".fav_row .qnt").change(function(){
         change_favorite_sum();
     });
@@ -274,6 +290,32 @@ $(document).ready(function(){
         change_favorite_sum();
     });
     
+    $(document).on("click",".RightButton",function(){
+        var itm=$(this).closest(".quantity-buy");
+        itm.find(".min_count_hint").fadeOut(150);
+    });
+    
+    if($("#min_count_hint").length){
+        var min_val=$(".unitpack1").attr("data-ui_minimum");
+        if(min_val>1){
+            $("#min_count_hint").show();
+        }
+    }
+    $(document).on("click",".LeftButton",function(){
+        var cont_itm=$(this).closest(".qnt-widget");
+        var itm=$(this).closest(".quantity-buy");
+        var input_val=itm.find(".qnt").val();
+        var qnt_minimum=1;
+        if((cont_itm.hasClass("qnt-container-spec"))||(cont_itm.hasClass("qnt-container-modal"))){
+            qnt_minimum=$("#priceSwitcher li.active").attr("data-ui_minimum");
+        }else{
+            qnt_minimum=cont_itm.attr("data-ui_minimum");
+        }
+        if(input_val*1<=qnt_minimum*1){
+            itm.find(".min_count_hint").fadeIn(150);
+        }
+    });
+
     
     $("#add_all_favorites").click(function(){
         $(".fav_row").each(function(){
@@ -320,7 +362,6 @@ $(document).ready(function(){
 
     $(document).on('click','.buy',function(e){
         
-
         e.preventDefault();
         var show_added=0;
         var itm=$(this);
@@ -342,7 +383,8 @@ $(document).ready(function(){
 
             var product_id=$(this).attr('data-product_id');
             var count_add=quantityInPriceUnits.valueOf();
-            add_to_cart(product_id, count_add,0);
+            var itm_fly=$(this).closest(".wrp_fly");
+            add_to_cart(product_id, count_add,0,itm_fly);
         }
     });
 });

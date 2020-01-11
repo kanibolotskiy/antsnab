@@ -66,11 +66,12 @@
                 </div>
             </div>
             
-            <div class="favdel del">
-                <i class="fa fa-close fa-xs"></i>
-            </div>
+            
             
         </li>
+        <div class="favdel del">
+            <i class="fa fa-close fa-xs"></i>
+        </div>
     </ul>
     
 </div>

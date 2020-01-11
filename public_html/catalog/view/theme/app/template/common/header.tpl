@@ -74,6 +74,19 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal modal_info">
+            <div class="modal-block">
+                <div class="modal_overlay"></div>
+                <div class="modal-content">
+                    <div class="modal_close"></div>
+                    <div class="modal_info_product" id="modal_info_product">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="modal modal_call">
             <div class="modal-block">
                 <div class="modal_overlay"></div>
@@ -102,11 +115,11 @@
 
                             <div class="row">
                                 <div class="row_cap">Имя:<i class="error name"></i></div>
-                                <input value="<?= $form_data['name'] ?>" name="name" type="text" placeholder="Введите Ваше имя"/>
+                                <input class="inputModal" value="<?= $form_data['name'] ?>" name="name" type="text" placeholder="Введите Ваше имя"/>
                             </div>
                             <div class="row">
                                 <div class="row_cap">Телефон:<i class="error phone"></i></div>
-                                <input value="<?= $form_data['phone'] ?>" name="phone" type="tel" placeholder="Введите телефон"/>
+                                <input class="inputModal" value="<?= $form_data['phone'] ?>" name="phone" type="tel" placeholder="Введите телефон"/>
                             </div>
                             <div class="row">
                                 <div class="row_cap">Сообщение:</div>
@@ -169,11 +182,6 @@
                             </a>
                         <?php } ?>
                     </strong>
-                    <!--
-                    <div class="logo_slogan">
-                        Производство и продажа<br/>стройматериалов
-                    </div>
-                    -->
                 </div>
                 <?php if($class != "checkout-cart"){ ?>
                     <div class="header_email">

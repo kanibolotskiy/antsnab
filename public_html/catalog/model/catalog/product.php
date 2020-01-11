@@ -3,6 +3,51 @@ class ModelCatalogProduct extends Model {
 	public function updateViewed($product_id) {
 		$this->db->query("UPDATE " . DB_PREFIX . "product SET viewed = (viewed + 1) WHERE product_id = '" . (int)$product_id . "'");
 	}
+	public function getProductLabels($product){
+		//print_r($product);
+
+		//Скидка
+		$labels=[];
+		if($product['price_wholesaleold']*1){
+			$priceold = number_format($product['price_wholesaleold'],0,"."," ");
+			$discount_label = (int)(($product['price_wholesale']/$product['price_wholesaleold']-1)*100);
+			$labels["_discount"]=Array(
+				"label"=>$discount_label."%",
+				"title"=>"Сегодня этот товар продается со скидкой"
+			);
+		}
+
+		//Акция
+
+		//Новинка
+		$datediff=time()-strtotime($product['date_added']);
+		$limit=15724800; //60*60*24*182 //182 дня (пол года)
+		if($datediff<$limit){
+			$labels["_new"]=Array(
+				"label"=>"New",
+				"title"=>"Новый товар в каталоге"
+			);
+		}
+
+		//Хит
+		$sql="SELECT op.product_id FROM oc_product_to_category oc inner join oc_product op ON oc.product_id=op.product_id
+		where category_id=(select category_id from oc_product_to_category where product_id='".$product["product_id"]."' and main_category=1)
+		order by op.viewed DESC limit 3";
+		$query = $this->db->query($sql);
+		$product_hit=[];
+		foreach ($query->rows as $result) {
+			$product_hit[]=$result["product_id"];
+		}
+		if(in_array($product['product_id'], $product_hit)){
+			$labels["_hit"]=Array(
+				"label"=>"Хит",
+				"title"=>"Хит продаж в категории товаров"
+			);
+		}
+
+		return $labels;
+		
+	}
 	public function getProductsPopular(){
 		$start_cats=[264,263,265,354];
 		//$start_cats=[263];
@@ -126,6 +171,7 @@ class ModelCatalogProduct extends Model {
 	}
 
 	public function getProducts($data = array()) {
+
 		$sql = "SELECT p.product_id, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review r1 WHERE r1.product_id = p.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating, (SELECT price FROM " . DB_PREFIX . "product_discount pd2 WHERE pd2.product_id = p.product_id AND pd2.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND pd2.quantity = '1' AND ((pd2.date_start = '0000-00-00' OR pd2.date_start < NOW()) AND (pd2.date_end = '0000-00-00' OR pd2.date_end > NOW())) ORDER BY pd2.priority ASC, pd2.price ASC LIMIT 1) AS discount, (SELECT price FROM " . DB_PREFIX . "product_special ps WHERE ps.product_id = p.product_id AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special";
 
 		if (!empty($data['filter_category_id'])) {
@@ -256,7 +302,11 @@ class ModelCatalogProduct extends Model {
 			if($data['sort']=="ids"){
 				$sort_by="FIELD(p.product_id, ".$data['product_ids'].")";
 			}
+			if($data['sort']=="viewed"){
+				$sort_by=" p.viewed";
+			}
 			
+
 			if($data['order']=="DESC"){
 				$sort_dir = " DESC";
 			}
@@ -266,7 +316,6 @@ class ModelCatalogProduct extends Model {
 		}
 		$sql .= " ORDER BY ".$sort_by.$sort_dir;
 
-		//echo "!".$sql."!";
 		/*
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
@@ -651,7 +700,7 @@ class ModelCatalogProduct extends Model {
 		}
 	}
 	public function getProductBenefits($product_id) {
-		$query = $this->db->query("SELECT dbp.product_id,db.benefit_id,db.name,db.description,db.goal FROM `dopinfo_benefits_to_product` dbp left join dopinfo_benefits db ON dbp.benefit_id=db.benefit_id WHERE dbp.product_id=" . (int)$product_id ." order by sort_order");
+		$query = $this->db->query("SELECT dbp.product_id,db.benefit_id,db.name,db.description,db.goal,db.filename FROM `dopinfo_benefits_to_product` dbp left join dopinfo_benefits db ON dbp.benefit_id=db.benefit_id WHERE dbp.product_id=" . (int)$product_id ." order by sort_order");
 		$benefits_product=$query->rows;
 		
 		if(count($benefits_product)){
@@ -660,7 +709,7 @@ class ModelCatalogProduct extends Model {
 			$query_cat = $this->db->query("SELECT category_id from " . DB_PREFIX . "product_to_category where main_category=1 AND product_id=" . (int)$product_id." LIMIT 1");
 			$cat_id=$query_cat->row["category_id"];
 			
-			$query = $this->db->query("SELECT dbp.product_id,db.benefit_id,db.name,db.description,db.goal FROM `dopinfo_benefits_to_product` dbp left join dopinfo_benefits db ON dbp.benefit_id=db.benefit_id WHERE dbp.product_id=" . (int)$cat_id ." order by sort_order");
+			$query = $this->db->query("SELECT dbp.product_id,db.benefit_id,db.name,db.description,db.goal,db.filename FROM `dopinfo_benefits_to_product` dbp left join dopinfo_benefits db ON dbp.benefit_id=db.benefit_id WHERE dbp.product_id=" . (int)$cat_id ." order by sort_order");
 
 			return $query->rows;
 		}
@@ -694,6 +743,18 @@ class ModelCatalogProduct extends Model {
 		}
 		//print_r(count($query->rows));
 		return $iswork;
+	}
+	public function getDeliveryPrice($weight_product){
+		$delivery_weights=$this->getDeliveryDocs();
+		$delivery_weights_rev=array_reverse($delivery_weights,true);
+		$del_price=0;
+		foreach($delivery_weights_rev as $del_weight=>$key){
+			if($weight_product<=$del_weight){
+				$del_price=$key[0];
+			}
+		}
+		return $del_price;
+
 	}
 	public function getDelivery($product_id, $weight_product){
 		$result=[];

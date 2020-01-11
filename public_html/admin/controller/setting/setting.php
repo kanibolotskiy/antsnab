@@ -3,6 +3,17 @@ class ControllerSettingSetting extends Controller {
 	private $error = array();
 
 	public function index() {
+		//CKEditor
+		if ($this->config->get('config_editor_default')) {
+			$this->document->addScript('view/javascript/ckeditor/ckeditor.js');
+			$this->document->addScript('view/javascript/ckeditor/ckeditor_init.js');
+		} else {
+			$this->document->addScript('view/javascript/summernote/summernote.js');
+			$this->document->addScript('view/javascript/summernote/lang/summernote-' . $this->language->get('lang') . '.js');
+			$this->document->addScript('view/javascript/summernote/opencart.js');
+			$this->document->addStyle('view/javascript/summernote/summernote.css');
+		}
+		
 		$this->load->language('setting/setting');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -20,9 +31,9 @@ class ControllerSettingSetting extends Controller {
       $this->request->post['config_meta_keyword'] = $this->request->post['config_langdata'][$front_language_id]['meta_keyword'];
       $this->request->post['config_name'] = $this->request->post['config_langdata'][$front_language_id]['name'];
       $this->request->post['config_owner'] = $this->request->post['config_langdata'][$front_language_id]['owner'];
-      $this->request->post['config_address'] = $this->request->post['config_langdata'][$front_language_id]['address'];
-      $this->request->post['config_address'] = $this->request->post['config_langdata'][$front_language_id]['open'];
-      $this->request->post['config_address'] = $this->request->post['config_langdata'][$front_language_id]['comment'];
+      //$this->request->post['config_address'] = $this->request->post['config_langdata'][$front_language_id]['address'];
+      //$this->request->post['config_address'] = $this->request->post['config_langdata'][$front_language_id]['open'];
+      //$this->request->post['config_address'] = $this->request->post['config_langdata'][$front_language_id]['comment'];
 	  $this->request->post['config_mail_regexp'] = trim($this->request->post['config_mail_regexp']);
 
 			$this->model_setting_setting->editSetting('config', $this->request->post);
@@ -205,6 +216,17 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_sms_alert'] = $this->language->get('entry_sms_alert');
 		$data['entry_sms_copy'] = $this->language->get('entry_sms_copy');
 		$data['entry_status'] = $this->language->get('entry_status');
+		$data['entry_req'] = $this->language->get('entry_req');
+
+		$data['entry_soc_vk'] = $this->language->get('entry_soc_vk');
+		$data['entry_soc_fb'] = $this->language->get('entry_soc_fb');
+		$data['entry_soc_tw'] = $this->language->get('entry_soc_tw');
+		$data['entry_soc_in'] = $this->language->get('entry_soc_in');
+
+		$data['entry_m_telegram'] = $this->language->get('entry_m_telegram');
+		$data['entry_m_whatsapp'] = $this->language->get('entry_m_whatsapp');
+		$data['entry_m_viber'] = $this->language->get('entry_m_viber');
+
 
 		$data['help_geocode'] = $this->language->get('help_geocode');
 		$data['help_open'] = $this->language->get('help_open');
@@ -286,6 +308,8 @@ class ControllerSettingSetting extends Controller {
 
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_store'] = $this->language->get('tab_store');
+		$data['tab_contacts'] = $this->language->get('tab_contacts');
+		
 		$data['tab_local'] = $this->language->get('tab_local');
 		$data['tab_option'] = $this->language->get('tab_option');
 		$data['tab_image'] = $this->language->get('tab_image');
@@ -465,7 +489,7 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['success'] = '';
 		}
-
+		
 		$data['action'] = $this->url->link('setting/setting', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('setting/store', 'token=' . $this->session->data['token'], true);
@@ -1417,6 +1441,51 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_sms_copy'] = $this->config->get('config_sms_copy');
 		}
+
+		if (isset($this->request->post['config_req'])) {
+			$data['config_req'] = $this->request->post['config_req'];
+		} else {
+			$data['config_req'] = $this->config->get('config_req');
+		}
+
+		if (isset($this->request->post['config_soc_vk'])) {
+			$data['config_soc_vk'] = $this->request->post['config_soc_vk'];
+		} else {
+			$data['config_soc_vk'] = $this->config->get('config_soc_vk');
+		}
+		if (isset($this->request->post['config_soc_fb'])) {
+			$data['config_soc_fb'] = $this->request->post['config_soc_fb'];
+		} else {
+			$data['config_soc_fb'] = $this->config->get('config_soc_fb');
+		}
+		if (isset($this->request->post['config_soc_tw'])) {
+			$data['config_soc_tw'] = $this->request->post['config_soc_tw'];
+		} else {
+			$data['config_soc_tw'] = $this->config->get('config_soc_tw');
+		}
+		if (isset($this->request->post['config_soc_in'])) {
+			$data['config_soc_in'] = $this->request->post['config_soc_in'];
+		} else {
+			$data['config_soc_in'] = $this->config->get('config_soc_in');
+		}
+
+		if (isset($this->request->post['config_m_telegram'])) {
+			$data['config_m_telegram'] = $this->request->post['config_m_telegram'];
+		} else {
+			$data['config_m_telegram'] = $this->config->get('config_m_telegram');
+		}
+		if (isset($this->request->post['config_m_whatsapp'])) {
+			$data['config_m_whatsapp'] = $this->request->post['config_m_whatsapp'];
+		} else {
+			$data['config_m_whatsapp'] = $this->config->get('config_m_whatsapp');
+		}
+		if (isset($this->request->post['config_m_viber'])) {
+			$data['config_m_viber'] = $this->request->post['config_m_viber'];
+		} else {
+			$data['config_m_viber'] = $this->config->get('config_m_viber');
+		}
+
+		
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

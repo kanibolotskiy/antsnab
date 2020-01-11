@@ -5,7 +5,8 @@ $_['heading_title_couriers']    = 'Курьеры';
 $_['heading_title_docs']        = 'Документы';
 $_['heading_title_discounts']   = 'Скидки';
 $_['heading_title_calcs']       = 'Калькуляторы';
-$_['heading_title_benefits']    = 'Преимущества(главная)';
+$_['heading_title_main']        = 'Главная (информация)';
+
 
 // Text
 $_['text_success_benefits']     = 'Список преимуществ обновлен!';
@@ -38,6 +39,9 @@ $_['text_edit_couriers']        = 'Редактирование курьера';
 $_['text_add_discounts']        = 'Добавление скидки';
 $_['text_edit_discounts']       = 'Редактирование скидки';
 
+$_['text_edit_main']            = 'Редактирование главная';
+
+
 $_['text_add_calcs']            = 'Добавление калькулятора';
 $_['text_edit_calcs']           = 'Редактирование калькулятора';
 
@@ -69,13 +73,17 @@ $_['entry_price_ico']           = 'Иконка RUB';
 
 $_['entry_caption']             = 'Заголовок';
 $_['entry_description']         = 'Описание';
+$_['entry_description_seo']         = 'Текст SEO';
 
 $_['entry_goal']                = 'Цель';
 $_['entry_discount']            = 'Скидка';
 $_['entry_label']               = 'Метка';
 $_['entry_nomer']               = 'Номер калькулятора';
 $_['entry_image']               = 'Изображение';
-
+$_['entry_video']               = 'Видео (Youtube)';
+$_['entry_filename']          	= 'Выберите файл:';
+$_['button_upload']          	= 'Загрузить';
+$_['text_loading']          	= 'Загрузка...';
 
 
 $_['entry_sort_order']          = 'Порядок сортировки';

@@ -34,7 +34,7 @@ function getDelivery(){
     var koef=$("#priceSwitcher .active").attr("data-sale_to_ui_koef")*1;
     var base_weight=$("#priceSwitcher").attr("data-base_weight")*1;
     
-    var product_id=$("#product_id").val();
+    var product_id=$("#product_id").attr("product_id");
     //console.log(koef);
     if(!koef){
         koef=1;
@@ -79,6 +79,16 @@ function refresh_veiew_cart(json){
 
         $("#total_cart").animate({"opacity":1},100);
 
+        $("#order_weight").css({"opacity":0});
+        $("#order_weight").html(json["total_weight"]);
+        $("#order_weight").animate({"opacity":1},200);
+
+        if($("#order_weight_cost").html()!=json["total_del"]){
+            $("#order_weight_cost").css({"opacity":0});
+            $("#order_weight_cost").html(json["total_del"]);
+            $("#order_weight_cost").animate({"opacity":1},200);
+        }
+        
         if(json["econom"]==0){
             $(".intotal.economy").hide();
         }else{
@@ -86,7 +96,8 @@ function refresh_veiew_cart(json){
             $("#ecosum").css({"opacity":0});
             $("#ecosum").html(json["econom"]);
             $("#ecosum").animate({"opacity":1},200);
-            //$("#ecosum").fadeOut(200);
+
+            
         }
         
         var products=json["products"];

@@ -8,20 +8,24 @@
         <?php if (!empty($products)): ?>
             <div class="catalog-info">
                 <h1 class="title"><?= $heading_title ?></h1>
-                <div class="wrp_description">
-                    <?php if($catalog_brand_img) {?>
-                        <div class="catalog-info_img">
-                            <img src="<?php echo $catalog_brand_img;?>" alt="<?= $heading_title ?>"/>
-                        </div>
-                    <?php }?>
-                    <?= $description ?>
-                </div>
+                <?php if($description){ ?>
+
+                    <div class="wrp_description">
+                        <?php if($catalog_brand_img) {?>
+                            <div class="catalog-info_img">
+                                <img src="<?php echo $catalog_brand_img;?>" alt="<?= $heading_title ?>"/>
+                            </div>
+                        <?php }?>
+                        
+                        <?php echo $description; ?>
+                    </div>
+                <?php }?>
             </div>
 
             <?php if(isset($categories_isseo)) {?>
                 <?php if(count($categories_isseo)) {?>
                     <div class="pick-up">
-                        <span>Подобрать:</span>
+                        <span>Подборки:</span>
                         <ul>    
                             <?php foreach($categories_isseo as $item) {?>
                                 <li><a href="<?php echo $item['href'];?>"><?php echo $item['name']?></a></li>
@@ -60,46 +64,43 @@
                     </div>
                 </div>
                 
-                <?php echo $paginationLazy ?>
-                <?php echo $pagination; ?>
+                <?php if( $products_add):?>
+                    <div class="mentioned-products mentioned-products2">
+                        
+                        <div class="title">Популярное в категории <?php echo $parent_name;?></div>
+                        <ul>
+                        
+                            <?php foreach($products_add as $p):?>
+                            <li>
+                                <?php if($p["labels"]){  ?>
+                                    <div class="item_labels">
+                                        <?php foreach($p["labels"] as $key=>$label){ ?>
+                                            <div class="item_label <?php echo $key;?>" title="<?php echo $label['title'];?>"><?php echo $label['label'];?></div>
+                                        <?php } ?>
+                                    </div>
+                                <?php }?>
+                                <div class="products-block">
+                                    <?php if($p["rating"]){?>
+                                        <div class="agg_rating"><?php echo $p["rating"];?></div>
+                                    <?php }?>
+                                    
+                                    <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
 
-                
-                <?php if(!empty($summary['rows'])): ?>
-                <div class="title">Технические характеристики</div>
-                <div class="wrapper_adaptive_table">
-                    <table class="summary table table-bordered table-striped table-responsive">
-                        <thead>
-                            <tr>
-                                <th rowspan="2">Показатель</th>
-                                <th colspan="<?= count($summary['header']) ?>">Значение</th>
-                                <th rowspan="2">Единица измерения</th>
-                            </tr>
-                            <tr>
-                                <?php foreach ($summary['header'] as $h): ?>
-                                    <th class="grey"><?= $h['name'] ?></th>
-                                <?php endforeach; ?>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr></tr>
-                            <?php foreach ($summary['rows'] as $row): ?>
-                                <tr>
-                                    <td class="left"><?= $row['name'] ?></td>
-                                    <?php foreach ($summary['header'] as $prodKey => $h): ?>
-                                        <?php if (isset($row['products'][$prodKey])): ?>
-                                            <td><?= $row['products'][$prodKey]['val'] ?></td>
-                                        <?php else: ?>
-                                            <td>--</td>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                    <td><?= $row['unit'] ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
+                                    <a href="<?=$p['href']?>" class="img-production">
+                                        <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+                                    </a>
+                                    
+                                    <strong><?=$p['price']?> <div class="rur">i</div></strong>
+                                    <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
+                                </div>
+                            </li>
+                            <?php endforeach;?>
+                        </ul>
+                    </div>
                 <?php endif;?>
 
+                <?php echo $paginationLazy ?>
+                <?php echo $pagination; ?>
 
             </div>
             <?php if($bottom_text){ ?>

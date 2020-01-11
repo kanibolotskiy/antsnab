@@ -17,7 +17,7 @@ function initSlideShow() {
 		autoRotation: true,
 		autoHeight: true,
         useSwipe: true,
-        switchTime: 2000,
+        switchTime: 4000,
 		animSpeed: 600
 	});
 }

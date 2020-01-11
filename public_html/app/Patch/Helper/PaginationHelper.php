@@ -85,7 +85,6 @@ class PaginationHelper
         $load = $registry->get('load');
         $document = $registry->get('document');
         $pageUrl = static::getPageUrl($baseUrl); 
-
         if( !$isAjax ) {
             $document->addScript('/catalog/view/javascript/lazyload.js');
         }

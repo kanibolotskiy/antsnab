@@ -74,13 +74,13 @@ class CategoryController extends \Controller
             if(isset($_GET["page"])){
                 $catalog_page=$_GET["page"];
             }
-            //if((isset($category_final_info["bottom_text"]))and($catalog_page>1))){
+
             if((isset($category_final_info["bottom_text"]))and($catalog_page==1)){
-                //$this->data['bottom_text'] = html_entity_decode($category_final_info["bottom_text"]);
-                
                 $this->data['bottom_text'] = $this->model_catalog_information->cleanText($category_final_info["bottom_text"]);
+                $this->data['description'] = html_entity_decode($category_final_info['description'], ENT_QUOTES, 'UTF-8');
             }else{
                 $this->data['bottom_text'] = '';
+                $this->data['description'] = '';
             }
         } else {
             $category_id = 0;
@@ -115,9 +115,13 @@ class CategoryController extends \Controller
         $flag_is_seo=$gateway->isCategorySeo($category_id);
 
         $category_info = $this->model_catalog_category->getCategory($category_id);
+        
+        
+        
         /* @ИСПРАВИТЬ перенести ниже после проверки наличия category_info */
         $categories_seo = $this->model_catalog_category->getCategoresSeo($category_id);
 
+        
         if (!$category_info) {
             $this->showNotFound();
             return;
@@ -128,11 +132,12 @@ class CategoryController extends \Controller
 
 
         if($flag_is_seo){
-            $this->showProducts($category_id,true);
+            $this->showProducts($category_id,true,null);
             return;
         }
         if ($isCategoryFinal) {
-            $this->showProducts($category_id);
+            $parent_category_info = $this->model_catalog_category->getCategory($category_info["parent_id"]);
+            $this->showProducts($category_id,false,$parent_category_info);
             return;
         }
 
@@ -151,8 +156,11 @@ class CategoryController extends \Controller
         }
 
         $this->load->model('catalog/product');
+        
+        $filter_data = $this->getFilter($category_id, $limit, $page, $sort_selected, true);
+        
 
-        $filter_data = $this->getFilter($category_id, $limit, $page);
+        //$filter_data = $this->getFilter($category_id, $limit, $page, 0, true);
         $products_total = $this->model_catalog_product->getTotalProducts($filter_data);
         $productsHelper = new ProductListHelper($this->registry);
         $products = $productsHelper->getProducts($filter_data);
@@ -182,6 +190,7 @@ class CategoryController extends \Controller
         ]); 
 
         $this->response->setOutput($lazyLoadResponse);
+        
     }
 
     private function setFilterCategories($categories_seo){
@@ -247,18 +256,83 @@ class CategoryController extends \Controller
             );
         }
         $this->setPartials();
-        $this->response->setOutput($this->load->view('product/category', $this->data));
+        if($category_id==71){
+            $template_catalog='product/category_main';
+        }else{
+            $template_catalog='product/category';
+
+            //$category_id=264;
+            $filter_data = $this->getFilter($category_id, $limit, $page, $sort_selected, true);
+            
+            $this->data['sort_selected']=$sort_selected;
+            $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
+            $productsHelper = new ProductListHelper($this->registry);
+            
+            
+            
+            $queryString = $this->hierarhy->getPath($category_id);
+            if (isset($this->request->get['filter'])) {
+                $queryString .= '&filter=' . $this->request->get['filter'];
+            }
+            if (isset($this->request->get['sort'])) {
+                $queryString .= '&sort=' . $this->request->get['sort'];
+            }
+            $paginationBaseUrl = $this->url->link('product/category', 'path=' . $queryString);
+            $lazyLoadBaseUrl = $this->url->link('product/category/showmore', 'cat_path=' . $queryString);
+
+            $paginationModel = PaginationHelper::getPaginationModel($product_total, (int)$limit, (int)$page);
+            $this->data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl, $paginationModel);
+            $this->data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl, $paginationModel);
+            $this->setPartials();
+            
+            if ($page == 1) {
+                $this->document->addLink($this->url->link('product/category', 'path=' . $category_id, true), 'canonical');
+            } elseif ($page == 2) {
+                $this->document->addLink($this->url->link('product/category', 'path=' . $category_id, true), 'prev');
+            } else {
+                $this->document->addLink($this->url->link('product/category', 'path=' . $category_id . '&page='. ($page - 1), true), 'prev');
+            }
+            
+            if ($limit && ceil($product_total / $limit) > $page) {
+                $this->document->addLink($this->url->link('product/category', 'path=' . $category_id . '&page='. ($page + 1), true), 'next');
+            }
+
+            $this->data['products'] = $productsHelper->getProducts($filter_data);
+        }
+        $this->response->setOutput($this->load->view($template_catalog, $this->data));
     }
 
-    private function showProducts($category_id, $showPropertyTable=false)
+    private function showProducts($category_id, $showPropertyTable=false, $parent_category=null)
     {
         
-        $filter_data = $this->getFilter($category_id, $limit, $page, $sort_selected);
+        $filter_data = $this->getFilter($category_id, $limit, $page, $sort_selected, true);
         
         $this->data['sort_selected']=$sort_selected;
         $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
         $productsHelper = new ProductListHelper($this->registry);
-        //print_r($filter_data);
+
+
+        $products_add=[];
+        $parent_category_name='';
+        if(($product_total<5)and $parent_category){
+            //print_r($parent_category);
+            
+            $filter_data_add = array(
+                'filter_category_id' => $parent_category["category_id"],
+                'sort' => 'viewed',
+                'order' => 'DESC',
+                'start' => 0,
+                'limit' => 4,
+                'filter_sub_category'=>1
+            );
+            $parent_category_name=$parent_category["name"];
+            $products_add=$productsHelper->getProducts($filter_data_add);
+        }
+        $this->data["parent_name"]=$parent_category_name;
+        $this->data["products_add"]=$products_add;
+
+        
+        
         //$filter_data['limit']=18;
         
 
@@ -285,7 +359,12 @@ class CategoryController extends \Controller
         $this->data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl, $paginationModel);
         $this->data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl, $paginationModel);
 
+        
+        
+
+
         $this->setPartials();
+
         $this->response->setOutput($this->load->view('product/category_final', $this->data));
     }
 
@@ -379,6 +458,7 @@ class CategoryController extends \Controller
             $this->data['heading_title']=$this->data['heading_title'].". Страница ".$catalog_page;
         }
         
+        
 
         $this->data['text_refine'] = $this->language->get('text_refine');
         $this->data['text_empty'] = $this->language->get('text_empty');
@@ -412,11 +492,11 @@ class CategoryController extends \Controller
             $this->data['thumb'] = '';
         }
 
-        $this->data['description'] = html_entity_decode($category_info['description'], ENT_QUOTES, 'UTF-8');
-        $this->data['compare'] = $this->url->link('product/compare');
+        //$this->data['description'] = html_entity_decode($category_info['description'], ENT_QUOTES, 'UTF-8');
+        //$this->data['compare'] = $this->url->link('product/compare');
     }
 
-    private function getFilter($category_id, &$limit, &$page = 1 , &$sort_selected = 0)
+    private function getFilter($category_id, &$limit, &$page = 1 , &$sort_selected = 0, $filter_sub_category=0)
     {
         if (isset($this->request->get['filter'])) {
             $filter = $this->request->get['filter'];
@@ -474,16 +554,18 @@ class CategoryController extends \Controller
             $end = 1;
         }
 
-        //echo "end=".$end;
-
+        
+        
         $filter_data = array(
             'filter_category_id' => $category_id,
             'filter_filter' => $filter,
             'sort' => $sort,
             'order' => $order,
             'start' => ($page - 1) * $limit,
-            'limit' => $end*$limit
+            'limit' => $end*$limit,
+            'filter_sub_category'=>$filter_sub_category
         );
+        
         return $filter_data;
     }
 }

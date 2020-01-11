@@ -78,8 +78,12 @@
                         }
                         &.active {
                           a {
-                                border: 1px solid #85F567;
+                                background:#41737E;
+                                border: 1px solid #41737E;
+                                color:#fff;
+                                /*border: 1px solid #85F567;
                                 background-color: #85F567;
+                                */
                             }
                         }
                     }
@@ -95,7 +99,7 @@
             flex-wrap: nowrap;
             margin-top:20px;
             .quantity-buy-block{
-                position:relative;overflow:hidden;/*float:left;*/
+                position:relative;/*overflow:hidden;/*float:left;*/
                 width:230px;
 
                 
@@ -105,7 +109,8 @@
                 */
             }
             a.buy{
-                width:100%;
+                width:50%;
+                /*width:100%;*/
                 /*width: 54%;*/
             }
         }
@@ -366,14 +371,20 @@
         top: 10px;
         right: 10px;
         cursor: pointer;
-        background: url(../img/close.png) no-repeat;
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIiIGhlaWdodD0iMjIiIHZpZXdCb3g9IjAgMCAyMiAyMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMSAxTDIxIDIxTTIxIDFMMSAyMSIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9zdmc+);
+        background-repeat:no-repeat;
+        background-position:center center;
+
+        /*background: url(../img/close.png) no-repeat;*/
         width: 25px;
         height: 25px;
-        opacity: 0.7;
-        @include transition;
+        opacity: 1;
+        transition:0.2s;
+        -webkit-transition:0.2s;
+        -moz-transition:0.2s;
+        -o-transition:0.2s;
         &:hover{
-            opacity: 1;
-            @include transition;
+            transform:rotate(90deg);
         }
     }
     .modal_caption{
@@ -383,7 +394,7 @@
         line-height: 26px;
         margin-bottom: 20px;
     }
-    input[type="text"],input[type="tel"] {
+    .inputModal{
         display: block;
         border: 1px solid #E8E5E2;
         height: 48px;
@@ -396,6 +407,21 @@
         width: 100%;
         margin-bottom: 15px;
     }
+
+    /*
+    input[type="text"],input[type="tel"] {
+        display: block;
+        border: 1px solid #E8E5E2;
+        height: 48px;
+        padding: 0 15px 0 15px;
+        background-color: transparent;
+        color: #666666;
+        display: block;
+        font-size: 13px;
+        font-family: 'Open Sans AS', sans-serif;
+        width: 100%;
+        margin-bottom: 15px;
+    }*/
     textarea {
         display: block;
         border: 1px solid #E8E5E2;

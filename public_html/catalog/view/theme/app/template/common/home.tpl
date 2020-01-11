@@ -3,8 +3,11 @@
     <?= $column_left ?>
     <div class="content">
         <?php echo $content_top; ?>
-        
-        
+        <?php if($main_video){?>
+            <div class="main_video">
+                <iframe width="817" height="476" src="<?php echo $main_video;?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        <?php }?>
         <div class="our-production">
             <h1 >Наша продукция</h1>
             <ul>
@@ -56,6 +59,9 @@
 
         </div>
         <?php echo $content_bottom; ?>
+        <?php if($seo_text){ ?>
+            <div class="bottom_text content-text"><?php echo $seo_text;?></div>
+        <?php }?>
     </div>
 </div>
 <?= $footer ?>

@@ -8,7 +8,13 @@ $(function(){
 		if(!$(this).hasClass("active")){
 			$(".select_view").removeClass("active");
 			$(this).addClass("active");
-			$(".tab-block").toggleClass("tab-block2");
+			
+			$(".tab-block").each(function(){
+				if(!$(this).hasClass("tab-block-cat")){
+					$(this).toggleClass("tab-block2");
+				}
+			});
+			
 			var rel=$(this).attr("rel");
 			$.cookie('cat_view', rel, { expires: 7, path: '/' });
 		}

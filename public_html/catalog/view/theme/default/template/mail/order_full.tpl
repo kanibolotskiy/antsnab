@@ -38,6 +38,7 @@
                     <b><?php echo $text_name; ?></b> <span name="order_name"><?php echo $name; ?></span><br />
                     <b><?php echo $text_email; ?></b> <span name="order_email"><?php echo $email; ?></span><br />
                     <b><?php echo $text_telephone; ?></b> <span name="order_phone"><?php echo $telephone; ?></span><br />
+                    <b><?php echo $text_inn; ?></b> <span name="order_inn"><?php echo $inn; ?></span><br />
                     <b><?php echo $text_ip; ?></b> <span name="order_ip"><?php echo $ip; ?></span><br />
             </tr>
         </tbody>

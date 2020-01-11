@@ -31,17 +31,17 @@ class ProductTemplateDecorator implements IDecorator
         } else {
             $product_id = 0;
         }
+        $data["product_id"]=$product_id;
 
         $product_info = $registry->get('model_catalog_product')->getProduct($product_id);
 
+        /*
         if ($registry->get('customer')->isLogged() || !$registry->get('config')->get('config_customer_price')) {
-            $data['price'] = $registry->get('tax')->calculate($product_info['price'], $product_info['tax_class_id'], $registry->get('config')->get('config_tax'));
-            $data['price_val']=$registry->get('currency')->format((float)$data['price'] ? $data['price'] : $product_info['price'], $registry->get('session')->data['currency']);
+            
         } else {
-            $data['price'] = false;
-            $data['price_val'] = false;
+            
         }
-
+*/
         $discount=0;
         $discount_val1=0;
         $discount_val2=0;
@@ -49,7 +49,9 @@ class ProductTemplateDecorator implements IDecorator
         if ($registry->get('customer')->isLogged() || !$registry->get('config')->get('config_customer_price')) {
             $data['price_wholesale'] = $registry->get('tax')->calculate($product_info['price_wholesale'], $product_info['tax_class_id'], $registry->get('config')->get('config_tax'));
             $data['price_wholesale_val']=$registry->get('currency')->format((float)$data['price_wholesale'] ? $data['price_wholesale'] : $product_info['price_wholesale'], $registry->get('session')->data['currency']);
-            
+            $data['price'] = $registry->get('tax')->calculate($product_info['price'], $product_info['tax_class_id'], $registry->get('config')->get('config_tax'));
+            $data['price_val']=$registry->get('currency')->format((float)$data['price'] ? $data['price'] : $product_info['price'], $registry->get('session')->data['currency']);
+
             if($product_info['price_wholesaleold']*1){
                 $discount_val1=(($product_info['price_wholesale']/$product_info['price_wholesaleold']-1)*100);
                 $discount_val2=(($product_info['price']/$product_info['priceold']-1)*100);
@@ -60,6 +62,8 @@ class ProductTemplateDecorator implements IDecorator
         } else {
             $data['price_wholesale'] = false;
             $data['price_wholesale_val'] = false;
+            $data['price'] = false;
+            $data['price_val'] = false;
         }
         
         $data['discount'] = $discount;
@@ -78,6 +82,21 @@ class ProductTemplateDecorator implements IDecorator
             $fav_active='';
         }
         $data['favorite'] = $fav_active;
+
+
+        if(isset($_COOKIE["compare"])){
+            $compare_arr=json_decode($_COOKIE["compare"]);
+        }else{
+            $compare_arr=[];
+        }
+        
+        if(in_array($product_id, $compare_arr)){
+            $compare_active=' active';
+        }else{
+            $compare_active='';
+        }
+        $data['compare'] = $compare_active;
+
 
         $data['currencySymb'] = $registry->get('currency')->getSymbolRight($registry->get('session')->data['currency']);
         $data['wholesale_threshold'] = (int)$product_info['wholesale_threshold'];
