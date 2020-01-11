@@ -119,7 +119,7 @@ class ProductTemplateDecorator implements IDecorator
                     
                     $key = (int)$unit['switchSortOrder'];
                     $pUnits[ $key ] = $unit;
-                    /*
+                    
                     //print_r($unit);
                     //коэффициент пересчета из базовой еденицы продажи в данную отображаемую еденицу
                     $saleToUIKoef = $produnitsCalcGateway->getBaseToUnitKoef($product_id, 'isSaleBase', $unit_id);
@@ -140,6 +140,8 @@ class ProductTemplateDecorator implements IDecorator
                         }
                         $z++;
                     }
+                    /*
+                    
                     $pUnits[$key]['nom']=$koef_numerator;
                     $pUnits[$key]['denom']=$koef_denomirator;
 
