@@ -113,6 +113,7 @@ class ProductTemplateDecorator implements IDecorator
         
         try {
             foreach ($prodUnits as $unit_id => $unit) {
+                /*
                 // единицы измерения с sortorder <> 0 участвуют в отображении в шаблоне 
                 if (0 != $unit['switchSortOrder']) {
                     $key = (int)$unit['switchSortOrder'];
@@ -186,6 +187,7 @@ class ProductTemplateDecorator implements IDecorator
                 } elseif ($unit['isSaleBase'] == 1) {
                     throw new \Exception('Too many price bases for product ' . $product_id);
                 }
+                */
             }
 
             if (!isset($pUnits[1])) {
@@ -203,7 +205,7 @@ class ProductTemplateDecorator implements IDecorator
         } catch (\Exception $e) {
             $pUnitsErrors = $e->getMessage();
         }
-        /*
+        
         $data['pUnits'] = $pUnits;
         $data['pUnitsErrors'] = $pUnitsErrors;
         $data['priceUnit'] = $priceUnit;
@@ -341,7 +343,7 @@ class ProductTemplateDecorator implements IDecorator
 
         $ruleId = $registry->get('config')->get(ReviewAdminModule::CONFIG_KEY_RULE_ID);
         $data['rules'] = $registry->get('url')->link('information/information', 'information_id=' . $ruleId);
-        */
+        
         return $data;
 
     }
