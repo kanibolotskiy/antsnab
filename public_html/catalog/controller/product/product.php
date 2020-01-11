@@ -567,7 +567,7 @@ class ControllerProductProduct extends Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 		if ($product_info) {
 			$url = '';
-
+			/*
 			if (isset($this->request->get['path'])) {
 				$url .= '&path=' . $this->request->get['path'];
 			}
@@ -630,7 +630,7 @@ class ControllerProductProduct extends Controller {
 			//price_wholesale
 			//Подставляем оптовую цену в Title
 			//$seoTitlePrice=$this->currency->format((float)$product_info['price_wholesale'] ? $product_info['price_wholesale'] : $product_info['price'], $this->session->data['currency']);
-			/*
+			
 			$seoTitlePrice = number_format((float)$product_info['price_wholesale'] ? $product_info['price_wholesale'] : $product_info['price'],0,"."," ")." р.";
 
 			$seoTitle=str_replace('[+price]',$seoTitlePrice ,$seoTitle);
