@@ -123,9 +123,9 @@ class ProductTemplateDecorator implements IDecorator
                     //print_r($unit);
                     //коэффициент пересчета из базовой еденицы продажи в данную отображаемую еденицу
                     echo $product_id."|'isSaleBase'!".$unit_id;
-                    /*
-                    $saleToUIKoef = $produnitsCalcGateway->getBaseToUnitKoef($product_id, 'isSaleBase', $unit_id);
                     
+                    $saleToUIKoef = $produnitsCalcGateway->getBaseToUnitKoef($product_id, 'isSaleBase', $unit_id);
+                    /*
                     $pUnits[$key]['sale_to_ui_koef'] = $saleToUIKoef;
                     
                     //$pUnits[$key]['ui_step']=15;
