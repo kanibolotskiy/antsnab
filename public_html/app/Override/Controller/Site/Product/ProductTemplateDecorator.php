@@ -122,12 +122,13 @@ class ProductTemplateDecorator implements IDecorator
                     
                     //print_r($unit);
                     //коэффициент пересчета из базовой еденицы продажи в данную отображаемую еденицу
+                    /*
                     $saleToUIKoef = $produnitsCalcGateway->getBaseToUnitKoef($product_id, 'isSaleBase', $unit_id);
                     
                     $pUnits[$key]['sale_to_ui_koef'] = $saleToUIKoef;
                     
                     //$pUnits[$key]['ui_step']=15;
-/*
+
                     $array_koef = (array) $saleToUIKoef;
                     $z=0;
                     $koef_numerator=1;
