@@ -210,6 +210,8 @@ class ModelCatalogProduct extends Model {
 
 				$sql .= " AND pf.filter_id IN (" . implode(',', $implode) . ")";
 			}
+			$sql .= " AND p2c.main_category=1 ";
+
 		}
 
 		if (!empty($data['filter_name']) || !empty($data['filter_tag'])) {
@@ -315,7 +317,7 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 		$sql .= " ORDER BY ".$sort_by.$sort_dir;
-		echo "!".$sql."!";
+		//echo "!".$sql."!";
 		/*
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
