@@ -162,7 +162,6 @@ class CategoryController extends \Controller
 
         //$filter_data = $this->getFilter($category_id, $limit, $page, 0, true);
         $products_total = $this->model_catalog_product->getTotalProducts($filter_data);
-        $sql = $this->model_catalog_product->getProductsSQL($filter_data);
 
         $productsHelper = new ProductListHelper($this->registry);
         $products = $productsHelper->getProducts($filter_data,true);
