@@ -315,7 +315,7 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 		$sql .= " ORDER BY ".$sort_by.$sort_dir;
-
+		echo "!".$sql."!";
 		/*
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
