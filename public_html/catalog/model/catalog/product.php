@@ -348,7 +348,7 @@ class ModelCatalogProduct extends Model {
 
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
-		//echo "!".$sql."!";
+		echo "!".$sql."!";
 
 		$product_data = array();
 
