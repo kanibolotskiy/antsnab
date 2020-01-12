@@ -180,7 +180,6 @@ class CategoryController extends \Controller
 
         $items = [];
         foreach( $products as $p ){
-            $p["sql"]=$sql;
             $items[] = $this->load->view("partial/product_item", ['p'=>$p]);
         }
 
