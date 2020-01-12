@@ -163,8 +163,8 @@ class CategoryController extends \Controller
         //$filter_data = $this->getFilter($category_id, $limit, $page, 0, true);
         $products_total = $this->model_catalog_product->getTotalProducts($filter_data);
         $productsHelper = new ProductListHelper($this->registry);
-        $products = $productsHelper->getProducts($filter_data);
-
+        $products_data = $productsHelper->getProductsSQL($filter_data);
+        $products=$products_data['products'];
         $queryString = $this->hierarhy->getPath($category_id);
         if (isset($this->request->get['filter'])) {
             $queryString .= '&filter=' . $this->request->get['filter'];
@@ -181,6 +181,7 @@ class CategoryController extends \Controller
         }
 
         $lazyLoadResponse = PaginationHelper::getLazyLoadResponse($this->registry, [
+            'sql'=>$products_data["sql"],
             'items' => $items, 
             'total' => (int)$products_total,
             'itemsPerPage' => (int)$limit,
