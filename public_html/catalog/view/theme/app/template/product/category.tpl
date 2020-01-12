@@ -114,5 +114,4 @@
         
     </div>
 </div>
-<script src="/catalog/view/javascript/lazyload.js" type="text/javascript"></script>
 <?= $footer ?>

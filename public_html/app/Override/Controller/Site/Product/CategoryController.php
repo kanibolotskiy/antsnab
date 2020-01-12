@@ -162,9 +162,12 @@ class CategoryController extends \Controller
 
         //$filter_data = $this->getFilter($category_id, $limit, $page, 0, true);
         $products_total = $this->model_catalog_product->getTotalProducts($filter_data);
+        $sql = $this->model_catalog_product->getProductsSQL($filter_data);
+
         $productsHelper = new ProductListHelper($this->registry);
-        $products_data = $productsHelper->getProductsSQL($filter_data);
-        $products=$products_data['products'];
+        $products = $productsHelper->getProducts($filter_data,true);
+        //print_r($products_data);
+
         $queryString = $this->hierarhy->getPath($category_id);
         if (isset($this->request->get['filter'])) {
             $queryString .= '&filter=' . $this->request->get['filter'];
@@ -177,11 +180,11 @@ class CategoryController extends \Controller
 
         $items = [];
         foreach( $products as $p ){
+            $p["sql"]=$sql;
             $items[] = $this->load->view("partial/product_item", ['p'=>$p]);
         }
 
         $lazyLoadResponse = PaginationHelper::getLazyLoadResponse($this->registry, [
-            'sql'=>$products_data["sql"],
             'items' => $items, 
             'total' => (int)$products_total,
             'itemsPerPage' => (int)$limit,
@@ -315,7 +318,7 @@ class CategoryController extends \Controller
 
         $products_add=[];
         $parent_category_name='';
-        if(($product_total<5)and $parent_category){
+        if(($product_total<5) and $parent_category) {
             //print_r($parent_category);
             
             $filter_data_add = array(

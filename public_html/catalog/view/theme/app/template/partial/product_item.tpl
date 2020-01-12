@@ -1,4 +1,5 @@
 <li class="catalog_item_product wrp_fly" rel="<?= $p['product_id']?>" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+    <?php echo $p["sql"];?>
     <?php if($p["labels"]){  ?>
         <div class="item_labels">
             <?php foreach($p["labels"] as $key=>$label){ ?>
