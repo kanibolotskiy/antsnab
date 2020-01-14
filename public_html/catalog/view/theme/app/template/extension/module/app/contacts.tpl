@@ -164,7 +164,7 @@
             </div>
         <?php }?>
         <div class="tovar_files">
-            <a class="download" target="_blank" href="http://antsnab.cp06038.tmweb.ru/files/rek_ant-snab.pdf">Скачать реквизиты</a>
+            <a class="download" target="_blank" href="https://ant-snab.ru/files/rek_ant-snab.pdf">Скачать реквизиты</a>
         </div>
         <div class="wrp_feedback">
             <h2>Обратная связь</h2>
