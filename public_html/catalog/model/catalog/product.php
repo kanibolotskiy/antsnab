@@ -30,19 +30,37 @@ class ModelCatalogProduct extends Model {
 		}
 
 		//Хит
-		$sql="SELECT op.product_id FROM oc_product_to_category oc inner join oc_product op ON oc.product_id=op.product_id
-		where category_id=(select category_id from oc_product_to_category where product_id='".$product["product_id"]."' and main_category=1)
-		order by op.viewed DESC limit 3";
-		$query = $this->db->query($sql);
-		$product_hit=[];
-		foreach ($query->rows as $result) {
-			$product_hit[]=$result["product_id"];
-		}
-		if(in_array($product['product_id'], $product_hit)){
-			$labels["_hit"]=Array(
-				"label"=>"Хит",
-				"title"=>"Хит продаж в категории товаров"
-			);
+		$sql_cnt="SELECT count(op.product_id) as cnt FROM oc_product_to_category oc inner join oc_product op ON oc.product_id=op.product_id
+		where category_id=(select category_id from oc_product_to_category where product_id='".$product["product_id"]."' and main_category=1)";
+		$query = $this->db->query($sql_cnt);
+		
+		$cnt=$query->row["cnt"];
+		$limit=0;
+		if($cnt>1){
+			if($cnt<4){
+				$limit=1;
+			}else{
+				if($cnt<5){
+					$limit=2;
+				}else{
+					$limit=3;
+				}
+			}
+			
+			$sql="SELECT op.product_id FROM oc_product_to_category oc inner join oc_product op ON oc.product_id=op.product_id
+			where category_id=(select category_id from oc_product_to_category where product_id='".$product["product_id"]."' and main_category=1)
+			order by op.viewed DESC limit ".$limit;
+			$query = $this->db->query($sql);
+			$product_hit=[];
+			foreach ($query->rows as $result) {
+				$product_hit[]=$result["product_id"];
+			}
+			if(in_array($product['product_id'], $product_hit)){
+				$labels["_hit"]=Array(
+					"label"=>"Хит",
+					"title"=>"Хит продаж в категории товаров"
+				);
+			}
 		}
 
 		return $labels;
