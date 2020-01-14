@@ -9,7 +9,7 @@
             </div>
         <?php }?>
         <div class="our-production">
-            <h1 >Наша продукция</h1>
+            <h2>Наша продукция</h2>
             <ul>
                 <?php foreach ($rootCategories as $category): ?>
                     <li>
