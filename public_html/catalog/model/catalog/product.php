@@ -195,6 +195,7 @@ class ModelCatalogProduct extends Model {
 		if (!empty($data['filter_category_id'])) {
 			if (!empty($data['filter_sub_category'])) {
 				$sql .= " AND cp.path_id = '" . (int)$data['filter_category_id'] . "'";
+				//$sql .= " AND p2c.main_category=1 ";
 			} else {
 				$sql .= " AND p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
 			}
@@ -210,7 +211,7 @@ class ModelCatalogProduct extends Model {
 
 				$sql .= " AND pf.filter_id IN (" . implode(',', $implode) . ")";
 			}
-			$sql .= " AND p2c.main_category=1 ";
+			
 
 		}
 
