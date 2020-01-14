@@ -16,8 +16,20 @@ class ModelExtensionModuleMenueditor extends Model
         $pre_menu = array();
         $post_menu = array();
         $menu_editor_entries = $config->get('menu_editor_entries');
+        for($i=0;$i<count($menu_editor_entries);$i++){
+            $post_menu[] = array('name' => $menu_editor_entries[$i]['names'][$config->get('config_language_id')],
+                    'children' => array(),
+                    'column' => 1,
+                    // 'href' => $this->url->link($menu_editor_entry['href']),
+                    'position' => $menu_editor_entries[$i]['position'],
+                    'href' => $menu_editor_entries[$i]['href'],
+                    'isactive' => $this->isUrlActive($menu_editor_entries[$i]['href']),
+                    'target' => $menu_editor_entries[$i]['target']);
+        }
+        return $post_menu;
         //  var_dump('ЗАПРОШЕН: ' . $_SERVER['REQUEST_URI']);
         //  echo('<br/>');
+        /*
         foreach ($menu_editor_entries as $menu_editor_entry) {
             if ($menu_editor_entry['position'] == 0) {
                 $pre_menu[] = array('name' => $menu_editor_entry['names'][$config->get('config_language_id')],
@@ -36,8 +48,8 @@ class ModelExtensionModuleMenueditor extends Model
                     'isactive' => $this->isUrlActive($menu_editor_entry['href']),
                     'target' => $menu_editor_entry['target']);
             }
-        }
-        return array_merge($pre_menu, $post_menu);
+        }*/
+        //return array_merge($pre_menu, $post_menu);
     }
 
     private function isUrlActive($url)

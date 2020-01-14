@@ -229,28 +229,33 @@
                 <ul itemscope itemtype="http://www.schema.org/SiteNavigationElement">
                     <?php $cnt = 0; $ttl = count($top_menu);?>
                     <?php foreach ($top_menu as $item) : ?>
-                        <?php 
-                            if (isset($item['target']) && trim($item['target']) != "") {
-                                $target=" target=".$item['target'];
-                            }else{
-                                $target="";
-                            }
-                        ?>
-                        
-                        <?php if($item['isactive']){?>
-                            <li class="active" itemprop="name">
-                                <span><?php echo $item['name']; ?></span>
-                            </li>
-                        <?php }else{?>
-                            <li class="menu_li" itemprop="name">
-                                <a itemprop="url" href="<?php echo $item['href']; ?>" <?php echo $target; ?>><span><?php echo $item['name']; ?></span></a>
-                            </li>
-                        <?php }?>
+                        <?php if($item["position"]==0){?>
+                                
+                            <?php 
+                                if (isset($item['target']) && trim($item['target']) != "") {
+                                    $target=" target=".$item['target'];
+                                }else{
+                                    $target="";
+                                }
+                            ?>
+                            
+                            <?php if($item['isactive']){?>
+                                <li class="active" itemprop="name">
+                                    <span><?php echo $item['name']; ?></span>
+                                </li>
+                            <?php }else{?>
+                                <li class="menu_li" itemprop="name">
+                                    <a itemprop="url" href="<?php echo $item['href']; ?>" <?php echo $target; ?>><span><?php echo $item['name']; ?></span></a>
+                                </li>
+                            <?php }?>
 
-                        <?php $cnt++;?>
-                        <?php if( $cnt != $ttl): ?>
-                        <li class="separator"></li>
-                        <?php endif;?>
+                            <?php $cnt++;?>
+                            <?php if( $cnt != $ttl): ?>
+                            <li class="separator"></li>
+                                
+                        
+                            <?php endif;?>
+                        <?php }?>
                     <?php endforeach; ?>
                 </ul>
                 <div class="mobmenu_contacts">
