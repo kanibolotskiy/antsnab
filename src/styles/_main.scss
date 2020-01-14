@@ -8017,12 +8017,15 @@ background-size:cover;-webkit-background-size:cover;-moz-background-size:cover;-
     transition:0.2s;
     z-index:10;
 }
+
+
 .wrapper_contact_slider .slick-arrow:hover{
     opacity:0.3s;
 }
 .wrapper_contact_slider .slick-prev.slick-arrow{
     left:-9px;
 }
+.wrapper_contact_slider .slick-arrow.slick-disabled{opacity:0.5;cursor:auto;}
 
 .wrapper_contact_slider .slick-next.slick-arrow{
     transform:rotate(180deg);

@@ -24533,7 +24533,7 @@ $(document).ready(function(){
         appendArrows:$(".contact_slider_arrows"),
         dots: false,
         arrows:true,
-        infinite: true,
+        infinite: false,
         speed: 300,
         slidesToShow: 4,
         slidesToScroll: 1,

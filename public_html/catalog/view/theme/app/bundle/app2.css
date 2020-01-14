@@ -4167,6 +4167,8 @@ body._hfixed._hmenu.checkout-cart .empty_block_header { height: 120px; }
 
 .wrapper_contact_slider .slick-prev.slick-arrow { left: -9px; }
 
+.wrapper_contact_slider .slick-arrow.slick-disabled { opacity: 0.5; cursor: auto; }
+
 .wrapper_contact_slider .slick-next.slick-arrow { transform: rotate(180deg); right: -9px; }
 
 .footer_phone .call-us.call-us2 { margin-left: 9px; }
