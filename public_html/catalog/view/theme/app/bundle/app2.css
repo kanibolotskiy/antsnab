@@ -4189,6 +4189,8 @@ body._hfixed._hmenu.checkout-cart .empty_block_header { height: 120px; }
 
 .mentioned-products .item_labels { left: -7px; }
 
+.nav ul li.separator:last-child { display: none; }
+
 /*Stick Nav */
 .container.main { /*for right calculation of .offset in js*/ position: relative; }
 
