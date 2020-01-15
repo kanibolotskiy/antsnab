@@ -20,7 +20,7 @@
 
         <div class="catalog-img">
             <div class="fast_preview">
-                <div class="fast_preview_caption">
+                <div class="fast_preview_caption with_goal" goal="quick-view">
                     <span>Быстрый просмотр</span>
                 </div>
             </div>

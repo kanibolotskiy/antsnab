@@ -187,7 +187,8 @@ class ControllerProductProduct extends Controller {
                             $koef_numerator=$koef_item;
                         }
                         $z++;
-                    }
+					}
+					
                     $pUnits[$key]['nom']=$koef_numerator;
                     $pUnits[$key]['denom']=$koef_denomirator;
 
@@ -196,7 +197,8 @@ class ControllerProductProduct extends Controller {
                         $pUnits[$key]['mincount']=ceil(1*$koef_d);
                     }else{
                         $pUnits[$key]['mincount']=ceil($product_info['mincount']*$koef_d);
-                    }
+					}
+					
                     //echo "!".$pUnits[$key]['mincount']."!";
 
                     //print_r($pUnits[$key]);

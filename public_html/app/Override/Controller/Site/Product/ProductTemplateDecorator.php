@@ -148,6 +148,8 @@ class ProductTemplateDecorator implements IDecorator
                     $pUnits[$key]['nom']=$koef_numerator;
                     $pUnits[$key]['denom']=$koef_denomirator;
 
+                   
+
                     $koef_d=$koef_numerator/$koef_denomirator;
                     if($product_info['quantity']>0){
                         $pUnits[$key]['mincount']=ceil(1*$koef_d);
