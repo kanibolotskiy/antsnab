@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogInformation extends Model {
 	public function getBanner($banner_id){
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "banner_image WHERE banner_id='".$banner_id."'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "banner_image WHERE banner_id='".$banner_id."' order by sort_order ASC");
 		return $query->rows;
 	}
 	private function cleanInternalUrl($matches){
