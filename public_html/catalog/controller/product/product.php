@@ -775,10 +775,11 @@ class ControllerProductProduct extends Controller {
 			if($product_info['video']){
 				preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $product_info['video'], $matches);
 				if(isset($matches[0])){
-				$video_id=$matches[0];
-				$data['video_link'] = $product_info['video'];
-				
-				$data['video_img']='//img.youtube.com/vi/'.$video_id.'/sddefault.jpg';
+					$video_id=$matches[0];
+					$data['video_link'] = $product_info['video'];
+					
+					//$data['video_img']='//img.youtube.com/vi/'.$video_id.'/sddefault.jpg';
+					$data['video_img']='//img.youtube.com/vi/'.$video_id.'/maxresdefault.jpg';
 				}
 			}
 

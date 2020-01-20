@@ -3877,7 +3877,7 @@ body._hfixed._hmenu.checkout-cart .empty_block_header { height: 120px; }
   #search { width: auto; position: absolute; left: 149px; top: -79px; border: 0; /*right: 262px;*/ right: 305px; }
   .container.main { overflow: visible; }
   .ya-site-form__submit { left: -28px; right: initial; background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNS45NDc4MyAxMUM1Ljk0NzgzIDE1LjA5OTQgOS4xOTU0MiAxOC40IDEzLjE3MzkgMTguNEMxNy4xNTI0IDE4LjQgMjAuNCAxNS4wOTk0IDIwLjQgMTFDMjAuNCA2LjkwMDU5IDE3LjE1MjQgMy42IDEzLjE3MzkgMy42QzkuMTk1NDIgMy42IDUuOTQ3ODMgNi45MDA1OSA1Ljk0NzgzIDExWiIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIxLjIiLz48cGF0aCBkPSJNNy42OTU2NSAxNi4yTDIuOTk5OTkgMjEiIHN0cm9rZT0iYmxhY2siIHN0cm9rZS13aWR0aD0iMS4yIi8+PC9zdmc+); width: 24px; height: 24px; }
-  .catalog-product { top: 149px; position: fixed; background: #fff; z-index: 10; height: calc(100vh - 135px); overflow: auto; border: 1px solid #EFEEEC; }
+  .catalog-product { top: 149px; position: fixed; background: #fff; z-index: 11; height: calc(100vh - 135px); overflow: auto; border: 1px solid #EFEEEC; }
   .accordion .slide ul li a:after { display: none; }
   body._hfixed .wrp_header { height: 90px; }
   body._hfixed .header_email, body._hfixed .tel, body._hfixed .prehead_call { display: none; }
