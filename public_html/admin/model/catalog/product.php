@@ -4,8 +4,74 @@ use WS\Override\Gateway\ProdTabs;
 
 class ModelCatalogProduct extends Model
 {
+    public function setParamValues($product_id,$data){
+        
+        if($data["change_params"]){
+            $this->db->query("delete from product_param_values where product_id=".$product_id);
 
-    //@task move to override
+            foreach($data["param_value"] as $key=>$value){
+                //print_r($value);
+                foreach($value as $key_val=>$value_item){
+                    //print_r($value_item);
+                    if($value_item){
+                        $this->db->query("insert into product_param_values (product_id, param_id, value1) values (".(int)$product_id.", ".(int)$key.",'".$key_val."')");
+                    }
+                }
+            }
+
+            foreach($data["param_value_d"] as $key=>$value){
+                if($value["value1"] or $value["value2"]){
+                    $this->db->query("insert into product_param_values (product_id, param_id, value1, value2) values (".(int)$product_id.", ".(int)$key.",'".$value["value1"]."','".$value["value2"]."')");
+                }
+            }
+        }
+    }
+
+    public function getFilterParamValues($param_id, $tp, $product_id){
+        $data=[];
+        if($tp==0){
+            $sql="SELECT value1 from product_param_values where product_id=".(int)$product_id." and param_id=".(int)$param_id;
+            $query=$this->db->query($sql);
+            
+            foreach ($query->rows as $result) {
+                $data[]=$result["value1"];
+            }
+        }else{
+            $sql="SELECT value1, value2 from product_param_values where product_id=".(int)$product_id." and param_id=".$param_id;
+            $query=$this->db->query($sql);
+            $data=$query->row;
+            
+        }
+        return $data;
+    }
+    public function getFilterParamList($param_id){
+        $sql="SELECT * from category_param_values where param_id=".(int)$param_id." order by param_value";
+        $query=$this->db->query($sql);
+        return $query->rows;
+    }
+
+    public function getMainCategoryFilter($category_id){
+        $sql="SELECT * from category_params where category_id=".(int)$category_id." order by sort_order";
+        $query=$this->db->query($sql);
+        return $query->rows;
+    }
+    public function getMainCategory($product_id){
+        $temp_cat_id=0;
+        $fin_cat_id=0;
+        $step=1;
+        $sql="SELECT category_id from oc_product_to_category where main_category=1 and product_id=".(int)$product_id;
+        $query=$this->db->query($sql);
+        $temp_cat_id=$query->row["category_id"];
+        
+        while($temp_cat_id!=71 and $step<5){
+            $fin_cat_id=$temp_cat_id;
+            $sql_cat="SELECT parent_id from oc_category where category_id=".(int)$temp_cat_id;
+            $query_cat=$this->db->query($sql_cat);
+            $temp_cat_id=$query_cat->row["parent_id"];
+            $step++;
+        }
+        return $fin_cat_id;
+    }
     public function afterAddProduct($data, $product_id)
     {
         $this->setIsShowInSummary($product_id, $data);
@@ -327,6 +393,7 @@ class ModelCatalogProduct extends Model
                 $this->db->query("INSERT INTO `" . DB_PREFIX . "product_recurring` SET `product_id` = " . (int) $product_id . ", customer_group_id = " . (int) $recurring['customer_group_id'] . ", `recurring_id` = " . (int) $recurring['recurring_id']);
             }
         }
+        $this->setParamValues($product_id, $data);
 
         $this->cache->delete('product');
 
@@ -520,7 +587,7 @@ class ModelCatalogProduct extends Model
                 $this->db->query("INSERT INTO `" . DB_PREFIX . "product_recurring` SET `product_id` = " . (int) $product_id . ", customer_group_id = " . (int) $product_recurring['customer_group_id'] . ", `recurring_id` = " . (int) $product_recurring['recurring_id']);
             }
         }
-
+        $this->setParamValues($product_id, $data);
         $this->cache->delete('product');
     }
 

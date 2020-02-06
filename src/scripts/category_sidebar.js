@@ -1,137 +1,185 @@
-/*
-import './lib/jquery.accordion';
-import 'jquery-touchswipe';
-(function($){
-   var  slideDuration = 300,
-          stickBreakpoint = 800,
-          freezeClass = 'freeze',
-          stickClass = 'fixed-nav'; 
+function getParamsForm(){
+    //$(".inputRangeMin").each()
+    var str='';
+    $(".inputRangeMin").each(function(){
+        var val=$(this).val()*1;
+        var min=$(this).closest(".wrapper_range_slider").find(".range_slider").attr("min_value")*1;
+        if(val!=min){
+            str+="&"+$(this).attr("name")+"="+$(this).val();
+        }
+    });
+    $(".inputRangeMax").each(function(){
+        var val=$(this).val()*1;
+        var max=$(this).closest(".wrapper_range_slider").find(".range_slider").attr("max_value")*1;
+        if(val!=max){
+            str+="&"+$(this).attr("name")+"="+$(this).val();
+        }
+    });
+    $(".param_check").each(function(){
+        if($(this).prop("checked")){
+            str+="&"+$(this).attr("name")+"="+$(this).val();
+        }
+    });
+    if(str){
+        str="?"+str;
+    }
+    return str;
+}
+function change_params_form(){
+    //data_url1=getParamsForm()
 
-   var  $header = $('.catalog-product'),
-        $container = $header.parents('.container.main'),
-        $accordeon = $header.find('.accordion'),
-        $accordeonInner = $accordeon.find('.simple-accordion'),
-        $accordeonHeader = $(".catalog-btn"),
-        $accordeonToggleButton = $(".catalog-opener"),
-        $collapseButton = $(".collapse");
+    var url=$("#form_params").attr("action");
+    //var data_url=decodeURI($("#form_params").serialize());
+    var data_url=getParamsForm();
+    var catalog_id=$("#form_params").attr("catalog_id");
+    history.pushState(null,null, url+data_url);
+    var tp=$(".catalog-list").offset().top-$(".header").height();
+    
+    $.ajax({
+        url:  '/index.php?route=extension/module/category/ajaxRefreshParams',
+        type: 'post',
+        data: data_url+"&catalog_id="+catalog_id,
+        dataType: 'json',
+        /*
+        beforeSend: function() {
+            $('#cart_preloader').fadeIn(200);
+        },
+        complete: function() {
+            $('#cart_preloader').fadeOut(200);
+        },*/
+        success: function(json) {
+            //console.log(json)
+            if (json['success']) {
+                var avail_data=json['avail'];
+                $(".row_check").removeClass("_unactive");
+                $(".param_check").attr("disabled",false);
 
-    $header.data('stickVerticalBreakPoint', $header.offset().top);
-          
+                for(avail_item in avail_data){
+                    let itm=avail_data[avail_item];
+                    if(itm.type){
+                        let min_value=itm.result.min;
+                        let max_value=itm.result.max;
+                        let range_row=$(".param_row[param_name='"+avail_item+"']");
+                        let range_row_slider=range_row.find(".range_slider");
 
-   var  toggleStickHeader = function() {
+                        let inputMin=range_row.find(".inputRangeMin").val()*1;
+                        let inputMax=range_row.find(".inputRangeMax").val()*1;
+
+                        //range_row.find(".inputRangeMin").val()
+                        
+                        range_row_slider.attr("min_value",min_value);
+                        range_row_slider.attr("max_value",max_value);
+                        
+                        if(min_value>inputMin){
+                            range_row.find(".inputRangeMin").val(min_value)
+                        }
+                        if(max_value<inputMax){
+                            range_row.find(".inputRangeMax").val(max_value)
+                        }
+                        console.log(min_value+"="+max_value)
+                        range_row_slider.slider("option",{"min":min_value,"max":max_value});
+                        
+
+
+                        //range_row_slider.
+
+
+                    }else{                        
+                        $(".param_row[param_name='"+avail_item+"'] .param_check").each(function(){
+                            //console.log($(this).val());
+                            let flag=true;
+                            for(itm_result in itm.result){
+                                if((itm.result[itm_result]["param_id"]*1)==$(this).val()){
+                                    flag=false;
+                                }
+                            }
+                            if(flag){
+                                $(this).attr("disabled",true);
+                                $(this).closest(".row_check").addClass("_unactive");
+                            }else{
+                                $(this).attr("disabled",false);
+                                $(this).closest(".row_check").removeClass("_unactive");
+                            }
+                            //itm.result
+
+                        });
+                    }
+                }
             
-            if( 
-                !isHeaderSticked() && 
-                $(window).scrollTop() >= $header.offset().top && 
-                window.innerWidth <= stickBreakpoint 
-            ) {
-                $header.data('stickVerticalBreakPoint', $header.offset().top);
-                $container.addClass(stickClass);
-
-            } else if ( 
-                window.innerWidth > stickBreakpoint ||
-                $(window).scrollTop() < $header.data('stickVerticalBreakPoint')
-            ) {
-                $container.removeClass(stickClass);
-                $header.data('stickVerticalBreakPoint', $header.offset().top);
+                $("html,body").animate({"scrollTop":tp},500)
             }
         },
-
-        isHeaderSticked = function() {
-            return $container.hasClass(stickClass);
-        },
-   
-        toggleAccordeon = function(complete) {
-            $accordeon.slideToggle(slideDuration, complete);
-        },
-
-        isAccordeonOpened = function () {
-            return !($accordeon.css('display') === 'none');        
-        },
-
-        toggleFreezeBody = function() {
-            if( isAccordeonOpened() && isHeaderSticked() ) {
-                $('body').addClass(freezeClass);
-                $accordeon.css('height', window.innerHeight-$accordeonHeader.height() );
-            } else {
-                $('body').removeClass(freezeClass);
-                $accordeon.css('height', 'auto');
-            } 
-        },
-
-        isBodyFreezed = function() {
-            return $('body').hasClass(freezeClass);
-        },
-
-        isScrolledBottom = function() {
-            var totalHeight = $accordeon[0].scrollHeight,
-                scrollPosition = $accordeon.height() + $accordeon.scrollTop();
-            return (totalHeight == scrollPosition);
-        },
-
-        registerEvents = function() {
-
-            //toggle accordeon
-            $accordeonToggleButton.on('click', function(e){
-                e.preventDefault();
-                e.stopPropagation();
-                toggleAccordeon(toggleFreezeBody);
-            });
-
-            $collapseButton.on('click', function(){
-                toggleAccordeon(toggleFreezeBody);
-            });
-            
-            //scroll
-            $(window).on('scroll resize load', function(){
-                toggleStickHeader();
-                toggleFreezeBody();
-                if( $(window).width() > stickBreakpoint && !isAccordeonOpened() ) {
-                    toggleAccordeon();
-                }
-            });
-
-            $accordeon.on('scroll', function() {
-                if( isScrolledBottom() ) {
-                    //console.log('bottom');
-                }
-            });
-        };
-  registerEvents();
-})($);
-
-
-// page init
-jQuery(function(){
-	initAccordion();
-});
-
-// inner accordions in menu
-function initAccordion() {
-	jQuery('ul.simple-accordion').slideAccordion({
-		opener:'>a.opener',
-		slider:'>div.slide',
-		collapsible:true,
-		animSpeed: 300,
-
-        afterOpenHandler: function(options, $item) {
-            var accordion = this,
-                accordionCont = accordion.parent('div');
-
-            //in sticked mode
-            if($item.position().top < 0) {
-                //accordionCont.scrollTop( accordionCont.scrollTop()+$item.position().top );
-                accordionCont.animate({scrollTop: accordionCont.scrollTop()+$item.position().top}, "slow");
-
-            //in desktop mode
-            //} else if( $(window).scrollTop() > $item.offset().top ) {
-            //    $(window).animate( {scrollTop: $item.offset().top} );
-            //} 
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
-	});
+    });
 }
-*/
+
 $(document).ready(function(){
+    $(document).on("change",".param_check",function(){
+        change_params_form();
+    });
+    $(".range_slider").each(function(){
+        var min_value=$(this).attr("min_value")*1;
+        var max_value=$(this).attr("max_value")*1;
+        
+        $(this).slider({
+            range: true,
+            animate: "fast",
+            min: min_value,
+            max: max_value,
+            values: [min_value,max_value],
+            slide: function( event, ui ) {
+                //console.log(ui.values[ 0 ] )
+                $(this).closest(".wrapper_range_slider").find(".inputRangeMin").val(ui.values[0])
+                $(this).closest(".wrapper_range_slider").find(".inputRangeMax").val(ui.values[1])
+            },
+            change:function(event, ui){
+                change_params_form();
+            }
+        });
+    });
+    $(".inputRangeMin").change(function(){
+        var vl=$(this).val()*1;
+        var itm=$(this).closest(".wrapper_range_slider").find(".range_slider");
+        var avail_min = itm.attr("min_value")*1;
+        var avail_max = itm.attr("max_value")*1;
+        if(vl<avail_min){
+            $(this).val(avail_min);
+            vl=avail_min;
+        }
+        if(vl>avail_max){
+            $(this).val(avail_max);
+            vl=avail_max;
+        }
+        itm.slider("values", 0, vl);
+    });
+
+    $(".inputRangeMax").change(function(){
+        var vl=$(this).val()*1;
+        var itm=$(this).closest(".wrapper_range_slider").find(".range_slider");
+        var avail_min = itm.attr("min_value")*1;
+        var avail_max = itm.attr("max_value")*1;
+        if(vl<avail_min){
+            $(this).val(avail_min);
+            vl=avail_min;
+        }
+        if(vl>avail_max){
+            $(this).val(avail_max);
+            vl=avail_max;
+        }
+        itm.slider("values", 1, vl);
+    });
+
+    $(".wrp_sidebar_filter_caption").click(function(){
+        $(".sidebar_filter_caption").addClass("active");
+        $(".catalog-product").addClass("_filter");
+    });
+    $(".sidebar_filter_close").click(function(){
+        $(".sidebar_filter_caption").removeClass("active");
+        $(".catalog-product").removeClass("_filter");
+    });
+
     $(".catalog_opens").click(function(){
         $(".catalog-product .accordion").slideToggle(200);
     });
@@ -152,6 +200,7 @@ $(document).ready(function(){
 
     $(".table_catalog").click(function(){
         $(this).toggleClass("active");
+        
         $(".catalog-product").toggleClass("active");
         $("body").toggleClass("_lmenu");
     });

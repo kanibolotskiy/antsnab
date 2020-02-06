@@ -1,4 +1,7 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+<?php echo $header; ?>
+<?php echo $column_left; ?>
+
+
 <div id="content">
     <div class="page-header">
         <div class="container-fluid">
@@ -42,6 +45,7 @@
                         <li style="display:none"><a href="#tab-discount" data-toggle="tab"><?php echo $tab_discount; ?></a></li>
                         <li style="display:none"><a href="#tab-special" data-toggle="tab"><?php echo $tab_special; ?></a></li>
                         <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
+                        <li><a href="#tab-filter" data-toggle="tab"><?php echo $tab_filter; ?></a></li>
                         <li style="display:none"><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
                         <li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
                     </ul>
@@ -1231,6 +1235,53 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="tab-pane" id="tab-filter">
+                            <input type="text" name="change_params" value="0" id="change_params">
+                            <div class="table-responsive">
+                                <table id="filter" class="table table-solid table-bordered table-hover">
+                                
+                                    <thead>
+                                        <tr>
+                                            <td class="text-left" style="width:150px;">Все параметры категории</td>
+                                            <td class="text-left">Все критерии</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach($filter_params as $filter_param){?>
+                                            <tr>
+                                                <td class="text-left">
+                                                    <b><?php echo $filter_param['name'];?><?php echo $filter_param['unit']?" (".$filter_param['unit'].")":"";?></b>
+                                                </td>
+                                                <td class="text-left">
+                                                    <?php if($filter_param["type_param"]) {?>
+                                                        <div class="product_availparam_dispason">
+                                                            <div class="param_block_wrapper">
+                                                                
+                                                                <div class="param_block_cap">от</div>
+                                                                <input type="text" class="param_inp form-control" name="param_value_d[<?php echo $filter_param["id"];?>][value1]" value="<?php echo $filter_param["list"]["value1"];?>" />
+                                                                <div class="param_block_cap">до</div>
+                                                                <input type="text" class="param_inp form-control" name="param_value_d[<?php echo $filter_param["id"];?>][value2]"  value="<?php echo $filter_param["list"]["value2"];?>" />
+                                                            </div>
+                                                        </div>                                                    
+                                                    <?php }else{?>
+                                                        <div class="product_availparam_list">
+                                                            <?php foreach($filter_param["list"] as $param_item){?>
+                                                                <div class="product_used_item <?php echo ($param_item["selected"])?"_active":""?>" rel="<?php $param_item["id"];?>">
+                                                                    <input class="param_value_input" type="text" name="param_value[<?php echo $filter_param["id"];?>][<?php echo $param_item["id"];?>]" value="<?php echo $param_item["selected"];?>">
+                                                                    <?php echo $param_item["param_value"];?>
+                                                                </div>
+                                                            <?php }?>
+                                                        </div>
+                                                    <?php } ?>
+                                                    
+                                                </td>
+                                            </tr>
+                                        <?php }?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                         <div class="tab-pane" id="tab-image">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover">
@@ -1355,9 +1406,29 @@
                                         ckeditorInit('input-description<?php echo $language['language_id']; ?>', getURLVar('token'));
     <?php } ?>
 <?php } ?>
-                                //--></script>
+//--></script>
+
+    <script type="text/javascript"><!--
+        
+    //--></script>
+         
+                               
         <script type="text/javascript"><!--
-            
+
+            $(".product_used_item").click(function(){
+                $("#change_params").val(1);
+                if($(this).hasClass("_active")){
+                    $(this).removeClass("_active");
+                    $(this).find(".param_value_input").val("");
+                }else{
+                    $(this).addClass("_active");
+                    $(this).find(".param_value_input").val(1);
+                } 
+            });
+            $(".param_inp").change(function(){
+                $("#change_params").val(1);
+            });
+
             function setCalcView(){
                 $(".show_calc").hide();
                 var calc_nomer=$("#input-calc").val();
@@ -1918,6 +1989,7 @@
                                                      pickDate: true,
           pickTime: true
       });
+
 //--></script>
   <script type="text/javascript"><!--
       $('#language a:first').tab('show');

@@ -285,7 +285,7 @@ class CategoryController extends \Controller
             $paginationModel = PaginationHelper::getPaginationModel($product_total, (int)$limit, (int)$page);
             $this->data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl, $paginationModel);
             $this->data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl, $paginationModel);
-            $this->setPartials();
+            //$this->setPartials();
             
             if ($page == 1) {
                 $this->document->addLink($this->url->link('product/category', 'path=' . $category_id, true), 'canonical');

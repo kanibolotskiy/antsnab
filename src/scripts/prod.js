@@ -742,16 +742,34 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
     $(document).on("mouseenter",".wrap_oneclick",function(){
         $(this).addClass("active");
     });
-
+    $(document).on("mouseleave",".catalog_item_product",function(){
+        if(!$(this).find(".onclickInput").is(":focus")){
+            $(this).find(".wrap_oneclick").removeClass("active");
+        }
+        
+    });
+    /*
+    is(":focus")
+    $(document).on("focusout",".onclickInput",function(){
+        $(this).closest(".wrap_oneclick").removeClass("active");
+        //$(this).addClass("active");
+    });
+    */
+    /*
     $(document).on("mouseleave",".catalog_item_product",function(){
         $(this).find(".wrap_oneclick").removeClass("active");
     });
+    */
 
     $(document).on("keyup",".onclickInput",function(){
         var vl=$(this).val();
         var itm=$(this).closest(".wrap_oneclick");
 
-        if(vl.indexOf("_")==-1){
+        //console.log(vl);
+        //console.log(vl.indexOf("_"));
+
+        if((vl.indexOf("_")==-1)&&(vl!="")){
+            
             //console.log("посылаем");
             var frm=$(this).closest(".oneclickform");
             var data=frm.serialize();
@@ -784,9 +802,8 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                     }
                 }
             });
-            
+           
         }
-        //console.log(vl+"="+vl.indexOf("_"));
     });
 
     /**/

@@ -184,5 +184,6 @@ $_['entry_video'] = 'Видео';
 $_['entry_showdiscount'] = 'Показывать скидку?';
 
 
+$_['tab_filter']='Параметры';
 
 

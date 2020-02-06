@@ -437,26 +437,32 @@
                                 <input name="label" type="hidden" placeholder="" value="<?php echo $discount_label;?>"/>
                                 <input name="product" type="hidden" placeholder="" value="<?php echo $heading_title;?>"/>
 
-                                <div class="modal_form_row">
-                                    <i class="error">Необходимо заполнить</i>
-                                    <input class="required" name="name" type="text" placeholder="Ваше имя"/>
+                                <div class="modal_form_group">
+                                    <div class="modal_form_row">
+                                        <i class="error">Необходимо заполнить</i>
+                                        <input class="inputModal required" name="name" type="text" placeholder="Ваше имя"/>
+                                    </div>
+
+                                    <div class="modal_form_row">
+                                        <i class="error">Необходимо заполнить</i>
+                                        <input class="inputModal required" name="company" type="text" placeholder="Название организации"/>
+                                    </div>
                                 </div>
 
-                                <div class="modal_form_row">
-                                    <i class="error">Необходимо заполнить</i>
-                                    <input class="required" name="company" type="text" placeholder="Название организации"/>
+                                <div class="modal_form_group">
+                                    <div class="modal_form_row">
+                                        <i class="error">Необходимо заполнить</i>
+                                        <input class="inputModal required" name="phone" type="tel" placeholder="Телефон"/>
+                                    </div>
+                                    <div class="modal_form_row">
+                                        <i class="error">Некорректный Email</i>
+                                        <input class="inputModal required" name="email" type="text" placeholder="E-mail"/>
+                                    </div>
                                 </div>
-
-                                <div class="modal_form_row">
-                                    <i class="error">Необходимо заполнить</i>
-                                    <input class="required" name="phone" type="tel" placeholder="Телефон"/>
-                                </div>
-                                <div class="modal_form_row">
-                                    <i class="error">Некорректный Email</i>
-                                    <input class="required" name="email" type="text" placeholder="E-mail"/>
-                                </div>
-                                <div class="modal_form_row">
-                                    <input name="site" type="text" placeholder="Сайт"/>
+                                <div class="modal_form_group">
+                                    <div class="modal_form_row">
+                                        <input class="inputModal" name="site" type="text" placeholder="Сайт"/>
+                                    </div>
                                 </div>
                                 
                                 <div class="modal_form_row">
@@ -472,16 +478,17 @@
                                 
 
                                 <input value="" name="workemail" type="text" placeholder="Рабочий email"/>
-                                
+                                <div class="modal_form_link">
+                                    <p>Нажимая на кнопку Отправить, я даю <a target="_blank" href="agreement/">согласие на обработку персональных данных</a></p>
+                                </div>
+
                                 <input
                                     type ="submit"
                                     class="g-recaptcha"
                                     data-sitekey="<?= $captcha_key ?>"
                                     data-callback="submitDiscountForm" value="Отправить"/>
                                     
-                                <div class="modal_form_link">
-                                    <p>Нажимая на кнопку Отправить, я даю <a target="_blank" href="agreement/">согласие на обработку персональных данных</a></p>
-                                </div>
+                                
 
                                 </form>
                             </div>

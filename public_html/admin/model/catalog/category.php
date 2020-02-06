@@ -2,7 +2,109 @@
 
 class ModelCatalogCategory extends Model
 {
+    function rus2translit($string) {
+		$converter = array(
+			'а' => 'a',   'б' => 'b',   'в' => 'v',
+			'г' => 'g',   'д' => 'd',   'е' => 'e',
+			'ё' => 'e',   'ж' => 'zh',  'з' => 'z',
+			'и' => 'i',   'й' => 'y',   'к' => 'k',
+			'л' => 'l',   'м' => 'm',   'н' => 'n',
+			'о' => 'o',   'п' => 'p',   'р' => 'r',
+			'с' => 's',   'т' => 't',   'у' => 'u',
+			'ф' => 'f',   'х' => 'h',   'ц' => 'c',
+			'ч' => 'ch',  'ш' => 'sh',  'щ' => 'sch',
+			'ь' => '\'',  'ы' => 'y',   'ъ' => '\'',
+			'э' => 'e',   'ю' => 'yu',  'я' => 'ya',
+			'А' => 'A',   'Б' => 'B',   'В' => 'V',
+			'Г' => 'G',   'Д' => 'D',   'Е' => 'E',
+			'Ё' => 'E',   'Ж' => 'Zh',  'З' => 'Z',
+			'И' => 'I',   'Й' => 'Y',   'К' => 'K',
+			'Л' => 'L',   'М' => 'M',   'Н' => 'N',
+			'О' => 'O',   'П' => 'P',   'Р' => 'R',
+			'С' => 'S',   'Т' => 'T',   'У' => 'U',
+			'Ф' => 'F',   'Х' => 'H',   'Ц' => 'C',
+			'Ч' => 'Ch',  'Ш' => 'Sh',  'Щ' => 'Sch',
+			'Ь' => '\'',  'Ы' => 'Y',   'Ъ' => '\'',
+            'Э' => 'E',   'Ю' => 'Yu',  'Я' => 'Ya',
+            ' '=>'_'
+		);
+		return strtr($string, $converter);
+    }
+    
 
+    public function setParamValues($category_id,$data){
+        if($data["change_params"]){
+            //print_r($data["cat_filter"]);
+            //Обновление общих данных
+            $sql = "select id from category_params where category_id='".(int)$category_id."'";
+            $query = $this->db->query($sql);
+            $cat_filters=[];
+            if ($query->rows) {
+                foreach ($query->rows as $category_filter) {
+                    $cat_filters[]=$category_filter["id"];
+                }
+            }
+            foreach($data["cat_filter"] as $key=>$data_itm){
+                unset($cat_filters[array_search($key,$cat_filters)]);
+                
+                if(!trim($data_itm["translit"])){
+                    $tr_translit=strtolower($this->rus2translit(trim($data_itm["name"])));
+                }else{
+                    $tr_translit=trim($data_itm["translit"]);
+                }
+                $sql="update category_params set name='".trim($data_itm["name"])."', translit='".$tr_translit."', unit='".trim($data_itm["unit"])."', type_param='".(int)$data_itm["type_param"]."',  sort_order='".(int)$data_itm["sort_order"]."', param_sort_type='".(int)$data_itm["param_sort_type"]."' where id='".(int)$key."'";
+                $this->db->query($sql);
+            }
+            foreach($cat_filters as $del_item){
+                $this->db->query("DELETE FROM category_param_values where param_id='".(int)$del_item."'");
+                $this->db->query("DELETE FROM category_params where id='".(int)$del_item."'");
+            }
+
+            foreach($data["param_value"] as $key=>$param_item){
+                foreach($param_item as $key_value=>$param_value){
+                    if($key_value=="new"){
+                        foreach($param_value as $item_new){
+                            if($item_new!="remove"){
+                                $sql_upd="insert into category_param_values (param_id, param_value) values ('".(int)$key."', '".trim($item_new)."')";
+                                $this->db->query($sql_upd);
+                            }
+                        }
+                    }else{
+                        if($param_value=="remove"){
+                            $sql_upd="delete from category_param_values where param_id='".(int)$key."' and id='".(int)$key_value."'";
+                        }else{
+                            $sql_upd="update category_param_values set param_value='".trim($param_value)."' where param_id='".(int)$key."' and id='".(int)$key_value."'";
+                        }
+                        $this->db->query($sql_upd);
+                    }
+                }
+            }
+            if(isset($data["cat_filter_new"])){
+                foreach($data["cat_filter_new"] as $key=>$data_itm){
+                    if(!trim($data_itm["translit"])){
+                        $tr_translit=strtolower($this->rus2translit(trim($data_itm["name"])));
+                    }else{
+                        $tr_translit=trim($data_itm["translit"]);
+                    }
+                    //$sql="update category_params set name='".trim($data_itm["name"])."', translit='".$tr_translit."', unit='".trim($data_itm["unit"])."', type_param='".(int)$data_itm["type_param"]."',  sort_order='".(int)$data_itm["sort_order"]."', param_sort_type='".(int)$data_itm["param_sort_type"]."' where id='".(int)$key."'";
+                    $sql="insert into category_params (category_id, name, translit, unit, type_param, sort_order, param_sort_type) 
+                    values (".(int)$category_id.", '".trim($data_itm["name"])."', '".trim($tr_translit)."', '".trim($data_itm["unit"])."', '".$data_itm["type_param"]."', '".$data_itm["sort_order"]."', '".$data_itm["param_sort_type"]."') ";
+                    $this->db->query($sql);
+                    $new_filter_id = $this->db->getLastId();
+
+                    if($data_itm["type_param"]==0){
+                        //print_r($data["param_value_new"][$key]);
+                        foreach($data["param_value_new"][$key] as $itm){
+                            if($itm!="remove"){
+                                $sql="INSERT INTO category_param_values (param_id, param_value) values (".(int)$new_filter_id.",'".trim($itm)."')";
+                                $this->db->query($sql);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
     public function addCategory($data)
     {
         if(!isset($data['isseo'])){
@@ -14,8 +116,6 @@ class ModelCatalogCategory extends Model
         if(!isset($data['notshowisseo'])){
             $data['notshowisseo']=0;
         }
-
-        
 
         $this->db->query("INSERT INTO " . DB_PREFIX . "category SET parent_id = '" . (int) $data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int) $data['top'] : 0) . "', `column` = '" . (int) $data['column'] . "', sort_order = '" . (int) $data['sort_order'] . "', status = '" . (int) $data['status'] . "', isseo = '" . (int) $data['isseo'] . "',isbrand = '" . (int) $data['isbrand'] . "', discount = '" . (int) $data['discount'] . "', notshowisseo = '" . (int) $data['notshowisseo'] . "', calc = '" . (int) $data['calc'] . "', date_modified = NOW(), date_added = NOW()");
 
@@ -64,9 +164,10 @@ class ModelCatalogCategory extends Model
         if (isset($data['keyword'])) {
             $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'category_id=" . (int) $category_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
         }
+        $this->setParamValues($category_id,$data);
+
 
         $this->cache->delete('category');
-
         return $category_id;
     }
 
@@ -195,7 +296,8 @@ class ModelCatalogCategory extends Model
         if ($data['keyword']) {
             $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'category_id=" . (int) $category_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
         }
-
+        $this->setParamValues($category_id,$data);
+        
         $this->cache->delete('category');
     }
 

@@ -653,3 +653,103 @@ div.ckeditor {
     font-size: 10.5em;
 }
 .cat_isseo_1{color:blue;}
+
+.product_availparam_list{padding-bottom: 5px;font-size: 0;position:relative;overflow:hidden;}
+/*
+.avail_item{position:relative;padding: 3px 20px 3px 10px;border-radius:2px;border:1px solid #ddd;cursor:pointer;display:inline-block;margin-bottom: 4px;}
+*/
+.add_param_caption{line-height: 33px;margin-right: 10px;white-space:nowrap;}
+.add_param{border: 1px solid #ddd;width: 50px;height: 33px;margin-left: 7px;text-align: center;line-height: 33px;font-weight: bold;cursor: pointer;}
+
+
+.used_item{
+	/*background: #fff;*/
+	font-size: 12px;
+	padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 8px;padding-right:20px;
+	margin-bottom: 3px;
+	margin-right:3px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+	position:relative;float:left;
+	min-height: 23px;
+}
+.product_used_item{
+	position:relative;
+	float:left;
+	font-size: 12px;
+	padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 8px;padding-right:8px;
+	margin-bottom: 3px;
+	margin-right:3px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+	position:relative;float:left;
+	line-height: 22px;
+	cursor:pointer;
+}
+.product_used_item.active{background:#fff;}
+.wrp_used_item{
+	position:relative;
+	float:left;
+}
+
+.used_item._added{
+	background:#fff;
+}
+.del_used_item{width:20px;height:20px;position:absolute;top:0;right:0;cursor:pointer;z-index: 2;} 
+.del_used_item:before{content:'';position:absolute;width:10px;height:2px;background:#777;border-radius:2px;transform:rotate(45deg);left: 5px;top: 8px;}
+.del_used_item:after{content:'';position:absolute;width:10px;height:2px;background:#777;border-radius:2px;transform:rotate(-45deg);left: 5px;top: 8px;}
+.del_used_item.del_used_item_0:before{background:red;}
+.del_used_item.del_used_item_0:after{background:red;}
+
+.wrp_add_paramvalue{margin-top:10px;display:flex;}
+._error{border-color:red!important;}
+
+.input_param_wrp{position:relative;    padding-right: 5px;}
+.input_param_hidden{
+	min-width: 20px;
+	height: 20px;
+	padding: 0;;
+    border: 0;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 8px;
+    outline: none;
+    font-size: 12px;
+	z-index: 1;
+	background:transparent;
+}
+.input_param_val{opacity:0;min-width: 20px;}
+
+
+.table-solid tbody td {background:#f9f9f9;}
+.wrp_used_item._remove .input_param_hidden,.wrp_used_item._remove .used_item{display:none;}
+.product_used_item._active{
+	background:#41737E;
+	color:#fff;
+}
+.param_value_input{display:none;}
+.param_block_cap{display:inline-block;vertical-align:top;line-height: 34px;margin-right: 3px;}
+.param_block_wrapper{position:relative;overflow:hidden;}
+.param_inp{width:100px;display:inline-block;margin-right:10px;}
+.unable_delete{margin-top: 10px;border-top: 1px solid #ddd;padding-top:5px;display:none;}
+.unable_delete_cap{font-weight: bold;}
+.unable_delete_list{margin-top:5px;}
+.unable_delete_list_row a{font-size:14px;}
+.del_used_items{display:none;}
+
+.table-solid.table tbody > tr > td{vertical-align: top;}
+
+.remove_item_param.btn-danger{
+	background-color: #777;
+    border-color: #777;
+}
+.remove_item_param.btn-danger.btn-danger_0{
+	background-color: #d9534f;
+    border-color: #d43f3a;
+}
+#change_params{display:none;}

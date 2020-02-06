@@ -745,11 +745,15 @@ class ControllerCatalogProduct extends Controller {
 		$data['tab_image'] = $this->language->get('tab_image');
 		$data['tab_links'] = $this->language->get('tab_links');
 		$data['tab_reward'] = $this->language->get('tab_reward');
+		$data['tab_filter'] = $this->language->get('tab_filter');
+		
+
 		$data['tab_design'] = $this->language->get('tab_design');
 		$data['tab_openbay'] = $this->language->get('tab_openbay');
 
 		$data['tab_calcs'] = $this->language->get('tab_calcs');
 		
+
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -1520,6 +1524,56 @@ class ControllerCatalogProduct extends Controller {
 				'sort_order' => $product_image['sort_order']
 			);
 		}
+
+		//Параметры
+		/*
+		<span class="avail_item">герметик</span>
+		<span class="avail_item">клей</span>
+		<span class="avail_item">клей-герметик</span>
+		<span class="avail_item">химический анкер</span>
+		<span class="avail_item">лента</span>
+		<span class="avail_item">грунтовка</span>
+		<span class="avail_item">очиститель</span>
+		*/
+		
+		$main_category_id=$this->model_catalog_product->getMainCategory($this->request->get['product_id']);
+		$filter_params_data=$this->model_catalog_product->getMainCategoryFilter($main_category_id);
+
+		$filter_params=[];
+		//$filter_params=$this->model_catalog_product->getProductFilterParams();
+
+		foreach($filter_params_data as $f_data){
+			$list=[];
+			$list_param_value=$this->model_catalog_product->getFilterParamValues($f_data["id"],$f_data["type_param"],$this->request->get['product_id']);
+			if($f_data["type_param"]==0){
+				$list_data=$this->model_catalog_product->getFilterParamList($f_data["id"]);
+
+				foreach($list_data as $list_item){
+					$list[]=[
+						"id"=>$list_item["id"],
+						"param_id"=>$list_item["param_id"],
+						"param_value"=>$list_item["param_value"],
+						"selected"=>in_array ($list_item["id"], $list_param_value)
+					];
+				}
+			}else{
+				//print_r($list_param_value);
+				
+				$list["value1"]=isset($list_param_value["value1"])?$list_param_value["value1"]:"";
+				$list["value2"]=isset($list_param_value["value2"])?$list_param_value["value2"]:"";
+
+			}
+			
+			$filter_params[]=Array(
+				"id"=>$f_data["id"],
+				"name"=>$f_data["name"],
+				"unit"=>html_entity_decode($f_data["unit"]),
+				"type_param"=>$f_data["type_param"],
+				"list"=>$list
+			);
+		}
+		
+		$data["filter_params"]=$filter_params;
 
 		// Downloads
 		$this->load->model('catalog/download');

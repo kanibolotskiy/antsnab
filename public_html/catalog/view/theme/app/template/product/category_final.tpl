@@ -35,7 +35,7 @@
                 <?php }?>
             <?php }?>
 
-            <div class="catalog-tab">
+            <div class="catalog-tab catalog-list">
 
                 <div class="wrap_select_view">
                     <form method="GET" style="position:absolute;top:0;z-index:2;">

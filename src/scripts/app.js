@@ -15,6 +15,9 @@ import './responsive_tabs_tables';
 import './lib/opencart_product';
 import './lib/opencart_search';
 
+import './lib/jquery.ui.touch-punch.min';
+import './lib/jquery-ui.min';
+
 import 'magnific-popup';
 import './category.js';
 import './prod.js';

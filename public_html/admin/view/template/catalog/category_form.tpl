@@ -28,6 +28,7 @@
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
             <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
+            <li><a href="#tab-filter" data-toggle="tab"><?php echo $tab_filter; ?></a></li>
             <li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
           </ul>
           <div class="tab-content">
@@ -355,6 +356,122 @@
                 </div>
               </div>
             </div>
+
+            <div class="tab-pane" id="tab-filter">
+              <div class="table-responsive">
+                <input type="text" name="change_params" value="0" id="change_params"/>
+
+                <table id="filters" class="table table-solid table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <td class="text-left" style="width:200px;">Название параметра</td>
+                            <td class="text-left" style="width:100px;">Транслит</td>
+                            <td class="text-left" style="min-width:100px;">Ед. изм.</td>
+                            <td class="text-left" style="min-width:150px;">Тип<br/>параметра</td>
+                            <td class="text-left" style="min-width:150px;">Тип сортировки<br/>значений параметров</td>
+                            <td class="text-left" style="width:700px;">Возможные значения</td>
+                            <td class="text-left" style="width: 80px;">Сортировка</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                      <?php $z=0;for($i=0;$i<count($cat_filters);$i++){?>
+                        <tr id="filter-row<?php echo $i; ?>">
+                          <td class="text-left">
+                            <input type="text" name="cat_filter[<?php echo $cat_filters[$i]["id"];?>][name]" value="<?php echo $cat_filters[$i]['name']; ?>" class="change_form_param form-control" />
+                          </td>
+                          <td class="text-left">
+                            <input type="text" name="cat_filter[<?php echo $cat_filters[$i]["id"];?>][translit]" value="<?php echo $cat_filters[$i]['translit']; ?>" class="change_form_param form-control" />
+                          </td>
+
+                          <td class="text-left">
+                            <input type="text" name="cat_filter[<?php echo $cat_filters[$i]["id"];?>][unit]" value="<?php echo $cat_filters[$i]['unit']; ?>" class="change_form_param form-control" />
+                          </td>
+                          
+                          <td class="text-left">  
+                            <?php if(count($cat_filters[$i]["products"])){?>
+                              <input type="hidden" name="cat_filter[<?php echo $cat_filters[$i]["id"];?>][type_param]" value="<?php echo $cat_filters[$i]['type_param'];?>">
+                            <?php }?>
+                            <select  <?php echo count($cat_filters[$i]["products"])?"disabled='disabled'":"";?>  class="form-control change_form_param change_form_paramlist" name="cat_filter[<?php echo $cat_filters[$i]["id"];?>][type_param]" value="<?php $cat_filters[$i]['type_param'];?>">
+                              <option value="0" <?php echo ($cat_filters[$i]['type_param']==0?"selected":"");?> >Значение</option>
+                              <option value="1" <?php echo ($cat_filters[$i]['type_param']==1?"selected":"");?> >Диапазон</option>
+                            </select>
+                          </td>
+                          <td class="text-left">
+                            <select class="form-control change_form_param" name="cat_filter[<?php echo $cat_filters[$i]["id"];?>][param_sort_type]" value="<?php $cat_filters[$i]['param_sort_type'];?>">
+                              <option value="0" <?php echo ($cat_filters[$i]['param_sort_type']==0?"selected":"");?> >По релевантности</option>
+                              <option value="1" <?php echo ($cat_filters[$i]['param_sort_type']==1?"selected":"");?> >По алфавиту</option>
+                            </select>
+                          </td>
+                          <td class="text-left">
+                              
+                              <div class="param_block1" <?php echo ($cat_filters[$i]["type_param"])?'style="display:none;"':'style="display:block;"';?>>
+                                <div class="product_availparam_list" rel="<?php echo $cat_filters[$i]["id"];?>">
+                                    <?php foreach($cat_filters[$i]["list"] as $param_item){?>
+                                        <div class="wrp_used_item">
+                                          <input class="input_param_hidden" name="param_value[<?php echo $cat_filters[$i]['id']; ?>][<?php echo $param_item["id"];?>]" type="text" value="<?php echo $param_item["param_value"];?>" />
+                                          <span class="used_item" rel="<?php echo $param_item["id"];?>">
+                                            <div class="input_param_wrp">
+                                              <div class="input_param_val"><?php echo $param_item["param_value"];?></div>                
+                                            </div>
+                                            <div class="del_used_item del_used_item_<?php echo count($param_item["products"]);?>">
+                                              <div class="del_used_items" rel="<?php echo count($param_item["products"]);?>">
+                                                <?php foreach($param_item["products"] as $linked_prod){?>
+                                                  <div class="unable_delete_list_row">
+                                                    <a href="<?php echo $linked_prod["url"];?>" target="_blank"><?php echo $linked_prod["name"];?></a>
+                                                  </div>
+                                                <?php }?>
+                                              </div>
+                                            </div>
+                                          </span>
+                                        </div>
+                                    <?php }?>
+                                </div>
+                                <div class="wrp_add_paramvalue">
+                                    <div class="add_param_caption">Добавить значение:</div> 
+                                    <input type="text" class="add_param_input form-control"/> 
+                                    <div class="add_param">>></div>
+                                </div>
+                              </div>
+                              <div class="unable_delete">
+                                <div class="unable_delete_cap">Невозможно удалить значение:</div>
+                                <div class="unable_delete_subcap">Связанные продукты:</div>
+                                <div class="unable_delete_list"></div>
+                              </div>
+                              
+                          </td>
+                          <td class="text-left">
+                            <input type="number" name="cat_filter[<?php echo $cat_filters[$i]["id"];?>][sort_order]" value="<?php echo $cat_filters[$i]['sort_order']; ?>" class="change_form_param form-control sort_order_filter" />
+                          </td>
+
+                          
+                          <td class="text-left">
+                            <button class="remove_item_param btn-danger btn btn-danger_<?php echo count($cat_filters[$i]["products"]);?>" type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="fa fa-minus-circle"></i>
+                              <div class="del_used_items">
+                                <?php foreach($cat_filters[$i]["products"] as $linked_prod){?>
+                                  <div class="unable_delete_list_row">
+                                    <a href="<?php echo $linked_prod["url"];?>" target="_blank"><?php echo $linked_prod["name"];?></a>
+                                  </div>
+                                <?php }?>
+                              </div>
+                            </button>
+                          </td>
+
+                        </tr>
+                        
+                      <?php $z++;}?>
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="7"></td>
+                            <td class="text-left"><button type="button" onclick="addFilter();" data-toggle="tooltip" title="<?php echo $button_filter_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            </div>
             <div class="tab-pane" id="tab-design">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -402,6 +519,153 @@
       </div>
     </div>
   </div>
+
+  <script type="text/javascript"><!--
+      var filter_row = $("#filters tbody tr").length;
+      var last_added_new=filter_row;
+      function addFilter() {
+          
+          var last_order=-1;
+          $(".sort_order_filter").each(function(){
+            if(last_order<$(this).val()){
+              last_order=$(this).val();
+            }
+          });
+          last_order++;
+
+          
+          html = '<tr id="filter-row' + filter_row + '" new_row="'+last_added_new+'">';
+          html += '  <td class="text-left"><input type="text" name="cat_filter_new['+last_added_new+'][name]" value="" class="form-control change_form_param" /></td>';
+          html += '  <td class="text-left"><input type="text" name="cat_filter_new['+last_added_new+'][translit]" value="" class="form-control change_form_param " /></td>';
+          html += '  <td class="text-left"><input type="text" name="cat_filter_new['+last_added_new+'][unit]" value="" class="form-control change_form_param " /></td>';
+
+          html += '  <td class="text-left"><select name="cat_filter_new['+last_added_new+'][type_param]" class="form-control change_form_param" value="0"><option value="0">Значение</option><option value="1">Диапазон</option></select></td>';
+          html += '  <td class="text-left"><select name="cat_filter_new['+last_added_new+'][param_sort_type]" class="form-control change_form_param" value="0"><option value="0">По релевантности</option><option value="1">По алфавиту</option></select></td>';
+
+          html += ' <td class="text-left"><div class="param_block1" style="display:block;"><div class="product_availparam_list"></div><div class="wrp_add_paramvalue"><div class="add_param_caption">Добавить значение:</div> <input type="text" class="add_param_input form-control"> <div class="add_param">&gt;&gt;</div></div></div></td>';
+
+                          
+          html += '  <td class="text-left"><input type="number" name="cat_filter_new['+last_added_new+'][sort_order]" value="'+last_added_new+'" class="form-control sort_order_filter change_form_param" /></td>';
+          html += '  <td class="text-left"><button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="remove_item_param btn btn-danger btn-danger_0"><i class="fa fa-minus-circle"></i></button></td>';
+          
+          html += '</tr>';
+
+          $('#filters tbody').append(html);
+
+          last_added_new++;
+          filter_row++;
+      }
+/*-------------------------------------------*/
+    function add_param_value(itm){
+      var itm_val=itm.find("input");
+      var itm_list=itm.closest("td").find(".product_availparam_list");
+
+      var flag_add=true;
+      if($.trim(itm_val.val())==""){
+          flag_add=false;
+      }else{
+          itm.closest("td").find(".used_item").each(function(){
+            if($.trim(itm_val.val()).toLowerCase()==$.trim($(this).text()).toLowerCase()){
+              flag_add=false;
+            }
+          });
+      }
+      if(!flag_add){ 
+          itm_val.addClass("_error");
+      }else{
+          itm_val.removeClass("_error");
+          //var new_item='<span class="used_item _added" rel="0">'+itm_val.val()+'<div class="del_used_item"></div></span>';
+          
+          var new_row=itm.closest("tr").attr("new_row");
+          
+          if(new_row){
+            var new_item_name='param_value_new['+new_row+'][]';
+          }else{
+            var new_item_name='param_value['+itm_list.attr("rel")+'][new][]';
+          }
+          var new_item='<div class="wrp_used_item">';
+          new_item+='  <input class="input_param_hidden" name="'+new_item_name+'" type="text" value="'+itm_val.val()+'">';
+          new_item+='  <span class="used_item" rel="0">';
+          new_item+='    <div class="input_param_wrp">';
+          new_item+='      <div class="input_param_val">'+itm_val.val()+'</div>';
+          new_item+='    </div>';
+          new_item+='    <div class="del_used_item del_used_item_0"></div>';
+          new_item+='  </span>';
+          new_item+='</div>';
+      
+
+          itm_list.append(new_item);
+          itm_val.val("");
+          $("#change_params").val(1);
+          itm_val.focus();
+      }
+    };
+    $(document).ready(function(){
+      $(document).on("click",".remove_item_param",function(){
+          if($(this).hasClass("btn-danger_0")){
+            $(this).closest("tr").remove();
+            $("#change_params").val(1);
+
+          }else{
+            var itm=$(this).closest("tr").find(".unable_delete");
+            itm.find(".unable_delete_list").html($(this).children(".del_used_items").html())
+            itm.fadeIn();
+          }
+        });
+        $(document).on("change",".change_form_paramlist",function(){
+          if($(this).val()==0){
+            $(this).closest("tr").find(".param_block1").show();
+          }else{
+            $(this).closest("tr").find(".param_block1").hide();
+          }
+          //console.log($(this).val());
+        })
+
+        $(document).on("change",".change_form_param",function(){
+            $("#change_params").val(1);
+        });
+        $(document).on("keyup",".input_param_hidden",function(){
+
+            $(this).closest(".wrp_used_item").find(".input_param_val").html($(this).val());
+            $("#change_params").val(1);
+        });
+        $(document).on("keypress",".add_param_input",function(e){
+            if (e.which == 13) {
+              e.preventDefault();
+              var itm=$(this).closest(".wrp_add_paramvalue");
+              add_param_value(itm);
+            }
+        });
+        $(document).on("click",".add_param",function(){
+            var itm=$(this).closest(".wrp_add_paramvalue");
+            add_param_value(itm);
+        });
+        $(".unable_delete").click(function(){
+          $(this).hide();
+        });
+        $(document).on("click",".del_used_item",function(){
+
+            if($(this).hasClass("del_used_item_0")){
+              var itm=$(this).closest(".wrp_used_item");
+              itm.addClass("_remove");
+              itm.find(".input_param_hidden").val("remove");
+
+              $("#change_params").val(1);
+                
+            }else{
+              var itm=$(this).closest("td").find(".unable_delete");
+              itm.children(".unable_delete_list").html($(this).children(".del_used_items").html())
+              itm.fadeIn();
+
+                
+            }
+            
+        });
+    });
+    
+//--></script>
+
+
   <script type="text/javascript"><!--
   <?php if ($ckeditor) { ?>
     <?php foreach ($languages as $language) { ?>

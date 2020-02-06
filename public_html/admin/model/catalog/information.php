@@ -1,5 +1,7 @@
 <?php
 class ModelCatalogInformation extends Model {
+
+
 	/**Добавляем файлы для загрузки для локализаций */
 	public function getInformationDownloads($information_id)
     {

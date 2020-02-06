@@ -353,7 +353,20 @@ class ControllerCatalogCategory extends Controller {
 
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_data'] = $this->language->get('tab_data');
+		$data['tab_filter'] = $this->language->get('tab_filter');
+
 		$data['tab_design'] = $this->language->get('tab_design');
+
+		$data['entry_filter_name'] = $this->language->get('entry_filter_name');
+		$data['entry_filter_type'] = $this->language->get('entry_filter_type');
+		$data['entry_filter_unit'] = $this->language->get('entry_filter_unit');
+		$data['entry_filter_name'] = $this->language->get('entry_filter_name');
+		$data['entry_filter_sort_order'] = $this->language->get('entry_filter_sort_order');
+		$data['button_filter_add'] = $this->language->get('button_filter_add');
+		$data['button_remove'] = $this->language->get('button_remove');
+		
+
+		
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -453,6 +466,7 @@ class ControllerCatalogCategory extends Controller {
 			$data['parent_id'] = 0;
 		}
 
+		
 		$this->load->model('catalog/filter');
 
 		if (isset($this->request->post['category_filter'])) {
@@ -522,11 +536,73 @@ class ControllerCatalogCategory extends Controller {
 			$data['notshowisseo'] = 0;
 		}
 		
+		//Фильтр
+		
+		$this->load->model('catalog/catfilters');
+		
+		$cat_filters=[];
+		$data_cat_filters = $this->model_catalog_catfilters->getCatFilters($category_info['category_id']);
+		
+		
+
+		foreach($data_cat_filters as $data_cat_filter){
+			
+			//$list_param_value=$this->model_catalog_product->getFilterParamValues($f_data["id"],0,$this->request->get['product_id']);
+
+			$param_list=$this->model_catalog_catfilters->getCatFilterList($data_cat_filter["id"]);
+			
+			$list=[];
+			foreach($param_list as $list_item){
+				$linked_products_data=$this->model_catalog_catfilters->getLinkedProducts($list_item["param_id"],$list_item["id"]);
+				$linked_products=[];
+				foreach($linked_products_data as $linked_product){
+					$linked_products[]=[
+						"product_id"=>$linked_product["product_id"],
+						"url"=>$this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $linked_product["product_id"] , true),
+						"name"=>$linked_product["name"],
+					];
+				}
+				$list[]=[
+					"id"=>$list_item["id"],
+					"param_id"=>$list_item["param_id"],
+					"param_value"=>$list_item["param_value"],
+					"products"=>$linked_products
+				];
+			}
+
+			//print_r($list);
+			$linked_products_data=$this->model_catalog_catfilters->getLinkedProductsParam($data_cat_filter["id"]);
+			$linked_products=[];
+			foreach($linked_products_data as $linked_product){
+				$linked_products[]=[
+					"product_id"=>$linked_product["product_id"],
+					"url"=>$this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $linked_product["product_id"] , true),
+					"name"=>$linked_product["name"],
+				];
+			}
+
+			$cat_filters[]=Array(
+				"id"=>$data_cat_filter["id"],
+				"name"=>$data_cat_filter["name"],
+				"translit"=>$data_cat_filter["translit"],
+				"unit"=>$data_cat_filter["unit"],
+				"sort_order"=>$data_cat_filter["sort_order"],
+				"param_sort_type"=>$data_cat_filter["param_sort_type"],
+				"type_param"=>$data_cat_filter["type_param"],
+				"list"=>$list,
+				"products"=>$linked_products
+			);
+		}
+		
+		/**/
+
+		$data["cat_filters"]=$cat_filters;
+
 		//Скидки
 		
 		$this->load->model('catalog/discounts');
 		
-    $data['discounts'] = $this->model_catalog_discounts->getDiscounts();
+    	$data['discounts'] = $this->model_catalog_discounts->getDiscounts();
 		
 		if (isset($this->request->post['discount'])) {
 			$data['discount'] = $this->request->post['discount'];
