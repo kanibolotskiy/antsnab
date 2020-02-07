@@ -23946,21 +23946,12 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
     $(document).on("mouseleave",".catalog_item_product",function(){
         if(!$(this).find(".onclickInput").is(":focus")){
             $(this).find(".wrap_oneclick").removeClass("active");
-        }
-        
+        } 
     });
-    /*
-    is(":focus")
     $(document).on("focusout",".onclickInput",function(){
         $(this).closest(".wrap_oneclick").removeClass("active");
-        //$(this).addClass("active");
     });
-    */
-    /*
-    $(document).on("mouseleave",".catalog_item_product",function(){
-        $(this).find(".wrap_oneclick").removeClass("active");
-    });
-    */
+    
 
     $(document).on("keyup",".onclickInput",function(){
         var vl=$(this).val();
