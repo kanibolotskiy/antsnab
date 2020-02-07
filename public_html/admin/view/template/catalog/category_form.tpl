@@ -539,7 +539,7 @@
           html += '  <td class="text-left"><input type="text" name="cat_filter_new['+last_added_new+'][translit]" value="" class="form-control change_form_param " /></td>';
           html += '  <td class="text-left"><input type="text" name="cat_filter_new['+last_added_new+'][unit]" value="" class="form-control change_form_param " /></td>';
 
-          html += '  <td class="text-left"><select name="cat_filter_new['+last_added_new+'][type_param]" class="form-control change_form_param" value="0"><option value="0">Значение</option><option value="1">Диапазон</option></select></td>';
+          html += '  <td class="text-left"><select name="cat_filter_new['+last_added_new+'][type_param]" class="form-control change_form_param change_form_paramlist" value="0"><option value="0">Значение</option><option value="1">Диапазон</option></select></td>';
           html += '  <td class="text-left"><select name="cat_filter_new['+last_added_new+'][param_sort_type]" class="form-control change_form_param" value="0"><option value="0">По релевантности</option><option value="1">По алфавиту</option></select></td>';
 
           html += ' <td class="text-left"><div class="param_block1" style="display:block;"><div class="product_availparam_list"></div><div class="wrp_add_paramvalue"><div class="add_param_caption">Добавить значение:</div> <input type="text" class="add_param_input form-control"> <div class="add_param">&gt;&gt;</div></div></div></td>';
@@ -600,7 +600,9 @@
           itm_val.focus();
       }
     };
+    /*-----------------------------------------------*/
     $(document).ready(function(){
+
       $(document).on("click",".remove_item_param",function(){
           if($(this).hasClass("btn-danger_0")){
             $(this).closest("tr").remove();
