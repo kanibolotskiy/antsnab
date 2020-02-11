@@ -94,10 +94,12 @@ class ModelCatalogCategory extends Model
 
                     if($data_itm["type_param"]==0){
                         //print_r($data["param_value_new"][$key]);
-                        foreach($data["param_value_new"][$key] as $itm){
-                            if($itm!="remove"){
-                                $sql="INSERT INTO category_param_values (param_id, param_value) values (".(int)$new_filter_id.",'".trim($itm)."')";
-                                $this->db->query($sql);
+                        if(isset($data["param_value_new"])){
+                            foreach($data["param_value_new"][$key] as $itm){
+                                if($itm!="remove"){
+                                    $sql="INSERT INTO category_param_values (param_id, param_value) values (".(int)$new_filter_id.",'".trim($itm)."')";
+                                    $this->db->query($sql);
+                                }
                             }
                         }
                     }

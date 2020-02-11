@@ -14,7 +14,7 @@
     -->
     <div class="wrapper_left_data">
         <!--
-        <div class="wrapper_parameters">
+        <div class="wrapper_parameters scroll-pane">
             <div class="wrapper_param_list">
                 <div class="param_item">
                     <div class="param_item_rows">
@@ -24,15 +24,15 @@
                                     <div class="param_row" rel="<?=$param_item['id']?>" param_name="<?=$param_item['translit']?>">
                                         <div class="param_item_caption"><?=$param_item['name']?><?php echo $param_item['unit']?', '.$param_item['unit']:'';  ?></div>
                                         <div class="wrapper_range_slider">
-                                            <div class="range_slider" min_value="<?=$param_item['avail_params']['min']?>" max_value="<?=$param_item['avail_params']['max']?>" def_min_value="<?=$param_item['avail_params']['min']?>" def_max_value="<?=$param_item['avail_params']['max']?>"></div>
+                                            <div name="<?=$param_item['translit']?>" class="range_slider" select_min="<?=$param_item['avail_params']['min']?>" select_max="<?=$param_item['avail_params']['max']?>" min_value="<?=$param_item['avail_params']['min']?>" max_value="<?=$param_item['avail_params']['max']?>" def_min_value="<?=$param_item['avail_params']['min']?>" def_max_value="<?=$param_item['avail_params']['max']?>"></div>
                                             <div class="wrapper_range_input">
                                                 <div class="range_input_part _first">
                                                     <div class="range_input_caption">от</div>
-                                                    <input name="param[<?=$param_item['translit']?>][min]" type="number" class="inputRange inputRangeMin" value="<?=$param_item['avail_params']['min']?>" />
+                                                    <input type="number" class="inputRange inputRangeMin" value="<?=$param_item['avail_params']['min']?>" />
                                                 </div>
                                                 <div class="range_input_part">
                                                     <div class="range_input_caption">до</div>
-                                                    <input name="param[<?=$param_item['translit']?>][max]" type="number" class="inputRange inputRangeMax" value="<?=$param_item['avail_params']['max']?>" />
+                                                    <input type="number" class="inputRange inputRangeMax" value="<?=$param_item['avail_params']['max']?>" />
                                                 </div>
                                             </div>
                                         </div>
@@ -54,12 +54,14 @@
                             <?php }?>
                         </form>
                     </div>
+                    <div class="filter_reset"><span>Очистить фильтр</span></div>
                 </div>
+                
             </div>
-        </div>
-        -->
             
-        <div class="accordion">
+        </div>
+        -->    
+        <div class="accordion scroll-pane">
             <ul class="simple-accordion"  itemscope itemtype="http://www.schema.org/SiteNavigationElement">        
             <?php foreach ($categories as $parent) { ?>
                     

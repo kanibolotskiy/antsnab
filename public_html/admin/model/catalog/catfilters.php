@@ -8,7 +8,7 @@ class ModelCatalogCatfilters extends Model {
 
 	public function getCatFilterList($param_id){
 		$cat_filters=[];
-		$query = $this->db->query("SELECT * FROM category_param_values WHERE param_id = '" . (int) $param_id . "' order by param_value ASC");
+		$query = $this->db->query("SELECT * FROM category_param_values WHERE param_id = '" . (int) $param_id . "' order by CAST(param_value AS SIGNED) , param_value");
 		return $query->rows;
 	}
 	public function getLinkedProducts($param_id, $param_value){

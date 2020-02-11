@@ -68,11 +68,11 @@
                     break;
                         
                     case 3: //Цены
-                        $sql="SELECT min(price*1) as min, max(price*1) as max FROM oc_product op WHERE product_id in (".$used_products_list.") AND op.status=1";
+                        $sql="SELECT min(price_wholesale*1) as min, max(price_wholesale*1) as max FROM oc_product op WHERE product_id in (".$used_products_list.") AND op.status=1";
                         $query = $this->db->query($sql);
                         $result=$query->row;
-                        $param_list["min"]=round($result["min"],2);
-                        $param_list["max"]=round($result["max"],2);
+                        $param_list["min"]=floor($result["min"]);
+                        $param_list["max"]=ceil($result["max"]);
                     break;
                 }
                 

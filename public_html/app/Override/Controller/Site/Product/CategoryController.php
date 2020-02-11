@@ -116,20 +116,23 @@ class CategoryController extends \Controller
 
         $category_info = $this->model_catalog_category->getCategory($category_id);
         
-        
-        
-        /* @ИСПРАВИТЬ перенести ниже после проверки наличия category_info */
-        $categories_seo = $this->model_catalog_category->getCategoresSeo($category_id);
+        //print_r($category_info);
+        if($category_info["isseo"]){
+            $categories_seo = $this->model_catalog_category->getCategoresSeo($category_info["parent_id"]);
+        }else{
+            $categories_seo = $this->model_catalog_category->getCategoresSeo($category_id);
+        }
+        $this->data["category_id"]=$category_id;
 
         
         if (!$category_info) {
             $this->showNotFound();
             return;
         }
+
         $this->setCommons($category_info);
         
-        $this->setFilterCategories($categories_seo);
-
+        $this->setFilterCategories($categories_seo,$category_id);
 
         if($flag_is_seo){
             $this->showProducts($category_id,true,null);
@@ -195,13 +198,13 @@ class CategoryController extends \Controller
         
     }
 
-    private function setFilterCategories($categories_seo){
+    private function setFilterCategories($categories_seo, $current_id){
         $url="";
         foreach($categories_seo as $category){
-            if(!$category['notshowisseo']){
+            if((!$category['notshowisseo']) or ($current_id==$category["category_id"])){
                 $this->data['categories_isseo'][] = array(
+                    'category_id'   => $category['category_id'],
                     'name' => $category['name'],
-                    /** @ИСПРАВИТЬ - нужно использовать $path */
                     'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $category['category_id'] . $url)
                 );
             }
@@ -257,8 +260,9 @@ class CategoryController extends \Controller
                 'sub' => $sub
             );
         }
-        $this->setPartials();
+        //$this->setPartials();
         if($category_id==71){
+            $this->setPartials();
             $template_catalog='product/category_main';
         }else{
             $template_catalog='product/category';
@@ -285,7 +289,8 @@ class CategoryController extends \Controller
             $paginationModel = PaginationHelper::getPaginationModel($product_total, (int)$limit, (int)$page);
             $this->data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl, $paginationModel);
             $this->data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl, $paginationModel);
-            //$this->setPartials();
+            
+            $this->setPartials();
             
             if ($page == 1) {
                 $this->document->addLink($this->url->link('product/category', 'path=' . $category_id, true), 'canonical');

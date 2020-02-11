@@ -8,6 +8,27 @@ import Inputmask from "./lib/jquery.inputmask.bundle.min.js";
 import './lib/jquery.fancybox.min';
 import './lib/jquery.autocomplete.min';
 
+function check_left_position(){
+    var st=$(window).scrollTop();
+    var pnt1=$(document).height()-$("footer").innerHeight();
+    var added_height=0;
+    if($(".catalog-product").hasClass("_filter")){
+        added_height=$(".wrapper_param_list").height()*1+190;
+        //added_height=$(".wrapper_param_list").height()*1;
+    }else{
+        added_height=$(".accordion").height()*1+190;
+    }
+
+    var pnt2=(st+added_height);
+    //console.log($(window).height())
+    //console.log(pnt1+"="+pnt2)
+    var lmt=pnt1-pnt2;
+    if(lmt<0){
+        $(".catalog-product").css({"marginTop":lmt})
+    }else{
+        $(".catalog-product").css({"marginTop":0})
+    }
+}
 function check_scroll(){
     var st=$(window).scrollTop();
     var wd=window.innerWidth;
@@ -27,12 +48,13 @@ function check_scroll(){
         if(st>limit_leftmenu){
             $(".catalog-product").addClass("_fixed");
             //console.log("scroll="+st);
-            //console.log("height="+$(".wrapper_parameters").height());
-            console.log(st+"="+limit_bottom);
+            check_left_position();
+
         }else{
             $(".catalog-product").removeClass("_fixed");
         }
         */
+        
         /**Меню */
         if(st>limit){
             $("body").addClass("_hfixed");
@@ -80,6 +102,22 @@ $(document).ready(function(){
     check_resize();
     check_scroll();
 
+    $(".catalog_arrow").click(function(){
+        var itm=$(this).closest("li");
+        if(itm.hasClass("_active")){
+            itm.find(".slide").slideUp(200,function(){
+                check_left_position();
+            });
+            itm.removeClass("_active");
+        }else{
+            $(".simple-accordion li").removeClass("_active");
+            $(".sidebar .slide").slideUp(200);
+            itm.find(".slide").slideDown(200,function(){
+                check_left_position();
+            });
+            itm.addClass("_active");
+        }
+    });
     $("#contact_slider").slick({
         appendArrows:$(".contact_slider_arrows"),
         dots: false,

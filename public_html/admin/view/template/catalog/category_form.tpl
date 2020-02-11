@@ -584,17 +584,24 @@
             var new_item_name='param_value['+itm_list.attr("rel")+'][new][]';
           }
           var new_item='<div class="wrp_used_item">';
-          new_item+='  <input class="input_param_hidden" name="'+new_item_name+'" type="text" value="'+itm_val.val()+'">';
+          new_item+='  <input class="input_param_hidden nitem" name="'+new_item_name+'" type="text" value="">';
           new_item+='  <span class="used_item" rel="0">';
           new_item+='    <div class="input_param_wrp">';
-          new_item+='      <div class="input_param_val">'+itm_val.val()+'</div>';
+          new_item+='      <div class="input_param_val nitem_text">'+itm_val.val()+'</div>';
           new_item+='    </div>';
           new_item+='    <div class="del_used_item del_used_item_0"></div>';
           new_item+='  </span>';
           new_item+='</div>';
       
+          
 
           itm_list.append(new_item);
+          $(".nitem").val(itm_val.val());
+          $(".nitem_text").text(itm_val.val());
+          //$(".nitem").val("<sup>2</sup>");
+          $(".nitem").removeClass("nitem");
+          $(".nitem_text").removeClass("nitem_text");
+
           itm_val.val("");
           $("#change_params").val(1);
           itm_val.focus();

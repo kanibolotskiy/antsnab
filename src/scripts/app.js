@@ -17,6 +17,7 @@ import './lib/opencart_search';
 
 import './lib/jquery.ui.touch-punch.min';
 import './lib/jquery-ui.min';
+import './lib/functions';
 
 import 'magnific-popup';
 import './category.js';

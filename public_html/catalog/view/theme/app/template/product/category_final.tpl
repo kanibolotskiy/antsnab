@@ -21,14 +21,14 @@
                     </div>
                 <?php }?>
             </div>
-
             <?php if(isset($categories_isseo)) {?>
                 <?php if(count($categories_isseo)) {?>
                     <div class="pick-up">
                         <span>Подборки:</span>
+                        
                         <ul>    
                             <?php foreach($categories_isseo as $item) {?>
-                                <li><a href="<?php echo $item['href'];?>"><?php echo $item['name']?></a></li>
+                                <li><a class="<?php echo $item["category_id"]==$category_id?'active':'';?>" href="<?php echo $item['href'];?>"><?php echo $item['name']?></a></li>
                             <?php }?>
                         </ul>
                     </div>
