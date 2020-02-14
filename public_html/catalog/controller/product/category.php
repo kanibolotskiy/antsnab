@@ -32,7 +32,7 @@ class ControllerProductCategory extends Controller {
 		} else {
 			$page = 1;
 		}
-
+		echo "page=".$page;
 		if (isset($this->request->get['limit'])) {
 			$limit = (int)$this->request->get['limit'];
 		} else {
@@ -375,7 +375,7 @@ class ControllerProductCategory extends Controller {
 			$pagination->total = $product_total;
 			$pagination->page = $page;
 			$pagination->limit = $limit;
-			$pagination->url = $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&page={page}');
+			$pagination->url = $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '?page={page}');
 
 			$data['pagination'] = $pagination->render();
 			

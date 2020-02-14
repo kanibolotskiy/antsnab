@@ -1,7 +1,7 @@
 
 document.addEventListener("DOMContentLoaded", function(){
     $(window).bind('popstate', function(event){
-        console.log("popstate");
+        //console.log("popstate");
     });
     
     function showMoreHandler(e) {
@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function(){
         var href=base_href+"?load_pages="+data_pagenum;
         history.pushState({page:href}, null, href);
 
-        
         $.get(endPoint)
             .done(function(dataJson){
                 var data = $.parseJSON(dataJson);

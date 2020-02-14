@@ -157,11 +157,9 @@ class CategoryController extends \Controller
         } else {
             $category_id = 0;
         }
-
         $this->load->model('catalog/product');
         
         $filter_data = $this->getFilter($category_id, $limit, $page, $sort_selected, true);
-        
 
         //$filter_data = $this->getFilter($category_id, $limit, $page, 0, true);
         $products_total = $this->model_catalog_product->getTotalProducts($filter_data);
@@ -297,11 +295,11 @@ class CategoryController extends \Controller
             } elseif ($page == 2) {
                 $this->document->addLink($this->url->link('product/category', 'path=' . $category_id, true), 'prev');
             } else {
-                $this->document->addLink($this->url->link('product/category', 'path=' . $category_id . '&page='. ($page - 1), true), 'prev');
+                $this->document->addLink($this->url->link('product/category', 'path=' . $category_id . '?page='. ($page - 1), true), 'prev');
             }
             
             if ($limit && ceil($product_total / $limit) > $page) {
-                $this->document->addLink($this->url->link('product/category', 'path=' . $category_id . '&page='. ($page + 1), true), 'next');
+                $this->document->addLink($this->url->link('product/category', 'path=' . $category_id . '?page='. ($page + 1), true), 'next');
             }
 
             $this->data['products'] = $productsHelper->getProducts($filter_data);
