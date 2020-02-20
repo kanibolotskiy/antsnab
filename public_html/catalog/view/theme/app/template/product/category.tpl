@@ -69,7 +69,7 @@
                         </div>
                     </div>
                 </div>
-                
+                <!--
                 <div class="wrapper_parameters scroll-pane">
                     <div class="wrapper_param_list">
                         <div class="param_item">
@@ -119,7 +119,7 @@
                         </div>
                     </div>
                 </div>
-               
+                -->
                 <h2>Товары из категории <?= $heading_title ?></h2>
                 <div class="catalog-tab catalog-list">
 

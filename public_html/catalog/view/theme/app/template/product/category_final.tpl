@@ -38,7 +38,7 @@
                     <?php }?>
                 <?php }?>
                 <!--<div class="temp_params" style="width:100px;height:100px;background:red;">test</div>-->
-                
+                <!--
                 <div class="wrapper_parameters scroll-pane">
                     <div class="wrapper_param_list">
                         <div class="param_item">
@@ -88,7 +88,7 @@
                         </div>
                     </div>
                 </div>
-               
+                -->
 
                 <div class="catalog-tab catalog-list">
 
