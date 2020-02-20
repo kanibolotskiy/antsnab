@@ -42,7 +42,8 @@
                         INNER JOIN category_param_values cv ON cv.id=pv.value1 
                         INNER JOIN oc_product op ON op.product_id=pv.product_id
                         WHERE op.product_id in (".$used_products_list.") AND pv.param_id=".(int)$param_id." and op.status=1
-                        group by value1 order by cv.param_value ASC";
+                        group by value1 order by CAST(cv.param_value AS SIGNED) , cv.param_value";
+                        
 
                         $query = $this->db->query($sql);
                         foreach ($query->rows as $result) {

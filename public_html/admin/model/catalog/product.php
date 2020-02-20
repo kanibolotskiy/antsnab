@@ -45,7 +45,7 @@ class ModelCatalogProduct extends Model
         return $data;
     }
     public function getFilterParamList($param_id){
-        $sql="SELECT * from category_param_values where param_id=".(int)$param_id." order by param_value";
+        $sql="SELECT * from category_param_values where param_id=".(int)$param_id." order by CAST(param_value AS SIGNED) , param_value";
         $query=$this->db->query($sql);
         return $query->rows;
     }
