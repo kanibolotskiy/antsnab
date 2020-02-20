@@ -15,7 +15,7 @@ import './responsive_tabs_tables';
 import './lib/opencart_product';
 import './lib/opencart_search';
 
-import './lib/jquery.ui.touch-punch.min';
+
 import './lib/jquery-ui.min';
 import './lib/functions';
 
@@ -30,4 +30,5 @@ import './ui_styling';
 import './goals';
 import './search';
 
+import './lib/jquery.ui.touch-punch.min';
 

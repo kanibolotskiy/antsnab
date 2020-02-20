@@ -4,68 +4,19 @@
     <a href="<?=$root?>" class="catalog-btn">    
         Каталог
     </a>
-    <!--<?php if($params){ ?>--><!--<?php }?>
+    <!--
+    <?php if($show_params){ ?>
+
         <div class="sidebar_filter_caption">
             <div class="wrp_sidebar_filter_caption">
                 <div><span>Фильтр</span></div>
             </div>
             <div class="sidebar_filter_close"></div>
         </div>
+    <?php }?>
     -->
     <div class="wrapper_left_data">
-        <!--
-        <div class="wrapper_parameters scroll-pane">
-            <div class="wrapper_param_list">
-                <div class="param_item">
-                    <div class="param_item_rows">
-                        <form id="form_params" action="<?=$catalog_info['category_url']?>" catalog_id="<?=$catalog_info['category_id']?>">
-                            <?php foreach($params as $param_item){?>
-                                <?php if($param_item["type_param"]){?>
-                                    <div class="param_row" rel="<?=$param_item['id']?>" param_name="<?=$param_item['translit']?>">
-                                        <div class="param_item_caption"><?=$param_item['name']?><?php echo $param_item['unit']?', '.$param_item['unit']:'';  ?></div>
-                                        <div class="wrapper_range_slider">
-                                            <div name="<?=$param_item['translit']?>" class="range_slider" select_min="" select_max="" min_value="<?=$param_item['avail_params']['min']?>" max_value="<?=$param_item['avail_params']['max']?>" def_min_value="<?=$param_item['avail_params']['min']?>" def_max_value="<?=$param_item['avail_params']['max']?>"></div>
-                                            <div class="wrapper_range_input">
-                                                <div class="range_input_part _first">
-                                                    <div class="range_input_caption">от</div>
-                                                    <input type="number" class="inputRange inputRangeMin" value="<?=$param_item['avail_params']['min']?>" />
-                                                </div>
-                                                <div class="range_input_part">
-                                                    <div class="range_input_caption">до</div>
-                                                    <input type="number" class="inputRange inputRangeMax" value="<?=$param_item['avail_params']['max']?>" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php }else{?>
-                                    <?php if(count($param_item['avail_params'])>1) {?>
-                                        <div class="param_row" rel="<?=$param_item['id']?>" param_name="<?=$param_item['translit']?>">
-                                            <div class="param_item_caption"><?=$param_item['name']?><?php echo $param_item['unit']?', '.$param_item['unit']:'';  ?></div>
-                                            <div class="row_checks_wrap">
-                                                <div class="row_checks">
-                                                    <?php foreach($param_item['avail_params'] as $param_list_item) {?>
-                                                        <div class="row_check">
-                                                            <input class="param_check" name="param[<?=$param_item['translit']?>][]" type="checkbox" id="check_<?=$param_list_item['param_id']?>" value="<?=$param_list_item['param_id']?>">
-                                                            <label for="check_<?=$param_list_item['param_id']?>"><?php echo html_entity_decode($param_list_item["param_value"]);?></label>
-                                                        </div>
-                                                    <?php } ?>
-                                                </div>
-                                            </div>
-                                            <div class="show_more_params"><span>Показать еще</span></div>
-                                        </div>
-                                    <?php }?>
-                                <?php }?>
-                            
-                            <?php }?>
-                        </form>
-                    </div>
-                    <div class="filter_reset"><span>Очистить фильтр</span></div>
-                </div>
-                
-            </div>
-            
-        </div>
-        -->   
+    
         <div class="accordion scroll-pane">
             <ul class="simple-accordion"  itemscope itemtype="http://www.schema.org/SiteNavigationElement">        
             <?php foreach ($categories as $parent) { ?>

@@ -229,11 +229,18 @@ class CategoryController extends \Controller
                 $data['categories'][] = $item;
             }
         }
+        if($data['category_id']==ROOT_CATEGORY_ID){
+            $data["show_params"]=false;
+        }else{
+            $data["show_params"]=true;
+        }
+        
+
         //print_r($data['categories']);
-        $data["catalog_info"]=[
+        /*$data["catalog_info"]=[
             'category_id'=>$data['category_id'],
             'category_url'=>$this->url->link('product/category', 'path=' . $data['category_id']),
-        ];
+        ];*/
         /*
         if($data['category_id']==ROOT_CATEGORY_ID){
             $data["params"]=[];

@@ -8306,14 +8306,20 @@ input[type="checkbox"]:checked + label {
 .container.main.withparams .bottom_text{padding-bottom:50px;}
 @media screen and (max-width: 1100px){
     body._hfixed._hmenu .empty_block_header{height:90px;}
-    .wrapper_parameters{position:relative;top:0!important;margin-top:0!important;left:0!important;margin-left:0!important;height:auto!important;width:100%!important;}
+    .wrapper_parameters{opacity:1;position:relative;top:0!important;margin-top:0!important;left:0!important;margin-left:0!important;height:auto!important;width:100%!important;}
     .container.main.withparams .content{margin-left:0;}
     .sidebar_filter_caption{display:none;}
     .container.main.withparams .sidebar{margin-left:0;}
     .catalog-product .accordion{border-left:0;border-right:0;border-bottom:0;}
+    #form_params{display:flex;justify-content: space-between;flex-wrap:wrap;}
+    .param_row{width:48%;}
+    .row_checks_wrap{max-height: initial;}
+    .show_more_params{display:none!important;}
 }
 @media screen and (max-width: 750px){
     body._hfixed._hmenu .empty_block_header {height: 140px;}
+    .row_check{min-width:40%;}
+    .param_row{width:100%;}
 }
 
 

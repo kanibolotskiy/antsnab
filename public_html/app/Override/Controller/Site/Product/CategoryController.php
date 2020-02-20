@@ -492,7 +492,12 @@ class CategoryController extends \Controller
             if ($limit && ceil($product_total / $limit) > $page) {
                 $this->document->addLink($this->url->link('product/category', 'path=' . $category_id . '?page='. ($page + 1), true), 'next');
             }
-
+            
+            
+            $catalog_info["category_url"]=$this->url->link('product/category', 'path=' . $category_id);
+            $catalog_info["category_id"]=$category_id;
+            $this->data["catalog_info"]=$catalog_info;
+            $this->data["params"]=$this->getFilterParams($category_id,[]);
             $this->data['products'] = $productsHelper->getProducts($filter_data);
         }
         $this->response->setOutput($this->load->view($template_catalog, $this->data));
@@ -553,6 +558,9 @@ class CategoryController extends \Controller
 
         $this->setPartials();
         //print_r($this->getFilterParams($category_id,[]));
+        $catalog_info["category_url"]=$this->url->link('product/category', 'path=' . $category_id);
+        $catalog_info["category_id"]=$category_id;
+        $this->data["catalog_info"]=$catalog_info;
         $this->data["params"]=$this->getFilterParams($category_id,[]);
         
         $this->response->setOutput($this->load->view('product/category_final', $this->data));
