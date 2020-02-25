@@ -19,14 +19,9 @@ $(document).ready(function(){
             $(this).html("Скрыть");
             $(this).animate({"opacity":1},300);
             $(this).addClass("active");
-            
             $(".row_checks_wrap").addClass("active");
-            
         }
-        
     });
-
-
 
     $(".catalog_opens").click(function(){
         $(".catalog-product .accordion").slideToggle(200);

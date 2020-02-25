@@ -81,68 +81,35 @@ $('body').delegate('#lazy-load_container','onLazyLoaded', function(e, $items){
 });
 
 var flag_update=true;
-
+//-------------------------------------------
 function getParamsForm(){
     //$(".inputRangeMin").each()
     
     var str='';
-    /*
-    $(".inputRangeMin").each(function(){
-        var val=$(this).val()*1;
-        var min=$(this).closest(".wrapper_range_slider").find(".range_slider").attr("def_min_value")*1;
-        if((val!=min)&&(val)){
-            str+="&"+$(this).attr("name")+"="+$(this).val();
-        }
-    });
-    $(".inputRangeMax").each(function(){
-        var val=$(this).val()*1;
-        var max=$(this).closest(".wrapper_range_slider").find(".range_slider").attr("def_max_value")*1;
-        if((val!=max)&&(val)){
-            str+="&"+$(this).attr("name")+"="+$(this).val();
-        }param[price][min]
-    });
-    */
 
     $(".range_slider").each(function(){
-        var select_min=$(this).attr("select_min")*1;
-        var select_max=$(this).attr("select_max")*1;
+        var select_min=$(this).attr("select_min");
+        var select_max=$(this).attr("select_max");
         var min_value=$(this).attr("min_value")*1;
         var max_value=$(this).attr("max_value")*1;
 
-        if(select_min){
-            if(select_min!=min_value){
-                str+="&param["+$(this).attr("name")+"][min]="+select_min;
+        if(select_min!=""){
+            if((select_min)*1!=min_value){
+                str+=(str!=""?"&":"")+"param["+$(this).attr("name")+"][min]="+select_min;
             }
         }
-        if(select_max){
-            if(select_max!=max_value){
-                str+="&param["+$(this).attr("name")+"][max]="+select_max;
+        if(select_max!=""){
+            if((select_max*1)!=max_value){
+                str+=(str!=""?"&":"")+"param["+$(this).attr("name")+"][max]="+select_max;
             }
         }
-
-        /*
-        if(select_min>min_value){
-            str+="&param["+$(this).attr("name")+"][min]="+select_min;
-        }
-        if(select_max<max_value){
-            str+="&param["+$(this).attr("name")+"][max]="+select_max;
-        }
-        */
-        //console.log(select_min+">"+min_value)
-        /*
-        if(select_min!=min_value){
-            str+="&param["+$(this).attr("name")+"][min]="+select_min;
-        }
-        if(select_max!=max_value){
-            str+="&param["+$(this).attr("name")+"][max]="+select_max;
-        }
-        */
     });
     
 
     $(".param_check").each(function(){
         if($(this).prop("checked")){
-            str+="&"+$(this).attr("name")+"="+$(this).val();
+            //str+=(str!=""?"&":"")+$(this).attr("name")+"="+$(this).val();
+            str+=(str==""?"":"&")+$(this).attr("name")+"="+$(this).val();
         }
     });
 
@@ -150,7 +117,7 @@ function getParamsForm(){
     var sort=$("#seldef1 option:selected").val();
     var sort_str="";
     if(sort){
-        str+="&sort="+sort;
+        str+=(str!=""?"&":"")+"sort="+sort;
     }
 
     if(str){
@@ -164,12 +131,16 @@ function getParamsForm(){
     history.pushState(null,null, url+str);
     return str;
 }
+//-------------------------------------------
 function resetSliders(){
-    
     $(".range_slider").each(function(){
 
         var min_value=$(this).attr("def_min_value")*1;
         var max_value=$(this).attr("def_max_value")*1;
+
+        var sel_min_value=$(this).attr("def_min_value")*1;
+        var sel_max_value=$(this).attr("def_max_value")*1;
+
 
         $(this).attr("select_min",min_value);
         $(this).attr("select_max",max_value);
@@ -185,6 +156,7 @@ function resetSliders(){
         
     });
 }
+//-------------------------------------------
 function resetFilterForm(){
     flag_update=false;
     $(".param_check").each(function(){
@@ -197,6 +169,110 @@ function resetFilterForm(){
     //$(".filter_reset").animate({"opacity":0},200);
 
 }
+//-------------------------------------------
+function set_state_checks(avail_data){
+//if(avail_data.length){
+    var flag_empty=true;
+    //console.log(avail_data)
+    for(var avail_item in avail_data){
+        
+        var flag_empty=false;
+        let itm=avail_data[avail_item];
+        if(itm.type){
+            /*
+            let min_value=itm.result.min;
+            let max_value=itm.result.max;
+            
+            
+            let range_row=$(".param_row[param_name='"+avail_item+"']");
+            let range_row_slider=range_row.find(".range_slider");
+
+
+            let inputMin=range_row.find(".inputRangeMin").val()*1;
+            let inputMax=range_row.find(".inputRangeMax").val()*1;
+
+            //var select_min=range_row_slider.attr("select_min")*1;
+            //var select_max=range_row_slider.attr("select_max")*1;
+
+            var select_min=range_row_slider.attr("select_min")*1;
+            var select_max=range_row_slider.attr("select_max")*1;
+          
+            if(min_value>=inputMin){
+        
+                range_row.find(".inputRangeMin").val(min_value);
+                range_row_slider.slider("value",0,min_value)
+            }else{
+                if(select_min){
+                    if(select_min<max_value){
+                        range_row.find(".inputRangeMin").val(select_min);
+                        range_row_slider.slider("value",0,select_min)
+                    }else{
+                        range_row.find(".inputRangeMin").val(max_value);
+                        range_row_slider.slider("value",0,max_value)
+                    }
+                }else{
+                    range_row.find(".inputRangeMin").val(min_value);
+                    range_row_slider.slider("value",0,min_value)
+                }
+            }
+        
+            if(max_value<=inputMax){
+                range_row.find(".inputRangeMax").val(max_value);
+                range_row_slider.slider("value",1,max_value)
+            }else{
+                if(select_max){
+                    if(select_max>min_value){
+                        range_row.find(".inputRangeMax").val(select_max);
+                        range_row_slider.slider("value",1,select_max)
+                    }else{
+                        range_row.find(".inputRangeMax").val(max_value);
+                        range_row_slider.slider("value",1,max_value)
+                    }
+                }else{
+                    range_row.find(".inputRangeMax").val(max_value);
+                    range_row_slider.slider("value",1,max_value)
+                    
+                }
+            }
+            
+            range_row_slider.slider("option",{"min":min_value,"max":max_value});
+            if(min_value==max_value){
+                range_row_slider.closest(".param_row").addClass("unactive");
+            }else{
+                range_row_slider.closest(".param_row").removeClass("unactive");
+            }
+            range_row_slider.attr("min_value",min_value);
+            range_row_slider.attr("max_value",max_value);
+            */
+        }else{                        
+            $(".param_row[param_name='"+avail_item+"'] .param_check").each(function(){
+                //console.log($(this).val());
+                //)
+                let flag=true;
+                for(var itm_result in itm.result){
+                    //console.log(itm_result+"="+itm.result[itm_result])
+                    //if((itm.result[itm_result]["param_id"]*1)==$(this).val()){
+                    if((itm_result*1)==$(this).val()){
+                        flag=false;
+                    }
+                }
+                if(flag){
+                    $(this).attr("disabled",true);
+                    $(this).closest(".row_check").addClass("_unactive");
+                }else{
+                    $(this).attr("disabled",false);
+                    $(this).closest(".row_check").removeClass("_unactive");
+                }
+            });
+        }
+        
+    }
+    if(flag_empty){
+        //resetSliders();
+    }
+    flag_update=true;
+}
+//-------------------------------------------
 function change_params_form(){
     //data_url1=getParamsForm()
 
@@ -212,7 +288,7 @@ function change_params_form(){
         flag_update=false;
         $("#lazy-load_container").css({opacity:0});
         $.ajax({
-            url:  '/index.php?route=extension/module/category/ajaxRefreshParams',
+            url:  '/index.php?route=product/category/ajaxRefreshParams',
             type: 'post',
             data: data_url+"&catalog_id="+catalog_id,
             dataType: 'json',
@@ -228,6 +304,7 @@ function change_params_form(){
                 if (json['success']) {
                     var avail_data=json['avail'];
                     var products_str=json['products'];
+                    
                     //console.log(products_str);
 
                     $("#lazy-load_container").html(products_str);
@@ -242,123 +319,9 @@ function change_params_form(){
                     $(".row_check").removeClass("_unactive");
                     $(".param_check").attr("disabled",false);
 
-                    
-                    //if(avail_data.length){
-                    var flag_empty=true;
-                    
-                    for(var avail_item in avail_data){
-                        var flag_empty=false;
-                        let itm=avail_data[avail_item];
-                        if(itm.type){
-                            let min_value=itm.result.min;
-                            let max_value=itm.result.max;
-                            
-                            
-                            let range_row=$(".param_row[param_name='"+avail_item+"']");
-                            let range_row_slider=range_row.find(".range_slider");
+                    set_state_checks(avail_data);
 
-
-                            let inputMin=range_row.find(".inputRangeMin").val()*1;
-                            let inputMax=range_row.find(".inputRangeMax").val()*1;
-
-                            //var select_min=range_row_slider.attr("select_min")*1;
-                            //var select_max=range_row_slider.attr("select_max")*1;
-
-                            var select_min=range_row_slider.attr("select_min")*1;
-                            var select_max=range_row_slider.attr("select_max")*1;
-
-                            /*
-                            if(min_value>select_min){
-                                range_row.find(".inputRangeMin").val(min_value);
-                                range_row_slider.slider("value",0,min_value)
-                            }else{
-                                range_row.find(".inputRangeMin").val(select_min);
-                            }
-                            
-                            if(max_value<select_max){
-                                range_row.find(".inputRangeMax").val(max_value);
-                                range_row_slider.slider("value",1,max_value)
-                            }else{
-                                range_row.find(".inputRangeMax").val(select_max);
-                            }*/
-                            //console.log(min_value+">"+select_min)
-
-                            //if(select_min){
-                          
-                                if(min_value>=inputMin){
-                          
-                                    range_row.find(".inputRangeMin").val(min_value);
-                                    range_row_slider.slider("value",0,min_value)
-                                }else{
-                                    if(select_min){
-                                        if(select_min<max_value){
-                                            range_row.find(".inputRangeMin").val(select_min);
-                                            range_row_slider.slider("value",0,select_min)
-                                        }else{
-                                            range_row.find(".inputRangeMin").val(max_value);
-                                            range_row_slider.slider("value",0,max_value)
-                                        }
-                                    }else{
-                                        range_row.find(".inputRangeMin").val(min_value);
-                                        range_row_slider.slider("value",0,min_value)
-                                    }
-                                }
-                            //}
-                            
-                            //if(select_max){
-                                
-                                if(max_value<=inputMax){
-                                    range_row.find(".inputRangeMax").val(max_value);
-                                    range_row_slider.slider("value",1,max_value)
-                                }else{
-                                    if(select_max){
-                                        if(select_max>min_value){
-                                            range_row.find(".inputRangeMax").val(select_max);
-                                            range_row_slider.slider("value",1,select_max)
-                                        }else{
-                                            range_row.find(".inputRangeMax").val(max_value);
-                                            range_row_slider.slider("value",1,max_value)
-                                        }
-                                    }else{
-                                        range_row.find(".inputRangeMax").val(max_value);
-                                        range_row_slider.slider("value",1,max_value)
-                                        
-                                    }
-                                }
-                            //}
-                            
-                            range_row_slider.slider("option",{"min":min_value,"max":max_value});
-                            if(min_value==max_value){
-                                range_row_slider.closest(".param_row").addClass("unactive");
-                            }else{
-                                range_row_slider.closest(".param_row").removeClass("unactive");
-                            }
-                            range_row_slider.attr("min_value",min_value);
-                            range_row_slider.attr("max_value",max_value);
-                        }else{                        
-                            $(".param_row[param_name='"+avail_item+"'] .param_check").each(function(){
-                                //console.log($(this).val());
-                                let flag=true;
-                                for(var itm_result in itm.result){
-                                    if((itm.result[itm_result]["param_id"]*1)==$(this).val()){
-                                        flag=false;
-                                    }
-                                }
-                                if(flag){
-                                    $(this).attr("disabled",true);
-                                    $(this).closest(".row_check").addClass("_unactive");
-                                }else{
-                                    $(this).attr("disabled",false);
-                                    $(this).closest(".row_check").removeClass("_unactive");
-                                }
-                            });
-                        }
-                        
-                    }
-                    if(flag_empty){
-                        //resetSliders();
-                    }
-                    flag_update=true;
+                    $("#wrp_paginate").html(json['showMore']+json['pagination']);
                     //$("html,body").animate({"scrollTop":tp},500)
                 }
             },
@@ -369,7 +332,7 @@ function change_params_form(){
         
     }
 }
-/*-----------------------------------------------------*/
+//-------------------------------------------
 function add_to_cart(product_id, count_add, show_added, fly_to_cart=false){
     $.ajax({
         url:  '/index.php?route=checkout/cart/add',
@@ -568,6 +531,10 @@ function change_favorite_sum(){
     });
 }
 $(document).ready(function(){
+    $(".wrp_filter_title").click(function(){
+        $(".param_item").slideToggle(300);
+    });
+
     $("#seldef1").change(function(){
         change_params_form();
     });
@@ -584,12 +551,24 @@ $(document).ready(function(){
         var max_value=$(this).attr("max_value")*1;
         var slider_item=$(this);
 
+        if($(this).attr("select_min")!=""){
+            var sel_min_value=$(this).attr("select_min")*1;
+        }else{
+            var sel_min_value=min_value;
+        }
+
+        if($(this).attr("select_max")!=""){
+            var sel_max_value=$(this).attr("select_max")*1;
+        }else{
+            var sel_max_value=max_value;
+        }
+
         slider_item.slider({
             range: true,
             animate: "fast",
             min: min_value,
             max: max_value,
-            values: [min_value,max_value],
+            values: [sel_min_value,sel_max_value],
             slide: function( event, ui ) {
 
                 $(this).closest(".wrapper_range_slider").find(".inputRangeMin").val(ui.values[0])

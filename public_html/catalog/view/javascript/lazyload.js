@@ -15,7 +15,14 @@ document.addEventListener("DOMContentLoaded", function(){
         var data_pagenum=$(this).attr("data-pagenum");
 
         var base_href=$("link[rel='canonical']").attr("href");
-        var href=base_href+"?load_pages="+data_pagenum;
+        //console.log(base_href)
+        var sep="?";
+        if(base_href.indexOf("?")>=0){
+            sep="&";
+        }
+        //console.log(base_href.indexOf("?"));
+
+        var href=base_href+sep+"load_pages="+data_pagenum;
         history.pushState({page:href}, null, href);
 
         $.get(endPoint)
@@ -33,9 +40,9 @@ document.addEventListener("DOMContentLoaded", function(){
                     $items = $([]);    
                 
                 /** append items */
-                $.each( items, function(index, item){
-                    var $item = $(item);
-                    // $items.push($item);
+                ///console.log(data.result.tp*1);
+                if(data.result.tp==1){
+                    var $item = $(items);
                     $item.css("display", "none");
                     $container.append($item);
                     $item.slideDown('slow');
@@ -45,8 +52,25 @@ document.addEventListener("DOMContentLoaded", function(){
                         "alias": 'numeric', 
                         "allowMinus": false
                     });
-                });
-                
+                    
+                    //$items=$(data.result.items);
+
+                }else{
+                    $.each( items, function(index, item){
+                        var $item = $(item);
+                        // $items.push($item);
+                        $item.css("display", "none");
+                        $container.append($item);
+                        $item.slideDown('slow');
+                        $items = $items.add($item);
+                        $('input[name="phone"]').inputmask("+7 9999999999",{ 
+                            "clearIncomplete": true,
+                            "alias": 'numeric', 
+                            "allowMinus": false
+                        });
+                    });
+                }
+
                 /** rerender shomore button */
                 $self.replaceWith(showMore);
                 setTimeout( function() { 
@@ -64,5 +88,6 @@ document.addEventListener("DOMContentLoaded", function(){
                 console.log('Server Error');
             });
     };
-    $('#showMore').on('click', showMoreHandler);
+    //$('#showMore').on('click', showMoreHandler);
+    $(document).on("click","#showMore",showMoreHandler);
 });

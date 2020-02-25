@@ -19,11 +19,13 @@ class ProductListHelper extends \Model
 
     public function getProducts($filter_data)
     {
+        
         $this->load->model('catalog/product');
         $this->load->model('tool/image');
         $propGateway = new ProdProperties($this->registry);
-
         $results = $this->model_catalog_product->getProducts($filter_data);
+        
+
         $products = [];
         
 

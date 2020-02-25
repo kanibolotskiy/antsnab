@@ -4,17 +4,17 @@
     <a href="<?=$root?>" class="catalog-btn">    
         Каталог
     </a>
-    <!--
+    
     <?php if($show_params){ ?>
 
-        <div class="sidebar_filter_caption">
+        <div class="sidebar_filter_caption <?php echo ($show_filter?'active':'');  ?>">
             <div class="wrp_sidebar_filter_caption">
                 <div><span>Фильтр</span></div>
             </div>
             <div class="sidebar_filter_close"></div>
         </div>
     <?php }?>
-    -->
+    
     <div class="wrapper_left_data">
     
         <div class="accordion scroll-pane">

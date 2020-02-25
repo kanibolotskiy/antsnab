@@ -29,10 +29,14 @@
 
                         $query = $this->db->query($sql);
                         foreach ($query->rows as $result) {
+
+                            $param_list[$result["value1"]]=$result["param_value"];
+                            /*
                             $param_list[]=[
                                 "param_id"=>$result["value1"],
                                 "param_value"=>$result["param_value"],
                             ];
+                            */
                         }
                     break;
                     
@@ -47,10 +51,13 @@
 
                         $query = $this->db->query($sql);
                         foreach ($query->rows as $result) {
+                            $param_list[$result["value1"]]=$result["param_value"];
+                            /*
                             $param_list[]=[
                                 "param_id"=>$result["value1"],
                                 "param_value"=>$result["param_value"],
                             ];
+                            */
                         }
                     break;
                     

@@ -55,18 +55,21 @@ function check_scroll(){
         //$(".catalog-product").addClass("_fixed");
         if($(".container.main").hasClass("withparams")){
             //,"height":wh-$(".wrapper_parameters").offset().top+st
-            if($(".catalog-product").hasClass("_filter")){
+            if($(".sidebar_filter_caption").hasClass("active")){
                 //added_height=$(".wrapper_param_list").height()*1;
-                added_height=$(".wrapper_parameters").height()*1+190;
+                //added_height=$(".wrapper_parameters").height()*1+200;
+                //added_height=$(window).height()+100
                 //added_height=600;
+                //added_height=800;
+                added_height=$(window).height();
             }else{
                 added_height=$(".accordion").height()*1+190;
             }
             var pnt2=(st+added_height);
             var lmt=pnt1-pnt2;
-
+            //console.log(st);
             if(st>limit_leftmenu){
-                
+                //console.log("ok1");
                 var ht=wh-165;
                 
                 
@@ -77,7 +80,7 @@ function check_scroll(){
                     //$(".wrapper_parameters").css({"margin-top":lmt-202,"height":ht-lmt})
                     $(".wrapper_parameters").css({"margin-top":lmt-202});
                     $(".catalog-product").css({"margin-top":lmt})
-                    console.log("tut");
+                
                     //$(".wrapper_parameters").css({"margin-top":st-limit_leftmenu+lmt,"height":ht})
                 }else{
                     $(".wrapper_parameters").css({"margin-top":-202,"height":ht})
@@ -88,8 +91,9 @@ function check_scroll(){
                 }
                 
             }else{
-                
+                $(".catalog-product").css({"margin-top":0})
                 var ht=wh+st-367;
+                //var ht=wh+st-417;
                 $(".wrapper_parameters").css({"margin-top":-st,"height":ht})
                 //$(".wrapper_parameters").css({"margin-top":0,"height":ht})
                 $(".catalog-product").removeClass("_fixed");
@@ -113,9 +117,7 @@ function check_scroll(){
                 $("body").removeClass("_hfixed").removeClass("_hmenu").removeClass("_openmenu");
             }
         }
-        
     }else{
-        
         if(st>0){
             $("body").addClass("_hfixed");
         }else{

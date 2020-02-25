@@ -14,9 +14,13 @@ class CategoryController extends \Controller
 {
     private static $openedItems;
 
-    public function ajaxRefreshParams(){ 
-        
-        $data=$this->parseUrlParams($this->request->post);
+    /*public function ajaxRefreshParams(){ 
+        //print_r($this->request->post);
+        $post_data=$this->request->post;
+        if(isset($this->request->post["?param"])){
+            $post_data["param"]=$this->request->post["?param"];
+        }
+        $data=$this->parseUrlParams($post_data);
 
         $json["avail"]=$data["avail"];
         $json["products"]=$data["products"];
@@ -25,6 +29,7 @@ class CategoryController extends \Controller
         $json["success"]=true;
         $this->response->setOutput(json_encode($json));
     }
+    
     public function getFilterParams($category_id, $data_filter){
         $this->load->model('extension/module/category');
         $params=$this->model_extension_module_category->getParamsByCategory($category_id);        
@@ -53,11 +58,14 @@ class CategoryController extends \Controller
         $avail_params_data=$this->model_extension_module_category->availParamsByProducts($avail_products);
         $avail_params_data[]=["id"=>0,"translit"=>"price","type_param"=>1];
 
+        //print_r($avail_params_data);
+        
         foreach($avail_params_data as $param){
             $key=$param["translit"];
             $sql_add="";
             $join_table="";
             $param_id=0;
+            
             switch ($key){
                 case "price":
                     if(isset($data_url["param"][$key]["min"])){
@@ -80,12 +88,15 @@ class CategoryController extends \Controller
                     $join_table=" LEFT JOIN product_param_values pv".$result["id"]." ON op.product_id=pv".$result["id"].".product_id";
                     
                     if($result["type_param"]){
+                        //echo "*".print_r($data_url,1)."*";
                         if(isset($data_url["param"][$key]["min"])){
-                            $sql_add.= " AND pv".$result["id"].".value1>=".$data_url["param"][$key]["min"];
+                            $sql_add.= " AND pv".$result["id"].".param_id=".$result["id"]." AND pv".$result["id"].".value1>=".$data_url["param"][$key]["min"];
                         }
                         if(isset($data_url["param"][$key]["max"])){
-                            $sql_add.=" AND pv".$result["id"].".value2<=".$data_url["param"][$key]["max"];
+                            $sql_add.=" AND pv".$result["id"].".param_id=".$result["id"]." AND pv".$result["id"].".value2<=".$data_url["param"][$key]["max"];
                         }
+                        //echo $key."|".$result["type_param"]."|".$sql_add;
+                        //echo "!".$sql_add."!";
                         $type_sql=2;
                     }else{
                         if(isset($data_url["param"][$key])){
@@ -94,7 +105,6 @@ class CategoryController extends \Controller
                         $type_sql=$result["param_sort_type"];
                         //pv1.param_id=1 and pv1.value1 in (19,20,21)
                     }
-                    
                     
                 break;
             }
@@ -137,7 +147,7 @@ class CategoryController extends \Controller
             $sql="SELECT op.product_id from oc_product op ".$table_a." WHERE
             op.status=1 ".$sql_a." and op.product_id in (".$avail_products_list.") group by op.product_id";
             
-
+        
             $query = $this->db->query($sql);
             $avail_products=[];
             foreach ($query->rows as $result) {
@@ -146,13 +156,20 @@ class CategoryController extends \Controller
             $rez=$this->model_extension_module_category->getParamsValues($avail_products, $param_id, $sql_type);
             $result_params[$key]=Array("type"=>$param["type_param"],"result"=>$rez);
         }
-        $sql_final_products="SELECT op.product_id from oc_product op ".$final_table." WHERE
-        op.status=1 ".$final_sql." and op.product_id in (".$avail_products_list.") group by op.product_id";
-        $query = $this->db->query($sql_final_products);
-        $avail_products_final=[];
-        foreach ($query->rows as $result) {
-            $avail_products_final[]=$result["product_id"];
+
+        if($avail_products_list){
+            $sql_final_products="SELECT op.product_id from oc_product op ".$final_table." WHERE
+            op.status=1 ".$final_sql." and op.product_id in (".$avail_products_list.") group by op.product_id";
+            
+            $query = $this->db->query($sql_final_products);
+            $avail_products_final=[];
+            foreach ($query->rows as $result) {
+                $avail_products_final[]=$result["product_id"];
+            }
+        }else{
+            $avail_products_final=[];
         }
+
         if($avail_products_final){
             $avail_products_final_list=implode(",",$avail_products_final);
         }else{
@@ -165,7 +182,7 @@ class CategoryController extends \Controller
             "filter_category_id"=>$catalog_id,
             "product_ids"=>$avail_products_final_list,
         ];
-        
+
         if(isset($data_url['sort'])){
             $sort_arr=explode("|",$data_url['sort']);
             if(isset($sort_arr[0])){
@@ -187,19 +204,22 @@ class CategoryController extends \Controller
         $filter_data["filter_sub_category"]=1;
         
         
+        
         $data_products=$productsHelper->getProducts($filter_data);
+        
+
         $products_str="";
         
         foreach($data_products as $p){
             $data["p"]=$p;
             $products_str.=$this->load->view('partial/product_item.tpl', $data);
         }
-
+        
         $data["products"] = $products_str;
         //$data["products"]=
         return $data;
     }
-    
+    */
 
     public function index()
     {
@@ -234,7 +254,15 @@ class CategoryController extends \Controller
         }else{
             $data["show_params"]=true;
         }
-        
+
+        $show_filter=false;
+        if(isset($this->request->get['param'])){
+            if($this->request->get['param']){
+                $show_filter=true;
+            }
+        }
+        $data["show_filter"]=$show_filter;
+        //sidebar_filter_caption 
 
         //print_r($data['categories']);
         /*$data["catalog_info"]=[

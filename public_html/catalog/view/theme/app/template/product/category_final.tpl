@@ -38,40 +38,53 @@
                     <?php }?>
                 <?php }?>
                 <!--<div class="temp_params" style="width:100px;height:100px;background:red;">test</div>-->
-                <!--
-                <div class="wrapper_parameters scroll-pane">
+                <?php //print_r($avail);?>
+                <div class="wrapper_parameters scroll-pane" <?php echo ($show_filter?'style="opacity:1;margin-left:0;"':'');  ?> >
                     <div class="wrapper_param_list">
+                        <div class="wrp_filter_title">
+                            <div class="filter_title">Фильтр товаров</div>
+                        </div>
                         <div class="param_item">
                             <div class="param_item_rows">
+                                
                                 <form id="form_params" action="<?=$catalog_info['category_url']?>" catalog_id="<?=$catalog_info['category_id']?>">
-                                    <?php foreach($params as $param_item){?>
+                                <?php //print_r($param_item); ?>
+                                    <?php foreach($params["items"] as $param_item){?>
+                                        <?php  ?>
+                                        <?php //echo isset($params['selected'][$param_item['translit']]['min'])?$params['selected'][$param_item['translit']]['min']:$param_item['avail_params']['min'];?>
+
                                         <?php if($param_item["type_param"]){?>
                                             <div class="param_row" rel="<?=$param_item['id']?>" param_name="<?=$param_item['translit']?>">
                                                 <div class="param_item_caption"><?=$param_item['name']?><?php echo $param_item['unit']?', '.$param_item['unit']:'';  ?></div>
                                                 <div class="wrapper_range_slider">
-                                                    <div name="<?=$param_item['translit']?>" class="range_slider" select_min="" select_max="" min_value="<?=$param_item['avail_params']['min']?>" max_value="<?=$param_item['avail_params']['max']?>" def_min_value="<?=$param_item['avail_params']['min']?>" def_max_value="<?=$param_item['avail_params']['max']?>"></div>
+                                                    <div name="<?=$param_item['translit']?>" class="range_slider" select_min="<?php echo isset($params['selected'][$param_item['translit']]['min'])?$params['selected'][$param_item['translit']]['min']:'';?>" select_max="<?php echo isset($params['selected'][$param_item['translit']]['max'])?$params['selected'][$param_item['translit']]['max']:'';?>" min_value="<?=$param_item['avail_params']['min']?>" max_value="<?=$param_item['avail_params']['max']?>" def_min_value="<?=$param_item['avail_params']['min']?>" def_max_value="<?=$param_item['avail_params']['max']?>"></div>
                                                     <div class="wrapper_range_input">
                                                         <div class="range_input_part _first">
                                                             <div class="range_input_caption">от</div>
-                                                            <input type="number" class="inputRange inputRangeMin" value="<?=$param_item['avail_params']['min']?>" />
+                                                            
+                                                            <input type="number" class="inputRange inputRangeMin" value="<?php echo isset($params['selected'][$param_item['translit']]['min'])?$params['selected'][$param_item['translit']]['min']:$param_item['avail_params']['min'];?>" />
                                                         </div>
                                                         <div class="range_input_part">
                                                             <div class="range_input_caption">до</div>
-                                                            <input type="number" class="inputRange inputRangeMax" value="<?=$param_item['avail_params']['max']?>" />
+                                                            <input type="number" class="inputRange inputRangeMax" value="<?php echo isset($params['selected'][$param_item['translit']]['max'])?$params['selected'][$param_item['translit']]['max']:$param_item['avail_params']['max'];?>" />
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         <?php }else{?>
+                                            
                                             <?php if(count($param_item['avail_params'])>1) {?>
                                                 <div class="param_row" rel="<?=$param_item['id']?>" param_name="<?=$param_item['translit']?>">
                                                     <div class="param_item_caption"><?=$param_item['name']?><?php echo $param_item['unit']?', '.$param_item['unit']:'';  ?></div>
                                                     <div class="row_checks_wrap">
                                                         <div class="row_checks">
-                                                            <?php foreach($param_item['avail_params'] as $param_list_item) {?>
-                                                                <div class="row_check">
-                                                                    <input class="param_check" name="param[<?=$param_item['translit']?>][]" type="checkbox" id="check_<?=$param_list_item['param_id']?>" value="<?=$param_list_item['param_id']?>">
-                                                                    <label for="check_<?=$param_list_item['param_id']?>"><?php echo html_entity_decode($param_list_item["param_value"]);?></label>
+                                                            
+                                                            <?php foreach($param_item['avail_params'] as $key=>$param_list_item) {?>
+                                                                
+                                                                <?php $fl=false;if(isset($params["selected"][$param_item['translit']])){foreach($params["selected"][$param_item['translit']] as $pitm){ if($pitm==$key) {$fl=true;}}}?>
+                                                                <div class="row_check <?php echo isset($avail[$param_item['translit']]['result'][$key])?'':'_unactive'; ?>">
+                                                                    <input <?php echo $fl?'checked':''; ?> class="param_check" name="param[<?=$param_item['translit']?>][]" type="checkbox" id="check_<?=$key?>" value="<?=$key?>">
+                                                                    <label for="check_<?=$key?>"><?php echo html_entity_decode($param_list_item);?></label>
                                                                 </div>
                                                             <?php } ?>
                                                         </div>
@@ -84,11 +97,11 @@
                                     <?php }?>
                                 </form>
                             </div>
-                            <div class="filter_reset"><span>Очистить фильтр</span></div>
+                            <div class="filter_reset" <?php echo ($show_filter?'style="opacity:1;"':'');  ?>><span>Очистить фильтр</span></div>
                         </div>
                     </div>
                 </div>
-                -->
+                
 
                 <div class="catalog-tab catalog-list">
 
@@ -112,9 +125,7 @@
                     <div class="tab-list">
                         <div class="tab-block tab-block3 <?php echo $cat_view_class;?>" >
                             <ul id="lazy-load_container">
-                                <?php foreach ($products as $p): ?>
-                                    <?php include __DIR__ . '/../partial/product_item.tpl' ?>
-                                <?php endforeach; ?>
+                                <?php echo $products;?>
                             </ul>
                         </div>
                     </div>
@@ -153,9 +164,10 @@
                             </ul>
                         </div>
                     <?php endif;?>
-
-                    <?php echo $paginationLazy ?>
-                    <?php echo $pagination; ?>
+                    <div id="wrp_paginate">
+                        <?php echo $paginationLazy ?>
+                        <?php echo $pagination; ?>
+                    </div>
 
                 </div>
                 <?php if($bottom_text){ ?>

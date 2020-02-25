@@ -7349,7 +7349,7 @@ body._hmenu._openmenu .mob_menu_block:after{
     position: absolute;
     top: -2px;
     right: 12px;
-    z-index:1;
+    z-index:0;
     -webkit-transition: 0.3s;
         -moz-transition: 0.3s;
         -ms-transition: 0.3s;
@@ -8295,7 +8295,7 @@ input[type="checkbox"]:checked + label {
 
 .container.main.withparams .wrapper_content{float: left;width: 100%;}
 .container.main.withparams .sidebar{margin-left: -100%;}
-.container.main.withparams .content{margin-left: 290px;overflow:visible;padding-bottom:0;}
+.container.main.withparams .content{margin-left: 290px;overflow:visible;padding-bottom:0;    min-height: 800px;}
 .container.main.withparams .catalog-info{z-index: 2;position: relative;background: #fff;}
 .container.main.withparams .pick-up{z-index: 2;position: relative;}
 .container.main.withparams .breadcrumbs{margin-bottom:0;position:relative;z-index:2;background:#fff;padding-bottom:30px;}
@@ -8304,9 +8304,20 @@ input[type="checkbox"]:checked + label {
 
 .container.main.withparams .catalog-tab{position:relative;z-index:2;background:#fff;}
 .container.main.withparams .bottom_text{padding-bottom:50px;}
+
+.wrp_filter_title{border-bottom:1px solid #EFEEEC;padding-bottom:10px;margin-top: 10px;cursor:pointer;display:none;}
+.filter_title{font-weight:bold;font-size:16px;color:#000;padding-left:24px;min-height:16px;padding-top:5px;padding-bottom:5px;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMi42MDg5MSA1LjU2OTAzTDIuNjA5NjcgNS41Njk3OUw3LjM1MzQyIDEwLjMxMzVMNy4zNTQ1NiAxMC4zMTQ3QzcuNTMxMDggMTAuNDkyMSA3LjYzMDEzIDEwLjczMjIgNy42MzAwNSAxMC45ODI0QzcuNjMwMDUgMTAuOTgyNiA3LjYzMDA1IDEwLjk4MjggNy42MzAwNSAxMC45ODNNMi42MDg5MSA1LjU2OTAzTDYuOTgwMDUgMTAuOTgyNEw3LjYzMDA1IDEwLjk4M00yLjYwODkxIDUuNTY5MDNDMi41MDU1MSA1LjQ2NTk4IDIuNDQ5OCA1LjMzMTk0IDIuNDQ5OCA1LjE4NDE2VjIuNjU4MTZDMi40NDk4IDIuMzU3MTUgMi42OTUwNCAyLjExMTkxIDIuOTk2MDUgMi4xMTE5MUgxNS4wMDM2QzE1LjMwNDYgMi4xMTE5MSAxNS41NDk4IDIuMzU3MTUgMTUuNTQ5OCAyLjY1ODE2VjUuMTg0MTZDMTUuNTQ5OCA1LjMzMTc1IDE1LjQ5NDIgNS40NjYyOCAxNS4zODk5IDUuNTcwNTRMMTAuNjQ2MiAxMC4zMTQzTDEwLjY0NjIgMTAuMzE0M0wxMC42NDMxIDEwLjMxNzRDMTAuNDY5IDEwLjQ5MzkgMTAuMzY5NiAxMC43MzE2IDEwLjM2OTYgMTAuOTgzMlYxNS43MzdNMi42MDg5MSA1LjU2OTAzTDEwLjY2ODYgMTUuOTE1NE03LjYzMDA1IDEwLjk4M0w3LjYzMDA1IDE0LjEwMjlNNy42MzAwNSAxMC45ODNMNy42MzAwNSAxNC4xMDI5TTcuNjMwMDUgMTQuMTAyOUw3LjUzMjcyIDE0LjA0NDhMNy41MzIwNCAxNC4wNDQ0TDcuNDI5OSAxNC4yMTU3TDcuNDI5NDIgMTQuMjE2NUw3LjQyOTEgMTQuMjE3TDcuNjMwMDUgMTQuMTAyOVpNNy42MzAwNSAxNC4xMDI5TDEwLjM2OTYgMTUuNzM3TTcuNjMwMDUgMTQuMTAyOUwxMC41NjYyIDE2LjA4OTJIMTAuMzY5NlYxNi4wODg4TTcuNjMwMDUgMTQuMTAyOVYxNC4yMTU3TTcuNjMwMDUgMTQuMTAyOVYxNC4yMTU3TTcuNjMwMDUgMTQuMjE1N1YxNC4yMTY4QzcuNjMwMDUgMTQuMjE2NCA3LjYzMDA2IDE0LjIxNjEgNy42MzAwNSAxNC4yMTU3Wk0xMC4zNjk2IDE1LjczN1YxNi4wODg4TTEwLjM2OTYgMTUuNzM3TDEwLjY2ODYgMTUuOTE1NE0xMC4zNjk2IDE2LjA4ODhMMTAuNTY2NCAxNi4wODg5TDEwLjU2NzQgMTYuMDg3MkwxMC41Njg0IDE2LjA4NTVMMTAuNDcxNCAxNS45MTQyQzEwLjQ0MDUgMTUuOTMxNyAxMC40MTQ4IDE1Ljk1NzEgMTAuMzk2OSAxNS45ODc3QzEwLjM3OSAxNi4wMTg0IDEwLjM2OTYgMTYuMDUzMyAxMC4zNjk2IDE2LjA4ODhaTTEwLjY2ODYgMTUuOTE1NEwxMC41NjkgMTYuMDg0NUwxMC40NzI3IDE1LjkxMzVDMTAuNTAyNiAxNS44OTY2IDEwLjUzNjUgMTUuODg3OSAxMC41NzA5IDE1Ljg4ODNDMTAuNjA1MyAxNS44ODg2IDEwLjYzOSAxNS44OTggMTAuNjY4NiAxNS45MTU0WiIgc3Ryb2tlPSIjNDE3MzdFIiBzdHJva2Utd2lkdGg9IjEuMyIvPjwvc3ZnPg==);
+    background-position:left center;background-repeat:no-repeat;
+}
+@media screen and (min-width: 1101px){
+    .param_item{display:block!important;}
+}
 @media screen and (max-width: 1100px){
+    .param_item{display:none;}
+    .wrp_filter_title{display:block;}
     body._hfixed._hmenu .empty_block_header{height:90px;}
-    .wrapper_parameters{opacity:1;position:relative;top:0!important;margin-top:0!important;left:0!important;margin-left:0!important;height:auto!important;width:100%!important;}
+    .wrapper_parameters{opacity:1!important;position:relative;top:0!important;margin-top:0!important;left:0!important;margin-left:0!important;height:auto!important;width:100%!important;}
     .container.main.withparams .content{margin-left:0;}
     .sidebar_filter_caption{display:none;}
     .container.main.withparams .sidebar{margin-left:0;}
@@ -8321,7 +8332,7 @@ input[type="checkbox"]:checked + label {
     .row_check{min-width:40%;}
     .param_row{width:100%;}
 }
-
+.empty_list{width: 100%!important;font-size: 13px;font-weight: bold;margin-top: 20px;}
 
 /*.wrapper_parameters {background:red;}*/
 

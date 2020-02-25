@@ -15,10 +15,9 @@
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
-        
+    
 
-
-        <link href="/catalog/view/theme/app/bundle/app2.css?v2.03" rel="stylesheet">
+        <link href="/catalog/view/theme/app/bundle/app2.css?v2.04" rel="stylesheet">
         <?php if ($description) { ?>
             <meta name="description" content="<?php echo $description; ?>" />
         <?php } ?>
