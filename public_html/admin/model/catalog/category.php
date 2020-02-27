@@ -34,6 +34,7 @@ class ModelCatalogCategory extends Model
 
     public function setParamValues($category_id,$data){
         if($data["change_params"]){
+            
             //print_r($data["cat_filter"]);
             //Обновление общих данных
             $sql = "select id from category_params where category_id='".(int)$category_id."'";
@@ -52,7 +53,7 @@ class ModelCatalogCategory extends Model
                 }else{
                     $tr_translit=trim($data_itm["translit"]);
                 }
-                $sql="update category_params set name='".trim($data_itm["name"])."', translit='".$tr_translit."', unit='".trim($data_itm["unit"])."', type_param='".(int)$data_itm["type_param"]."',  sort_order='".(int)$data_itm["sort_order"]."', param_sort_type='".(int)$data_itm["param_sort_type"]."' where id='".(int)$key."'";
+                $sql="update category_params set name='".trim($data_itm["name"])."', step=".$data_itm["step"].", translit='".$tr_translit."', unit='".trim($data_itm["unit"])."', type_param='".(int)$data_itm["type_param"]."',  sort_order='".(int)$data_itm["sort_order"]."', param_sort_type='".(int)$data_itm["param_sort_type"]."' where id='".(int)$key."'";
                 $this->db->query($sql);
             }
             foreach($cat_filters as $del_item){
@@ -86,9 +87,14 @@ class ModelCatalogCategory extends Model
                     }else{
                         $tr_translit=trim($data_itm["translit"]);
                     }
+                    if(isset($data_itm["step"])){
+                        $step=$data_itm["step"];
+                    }else{
+                        $step=1;
+                    }
                     //$sql="update category_params set name='".trim($data_itm["name"])."', translit='".$tr_translit."', unit='".trim($data_itm["unit"])."', type_param='".(int)$data_itm["type_param"]."',  sort_order='".(int)$data_itm["sort_order"]."', param_sort_type='".(int)$data_itm["param_sort_type"]."' where id='".(int)$key."'";
                     $sql="insert into category_params (category_id, name, translit, unit, type_param, sort_order, param_sort_type) 
-                    values (".(int)$category_id.", '".trim($data_itm["name"])."', '".trim($tr_translit)."', '".trim($data_itm["unit"])."', '".$data_itm["type_param"]."', '".$data_itm["sort_order"]."', '".$data_itm["param_sort_type"]."') ";
+                    values (".(int)$category_id.", '".$step."', '".trim($data_itm["name"])."', '".trim($tr_translit)."', '".trim($data_itm["unit"])."', '".$data_itm["type_param"]."', '".$data_itm["sort_order"]."', '".$data_itm["param_sort_type"]."') ";
                     $this->db->query($sql);
                     $new_filter_id = $this->db->getLastId();
 

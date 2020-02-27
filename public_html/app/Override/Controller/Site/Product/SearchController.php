@@ -343,12 +343,12 @@ class SearchController extends \Controller
 				$page_str="&page=".($this->request->get['page']-1);
 			}
 			
-			$url_search="https://catalogapi.site.yandex.net/v1.0?apikey=876ae57f-736c-456f-b961-7cae3d9d8942&text=".urlencode($this->request->get['text'])."&searchid=2367774&per_page=9".$page_str;
-
-			$products_search=file_get_contents($url_search);
-			$products_search_arr=json_decode($products_search,TRUE);
-			//print_r($products_search_arr);
-
+			if(trim($this->request->get['text'])){
+				$url_search="https://catalogapi.site.yandex.net/v1.0?apikey=876ae57f-736c-456f-b961-7cae3d9d8942&text=".urlencode($this->request->get['text'])."&searchid=2367774&per_page=9".$page_str;
+				$products_search=file_get_contents($url_search);
+				$products_search_arr=json_decode($products_search,TRUE);
+				//print_r($products_search_arr);
+			}
 			$product_ids=[];
 			$product_total=0;
 			if(isset($products_search_arr["documents"])){

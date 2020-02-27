@@ -1,6 +1,5 @@
 <?php echo $header; ?>
-<div class="container main">
-    
+<div class="container main l_product">
     <?= $column_left ?>
     <div class="content">
         <ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">

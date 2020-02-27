@@ -946,8 +946,12 @@ class ModelCatalogProduct extends Model {
 		
 		$this->load->language('extension/module/productform');
 		$data=[];
-		$data["logos"]= $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
-		
+		//$data["logo"]= $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
+	//echo $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
+		//$data["logo"] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
+		$data["logo"]='image/' . $this->config->get('config_logo');
+		//echo html_entity_decode($this->config->get('config_url') . 'image/' . $this->config->get('config_logo'));
+		//echo "!".$data["logo"]."!";
 		//$data_post['time']=date("d.m.Y H:i");
 		$data["caption"]=$this->language->get('text_caption_one');
 
@@ -987,8 +991,10 @@ class ModelCatalogProduct extends Model {
 		
 		$mail->setTo($this->config->get('config_email_one'));
 		
+		//$message="ok1";
+		
 		$message = $this->load->view('extension/one_report', $data);
-		//$message="ok";
+		//$message="ok2";
 
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));

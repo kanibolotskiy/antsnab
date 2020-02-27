@@ -1943,7 +1943,7 @@ button.show-more:hover { background-color: #EFEEEC; -webkit-transition: 0.4s; -m
 
 .mentioned-products ul li { position: relative; width: 25%; padding: 0 10px; margin-bottom: 20px; }
 
-.mentioned-products ul li .products-block { border: 2px solid #EFEEEC; padding: 0 8px 20px 8px; /*height: 100%;*/ overflow: hidden; /*min-height: 350px;*/ position: relative; }
+.mentioned-products ul li .products-block { border: 2px solid #EFEEEC; padding: 0 8px 20px 8px; /*height: 100%;*/ overflow: hidden; /*min-height: 350px;*/ position: relative; /*padding-top:56px;*/ }
 
 .mentioned-products ul li .products-block .img-production { height: 180px; }
 
@@ -2231,7 +2231,7 @@ button.show-more:hover { background-color: #EFEEEC; -webkit-transition: 0.4s; -m
 
 .mentioned-products2 .title { margin-bottom: 27px; }
 
-.mentioned-products2 ul li .products-block a.title-product { padding: 0 10px; text-align: center; /*height:65px; display: flex; align-items: center; justify-content: center; */ }
+.mentioned-products2 ul li .products-block a.title-product { padding: 0 10px; text-align: center; /*position: absolute; top: 0;width:100%;left:0; /*height:65px; display: flex; align-items: center; justify-content: center; */ }
 
 .mentioned-products2 ul li .products-block a.order-btn { width: 96px; }
 
@@ -4417,13 +4417,17 @@ input[type="checkbox"]:checked + label { background-image: url(data:image/svg+xm
 
 .scroll-pane::-webkit-resizer { background-image: none; background-repeat: no-repeat; width: 7px; height: 0px; }
 
-.scroll-pane::-webkit-scrollbar { width: 11px; }
+.scroll-pane::-webkit-scrollbar { width: 3px; }
 
 .wrapper_range_slider { margin-right: 10px; }
 
-.filter_reset { opacity: 0; position: relative; width: 100%; cursor: pointer; bottom: 25px; text-align: center; color: #CD9A67; margin-top: 40px; }
+.filter_reset { opacity: 0; position: relative; width: 100%; bottom: 25px; text-align: center; color: #CD9A67; margin-top: 40px; transition: 0.2; -webkit-transition: 0.2; -moz-transition: 0.2; -o-transition: 0.2; }
+
+.filter_reset.active { cursor: pointer; }
 
 .filter_reset span { border-bottom: 1px solid #CD9A67; }
+
+.filter_reset.active { opacity: 1; }
 
 /*.catalog-product{height:100vh;}*/
 .common-home .catalog-product { height: auto; }
@@ -4492,6 +4496,8 @@ input[type="checkbox"]:checked + label { background-image: url(data:image/svg+xm
 .empty_list { width: 100% !important; font-size: 13px; font-weight: bold; margin-top: 20px; }
 
 /*.wrapper_parameters {background:red;}*/
+.l_product .sidebar_filter_caption { display: none !important; }
+
 /*Stick Nav */
 .container.main { /*for right calculation of .offset in js*/ position: relative; }
 

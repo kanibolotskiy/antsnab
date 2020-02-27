@@ -590,7 +590,8 @@ class ControllerCatalogCategory extends Controller {
 				"param_sort_type"=>$data_cat_filter["param_sort_type"],
 				"type_param"=>$data_cat_filter["type_param"],
 				"list"=>$list,
-				"products"=>$linked_products
+				"products"=>$linked_products,
+				"step"=>$data_cat_filter["step"],
 			);
 		}
 		

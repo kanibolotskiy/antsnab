@@ -12,14 +12,14 @@ $(document).ready(function(){
             $(this).html("Показать еще");
             $(this).animate({"opacity":1},300);
             $(this).removeClass("active");
-            $(".row_checks_wrap").removeClass("active");
+            $(this).closest(".param_row").find(".row_checks_wrap").removeClass("active");
             
         }else{
             $(this).css({"opacity":0});
             $(this).html("Скрыть");
             $(this).animate({"opacity":1},300);
             $(this).addClass("active");
-            $(".row_checks_wrap").addClass("active");
+            $(this).closest(".param_row").find(".row_checks_wrap").addClass("active");
         }
     });
 

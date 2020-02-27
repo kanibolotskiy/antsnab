@@ -20048,16 +20048,12 @@ $('body').delegate('#lazy-load_container','onLazyLoaded', function(e, $items){
 var flag_update=true;
 //-------------------------------------------
 function getParamsForm(){
-    //$(".inputRangeMin").each()
-    
     var str='';
-
     $(".range_slider").each(function(){
         var select_min=$(this).attr("select_min");
         var select_max=$(this).attr("select_max");
         var min_value=$(this).attr("min_value")*1;
         var max_value=$(this).attr("max_value")*1;
-
         if(select_min!=""){
             if((select_min)*1!=min_value){
                 str+=(str!=""?"&":"")+"param["+$(this).attr("name")+"][min]="+select_min;
@@ -20069,8 +20065,6 @@ function getParamsForm(){
             }
         }
     });
-    
-
     $(".param_check").each(function(){
         if($(this).prop("checked")){
             //str+=(str!=""?"&":"")+$(this).attr("name")+"="+$(this).val();
@@ -20078,18 +20072,22 @@ function getParamsForm(){
         }
     });
 
+    if(str){
+        $(".filter_reset").addClass("active");
+    }else{
+        $(".filter_reset").removeClass("active");
+    }
+
     //Сортировка
     var sort=$("#seldef1 option:selected").val();
     var sort_str="";
     if(sort){
+        //str+=(str!=""?"&":"")+"sort="+sort;
         str+=(str!=""?"&":"")+"sort="+sort;
     }
 
     if(str){
         str="?"+str;
-        $(".filter_reset").animate({"opacity":1},200);
-    }else{
-        $(".filter_reset").animate({"opacity":0},200);
     }
     var url=$("#form_params").attr("action");
 
@@ -20138,12 +20136,11 @@ function resetFilterForm(){
 function set_state_checks(avail_data){
 //if(avail_data.length){
     var flag_empty=true;
-    //console.log(avail_data)
     for(var avail_item in avail_data){
         
         var flag_empty=false;
         let itm=avail_data[avail_item];
-        if(itm.type){
+        //if(itm.type==1){
             /*
             let min_value=itm.result.min;
             let max_value=itm.result.max;
@@ -20209,13 +20206,16 @@ function set_state_checks(avail_data){
             range_row_slider.attr("min_value",min_value);
             range_row_slider.attr("max_value",max_value);
             */
-        }else{                        
+        //}else{   
+        if(itm.type==0){
+            //console.log(avail_item)
             $(".param_row[param_name='"+avail_item+"'] .param_check").each(function(){
                 //console.log($(this).val());
                 //)
                 let flag=true;
+                
                 for(var itm_result in itm.result){
-                    //console.log(itm_result+"="+itm.result[itm_result])
+                    
                     //if((itm.result[itm_result]["param_id"]*1)==$(this).val()){
                     if((itm_result*1)==$(this).val()){
                         flag=false;
@@ -20228,6 +20228,37 @@ function set_state_checks(avail_data){
                     $(this).attr("disabled",false);
                     $(this).closest(".row_check").removeClass("_unactive");
                 }
+            });
+        }
+
+        if((itm.type==4)||(itm.type==5)){
+            //console.log(avail_item)
+            $(".param_row[param_name='"+avail_item+"'] .param_check").each(function(){
+                //console.log(avail_item)
+                if(itm.result.count){
+                    $(this).attr("disabled",false);
+                    $(this).closest(".row_check").removeClass("_unactive");
+                }else{
+                    $(this).attr("disabled",true);
+                    $(this).closest(".row_check").addClass("_unactive");
+                }
+                //let flag=true;
+                /*
+                for(var itm_result in itm.result){
+                    
+                    //if((itm.result[itm_result]["param_id"]*1)==$(this).val()){
+                    if((itm_result*1)==$(this).val()){
+                        flag=false;
+                    }
+                }
+                if(flag){
+                    $(this).attr("disabled",true);
+                    $(this).closest(".row_check").addClass("_unactive");
+                }else{
+                    $(this).attr("disabled",false);
+                    $(this).closest(".row_check").removeClass("_unactive");
+                }
+                */
             });
         }
         
@@ -20285,9 +20316,10 @@ function change_params_form(){
                     $(".param_check").attr("disabled",false);
 
                     set_state_checks(avail_data);
-                    console.log(json['showMore']);
+
                     $("#wrp_paginate").html(json['showMore']+json['pagination']);
-                    //$("html,body").animate({"scrollTop":tp},500)
+                    //-50
+                    $("html,body").animate({"scrollTop":tp},500)
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -20527,8 +20559,14 @@ $(document).ready(function(){
         }else{
             var sel_max_value=max_value;
         }
-
+        if($(this).attr("step")!=0){
+            var step=$(this).attr("step")*1;
+        }else{
+            var step=1;
+        }
+        
         slider_item.slider({
+            step:step,
             range: true,
             animate: "fast",
             min: min_value,
@@ -20728,14 +20766,14 @@ $(document).ready(function(){
             $(this).html("Показать еще");
             $(this).animate({"opacity":1},300);
             $(this).removeClass("active");
-            $(".row_checks_wrap").removeClass("active");
+            $(this).closest(".param_row").find(".row_checks_wrap").removeClass("active");
             
         }else{
             $(this).css({"opacity":0});
             $(this).html("Скрыть");
             $(this).animate({"opacity":1},300);
             $(this).addClass("active");
-            $(".row_checks_wrap").addClass("active");
+            $(this).closest(".param_row").find(".row_checks_wrap").addClass("active");
         }
     });
 
@@ -23944,6 +23982,7 @@ function calc5(){
 
 }
 $( document ).ready(function() {
+    
     if($('#priceSwitcher').length){
         $switchers = $('li','#priceSwitcher' );
         $firstSwitcher = $($switchers[0]);

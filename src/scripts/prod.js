@@ -549,6 +549,7 @@ function calc5(){
 
 }
 $( document ).ready(function() {
+    
     if($('#priceSwitcher').length){
         $switchers = $('li','#priceSwitcher' );
         $firstSwitcher = $($switchers[0]);

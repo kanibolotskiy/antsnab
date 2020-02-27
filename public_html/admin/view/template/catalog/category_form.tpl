@@ -368,7 +368,7 @@
                             <td class="text-left" style="width:100px;">Транслит</td>
                             <td class="text-left" style="min-width:100px;">Ед. изм.</td>
                             <td class="text-left" style="min-width:150px;">Тип<br/>параметра</td>
-                            <td class="text-left" style="min-width:150px;">Тип сортировки<br/>значений параметров</td>
+                            <td class="text-left" style="min-width:200px;">Тип сортировки<br/>значений параметров</td>
                             <td class="text-left" style="width:700px;">Возможные значения</td>
                             <td class="text-left" style="width: 80px;">Сортировка</td>
                             <td></td>
@@ -399,10 +399,18 @@
                             </select>
                           </td>
                           <td class="text-left">
-                            <select class="form-control change_form_param" name="cat_filter[<?php echo $cat_filters[$i]["id"];?>][param_sort_type]" value="<?php $cat_filters[$i]['param_sort_type'];?>">
-                              <option value="0" <?php echo ($cat_filters[$i]['param_sort_type']==0?"selected":"");?> >По релевантности</option>
-                              <option value="1" <?php echo ($cat_filters[$i]['param_sort_type']==1?"selected":"");?> >По алфавиту</option>
-                            </select>
+                            <div class="param_block1">
+                              <select class="form-control change_form_param" name="cat_filter[<?php echo $cat_filters[$i]["id"];?>][param_sort_type]" value="<?php $cat_filters[$i]['param_sort_type'];?>">
+                                <option class="param_block1" <?php echo ($cat_filters[$i]['type_param']==1?"style='display:none;'":""); ?> value="0" <?php echo (($cat_filters[$i]['param_sort_type']==0 and $cat_filters[$i]['type_param']==1)?"selected":"");?> >По релевантности</option>
+                                <option class="param_block1" <?php echo ($cat_filters[$i]['type_param']==1?"style='display:none;'":""); ?> value="1" <?php echo (($cat_filters[$i]['param_sort_type']==1 and $cat_filters[$i]['type_param']==0)?"selected":"");?> >По алфавиту</option>
+                                <option class="param_block2" <?php echo ($cat_filters[$i]['type_param']==0?"style='display:none;'":""); ?> value="0" <?php echo (($cat_filters[$i]['param_sort_type']==0 and $cat_filters[$i]['type_param']==1)?"selected":"");?> >Диапазон(темп)</option>
+                                <option class="param_block2" <?php echo ($cat_filters[$i]['type_param']==0?"style='display:none;'":""); ?> value="1" <?php echo (($cat_filters[$i]['param_sort_type']==1 and $cat_filters[$i]['type_param']==1)?"selected":"");?> >Диапазон</option>
+                              </select>
+                            </div>
+
+                          
+                            
+
                           </td>
                           <td class="text-left">
                               
@@ -432,6 +440,12 @@
                                     <div class="add_param_caption">Добавить значение:</div> 
                                     <input type="text" class="add_param_input form-control"/> 
                                     <div class="add_param">>></div>
+                                </div>
+                              </div>
+                              <div class="param_block2" <?php echo ($cat_filters[$i]["type_param"])?'style="display:block;"':'style="display:none;"';?>>
+                                <div class="wrp_step_input">
+                                  <div class="add_param_caption">Шаг:</div> 
+                                  <input type="text" name="cat_filter[<?php echo $cat_filters[$i]["id"];?>][step]" class="change_form_param step_input form-control" value="<?php echo $cat_filters[$i]['step'];?>" /> 
                                 </div>
                               </div>
                               <div class="unable_delete">
@@ -540,9 +554,10 @@
           html += '  <td class="text-left"><input type="text" name="cat_filter_new['+last_added_new+'][unit]" value="" class="form-control change_form_param " /></td>';
 
           html += '  <td class="text-left"><select name="cat_filter_new['+last_added_new+'][type_param]" class="form-control change_form_param change_form_paramlist" value="0"><option value="0">Значение</option><option value="1">Диапазон</option></select></td>';
-          html += '  <td class="text-left"><select name="cat_filter_new['+last_added_new+'][param_sort_type]" class="form-control change_form_param" value="0"><option value="0">По релевантности</option><option value="1">По алфавиту</option></select></td>';
+          html += '  <td class="text-left"><select name="cat_filter_new['+last_added_new+'][param_sort_type]" class="form-control change_form_param" value="0"><option class="param_block1" value="0">По релевантности</option><option class="param_block1" value="1">По алфавиту</option><option class="param_block2" style="display:none;" value="0">Диапазон(темп)</option><option class="param_block2" style="display:none;" value="1">Диапазон</option></select></td>';
 
-          html += ' <td class="text-left"><div class="param_block1" style="display:block;"><div class="product_availparam_list"></div><div class="wrp_add_paramvalue"><div class="add_param_caption">Добавить значение:</div> <input type="text" class="add_param_input form-control"> <div class="add_param">&gt;&gt;</div></div></div></td>';
+          html += ' <td class="text-left"><div class="param_block1" style="display:block;"><div class="product_availparam_list"></div><div class="wrp_add_paramvalue"><div class="add_param_caption">Добавить значение:</div> <input type="text" class="add_param_input form-control"> <div class="add_param">&gt;&gt;</div></div></div>';
+          html += ' <div class="param_block2" style="display:none;"><div class="wrp_step_input"><div class="add_param_caption">Шаг:</div> <input type="text" name="cat_filter['+last_added_new+'][step]" class="change_form_param step_input form-control" value="1" /></div></div></td>';
 
                           
           html += '  <td class="text-left"><input type="number" name="cat_filter_new['+last_added_new+'][sort_order]" value="'+last_added_new+'" class="form-control sort_order_filter change_form_param" /></td>';
@@ -624,8 +639,10 @@
         $(document).on("change",".change_form_paramlist",function(){
           if($(this).val()==0){
             $(this).closest("tr").find(".param_block1").show();
+            $(this).closest("tr").find(".param_block2").hide();
           }else{
             $(this).closest("tr").find(".param_block1").hide();
+            $(this).closest("tr").find(".param_block2").show();
           }
           //console.log($(this).val());
         })

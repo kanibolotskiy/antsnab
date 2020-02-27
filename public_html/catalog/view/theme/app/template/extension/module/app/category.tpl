@@ -4,7 +4,6 @@
     <a href="<?=$root?>" class="catalog-btn">    
         Каталог
     </a>
-    
     <?php if($show_params){ ?>
 
         <div class="sidebar_filter_caption <?php echo ($show_filter?'active':'');  ?>">

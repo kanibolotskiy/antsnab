@@ -1,5 +1,53 @@
 
+
 document.addEventListener("DOMContentLoaded", function(){
+    //-------------------------------------------
+    function getParamsForm(){
+        var str='';
+        $(".range_slider").each(function(){
+            var select_min=$(this).attr("select_min");
+            var select_max=$(this).attr("select_max");
+            var min_value=$(this).attr("min_value")*1;
+            var max_value=$(this).attr("max_value")*1;
+            if(select_min!=""){
+                if((select_min)*1!=min_value){
+                    str+=(str!=""?"&":"")+"param["+$(this).attr("name")+"][min]="+select_min;
+                }
+            }
+            if(select_max!=""){
+                if((select_max*1)!=max_value){
+                    str+=(str!=""?"&":"")+"param["+$(this).attr("name")+"][max]="+select_max;
+                }
+            }
+        });
+        $(".param_check").each(function(){
+            if($(this).prop("checked")){
+                //str+=(str!=""?"&":"")+$(this).attr("name")+"="+$(this).val();
+                str+=(str==""?"":"&")+$(this).attr("name")+"="+$(this).val();
+            }
+        });
+
+        if(str){
+            $(".filter_reset").addClass("active");
+        }else{
+            $(".filter_reset").removeClass("active");
+        }
+
+        //Сортировка
+        var sort=$("#seldef1 option:selected").val();
+        var sort_str="";
+        if(sort){
+            //str+=(str!=""?"&":"")+"sort="+sort;
+            str+=(str!=""?"&":"")+"sort="+sort;
+        }
+
+        if(str){
+            str="?"+str;
+        }
+        var url=$("#form_params").attr("action");
+        return str;
+}
+//-------------------------------------------
     $(window).bind('popstate', function(event){
         //console.log("popstate");
     });
@@ -11,11 +59,27 @@ document.addEventListener("DOMContentLoaded", function(){
             $container = $($self.attr('data-container')),
             $paginContainer = $($self.attr('data-pagincontainer'));
 
-            
-        var data_pagenum=$(this).attr("data-pagenum");
 
-        var base_href=$("link[rel='canonical']").attr("href");
+        //console.log();
+        //
+        //if(flag){
+        //    var base_href=$("link[rel='canonical']").attr("href");
+        //}else{
+        //    var base_href=$("#form_params").attr("action")+getParamsForm();
+        //}
+        //console.log($("link[rel='canonical']").attr("href"))
         //console.log(base_href)
+
+        var data_pagenum=$(this).attr("data-pagenum");
+        //var base_href=$("link[rel='canonical']").attr("href");
+        
+        if($("#wrp_paginate").length){
+            var base_href=document.location.pathname+getParamsForm();
+            //console.log(getParamsForm());
+        }else{
+            base_href=$("link[rel='canonical']").attr("href");
+        }
+
         var sep="?";
         if(base_href.indexOf("?")>=0){
             sep="&";
@@ -23,10 +87,12 @@ document.addEventListener("DOMContentLoaded", function(){
         //console.log(base_href.indexOf("?"));
 
         var href=base_href+sep+"load_pages="+data_pagenum;
+        
         history.pushState({page:href}, null, href);
 
         $.get(endPoint)
             .done(function(dataJson){
+               
                 var data = $.parseJSON(dataJson);
 
                 if( null === data.result ) {
@@ -90,4 +156,19 @@ document.addEventListener("DOMContentLoaded", function(){
     };
     //$('#showMore').on('click', showMoreHandler);
     $(document).on("click","#showMore",showMoreHandler);
+    /*$(document).on("click","#showMore",function(e){
+        var data_pagenum=$(this).attr("data-pagenum");
+        if($(this).parent().hasClass("wrp_paginate_cats")){
+            showMoreHandler(e,true,data_pagenum);
+        }else{
+            showMoreHandler(e,false,data_pagenum);
+        }
+        
+    });
+    */
+    /*
+    $(document).on("click","#showMoreCat",function(e){
+        showMoreHandler(e,true)
+    });
+    */
 });
