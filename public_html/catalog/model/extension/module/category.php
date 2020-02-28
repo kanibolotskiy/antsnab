@@ -12,9 +12,10 @@
             return $data;
         }
 
+        //public function getParamsValues($used_products, $param_id, $sql_type, $type_param){
         public function getParamsValues($used_products, $param_id, $sql_type){
             //type1
-            
+            //echo $param_id."|".$sql_type."<br/>";
             $used_products_list=implode(",",$used_products);
             $param_list=[];
             if($used_products_list){
@@ -31,12 +32,6 @@
                         foreach ($query->rows as $result) {
 
                             $param_list[$result["value1"]]=$result["param_value"];
-                            /*
-                            $param_list[]=[
-                                "param_id"=>$result["value1"],
-                                "param_value"=>$result["param_value"],
-                            ];
-                            */
                         }
                     break;
                     
@@ -55,6 +50,7 @@
                         }
                     break;
                     
+
                     case 2: //Диапазон
                         $sql="SELECT min(value1) as min,max(value2) as max FROM `product_param_values` pv WHERE product_id in (".$used_products_list.") AND pv.param_id=".(int)$param_id;
 
@@ -83,6 +79,7 @@
                         $result=$query->row;
                         $param_list["count"]=$result["count_sale"];
                     break;
+
                     case 5: //Скидки
                         $sql="SELECT count(product_id) as count_sale FROM oc_product op WHERE product_id in (".$used_products_list.") AND op.status=1 and price_wholesaleold>0";
                         $query = $this->db->query($sql);
@@ -180,11 +177,16 @@
                 foreach ($query->rows as $result) {
                     //echo $result[""]."<br/>";
                     $avail_params=[];
-                    if($result["type_param"]){  //Дипазон
+                    
+                    //echo $result["id"]."|".$result["type_param"]."|<br/>";
+
+                    if($result["type_param"]==1){  //Дипазон
                         $avail_params=$this->getParamsValues($used_products,$result["id"],2);
                     }else{                      //Список
+                        //echo $result["id"]."|".$result["param_sort_type"]."<br/>";
                         $avail_params=$this->getParamsValues($used_products,$result["id"],$result["param_sort_type"]);
                     }
+
                     $out[]=[
                         "id"=>$result["id"],
                         "name"=>html_entity_decode($result["name"]),

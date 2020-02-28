@@ -33,6 +33,7 @@ class ModelCatalogCategory extends Model
     
 
     public function setParamValues($category_id,$data){
+        
         if($data["change_params"]){
             
             //print_r($data["cat_filter"]);
@@ -45,7 +46,9 @@ class ModelCatalogCategory extends Model
                     $cat_filters[]=$category_filter["id"];
                 }
             }
+            
             foreach($data["cat_filter"] as $key=>$data_itm){
+                //print_r($data_itm);
                 unset($cat_filters[array_search($key,$cat_filters)]);
                 
                 if(!trim($data_itm["translit"])){
@@ -93,8 +96,9 @@ class ModelCatalogCategory extends Model
                         $step=1;
                     }
                     //$sql="update category_params set name='".trim($data_itm["name"])."', translit='".$tr_translit."', unit='".trim($data_itm["unit"])."', type_param='".(int)$data_itm["type_param"]."',  sort_order='".(int)$data_itm["sort_order"]."', param_sort_type='".(int)$data_itm["param_sort_type"]."' where id='".(int)$key."'";
-                    $sql="insert into category_params (category_id, name, translit, unit, type_param, sort_order, param_sort_type) 
+                    $sql="insert into category_params (category_id, step,  name, translit, unit, type_param, sort_order, param_sort_type) 
                     values (".(int)$category_id.", '".$step."', '".trim($data_itm["name"])."', '".trim($tr_translit)."', '".trim($data_itm["unit"])."', '".$data_itm["type_param"]."', '".$data_itm["sort_order"]."', '".$data_itm["param_sort_type"]."') ";
+                    //echo $sql;
                     $this->db->query($sql);
                     $new_filter_id = $this->db->getLastId();
 

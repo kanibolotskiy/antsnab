@@ -20056,19 +20056,22 @@ function getParamsForm(){
         var max_value=$(this).attr("max_value")*1;
         if(select_min!=""){
             if((select_min)*1!=min_value){
-                str+=(str!=""?"&":"")+"param["+$(this).attr("name")+"][min]="+select_min;
+                //str+=(str!=""?"&":"")+"param["+$(this).attr("name")+"][min]="+select_min;
+                str+="&param["+$(this).attr("name")+"][min]="+select_min;
             }
         }
         if(select_max!=""){
             if((select_max*1)!=max_value){
-                str+=(str!=""?"&":"")+"param["+$(this).attr("name")+"][max]="+select_max;
+                //str+=(str!=""?"&":"")+"param["+$(this).attr("name")+"][max]="+select_max;
+                str+="&param["+$(this).attr("name")+"][max]="+select_max;
             }
         }
     });
     $(".param_check").each(function(){
         if($(this).prop("checked")){
             //str+=(str!=""?"&":"")+$(this).attr("name")+"="+$(this).val();
-            str+=(str==""?"":"&")+$(this).attr("name")+"="+$(this).val();
+            //str+=(str==""?"":"&")+$(this).attr("name")+"="+$(this).val();
+            str+="&"+$(this).attr("name")+"="+$(this).val();
         }
     });
 
@@ -20078,21 +20081,27 @@ function getParamsForm(){
         $(".filter_reset").removeClass("active");
     }
 
+    //slice(1);
     //Сортировка
     var sort=$("#seldef1 option:selected").val();
     var sort_str="";
     if(sort){
         //str+=(str!=""?"&":"")+"sort="+sort;
-        str+=(str!=""?"&":"")+"sort="+sort;
+        str+="&sort="+sort;
     }
-
+/*
     if(str){
         str="?"+str;
     }
-    var url=$("#form_params").attr("action");
+*/
 
-    history.pushState(null,null, url+str);
-    return str;
+    var url=$("#form_params").attr("action");
+    var str_fin="";
+    if(str){
+        str_fin="?"+str.slice(1)
+    }
+    history.pushState(null,null, url+str_fin);
+    return "?"+str;
 }
 //-------------------------------------------
 function resetSliders(){
@@ -20136,6 +20145,7 @@ function resetFilterForm(){
 function set_state_checks(avail_data){
 //if(avail_data.length){
     var flag_empty=true;
+    console.log(avail_data)
     for(var avail_item in avail_data){
         
         var flag_empty=false;
@@ -20206,8 +20216,9 @@ function set_state_checks(avail_data){
             range_row_slider.attr("min_value",min_value);
             range_row_slider.attr("max_value",max_value);
             */
-        //}else{   
-        if(itm.type==0){
+        //}else{ 
+        
+        if((itm.type==0)||(itm.type==2)){
             //console.log(avail_item)
             $(".param_row[param_name='"+avail_item+"'] .param_check").each(function(){
                 //console.log($(this).val());
@@ -20270,6 +20281,9 @@ function set_state_checks(avail_data){
 }
 //-------------------------------------------
 function change_params_form(){
+    if (typeof ym != 'undefined') {
+        ym(14496178, 'reachGoal', 'filter');
+    }
     //data_url1=getParamsForm()
 
     //console.log("flag_update="+flag_update);

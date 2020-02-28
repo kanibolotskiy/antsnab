@@ -29,18 +29,18 @@ class ModelCatalogProduct extends Model
 
     public function getFilterParamValues($param_id, $tp, $product_id){
         $data=[];
-        if($tp==0){
+        if($tp==1){
+            $sql="SELECT value1, value2 from product_param_values where product_id=".(int)$product_id." and param_id=".$param_id;
+            $query=$this->db->query($sql);
+            $data=$query->row;            
+        }else{
             $sql="SELECT value1 from product_param_values where product_id=".(int)$product_id." and param_id=".(int)$param_id;
             $query=$this->db->query($sql);
             
             foreach ($query->rows as $result) {
                 $data[]=$result["value1"];
             }
-        }else{
-            $sql="SELECT value1, value2 from product_param_values where product_id=".(int)$product_id." and param_id=".$param_id;
-            $query=$this->db->query($sql);
-            $data=$query->row;
-            
+
         }
         return $data;
     }

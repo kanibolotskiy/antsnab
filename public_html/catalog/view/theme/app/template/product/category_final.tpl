@@ -104,8 +104,8 @@
                                                 </div>
                                             </div>
                                         <?php }?>
-
-                                        <?php if($param_item["type_param"]==0){?>
+                                        <?php //print_r($param_item);?>
+                                        <?php if($param_item["type_param"]==0 or $param_item["type_param"]==2){?>
                                             
                                             <?php if(count($param_item['avail_params'])>1) {?>
                                                 <div class="param_row" rel="<?=$param_item['id']?>" param_name="<?=$param_item['translit']?>">

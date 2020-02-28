@@ -1545,7 +1545,10 @@ class ControllerCatalogProduct extends Controller {
 		foreach($filter_params_data as $f_data){
 			$list=[];
 			$list_param_value=$this->model_catalog_product->getFilterParamValues($f_data["id"],$f_data["type_param"],$this->request->get['product_id']);
-			if($f_data["type_param"]==0){
+			if($f_data["type_param"]==1){
+				$list["value1"]=isset($list_param_value["value1"])?$list_param_value["value1"]:"";
+				$list["value2"]=isset($list_param_value["value2"])?$list_param_value["value2"]:"";
+			}else{
 				$list_data=$this->model_catalog_product->getFilterParamList($f_data["id"]);
 
 				foreach($list_data as $list_item){
@@ -1556,11 +1559,7 @@ class ControllerCatalogProduct extends Controller {
 						"selected"=>in_array ($list_item["id"], $list_param_value)
 					];
 				}
-			}else{
-				//print_r($list_param_value);
 				
-				$list["value1"]=isset($list_param_value["value1"])?$list_param_value["value1"]:"";
-				$list["value2"]=isset($list_param_value["value2"])?$list_param_value["value2"]:"";
 
 			}
 			

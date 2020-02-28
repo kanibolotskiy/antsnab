@@ -48,14 +48,13 @@ document.addEventListener("DOMContentLoaded", function(){
         return str;
 }
 //-------------------------------------------
-    $(window).bind('popstate', function(event){
-        //console.log("popstate");
-    });
+   
     
     function showMoreHandler(e) {
+        //console.log("ook");
         e.preventDefault();
-        var endPoint = $(this).attr('data-href'),
-            $self = $(this),
+        var endPoint = $("#showMore").attr('data-href'),
+            $self = $("#showMore"),
             $container = $($self.attr('data-container')),
             $paginContainer = $($self.attr('data-pagincontainer'));
 
@@ -70,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function(){
         //console.log($("link[rel='canonical']").attr("href"))
         //console.log(base_href)
 
-        var data_pagenum=$(this).attr("data-pagenum");
+        var data_pagenum=$("#showMore").attr("data-pagenum");
         //var base_href=$("link[rel='canonical']").attr("href");
         
         if($("#wrp_paginate").length){
@@ -124,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function(){
                 }else{
                     $.each( items, function(index, item){
                         var $item = $(item);
-                        // $items.push($item);
+                     $items.push($item);
                         $item.css("display", "none");
                         $container.append($item);
                         $item.slideDown('slow');
@@ -139,11 +138,12 @@ document.addEventListener("DOMContentLoaded", function(){
 
                 /** rerender shomore button */
                 $self.replaceWith(showMore);
+                
                 setTimeout( function() { 
-                    $('#showMore').on('click', showMoreHandler);
+                   //$('#showMore').on('click', showMoreHandler);
                     $container.trigger('onLazyLoaded', [$items]); 
                 }, 100 );
-
+                
                 /** make manipulations with standart pagination */
                 if( $paginContainer.length > 0) {
                     $paginContainer.replaceWith(pagination);
@@ -154,8 +154,13 @@ document.addEventListener("DOMContentLoaded", function(){
                 console.log('Server Error');
             });
     };
+    //$(document).on("click","#showMore",showMoreHandler);
+    $(document).on("click","#showMore",function(e){
+        showMoreHandler(e);
+    });
+
     //$('#showMore').on('click', showMoreHandler);
-    $(document).on("click","#showMore",showMoreHandler);
+   
     /*$(document).on("click","#showMore",function(e){
         var data_pagenum=$(this).attr("data-pagenum");
         if($(this).parent().hasClass("wrp_paginate_cats")){

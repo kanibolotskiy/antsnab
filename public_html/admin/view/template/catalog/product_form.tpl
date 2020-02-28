@@ -1253,7 +1253,7 @@
                                                     <b><?php echo $filter_param['name'];?><?php echo $filter_param['unit']?" (".$filter_param['unit'].")":"";?></b>
                                                 </td>
                                                 <td class="text-left">
-                                                    <?php if($filter_param["type_param"]) {?>
+                                                    <?php if($filter_param["type_param"]==1) {?>
                                                         <div class="product_availparam_dispason">
                                                             <div class="param_block_wrapper">
                                                                 
