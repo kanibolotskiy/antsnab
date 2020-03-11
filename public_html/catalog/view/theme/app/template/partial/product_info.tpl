@@ -40,24 +40,25 @@
                             <?php } ?>
                         </div>
                     <?php }?>
-                    <?php if($rating){?>
-                        <div class="agg_rating">
-                            <div class="agg_rating_ico"></div>
-                            <div class="agg_rating_val"><?php echo $rating?></div>
-                        </div>
-                    <?php }?>
+                    
 
                     <?php if ($thumb) { ?>
                         <img class="wrp_fly_image" id="main_popup_product_image" src="<?php echo $thumb; ?>"
                             title="<?php echo $heading_title; ?>"
                             alt="<?php echo $heading_title; ?>" />
                     <?php } ?>
-                    <div class="wrp_favorite">
-                                    <div title="Добавить товар в избранное" class="favorite <?php echo $favorite;?>" rel="<?php echo $product_id;?>"></div>
-                                    <div title="Добавить товар в сравнение" class="compare <?php echo $compare;?>" rel="<?php echo $product_id;?>"></div>
-                                </div>
+                    
                 </div>
-                
+                <div class="wrp_favorite">
+                    <?php if($rating){?>
+                        <div class="agg_rating">
+                            <div class="agg_rating_ico"></div>
+                            <div class="agg_rating_val"><?php echo $rating?></div>
+                        </div>
+                    <?php }?>
+                    <div title="Добавить товар в избранное" class="favorite <?php echo $favorite;?>" rel="<?php echo $product_id;?>"></div>
+                    <div title="Добавить товар в сравнение" class="compare <?php echo $compare;?>" rel="<?php echo $product_id;?>"></div>
+                </div>
                 <div class="thumb__nav">
                     <?php if ($images) { ?>
                     <div class="tovar_mini_gallery">

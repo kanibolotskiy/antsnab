@@ -804,7 +804,7 @@ class CategoryController extends \Controller
             
         $this->data['catalog_brand_img']='';
         if($category_final_info["isbrand"]){
-            $image_brand = $this->model_tool_image->resize($category_final_info["image"], 100, 100);
+            $image_brand = $this->model_tool_image->resize($category_final_info["image"], 200, 200);
             $this->data['catalog_brand_img'] = $image_brand;
         }
         
@@ -881,9 +881,11 @@ class CategoryController extends \Controller
 
         foreach ($results as $result) {
             if ($result['image']) {
-                $image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_category_width'), $this->config->get($this->config->get('config_theme') . '_image_category_height'));
+                //$image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_category_width'), $this->config->get($this->config->get('config_theme') . '_image_category_height'));
+                $image = $this->model_tool_image->resize($result['image'], 320, 400);
             } else {
-                $image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_category_width'), $this->config->get($this->config->get('config_theme') . '_image_category_height'));
+                //$image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_category_width'), $this->config->get($this->config->get('config_theme') . '_image_category_height'));
+                $image = $this->model_tool_image->resize('placeholder.png', 320, 400);
             }
 
             $sub = array();

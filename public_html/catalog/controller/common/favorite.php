@@ -181,7 +181,8 @@ class ControllerCommonFavorite extends Controller {
                 }
     */
                 if ($product['image']) {
-                    $image = $this->model_tool_image->resize($product['image'], 120,120);
+                    //$image = $this->model_tool_image->resize($product['image'], 120,120);
+                    $image = $this->model_tool_image->resize($product['image'], 240,240);
                 } else {
                     $image = '';
                 }
@@ -230,7 +231,7 @@ class ControllerCommonFavorite extends Controller {
                     'total' => number_format($mincount*$saleUnit_price,0,"."," "),
                     'priceUnit'=> $priceUnit,
                     'saleToPriceKoef' => $saleToPriceKoef,
-                    'location' => $product['location'],
+                    'location' => html_entity_decode($product['description_mini']),
                     'properties' => $previewProperties,
                     'href' => $this->url->link('product/product', 'product_id=' . $product['product_id']),
                     'mincount'=>$mincount,

@@ -427,8 +427,11 @@ class ControllerCatalogCategory extends Controller {
 		$data['cancel'] = $this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, true);
 
 		if (isset($this->request->get['category_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$category_info = $this->model_catalog_category->getCategory($this->request->get['category_id']);
+			$parent_cat_id=$this->request->get['category_id'];
+		}else{
+			$parent_cat_id=0;
 		}
+		$category_info = $this->model_catalog_category->getCategory($parent_cat_id);
 
 		$data['token'] = $this->session->data['token'];
 		$data['ckeditor'] = $this->config->get('config_editor_default');
@@ -455,7 +458,7 @@ class ControllerCatalogCategory extends Controller {
 
 		
 		if (isset($category_info)) {
-			unset($data['categories'][$category_info['category_id']]);
+			unset($data['categories'][$parent_cat_id]);
 		}
 
 		if (isset($this->request->post['parent_id'])) {
@@ -541,19 +544,37 @@ class ControllerCatalogCategory extends Controller {
 		$this->load->model('catalog/catfilters');
 		
 		$cat_filters=[];
-		$data_cat_filters = $this->model_catalog_catfilters->getCatFilters($category_info['category_id']);
 		
-		
-
-		foreach($data_cat_filters as $data_cat_filter){
+		if(isset($category_info['category_id'])){
+			$data_cat_filters = $this->model_catalog_catfilters->getCatFilters($category_info['category_id']);
 			
-			//$list_param_value=$this->model_catalog_product->getFilterParamValues($f_data["id"],0,$this->request->get['product_id']);
+			foreach($data_cat_filters as $data_cat_filter){
+				
+				//$list_param_value=$this->model_catalog_product->getFilterParamValues($f_data["id"],0,$this->request->get['product_id']);
 
-			$param_list=$this->model_catalog_catfilters->getCatFilterList($data_cat_filter["id"]);
-			
-			$list=[];
-			foreach($param_list as $list_item){
-				$linked_products_data=$this->model_catalog_catfilters->getLinkedProducts($list_item["param_id"],$list_item["id"]);
+				$param_list=$this->model_catalog_catfilters->getCatFilterList($data_cat_filter["id"]);
+				
+				$list=[];
+				foreach($param_list as $list_item){
+					$linked_products_data=$this->model_catalog_catfilters->getLinkedProducts($list_item["param_id"],$list_item["id"]);
+					$linked_products=[];
+					foreach($linked_products_data as $linked_product){
+						$linked_products[]=[
+							"product_id"=>$linked_product["product_id"],
+							"url"=>$this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $linked_product["product_id"] , true),
+							"name"=>$linked_product["name"],
+						];
+					}
+					$list[]=[
+						"id"=>$list_item["id"],
+						"param_id"=>$list_item["param_id"],
+						"param_value"=>$list_item["param_value"],
+						"products"=>$linked_products
+					];
+				}
+
+				//print_r($list);
+				$linked_products_data=$this->model_catalog_catfilters->getLinkedProductsParam($data_cat_filter["id"]);
 				$linked_products=[];
 				foreach($linked_products_data as $linked_product){
 					$linked_products[]=[
@@ -562,39 +583,21 @@ class ControllerCatalogCategory extends Controller {
 						"name"=>$linked_product["name"],
 					];
 				}
-				$list[]=[
-					"id"=>$list_item["id"],
-					"param_id"=>$list_item["param_id"],
-					"param_value"=>$list_item["param_value"],
-					"products"=>$linked_products
-				];
-			}
 
-			//print_r($list);
-			$linked_products_data=$this->model_catalog_catfilters->getLinkedProductsParam($data_cat_filter["id"]);
-			$linked_products=[];
-			foreach($linked_products_data as $linked_product){
-				$linked_products[]=[
-					"product_id"=>$linked_product["product_id"],
-					"url"=>$this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $linked_product["product_id"] , true),
-					"name"=>$linked_product["name"],
-				];
+				$cat_filters[]=Array(
+					"id"=>$data_cat_filter["id"],
+					"name"=>$data_cat_filter["name"],
+					"translit"=>$data_cat_filter["translit"],
+					"unit"=>$data_cat_filter["unit"],
+					"sort_order"=>$data_cat_filter["sort_order"],
+					"param_sort_type"=>$data_cat_filter["param_sort_type"],
+					"type_param"=>$data_cat_filter["type_param"],
+					"list"=>$list,
+					"products"=>$linked_products,
+					"step"=>$data_cat_filter["step"],
+				);
 			}
-
-			$cat_filters[]=Array(
-				"id"=>$data_cat_filter["id"],
-				"name"=>$data_cat_filter["name"],
-				"translit"=>$data_cat_filter["translit"],
-				"unit"=>$data_cat_filter["unit"],
-				"sort_order"=>$data_cat_filter["sort_order"],
-				"param_sort_type"=>$data_cat_filter["param_sort_type"],
-				"type_param"=>$data_cat_filter["type_param"],
-				"list"=>$list,
-				"products"=>$linked_products,
-				"step"=>$data_cat_filter["step"],
-			);
 		}
-		
 		/**/
 
 		$data["cat_filters"]=$cat_filters;

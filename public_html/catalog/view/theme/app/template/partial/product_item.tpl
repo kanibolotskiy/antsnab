@@ -24,16 +24,21 @@
                 </div>
             </div>
             <img class="wrp_fly_image" itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" title="<?= $p['name'] ?>" itemprop="image" />
+            <div class="wrp_favorite">
+                <div rel="<?= $p['product_id']?>" title="Добавить товар в избранное" class="favorite <?= $p['favorite'] ?>"></div>        
+                <div rel="<?= $p['product_id']?>" title="Добавить товар в сравнение" class="compare <?= $p['compare'] ?>"></div>
+            </div>
         </div>
-        <div class="wrp_favorite">
-            <div rel="<?= $p['product_id']?>" title="Добавить товар в избранное" class="favorite <?= $p['favorite'] ?>"></div>        
-            <div rel="<?= $p['product_id']?>" title="Добавить товар в сравнение" class="compare <?= $p['compare'] ?>"></div>
-        </div>
+        
         <div class="clr"></div>
 
         <div class="catalog-description">
             <div class="catalog-block_caption" itemprop="name"><?= $p['name'] ?></div>
-            <div class="description" itemprop="description"><p><?= $p['descriptionPreview'] ?></p></div>
+            <div class="catalog_lsi description" itemprop="description">
+                <div class="wrp_catalog_lsi">
+                    <?= $p['descriptionPreview'] ?>
+                </div>
+            </div>
             <div class="complement">
             
                 <?php foreach ($p['properties'] as $prop): ?>
@@ -86,6 +91,7 @@
                     </div>
                     
                     <div class="wrap_oneclick" title="Для быстрого заказа введите свой телефон">
+                        
                         <div class="oneclick_hover">
                             <div class="oneclick_hover_ok"></div>
                             <span>Купить в 1 клик
@@ -104,7 +110,6 @@
                             <!--<button title="Купить в 1 клик" type="submit" class="onclickButton">Купить<span> в 1 клик</span></button>-->
                         </form>
                     </div>
-
                 <?php else: ?>
                     <?php foreach($p['unit_errors'] as $e): ?>
                         <?=$e . "<br/>"?>

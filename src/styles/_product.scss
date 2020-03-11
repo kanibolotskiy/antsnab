@@ -364,7 +364,7 @@
         width: 100%;
         background-color: #fff;
         position: relative;
-        padding: 50px 30px 30px;
+        padding: 40px 30px 30px;
     }
     .modal_close{
         position: absolute;
@@ -482,7 +482,10 @@
         color: #666666;
         line-height: 14px;
         min-height: 20px;
-        background: url(../img/icon21.png) no-repeat 100% 50%;
+        /*background: url(../img/icon21.png) no-repeat 100% 50%;*/
+        background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/PjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTIuMDAxIDUxMi4wMDEiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMi4wMDEgNTEyLjAwMTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxnPjxnPjxwYXRoIGQ9Ik00ODAuNDY3LDUxLjI4NGMtMjAuMzM0LTIwLjMzNC00Ny4zNzEtMzEuNTM0LTc2LjEyOS0zMS41MzRjLTI4Ljc1OCwwLTU1Ljc5NSwxMS4xOTktNzYuMTMsMzEuNTM0bC0yMzMuMjIsMjMzLjIyYy0xNS4wNiwxNS4wNTktMjMuMzUzLDM1LjA4My0yMy4zNTMsNTYuMzhzOC4yOTMsNDEuMzIsMjMuMzUzLDU2LjM4YzMxLjA4OCwzMS4wODgsODEuNjczLDMxLjA4OCwxMTIuNzYsMGwyMDQuNDg1LTIwNC40ODRsLTIzLjYxNC0yMy42MTRMMTg0LjEzMywzNzMuNjUxYy0xOC4wNjcsMTguMDY3LTQ3LjQ2NSwxOC4wNjYtNjUuNTMzLDBjLTguNzUyLTguNzUyLTEzLjU3Mi0yMC4zODktMTMuNTcyLTMyLjc2NmMwLTEyLjM3OCw0LjgyLTI0LjAxNSwxMy41NzItMzIuNzY3TDM1MS44Miw3NC44OTljMTQuMDI4LTE0LjAyNywzMi42NzktMjEuNzUzLDUyLjUxNy0yMS43NTNzMzguNDg3LDcuNzI1LDUyLjUxNSwyMS43NTNjMTQuMDI4LDE0LjAyNywyMS43NTMsMzIuNjc3LDIxLjc1Myw1Mi41MTVzLTcuNzI0LDM4LjQ4Ny0yMS43NTMsNTIuNTE1TDIwNy43OTUsNDI4Ljk4NmMtMzkuODQ3LDM5Ljg0Ni0xMDQuNjg0LDM5Ljg0NS0xNDQuNTMsMGMtMTkuMzAzLTE5LjMwMy0yOS45MzMtNDQuOTY3LTI5LjkzMy03Mi4yNjRjMC0yNy4yOTksMTAuNjMxLTUyLjk2MywyOS45MzMtNzIuMjY2bDIyMC4zMi0yMjAuMzJsLTIzLjYxNC0yMy42MTRsLTIyMC4zMiwyMjAuMzJjLTUyLjg2OCw1Mi44NjctNTIuODY4LDEzOC44ODksMCwxOTEuNzU4YzI2LjQzNCwyNi40MzUsNjEuMTU3LDM5LjY1Miw5NS44NzksMzkuNjUyczY5LjQ0Ni0xMy4yMTcsOTUuODc5LTM5LjY1MmwyNDkuMDU3LTI0OS4wNThjMjAuMzM1LTIwLjMzNCwzMS41MzQtNDcuMzcxLDMxLjUzNC03Ni4xMjlTNTAwLjgwMiw3MS42MTgsNDgwLjQ2Nyw1MS4yODR6IiBmaWxsPSIjZDNhMDZkIi8+PC9nPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48L3N2Zz4=);
+        background-position:right center;
+        background-repeat:no-repeat;
         width: 180px;
         cursor: pointer;
         

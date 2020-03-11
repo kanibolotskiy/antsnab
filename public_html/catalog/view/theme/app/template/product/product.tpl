@@ -317,7 +317,8 @@
                                             <div class="state_stock_cap">Наличие на складе:</div>
                                             <div class="state_stock_val">
                                             <?php if($quantity_stock>0){?>
-                                                <span class="stock1 with_goal" goal="in-stock">Алтуфьево</span>
+                                                <!--<span class="stock1 with_goal" goal="in-stock">Алтуфьево</span>-->
+                                                <span class="js_modal with_goal" goal="in-stock" data-modal="modal_map">Алтуфьево</span>
                                             <?php }else{ ?>
                                                 <span class="notinstock js_modal with_goal" goal="pre-order" data-modal="modal_delivery">Под заказ</span>
                                             <?php }?>
@@ -386,155 +387,6 @@
                 </div>
             </div>
             
-            <?php if(isset($locations[0])):?>
-                <?php $l = $locations[0]?>
-                <div class="popup2">
-                    <div class="close3"></div>
-                    <div class="popup-block2">
-                        <div class="popup-content2">
-                            <div class="close4"></div>
-                            <span><?=$l['name']?></span>
-                            <p><?=$l['address']?></p>
-                            <p><?=$l['open']?></p>
-                            <p><?=$l['comment']?></p>
-                            <p>Для вашего удобства можете <a target="_blank" href="<?php echo $l['files'][0]['file_link'];?>">скачать подробную схему проезда</a></p>
-                            <div class="map">
-                                <?=$l['map']?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php endif;?>
-
-            <div class="modal modal_delivery">
-                <div class="modal-block">
-                    <div class="modal_overlay"></div>
-                    <div class="modal-content">
-                        <div class="modal_close"></div>
-                        <div class="modal_caption"><?=$nostock_caption?></div>
-                        <div class="modal_text content-text">
-                            <?=$nostock_text?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <?php if($discount_form){?>
-            <div class="modal modal_discount">
-                <div class="modal-block">
-                    <div class="modal_overlay"></div>
-                    <div class="modal-content">
-                        <div class="modal_close"></div>
-                        <div class="wrp_modal_body">
-                            <div class="modal_caption"><?=$discount_caption?></div>
-                            <div class="modal_text content-text">
-                                <?=$discount_text?>
-                            </div>
-                            
-                            <div class="modal_form">
-                                <form id="discount_form" action="#" method="post" enctype="multipart/form-data">
-                                <input name="label" type="hidden" placeholder="" value="<?php echo $discount_label;?>"/>
-                                <input name="product" type="hidden" placeholder="" value="<?php echo $heading_title;?>"/>
-
-                                <div class="modal_form_group">
-                                    <div class="modal_form_row">
-                                        <i class="error">Необходимо заполнить</i>
-                                        <input class="inputModal required" name="name" type="text" placeholder="Ваше имя"/>
-                                    </div>
-
-                                    <div class="modal_form_row">
-                                        <i class="error">Необходимо заполнить</i>
-                                        <input class="inputModal required" name="company" type="text" placeholder="Название организации"/>
-                                    </div>
-                                </div>
-
-                                <div class="modal_form_group">
-                                    <div class="modal_form_row">
-                                        <i class="error">Необходимо заполнить</i>
-                                        <input class="inputModal required" name="phone" type="tel" placeholder="Телефон"/>
-                                    </div>
-                                    <div class="modal_form_row">
-                                        <i class="error">Некорректный Email</i>
-                                        <input class="inputModal required" name="email" type="text" placeholder="E-mail"/>
-                                    </div>
-                                </div>
-                                <div class="modal_form_group">
-                                    <div class="modal_form_row">
-                                        <input class="inputModal" name="site" type="text" placeholder="Сайт"/>
-                                    </div>
-                                </div>
-                                
-                                <div class="modal_form_row">
-                                    <i class="error">Необходимо заполнить</i>
-                                    <div class="file">
-                                        <div class="file-block">
-                                            <div id="filename">Прикрепить реквизиты</div>
-                                            <input id="file" type="file" value="" name="download">
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                                
-
-                                <input value="" name="workemail" type="text" placeholder="Рабочий email"/>
-                                <div class="modal_form_link">
-                                    <p>Нажимая на кнопку Отправить, я даю <a target="_blank" href="agreement/">согласие на обработку персональных данных</a></p>
-                                </div>
-
-                                <input
-                                    type ="submit"
-                                    class="g-recaptcha"
-                                    data-sitekey="<?= $captcha_key ?>"
-                                    data-callback="submitDiscountForm" value="Отправить"/>
-                                    
-                                
-
-                                </form>
-                            </div>
-                        </div>
-                        <div class="wrp_modal_thsnk">
-                            <div class="modal_caption">Благодарим вас за обращение!</div>
-                            <div class="content-text">
-                                <p style="text-align: center">Мы свяжемся с вами в ближайшее время!</p>
-                            </div>
-                        </div>
-                        <script type="text/javascript">
-                            function submitDiscountForm(){ 
-                                $('#discount_form').submit();
-                            }
-                        </script>
-                        
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            <?php }?>
-
-            <div class="modal modal_delivery_cost">
-                <div class="modal-block">
-                    <div class="modal_overlay"></div>
-                    <div class="modal-content">
-                        <div class="modal_close"></div>
-                        <div class="modal_caption" id="caption_delivery"></div>
-                        <div class="modal_text content-text" id="text_delivery"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal modal_delivery_pay">
-                
-                <div class="modal-block">
-                    
-                    <div class="modal_overlay"></div>
-                    <div class="modal-content">
-                        <div class="modal_close"></div>
-                        <div class="modal_caption"><?=$delivery_cost_caption?></div>
-                        <div class="modal_text content-text"><?=$delivery_cost_text?></div>
-                    </div>
-                
-                </div>
-            </div>
 
             <div id="demoTab">
                 <ul class="resp-tabs-list vert">
@@ -816,71 +668,151 @@
             </div>
 
 
-            <?php if(isset($locations[1])):?>
-                <?php $l = $locations[1]?>
-                <div class="popup3">
-                    <div class="close5"></div>
-                    <div class="popup-block3">
-                        <div class="popup-content3">
-                            <div class="close6"></div>
-                            <span><?=$l['name']?></span>
-                            <p><?=$l['address']?></p>
-                            <p><?=$l['open']?></p>
-                            <p><?=$l['comment']?></p>
-                            <p>Для вашего удобства можете <a href="">скачать подробную схему проезда</a></p>
-                            <div id="prodmap3" 
-                                class="map map-container prodmap"
-                                data-longitude="<?=$l['longitude']?>"
-                                data-latitude="<?=$l['latitude']?>"
-                                data-name="<?=$l['name']?>" >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php endif;?>
+            
 
             <div class="mentioned-products mentioned-products2">
                 <?php if( $products):?>
-                <div class="title">Аналоги и сопутствующие товары</div>
-                <ul>
-                
-                    <?php foreach( $products as $p):?>
-                    <li>
-                        <?php if($p["labels"]){  ?>
-                            <div class="item_labels">
-                                <?php foreach($p["labels"] as $key=>$label){ ?>
-                                    <div class="item_label <?php echo $key;?>" title="<?php echo $label['title'];?>"><?php echo $label['label'];?></div>
-                                <?php } ?>
-                            </div>
-                        <?php }?>
-                        <!--
-                        <?php if($p['discount']){?>
-                            <div class="label_discount _label"><?php echo $p['discount'];?>%</div>
-                        <?php }?>
-                        -->
-                        <div class="products-block">
-                            <?php if($p["rating"]){?>
-                                <div class="agg_rating"><?php echo $p["rating"];?></div>
-                            <?php }?>
-                            
-                            <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
 
-                            <a href="<?=$p['href']?>" class="img-production">
-                                <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
-                            </a>
-                            
-                            <strong><?=$p['price']?> <div class="rur">i</div></strong>
-                            <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
-                        </div>
-                    </li>
-                    <?php endforeach;?>
-                </ul>
+                <div class="mentioned_products_captions">
+                    <div class="wrp_mentioned_products_captions">
+                        <div id="mentioned_active_line" class="mentioned_active_line"></div>
+                        <?php if(count($products[0])){ ?>
+                            <div class="mentioned_products_caption active" rel="1">Аналоги</div>
+                        <?php }?>
+                        <?php if(count($products[1])){ ?>
+                            <div class="mentioned_products_caption" rel="2">Сопутствующие</div>
+                        <?php }?>
+                    </div>
+                </div>
+
+                <!--<div class="title">Аналоги и сопутствующие товары</div>-->
+
+                <div class="mentioned_sliders">
+                    <div class="wrapper_mentioned_sliders">
+                        <?php if(count($products[0])){ ?>
+                            <div class="mentioned_slider active" rel="1">
+                                <ul class="ment_slider">
+                                    <?php foreach( $products[0] as $p):?>
+                                    <li>
+                                        <?php if($p["labels"]){  ?>
+                                            <div class="item_labels">
+                                                <?php foreach($p["labels"] as $key=>$label){ ?>
+                                                    <div class="item_label <?php echo $key;?>" title="<?php echo $label['title'];?>"><?php echo $label['label'];?></div>
+                                                <?php } ?>
+                                            </div>
+                                        <?php }?>
+                                        <div class="products-block">
+                                            <?php if($p["rating"]){?>
+                                                <div class="agg_rating"><?php echo $p["rating"];?></div>
+                                            <?php }?>
+                                            
+                                            <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
+
+                                            <a href="<?=$p['href']?>" class="img-production">
+                                                <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+                                            </a>
+                                            
+                                            <strong><?=$p['price']?> <div class="rur">i</div></strong>
+                                            <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
+                                        </div>
+                                    </li>
+                                    <?php endforeach;?>
+                                    <?php foreach( $products[0] as $p):?>
+                                    <li>
+                                        <?php if($p["labels"]){  ?>
+                                            <div class="item_labels">
+                                                <?php foreach($p["labels"] as $key=>$label){ ?>
+                                                    <div class="item_label <?php echo $key;?>" title="<?php echo $label['title'];?>"><?php echo $label['label'];?></div>
+                                                <?php } ?>
+                                            </div>
+                                        <?php }?>
+                                        <div class="products-block">
+                                            <?php if($p["rating"]){?>
+                                                <div class="agg_rating"><?php echo $p["rating"];?></div>
+                                            <?php }?>
+                                            
+                                            <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
+
+                                            <a href="<?=$p['href']?>" class="img-production">
+                                                <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+                                            </a>
+                                            
+                                            <strong><?=$p['price']?> <div class="rur">i</div></strong>
+                                            <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
+                                        </div>
+                                    </li>
+                                    <?php endforeach;?>
+                                </ul>
+                            </div>
+                        <?php } ?>
+
+                        <?php if(count($products[1])){ ?>
+                            <div class="mentioned_slider second" rel="2">
+                                <ul class="ment_slider">
+                                    <?php foreach( $products[1] as $p):?>
+                                    <li>
+                                        <?php if($p["labels"]){  ?>
+                                            <div class="item_labels">
+                                                <?php foreach($p["labels"] as $key=>$label){ ?>
+                                                    <div class="item_label <?php echo $key;?>" title="<?php echo $label['title'];?>"><?php echo $label['label'];?></div>
+                                                <?php } ?>
+                                            </div>
+                                        <?php }?>
+                                        <div class="products-block">
+                                            <?php if($p["rating"]){?>
+                                                <div class="agg_rating"><?php echo $p["rating"];?></div>
+                                            <?php }?>
+                                            
+                                            <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
+
+                                            <a href="<?=$p['href']?>" class="img-production">
+                                                <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+                                            </a>
+                                            
+                                            <strong><?=$p['price']?> <div class="rur">i</div></strong>
+                                            <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
+                                        </div>
+                                    </li>
+                                    <?php endforeach;?>
+                                    <?php foreach( $products[1] as $p):?>
+                                    <li>
+                                        <?php if($p["labels"]){  ?>
+                                            <div class="item_labels">
+                                                <?php foreach($p["labels"] as $key=>$label){ ?>
+                                                    <div class="item_label <?php echo $key;?>" title="<?php echo $label['title'];?>"><?php echo $label['label'];?></div>
+                                                <?php } ?>
+                                            </div>
+                                        <?php }?>
+                                        <div class="products-block">
+                                            <?php if($p["rating"]){?>
+                                                <div class="agg_rating"><?php echo $p["rating"];?></div>
+                                            <?php }?>
+                                            
+                                            <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
+
+                                            <a href="<?=$p['href']?>" class="img-production">
+                                                <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+                                            </a>
+                                            
+                                            <strong><?=$p['price']?> <div class="rur">i</div></strong>
+                                            <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
+                                        </div>
+                                    </li>
+                                    <?php endforeach;?>
+                                </ul>
+                            </div>
+                        <?php } ?>
+                    </div>
+                </div>
+
+                
                 <?php endif;?>
             </div>
         </div>
         <?php echo $content_bottom; ?>
     </div>
 </div>
+<!--
 <div class="popup thank-you">
     <div class="close"></div>
     <div class="popup-block">
@@ -891,4 +823,194 @@
         </div>
     </div>
 </div>
+
+<div class="modal modal_thank-you">
+    <div class="modal-block">
+        <div class="modal_overlay"></div>
+        <div class="modal-content">
+            <div class="modal_close"></div>
+            <div class="modal_caption"><?=$text_thankyou_header?></div>
+            <div class="modal_text content-text">
+                <?=$text_thankyou?>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+<div class="modal modal_delivery_cost">
+    <div class="modal-block">
+        <div class="modal_overlay"></div>
+        <div class="modal-content">
+            <div class="modal_close"></div>
+            <div class="modal_caption" id="caption_delivery"></div>
+            <div class="modal_text content-text" id="text_delivery"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal_delivery_pay">
+    <div class="modal-block">
+        <div class="modal_overlay"></div>
+        <div class="modal-content">
+            <div class="modal_close"></div>
+            <div class="modal_caption"><?=$delivery_cost_caption?></div>
+            <div class="modal_text content-text"><?=$delivery_cost_text?></div>
+        </div>
+    
+    </div>
+</div>
+<?php if(isset($locations[0])):?>
+    <?php $l = $locations[0]?>
+    <!--<div class="popup2">
+        <div class="close3"></div>
+        <div class="popup-block2">
+        -->
+    <div class="modal modal_map">
+        <div class="modal-block">
+            <div class="modal_overlay"></div>
+            <div class="modal-content">
+                <div class="modal_close"></div>
+                <!--<span><?=$l['name']?></span>-->
+                <div class="modal_caption"><?=$l['name']?></div>
+                <div class="modal_text_map">
+                    <p><?=$l['address']?></p>
+                    <p><?=$l['open']?></p>
+                    <p><?=$l['comment']?></p>
+                    <p>Для вашего удобства можете <a target="_blank" href="<?php echo $l['files'][0]['file_link'];?>">скачать подробную схему проезда</a></p>
+                </div>
+                <div class="map">
+                    <?=$l['map']?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif;?>
+
+<div class="modal modal_delivery">
+    <div class="modal-block">
+        <div class="modal_overlay"></div>
+        <div class="modal-content">
+            <div class="modal_close"></div>
+            <div class="modal_caption"><?=$nostock_caption?></div>
+            <div class="modal_text content-text">
+                <?=$nostock_text?>
+            </div>
+        </div>
+    </div>
+</div>
+<?php if($discount_form){?>
+    <div class="modal modal_discount">
+        <div class="modal-block">
+            <div class="modal_overlay"></div>
+            <div class="modal-content">
+                <div class="modal_close"></div>
+                <div class="wrp_modal_body">
+                    <div class="modal_caption"><?=$discount_caption?></div>
+                    <div class="modal_text content-text">
+                        <?=$discount_text?>
+                    </div>
+                    
+                    <div class="modal_form">
+                        <form id="discount_form" action="#" method="post" enctype="multipart/form-data">
+                        <input name="label" type="hidden" placeholder="" value="<?php echo $discount_label;?>"/>
+                        <input name="product" type="hidden" placeholder="" value="<?php echo $heading_title;?>"/>
+
+                        <div class="modal_form_group">
+                            <div class="modal_form_row">
+                                <i class="error">Необходимо заполнить</i>
+                                <input class="inputModal required" name="name" type="text" placeholder="Ваше имя"/>
+                            </div>
+
+                            <div class="modal_form_row">
+                                <i class="error">Необходимо заполнить</i>
+                                <input class="inputModal required" name="company" type="text" placeholder="Название организации"/>
+                            </div>
+                        </div>
+
+                        <div class="modal_form_group">
+                            <div class="modal_form_row">
+                                <i class="error">Необходимо заполнить</i>
+                                <input class="inputModal required" name="phone" type="tel" placeholder="Телефон"/>
+                            </div>
+                            <div class="modal_form_row">
+                                <i class="error">Некорректный Email</i>
+                                <input class="inputModal required" name="email" type="text" placeholder="E-mail"/>
+                            </div>
+                        </div>
+                        <div class="modal_form_group">
+                            <div class="modal_form_row">
+                                <input class="inputModal" name="site" type="text" placeholder="Сайт"/>
+                            </div>
+                        </div>
+                        
+                        <div class="modal_form_row">
+                            <i class="error">Необходимо заполнить</i>
+                            <div class="file">
+                                <div class="file-block">
+                                    <div id="filename">Прикрепить реквизиты</div>
+                                    <input id="file" type="file" value="" name="download">
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+
+                        <input value="" name="workemail" type="text" placeholder="Рабочий email"/>
+                        <div class="modal_form_link">
+                            <p>Нажимая на кнопку Отправить, я даю <a target="_blank" href="agreement/">согласие на обработку персональных данных</a></p>
+                        </div>
+
+                        <input
+                            type ="submit"
+                            class="g-recaptcha"
+                            data-sitekey="<?= $captcha_key ?>"
+                            data-callback="submitDiscountForm" value="Отправить"/>
+                            
+                        
+
+                        </form>
+                    </div>
+                </div>
+                <div class="wrp_modal_thsnk">
+                    <div class="modal_caption">Благодарим вас за обращение!</div>
+                    <div class="content-text">
+                        <p style="text-align: center">Мы свяжемся с вами в ближайшее время!</p>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    function submitDiscountForm(){ 
+                        $('#discount_form').submit();
+                    }
+                </script>
+                
+                </div>
+                
+            </div>
+        </div>
+    </div>
+<?php }?>
+<!--
+<?php if(isset($locations[1])):?>
+    <?php $l = $locations[1]?>
+    <div class="popup3">
+        <div class="close5"></div>
+        <div class="popup-block3">
+            <div class="popup-content3">
+                <div class="close6"></div>
+                <span><?=$l['name']?></span>
+                <p><?=$l['address']?></p>
+                <p><?=$l['open']?></p>
+                <p><?=$l['comment']?></p>
+                <p>Для вашего удобства можете <a href="">скачать подробную схему проезда</a></p>
+                <div id="prodmap3" 
+                    class="map map-container prodmap"
+                    data-longitude="<?=$l['longitude']?>"
+                    data-latitude="<?=$l['latitude']?>"
+                    data-name="<?=$l['name']?>" >
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif;?>
+-->
 <?= $footer ?>

@@ -263,7 +263,7 @@ class Cart {
                     'wholesale_threshold' => $product_query->row['wholesale_threshold'],
 					'total'           => ($price + $option_price) * $cart['quantity'],
 					'total_wholesale'           => ($price_wholesale + $option_price) * $cart['quantity'],
-					'location' => $product_query->row['location'], //превью назначение (для категорий используется и в корзине)
+					'description_mini' => $product_query->row['description_mini'], //превью назначение (для категорий используется и в корзине)
 
 					'reward'          => $reward * $cart['quantity'],
 					'points'          => ($product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $cart['quantity'] : 0),

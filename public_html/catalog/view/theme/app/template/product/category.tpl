@@ -1,6 +1,15 @@
 <?= $header ?>
 <div class="container main withparams">
     <div class="wrapper_content">
+        <div class="filter_reset <?php echo ($show_filter?'active':'');  ?>" >
+            <div class="wrp_filter_reset">
+                <span id="apply_filter">Применить</span>
+                <div class="wrp_buttons_reset_filter">
+                    <div id="hide_filter" class="button_reset_filter_slide">Свернуть</div>
+                    <div id="reset_filter" class="button_reset_filter_reset <?php echo ($show_filter?'active':'');?>"><span>Очистить</span></div>
+                </div>
+            </div>
+        </div>
         <div class="content">
             <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
             <?php echo $content_top; ?>
@@ -163,7 +172,6 @@
                                     <?php }?>
                                 </form>
                             </div>
-                            <div class="filter_reset <?php echo ($show_filter?'active':'');  ?>" ><span>Очистить фильтр</span></div>
                         </div>
                     </div>
                 </div>

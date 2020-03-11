@@ -10,6 +10,9 @@ $.fn.scrollToTop = function () {
 
     $scrolldiv.hide().removeAttr("href");
     $scrolldiv.click(function () {
+        if (typeof ym != 'undefined') {
+            ym(14496178, 'reachGoal', 'up-arrow');
+        }
         $("html, body").animate({scrollTop: 0}, "slow");
     });
 

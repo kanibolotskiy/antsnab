@@ -402,8 +402,8 @@
                           <td class="text-left">
                             <div class="param_block1">
                               <select class="form-control change_form_param" name="cat_filter[<?php echo $cat_filters[$i]["id"];?>][param_sort_type]" value="<?php $cat_filters[$i]['param_sort_type'];?>">
-                                <option class="param_block1" <?php echo ($cat_filters[$i]['type_param']==1?"style='display:none;'":""); ?> value="0" <?php echo (($cat_filters[$i]['param_sort_type']==0 and $cat_filters[$i]['type_param']==1)?"selected":"");?> >По релевантности</option>
-                                <option class="param_block1" <?php echo ($cat_filters[$i]['type_param']==1?"style='display:none;'":""); ?> value="1" <?php echo (($cat_filters[$i]['param_sort_type']==1 and $cat_filters[$i]['type_param']==0)?"selected":"");?> >По алфавиту</option>
+                                <option class="param_block1" <?php echo ($cat_filters[$i]['type_param']==1?"style='display:none;'":""); ?> value="0" <?php echo (($cat_filters[$i]['param_sort_type']==0 and $cat_filters[$i]['type_param']!=1)?"selected":"");?> >По релевантности</option>
+                                <option class="param_block1" <?php echo ($cat_filters[$i]['type_param']==1?"style='display:none;'":""); ?> value="1" <?php echo (($cat_filters[$i]['param_sort_type']==1 and $cat_filters[$i]['type_param']!=1)?"selected":"");?> >По алфавиту</option>
                                 <option class="param_block2" <?php echo ($cat_filters[$i]['type_param']==1?"":"style='display:none;'"); ?> value="0" <?php echo (($cat_filters[$i]['param_sort_type']==0 and $cat_filters[$i]['type_param']==1)?"selected":"");?> >Диапазон(темп)</option>
                                 <option class="param_block2" <?php echo ($cat_filters[$i]['type_param']==1?"":"style='display:none;'"); ?> value="1" <?php echo (($cat_filters[$i]['param_sort_type']==1 and $cat_filters[$i]['type_param']==1)?"selected":"");?> >Диапазон</option>
                               </select>

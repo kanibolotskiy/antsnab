@@ -6,7 +6,7 @@
         </div>
     <?php }?>
     <ul>
-        <li>
+        <li class="basket_image">
             <?php if ($product['thumb']) { ?>
                 <a target="_blank" href="<?php echo $product['href']; ?>">
                     <img src="<?php echo $product['thumb']; ?>" 

@@ -128,6 +128,9 @@ class ModelCatalogCategory extends Model
         if(!isset($data['notshowisseo'])){
             $data['notshowisseo']=0;
         }
+        if(!isset($data['bottom_text'])){
+            $data['bottom_text']='';
+        }
 
         $this->db->query("INSERT INTO " . DB_PREFIX . "category SET parent_id = '" . (int) $data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int) $data['top'] : 0) . "', `column` = '" . (int) $data['column'] . "', sort_order = '" . (int) $data['sort_order'] . "', status = '" . (int) $data['status'] . "', isseo = '" . (int) $data['isseo'] . "',isbrand = '" . (int) $data['isbrand'] . "', discount = '" . (int) $data['discount'] . "', notshowisseo = '" . (int) $data['notshowisseo'] . "', calc = '" . (int) $data['calc'] . "', date_modified = NOW(), date_added = NOW()");
 
@@ -138,7 +141,7 @@ class ModelCatalogCategory extends Model
         }
         
         foreach ($data['category_description'] as $language_id => $value) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "category_description SET category_id = '" . (int) $category_id . "', language_id = '" . (int) $language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
+            $this->db->query("INSERT INTO " . DB_PREFIX . "category_description SET category_id = '" . (int) $category_id . "', language_id = '" . (int) $language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', bottom_text = '" . $this->db->escape($value['bottom_text']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
         }
 
         // MySQL Hierarchical Data Closure Table Pattern
@@ -315,6 +318,7 @@ class ModelCatalogCategory extends Model
 
     public function deleteCategory($category_id)
     {
+        
         $this->db->query("DELETE FROM " . DB_PREFIX . "category_path WHERE category_id = '" . (int) $category_id . "'");
 
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category_path WHERE path_id = '" . (int) $category_id . "'");
@@ -333,6 +337,7 @@ class ModelCatalogCategory extends Model
         $this->db->query("DELETE FROM " . DB_PREFIX . "coupon_category WHERE category_id = '" . (int) $category_id . "'");
 
         $this->cache->delete('category');
+       
     }
 
     public function repairCategories($parent_id = 0)
@@ -393,8 +398,8 @@ class ModelCatalogCategory extends Model
 
     public function getCategoriesByParentId($parent_id = 0)
     {
-        $query = $this->db->query("SELECT *, (SELECT COUNT(parent_id) FROM " . DB_PREFIX . "category WHERE parent_id = c.category_id) AS children FROM " . DB_PREFIX . "category c LEFT JOIN " . DB_PREFIX . "category_description cd ON (c.category_id = cd.category_id) WHERE c.parent_id = '" . (int) $parent_id . "' AND cd.language_id = '" . (int) $this->config->get('config_language_id') . "' ORDER BY c.sort_order, cd.name");
 
+        $query = $this->db->query("SELECT *, (SELECT COUNT(parent_id) FROM " . DB_PREFIX . "category WHERE parent_id = c.category_id) AS children FROM " . DB_PREFIX . "category c LEFT JOIN " . DB_PREFIX . "category_description cd ON (c.category_id = cd.category_id) WHERE c.parent_id = '" . (int) $parent_id . "' AND cd.language_id = '" . (int) $this->config->get('config_language_id') . "' ORDER BY c.sort_order, cd.name");
         return $query->rows;
     }
 

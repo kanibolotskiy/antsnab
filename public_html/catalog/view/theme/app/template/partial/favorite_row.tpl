@@ -6,7 +6,7 @@
                     <img src="<?php echo $product['thumb']; ?>" 
                             alt="<?php echo $product['name']; ?>" 
                             title="<?php echo $product['name']; ?>" 
-                            class="img-thumbnail" />
+                            class="img-thumbnail fav_img_thumb" />
                 </a>
             <?php } ?>
         </li>

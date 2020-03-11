@@ -18,7 +18,7 @@
                     <?php endif; ?>
                 </div>
             <?php } ?>
-            <div class="article-content content-text content-text">
+            <div class="article-content content-text">
                 <?php echo $description; ?>
             </div>
             

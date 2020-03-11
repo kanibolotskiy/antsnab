@@ -3,7 +3,7 @@
 <!--[if (gte IE 9) | !(IE)]><!--><html lang="en" class="no-js"><!--<![endif]-->
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title><?php echo $title; ?></title>
         <base href="<?php echo $base; ?>" />
@@ -17,7 +17,7 @@
 
     
 
-        <link href="/catalog/view/theme/app/bundle/app2.css?v2.05" rel="stylesheet">
+        <link href="/catalog/view/theme/app/bundle/app2.css?v2.12" rel="stylesheet">
         <?php if ($description) { ?>
             <meta name="description" content="<?php echo $description; ?>" />
         <?php } ?>

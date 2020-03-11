@@ -90,7 +90,16 @@ $(document).ready(function(){
         $(".wrp_header").css({"padding-right":0});
     });
 
-
+/*   
+    $(document).on("keypress",function(e){
+        console.log("ok")
+        if(e.which == 27){
+            $(".modal").fadeOut(200);
+            $("html").css({"overflow":"inherit","margin-right":"0"});
+            $(".wrp_header").css({"padding-right":0});
+        }
+    });
+*/
     $(".bene_item").click(function(){
         var bene_cap=$(this).find(".bene_item_val").html();
         var bene_text=$(this).find(".bene_item_desc").html();

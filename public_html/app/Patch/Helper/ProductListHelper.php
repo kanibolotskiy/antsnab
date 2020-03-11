@@ -58,9 +58,9 @@ class ProductListHelper extends \Model
 
             if ($result['image']) {
                 //$image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_category_width'), $this->config->get($this->config->get('config_theme') . '_image_category_height'));
-                $image = $this->model_tool_image->myResize($result['image'], 200, 200,2);
+                $image = $this->model_tool_image->myResize($result['image'], 400, 400,2);
             } else {
-                $image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_category_width'), $this->config->get($this->config->get('config_theme') . '_image_category_height'));
+                $image = $this->model_tool_image->resize('placeholder.png', 400, 400);
             }
 
 
@@ -247,7 +247,8 @@ class ProductListHelper extends \Model
                 //'name' => $result['meta_h1'],
                 'name' => $result['name'],
                 'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
-                'descriptionPreview' => utf8_substr(strip_tags(html_entity_decode($result['location'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '...',
+                //'descriptionPreview' => utf8_substr(strip_tags(html_entity_decode($result['location'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '...',
+                'descriptionPreview' => html_entity_decode($result['description_mini']),
                 'price_val'=>$price_val,
                 'price' => $price??0,
                 'priceold' => $priceold,
