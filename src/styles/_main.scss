@@ -2334,24 +2334,41 @@ button.show-more{
         }
     }
 }
-.mentioned-products{
+.wrp_mentioned_slider{
     margin-left:-25px;
     margin-top:25px;
+    margin-right: -7px!important;
+    ul{
+        /*margin-left:-25px;
+        margin-top:25px;
+        */
+        li{
+            padding: 0 5px 0 15px;
+        }
+    }
+}
+/*padding: 0 10px;*/
+
+.mentioned-products{
     clear: both;
+    margin-right: -10px;
     .title{
         margin-bottom: 20px;
     }
     ul {
-        /*
+        
         display: flex;
         flex-wrap: wrap;
-        margin: 0 -10px;
+        /*margin: 0 -10px;*/
+        /*margin-left:-25px;
+        margin-top:25px;
         */
+
         li {
             position:relative;
             width: 25%;
-            /*padding: 0 10px;*/
-            padding: 0 5px 0 15px;
+            padding: 0 10px;
+            
             margin-bottom: 20px;
             .products-block {
                 border: 2px solid #EFEEEC;
@@ -8543,7 +8560,7 @@ opacity:0.4;transition:0.2s;-webkit-transition:0.2s;-moz-transition:0.2s;-ms-tra
     left:-1px;
 }
 .mentioned_slider .slick-arrow.slick-next{
-    right:-10px;
+    right:-2px;
     transform:rotate(180deg);
 }
 //.mentioned_slider.active{display:block;}

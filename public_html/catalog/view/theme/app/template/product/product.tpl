@@ -660,7 +660,7 @@
 
             
 
-            <div class="mentioned-products mentioned-products2">
+            <div class="mentioned-products mentioned-products2 wrp_mentioned_slider">
                 <?php if( $products):?>
 
                 <div class="mentioned_products_captions">
