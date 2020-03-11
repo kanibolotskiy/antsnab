@@ -23336,6 +23336,10 @@ $(document).ready(function(){
     });
 */
     $(".bene_item").click(function(){
+        var sw=scrollbarWidth();
+        $("html").css("overflow", "hidden");
+        $("html").css("margin-right", sw+"px");
+
         var bene_cap=$(this).find(".bene_item_val").html();
         var bene_text=$(this).find(".bene_item_desc").html();
         $("#caption_benefit").html(bene_cap);

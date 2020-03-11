@@ -371,16 +371,6 @@
                             </div>
                         <?php }?>
                     </div>
-                    <div class="modal modal_benefits">
-                        <div class="modal-block">
-                            <div class="modal_overlay"></div>
-                            <div class="modal-content">
-                                <div class="modal_close"></div>
-                                <div class="modal_caption" id="caption_benefit"></div>
-                                <div class="modal_text content-text" id="text_benefit"></div>
-                            </div>
-                        </div>
-                    </div>
                 <?php }?>
                 <div class="info-block info-block2" itemprop="description">
                     <?=$description?>
@@ -898,6 +888,18 @@
         </div>
     </div>
 </div>
+<?php if($benefits) {?>
+    <div class="modal modal_benefits">
+        <div class="modal-block">
+            <div class="modal_overlay"></div>
+            <div class="modal-content">
+                <div class="modal_close"></div>
+                <div class="modal_caption" id="caption_benefit"></div>
+                <div class="modal_text content-text" id="text_benefit"></div>
+            </div>
+        </div>
+    </div>
+<?php }?>
 <?php if($discount_form){?>
     <div class="modal modal_discount">
         <div class="modal-block">
@@ -989,28 +991,4 @@
         </div>
     </div>
 <?php }?>
-<!--
-<?php if(isset($locations[1])):?>
-    <?php $l = $locations[1]?>
-    <div class="popup3">
-        <div class="close5"></div>
-        <div class="popup-block3">
-            <div class="popup-content3">
-                <div class="close6"></div>
-                <span><?=$l['name']?></span>
-                <p><?=$l['address']?></p>
-                <p><?=$l['open']?></p>
-                <p><?=$l['comment']?></p>
-                <p>Для вашего удобства можете <a href="">скачать подробную схему проезда</a></p>
-                <div id="prodmap3" 
-                    class="map map-container prodmap"
-                    data-longitude="<?=$l['longitude']?>"
-                    data-latitude="<?=$l['latitude']?>"
-                    data-name="<?=$l['name']?>" >
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif;?>
--->
 <?= $footer ?>
