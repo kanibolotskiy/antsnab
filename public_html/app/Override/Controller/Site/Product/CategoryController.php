@@ -869,6 +869,8 @@ class CategoryController extends \Controller
                 );
             }
         }
+        $this->data['categories_isseo_hidden']=[];
+        
         foreach($categories_seo as $category){
             if($current_id!=$category["category_id"]){
                 if(!$category['notshowisseo']){
