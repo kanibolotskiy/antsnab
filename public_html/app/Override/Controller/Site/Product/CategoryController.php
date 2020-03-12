@@ -861,14 +861,34 @@ class CategoryController extends \Controller
     private function setFilterCategories($categories_seo, $current_id){
         $url="";
         foreach($categories_seo as $category){
-            if((!$category['notshowisseo']) or ($current_id==$category["category_id"])){
+            if($current_id==$category["category_id"]){
                 $this->data['categories_isseo'][] = array(
                     'category_id'   => $category['category_id'],
                     'name' => $category['name'],
-                    'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $category['category_id'] . $url)
+                    'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $category['category_id'] . $url),
                 );
             }
         }
+        foreach($categories_seo as $category){
+            if($current_id!=$category["category_id"]){
+                if(!$category['notshowisseo']){
+                    $this->data['categories_isseo'][] = array(
+                        'category_id'   => $category['category_id'],
+                        'name' => $category['name'],
+                        'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $category['category_id'] . $url),
+                    );
+                }else{
+                    $this->data['categories_isseo_hidden'][] = array(
+                        'category_id'   => $category['category_id'],
+                        'name' => $category['name'],
+                        'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $category['category_id'] . $url),
+                    );
+                }
+            }
+            
+        }
+        
+
     }
 
     private function showCategories($category_id)

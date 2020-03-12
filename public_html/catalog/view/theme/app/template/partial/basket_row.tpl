@@ -57,7 +57,7 @@
                 data-wholesale_threshold="<?=$product['wholesale_threshold']?>"
                 data-price_quantity="<?php echo $product['quantity']; ?>">
             </div>
-            <div class="min_count_hint" <?php if(($product['quantity']>1) and ($product['mincount']>1)){echo "style='display:block;'";}?>><span>минимально для заказа</span></div>
+            <div class="min_count_hint" <?php if(($product['quantity']>1) and ($product['mincount']>1) and ($product['mincount']==$product['quantity'])){echo "style='display:block;'";}?>><span>минимально для заказа</span></div>
             <div class="opt_limit_notification">добавьте еще <span class="opt_limit_notification_value"></span>, цена снизится</div>
         </li>
         <li>

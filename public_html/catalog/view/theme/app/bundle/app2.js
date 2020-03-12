@@ -20550,6 +20550,18 @@ function change_favorite_sum(){
     });
 }
 $(document).ready(function(){
+    $("#showmore_isseo").click(function(){
+        if($(this).hasClass("active")){
+            $(this).html("показать еще");            
+            $(this).removeClass("active");
+            $(".pick-up ul li._hidden").fadeOut(200);
+        }else{
+            $(this).html("скрыть");
+            $(this).addClass("active");
+            $(".pick-up ul li._hidden").fadeIn(200);
+        }
+        
+    });
     if($(".filter_reset.active").length){
         $(".up").addClass("_filter");
     }

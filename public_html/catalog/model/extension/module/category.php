@@ -128,75 +128,77 @@
                 $cat_list=implode(",",$categories);
                 $used_products=$this->getAvailProductsByCategory($cat_list);
 
-                //Цена
-                $out[]=[
-                    "id"=>"price_id",
-                    "name"=>"Цена",
-                    "translit"=>"price",
-                    "unit"=>html_entity_decode('<div class="rur">i</div>'),
-                    "type_param"=>1,
-                    "param_sort_type"=>0,
-                    "avail_params"=>$this->getParamsValues($used_products,null,3),
-                    "step"=>1
-                ];
-                
-                $avail_avail=$this->getParamsValues($used_products,null,4);
-                
-                //Наличие
-                if($avail_avail["count"]>0){
+                if(count($used_products)){
+                    //Цена
                     $out[]=[
-                        "id"=>"availible_id",
-                        "name"=>"Наличие",
-                        "translit"=>"availible",
-                        "unit"=>"",
-                        "type_param"=>4,
+                        "id"=>"price_id",
+                        "name"=>"Цена",
+                        "translit"=>"price",
+                        "unit"=>html_entity_decode('<div class="rur">i</div>'),
+                        "type_param"=>1,
                         "param_sort_type"=>0,
-                        "avail_params"=>[1=>"только в наличии"]
+                        "avail_params"=>$this->getParamsValues($used_products,null,3),
+                        "step"=>1
                     ];
-                }
-                //print_r($avail_avail);
-                $avail_sale=$this->getParamsValues($used_products,null,5);
-                if($avail_sale["count"]>0){
-                    $out[]=[
-                        "id"=>"sale_id",
-                        "name"=>"Скидки",
-                        "translit"=>"sale",
-                        "unit"=>"",
-                        "type_param"=>5,
-                        "param_sort_type"=>0,
-                        "avail_params"=>[1=>"скидки и акции"]
-                    ];
-                }
-
-                //Доступные параметры по категории
-                $sql="SELECT cp.* from oc_product_to_category oc 
-                INNER JOIN product_param_values pv ON oc.product_id=pv.product_id 
-                INNER JOIN category_params cp ON pv.param_id=cp.id 
-                where oc.category_id in (".$cat_list.") group by cp.id ORDER BY cp.sort_order";
-                $query = $this->db->query($sql);
-                foreach ($query->rows as $result) {
-                    //echo $result[""]."<br/>";
-                    $avail_params=[];
                     
-                    //echo $result["id"]."|".$result["type_param"]."|<br/>";
-
-                    if($result["type_param"]==1){  //Дипазон
-                        $avail_params=$this->getParamsValues($used_products,$result["id"],2);
-                    }else{                      //Список
-                        //echo $result["id"]."|".$result["param_sort_type"]."<br/>";
-                        $avail_params=$this->getParamsValues($used_products,$result["id"],$result["param_sort_type"]);
+                    $avail_avail=$this->getParamsValues($used_products,null,4);
+                    
+                    //Наличие
+                    if($avail_avail["count"]>0){
+                        $out[]=[
+                            "id"=>"availible_id",
+                            "name"=>"Наличие",
+                            "translit"=>"availible",
+                            "unit"=>"",
+                            "type_param"=>4,
+                            "param_sort_type"=>0,
+                            "avail_params"=>[1=>"только в наличии"]
+                        ];
+                    }
+                    //print_r($avail_avail);
+                    $avail_sale=$this->getParamsValues($used_products,null,5);
+                    if($avail_sale["count"]>0){
+                        $out[]=[
+                            "id"=>"sale_id",
+                            "name"=>"Скидки",
+                            "translit"=>"sale",
+                            "unit"=>"",
+                            "type_param"=>5,
+                            "param_sort_type"=>0,
+                            "avail_params"=>[1=>"скидки и акции"]
+                        ];
                     }
 
-                    $out[]=[
-                        "id"=>$result["id"],
-                        "name"=>html_entity_decode($result["name"]),
-                        "translit"=>$result["translit"],
-                        "unit"=>html_entity_decode($result["unit"]),
-                        "type_param"=>$result["type_param"],
-                        "param_sort_type"=>$result["param_sort_type"],
-                        "avail_params"=>$avail_params,
-                        "step"=>$result["step"]*1,
-                    ];
+                    //Доступные параметры по категории
+                    $sql="SELECT cp.* from oc_product_to_category oc 
+                    INNER JOIN product_param_values pv ON oc.product_id=pv.product_id 
+                    INNER JOIN category_params cp ON pv.param_id=cp.id 
+                    where oc.category_id in (".$cat_list.") group by cp.id ORDER BY cp.sort_order";
+                    $query = $this->db->query($sql);
+                    foreach ($query->rows as $result) {
+                        //echo $result[""]."<br/>";
+                        $avail_params=[];
+                        
+                        //echo $result["id"]."|".$result["type_param"]."|<br/>";
+
+                        if($result["type_param"]==1){  //Дипазон
+                            $avail_params=$this->getParamsValues($used_products,$result["id"],2);
+                        }else{                      //Список
+                            //echo $result["id"]."|".$result["param_sort_type"]."<br/>";
+                            $avail_params=$this->getParamsValues($used_products,$result["id"],$result["param_sort_type"]);
+                        }
+
+                        $out[]=[
+                            "id"=>$result["id"],
+                            "name"=>html_entity_decode($result["name"]),
+                            "translit"=>$result["translit"],
+                            "unit"=>html_entity_decode($result["unit"]),
+                            "type_param"=>$result["type_param"],
+                            "param_sort_type"=>$result["param_sort_type"],
+                            "avail_params"=>$avail_params,
+                            "step"=>$result["step"]*1,
+                        ];
+                    }
                 }
                 
             }

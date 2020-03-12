@@ -8634,3 +8634,16 @@ opacity:0.4;transition:0.2s;-webkit-transition:0.2s;-moz-transition:0.2s;-ms-tra
     &:after {display:none;}
 }
 .reviews .slick-list{overflow:visible;}
+
+.pick-up ul li._hidden{display:none;}
+.showmore__isseo{    
+    width: 100%;
+    line-height: 20px;
+    color: #41737E;   
+}
+#showmore_isseo{cursor: pointer;display: inline-block;text-decoration: underline;
+    transition:0.2s;-webkit-transition:0.2s;-moz-transition:0.2s;-ms-transition:0.2s;-o-transition:0.2s;
+}
+#showmore_isseo:hover{
+    text-decoration:none;
+}

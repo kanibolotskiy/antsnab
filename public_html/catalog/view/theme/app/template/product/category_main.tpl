@@ -19,6 +19,14 @@
                                 <?php foreach($categories_isseo as $item) {?>
                                     <li><a href="<?php echo $item['href'];?>"><?php echo $item['name']?></a></li>
                                 <?php }?>
+                                <?php if(count($categories_isseo_hidden)){?>
+                                    <?php foreach($categories_isseo_hidden as $item) {?>
+                                        <li class="_hidden"><a href="<?php echo $item['href'];?>"><?php echo $item['name']?></a></li>
+                                    <?php }?>
+                                    <li class="showmore__isseo">
+                                        <div id="showmore_isseo">показать еще</div>
+                                    </li>
+                                <?php }?>
                             </ul>
                         </div>
                     <?php }?>

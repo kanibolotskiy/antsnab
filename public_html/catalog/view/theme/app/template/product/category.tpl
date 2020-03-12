@@ -13,7 +13,7 @@
         <div class="content">
             <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
             <?php echo $content_top; ?>
-
+            
             <?php if (!empty($categories)): ?>
                 <div class="catalog-info">
                     <h1 class="title"><?= $heading_title ?></h1>
@@ -26,6 +26,14 @@
                                 <li><span>Подборки:</span></li>
                                 <?php foreach($categories_isseo as $item) {?>
                                     <li><a href="<?php echo $item['href'];?>"><?php echo $item['name']?></a></li>
+                                <?php }?>
+                                <?php if(count($categories_isseo_hidden)){?>
+                                    <?php foreach($categories_isseo_hidden as $item) {?>
+                                        <li class="_hidden"><a href="<?php echo $item['href'];?>"><?php echo $item['name']?></a></li>
+                                    <?php }?>
+                                    <li class="showmore__isseo">
+                                        <div id="showmore_isseo">показать еще</div>
+                                    </li>
                                 <?php }?>
                             </ul>
                         </div>
