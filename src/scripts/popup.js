@@ -1,9 +1,3 @@
-function scrollbarWidth() {
-    var documentWidth = parseInt(document.documentElement.clientWidth);
-    var windowsWidth = parseInt(window.innerWidth);
-    var scrollbarWidth = windowsWidth - documentWidth;
-    return scrollbarWidth;
-  }
 $(document).ready(function(){
 
     $("#call_submit").click(function(){
