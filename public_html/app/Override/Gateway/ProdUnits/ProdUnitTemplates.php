@@ -32,7 +32,6 @@ class ProdUnitTemplates extends \Model
         }else{
             $sql .= " order by name ASC";
         }
-echo "!".$sql."!";
         $res =  $this->db->query($sql);
 
         return $res->rows;
