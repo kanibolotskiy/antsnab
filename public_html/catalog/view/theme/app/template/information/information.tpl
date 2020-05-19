@@ -17,7 +17,9 @@
             </div>
         <?php }?>
         <?php if(isset($feedbackform)){ 
-            include __DIR__ . '/../partial/feedbackform.tpl';
+            if($feedbackform){
+                include __DIR__ . '/../partial/feedbackform.tpl';
+            }
         }?>
 
         <?php echo $content_bottom; ?>

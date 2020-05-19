@@ -1,0 +1,2 @@
+antsnab.cp06038.tmweb.ru [Tue May 19 17:37:00 2020] [emerg] [pid 25440] sapi_apache2.c(362): [client 94.158.95.26:44032] PHP Parse error:  syntax error, unexpected '<' in /home/c/cp06038/antsnab/public_html/catalog/view/theme/app/template/information/information.tpl on line 20
+antsnab.cp06038.tmweb.ru [Tue May 19 17:37:45 2020] [emerg] [pid 32241] sapi_apache2.c(362): [client 94.158.95.26:48080] PHP Parse error:  syntax error, unexpected end of file in /home/c/cp06038/antsnab/public_html/catalog/view/theme/app/template/information/information.tpl on line 29
