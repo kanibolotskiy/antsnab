@@ -90,7 +90,7 @@
                 <div class="wrapper_parameters scroll-pane" <?php echo ($show_filter?'style="opacity:1;margin-left:0;"':'');  ?> >
                     <div class="wrapper_param_list">
                         <div class="wrp_filter_title">
-                            <div class="filter_title">Фильтр товаров</div>
+                            <div class="filter_title">Подбор по параметрам</div>
                         </div>
                         <div class="param_item">
                             <div class="param_item_rows">

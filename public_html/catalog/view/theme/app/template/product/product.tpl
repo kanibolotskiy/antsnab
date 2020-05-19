@@ -38,14 +38,15 @@
                 <h1 class="title" itemprop="name"><?=$heading_title?></h1>
                 <img itemprop="image" src="<?php echo $popup; ?>" style="display:none;">
                 
-                
-                <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" style="display:none">
-                    <meta itemprop="ratingValue" content="<?=$ratingValue?>" />
-                    <meta itemprop="bestRating" content="5"/>
-                    <meta itemprop="worstRating" content="1"/>
-                    <meta itemprop="ratingCount" content="<?php echo count($reviews);?>" />
-                    <meta itemprop="reviewCount" content="<?=$ratingSum?>" />
-                </div>
+                <?php if($ratingSum){?>
+                    <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" style="display:none">
+                        <meta itemprop="ratingValue" content="<?=$ratingValue?>" />
+                        <meta itemprop="bestRating" content="5"/>
+                        <meta itemprop="worstRating" content="1"/>
+                        <meta itemprop="ratingCount" content="<?php echo count($reviews);?>" />
+                        <meta itemprop="reviewCount" content="<?=$ratingSum?>" />
+                    </div>
+                <?php }?>
 
 
                 <div class="wrapper_product_cart wrp_fly">

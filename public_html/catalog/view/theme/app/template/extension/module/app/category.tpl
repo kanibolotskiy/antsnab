@@ -1,18 +1,22 @@
 
-<div class="catalog-product">
-    <div class="catalog_opens"></div>
-    <a href="<?=$root?>" class="catalog-btn">    
-        Каталог
-    </a>
-    <?php if($show_params){ ?>
 
+<div class="catalog-product">
+    <?php if($show_params){ ?>
         <div class="sidebar_filter_caption <?php echo ($show_filter?'active':'');  ?>">
             <div class="wrp_sidebar_filter_caption">
-                <div><span>Фильтр</span></div>
+                <div><span>Подбор по параметрам</span></div>
             </div>
             <div class="sidebar_filter_close"></div>
         </div>
     <?php }?>
+
+    <div class="wrapper_catalog-btn">
+        <div class="catalog_opens"></div>
+        <a href="<?=$root?>" class="catalog-btn">
+            Каталог
+        </a>
+    </div>
+    
     
     <div class="wrapper_left_data">
     

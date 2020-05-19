@@ -320,7 +320,6 @@ function set_state_checks(avail_data){
 }
 //-------------------------------------------
 function change_params_form(flag=true){
-    //console.log(flag);
     if(flag){
         if (typeof ym != 'undefined') {
             ym(14496178, 'reachGoal', 'filter');
@@ -602,6 +601,19 @@ $(document).ready(function(){
     }
     $(".wrp_filter_title").click(function(){
         if($(".filter_reset").hasClass("active")){
+            $(".wrp_filter_title").removeClass("active");
+            $(".param_item").slideUp(300);
+            $(".filter_reset").removeClass("active");
+            $(".up").removeClass("_filter");
+        }else{
+            $(".wrp_filter_title").addClass("active");
+            $(".param_item").slideDown(300);
+            $(".filter_reset").addClass("active");
+            $(".up").addClass("_filter");
+        }
+
+        /*
+        if($(".filter_reset").hasClass("active")){
             $(".param_item").slideUp(300);
             $(".filter_reset").removeClass("active");
             $(".up").removeClass("_filter");
@@ -610,9 +622,7 @@ $(document).ready(function(){
             $(".filter_reset").addClass("active");
             $(".up").addClass("_filter");
         }
-        
-
-        
+        */
     });
 
     $("#seldef1").change(function(){
@@ -835,16 +845,23 @@ $(document).ready(function(){
     });
 
     $(document).on('click','.buy',function(e){
-        
         e.preventDefault();
         var show_added=0;
         var itm=$(this);
         
-        if(itm.hasClass("cart_similar_button")){
+        //switch  add-to-card-compare
+        if((itm.hasClass("cart_similar_button"))||(itm.hasClass("add-to-card-compare"))){
             show_added=1;
             var product_id=$(this).attr('data-product_id');
-            if (typeof ym != 'undefined') {
-                ym(14496178, 'reachGoal', 'related-products');
+            if(itm.hasClass("cart_similar_button")){
+                if (typeof ym != 'undefined') {
+                    ym(14496178, 'reachGoal', 'related-products');
+                }
+            }
+            if(itm.hasClass("add-to-card-compare")){
+                if (typeof ym != 'undefined') {
+                    ym(14496178, 'reachGoal', 'add-to-card-compare');
+                }
             }
             add_to_cart(product_id, 1, show_added);
         }else{

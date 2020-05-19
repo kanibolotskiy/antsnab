@@ -15,7 +15,6 @@ $(document).ready(function(){
         if (typeof ym != 'undefined') {
             ym(14496178, 'reachGoal', 'add-to-card-catalog');
         }
-
     });
     /*
     $(".btn-request-call").click(function(){

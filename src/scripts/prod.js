@@ -5,12 +5,7 @@ var $switchers;
 var $firstSwitcher;
 //var format = require('number-format.js');
 
-function scrollbarWidth() {
-    var documentWidth = parseInt(document.documentElement.clientWidth);
-    var windowsWidth = parseInt(window.innerWidth);
-    var scrollbarWidth = windowsWidth - documentWidth;
-    return scrollbarWidth;
-}
+
 
 function getPlural(number, one, two) {///1,ведра,вёдер
     let n = Math.abs(number);
@@ -1081,6 +1076,20 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                 $firstSwitcher.trigger('click');
             }
         });
+    });
+    
+    $(document).on("click",".close_accia_info",function(){
+        $(this).closest(".product_accia_text").removeClass("active");
+    });
+    $(document).on("click",function(e){
+        if($(e.target).closest('.product_accia_text').length ) {
+            return;
+        }
+        $(".product_accia_text").removeClass("active");
+    });
+    $(".item_label._accia").mouseenter(function(){
+        $(".product_accia_text").removeClass("active");
+        $(this).closest(".catalog_item_product").find(".product_accia_text").addClass("active");
     });
 
     $(document).on("click",".modal_info_product .tovar_mini_image",function(){

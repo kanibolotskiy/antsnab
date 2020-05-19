@@ -1,5 +1,3 @@
-
-
 $(document).ready(function(){
     $(".row_checks").each(function(){
         if($(this).height()>175){

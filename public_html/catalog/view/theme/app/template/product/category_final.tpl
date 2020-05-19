@@ -54,12 +54,12 @@
                         </div>
                     <?php }?>
                 <?php }?>
-                <!--<div class="temp_params" style="width:100px;height:100px;background:red;">test</div>-->
+                
                 <div class="wrapper_parameters scroll-pane" <?php echo ($show_filter?'style="opacity:1;margin-left:0;"':'');  ?> >
                     
                     <div class="wrapper_param_list">
                         <div class="wrp_filter_title">
-                            <div class="filter_title">Фильтр товаров</div>
+                            <div class="filter_title">Подбор по параметрам</div>
                         </div>
                         <div class="param_item" <?php echo ($show_filter?'style="display:block;"':'');  ?>>
                             <div class="param_item_rows">
@@ -122,7 +122,7 @@
                                                 </div>
                                             </div>
                                         <?php }?>
-                                        <?php //print_r($param_item);?>
+                                        
                                         <?php if($param_item["type_param"]==0 or $param_item["type_param"]==2){?>
                                             
                                             <?php if(count($param_item['avail_params'])>1) {?>

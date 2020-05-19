@@ -14,6 +14,7 @@ import './popup';
 import './responsive_tabs_tables';
 import './lib/opencart_product';
 import './lib/opencart_search';
+import './lib/jquery.mousewheel.min';
 
 
 import './lib/jquery-ui.min';
@@ -29,6 +30,7 @@ import './yamap';
 import './ui_styling';
 import './goals';
 import './search';
+import './compare';
 
 import './lib/jquery.ui.touch-punch.min';
 

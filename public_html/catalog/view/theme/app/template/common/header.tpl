@@ -26,7 +26,7 @@
         <?php } ?>
 
         <?php if (isset($noindex)) { ?>
-            <meta name="robots" content="noindex" />
+            <meta name="robots" content="noindex,nofollow" />
         <?php }else{ ?>
             <meta name="robots" content="noyaca" />
         <?php } ?>
@@ -218,7 +218,9 @@
             </header>
         </div>
         <div class="table_block_header">
-            <div class="table_catalog"><span>Каталог</span></div>
+            <div class="table_block_header_info">
+                <div class="table_catalog"><span>Каталог</span></div>
+            </div>
         </div>
         <div class="empty_block_header"></div>
 
@@ -229,7 +231,8 @@
                     <?php $cnt = 0; $ttl = count($top_menu);?>
                     <?php foreach ($top_menu as $item) : ?>
                         <?php if($item["position"]==0){?>
-                                
+                            <?php if($item["href"]=='/sales/'){$classMenu='<div class="_menu_accia"></div>';?>
+                            <?php }else{$classMenu='';}?>
                             <?php 
                                 if (isset($item['target']) && trim($item['target']) != "") {
                                     $target=" target=".$item['target'];
@@ -240,10 +243,12 @@
                             
                             <?php if($item['isactive']){?>
                                 <li class="active" itemprop="name">
+                                    <?php echo $classMenu;?>
                                     <span><?php echo $item['name']; ?></span>
                                 </li>
                             <?php }else{?>
                                 <li class="menu_li" itemprop="name">
+                                    <?php echo $classMenu;?>
                                     <a itemprop="url" href="<?php echo $item['href']; ?>" <?php echo $target; ?>><span><?php echo $item['name']; ?></span></a>
                                 </li>
                             <?php }?>

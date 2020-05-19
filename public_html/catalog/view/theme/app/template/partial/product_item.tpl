@@ -1,4 +1,5 @@
 <li class="catalog_item_product wrp_fly" rel="<?= $p['product_id']?>" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+    
     <?php if($p["labels"]){  ?>
         <div class="item_labels">
             <?php foreach($p["labels"] as $key=>$label){ ?>
@@ -7,9 +8,26 @@
         </div>
     <?php }?>
 
-    <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>">
+    <?php print_r($p["labels"]["_accia"]);?>
     <div class="catalog-block" itemprop="item" itemscope itemtype="http://schema.org/Offer">
-
+        <?php if(isset($p["labels"]["_accia"])){?>
+            <div class="product_accia_text">
+                <div class="icon_del close_accia_info"></div>
+                <div class="product_accia_info">
+                    <?php foreach($p["labels"]["_accia"]["items"] as $accia) {?>
+                        <div class="product_accia_row">
+                            <div class="product_accia_caption"><?php echo $accia['title'];?></div>
+                            <div class="product_accia_content"><?php echo $accia['text'];?></div>
+                            <div class="product_accia_link">
+                                <a href="<?php echo $accia['url'];?>" target="_blank">Перейти к акции</a>
+                            </div>
+                        </div>
+                    <?php }?>
+                </div>
+            </div>
+        <?php }?>
+        
+        <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>">
         <?php if($p["rating"]){?>
             <div class="agg_rating">
                 <div class="agg_rating_ico"></div>
@@ -119,6 +137,7 @@
             <div class="clr_buy"></div>
             <div class="more_product">Подробнее</div>
         </div>
+        </a>
     </div>
-    </a>
+    
 </li>

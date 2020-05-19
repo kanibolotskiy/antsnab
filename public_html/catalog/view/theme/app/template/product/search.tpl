@@ -11,9 +11,6 @@
             <h2><?php echo $text_search; ?></h2>
 
             <div class="catalog-tab">
-                <?php /* <div class="row">
-                    @task OUR FILTERS HERE 
-                </div> */ ?>
                 <div class="wrap_select_view">
                     <ul class="select_view_switch">
                         <li class="select_view select_view1 <?php echo $cat_view1;?>" rel="view1"></li>

@@ -1,5 +1,36 @@
 <?php
 class ModelCatalogProduct extends Model {
+	public function getCategoryParamsValues(){
+		$results=[];
+		$sql="SELECT id, param_value from category_param_values";
+		$query = $this->db->query($sql);
+		foreach ($query->rows as $result) {
+			$results[$result["id"]]=$result["param_value"];
+		}
+		/*
+		$results=[];
+		$sql="SELECT id, param_value from category_param_values";
+		$query = $this->db->query($sql);
+		foreach ($query->rows as $result) {
+			$results[$result["id"]]=$result["param_value"];
+		}
+		*/
+		return $results;
+	}
+
+	public function getMainCategory($temp_cat_id){
+        $fin_cat_id=0;
+		$step=1;
+        while($temp_cat_id!=71 and $step<5){
+            $fin_cat_id=$temp_cat_id;
+            $sql_cat="SELECT parent_id from oc_category where category_id=".(int)$temp_cat_id;
+            $query_cat=$this->db->query($sql_cat);
+            $temp_cat_id=$query_cat->row["parent_id"];
+            $step++;
+        }
+        return $fin_cat_id;
+	}
+
 	public function updateViewed($product_id) {
 		$this->db->query("UPDATE " . DB_PREFIX . "product SET viewed = (viewed + 1) WHERE product_id = '" . (int)$product_id . "'");
 	}
@@ -18,6 +49,26 @@ class ModelCatalogProduct extends Model {
 		}
 
 		//Акция
+		$d_now=date("Y-m-d");
+		$sql="select ap.accia_id, a.name, a.shorttext from accia_products ap LEFT JOIN accia a ON ap.accia_id=a.accia_id
+		where ap.product_id=".$product["product_id"]." and status=1 
+		and DATE(a.date_start) <= '".$d_now."' AND DATE(a.date_end) >= '".$d_now."' order by a.sort_order";
+		//echo $sql;
+		$query = $this->db->query($sql);
+		$accia=[];
+		foreach ($query->rows as $result) {
+			$accia[]=Array(
+				"title"=>$result["name"],
+				"text"=>$result["shorttext"],
+			);
+		}
+		if(count($accia)){
+			$labels["_accia"]=Array(
+				"label"=>"Акция",
+				"title"=>"Акция",
+				"items"=>$accia
+			);
+		}
 
 		//Новинка
 		$datediff=time()-strtotime($product['date_added']);
@@ -120,6 +171,7 @@ class ModelCatalogProduct extends Model {
 		if ($query->num_rows) {
 
 			return array(
+				'category_id'       => $query->row['category_id'],
 				'product_id'       => $query->row['product_id'],
 				'name'             => $query->row['name'],
 				'description'      => $query->row['description'],
@@ -781,6 +833,7 @@ class ModelCatalogProduct extends Model {
 		return $del_price;
 
 	}
+	
 	public function getDelivery($product_id, $weight_product){
 		$result=[];
 		/**Стоимость и сроки доставки */
@@ -849,8 +902,6 @@ class ModelCatalogProduct extends Model {
 		$result['price_delivery']=$del_price.($del_ico?' <div class="rur">i</div>':'');
 		$result['caption_delivery']=$del_caption;
 		$result['text_delivery']=$del_text;
-		
-
 		//return '<span class="nowrap">'.$delday_text.',</span> <span class="nowrap">'.$del_price.'</span>';
 		return $result;
 	}

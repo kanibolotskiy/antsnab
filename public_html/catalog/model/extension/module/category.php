@@ -1,5 +1,15 @@
 <?php
     class ModelExtensionModuleCategory extends Model{
+        public function getProductParams($product_id){
+            $query = $this->db->query("select * from product_param_values where product_id=".(int)$product_id);
+            return $query->rows;
+        }
+        public function getListParamsByCategory($category_id){    
+            //echo "!"."SELECT * from category_params where category_id=".(int)$category_id." order by sort_order"."!";
+            $query = $this->db->query("SELECT * from category_params where category_id=".(int)$category_id." order by sort_order");
+            return $query->rows;
+        }
+
         public function allRecCategory($category_id,$data){
             $data[]=$category_id;
             $query = $this->db->query("SELECT category_id, isfinal from oc_category where isseo=0 AND parent_id=".(int)$category_id);

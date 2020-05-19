@@ -1242,7 +1242,7 @@ class CartController extends \ControllerCheckoutCart
         }
         $data['success']=true;
         $data['total'] = $this->currency->format($orderSumTotal, $this->session->data['currency']);
-        $data['total_weight']=$totalWeight;
+        $data['total_weight']=round($totalWeight,2);
         $data['total_del']=$this->model_catalog_product->getDeliveryPrice($totalWeight);
         $this->response->setOutput(json_encode($data));
     }

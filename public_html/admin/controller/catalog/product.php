@@ -1536,7 +1536,12 @@ class ControllerCatalogProduct extends Controller {
 		<span class="avail_item">очиститель</span>
 		*/
 		
-		$main_category_id=$this->model_catalog_product->getMainCategory($this->request->get['product_id']);
+		if(isset($this->request->get['product_id'])){
+			$main_category_id=$this->model_catalog_product->getMainCategory($this->request->get['product_id']);
+		}else{
+			$main_category_id=0;
+		}
+		//$main_category_id=$this->model_catalog_product->getMainCategory($this->request->get['product_id']);
 		$filter_params_data=$this->model_catalog_product->getMainCategoryFilter($main_category_id);
 
 		$filter_params=[];

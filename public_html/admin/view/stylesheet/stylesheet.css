@@ -755,3 +755,12 @@ div.ckeditor {
 #change_params{display:none;}
 .step_input{width:150px;}
 .wrp_step_input{display:flex;}
+
+/*Страница "Акция"*/
+.accia_catalog_row{display: flex;border-bottom: 1px solid #eee;padding: 5px 0;}
+.accia_catalog_left{order:1;min-width:230px;max-width:230px;width:230px;}
+.accia_catalog_right{order:2;}
+.accia_column_category_caption{font-size:13px;font-weight: bold;cursor:pointer;}
+.accia_column_subcategory_caption{font-size:12px;cursor:pointer;margin-left:15px;}
+.accia_column_subcategory_caption._sub{margin-left:30px;}
+.subcat_wrapper{display:none;}

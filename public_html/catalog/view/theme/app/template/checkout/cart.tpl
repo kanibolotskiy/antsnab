@@ -1,7 +1,7 @@
 <?= $header ?>
 <div class="container main">
-    <?= $column_left ?>
-    <div class="content">
+    
+    <div class="content without_sidebar">
         <?php echo $content_top; ?>
         <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
         <h1 class="title">Корзина покупок</h1>

@@ -210,7 +210,13 @@ class ControllerCommonColumnLeft extends Controller {
 				);
 			}
 
-
+			if ($this->user->hasPermission('access', 'catalog/accia')) {
+				$catalog[] = array(
+					'name'	   => $this->language->get('text_accia'),
+					'href'     => $this->url->link('catalog/accia', 'token=' . $this->session->data['token'], true),
+					'children' => array()		
+				);
+			}
 			if ($catalog) {
 				$data['menus'][] = array(
 					'id'       => 'menu-catalog',
