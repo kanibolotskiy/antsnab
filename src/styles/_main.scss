@@ -8991,7 +8991,7 @@ border-bottom:1px solid transparent;
 }
 .compare_hint{
     position:relative;
-    margin-top:40px;
+    /*margin-top:40px;*/
     background-color:#F8F8F8;
     font-size: 14px;
     line-height:21px;
@@ -9076,7 +9076,8 @@ border-bottom:1px solid transparent;
     text-align:center;
     width:305px;max-width:100%;
     margin-top:20px;
-    background: #fff;
+    background: #41737E;
+    color: #fff;
     margin-right: 5px;
     margin-bottom: 5px;
     cursor: pointer;
@@ -9092,9 +9093,8 @@ border-bottom:1px solid transparent;
     line-height: 34px;
 }
 .permanent_link_button:hover{
-    background: #41737E;
-    color: #fff;
-    border-color: #41737E;
+    background: #fff;
+    color: #000;
 }
 .compare_header_ico{width:255px!important;box-shadow: rgba(0, 0, 0, 0.07) 0px 4px 4px;border-right:1px solid #EFEEEC;position:relative;}
 .notfixed{margin-left:0!important}
