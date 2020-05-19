@@ -40,150 +40,151 @@
                     <?php }?>
                 <?php }?>
                 <h2 class="part_title">Категории</h2>
-                <div class="catalog-tab">
-                    
-                    <div id="mtab1" class="tab">
+                <div class="right_order_mob_filters">
+                    <div class="catalog-tab">
                         
-                        <div class="tab-list">
-                            <div id="m1tab1">
-                                <div class="tab-block-cat tab-block tab-block2">
-                                
-                                    <ul>
-                                        <?php foreach ($categories as $c): ?>
-                                            <li>
-                                                <div class="catalog-block">
-                                                    <div class="catalog-img">
-                                                        <a href="<?= $c['href'] ?>"><img src="<?= $c['thumb'] ?>" title="<?= $c['name']?>" alt="<?= $c['name']?>"></a>
-                                                    </div>
-                                                    <div class="catalog-description">
-                                                        <a class="title-product" href="<?= $c['href'] ?>">
-                                                            <?= $c['name'] ?>
-                                                        </a> 
-                                                        <div class="cat-desc">
-                                                            <p>
-                                                            <?= $c['description'] ?>
-                                                            </p>
-                                                        </div>
-                                                        <!--   
-                                                        <div class="tags">
-                                                            <?php foreach( $c['sub'] as $sub ): ?>
-                                                                <a href="<?=$sub['href']?>">
-                                                                    <?=$sub['name']?>
-                                                                </a>
-                                                            <?php endforeach;?>
-                                                        </div> 
-                                                        -->
-                                                    </div> 
-                                                    <a href="<?= $c['href'] ?>" class="more">Смотреть все</a> 
-                                                </div> 
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ul>
+                        <div id="mtab1" class="tab">
+                            
+                            <div class="tab-list">
+                                <div id="m1tab1">
+                                    <div class="tab-block-cat tab-block tab-block2">
                                     
-                                </div>
-                            </div> 
-                        
+                                        <ul>
+                                            <?php foreach ($categories as $c): ?>
+                                                <li>
+                                                    <div class="catalog-block">
+                                                        <div class="catalog-img">
+                                                            <a href="<?= $c['href'] ?>"><img src="<?= $c['thumb'] ?>" title="<?= $c['name']?>" alt="<?= $c['name']?>"></a>
+                                                        </div>
+                                                        <div class="catalog-description">
+                                                            <a class="title-product" href="<?= $c['href'] ?>">
+                                                                <?= $c['name'] ?>
+                                                            </a> 
+                                                            <div class="cat-desc">
+                                                                <p>
+                                                                <?= $c['description'] ?>
+                                                                </p>
+                                                            </div>
+                                                            <!--   
+                                                            <div class="tags">
+                                                                <?php foreach( $c['sub'] as $sub ): ?>
+                                                                    <a href="<?=$sub['href']?>">
+                                                                        <?=$sub['name']?>
+                                                                    </a>
+                                                                <?php endforeach;?>
+                                                            </div> 
+                                                            -->
+                                                        </div> 
+                                                        <a href="<?= $c['href'] ?>" class="more">Смотреть все</a> 
+                                                    </div> 
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                        
+                                    </div>
+                                </div> 
+                            
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="wrapper_parameters scroll-pane" <?php echo ($show_filter?'style="opacity:1;margin-left:0;"':'');  ?> >
-                    <div class="wrapper_param_list">
-                        <div class="wrp_filter_title">
-                            <div class="filter_title">Подбор по параметрам</div>
-                        </div>
-                        <div class="param_item">
-                            <div class="param_item_rows">
-                                
-                                <form id="form_params" action="<?=$catalog_info['category_url']?>" catalog_id="<?=$catalog_info['category_id']?>">
+                    
+                    <div class="wrapper_parameters scroll-pane" <?php echo ($show_filter?'style="opacity:1;margin-left:0;"':'');  ?> >
+                        <div class="wrapper_param_list">
+                            <div class="wrp_filter_title">
+                                <div class="filter_title">Подбор по параметрам</div>
+                            </div>
+                            <div class="param_item">
+                                <div class="param_item_rows">
                                     
-                                    
-                                    <?php foreach($params["items"] as $param_item){?>
+                                    <form id="form_params" action="<?=$catalog_info['category_url']?>" catalog_id="<?=$catalog_info['category_id']?>">
                                         
-                                        <?php if($param_item["type_param"]==1){?>
-                                            <div class="param_row" rel="<?=$param_item['id']?>" param_name="<?=$param_item['translit']?>">
-                                                <div class="param_item_caption"><?=$param_item['name']?><?php echo $param_item['unit']?', '.$param_item['unit']:'';  ?></div>
-                                                <div class="wrapper_range_slider">
-                                                    <div name="<?=$param_item['translit']?>" class="range_slider" select_min="<?php echo isset($params['selected'][$param_item['translit']]['min'])?$params['selected'][$param_item['translit']]['min']:'';?>" select_max="<?php echo isset($params['selected'][$param_item['translit']]['max'])?$params['selected'][$param_item['translit']]['max']:'';?>" min_value="<?=$param_item['avail_params']['min']?>" max_value="<?=$param_item['avail_params']['max']?>" def_min_value="<?=$param_item['avail_params']['min']?>" def_max_value="<?=$param_item['avail_params']['max']?>" step="<?=$param_item['step']?>"></div>
-                                                    <div class="wrapper_range_input">
-                                                        <div class="range_input_part _first">
-                                                            <div class="range_input_caption">от</div>
-                                                            
-                                                            <input type="number" class="inputRange inputRangeMin" value="<?php echo isset($params['selected'][$param_item['translit']]['min'])?$params['selected'][$param_item['translit']]['min']:$param_item['avail_params']['min'];?>" />
-                                                        </div>
-                                                        <div class="range_input_part">
-                                                            <div class="range_input_caption">до</div>
-                                                            <input type="number" class="inputRange inputRangeMax" value="<?php echo isset($params['selected'][$param_item['translit']]['max'])?$params['selected'][$param_item['translit']]['max']:$param_item['avail_params']['max'];?>" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php }?>
                                         
-                                        <?php if($param_item["type_param"]==5){?>
-                                            <div class="param_row param_row_full" rel="<?=$param_item['id']?>" param_name="<?=$param_item['translit']?>">
-                                                <!--<div class="param_item_caption"><?=$param_item['name']?></div>-->
-                                                <div class="row_checks_wrap">
-                                                    <div class="row_checks">    
-                                                        <?php foreach($param_item['avail_params'] as $key=>$param_list_item) {?>    
-                                                            <?php if(isset($avail[$param_item['translit']]['result']['count'])){$cnt=$avail[$param_item['translit']]['result']['count'];}else{$cnt=0;} ?>
-                                                            <div class="row_check <?php echo $cnt?'':'_unactive'; ?>">
-                                                                <input <?php echo $cnt?'':'disabled'; ?> <?php echo isset($params["selected"][$param_item['translit']])?'checked':'' ?> class="param_check" name="param[<?=$param_item['translit']?>]" type="checkbox" id="check_sale" value="1">
-                                                                <label for="check_sale"><?php echo html_entity_decode($param_list_item);?></label>
-                                                            </div>
-                                                        <?php } ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php }?>
-
-                                        <?php if($param_item["type_param"]==4){?>
-                                            <div class="param_row param_row_full" rel="<?=$param_item['id']?>" param_name="<?=$param_item['translit']?>">
-                                                <!--<div class="param_item_caption"><?=$param_item['name']?></div>-->
-                                                <div class="row_checks_wrap">
-                                                    <div class="row_checks">    
-                                                        <?php foreach($param_item['avail_params'] as $key=>$param_list_item) {?>
-                                                            <?php if(isset($avail[$param_item['translit']]['result']['count'])){$cnt=$avail[$param_item['translit']]['result']['count'];}else{$cnt=0;} ?>
-                                                            <div class="row_check <?php echo $cnt?'':'_unactive'; ?>">
-                                                                <input <?php echo $cnt?'':'disabled'; ?> <?php echo isset($params["selected"][$param_item['translit']])?'checked':'' ?> class="param_check" name="param[<?=$param_item['translit']?>]" type="checkbox" id="check_availible" value="1">
-                                                                <label for="check_availible"><?php echo html_entity_decode($param_list_item);?></label>
-                                                            </div>
-                                                        <?php } ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php }?>
-                                        <?php //print_r($param_item);?>
-                                        <?php if($param_item["type_param"]==0 or $param_item["type_param"]==2){?>
+                                        <?php foreach($params["items"] as $param_item){?>
                                             
-                                            <?php if(count($param_item['avail_params'])>1) {?>
+                                            <?php if($param_item["type_param"]==1){?>
                                                 <div class="param_row" rel="<?=$param_item['id']?>" param_name="<?=$param_item['translit']?>">
                                                     <div class="param_item_caption"><?=$param_item['name']?><?php echo $param_item['unit']?', '.$param_item['unit']:'';  ?></div>
-                                                    <div class="row_checks_wrap">
-                                                        <div class="row_checks">
-                                                            
-                                                            <?php foreach($param_item['avail_params'] as $key=>$param_list_item) {?>
+                                                    <div class="wrapper_range_slider">
+                                                        <div name="<?=$param_item['translit']?>" class="range_slider" select_min="<?php echo isset($params['selected'][$param_item['translit']]['min'])?$params['selected'][$param_item['translit']]['min']:'';?>" select_max="<?php echo isset($params['selected'][$param_item['translit']]['max'])?$params['selected'][$param_item['translit']]['max']:'';?>" min_value="<?=$param_item['avail_params']['min']?>" max_value="<?=$param_item['avail_params']['max']?>" def_min_value="<?=$param_item['avail_params']['min']?>" def_max_value="<?=$param_item['avail_params']['max']?>" step="<?=$param_item['step']?>"></div>
+                                                        <div class="wrapper_range_input">
+                                                            <div class="range_input_part _first">
+                                                                <div class="range_input_caption">от</div>
                                                                 
-                                                                <?php $fl=false;if(isset($params["selected"][$param_item['translit']])){foreach($params["selected"][$param_item['translit']] as $pitm){ if($pitm==$key) {$fl=true;}}}?>
-                                                                <div class="row_check <?php echo isset($avail[$param_item['translit']]['result'][$key])?'':'_unactive'; ?>">
-                                                                    <input <?php echo isset($avail[$param_item['translit']]['result'][$key])?'':'disabled'; ?> <?php echo $fl?'checked':''; ?> class="param_check" name="param[<?=$param_item['translit']?>][]" type="checkbox" id="check_<?=$key?>" value="<?=$key?>">
-                                                                    <label for="check_<?=$key?>"><?php echo html_entity_decode($param_list_item);?></label>
+                                                                <input type="number" class="inputRange inputRangeMin" value="<?php echo isset($params['selected'][$param_item['translit']]['min'])?$params['selected'][$param_item['translit']]['min']:$param_item['avail_params']['min'];?>" />
+                                                            </div>
+                                                            <div class="range_input_part">
+                                                                <div class="range_input_caption">до</div>
+                                                                <input type="number" class="inputRange inputRangeMax" value="<?php echo isset($params['selected'][$param_item['translit']]['max'])?$params['selected'][$param_item['translit']]['max']:$param_item['avail_params']['max'];?>" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php }?>
+                                            
+                                            <?php if($param_item["type_param"]==5){?>
+                                                <div class="param_row param_row_full" rel="<?=$param_item['id']?>" param_name="<?=$param_item['translit']?>">
+                                                    <!--<div class="param_item_caption"><?=$param_item['name']?></div>-->
+                                                    <div class="row_checks_wrap">
+                                                        <div class="row_checks">    
+                                                            <?php foreach($param_item['avail_params'] as $key=>$param_list_item) {?>    
+                                                                <?php if(isset($avail[$param_item['translit']]['result']['count'])){$cnt=$avail[$param_item['translit']]['result']['count'];}else{$cnt=0;} ?>
+                                                                <div class="row_check <?php echo $cnt?'':'_unactive'; ?>">
+                                                                    <input <?php echo $cnt?'':'disabled'; ?> <?php echo isset($params["selected"][$param_item['translit']])?'checked':'' ?> class="param_check" name="param[<?=$param_item['translit']?>]" type="checkbox" id="check_sale" value="1">
+                                                                    <label for="check_sale"><?php echo html_entity_decode($param_list_item);?></label>
                                                                 </div>
                                                             <?php } ?>
                                                         </div>
                                                     </div>
-                                                    <div class="show_more_params"><span>Показать еще</span></div>
                                                 </div>
                                             <?php }?>
+
+                                            <?php if($param_item["type_param"]==4){?>
+                                                <div class="param_row param_row_full" rel="<?=$param_item['id']?>" param_name="<?=$param_item['translit']?>">
+                                                    <!--<div class="param_item_caption"><?=$param_item['name']?></div>-->
+                                                    <div class="row_checks_wrap">
+                                                        <div class="row_checks">    
+                                                            <?php foreach($param_item['avail_params'] as $key=>$param_list_item) {?>
+                                                                <?php if(isset($avail[$param_item['translit']]['result']['count'])){$cnt=$avail[$param_item['translit']]['result']['count'];}else{$cnt=0;} ?>
+                                                                <div class="row_check <?php echo $cnt?'':'_unactive'; ?>">
+                                                                    <input <?php echo $cnt?'':'disabled'; ?> <?php echo isset($params["selected"][$param_item['translit']])?'checked':'' ?> class="param_check" name="param[<?=$param_item['translit']?>]" type="checkbox" id="check_availible" value="1">
+                                                                    <label for="check_availible"><?php echo html_entity_decode($param_list_item);?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php }?>
+                                            <?php //print_r($param_item);?>
+                                            <?php if($param_item["type_param"]==0 or $param_item["type_param"]==2){?>
+                                                
+                                                <?php if(count($param_item['avail_params'])>1) {?>
+                                                    <div class="param_row" rel="<?=$param_item['id']?>" param_name="<?=$param_item['translit']?>">
+                                                        <div class="param_item_caption"><?=$param_item['name']?><?php echo $param_item['unit']?', '.$param_item['unit']:'';  ?></div>
+                                                        <div class="row_checks_wrap">
+                                                            <div class="row_checks">
+                                                                
+                                                                <?php foreach($param_item['avail_params'] as $key=>$param_list_item) {?>
+                                                                    
+                                                                    <?php $fl=false;if(isset($params["selected"][$param_item['translit']])){foreach($params["selected"][$param_item['translit']] as $pitm){ if($pitm==$key) {$fl=true;}}}?>
+                                                                    <div class="row_check <?php echo isset($avail[$param_item['translit']]['result'][$key])?'':'_unactive'; ?>">
+                                                                        <input <?php echo isset($avail[$param_item['translit']]['result'][$key])?'':'disabled'; ?> <?php echo $fl?'checked':''; ?> class="param_check" name="param[<?=$param_item['translit']?>][]" type="checkbox" id="check_<?=$key?>" value="<?=$key?>">
+                                                                        <label for="check_<?=$key?>"><?php echo html_entity_decode($param_list_item);?></label>
+                                                                    </div>
+                                                                <?php } ?>
+                                                            </div>
+                                                        </div>
+                                                        <div class="show_more_params"><span>Показать еще</span></div>
+                                                    </div>
+                                                <?php }?>
+                                            <?php }?>
+                                        
                                         <?php }?>
-                                    
-                                    <?php }?>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
                 <h2>Товары из категории <?= $heading_title ?></h2>
                 <div class="catalog-tab catalog-list">
 

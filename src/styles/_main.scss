@@ -9302,6 +9302,12 @@ body.common-compare #search{top:-53px;}
     background-size:cover;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;
 }
 body._hmenu ._menu_accia{left: 80px;}
+@media screen and (max-width: 1100px){
+    .right_order_mob_filters .wrp_filter_title{margin-top:15px;margin-bottom:0;}
+    .right_order_mob_filters{display:flex;flex-direction:column;}
+    .right_order_mob_filters .catalog-tab{order:2;}
+    .right_order_mob_filters .wrapper_parameters {order:1;}
+}
 @media screen and (max-width: 750px){
     .left_compare{width:200px;}
     .right_compare{left:199px;}
@@ -9318,6 +9324,8 @@ body._hmenu ._menu_accia{left: 80px;}
         height: 52px;
         top: 81px;
     }
+
+    
 }
 
 .mob_compare_hint{
@@ -9347,3 +9355,4 @@ body._hmenu ._menu_accia{left: 80px;}
     position:relative;
 }
 ._openmenu #search{display:none;}
+
