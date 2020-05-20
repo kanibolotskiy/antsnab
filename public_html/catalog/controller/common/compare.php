@@ -147,87 +147,89 @@ class ControllerCommonCompare extends Controller {
         
         $favorite_products=[];
         $pack_list=[];
-        foreach($fav_product as $key_catalog=>$fav_product_catalog){
-            //Все параметры для категории
-            $category_params=$this->model_extension_module_category->getListParamsByCategory($key_catalog);
-
-            $avail_params_by_cat=[];
-            foreach($category_params as $category_param){
-                $avail_params_by_cat[$category_param["id"]]=$category_param;
-                $avail_params_by_cat[$category_param["id"]]["used"]=false;
-                
-            }
-            
-            $final_fav_product_catalog=[];
-            
-            foreach($fav_product_catalog as $favorite_product){
-                $product_params=$this->model_extension_module_category->getProductParams($favorite_product['product_id']);
-
-                //print_r($favorite_product);
-                //echo "!".$favorite_product['produnit_template_id']."!";
-                $stringsGateway = new ProdUnitStrings($this->registry);
-                $data_packageStrings = $stringsGateway->getAll($favorite_product['produnit_template_id'], 'order by sortOrder');
-                $params_pack=[];    
-                foreach($data_packageStrings as $pack_item){
-                    $unit_desc=trim($pack_item["description"]);
-                    $pack_list[$key_catalog][$unit_desc]=1;
-                    $params_pack[$unit_desc]=$pack_item["value"];
-                }
-
-                //print_r($data_packageStrings);
-                
-                $params=[];
-                $str_param="";
-                foreach($product_params as $product_param){
-                    if(isset($avail_params_by_cat[$product_param["param_id"]])){
-                        $avail_params_by_cat[$product_param["param_id"]]["used"]=true;
-
-                        $type_param=$avail_params_by_cat[$product_param["param_id"]]["type_param"];
-
-                        switch ($type_param){
-                            case 0: //Список       
-                                $str_param=$param_values_result[$product_param["value1"]];
-                                //$str_param=$product_param["value1"];
-                            break;
-
-                            case 1: //Диапазон
-                                $str_param="от ".$product_param["value1"]." до ".$product_param["value2"];
-                            break;
-
-                            case 2: //Список(тип2)
-                                $str_param=$param_values_result[$product_param["value1"]];
-                            break;
-                        }
-                        $params[$product_param["param_id"]][]=$str_param;
-                    }
-                }
-                $params_final=[];
-                foreach($params as $key=>$param){
-                    if($param){
-                        //sort($param);
-                        $params_final[$key]=implode(", ",$param);
-                    }
-                }
-                
-                $favorite_product["compare_filter"]=$params_final;
-                $favorite_product["params_pack"]=$params_pack;
-
-                $final_fav_product_catalog[]=$favorite_product;
-            }
-            //print_r($pack_list);
-            $category_info = $this->model_catalog_category->getCategory($key_catalog);
-            
-            $favorite_products[]=Array(
-                "name"=>$category_info["name"],
-                "catalog_id"=>$key_catalog,//$main_category_id,
-                "category_params"=>$avail_params_by_cat,
-                "pack_list"=>$pack_list,
-                "properties"=>$list_properties,
-                "products"=>$final_fav_product_catalog,
-                //"compare_filter"=>$compare_filter,
-            );
-        }
         
+        if(isset($fav_product)){
+            foreach($fav_product as $key_catalog=>$fav_product_catalog){
+                //Все параметры для категории
+                $category_params=$this->model_extension_module_category->getListParamsByCategory($key_catalog);
+
+                $avail_params_by_cat=[];
+                foreach($category_params as $category_param){
+                    $avail_params_by_cat[$category_param["id"]]=$category_param;
+                    $avail_params_by_cat[$category_param["id"]]["used"]=false;
+                    
+                }
+                
+                $final_fav_product_catalog=[];
+                
+                foreach($fav_product_catalog as $favorite_product){
+                    $product_params=$this->model_extension_module_category->getProductParams($favorite_product['product_id']);
+
+                    //print_r($favorite_product);
+                    //echo "!".$favorite_product['produnit_template_id']."!";
+                    $stringsGateway = new ProdUnitStrings($this->registry);
+                    $data_packageStrings = $stringsGateway->getAll($favorite_product['produnit_template_id'], 'order by sortOrder');
+                    $params_pack=[];    
+                    foreach($data_packageStrings as $pack_item){
+                        $unit_desc=trim($pack_item["description"]);
+                        $pack_list[$key_catalog][$unit_desc]=1;
+                        $params_pack[$unit_desc]=$pack_item["value"];
+                    }
+
+                    //print_r($data_packageStrings);
+                    
+                    $params=[];
+                    $str_param="";
+                    foreach($product_params as $product_param){
+                        if(isset($avail_params_by_cat[$product_param["param_id"]])){
+                            $avail_params_by_cat[$product_param["param_id"]]["used"]=true;
+
+                            $type_param=$avail_params_by_cat[$product_param["param_id"]]["type_param"];
+
+                            switch ($type_param){
+                                case 0: //Список       
+                                    $str_param=$param_values_result[$product_param["value1"]];
+                                    //$str_param=$product_param["value1"];
+                                break;
+
+                                case 1: //Диапазон
+                                    $str_param="от ".$product_param["value1"]." до ".$product_param["value2"];
+                                break;
+
+                                case 2: //Список(тип2)
+                                    $str_param=$param_values_result[$product_param["value1"]];
+                                break;
+                            }
+                            $params[$product_param["param_id"]][]=$str_param;
+                        }
+                    }
+                    $params_final=[];
+                    foreach($params as $key=>$param){
+                        if($param){
+                            //sort($param);
+                            $params_final[$key]=implode(", ",$param);
+                        }
+                    }
+                    
+                    $favorite_product["compare_filter"]=$params_final;
+                    $favorite_product["params_pack"]=$params_pack;
+
+                    $final_fav_product_catalog[]=$favorite_product;
+                }
+                //print_r($pack_list);
+                $category_info = $this->model_catalog_category->getCategory($key_catalog);
+                
+                $favorite_products[]=Array(
+                    "name"=>$category_info["name"],
+                    "catalog_id"=>$key_catalog,//$main_category_id,
+                    "category_params"=>$avail_params_by_cat,
+                    "pack_list"=>$pack_list,
+                    "properties"=>$list_properties,
+                    "products"=>$final_fav_product_catalog,
+                    //"compare_filter"=>$compare_filter,
+                );
+            }
+        }
         
 
         $data['favorite_products']=$favorite_products;

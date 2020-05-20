@@ -149,6 +149,7 @@ $(document).ready(function(){
     compareScroll();
     $(".comdel").click(function(){
         var product=$(this).closest(".compare_product");
+        var products=product.parent();
         var rel=product.attr("rel");
         //console.log($.cookie('compare'));
         var compare_str=$.cookie('compare');
@@ -180,8 +181,23 @@ $(document).ready(function(){
                 $(".compare_catalog_block").hide();
                 $(".compare_catalog_block[rel='"+rel_new_item+"']").fadeIn(200);
             }
-            
-            checkCompare();
+            var total_compare_product=$(".compare_product").length;
+            if(total_compare_product){
+                var left_products=products.find(".compare_product").length;
+                if(left_products==1){
+                    //console.log(left_products);
+                    var check=products.closest(".compare_catalog_block").find(".check_compare");
+                    check.prop("checked",false);
+                    check.attr("disabled","disabled");
+                    check.parent().addClass("_unactive");
+                }
+                checkCompare();
+            }else{
+                $(".compare_footer").removeClass("active");
+                $(".compare_footer_empty").removeClass("active");
+                $(".compare_link").addClass("_empty");
+
+            }
         });
     });
 

@@ -584,6 +584,14 @@ function change_favorite_sum(){
     });
 }
 $(document).ready(function(){
+    $(".param_check:checked").each(function(){
+        var prnts=$(this).closest(".row_checks_wrap");
+        prnts.addClass("active");
+        var prnts_more=prnts.parent().find(".show_more_params")
+        prnts_more.addClass("active");
+        prnts_more.children("span").addClass("active").html("Скрыть");
+
+    });
     $("#showmore_isseo").click(function(){
         if($(this).hasClass("active")){
             $(this).html("показать еще");            
