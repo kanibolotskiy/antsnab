@@ -109,8 +109,8 @@
                         <meta itemprop="addressCountry" content="RU">
                     </p>
                 </a>
-                <time style="display:none;" itemprop="openingHours" datetime="Mo-Fr 09:00−19:00">
-                    Пн-Пт: 09.00 до 19.00, Сб-Вс: Выходные дни
+                <time style="display:none;" itemprop="openingHours" datetime="Mo-Fr 09:00−18:00">
+                    Пн-Пт: 09.00 до 18.00, Сб-Вс: Выходные дни
                 </time>
                 <meta itemprop="priceRange" content="<?php echo $priceRange;?>">
             </div>
@@ -122,7 +122,7 @@
         </div>
     </div>
 </footer>
-<script src="/catalog/view/theme/app/bundle/app2.js?v2.20"></script>
+<script src="/catalog/view/theme/app/bundle/app2.js?v2.21"></script>
 <!--<script src="https://www.google.com/recaptcha/api.js"></script>-->
 
     <!-- @task1 Счетчики, виджеты (comagic) -->

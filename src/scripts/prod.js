@@ -6,7 +6,12 @@ var $firstSwitcher;
 //var format = require('number-format.js');
 
 
-
+function scrollbarWidth() {
+    var documentWidth = parseInt(document.documentElement.clientWidth);
+    var windowsWidth = parseInt(window.innerWidth);
+    var scrollbarWidth = windowsWidth - documentWidth;
+    return scrollbarWidth;
+}
 function getPlural(number, one, two) {///1,ведра,вёдер
     let n = Math.abs(number);
 

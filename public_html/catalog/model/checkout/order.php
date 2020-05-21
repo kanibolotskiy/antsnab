@@ -7,11 +7,11 @@ class ModelCheckoutOrder extends Model {
 	public function OfficeWorkTime($dummy = false) {
 		$OfficeWorkTimes = array(
 			
-			1 => array('9:00','19:00'), // MON
-			2 => array('9:00','19:00'),
-			3 => array('9:00','19:00'),
-			4 => array('9:00','19:00'),
-			5 => array('9:00','19:00'), // FRI
+			1 => array('9:00','18:00'), // MON
+			2 => array('9:00','18:00'),
+			3 => array('9:00','18:00'),
+			4 => array('9:00','18:00'),
+			5 => array('9:00','18:00'), // FRI
 			6 => null, // SUN
 			0 => null // SUN
 		  );
