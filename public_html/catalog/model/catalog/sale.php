@@ -49,7 +49,7 @@ class ModelCatalogSale extends Model {
 
 		if($data["select"]==1 or $data["select"]==0){
 			//Активные акции
-			$sql="SELECT DISTINCT * FROM accia where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND (DATE(date_end) >= '".$d_now."' or date_end is null)";
+			$sql="SELECT DISTINCT * FROM accia where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND (DATE(date_end) >= '".$d_now."' or date_end is null) order by sort_order DESC";
 			$query = $this->db->query($sql);
 			foreach($query->rows as $row){
 				$results[]=$row;
@@ -61,7 +61,7 @@ class ModelCatalogSale extends Model {
 		}
 		if($data["select"]==2 or $data["select"]==0){
 			//Закончившиеся акции
-			$sql="SELECT DISTINCT * FROM accia where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND (DATE(date_end) < '".$d_now."' or date_end is null)";
+			$sql="SELECT DISTINCT * FROM accia where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND (DATE(date_end) < '".$d_now."' or date_end is null) order by sort_order DESC";
 			$query = $this->db->query($sql);
 			foreach($query->rows as $row){
 				$results[]=$row;
