@@ -255,6 +255,11 @@ $(document).ready(function(){
         $tmp.remove();
     } 
     $("#permanent_link_button").click(function(){
+
+        if (typeof ym != 'undefined') {
+            ym(14496178, 'reachGoal', 'compare-copy');
+        }
+
         var ttl1=$(this).text();
         var ttl2=$(this).attr("data-title");
         //$(this).attr("data-title",ttl1);
