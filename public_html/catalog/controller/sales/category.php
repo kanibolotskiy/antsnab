@@ -21,6 +21,9 @@ class ControllerSalesCategory extends Controller {
 		);
 
 		$data["heading_title"]="Акции и скидки";
+		$this->document->setTitle("Акции, скидки, специальные предложения | Ант-Снаб");
+		$this->document->setDescription("На странице собраны текущие и закончившиеся акции, информация о скидках и специальные предложения на строительные материалы, инструменты и сопутствующие товары Ант-Снаб");
+		$this->document->setKeywords("акции, скидки, спецпредложения, специальные предложения, строительные материалы, стройматериалы, инструменты, распродажа");
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
