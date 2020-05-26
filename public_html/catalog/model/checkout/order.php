@@ -789,7 +789,7 @@ class ModelCheckoutOrder extends Model {
 					$text .= $language->get('text_new_date_added') . ' ' . date($language->get('date_format_short'), strtotime($order_info['date_added'])) . "\n";
 					$text .= $language->get('text_new_order_status') . ' ' . $order_status . "\n\n";
 					$text .= $language->get('text_new_products') . "\n";
-
+					$data["sales"]=[];
 					foreach ($order_product_query->rows as $product) {
 
 						$sales_product=$this->model_catalog_product->activeActionsProduct($product['product_id']);
