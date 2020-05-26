@@ -65,7 +65,7 @@ class ControllerCatalogMain extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title_benefits'),
+			'text' => $this->language->get('heading_title_main'),
 			'href' => $this->url->link('catalog/main', 'token=' . $this->session->data['token'] . $url, true)
 		);
 

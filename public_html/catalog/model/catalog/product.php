@@ -34,6 +34,14 @@ class ModelCatalogProduct extends Model {
 	public function updateViewed($product_id) {
 		$this->db->query("UPDATE " . DB_PREFIX . "product SET viewed = (viewed + 1) WHERE product_id = '" . (int)$product_id . "'");
 	}
+	public function activeActionsProduct($product_id){
+		$d_now=date("Y-m-d");
+		$sql="select ap.accia_id, a.title, a.shorttext from accia_products ap LEFT JOIN accia a ON ap.accia_id=a.accia_id
+		where ap.product_id=".$product_id." and status=1 
+		and (DATE(a.date_start) <= '".$d_now."' or a.date_start is null) AND (DATE(a.date_end) >= '".$d_now."' or a.date_end is null ) order by a.sort_order";
+		$query = $this->db->query($sql);
+		return $query->rows;
+	}
 	public function getProductLabels($product){
 		//print_r($product);
 
@@ -50,23 +58,24 @@ class ModelCatalogProduct extends Model {
 
 		//Акция
 		$d_now=date("Y-m-d");
-		$sql="select ap.accia_id, a.name, a.shorttext from accia_products ap LEFT JOIN accia a ON ap.accia_id=a.accia_id
+		$sql="select ap.accia_id, a.title, a.shorttext from accia_products ap LEFT JOIN accia a ON ap.accia_id=a.accia_id
 		where ap.product_id=".$product["product_id"]." and status=1 
-		and DATE(a.date_start) <= '".$d_now."' AND DATE(a.date_end) >= '".$d_now."' order by a.sort_order";
-		//echo $sql;
+		and (DATE(a.date_start) <= '".$d_now."' or a.date_start is null) AND (DATE(a.date_end) >= '".$d_now."' or a.date_end is null ) order by a.sort_order";
 		$query = $this->db->query($sql);
 		$accia=[];
+		
 		foreach ($query->rows as $result) {
 			$accia[]=Array(
-				"title"=>$result["name"],
+				"title"=>$result["title"],
 				"text"=>$result["shorttext"],
+				"url"=>$this->url->link('sale/sale', 'sale_id=' .  $result["accia_id"])
 			);
 		}
 		if(count($accia)){
 			$labels["_accia"]=Array(
 				"label"=>"Акция",
 				"title"=>"Акция",
-				"items"=>$accia
+				"items"=>$accia,
 			);
 		}
 

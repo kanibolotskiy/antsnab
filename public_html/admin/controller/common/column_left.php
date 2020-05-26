@@ -202,6 +202,15 @@ class ControllerCommonColumnLeft extends Controller {
 				);					
 			}
 
+			//Страница акция(скидочные товары)
+			if ($this->user->hasPermission('access', 'catalog/acciasale')) {		
+				$dopinfo_arr[] = array(
+					'name'	   => $this->language->get('text_acciasale'),
+					'href'     => $this->url->link('catalog/acciasale', 'token=' . $this->session->data['token'], true),
+					'children' => array()
+				);					
+			}
+
 			if ($dopinfo_arr) {
 				$catalog[] = array(
 					'name'	   => $this->language->get('text_dopinfo'),

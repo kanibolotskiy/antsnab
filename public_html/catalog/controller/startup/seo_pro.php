@@ -6,6 +6,7 @@ class ControllerStartupSeoPro extends Controller {
 		parent::__construct($registry);
 		$this->cache_data = $this->cache->get('seo_pro');
 		if (!$this->cache_data) {
+			
 			$query = $this->db->query("SELECT LOWER(`keyword`) as 'keyword', `query` FROM " . DB_PREFIX . "url_alias ORDER BY url_alias_id");
 			$this->cache_data = array();
 			foreach ($query->rows as $row) {
@@ -21,18 +22,22 @@ class ControllerStartupSeoPro extends Controller {
 	}
 
 	public function index() {
+		
 		// Add rewrite to url class
 		if ($this->config->get('config_seo_url')) {
 			$this->url->addRewrite($this);
 		} else {
 			return;
 		}
-
+		
 		// Decode URL
 		if (!isset($this->request->get['_route_'])) {
 			$this->validate();
 		} else {
+			
 			$route_ = $route = $this->request->get['_route_'];
+			
+			
 			unset($this->request->get['_route_']);
 			$parts = explode('/', trim(utf8_strtolower($route), '/'));
 			list($last_part) = explode('.', array_pop($parts));
@@ -44,12 +49,18 @@ class ControllerStartupSeoPro extends Controller {
 					$rows[] = array('keyword' => $keyword, 'query' => $this->cache_data['keywords'][$keyword]);
 				}
 			}
+			
 
 			if (isset($this->cache_data['keywords'][$route])){
 				$keyword = $route;
 				$parts = array($keyword);
 				$rows = array(array('keyword' => $keyword, 'query' => $this->cache_data['keywords'][$keyword]));
 			}
+			/*
+			print_r($rows);
+			echo "<br/><br/>";
+			print_r($parts);
+			*/
 
 			if (count($rows) == sizeof($parts)) {
 				$queries = array();
@@ -75,7 +86,7 @@ class ControllerStartupSeoPro extends Controller {
 			} else {
 				$this->request->get['route'] = 'error/not_found';
 			}
-
+			 
 			if (isset($this->request->get['product_id'])) {
 				$this->request->get['route'] = 'product/product';
 				if (!isset($this->request->get['path'])) {
@@ -88,6 +99,13 @@ class ControllerStartupSeoPro extends Controller {
 				$this->request->get['route'] = 'product/manufacturer/info';
 			} elseif (isset($this->request->get['information_id'])) {
 				$this->request->get['route'] = 'information/information';
+			
+			} elseif (isset($this->request->get['sale_id'])) {
+				$this->request->get['route'] = 'sales/sales';
+			/*
+			} elseif (isset($this->request->get['sales'])) {
+				$this->request->get['route'] = 'sales/category';
+			/**/
 			} elseif(isset($this->cache_data['queries'][$route_]) && isset($this->request->server['SERVER_PROTOCOL'])) {
 					header($this->request->server['SERVER_PROTOCOL'] . ' 301 Moved Permanently');
 					$this->response->redirect($this->cache_data['queries'][$route_], 301);
@@ -95,10 +113,8 @@ class ControllerStartupSeoPro extends Controller {
 				if (isset($queries[$parts[0]])) {
 					$this->request->get['route'] = $queries[$parts[0]];
 				}
-			}
-
+			}			
 			$this->validate();
-
 			if (isset($this->request->get['route'])) {
 				return new Action($this->request->get['route']);
 			}
@@ -118,6 +134,8 @@ class ControllerStartupSeoPro extends Controller {
 		$route = $data['route'];
 		unset($data['route']);
 
+		
+		
 		switch ($route) {
 			case 'product/product':
 				if (isset($data['product_id'])) {
@@ -146,7 +164,7 @@ class ControllerStartupSeoPro extends Controller {
 					if (!$data['path']) return $link;
 				}
 				break;
-
+			
 			case 'product/product/review':
 			case 'information/information/agree':
 				return $link;
@@ -181,7 +199,18 @@ class ControllerStartupSeoPro extends Controller {
 						unset($data[$key]);
 						$postfix = 1;
 						break;
-
+					case 'sale_id':
+						$queries[]="sales/category";
+						$queries[] = $key . '=' . $value;
+						unset($data[$key]);
+						//$postfix = 1;
+					break;
+					/*
+					case 'sales':
+						$queries[]="sales/category";
+						//$postfix = 1;
+					break;
+					/**/
 					case 'path':
 						$categories = explode('_', $value);
 						foreach ($categories as $category) {
@@ -195,19 +224,32 @@ class ControllerStartupSeoPro extends Controller {
 				}
 			}
 		}
-
-
+		//print_r($queries);
+		/*
+		echo "*<br/><br/>";
+		print_r($route);
+*/
 		if(empty($queries)) {
 			$queries[] = $route;
 		}
-
+		
 		$rows = array();
+		//print_r($this->cache_data['queries']);
 		foreach($queries as $query) {
-			if(isset($this->cache_data['queries'][$query])) {
+			//echo "!".$query."!<br/>";
+			if(isset($this->cache_data['queries'][$query])) {	
 				$rows[] = array('query' => $query, 'keyword' => $this->cache_data['queries'][$query]);
 			}
 		}
-
+		/*
+		echo "*<br/><br/>";
+		print_r($rows);
+		echo "*<br/><br/>";
+		print_r($queries);
+		echo "*<br/><br/>";
+		/*
+		echo count($rows)."==".count($queries)."<br/>";
+		*/
 		if(count($rows) == count($queries)) {
 			$aliases = array();
 			foreach($rows as $row) {
@@ -217,7 +259,8 @@ class ControllerStartupSeoPro extends Controller {
 				$seo_url .= '/' . rawurlencode($aliases[$query]);
 			}
 		}
-
+		//echo "<br/>seo_url=".$seo_url."<br/><br/>";
+		//echo "link=".$link."<br/>";
 		if ($seo_url == '') return $link;
 
 		$seo_url = trim($seo_url, '/');
@@ -241,7 +284,7 @@ class ControllerStartupSeoPro extends Controller {
 		if (count($data)) {
 			$seo_url .= '?' . urldecode(http_build_query($data, '', '&amp;'));
 		}
-
+//echo "!".$seo_url."!";
 		return $seo_url;
 	}
 
@@ -300,13 +343,15 @@ class ControllerStartupSeoPro extends Controller {
 	}
 
 	private function validate() {
+		
 		if (isset($this->request->get['route']) && $this->request->get['route'] == 'error/not_found') {
 			return;
 		}
+		
 		if(empty($this->request->get['route'])) {
 			$this->request->get['route'] = 'common/home';
 		}
-
+		
 		if (isset($this->request->server['HTTP_X_REQUESTED_WITH']) && strtolower($this->request->server['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 			return;
 		}
@@ -321,9 +366,9 @@ class ControllerStartupSeoPro extends Controller {
 			$seo = str_replace('&amp;', '&', $this->url->link($this->request->get['route'], $this->getQueryString(array('route')), false));
 		}
 
+		
 		if (rawurldecode($url) != rawurldecode($seo) && isset($this->request->server['SERVER_PROTOCOL'])) {
 			header($this->request->server['SERVER_PROTOCOL'] . ' 301 Moved Permanently');
-
 			$this->response->redirect($seo, 301);
 		}
 	}

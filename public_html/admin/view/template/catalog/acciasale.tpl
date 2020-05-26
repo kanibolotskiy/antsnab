@@ -40,29 +40,39 @@
                                     <?php } ?>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label class="col-sm-2 control-label" for="input-meta_title"><?php echo $entry_meta_title; ?></label>
                                 <div class="col-sm-10">
                                     <input type="text" name="meta_title" value="<?php echo $meta_title; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta_title" class="form-control" />
+                                    <?php if ($error_meta_title) { ?>
+                                        <div class="text-danger"><?php echo $error_meta_title; ?></div>
+                                    <?php } ?>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label class="col-sm-2 control-label" for="input-meta_h1"><?php echo $entry_meta_h1; ?></label>
                                 <div class="col-sm-10">
                                     <input type="text" name="meta_h1" value="<?php echo $meta_h1; ?>" placeholder="<?php echo $entry_meta_h1; ?>" id="input-meta_h1" class="form-control" />
+                                    <?php if ($error_meta_h1) { ?>
+                                        <div class="text-danger"><?php echo $error_meta_h1; ?></div>
+                                    <?php } ?>
                                 </div>
                             </div>
                             
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label class="col-sm-2 control-label" for="input-description"><?php echo $entry_description; ?></label>
                                 <div class="col-sm-10">
                                     <textarea id="input-description" name="description" cols="60" rows="8" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control summernote"><?php echo $description; ?></textarea>
+                                    
+                                    <?php if ($error_description) { ?>
+                                        <div class="text-danger"><?php echo $error_description; ?></div>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="form-group required">
                                 <label class="col-sm-2 control-label" for="input-shorttext"><?php echo $entry_shorttext; ?></label>
                                 <div class="col-sm-10">
-                                    <textarea id="input-shorttext" name="shorttext" cols="60" rows="8" placeholder="<?php echo $entry_shorttext; ?>" id="input-shorttext" class="form-control"><?php echo $shorttext; ?></textarea>
+                                    <textarea id="input-description" name="shorttext" cols="60" rows="8" placeholder="<?php echo $entry_shorttext; ?>" id="input-shorttext" class="form-control"><?php echo $shorttext; ?></textarea>
                                     <?php if ($error_shorttext) { ?>
                                         <div class="text-danger"><?php echo $error_shorttext; ?></div>
                                     <?php } ?>
@@ -72,6 +82,9 @@
                                 <label class="col-sm-2 control-label" for="input-meta_description"><?php echo $entry_meta_description; ?></label>
                                 <div class="col-sm-10">
                                     <textarea id="input-meta_description" name="meta_description" cols="60" rows="8" placeholder="<?php echo $meta_description; ?>" id="input-meta_description" class="form-control"><?php echo $meta_description; ?></textarea>
+                                    <?php if ($error_meta_description) { ?>
+                                        <div class="text-danger"><?php echo $error_meta_description; ?></div>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -80,16 +93,7 @@
                                     <input type="text" name="meta_keyword" value="<?php echo $meta_keyword; ?>" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta_keyword" class="form-control" />
                                 </div>
                             </div>
-                            <div class="form-group required">
-                                <label class="col-sm-2 control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
-                                    <?php if ($error_keyword) { ?>
-                                        <div class="text-danger"><?php echo $error_keyword; ?></div>
-                                    <?php } ?>
-                                </div>
-                                
-                            </div>
+                            
                             <div class="form-group">
                                 <div class="table-responsive">
                                     <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
@@ -125,51 +129,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
-                                <div class="col-sm-3">
-                                    <div class="input-group datetime">
-                                        <input type="text" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group required">
-                                <label class="col-sm-2 control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
-                                <div class="col-sm-3">
-                                    <div class="input-group datetime">
-                                        <input type="text" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                                        </span>
-                                        
-                                    </div>
-                                    <?php if ($error_date_end) { ?>
-                                        <div class="text-danger"><?php echo $error_date_end; ?></div>
-                                    <?php } ?>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+                                <label class="col-sm-2 control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
                                 <div class="col-sm-10">
-                                    <select name="status" id="input-status" class="form-control">
-                                        <?php if ($status) { ?>
-                                            <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                                            <option value="0"><?php echo $text_disabled; ?></option>
-                                        <?php } else { ?>
-                                            <option value="1"><?php echo $text_enabled; ?></option>
-                                            <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                                        <?php } ?>
-                                    </select>
+                                    <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
-                                </div>
-                            </div>
+
+                            
                         </div>
                         <div class="tab-pane" id="tab-products">
                             <input type="hidden" name="accia_products" id="accia_products" value="<?php echo $accia_products;?>"/>

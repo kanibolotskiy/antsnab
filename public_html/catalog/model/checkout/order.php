@@ -589,6 +589,7 @@ class ModelCheckoutOrder extends Model {
 				$data['shipping_address'] = $order_info['payment_address_1'];
 				$data['caption'] = $language->get('text_caption_user');
 				$this->load->model('tool/upload');
+				$this->load->model('catalog/product');
 
 				// Products
 				$data['products'] = array();
@@ -756,6 +757,8 @@ class ModelCheckoutOrder extends Model {
 					// HTML Mail
 					$data['text_greeting'] = $language->get('text_new_received');
 					$data['caption'] = $language->get('text_caption_admin');
+					
+					
 					if ($comment) {
 						if ($order_info['comment']) {
 							$data['comment'] = nl2br($comment) . '<br/><br/>' . $order_info['comment'];
@@ -788,6 +791,33 @@ class ModelCheckoutOrder extends Model {
 					$text .= $language->get('text_new_products') . "\n";
 
 					foreach ($order_product_query->rows as $product) {
+
+						$sales_product=$this->model_catalog_product->activeActionsProduct($product['product_id']);
+						
+						$sales_arr=[];
+						$sales_str="";
+						foreach($sales_product as $sale){
+							$sale_link=$this->url->link('sales/sales', 'sale_id=' . $sale['accia_id']);
+							$sales_arr[]='<a href="'.$sale_link.'">'.$sale['title'].'</a>';
+						}
+						if($sales_arr){
+							$sales_str=implode(", ",$sales_arr);
+						}
+						if($sales_str){
+							$product_link=$this->url->link('product/product', 'product_id=' . $product['product_id']);
+							
+							$data["sales"][]='Товар <a target="_blank" href="'.$product_link.'">'.$product['name'].'</a> участвует в акции '.$sales_str;
+						}
+						/*
+						$data["sales"][$product['product_id']]=Array(
+							"list"=>$sales_arr,
+							"product_name"=>$product['name'],
+							"product_url"=>"#"
+						);
+						*/
+
+						//$data['sales'][] = 'Товар <a href="#">мастика1</a> учавствует в акции <a href="#">акция1</a>, <a href="#">акция2</a>';
+
 						$text .= $product['quantity'] . 'x ' . $product['name'] . ' (' . $product['model'] . ') ' . html_entity_decode($this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
 
 						$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . $product['order_product_id'] . "'");

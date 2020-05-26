@@ -5,7 +5,6 @@ class ControllerStartupSeoUrl extends Controller {
 		if ($this->config->get('config_seo_url')) {
 			$this->url->addRewrite($this);
 		}
-
 		// Decode URL
 		if (isset($this->request->get['_route_'])) {
 			$parts = explode('/', $this->request->get['_route_']);
@@ -50,7 +49,7 @@ class ControllerStartupSeoUrl extends Controller {
 					break;
 				}
 			}
-
+			
 			if (!isset($this->request->get['route'])) {
 				if (isset($this->request->get['product_id'])) {
 					$this->request->get['route'] = 'product/product';

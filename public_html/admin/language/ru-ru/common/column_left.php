@@ -111,5 +111,7 @@ $_['text_docs']              		        = 'Документы';
 $_['text_discount']              		    = 'Скидки';
 $_['text_calcs']                  		    = 'Калькуляторы';
 $_['text_main']                  		    = 'Главная';
+$_['text_acciasale']                  		= 'Акция (скидки)';
+
 
 $_['text_accia']          					= 'Акции';

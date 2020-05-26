@@ -117,14 +117,14 @@
         </div>
         <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-review">
           <div class="table-responsive">
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover accia_list_table">
               <thead>
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                  <td class="text-left"><?php if ($sort == 'r.name') { ?>
-                    <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
+                  <td class="text-left"><?php if ($sort == 'a.title') { ?>
+                    <a href="<?php echo $sort_title; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_title; ?></a>
                     <?php } else { ?>
-                    <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
+                    <a href="<?php echo $sort_title; ?>"><?php echo $column_title; ?></a>
                     <?php } ?></td>
                   <!--
                   <td class="text-left"><?php if ($sort == 'r.author') { ?>
@@ -150,23 +150,23 @@
                     <a href="<?php echo $sort_rating; ?>"><?php echo $column_rating; ?></a>
                     <?php } ?></td>
                   -->
-                  <td class="text-left"><?php if ($sort == 'r.date_start') { ?>
+                  <td class="text-left"><?php if ($sort == 'a.date_start') { ?>
                     <a href="<?php echo $sort_date_start; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_start; ?></a>
                     <?php } else { ?>
                     <a href="<?php echo $sort_date_start; ?>"><?php echo $column_date_start; ?></a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'r.date_end') { ?>
+                  <td class="text-left"><?php if ($sort == 'a.date_end') { ?>
                     <a href="<?php echo $sort_date_end; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_end; ?></a>
                     <?php } else { ?>
                     <a href="<?php echo $sort_date_end; ?>"><?php echo $column_date_end; ?></a>
                     <?php } ?></td>                    
 
-                  <td class="text-left"><?php if ($sort == 'r.status') { ?>
+                  <td class="text-left"><?php if ($sort == 'a.status') { ?>
                     <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
                     <?php } else { ?>
                     <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
                     <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'r.sort_order') { ?>
+                  <td class="text-left"><?php if ($sort == 'a.sort_order') { ?>
                     <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
                     <?php } else { ?>
                     <a href="<?php echo $sort_sort_order; ?>"><?php echo $column_sort_order; ?></a>
@@ -180,13 +180,13 @@
               <tbody>
                 <?php if ($accias) { ?>
                 <?php foreach ($accias as $accia) { ?>
-                <tr>
+                <tr class="<?php echo $accia['disabled'];?>">
                   <td class="text-center"><?php if (in_array($accia['accia_id'], $selected)) { ?>
                     <input type="checkbox" name="selected[]" value="<?php echo $accia['accia_id']; ?>" checked="checked" />
                     <?php } else { ?>
                     <input type="checkbox" name="selected[]" value="<?php echo $accia['accia_id']; ?>" />
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $accia['name']; ?></td>
+                  <td class="text-left"><?php echo $accia['title']; ?></td>
                   <td class="text-left"><?php echo $accia['date_start']; ?></td>
                   <td class="text-left"><?php echo $accia['date_end']; ?></td>
                   <td class="text-left"><?php echo $accia['status']; ?></td>
@@ -210,9 +210,32 @@
       </div>
     </div>
   </div>
+
+  <script type="text/javascript"><!--
+    $('input[name=\'filter_product\']').autocomplete({
+        'source': function (request, response) {
+            $.ajax({
+                url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' + encodeURIComponent(request),
+                dataType: 'json',
+                success: function (json) {
+                    response($.map(json, function (item) {
+                        return {
+                            label: item['name'],
+                            value: item['product_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function (item) {
+
+            $('input[name=\'filter_product\']').val(item.label);
+        }
+    });
+//--></script> 
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=catalog/review&token=<?php echo $token; ?>';
+	url = 'index.php?route=catalog/accia&token=<?php echo $token; ?>';
 	
 	var filter_product = $('input[name=\'filter_product\']').val();
 	
@@ -220,34 +243,19 @@ $('#button-filter').on('click', function() {
 		url += '&filter_product=' + encodeURIComponent(filter_product);
 	}
 	
-	var filter_author = $('input[name=\'filter_author\']').val();
-	
-	if (filter_author) {
-		url += '&filter_author=' + encodeURIComponent(filter_author);
-	}
-
-    var filter_about = $('input[name=\'filter_about\']').val();
-	
-	if (filter_about) {
-		url += '&filter_about=' + encodeURIComponent(filter_about);
-	}
-
-    var filter_moderator = $('input[name=\'filter_moderator\']').val();
-
-	if (filter_moderator) {
-		url += '&filter_moderator=' + encodeURIComponent(filter_moderator);
-	}
 	
 	var filter_status = $('select[name=\'filter_status\']').val();
-	
 	if (filter_status != '*') {
 		url += '&filter_status=' + encodeURIComponent(filter_status); 
 	}		
 			
-	var filter_date_added = $('input[name=\'filter_date_added\']').val();
-	
-	if (filter_date_added) {
-		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+	var filter_date_start = $('input[name=\'filter_date_start\']').val();
+	if (filter_date_start) {
+		url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
+	}
+  var filter_date_end = $('input[name=\'filter_date_end\']').val();
+	if (filter_date_end) {
+		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
 	}
 
 	location = url;

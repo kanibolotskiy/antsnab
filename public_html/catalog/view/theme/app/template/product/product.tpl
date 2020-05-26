@@ -83,11 +83,32 @@
                         </div> 
                         <div class="left">
                             <div class="tovar_main_image">
-        
+
+                                <?php if(isset($labels["_accia"])){?>
+                                    <div class="product_accia_text">
+                                        <div class="icon_del close_accia_info"></div>
+                                        <div class="product_accia_info">
+                                            <?php foreach($labels["_accia"]["items"] as $accia) {?>
+                                                <div class="product_accia_row">
+                                                    <div class="product_accia_caption"><?php echo $accia['title'];?></div>
+                                                    <div class="product_accia_content"><?php echo $accia['text'];?></div>
+                                                    <div class="product_accia_link">
+                                                        <a href="<?php echo $accia['url'];?>" target="_blank">Перейти к акции</a>
+                                                    </div>
+                                                </div>
+                                            <?php }?>
+                                        </div>
+                                    </div>
+                                <?php }?>
+
                                 <?php if($labels){  ?>
                                     <div class="item_labels">
                                         <?php foreach($labels as $key=>$label){ ?>
-                                            <div class="item_label <?php echo $key;?>" title="<?php echo $label['title'];?>"><?php echo $label['label'];?></div>
+                                            <?php if($key=="_accia"){?>
+                                                <div class="item_label mainitem_accialabel <?php echo $key;?>"><?php echo $label['label'];?></div>
+                                            <?php }else{?>
+                                                <div class="item_label <?php echo $key;?>" title="<?php echo $label['title'];?>"><?php echo $label['label'];?></div>
+                                            <?php }?>
                                         <?php } ?>
                                     </div>
                                 <?php }?>

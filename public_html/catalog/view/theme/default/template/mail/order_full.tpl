@@ -145,6 +145,11 @@
             <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; padding: 7px;" name="UTM_value"><?=$utm_term?></td>
         </tr>                                
     </table>
+    <?php if($sales) {?>
+        <?php foreach($sales as $sale){?>
+            <p><?=$sale?></p>
+        <?php }?>
+    <?php }?>
     <p style="margin-top: 0px; margin-bottom: 20px;"><?php echo $text_footer; ?></p>
 </div>
 </body>

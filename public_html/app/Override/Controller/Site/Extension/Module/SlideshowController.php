@@ -22,18 +22,34 @@ class SlideshowController extends \Controller
 
 		$this->load->model('design/banner');
 		$this->load->model('tool/image');
+		$this->load->model('catalog/sale');
 
 		$data['banners'] = array();
 
 		$results = $this->model_design_banner->getBanner($setting['banner_id']);
-
+		
+		/**Добавляем баннеры из акций */
+		$activeAccias=$this->model_catalog_sale->activeAccias();
+		foreach($activeAccias as $accia){
+			$accia_url=$this->url->link('sale/sale', 'sale_id=' . $accia["accia_id"]);
+			if($accia['image']){
+				$data['banners'][] = array(
+					'title' => "Акция",
+					'link'  => $accia_url,
+					'descr' => $accia["shorttext"],
+					'image' => $this->model_tool_image->cropsize($accia['image'], 1100, 540)
+				);
+			}
+		}
+		
 		foreach ($results as $result) {
 			if (is_file(DIR_IMAGE . $result['image'])) {
 				$data['banners'][] = array(
 					'title' => $result['title'],
 					'link'  => $result['link'],
                     'descr' => html_entity_decode($result['descr']),
-					'image' => $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height'])
+					//'image' => $this->model_tool_image->cropsize($result['image'], $setting['width'], $setting['height'])
+					'image' => $this->model_tool_image->cropsize($result['image'],  781, 385)
 				);
 			}
 		}

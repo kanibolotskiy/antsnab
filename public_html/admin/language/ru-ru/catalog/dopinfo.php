@@ -6,6 +6,8 @@ $_['heading_title_docs']        = 'Документы';
 $_['heading_title_discounts']   = 'Скидки';
 $_['heading_title_calcs']       = 'Калькуляторы';
 $_['heading_title_main']        = 'Главная (информация)';
+$_['heading_title_acciasale']   = 'Акция (скидки)';
+
 
 
 // Text
@@ -98,3 +100,5 @@ $_['error_price']               = 'Цена должна быть больше 0
 $_['error_keyword']          	= 'Этот SEO keyword уже используется!';
 $_['error_product']          	= 'Этот производитель не может быть удален, поскольку в настоящее время он прикреплен к %s товару(ам)!';
 $_['text_success']          	= 'Успешно сохранено';
+
+$_['tab_products']          	= 'Продукты';

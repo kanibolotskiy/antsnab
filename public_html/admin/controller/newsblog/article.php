@@ -507,6 +507,7 @@ class ControllerNewsBlogArticle extends Controller {
 		} else {
 			$data['error_name'] = array();
 		}
+		
 
 		if (isset($this->error['keyword'])) {
 			$data['error_keyword'] = $this->error['keyword'];

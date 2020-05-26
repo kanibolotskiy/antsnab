@@ -1,11 +1,14 @@
 <?php
 // Heading
-$_['heading_title']     	= 'Акции';
+$_['heading_title']     	= 'Акции(скидки)';
+$_['heading_title_acciasale']     	= 'Акции(скидки)';
+
+
 
 // Text
 $_['text_success']          = 'Список акций обновлен!';
 $_['text_list']          	= 'Список акций';
-$_['text_add']          	= 'Добавление акции';
+$_['text_add']          	= 'Редактирование акции';
 $_['text_edit']          	= 'Редактирование акции';
 
 // Column
@@ -35,7 +38,7 @@ $_['entry_product']         = 'Товар:';
 $_['entry_title']            = 'Название:';
 $_['entry_image']           = 'Изображение:';
 $_['entry_banner']           = 'Баннер:';
-
+$_['entry_keyword']             = 'SEO URL:';
 
 /*
 $_['entry_author']          = 'Автор:';
@@ -63,17 +66,10 @@ $_['entry_meta_keyword']    = 'Мета-тег Keyword:';
 $_['entry_keyword']             = 'SEO URL:';
 
 
-
 // Error
 $_['error_permission']      = 'У вас нет прав для изменения акции!';
 $_['error_product']         = 'Требуется выбрать товар!';
 $_['error_text']          	= 'Текст акции должен содержать хотя бы 1 символ!';
-
-$_['error_title']          	= 'Необходимо заполнить';
-$_['error_shorttext']     	= 'Необходимо заполнить';
-$_['error_keyword']     	= 'Необходимо заполнить';
-$_['error_date_end']     	= 'Необходимо выбрать';
-
 
 $_['tab_general']           = 'Основное';
 $_['tab_products']          = 'Продукты';

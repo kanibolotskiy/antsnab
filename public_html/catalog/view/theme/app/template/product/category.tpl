@@ -11,6 +11,7 @@
             </div>
         </div>
         <div class="content">
+            <?php include __DIR__ . '/../partial/category_banner.tpl' ?>
             <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
             <?php echo $content_top; ?>
             

@@ -3,12 +3,18 @@
     <?php if($p["labels"]){  ?>
         <div class="item_labels">
             <?php foreach($p["labels"] as $key=>$label){ ?>
-                <div class="item_label <?php echo $key;?>" title="<?php echo $label['title'];?>"><?php echo $label['label'];?></div>
+                
+                <?php if($key=="_accia"){?>
+                    <div class="item_label <?php echo $key;?>"><?php echo $label['label'];?></div>
+                <?php }elseif($key=="_discount") {?>
+                <div class="item_label <?php echo $key;?>"><a title="<?php echo $label['title'];?>" href="sales/discounts/"><?php echo $label['label'];?></a></div>
+                <?php }else{?>
+                    <div class="item_label <?php echo $key;?>" title="<?php echo $label['title'];?>"><?php echo $label['label'];?></div>
+                <?php }?>
             <?php } ?>
         </div>
     <?php }?>
 
-    <?php print_r($p["labels"]["_accia"]);?>
     <div class="catalog-block" itemprop="item" itemscope itemtype="http://schema.org/Offer">
         <?php if(isset($p["labels"]["_accia"])){?>
             <div class="product_accia_text">

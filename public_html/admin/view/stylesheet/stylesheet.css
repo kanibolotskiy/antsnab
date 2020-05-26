@@ -764,3 +764,5 @@ div.ckeditor {
 .accia_column_subcategory_caption{font-size:12px;cursor:pointer;margin-left:15px;}
 .accia_column_subcategory_caption._sub{margin-left:30px;}
 .subcat_wrapper{display:none;}
+
+.accia_list_table tr._disabled{opacity:0.5;}

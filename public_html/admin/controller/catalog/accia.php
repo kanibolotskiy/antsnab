@@ -133,12 +133,7 @@ class ControllerCatalogAccia extends Controller {
 			if (isset($this->request->get['filter_product'])) {
 				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
 			}
-			/*
-			if (isset($this->request->get['filter_author'])) {
-				$url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
-			}
-			*/
-
+			
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
@@ -221,7 +216,7 @@ class ControllerCatalogAccia extends Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'r.date_added';
+			$sort = 'sort_order';
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -294,15 +289,30 @@ class ControllerCatalogAccia extends Controller {
 
 		$results = $this->model_catalog_accia->getAccias($filter_data);
 		//print_r($results);
+		$date_now=strtotime(date("Y-m-d"));
+		
 
 		foreach ($results as $result) {
+			$dis="";
+			if($result['date_start']){
+				if(strtotime($result['date_start'])>$date_now){
+					$dis="_disabled";
+				}
+			}
+			if($result['date_end']){
+				if(strtotime($result['date_end'])<$date_now){
+					$dis="_disabled";
+				}
+			}
+
 			$data['accias'][] = array(
+				'disabled'=>$dis,
 				'accia_id'  => $result['accia_id'],
-				'name'       => $result['name'],
+				'title'       => $result['title'],
 				'status'     => ($result['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'sort_order'       => $result['sort_order'],
-				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
-				'date_end' => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
+				'date_start' => $result['date_start']?date($this->language->get('date_format_short'), strtotime($result['date_start'])):'',
+				'date_end' => $result['date_end']?date($this->language->get('date_format_short'), strtotime($result['date_end'])):'',
 				'edit'       => $this->url->link('catalog/accia/edit', 'token=' . $this->session->data['token'] . '&accia_id=' . $result['accia_id'] . $url, true)
 			);
 		}
@@ -320,7 +330,7 @@ class ControllerCatalogAccia extends Controller {
 		$data['column_author'] = $this->language->get('column_author');
 		$data['column_rating'] = $this->language->get('column_rating');
 		*/
-		$data['column_name'] = $this->language->get('column_name');
+		$data['column_title'] = $this->language->get('column_title');
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_date_start'] = $this->language->get('column_date_start');
 		$data['column_date_end'] = $this->language->get('column_date_end');
@@ -332,7 +342,7 @@ class ControllerCatalogAccia extends Controller {
 		
 
 
-		$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_title'] = $this->language->get('entry_title');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_date_start'] = $this->language->get('entry_date_start');
 		$data['entry_date_end'] = $this->language->get('entry_date_end');
@@ -392,12 +402,23 @@ class ControllerCatalogAccia extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		/*
 		$data['sort_product'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=pd.name' . $url, true);
 		$data['sort_author'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=r.author' . $url, true);
 		$data['sort_about'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=r.about' . $url, true);
 		$data['sort_rating'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=r.rating' . $url, true);
-		$data['sort_status'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=r.status' . $url, true);
+		
+
 		$data['sort_date_added'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=r.date_added' . $url, true);
+		*/
+
+		$data['sort_status'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=a.status' . $url, true);
+		$data['sort_sort_order'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=a.sort_order' . $url, true);
+		$data['sort_title'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=a.title' . $url, true);
+		$data['sort_date_start'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=a.date_start' . $url, true);
+		$data['sort_date_end'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=a.date_end' . $url, true);
+
+		
 
 		$url = '';
 
@@ -452,17 +473,25 @@ class ControllerCatalogAccia extends Controller {
 	}
 
 	protected function getForm() {
-		
+		if ($this->config->get('config_editor_default')) {
+			$this->document->addScript('view/javascript/ckeditor/ckeditor.js');
+			$this->document->addScript('view/javascript/ckeditor/ckeditor_init.js');
+		} else {
+			$this->document->addScript('view/javascript/summernote/summernote.js');
+			$this->document->addScript('view/javascript/summernote/lang/summernote-' . $this->language->get('lang') . '.js');
+			$this->document->addScript('view/javascript/summernote/opencart.js');
+			$this->document->addStyle('view/javascript/summernote/summernote.css');
+		}
+		$this->document->addScript('view/javascript/auto_translit.js');
+
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_form'] = !isset($this->request->get['accia_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
-		$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_title'] = $this->language->get('entry_title');
 		$data['entry_product'] = $this->language->get('entry_product');
-		//$data['entry_author'] = $this->language->get('entry_author');
-		//$data['entry_rating'] = $this->language->get('entry_rating');
 		$data['entry_date_start'] = $this->language->get('entry_date_start');
 		$data['entry_date_end'] = $this->language->get('entry_date_end');
 
@@ -475,11 +504,22 @@ class ControllerCatalogAccia extends Controller {
 		$data['tab_products'] = $this->language->get('tab_products');
 
 		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_text'] = $this->language->get('entry_text');
+		$data['entry_description'] = $this->language->get('entry_description');
 		$data['entry_shorttext'] = $this->language->get('entry_shorttext');
+		$data['entry_sended'] = $this->language->get('entry_sended');
+
+		$data['entry_meta_title'] = $this->language->get('entry_meta_title');
+		$data['entry_meta_h1'] = $this->language->get('entry_meta_h1');
+		$data['entry_meta_description'] = $this->language->get('entry_meta_description');
+		$data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
+
+
 		
 
-		$data['entry_sended'] = $this->language->get('entry_sended');
+		
+
+		$data['entry_keyword'] = $this->language->get('entry_keyword');
+
 		
 		$data['help_product'] = $this->language->get('help_product');
 
@@ -510,16 +550,62 @@ class ControllerCatalogAccia extends Controller {
 			$data['error_author'] = '';
 		}
 		*/
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
+		if (isset($this->error['title'])) {
+			$data['error_title'] = $this->error['title'];
 		} else {
-			$data['error_name'] = '';
+			$data['error_title'] = '';
 		}
-		if (isset($this->error['text'])) {
-			$data['error_text'] = $this->error['text'];
+
+		if (isset($this->error['shorttext'])) {
+			$data['error_shorttext'] = $this->error['shorttext'];
 		} else {
-			$data['error_text'] = '';
+			$data['error_shorttext'] = array();
 		}
+
+		if (isset($this->error['keyword'])) {
+			$data['error_keyword'] = $this->error['keyword'];
+		} else {
+			$data['error_keyword'] = array();
+		}
+		if (isset($this->error['date_end'])) {
+			$data['error_date_end'] = $this->error['date_end'];
+		} else {
+			$data['error_date_end'] = array();
+		}
+		
+
+		
+		/*
+		if (isset($this->error['description'])) {
+			$data['error_description'] = $this->error['description'];
+		} else {
+			$data['error_description'] = '';
+		}
+		if (isset($this->error['meta_title'])) {
+			$data['error_meta_title'] = $this->error['meta_title'];
+		} else {
+			$data['error_meta_title'] = array();
+		}
+		if (isset($this->error['meta_h1'])) {
+			$data['error_meta_h1'] = $this->error['meta_h1'];
+		} else {
+			$data['error_meta_h1'] = array();
+		}
+		if (isset($this->error['meta_description'])) {
+			$data['error_meta_description'] = $this->error['meta_description'];
+		} else {
+			$data['error_meta_description'] = array();
+		}
+		if (isset($this->error['keyword'])) {
+			$data['error_keyword'] = $this->error['keyword'];
+		} else {
+			$data['error_keyword'] = array();
+		}
+*/
+		
+		
+
+
 		/*
 		if (isset($this->error['rating'])) {
 			$data['error_rating'] = $this->error['rating'];
@@ -617,20 +703,20 @@ class ControllerCatalogAccia extends Controller {
 		}
 		*/
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
+		if (isset($this->request->post['title'])) {
+			$data['title'] = $this->request->post['title'];
 		} elseif (!empty($accia_info)) {
-			$data['name'] = $accia_info['name'];
+			$data['title'] = $accia_info['title'];
 		} else {
-			$data['name'] = '';
+			$data['title'] = '';
 		}
 
-		if (isset($this->request->post['text'])) {
-			$data['text'] = $this->request->post['text'];
+		if (isset($this->request->post['description'])) {
+			$data['description'] = $this->request->post['description'];
 		} elseif (!empty($accia_info)) {
-			$data['text'] = $accia_info['text'];
+			$data['description'] = $accia_info['description'];
 		} else {
-			$data['text'] = '';
+			$data['description'] = '';
 		}
 
 		if (isset($this->request->post['shorttext'])) {
@@ -640,6 +726,43 @@ class ControllerCatalogAccia extends Controller {
 		} else {
 			$data['shorttext'] = '';
 		}
+
+		if (isset($this->request->post['meta_title'])) {
+			$data['meta_title'] = $this->request->post['meta_title'];
+		} elseif (!empty($accia_info)) {
+			$data['meta_title'] = $accia_info['meta_title'];
+		} else {
+			$data['meta_title'] = '';
+		}
+		if (isset($this->request->post['meta_h1'])) {
+			$data['meta_h1'] = $this->request->post['meta_h1'];
+		} elseif (!empty($accia_info)) {
+			$data['meta_h1'] = $accia_info['meta_h1'];
+		} else {
+			$data['meta_h1'] = '';
+		}
+		if (isset($this->request->post['meta_description'])) {
+			$data['meta_description'] = $this->request->post['meta_description'];
+		} elseif (!empty($accia_info)) {
+			$data['meta_description'] = $accia_info['meta_description'];
+		} else {
+			$data['meta_description'] = '';
+		}
+		if (isset($this->request->post['meta_keyword'])) {
+			$data['meta_keyword'] = $this->request->post['meta_keyword'];
+		} elseif (!empty($accia_info)) {
+			$data['meta_keyword'] = $accia_info['meta_keyword'];
+		} else {
+			$data['meta_keyword'] = '';
+		}
+		if (isset($this->request->post['keyword'])) {
+			$data['keyword'] = $this->request->post['keyword'];
+		} elseif (!empty($accia_info)) {
+			$data['keyword'] = $accia_info['keyword'];
+		} else {
+			$data['keyword'] = '';
+		}
+		
 
 		/*
 		if (isset($this->request->post['rating'])) {
@@ -693,18 +816,27 @@ class ControllerCatalogAccia extends Controller {
 		$this->load->model('tool/image');
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
-		if (is_file(DIR_IMAGE . $accia_info['image'])) {
-			$image = $this->model_tool_image->resize($accia_info['image'], 100,100);
-		} else {
+		if(isset($accia_info)){
+			if (is_file(DIR_IMAGE . $accia_info['image'])) {
+				$image = $this->model_tool_image->resize($accia_info['image'], 200,100);
+				$data["image"]=$accia_info['image'];
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 100,100);
+				$data["image"]='';
+			}	
+			if (is_file(DIR_IMAGE . $accia_info['banner'])) {
+				$banner = $this->model_tool_image->resize($accia_info['banner'], 390, 100);
+				$data["banner"]=$accia_info['banner'];
+			} else {
+				$banner = $this->model_tool_image->resize('no_image.png', 100, 100);
+				$data["banner"]='';
+			}
+		}else{
 			$image = $this->model_tool_image->resize('no_image.png', 100,100);
-		}
-		
-		if (is_file(DIR_IMAGE . $accia_info['banner'])) {
-			$banner = $this->model_tool_image->resize($accia_info['banner'], 100, 100);
-		} else {
 			$banner = $this->model_tool_image->resize('no_image.png', 100, 100);
+			$data["image"]='';
+			$data["banner"]='';
 		}
-		
 		$data['thumb_image']=$image;
 		$data['thumb_banner']=$banner;
 
@@ -772,8 +904,18 @@ class ControllerCatalogAccia extends Controller {
 			$this->error['author'] = $this->language->get('error_author');
 		}
 		*/
-		if (utf8_strlen($this->request->post['text']) < 1) {
-			$this->error['text'] = $this->language->get('error_text');
+		if (utf8_strlen($this->request->post['title']) < 1) {
+			$this->error['title'] = $this->language->get('error_title');
+		}
+		if (utf8_strlen($this->request->post['shorttext']) < 1) {
+			$this->error['shorttext'] = $this->language->get('error_shorttext');
+		}
+
+		if (utf8_strlen($this->request->post['keyword']) < 1) {
+			$this->error['keyword'] = $this->language->get('error_keyword');
+		}
+		if (utf8_strlen($this->request->post['date_end']) < 1) {
+			$this->error['date_end'] = $this->language->get('error_date_end');
 		}
 		/*
 		if (!isset($this->request->post['rating']) || $this->request->post['rating'] < 0 || $this->request->post['rating'] > 5) {

@@ -1,6 +1,6 @@
 <?php
 use WS\Patch\Helper\ProductListHelper;
-class ControllerSalesSales extends Controller {
+class ControllerSalesDiscount extends Controller {
 	public function index() {
 		
 		$this->load->language('sales/sales');
@@ -22,22 +22,15 @@ class ControllerSalesSales extends Controller {
 		} else {
 			$sale_id = 0;
 		}
-		if($sale_id){
-			$sale_info = $this->model_catalog_sale->getSale($sale_id);
-			$accia_products=$this->model_catalog_sale->acciaProducts($sale_id);
-		}else{
-			$sale_info = $this->model_catalog_sale->getSaleDiscount();
-			$accia_products=$this->model_catalog_sale->acciaProductsSale();
-		}
+		
+		$sale_info = $this->model_catalog_sale->getSale($sale_id);
 		
 		if ($sale_info){
 			
 			if ($sale_info['meta_title']) {
 				$this->document->setTitle($sale_info['meta_title']);
-				
 			} else {
 				$this->document->setTitle($sale_info['title']);
-				
 			}
 
 			$this->document->setDescription($sale_info['meta_description']);
@@ -65,23 +58,14 @@ class ControllerSalesSales extends Controller {
 			}else{
 				$data['image']='';
 			}
-			
-			if(isset($sale_info['date_end'])){
-				$d_now=strtotime(date("d.m.Y"));
-				if($d_now<strtotime($sale_info['date_end'])){
-					$accia_type=0;
-				}else{
-					$accia_type=1;
-				}
+			if($sale_info['date_end']){
 				$date_arr=explode("-",$sale_info['date_end']);
-				$data["date_end"]=$date_arr[2].".".$date_arr[1].".".$date_arr[0];
-				
-			}else{
-				$accia_type=2;
-			}
-			$data["accia_type"]=$accia_type;
 
+				$data["date_end"]=$date_arr[2].".".$date_arr[1].".".$date_arr[0];
+			}
 			
+
+			$accia_products=$this->model_catalog_sale->acciaProducts($sale_id);
 
 			$products=[];
 			if($accia_products){
@@ -100,9 +84,8 @@ class ControllerSalesSales extends Controller {
 					$data["p"]=$p;
 					$products[]=$this->load->view('partial/product_item.tpl', $data);
 				}
+				$data['products']=$products;
 			}
-			$data['products']=$products;
-
 			$data['description'] = html_entity_decode($sale_info['description'], ENT_QUOTES, 'UTF-8');
 			$data['continue'] = $this->url->link('common/home');
 			

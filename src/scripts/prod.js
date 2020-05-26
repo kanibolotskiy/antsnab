@@ -3,6 +3,7 @@ import './lib/formsubmit.js';
 var Fraction = require('fraction.js');
 var $switchers;
 var $firstSwitcher;
+var timeoutID;
 //var format = require('number-format.js');
 
 
@@ -790,9 +791,15 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                         });
                         
                     });
-
+                    
                     if (typeof ym != 'undefined') {
-                        ym(14496178, 'reachGoal', '1click');
+                        if(itm.closest(".tab-block").hasClass("accia_products")){
+                            //Быстрый заказ (акции)
+                            ym(14496178, 'reachGoal', 'sale-1click');
+                        }else{
+                            //Быстрый заказ (все остальное)
+                            ym(14496178, 'reachGoal', '1click');
+                        }
                     }
                 }
             });
@@ -1092,10 +1099,52 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
         }
         $(".product_accia_text").removeClass("active");
     });
-    $(".item_label._accia").mouseenter(function(){
-        $(".product_accia_text").removeClass("active");
-        $(this).closest(".catalog_item_product").find(".product_accia_text").addClass("active");
+
+    $(".product_accia_text").mouseleave(function(){
+        var itm=$(this);
+        itm.addClass("_leave");
+        
+        setTimeout(function () {
+            if(itm.hasClass("_leave")){
+                itm.removeClass("active").removeClass("_leave").removeClass("_hover");
+            }
+        }, 500)
     });
+    $(".product_accia_text").mouseenter(function(){
+        var itm=$(this);
+        itm.addClass("_hover");
+        itm.removeClass("_leave");   
+    });
+    /*
+    $(".item_label._accia").mouseleave(function(){
+        $(this).removeClass("_enter");
+    });
+    */
+    $(".item_label._accia").mouseleave(function(){
+        var itm=$(this).closest(".catalog_item_product").find(".product_accia_text");
+        setTimeout(function () {
+            if(!itm.hasClass("_hover")){
+                itm.removeClass("active");
+            }
+            
+        }, 500)
+    })
+    $(".item_label._accia").mouseenter(function(){
+
+        if($(this).hasClass("mainitem_accialabel")){
+            $(".product_accia_text").addClass("active");
+        }else{
+            var itm=$(this);
+            itm.addClass("_enter");
+            $(".product_accia_text").removeClass("active");
+            setTimeout(function () {
+                if(itm.hasClass("_enter")){
+                    itm.closest(".catalog_item_product").find(".product_accia_text").addClass("active");
+                }
+            }, 500)
+        }
+    });
+
 
     $(document).on("click",".modal_info_product .tovar_mini_image",function(){
         var itm=$(this);

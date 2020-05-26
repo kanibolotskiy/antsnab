@@ -17,7 +17,7 @@
 
     
 
-        <link href="/catalog/view/theme/app/bundle/app2.css?v2.21" rel="stylesheet">
+        <link href="/catalog/view/theme/app/bundle/app2.css?v2.22" rel="stylesheet">
         <?php if ($description) { ?>
             <meta name="description" content="<?php echo $description; ?>" />
         <?php } ?>
@@ -231,7 +231,7 @@
                     <?php $cnt = 0; $ttl = count($top_menu);?>
                     <?php foreach ($top_menu as $item) : ?>
                         <?php if($item["position"]==0){?>
-                            <?php if($item["href"]=='/sales/'){$classMenu='<div class="_menu_accia"></div>';?>
+                            <?php if($item["href"]=='/sales/'){$classMenu='_menu_accia';?>
                             <?php }else{$classMenu='';}?>
                             <?php 
                                 if (isset($item['target']) && trim($item['target']) != "") {
@@ -242,13 +242,11 @@
                             ?>
                             
                             <?php if($item['isactive']){?>
-                                <li class="active" itemprop="name">
-                                    <?php echo $classMenu;?>
+                                <li class="active <?=$classMenu?>" itemprop="name">
                                     <span><?php echo $item['name']; ?></span>
                                 </li>
                             <?php }else{?>
-                                <li class="menu_li" itemprop="name">
-                                    <?php echo $classMenu;?>
+                                <li class="menu_li <?=$classMenu?>" itemprop="name">
                                     <a itemprop="url" href="<?php echo $item['href']; ?>" <?php echo $target; ?>><span><?php echo $item['name']; ?></span></a>
                                 </li>
                             <?php }?>

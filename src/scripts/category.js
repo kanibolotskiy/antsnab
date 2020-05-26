@@ -632,6 +632,11 @@ $(document).ready(function(){
         }
         */
     });
+    
+    $("#seltype").change(function(){
+        document.location=$("#seltype").attr("data-href")+"?"+$("#seltype option:selected").val();
+
+    });
 
     $("#seldef1").change(function(){
         var flag=true;
@@ -825,7 +830,7 @@ $(document).ready(function(){
     });
 
     $(document).on("click",".full_item_link",function(e){
-        if($(e.target).closest(".quantity-buy").length){
+        if($(e.target).closest(".quantity-").length){
             e.preventDefault();
         }
     });
@@ -859,13 +864,16 @@ $(document).ready(function(){
         
         //switch  add-to-card-compare
         if((itm.hasClass("cart_similar_button"))||(itm.hasClass("add-to-card-compare"))){
+            
             show_added=1;
             var product_id=$(this).attr('data-product_id');
+            //Добавление в козину из подобных товаров
             if(itm.hasClass("cart_similar_button")){
                 if (typeof ym != 'undefined') {
                     ym(14496178, 'reachGoal', 'related-products');
                 }
             }
+            //Добавление в корзину из сравнения
             if(itm.hasClass("add-to-card-compare")){
                 if (typeof ym != 'undefined') {
                     ym(14496178, 'reachGoal', 'add-to-card-compare');
@@ -873,6 +881,13 @@ $(document).ready(function(){
             }
             add_to_cart(product_id, 1, show_added);
         }else{
+            
+            //Добавление в корзину из акции
+            if($(this).closest(".tab-block").hasClass("accia_products")){
+                if (typeof ym != 'undefined') {
+                    ym(14496178, 'reachGoal', 'sale-card');
+                }
+            }
             var $container = $(this).closest('.quantity-buy'),
             qntController = $container.find('.qnt-widget').data('quantity'), 
 

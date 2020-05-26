@@ -1,14 +1,6 @@
 <?php
 class ModelCatalogAccia extends Model {
-	public function addAccia($data) {
-		$this->db->query("INSERT INTO accia SET sended=0, author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = '" . $this->db->escape($data['date_added']) . "'");
-
-		$review_id = $this->db->getLastId();
-
-		$this->cache->delete('product');
-
-		return $review_id;
-	}
+	
 	/*
 	public function getReviews($data = array()) {
         //@task to wspatch
@@ -19,7 +11,10 @@ class ModelCatalogAccia extends Model {
 			$sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_product']) . "%'";
 		}
 	*/
-	
+	public function deleteAccia($accis_id){
+		$this->db->query("DELETE FROM accia WHERE accia_id = '" . (int)$accis_id . "'");
+		$this->db->query("DELETE FROM accia_products WHERE accia_id = '" . (int)$accis_id . "'");
+	}
 	public function listCatalogAccias(){
 		$sql="SELECT oc.category_id, oc.parent_id, oc.top, od.name
 		FROM oc_category oc
@@ -43,7 +38,45 @@ class ModelCatalogAccia extends Model {
 		return $query->rows;
 	}
 	public function getAccias($data = array()) {
-		$sql="select * from accia";
+		if($data["sort"]){
+			$sql_sort=" order by ".$data["sort"]." ".$data["order"];
+		}
+		
+		$sql_add=[];
+		$sql_add_str="";
+
+		if(isset($data["filter_product"])){
+			$sql_accia="select ap.accia_id from accia_products ap LEFT JOIN oc_product_description od ON ap.product_id=od.product_id
+			where od.name='".$this->db->escape($data["filter_product"])."'";
+			$query_accia = $this->db->query($sql_accia);
+			$accias=[];
+			
+			foreach($query_accia->rows as $row_accia){
+				$accias[]=$row_accia["accia_id"];
+			}
+			if($accias){
+				$sql_add[]="a.accia_id in (".implode(",",$accias).")";
+			}
+			
+			
+		}
+		if(isset($data["filter_status"])){
+			$sql_add[]="a.status=".$data["filter_status"];
+		}
+		
+		if(isset($data["filter_date_start"])){
+			$sql_add[]="DATE(a.date_start) = '".$data["filter_date_start"]."'";
+		}
+		if(isset($data["filter_date_end"])){
+			$sql_add[]="DATE(a.date_end) = '".$data["filter_date_end"]."'";
+		}
+		
+		if($sql_add){
+			$sql_add_str=" WHERE ".implode(" AND ",$sql_add);
+		}
+		
+		$sql="select * from accia a ".$sql_add_str.$sql_sort;
+		//echo $sql;
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
@@ -78,181 +111,92 @@ class ModelCatalogAccia extends Model {
 		*/
 		return 0;
 	}
-	public function editAccia($accia_id, $data) {
-		$this->db->query("UPDATE accia SET 
-		name='".$data["name"]."', 
+
+
+	
+	private function addProductsAccia($data,$accia_id){
+
+		$this->db->query("delete from accia_products where accia_id=".$accia_id);
+		if(isset($data["accia_products"])){
+			$product_arr=explode(",",$data["accia_products"]);
+			foreach($product_arr as $product_itm){
+				$this->db->query("insert into accia_products (accia_id, product_id) values (".$accia_id.",".trim($product_itm).")");
+				//echo "insert into accia_products (accia_id, product_id) values (".$accia_id.",".trim($product_itm).")";
+			}
+		}
+	}
+	
+	public function addAccia($data) {
+		if($data["date_start"]){
+			$date_start="'".$data["date_start"]."'";
+		}else{
+			$date_start="NULL";
+		}
+		if($data["date_end"]){
+			$date_end="'".$data["date_end"]."'";
+		}else{
+			$date_end="NULL";
+		}
+		$this->db->query("INSERT INTO accia SET 
+		title='".$data["title"]."', 
+		meta_title='".$data["meta_title"]."', 
+		meta_h1='".$data["meta_h1"]."', 
+		meta_description='".$data["meta_description"]."', 
+		meta_keyword='".$data["meta_keyword"]."', 
+		keyword='".$data["keyword"]."', 
 		sort_order=".$data["sort_order"].", 
-		text='".$data["text"]."', 
-		shorttext='".$data["shorttext"]."', 
+		description='".$data["description"]."', 
 		shorttext='".$data["shorttext"]."', 
 		image='".$data["image"]."', 
 		banner='".$data["banner"]."', 
-		status = '" . (int)$data['status'] . "'
+		status = '" . (int)$data['status'] . "',
+		date_start = ".$date_start.",
+		date_end = ".$date_end);
+		$accia_id = $this->db->getLastId();
+
+		if ($data['keyword']) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'sale_id=" . (int)$accia_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+		}
+		$this->addProductsAccia($data,$accia_id);
+
+		return $accia_id;
+	}
+	public function editAccia($accia_id, $data) {
+		if($data["date_start"]){
+			$date_start="'".$data["date_start"]."'";
+		}else{
+			$date_start="NULL";
+		}
+		if($data["date_end"]){
+			$date_end="'".$data["date_end"]."'";
+		}else{
+			$date_end="NULL";
+		}
+		$this->db->query("UPDATE accia SET 
+		title='".$data["title"]."', 
+		meta_title='".$data["meta_title"]."', 
+		meta_h1='".$data["meta_h1"]."', 
+		meta_description='".$data["meta_description"]."', 
+		meta_keyword='".$data["meta_keyword"]."', 
+		keyword='".$data["keyword"]."', 
+		sort_order=".$data["sort_order"].", 
+		description='".$data["description"]."', 
+		shorttext='".$data["shorttext"]."', 
+		image='".$data["image"]."', 
+		banner='".$data["banner"]."', 
+		status = '" . (int)$data['status'] . "',
+		date_start = ".$date_start.",
+		date_end = ".$date_end."
 		where accia_id=".$accia_id);
 
 		if($data["accia_products_change"]){
-			$this->db->query("delete from accia_products where accia_id=".$accia_id);
-			if(isset($data["accia_products"])){
-				$product_arr=explode(",",$data["accia_products"]);
-				foreach($product_arr as $product_itm){
-					$this->db->query("insert into accia_products (accia_id, product_id) values (".$accia_id.",".trim($product_itm).")");
-					//echo "insert into accia_products (accia_id, product_id) values (".$accia_id.",".trim($product_itm).")";
-				}
-			}
+			$this->addProductsAccia($data,$accia_id);
+		}		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'sale_id=" . (int)$accia_id . "'");
+		if ($data['keyword']) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'sale_id=" . (int)$accia_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
 		}
-
-		//echo "accia_id=".$accia_id;
-		//print_r($data);
-		//$this->db->query("UPDATE " . DB_PREFIX . "review SET sended='" . $sended . "', author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = '" . $this->db->escape($data['date_added']) . "', date_modified = NOW() WHERE review_id = '" . (int)$review_id . "'");
 	}
 
-	/*
-    //@task - move to overrideds
-    public function afterAddReview($data, $output)
-    {
-       $review_id = $output;
-       $this->afterEditReview($review_id, $data, $output);
-       return $output;
-    }
-
-    public function afterEditReview($review_id, $data, $output)
-    {
-        $reviewAboutField = $this->db->escape($data['about']);
-        $reviewAnswerField = $this->db->escape($data['answer']);
-        $reviewModeratorField = $this->db->escape($data['moderator']);
-        $reviewCompanyField = $this->db->escape($data['company']);
-        $reviewEmailField = $this->db->escape($data['email']);
-        $this->db->query("UPDATE " . DB_PREFIX . "review SET ". 
-            "about = '" . $reviewAboutField . "', ". 
-            "answer = '" . $reviewAnswerField . "', ". 
-            "moderator = '" . $reviewModeratorField . "', ". 
-            "company = '" . $reviewCompanyField . "', ". 
-            "email = '" . $reviewEmailField . "' ". 
-            "where review_id = " . $review_id);
-
-        $this->cache->delete('product');
-    }
-
-
-	public function editReview($review_id, $data) {
-		if(isset($data['sended'])){
-			$sended=$data['sended'];
-		}else{
-			$sended=0;
-		}
-		if(!$sended and $data['status']){
-			$this->sendReview($data['product_id'], $data);
-			$sended=1;
-		}
-		$this->db->query("UPDATE " . DB_PREFIX . "review SET sended='" . $sended . "', author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = '" . $this->db->escape($data['date_added']) . "', date_modified = NOW() WHERE review_id = '" . (int)$review_id . "'");
-		$this->cache->delete('product');
-	}
-
-	public function deleteReview($review_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "review WHERE review_id = '" . (int)$review_id . "'");
-
-		$this->cache->delete('product');
-	}
-
-	public function getReview($review_id) {
-		$query = $this->db->query("SELECT DISTINCT *, (SELECT pd.name FROM " . DB_PREFIX . "product_description pd WHERE pd.product_id = r.product_id AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS product FROM " . DB_PREFIX . "review r WHERE r.review_id = '" . (int)$review_id . "'");
-
-		return $query->row;
-	}
-
-	public function getReviews($data = array()) {
-        //@task to wspatch
-
-        $sql = "SELECT r.review_id, pd.name, r.author, r.email, r.company, r.rating, r.status, r.date_added, r.about, r.moderator, r.answer FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "product_description pd ON (r.product_id = pd.product_id) WHERE (pd.language_id = '" . (int)$this->config->get('config_language_id') . "' or pd.language_id is NULL)";
-
-		if (!empty($data['filter_product'])) {
-			$sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_product']) . "%'";
-		}
-
-		if (!empty($data['filter_author'])) {
-			$sql .= " AND r.author LIKE '" . $this->db->escape($data['filter_author']) . "%'";
-		}
-
-        if (!empty($data['filter_about'])) {
-			$sql .= " AND r.about LIKE '" . $this->db->escape($data['filter_about']) . "%'";
-		}
-
-        if (!empty($data['filter_moderator'])) {
-			$sql .= " AND r.moderator LIKE '" . $this->db->escape($data['filter_moderator']) . "%'";
-		}
-
-        if (!empty($data['moderator_author'])) {
-			$sql .= " AND r.moderator LIKE '" . $this->db->escape($data['filter_moderator']) . "%'";
-		}
-
-		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
-			$sql .= " AND r.status = '" . (int)$data['filter_status'] . "'";
-		}
-
-		if (!empty($data['filter_date_added'])) {
-			$sql .= " AND DATE(r.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
-		}
-
-		$sort_data = array(
-			'pd.name',
-			'r.author',
-			'r.rating',
-			'r.status',
-			'r.date_added'
-		);
-
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
-		} else {
-			$sql .= " ORDER BY r.date_added";
-		}
-
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC";
-		} else {
-			$sql .= " ASC";
-		}
-
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}
-
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}
-
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}
-
-		$query = $this->db->query($sql);
-
-		return $query->rows;
-	}
-
-	public function getTotalReviews($data = array()) {
-		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "product_description pd ON (r.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
-
-		if (!empty($data['filter_product'])) {
-			$sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_product']) . "%'";
-		}
-
-		if (!empty($data['filter_author'])) {
-			$sql .= " AND r.author LIKE '" . $this->db->escape($data['filter_author']) . "%'";
-		}
-
-		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
-			$sql .= " AND r.status = '" . (int)$data['filter_status'] . "'";
-		}
-
-		if (!empty($data['filter_date_added'])) {
-			$sql .= " AND DATE(r.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
-		}
-
-		$query = $this->db->query($sql);
-
-		return $query->row['total'];
-	}
-	*/
 	
 }

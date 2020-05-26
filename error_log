@@ -1,0 +1,1 @@
+antsnab.cp06038.tmweb.ru [Tue May 26 07:44:33 2020] [emerg] [pid 26263] sapi_apache2.c(362): [client 94.158.95.26:59932] PHP Parse error:  syntax error, unexpected '==' (T_IS_EQUAL) in /home/c/cp06038/antsnab/public_html/catalog/controller/sales/category.php on line 34

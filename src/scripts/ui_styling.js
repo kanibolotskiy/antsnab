@@ -76,13 +76,11 @@ function check_scroll(){
                 
                 $(".catalog-product").addClass("_fixed");
                 if(lmt<0){
-                    console.log("tut1");
+                    
                     $(".wrapper_parameters").css({"margin-top":lmt-202});
                     $(".filter_reset").css({"margin-bottom":-lmt});
-
                     $(".catalog-product").css({"margin-top":lmt})
                 }else{
-                    console.log("tut2");
                     $(".wrapper_parameters").css({"margin-top":-202,"height":ht})
                     $(".catalog-product").css({"margin-top":0})
                     $(".filter_reset").css({"margin-bottom":0});
@@ -244,7 +242,7 @@ $(document).ready(function(){
     
     
     $(".mob_menu_block").click(function(){
-        $("body").toggleClass("_openmenu");        
+        $("body").toggleClass("_openmenu");
     });
     $(document).click(function(event) {
         if ($(event.target).closest(".container-nav").length) return;
@@ -255,6 +253,14 @@ $(document).ready(function(){
     });
     $(".container-nav_close").click(function(){
         $("body").removeClass("_openmenu"); 
+    });
+    $("#category_banners").slick({
+        speed: 500,
+        autoplay:true,
+        autoplaySpeed:3000,
+        fade: true,
+        cssEase: 'linear'
+
     });
     $(".ment_slider").each(function(){
         $(this).slick({

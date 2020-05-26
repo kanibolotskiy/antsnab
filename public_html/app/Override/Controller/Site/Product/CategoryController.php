@@ -834,6 +834,22 @@ class CategoryController extends \Controller
         
         $this->setFilterCategories($categories_seo,$category_id);
 
+
+        /**Добавляем баннеры из акций */
+        $this->load->model('catalog/sale');
+		$this->data['banners'] = array();
+		$activeAccias=$this->model_catalog_sale->activeAccias();
+		foreach($activeAccias as $accia){
+			$accia_url=$this->url->link('sale/sale', 'sale_id=' . $accia["accia_id"]);
+			if($accia['banner']){
+				$this->data['banners'][] = array(
+					'title' => "Акция",
+					'link'  => $accia_url,
+					'descr' => $accia["title"],
+                    'image' => $this->model_tool_image->cropsize($accia['banner'], 1100,210)
+				);
+			}
+        }
         
         if($flag_is_seo){
             $this->showProducts($category_id,true,null);
@@ -844,6 +860,21 @@ class CategoryController extends \Controller
             $this->showProducts($category_id,false,$parent_category_info);
             return;
         }
+
+        
+        
+        //$this->data[]
+        /*
+        <?php if(count($banners)){?>
+                <div class="category_banners">
+                    <?php foreach($banners as $banner) {?>
+                        <div class="category_banner">
+                            <a href="<=$banner['href']=>"><img src="<=$banner['image']=>" alt="<=$banner['title']=>"/></a>
+                        </div>
+                    <?php }?>
+                </div>
+            <?php }?>
+        */
         /*
         if($data['category_id']==ROOT_CATEGORY_ID){
             $this->data["params"]=[];
