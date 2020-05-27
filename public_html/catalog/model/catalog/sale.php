@@ -42,7 +42,17 @@ class ModelCatalogSale extends Model {
 		return $query->row['total'];
 	}
 	*/
-
+	public function activeAcciaDiscount(){
+		//Если есть товары со скидками
+		$result=[];
+		$sql="select count(product_id) as count from oc_product where status=1 and priceold>0";
+		$query = $this->db->query($sql);
+		if($query->row["count"]){
+			$query = $this->db->query("SELECT DISTINCT * FROM accia_sale where id=1");
+			$result=$query->row;
+		}
+		return $result;
+	}
 	public function getSales($data=[]) {
 		$d_now=date("Y-m-d");
 		$results=[];
@@ -54,10 +64,16 @@ class ModelCatalogSale extends Model {
 			foreach($query->rows as $row){
 				$results[]=$row;
 			}
-			//Дискаунт
-			$sql="SELECT DISTINCT * FROM accia_sale where id=1";
+
+			//Если есть товары со скидками
+			$sql="select count(product_id) as count from oc_product where status=1 and priceold>0";
 			$query = $this->db->query($sql);
-			$results[]=$query->row;
+			if($query->row["count"]){
+				//Дискаунт
+				$sql="SELECT DISTINCT * FROM accia_sale where id=1";
+				$query = $this->db->query($sql);
+				$results[]=$query->row;
+			}
 		}
 		if($data["select"]==2 or $data["select"]==0){
 			//Закончившиеся акции

@@ -161,15 +161,10 @@ class CategoryController extends \Controller
             }
         }
         
-        //echo "!".$added_url_str."!";
-        //$added_url="?".substr($added_url_str,0,-1);
-        //$added_url_lazy="&".substr($added_url_str,0,-1);
-
-        //echo "!".$added_url."!";
+        
         $json["total"]=$param_data["products_count"];
         $json["itemsPerPage"]=$limit;
-        //$json["test"]=$added_url;
-
+        
         $catalog_id=$post_data["catalog_id"];
         $queryString=$this->hierarhy->getPath($catalog_id);
 
@@ -836,20 +831,33 @@ class CategoryController extends \Controller
 
 
         /**Добавляем баннеры из акций */
+        $banners=[];
         $this->load->model('catalog/sale');
 		$this->data['banners'] = array();
 		$activeAccias=$this->model_catalog_sale->activeAccias();
 		foreach($activeAccias as $accia){
 			$accia_url=$this->url->link('sale/sale', 'sale_id=' . $accia["accia_id"]);
 			if($accia['banner']){
-				$this->data['banners'][] = array(
-					'title' => "Акция",
+                $banners[]=array(
+					'title' => $accia["title"],
 					'link'  => $accia_url,
-					'descr' => $accia["title"],
                     'image' => $this->model_tool_image->cropsize($accia['banner'], 1100,210)
 				);
 			}
         }
+
+        $activeAcciasDiscount=$this->model_catalog_sale->activeAcciaDiscount();
+        if($activeAcciasDiscount){
+            if($activeAcciasDiscount["banner"]){
+                $banners[]=array(
+                    'title' => $activeAcciasDiscount["title"],
+                    'link'  => "sale/".$activeAcciasDiscount["keyword"],
+                    'image' => $this->model_tool_image->cropsize($activeAcciasDiscount["banner"], 1100,210)
+                );
+            }
+        }
+        shuffle($banners);
+        $this->data['banners']=$banners;
         
         if($flag_is_seo){
             $this->showProducts($category_id,true,null);

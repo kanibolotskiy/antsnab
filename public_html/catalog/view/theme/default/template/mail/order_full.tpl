@@ -145,7 +145,7 @@
             <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; padding: 7px;" name="UTM_value"><?=$utm_term?></td>
         </tr>                                
     </table>
-    <?php if($sales) {?>
+    <?php if(isset($sales)){?>
         <?php foreach($sales as $sale){?>
             <p><?=$sale?></p>
         <?php }?>

@@ -76,7 +76,7 @@ class ControllerSalesCategory extends Controller {
 				}
 				if ($result['image']) {
 					$original 	= HTTP_SERVER.'image/'.$result['image'];
-					$thumb 		= $this->model_tool_image->cropsize($result['image'], 210, 103);
+					$thumb 		= $this->model_tool_image->cropsize($result['image'], 210, 102);
 				} else {
 					$original 	= '';
 					//$thumb 		= $this->model_tool_image->cropsize($result['image'], 210, 103);

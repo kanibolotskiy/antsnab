@@ -2374,7 +2374,7 @@ button.show-more{
             
             margin-bottom: 20px;
             .products-block {
-                border: 2px solid #EFEEEC;
+                border: 1px solid #EFEEEC;
                 padding: 0 8px 20px 8px;
                 /*height: 100%;*/
                 overflow: hidden;
@@ -9214,6 +9214,7 @@ body.common-compare #search{top:-53px;}
     font-size: 13px;
     color:#000;
     padding-right:15px;
+    line-height:19px;
 }
 .product_accia_content{
     margin-top:5px;
@@ -9376,7 +9377,7 @@ body._hmenu .container-nav .nav ul li._menu_accia a span{color:#E70F29!important
 .sale_banner_img{text-align:center;position:relative;}
 .sale_banner_img img{max-width:100%;height:auto;}
 
-.category_banners{margin-bottom:10px;border:1px solid #E29B63;}
+.category_banners{border:1px solid #E29B63;}
 .category_banner{text-align:center;}
 .category_banner img{max-width:100%;height:auto;}
 
@@ -9440,3 +9441,9 @@ body._hmenu .container-nav .nav ul li._menu_accia a span{color:#E70F29!important
     line-height: 20px;
     padding: 0 7px;}
 .item_label._discount a{display:block;color:#fff;text-decoration: none;}
+.category_banners{
+    width: 100%;
+    height: 0px;
+    padding-bottom: 19.09090909%;
+}
+.wrap_category_banners{overflow:hidden;margin-bottom: 10px;}
