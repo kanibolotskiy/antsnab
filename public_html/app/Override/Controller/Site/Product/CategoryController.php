@@ -868,30 +868,7 @@ class CategoryController extends \Controller
             $this->showProducts($category_id,false,$parent_category_info);
             return;
         }
-
-        
-        
-        //$this->data[]
-        /*
-        <?php if(count($banners)){?>
-                <div class="category_banners">
-                    <?php foreach($banners as $banner) {?>
-                        <div class="category_banner">
-                            <a href="<=$banner['href']=>"><img src="<=$banner['image']=>" alt="<=$banner['title']=>"/></a>
-                        </div>
-                    <?php }?>
-                </div>
-            <?php }?>
-        */
-        /*
-        if($data['category_id']==ROOT_CATEGORY_ID){
-            $this->data["params"]=[];
-        }else{
-            $this->data["params"]=$this->getFilterParams($data['category_id'],[]);
-        }
-        */
-        
-
+    
         $this->showCategories($category_id);
     }
    
