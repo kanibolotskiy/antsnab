@@ -38,15 +38,11 @@ class CategoryController extends \Controller
         
         $limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');
         if (isset($this->request->get['page'])) {
-            //$parts = explode('_', (string) $this->request->get['cat_path']);
-            //$category_id = (int) array_pop($parts);
             $page=$this->request->get['page'];
         } else {
             $page = 1;
         }
         if (isset($this->request->get['category_id'])) {
-            //$parts = explode('_', (string) $this->request->get['cat_path']);
-            //$category_id = (int) array_pop($parts);
             $category_id=$this->request->get['category_id'];
         } else {
             $category_id = 0;
@@ -58,10 +54,6 @@ class CategoryController extends \Controller
         $get_data["catalog_id"]=$category_id;
         $param_data=$this->parseUrlParams($get_data);
 
-        //print_r($param_data);
-        //$this->data["products"]=$param_data["products"];
-        //$lazyLoadResponse=$param_data["products"];
-        
         $added_url_str="";
         if(isset($get_data["param"])){
             if($get_data["param"]){
@@ -77,29 +69,12 @@ class CategoryController extends \Controller
                 }
             }
         }
-        /*
-        if(isset($get_data["?param"])){
-            if($get_data["?param"]){
-                $show_filter=true;
-                foreach($get_data["?param"] as $key=>$value) {
-                    foreach($value as $item_key=>$item){
-                        $added_url_str.="?param[".$key."][]=".$item."&";
-                    }
-                }
-                $added_url="?".substr($added_url_str,0,-1);
-                $added_url_lazy="&".substr($added_url_str,0,-1);
-            }
-        }
-        */
-
+        
         $data["result"]["tp"]=1;
         $data["result"]["items"]=$param_data["products"];
         $data["result"]["total"]=$param_data["products_count"];
         $data["result"]["itemsPerPage"]=$limit;
         $data["result"]["page"]=$page;
-        //$data["result"]["paginationBaseUrl"] = $paginationBaseUrl;
-        //$data["result"]["lazyLoadBaseUrl"] = $lazyLoadBaseUrl;
-
         
         $queryString = $this->request->get['cat_path'];//$this->hierarhy->getPath($category_id);
         if (isset($get_data['sort'])) {
@@ -114,22 +89,7 @@ class CategoryController extends \Controller
         $paginationModel = PaginationHelper::getPaginationModel($param_data["products_count"], (int)$limit, (int)$page);
         $data["result"]["pagination"] = PaginationHelper::render($this->registry, $paginationBaseUrl, $paginationModel);
         $data["result"]["showMore"] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl."&category_id=".$category_id, $paginationModel);
-        
-        //echo $data["result"]["showMore"];
-/**/
-        //    'total' => (int)$products_total,
-        //    'itemsPerPage' => (int)$limit,
-        //    'page' => (int)$page,
-        //    'paginationBaseUrl' => $paginationBaseUrl,
-        //    'lazyLoadBaseUrl' => $lazyLoadBaseUrl,
-
-        /*
-        $paginationModel = PaginationHelper::getPaginationModel($product_total_filter, (int)$limit, (int)$page);
-        $this->data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl.$added_url, $paginationModel);
-        //$this->data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $paginationBaseUrl.$added_url."&category_id=".$category_id, $paginationModel);
-        $this->data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl.$added_url_lazy."&category_id=".$category_id, $paginationModel);
-        */
-
+       
         
         $lazyLoadResponse=json_encode($data);
         $this->response->setOutput($lazyLoadResponse);
@@ -224,7 +184,7 @@ class CategoryController extends \Controller
         $avail_params_data[]=["id"=>"availible","translit"=>"availible","type_param"=>4];
         $avail_params_data[]=["id"=>"sale","translit"=>"sale","type_param"=>5];
 
-        //print_r($avail_params_data);
+        
         $sql_param_where=[];
         foreach($avail_params_data as $param){
             $key=$param["translit"];
@@ -237,20 +197,11 @@ class CategoryController extends \Controller
                     if(isset($data_url["param"][$key]["min"])){
                         $sql_param_where[$key]["sql"][]=" AND op.price_wholesale>=".$data_url["param"][$key]["min"];
                     }
-                    /*
-                    if(isset($data_url["?param"][$key]["min"])){
-                        $sql_param_where[$key]["sql"][]=" AND op.price_wholesale>=".$data_url["?param"][$key]["min"];
-                    }
-                    */
-
+                   
                     if(isset($data_url["param"][$key]["max"])){
                         $sql_param_where[$key]["sql"][]=" AND op.price_wholesale<=".$data_url["param"][$key]["max"];
                     }
-                    /*
-                    if(isset($data_url["?param"][$key]["max"])){
-                        $sql_param_where[$key]["sql"][]=" AND op.price_wholesale<=".$data_url["?param"][$key]["max"];
-                    }
-                    */
+                   
                     $sql_param_where[$key]["type"]=3;
                 break;
                 case "availible":
@@ -261,7 +212,12 @@ class CategoryController extends \Controller
                 break;
                 case "sale":
                     if((isset($data_url["param"][$key]))or(isset($data_url["?param"][$key]))){
-                        $sql_param_where[$key]["sql"][]=" AND price_wholesaleold>0";
+                        //$sql_param_where[$key]["sql"][]=" AND price_wholesaleold>0";
+                        $d_now=date("Y-m-d");
+                        $sql_param_where[$key]["sql"][]=" AND (price_wholesaleold>0 or product_id in (SELECT ap.product_id 
+FROM accia_products ap LEFT JOIN accia a ON ap.accia_id=a.accia_id
+where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND (DATE(date_end) >= '".$d_now."' or date_end is null) order by sort_order DESC)";
+
                     }
                     $sql_param_where[$key]["type"]=5;
                 break;
@@ -291,16 +247,7 @@ class CategoryController extends \Controller
                                 $sql_param_where[$key]["sql"][]=" AND pv0.value1!='' AND (pv0.value1*1)<=".$data_url["param"][$key]["min"];
                             }
                         }
-                        /*
-                        if(isset($data_url["?param"][$key]["min"])){
-                            if($param_sort_type){
-                                $sql_param_where[$key]["sql"][]=" AND pv0.value1!='' AND (pv0.value1*1)>=".$data_url["?param"][$key]["min"];
-                            }else{
-                                $sql_param_where[$key]["sql"][]=" AND pv0.value1!='' AND (pv0.value1*1)<=".$data_url["?param"][$key]["min"];
-                            }
-                        }
-                        */
-
+                       
                         if(isset($data_url["param"][$key]["max"])){
                             if($param_sort_type){
                                 $sql_param_where[$key]["sql"][]=" AND pv0.value2!='' AND (pv0.value2*1)<=".$data_url["param"][$key]["max"];
@@ -308,25 +255,9 @@ class CategoryController extends \Controller
                                 $sql_param_where[$key]["sql"][]=" AND pv0.value2!='' AND (pv0.value2*1)>=".$data_url["param"][$key]["max"];
                             }
                         }
-                        /*
-                        if(isset($data_url["?param"][$key]["max"])){
-                            if($param_sort_type){
-                                $sql_param_where[$key]["sql"][]=" AND pv0.value2!='' AND (pv0.value2*1)<=".$data_url["?param"][$key]["max"];
-                            }else{
-                                $sql_param_where[$key]["sql"][]=" AND pv0.value2!='' AND (pv0.value2*1)>=".$data_url["?param"][$key]["max"];
-                            }
-                        }
-                        */
+                       
                     }else{
-                        /*
-                        if($param_type==0){
-                            $sql_param_where[$key]["type"]=2;
-                        }else{
-                            $sql_param_where[$key]["type"]=6;
-                        }
-                        */
-                        
-                        ///$sql_param_where[$key]["type"]=2;
+                       
                         if($param_type==0){
                             $sql_param_where[$key]["type"]=2;
                         }else{
@@ -337,17 +268,9 @@ class CategoryController extends \Controller
                         
                         
                         if(isset($data_url["param"][$key])){
-                            //$sql_param_where[$key]["sql"][]=" AND pv0.value1 IN (".implode(",",$data_url["param"][$key]).")";
-                            //$sql_param_where[$key]["sql"][]=implode(",",$data_url["param"][$key]);
                             $sql_param_where[$key]["sql"][]=implode(",",$data_url["param"][$key]);
                         }
-                        /*
-                        if(isset($data_url["?param"][$key])){
-                            $sql_param_where[$key]["sql"][]=implode(",",$data_url["?param"][$key]);
-                            //$sql_param_where[$key]["sql"][]=" AND pv0.value1 IN (".implode(",",$data_url["?param"][$key]).")";
-                        }
-                        */
-                        
+
                     }
                     
                     
@@ -393,7 +316,17 @@ class CategoryController extends \Controller
                 break;
                 case "sale":
                     if(isset($param["sql"])){
+                        
+                        /*Вывод товаров со скидкой */
                         $sql_temp="SELECT op.product_id from oc_product op WHERE op.status=1 and op.product_id in (".$avail_products_list.") ".implode(" ", $param["sql"])." group by op.product_id";
+                        $query = $this->db->query($sql_temp);
+                        foreach ($query->rows as $result) {
+                            $products_by_param[]=$result["product_id"];
+                        }
+                        
+                        /*Вывод товаров по акциям */
+                        $d_now=date("Y-m-d");
+                        $sql_temp="SELECT ap.product_id FROM accia_products ap LEFT JOIN accia a ON ap.accia_id=a.accia_id where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND (DATE(date_end) >= '".$d_now."' or date_end is null)";
                         $query = $this->db->query($sql_temp);
                         foreach ($query->rows as $result) {
                             $products_by_param[]=$result["product_id"];
@@ -466,41 +399,6 @@ class CategoryController extends \Controller
                         }
                         
                     }
-                    /*
-                    if($param["type"]==2){
-
-                        if(isset($param["sql"])){
-                            //print_r($param["sql"]);
-                            //echo " AND pv0.value1 IN (".implode(",",$param["sql"]).")";
-                            
-
-                        }
-                    }elseif ($param["type"]==22){
-                        if(isset($param["sql"])){
-                            
-                            foreach($param["sql"] as $row_sql){
-                                echo "!".$row_sql."!";
-                            }
-                            
-                            //$sql_temp="SELECT op.product_id from oc_product op LEFT JOIN product_param_values pv0 ON op.product_id=pv0.product_id 
-                            //WHERE op.status=1 and op.product_id in (".$avail_products_list.") AND pv0.value1 IN (".implode(",",$param["sql"]).") group by op.product_id";
-
-                            //$query = $this->db->query($sql_temp);
-                            //foreach ($query->rows as $result) {
-                            //    $products_by_param[]=$result["product_id"];
-                            //}
-                            
-                            $array_result=array_intersect($array_result,$products_by_param);
-                            $array_by_params_product[$key]["products"]=$products_by_param;
-                            $array_by_params_product[$key]["type"]=$param["type"];
-                            $array_by_params_product[$key]["param_id"]=$param["param_id"];
-
-                        }
-
-                    else{
-                        
-                    }
-                    */
                     
                 break;
             }
@@ -512,35 +410,23 @@ class CategoryController extends \Controller
             $avail_pr=$avail_products;
             
             foreach($array_by_params_product as $key_compare=>$avail_param_compare){
-                //echo $key_compare."=".$avail_param_compare["type"]."<br/>";
-                //print_r($avail_param_compare);
-                //echo "key_compare=".$key_compare."|".$avail_param_compare["type"]."|<br/>";
+                
                 if($avail_param_compare["type"]==2){
                     if($key!=$key_compare){
-                        //print_r($avail_param_compare["products"]);
-                        //echo $key."|";
-                        //print_r($avail_pr);
                         $avail_pr=array_intersect($avail_pr,$avail_param_compare["products"]);
-                        //print_r($avail_pr);
                     }
                 }else{
                     $avail_pr=array_intersect($avail_pr,$avail_param_compare["products"]);
                 }
             }
-            //print_r($avail_pr);
-            
-            //$rez=$this->model_extension_module_category->getParamsValues($avail_pr, $param["id"], $param["type_param"]);
-            //echo $param["type_param"];
+
             if($param["type_param"]==2){
                 $tp=0;
             }else{
                 $tp=$param["type_param"];
             }
             $rez=$this->model_extension_module_category->getParamsValues($avail_pr, $param["id"], $tp);
-            //echo $param["id"]."|".$param["type_param"]."<br/>";
-            
-            //echo $param["id"]."|".$param["type_param"];
-            //print_r($rez);
+
             $result_params[$key]=Array("type"=>$param["type_param"],"result"=>$rez);
         }
        
@@ -592,133 +478,6 @@ class CategoryController extends \Controller
         }
         $data["products_count"]=count($array_result);
 
-        /*
-        $final_sql="";
-        $final_table="";
-        
-
-        foreach($avail_params_data as $param){
-            
-            $key=$param["translit"];
-            //echo "!".$key."!<br/>";
-            $sql_add="";
-            $join_table="";
-            
-            $sql_a="";
-            $table_a="";
-    
-            foreach($filter_param_sql as $sql_key=>$sql_item){
-
-                if($sql_key!=$key){
-                
-                }
-                else{
-                    print_r($price_filter[$key]);
-                    //print_r($price_filter);
-                }
-
-                //echo $sql_key."=".$key."<br/>";
-                
-                if($sql_key!=$key){
-                    $sql_a.=$sql_item["sql"];
-                    $table_a.=$sql_item["table"];
-                }
-                else{
-                    $sql_type=$sql_item["type_sql"];
-                    $param_id=$sql_item["param_id"];
-
-                    $final_sql.=$sql_item["sql"];
-                    $final_table.=$sql_item["table"];
-                    
-                }
-                
-            }
-            
-            if($sql_a){
-                //print_r($sql_array);
-                
-                $sql="SELECT op.product_id from oc_product op ".$table_a." WHERE
-                op.status=1 ".$sql_a." and op.product_id in (".$avail_products_list.") group by op.product_id";
-                //echo "!".$sql."!<br/>";
-                
-                $query = $this->db->query($sql);
-                $avail_products=[];
-                foreach ($query->rows as $result) {
-                    $avail_products[]=$result["product_id"];
-                }
-                
-            }else{
-                //print_r($avail_products);
-            }
-
-            $rez=$this->model_extension_module_category->getParamsValues($avail_products, $param_id, $sql_type);
-            $result_params[$key]=Array("type"=>$param["type_param"],"result"=>$rez);
-
-        }
-        
-        $sql_final_products="SELECT op.product_id from oc_product op ".$final_table." WHERE
-        op.status=1 ".$final_sql." and op.product_id in (".$avail_products_list.") group by op.product_id";
-        //echo $sql_final_products;
-        
-        $query = $this->db->query($sql_final_products);
-        $avail_products_final=[];
-        
-
-        foreach ($query->rows as $result) {
-            $avail_products_final[]=$result["product_id"];
-        }
-        if($avail_products_final){
-            $avail_products_final_list=implode(",",$avail_products_final);
-        }else{
-            $avail_products_final_list="-1";
-        }
-        //print_r($avail_products_final_list);
-
-        $data["avail"]=$result_params;
-        $productsHelper = new ProductListHelper($this->registry);
-        $filter_data=[
-            "filter_category_id"=>$catalog_id,
-            "product_ids"=>$avail_products_final_list,
-        ];
-        
-        if(isset($data_url['sort'])){
-            $sort_arr=explode("|",$data_url['sort']);
-            if(isset($sort_arr[0])){
-                $filter_data["sort"]=$sort_arr[0];
-            }
-            if(isset($sort_arr[1])){
-                $filter_data["order"]=$sort_arr[1];
-            }
-        }
-        if(isset($data_url["page"])){
-            $page=$data_url["page"];
-        }else{
-            $page=1;
-        }
-        
-        $limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');
-        $filter_data['start'] = ($page - 1) * $limit;
-        $filter_data["limit"] = $limit;
-        $filter_data["filter_sub_category"]=1;
-        
-        //$data_products
-        //print_r($filter_data);
-        $data_products=$productsHelper->getProducts($filter_data);
-        
-        $products_str="";
-        
-        foreach($data_products as $p){
-            $data["p"]=$p;
-            $products_str.=$this->load->view('partial/product_item.tpl', $data);
-        }
-        
-        if($products_str){
-            $data["products"] = $products_str;
-        }else{
-            $data["products"] = "<li class='empty_list'>Товаров по заданному критерию не найдено</li>";
-        }
-        $data["products_count"]=count($avail_products_final);
-        */
         return $data;
     }
     public function index()
@@ -974,31 +733,7 @@ class CategoryController extends \Controller
             $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
             $productsHelper = new ProductListHelper($this->registry);
             
-            /*
-            $queryString = $this->hierarhy->getPath($category_id);
-            if (isset($this->request->get['filter'])) {
-                $queryString .= '&filter=' . $this->request->get['filter'];
-            }
-            if (isset($this->request->get['sort'])) {
-                $queryString .= '&sort=' . $this->request->get['sort'];
-            }
-            $paginationBaseUrl = $this->url->link('product/category', 'path=' . $queryString);
-            $lazyLoadBaseUrl = $this->url->link('product/category/showmore', 'cat_path=' . $queryString);
-
-            $paginationModel = PaginationHelper::getPaginationModel($product_total, (int)$limit, (int)$page);
-            $this->data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl, $paginationModel);
-            $this->data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl, $paginationModel);
-            */
-
-            /*
-            $queryString = $this->hierarhy->getPath($category_id);
-            if (isset($this->request->get['filter'])) {
-                $queryString .= '&filter=' . $this->request->get['filter'];
-            }
-            if (isset($this->request->get['sort'])) {
-                $queryString .= '&sort=' . $this->request->get['sort'];
-            }
-            */
+            
         $catalog_info["category_url"]=$this->url->link('product/category', 'path=' . $category_id);
         $catalog_info["category_id"]=$category_id;
         $this->data["catalog_info"]=$catalog_info;
@@ -1050,28 +785,9 @@ class CategoryController extends \Controller
         $this->data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl, $paginationModel);
         $this->data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl."&category_id=".$category_id, $paginationModel);
 
-        /** */
+        
             $this->setPartials();
-            /*
-            if ($page == 1) {
-                $this->document->addLink($this->url->link('product/category', 'path=' . $category_id, true), 'canonical');
-            } elseif ($page == 2) {
-                $this->document->addLink($this->url->link('product/category', 'path=' . $category_id, true), 'prev');
-            } else {
-                $this->document->addLink($this->url->link('product/category', 'path=' . $category_id . '?page='. ($page - 1), true), 'prev');
-            }
-            
-            if ($limit && ceil($product_total / $limit) > $page) {
-                $this->document->addLink($this->url->link('product/category', 'path=' . $category_id . '?page='. ($page + 1), true), 'next');
-            }
-            */
-            
-            
-            //$catalog_info["category_url"]=$this->url->link('product/category', 'path=' . $category_id);
-            //$catalog_info["category_id"]=$category_id;
-            //$this->data["catalog_info"]=$catalog_info;
-            //$this->data["params"]=$this->getFilterParams($category_id,[]);
-            //$this->data['products'] = $productsHelper->getProducts($filter_data);
+        
         }
         $this->response->setOutput($this->load->view($template_catalog, $this->data));
     }

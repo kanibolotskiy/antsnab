@@ -91,7 +91,9 @@
                     break;
 
                     case 5: //Скидки
-                        $sql="SELECT count(product_id) as count_sale FROM oc_product op WHERE product_id in (".$used_products_list.") AND op.status=1 and price_wholesaleold>0";
+                        $d_now=date("Y-m-d");
+
+                        $sql="SELECT count(product_id) as count_sale FROM oc_product op WHERE product_id in (".$used_products_list.") AND op.status=1 AND (price_wholesaleold>0 or product_id in (SELECT ap.product_id FROM accia_products ap LEFT JOIN accia a ON ap.accia_id=a.accia_id where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND (DATE(date_end) >= '".$d_now."' or date_end is null)))";
                         $query = $this->db->query($sql);
                         $result=$query->row;
                         $param_list["count"]=$result["count_sale"];

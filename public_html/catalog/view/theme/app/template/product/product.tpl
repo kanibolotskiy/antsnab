@@ -873,10 +873,6 @@
 </div>
 <?php if(isset($locations[0])):?>
     <?php $l = $locations[0]?>
-    <!--<div class="popup2">
-        <div class="close3"></div>
-        <div class="popup-block2">
-        -->
     <div class="modal modal_map">
         <div class="modal-block">
             <div class="modal_overlay"></div>
