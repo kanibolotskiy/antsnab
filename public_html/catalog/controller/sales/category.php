@@ -76,11 +76,12 @@ class ControllerSalesCategory extends Controller {
 				}
 				if ($result['image']) {
 					$original 	= HTTP_SERVER.'image/'.$result['image'];
-					$thumb 		= $this->model_tool_image->cropsize($result['image'], 210, 102);
+					//$thumb 		= $this->model_tool_image->cropsize($result['image'], 210, 102);
+					$thumb 		= $this->model_tool_image->cropsize($result['image'], 605, 294);
 				} else {
 					$original 	= '';
 					//$thumb 		= $this->model_tool_image->cropsize($result['image'], 210, 103);
-					$thumb = $this->model_tool_image->resize('no_image.png', 100,100);
+					$thumb = $this->model_tool_image->resize('no_image.png', 605, 294);
 				}
 				if(isset($result["accia_id"])){
 					$href=$this->url->link('sale/sale', 'sale_id=' . $result["accia_id"]);

@@ -108,7 +108,12 @@ class ControllerCommonCompare extends Controller {
             //Доставка//
             $delivery_info = $this->model_catalog_product->getDelivery($product['product_id'],$weight);
             //print_r($delivery_info);
-            $delivery_str=$delivery_info["date_delivery"].", ".$delivery_info["price_delivery"];
+            if(is_numeric($delivery_info["price_delivery"])){
+                $del_price="от ".number_format($delivery_info["price_delivery"],0,"."," ").' <div class="rur">i</div>';
+            }else{
+                $del_price=$delivery_info["price_delivery"];
+            }
+            $delivery_str=$delivery_info["date_delivery"].", ".$del_price;
             /*
             print_r($product);
             print_r($delivery_info["date_delivery"]);

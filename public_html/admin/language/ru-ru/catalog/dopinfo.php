@@ -69,7 +69,11 @@ $_['entry_name_discounts']      = 'Название скидки';
 $_['entry_name_calcs']          = 'Название калькулятора';
 
 $_['entry_weight']              = 'Грузоподъемность, до';
+$_['entry_weight_str']              = 'Грузоподъемность, заголовок';
 $_['entry_price']               = 'Цена, от';
+$_['entry_price_urgent']        = 'Цена срочной доставки';
+
+
 $_['entry_price_ico']           = 'Иконка RUB';
 
 

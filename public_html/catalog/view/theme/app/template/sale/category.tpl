@@ -6,18 +6,20 @@
         
         <?php echo $content_top; ?>
         <div class="content_inner news-container staty-container">
-            <h1 class="title"><?php echo $heading_title; ?></h1>
-            <select id="seltype" style="display: none;" data-href="sales/">
-                <option value="" <?php if($select==0){echo 'selected="selected"';}?>  >
-                    Все акции
-                </option>
-                <option value="&active=1" <?php if($select==1){echo 'selected="selected"';}?>>
-                    Активные акции
-                </option>
-                <option value="&active=0" <?php if($select==2){echo 'selected="selected"';}?>>
-                    Неактивные акции
-                </option>
-            </select>
+            <div class="wrapper_sale_title">
+                <h1 class="title"><?php echo $heading_title; ?></h1>
+                <select id="seltype" style="display: none;" data-href="sales/">
+                    <option value="" <?php if($select==0){echo 'selected="selected"';}?>  >
+                        Все акции
+                    </option>
+                    <option value="&active=1" <?php if($select==1){echo 'selected="selected"';}?>>
+                        Активные акции
+                    </option>
+                    <option value="&active=0" <?php if($select==2){echo 'selected="selected"';}?>>
+                        Неактивные акции
+                    </option>
+                </select>
+            </div>
             
             <div class="staty-list sales_list">
                 <?php foreach($sales as $sale){?>
@@ -37,7 +39,7 @@
                             </div>
 
                             
-                            <div class="news-img">
+                            <div class="news-img category_sale_img">
                                 <a itemprop="mainEntityOfPage" href="<?php echo $sale['href']; ?>">
                                     <img itemprop="image" src="<?php echo $sale['thumb']; ?>" alt="<?php echo $sale['title']; ?>" title="<?php echo $sale['title']; ?>">
                                 </a>
@@ -50,8 +52,6 @@
                                 <?php if($sale['accia_type']==2) {?>
                                     <time class="accia_time_discount">Текущие скидки</time>
                                 <?php }?>
-
-
                             </div>
                             <div class="news-description">
                                 

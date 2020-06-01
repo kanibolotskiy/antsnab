@@ -6,7 +6,7 @@ class ModelCatalogCouriers extends Model {
 		}else{
 			$price_ico=0;
 		}
-		$this->db->query("INSERT INTO dopinfo_couriers SET name = '" . $this->db->escape($data['name']) . "',description='" . $this->db->escape($data['courier_description']) . "', caption='" . $this->db->escape($data['courier_caption']) . "', weight = '" . $this->db->escape($data['weight']) . "', price = '" . $this->db->escape($data['price']) . "', price_ico = '" . $price_ico . "', sort_order = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO dopinfo_couriers SET name = '" . $this->db->escape($data['name']) . "',description='" . $this->db->escape($data['courier_description']) . "', caption='" . $this->db->escape($data['courier_caption']) . "', weight = '" . $this->db->escape($data['weight']) . "',weight_str = '" . $this->db->escape($data['weight_str']) . "', price = '" . $this->db->escape($data['price']) . "', price_urgent = '" . $this->db->escape($data['price_urgent']) . "', price_ico = '" . $price_ico . "', sort_order = '" . (int)$data['sort_order'] . "'");
 		$courier_id = $this->db->getLastId();
 
 		$this->cache->delete('courier');
@@ -20,7 +20,7 @@ class ModelCatalogCouriers extends Model {
 		}else{
 			$price_ico=0;
 		}
-		$this->db->query("UPDATE dopinfo_couriers SET name = '" . $this->db->escape($data['name']) . "', description='" . $this->db->escape($data['courier_description']) . "', caption='" . $this->db->escape($data['courier_caption']) . "', weight = '" . $this->db->escape($data['weight']) . "', price = '" . $this->db->escape($data['price']) . "', price_ico = '" . $price_ico . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE courier_id = '" . (int)$courier_id . "'");
+		$this->db->query("UPDATE dopinfo_couriers SET name = '" . $this->db->escape($data['name']) . "', description='" . $this->db->escape($data['courier_description']) . "', caption='" . $this->db->escape($data['courier_caption']) . "', weight = '" . $this->db->escape($data['weight']) . "', weight_str = '" . $this->db->escape($data['weight_str']) . "', price = '" . $this->db->escape($data['price']) . "', price_urgent = '" . $this->db->escape($data['price_urgent']) . "', price_ico = '" . $price_ico . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE courier_id = '" . (int)$courier_id . "'");
 		
 		$this->cache->delete('courier');
 		

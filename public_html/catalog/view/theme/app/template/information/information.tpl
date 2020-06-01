@@ -26,4 +26,27 @@
         
     </div>
 </div>
+<?php if(isset($locations[0])):?>
+    <?php $l = $locations[0]?>
+    <div class="modal modal_map">
+        <div class="modal-block">
+            <div class="modal_overlay"></div>
+            <div class="modal-content">
+                <div class="modal_close"></div>
+                <!--<span><?=$l['name']?></span>-->
+                <div class="modal_caption"><?=$l['name']?></div>
+                <div class="modal_text_map">
+                    <p><?=$l['address']?></p>
+                    <p><?=$l['open']?></p>
+                    <p><?=$l['comment']?></p>
+                    <p>Для вашего удобства можете <a target="_blank" href="<?php echo $l['files'][0]['file_link'];?>">скачать подробную схему проезда</a></p>
+                </div>
+                <div class="map">
+                    <?=$l['map']?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif;?>
+
 <?= $footer ?>

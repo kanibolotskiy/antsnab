@@ -162,7 +162,7 @@ class ArticleController extends \Controller
             if ($article_info['image']) {
                 $data['original'] = HTTP_SERVER . 'image/' . $article_info['image'];
                 $data['popup'] = $this->model_tool_image->resize($article_info['image'], $images_size_articles_big[0], $images_size_articles_big[1]);
-                $data['thumb'] = $this->model_tool_image->resize($article_info['image'], $images_size_articles_small[0], $images_size_articles_small[1]);
+                $data['thumb'] = $this->model_tool_image->resize($article_info['image'], 660,440);
 
                 $this->document->setOgimage($data['original']);
             } else {
@@ -235,6 +235,8 @@ class ArticleController extends \Controller
                 if ($result['image']) {
                     $original = HTTP_SERVER . 'image/' . $result['image'];
                     $thumb = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
+                    //$thumb = $this->model_tool_image->resize($result['image'], 660, 440);
+
                 } else {
                     $original = false;
                     $thumb = false;
@@ -271,7 +273,7 @@ class ArticleController extends \Controller
 
             foreach ($results as $result) {
                 if ($result['image']) {
-                    $image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
+                    $image = $this->model_tool_image->resize($result['image'], 280,280);
                 } else {
                     $image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
                 }

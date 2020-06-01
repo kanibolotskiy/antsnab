@@ -908,7 +908,8 @@ class ModelCatalogProduct extends Model {
 			
 		}
 		$result['date_delivery']=$delday_text;
-		$result['price_delivery']=$del_price.($del_ico?' <div class="rur">i</div>':'');
+		//$result['price_delivery']=$del_price.($del_ico?' <div class="rur">i</div>':'');
+		$result['price_delivery']=$del_price;
 		$result['caption_delivery']=$del_caption;
 		$result['text_delivery']=$del_text;
 		//return '<span class="nowrap">'.$delday_text.',</span> <span class="nowrap">'.$del_price.'</span>';

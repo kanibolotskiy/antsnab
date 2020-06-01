@@ -41,11 +41,23 @@
                             <input type="text" name="weight" value="<?php echo $weight; ?>" placeholder="<?php echo $entry_weight; ?>" id="input-weight" class="form-control" />
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-weight_str"><?php echo $entry_weight_str; ?></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="weight_str" value="<?php echo $weight_str; ?>" placeholder="<?php echo $entry_weight_str; ?>" id="input-weight_str" class="form-control" />
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-price"><?php echo $entry_price; ?></label>
                         <div class="col-sm-10">
                             <input type="text" name="price" value="<?php echo $price; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-price_urgent"><?php echo $entry_price_urgent; ?></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="price_urgent" value="<?php echo $price_urgent; ?>" placeholder="<?php echo $entry_price_urgent; ?>" id="input-price_urgent" class="form-control" />
                         </div>
                     </div>
 

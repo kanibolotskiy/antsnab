@@ -297,7 +297,11 @@ class ControllerCatalogCouriers extends Controller {
             $data['entry_description'] = $this->language->get('entry_description');
             $data['entry_sort_order'] = $this->language->get('entry_sort_order');
 			$data['entry_weight'] = $this->language->get('entry_weight');
+			$data['entry_weight_str'] = $this->language->get('entry_weight_str');
 			$data['entry_price'] = $this->language->get('entry_price');
+			$data['entry_price_urgent'] = $this->language->get('entry_price_urgent');
+			
+
 			$data['entry_price_ico'] = $this->language->get('entry_price_ico');
 			
 			
@@ -391,6 +395,13 @@ class ControllerCatalogCouriers extends Controller {
             } else {
                 $data['weight'] = '';
 			}
+			if (isset($this->request->post['weight_str'])) {
+                $data['weight_str'] = $this->request->post['weight_str'];
+            } elseif (!empty($courier_info)) {
+                $data['weight_str'] = $courier_info['weight_str'];
+            } else {
+                $data['weight_str'] = '';
+			}
 
 			if (isset($this->request->post['price'])) {
                 $data['price'] = $this->request->post['price'];
@@ -398,6 +409,13 @@ class ControllerCatalogCouriers extends Controller {
                 $data['price'] = $courier_info['price'];
             } else {
                 $data['price'] = '';
+			}
+			if (isset($this->request->post['price_urgent'])) {
+                $data['price_urgent'] = $this->request->post['price_urgent'];
+            } elseif (!empty($courier_info)) {
+                $data['price_urgent'] = $courier_info['price_urgent'];
+            } else {
+                $data['price_urgent'] = '';
             }
             
             $data['header'] = $this->load->controller('common/header');

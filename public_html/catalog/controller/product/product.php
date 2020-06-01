@@ -262,7 +262,14 @@ class ControllerProductProduct extends Controller {
 		}
 		
 		$delivery_info = $this->model_catalog_product->getDelivery($product_id,$base_weight);
-		$data["delivery_text"]='<span class="nowrap">'.$delivery_info['date_delivery'].'</span><br/>'.$delivery_info['price_delivery'];
+		
+		if(is_numeric($delivery_info["price_delivery"])){
+			$del_price="от ".number_format($delivery_info["price_delivery"],0,"."," ").' <div class="rur">i</div>';
+		}else{
+			$del_price=$delivery_info["price_delivery"];
+		}
+		
+		$data["delivery_text"]='<span class="nowrap">'.$delivery_info['date_delivery'].'</span><br/>'.$del_price;
 
 		$data['baseWeight']=$base_weight;
 		$data['baseVol']=$base_vol;
@@ -292,7 +299,17 @@ class ControllerProductProduct extends Controller {
 		$delivery_info = $this->model_catalog_product->getDelivery($product_id,$weight);
 	
 		$json['date_delivery']=$delivery_info['date_delivery'];
-		$json['price_delivery']=$delivery_info['price_delivery'];
+		
+		//echo "!".$delivery_info['price_delivery']."!".is_numeric($delivery_info['price_delivery']);
+		if(is_numeric($delivery_info['price_delivery'])){
+			$price_del="от ".number_format($delivery_info['price_delivery'],0,"."," ").' <div class="rur">i</div>';
+		}else{
+			$price_del=$delivery_info['price_delivery'];
+		}
+		//echo "!".$delivery_info['price_delivery']."!";
+		$json['price_delivery']=$price_del;//$delivery_info['price_delivery'];
+		/**/
+		//$json['price_delivery']=$delivery_info['price_delivery'];
 		$json['caption_delivery']=$delivery_info['caption_delivery'];
 		
 		

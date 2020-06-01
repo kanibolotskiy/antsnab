@@ -99,8 +99,11 @@ class CategoryController extends \Controller
                 $settings = unserialize($category_info['settings']);
                 $category_info = array_merge($category_info, $settings);
                 
-                $articles_image_size = array($settings['images_size_width'], $settings['images_size_height']);
-                $category_image_size = array($settings['image_size_width'], $settings['image_size_height']);
+                //$articles_image_size = array($settings['images_size_width'], $settings['images_size_height']);
+                //$category_image_size = array($settings['image_size_width'], $settings['image_size_height']);
+                $articles_image_size = array(660, 440);
+                $category_image_size = array(660, 440);
+
                 $date_format = $settings['date_format'];
             }
 
@@ -145,6 +148,7 @@ class CategoryController extends \Controller
             if ($category_info['image']) {
                 $data['original'] = HTTP_SERVER . 'image/' . $category_info['image'];
                 $data['thumb'] = $this->model_tool_image->resize($category_info['image'], $category_image_size[0], $category_image_size[1]);
+                //$data['thumb'] = $this->model_tool_image->resize($category_info['image'], 660, 440);
             } else {
                 $data['original'] = '';
                 $data['thumb'] = '';
