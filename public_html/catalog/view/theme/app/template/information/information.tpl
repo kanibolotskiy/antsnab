@@ -41,7 +41,7 @@
                     <p><?=$l['comment']?></p>
                     <p>Для вашего удобства можете <a target="_blank" href="<?php echo $l['files'][0]['file_link'];?>">скачать подробную схему проезда</a></p>
                 </div>
-                <div class="map">
+                <div class="map_">
                     <?=$l['map']?>
                 </div>
             </div>

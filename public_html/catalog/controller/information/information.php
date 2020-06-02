@@ -158,7 +158,7 @@ class ControllerInformationInformation extends Controller {
 				
 				/**Карта */
 				//яндекс карты во всплывающем модале
-				$this->document->addScript('https://api-maps.yandex.ru/2.0/?lang=ru_RU&load=package.standard','header');
+				//$this->document->addScript('https://api-maps.yandex.ru/2.0/?lang=ru_RU&load=package.standard','header');
 
 				$data['locations'] = array();
 		

@@ -647,6 +647,8 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_quantity'] = $this->language->get('entry_quantity');
 		$data['entry_stock_status'] = $this->language->get('entry_stock_status');
 		$data['entry_price'] = $this->language->get('entry_price');
+		$data['entry_discount_percent'] = $this->language->get('entry_discount_percent');
+
 		$data['entry_priceold'] = $this->language->get('entry_priceold');
 		$data['entry_price_wholesaleold'] = $this->language->get('entry_price_wholesaleold');
 
@@ -1013,8 +1015,16 @@ class ControllerCatalogProduct extends Controller {
 			$data['price'] = '';
 		}
 
-		//print_r($product_info);
+		if (isset($this->request->post['discount_percent'])) {
+			$data['discount_percent'] = $this->request->post['discount_percent'];
+		} elseif (!empty($product_info)) {
+			$data['discount_percent'] = $product_info['discount_percent'];
+		} else {
+			$data['discount_percent'] = '';
+		}
 
+		//print_r($product_info);
+		/*
 		if (isset($this->request->post['priceold'])) {
 			$data['priceold'] = $this->request->post['priceold'];
 		} elseif (!empty($product_info)) {
@@ -1030,7 +1040,7 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['price_wholesaleold'] = '';
 		}
-
+		*/
 
 		if (isset($this->request->post['mincount'])) {
 			$data['mincount'] = $this->request->post['mincount'];

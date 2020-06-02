@@ -7,6 +7,7 @@ class ControllerCatalogAcciasale extends Controller {
         $this->load->language('catalog/acciasale');
 		$this->document->setTitle($this->language->get('heading_title_acciasale'));
 
+		$this->load->model('catalog/accia');
 		$this->load->model('catalog/acciasale');
 		$this->getForm();
 		
@@ -217,6 +218,52 @@ class ControllerCatalogAcciasale extends Controller {
 		$data['thumb_image']=$image;
 		$data['thumb_banner']=$banner;
 
+		
+		/**-------------- */
+		$categories=[];
+		$categories_tree=[];
+		$category_list=$this->model_catalog_accia->listCatalogAccias();
+		foreach($category_list as $category){
+			$categories[$category["parent_id"]][]=$category;
+		}
+
+		foreach($categories[71] as $key=>$cat_item){
+			$categories_tree[$key]=$cat_item;
+			$cat_child=[];
+			if(isset($categories[$cat_item["category_id"]])){
+				foreach($categories[$cat_item["category_id"]] as $cat_item_child){
+					$cat_child2=[];
+					if(isset($categories[$cat_item_child["category_id"]])){
+						foreach($categories[$cat_item_child["category_id"]] as $cat_item_child2){
+							$cat_item_child["list"][]=$cat_item_child2;
+						}
+					}
+					$categories_tree[$key]["list"][]=$cat_item_child;
+				}
+			}
+		}
+		$data["accia_products"]="";
+		$data["categories_tree"]=$categories_tree;
+
+		$products=[];
+		$product_list=$this->model_catalog_accia->listProductsAll();
+		/**/
+		$productsAccia_list=$this->model_catalog_acciasale->productsAcciaSale();
+		//print_r($productsAccia_list);
+		//$productsAccia_list=[12];
+		$productsAccia=[];
+		foreach($productsAccia_list as $pr_accia){
+			$productsAccia[$pr_accia["product_id"]]=$pr_accia["discount_percent"];
+		}
+
+		foreach($product_list as $product){
+			$products[$product["category_id"]][]=$product;
+		}
+		$data["productAccia"]=$productsAccia;
+		$data["products"]=$products;
+
+		/**-------------- */
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -225,9 +272,7 @@ class ControllerCatalogAcciasale extends Controller {
 	public function edit() {
 		
         $this->load->language('catalog/dopinfo');
-        
 		$this->document->setTitle($this->language->get('heading_title_acciasale'));
-
 		$this->load->model('catalog/acciasale');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST')) {

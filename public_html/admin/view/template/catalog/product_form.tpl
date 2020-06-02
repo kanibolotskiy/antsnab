@@ -392,6 +392,26 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-price_wholesale">
+                                    <?php echo $entry_price_wholesale; ?>
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="price_wholesale" value="<?php echo $price_wholesale; ?>" placeholder="<?php echo $entry_price_wholesale; ?>" id="input-price_wholesale" class="form-control" />
+                                </div>
+                            </div>
+
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-discount_percent">
+                                    <?php echo $entry_discount_percent; ?>
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="discount_percent" value="<?php echo $discount_percent; ?>" placeholder="<?php echo $entry_discount_percent; ?>" id="input-discount_percent" class="form-control" />
+                                </div>
+                            </div>
+
+                            <!--
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-priceold"><?php echo $entry_priceold; ?></label>
                                 <div class="col-sm-10">
                                     <input type="text" name="priceold" value="<?php echo $priceold; ?>" placeholder="<?php echo $entry_priceold; ?>" id="input-priceold" class="form-control" />
@@ -415,6 +435,7 @@
                                     <input type="text" name="price_wholesaleold" value="<?php echo $price_wholesaleold; ?>" placeholder="<?php echo $entry_price_wholesaleold; ?>" id="input-price_wholesaleold" class="form-control" />
                                 </div>
                             </div>
+                            -->
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-wholesale_threshold"><?php echo $entry_wholesale_threshold; ?></label>

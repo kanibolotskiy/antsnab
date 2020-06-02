@@ -145,6 +145,7 @@
                             <input type="text" name="accia_categories_change" id="accia_categories_change" value="0"/>
 -->
 <div class="wrap_accia_products">
+    <input type="hidden" name="change_products" id="change_products" value="0"/>
     <?php foreach($categories_tree as $category){?>
         <div class="accia_catalog_row acc_cat_caption" rel="<?php echo $category['category_id'];?>">
             <div class="accia_catalog_left">
@@ -160,9 +161,20 @@
                     <div class="accia_catalog_left">
                         <div class="accia_column_subcategory_caption"><?php echo $category_item["name"];?></div>
                     </div>
+                    
                     <div class="accia_catalog_right">
                         <?php if(isset($products[$category_item["category_id"]])){ foreach($products[$category_item["category_id"]] as $product){?>
-                            <div class="product_used_item <?php echo isset($productAccia[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                            <div class="product_discount_item <?php echo isset($productAccia[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?>
+                                <input value="<?php echo isset($productAccia[$product['product_id']])?$productAccia[$product['product_id']]:""; ?>" step="0.01" min="0" max="100" type="number" class="dis_percent" name="discount[<?php echo $product['product_id'];?>]"/>
+                                <div class="product_discount_info">
+                                    <div class="product_discount_line _active">
+                                        <span class="product_discount_line_caption">Цена:</span> <span class="prod_item_price" data-price="<?=$product['price']?>"><?=number_format($product['price'],2,"."," ")?></span> / <span class="prod_item_priceopt" data-price="<?=$product['price_wholesale']?>"><?=number_format($product['price_wholesale'],2,"."," ")?></span>
+                                    </div>
+                                    <div class="product_discount_line product_discount_line_sale <?php echo isset($productAccia[$product['product_id']])?"_active":""; ?>">
+                                        <span class="product_discount_line_caption">Цена без скидки:</span> <span class="prod_item_price_old">0</span> / <span class="prod_item_priceopt_old"></span>
+                                    </div>
+                                </div>
+                            </div>
                         <?php }}?>
                     </div>
                 </div>
@@ -175,7 +187,17 @@
                             </div>
                             <div class="accia_catalog_right">
                                 <?php if(isset($products[$category_item_child["category_id"]])){ foreach($products[$category_item_child["category_id"]] as $product){?>
-                                    <div class="product_used_item <?php echo isset($productAccia[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                                    <div class="product_discount_item <?php echo isset($productAccia[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?>
+                                        <input value="<?php echo isset($productAccia[$product['product_id']])?$productAccia[$product['product_id']]:""; ?>" step="0.01" min="0" max="100" type="number" class="dis_percent" name="discount[<?php echo $product['product_id'];?>]" />
+                                        <div class="product_discount_info">
+                                            <div class="product_discount_line _active">
+                                                <span class="product_discount_line_caption">Цена:</span> <span class="prod_item_price" data-price="<?=$product['price']?>"><?=number_format($product['price'],2,"."," ")?></span> / <span class="prod_item_priceopt" data-price="<?=$product['price_wholesale']?>"><?=number_format($product['price_wholesale'],2,"."," ")?></span>
+                                            </div>
+                                            <div class="product_discount_line product_discount_line_sale <?php echo isset($productAccia[$product['product_id']])?"_active":""; ?>">
+                                                <span class="product_discount_line_caption">Цена без скидки:</span> <span class="prod_item_price_old">0</span> / <span class="prod_item_priceopt_old"></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 <?php }}?>
                             </div>
                         </div>
@@ -198,6 +220,102 @@
         </div>
     </div>
     <script>
+    /*-----------------------------------*/
+    function number_format(number,decimals,dec_point,thousands_sep) {
+        number  = number*1;//makes sure `number` is numeric value
+        var str = number.toFixed(decimals?decimals:0).toString().split('.');
+        var parts = [];
+        for ( var i=str[0].length; i>0; i-=3 ) {
+            parts.unshift(str[0].substring(Math.max(0,i-3),i));
+        }
+        str[0] = parts.join(thousands_sep?thousands_sep:',');
+        return str.join(dec_point?dec_point:'.');
+    }
+    /*-----------------------------------*/
+    function setOldPrice(itm){
+        var itm_price=itm.find(".prod_item_price").attr("data-price")*1;
+        var itm_priceopt=itm.find(".prod_item_priceopt").attr("data-price")*1;
+        var itm_discount=itm.find(".dis_percent").val()*1;
+
+        if(itm_discount>0){
+            var old_price=itm_price+itm_price*itm_discount/(100-itm_discount);
+            var old_priceopt=itm_priceopt+itm_priceopt*itm_discount/(100-itm_discount);
+
+            var old_price_str=number_format(old_price,2,"."," ");
+            var old_priceopt_str=number_format(old_priceopt,2,"."," ");
+
+            itm.find(".prod_item_price_old").html(old_price_str);
+            itm.find(".prod_item_priceopt_old").html(old_priceopt_str);
+            itm.find(".product_discount_line_sale").addClass("_active");
+        }else{
+            itm.find(".product_discount_line_sale").removeClass("_active");
+        }
+        
+    }
+    $(document).ready(function(){
+        $(".dis_percent").keyup(function(e){
+            if(e.keyCode==27){
+                $(this).val("");
+                $(this).parent().removeClass("_active");
+                $("#change_products").val(1);
+                $(this).closest(".product_discount_item").removeClass("show_info");
+            }
+            //console.log(e.keyCode);
+        });
+        $(".dis_percent").keyup(function(){
+            var val_perc=$(this).val()*1;
+            if(val_perc){
+                $(this).parent().addClass("_active");
+            }else{
+                $(this).parent().removeClass("_active");
+            }
+            $("#change_products").val(1);
+            setOldPrice($(this).closest(".product_discount_item"))
+        });
+        /*
+        $(".dis_percent").change(function(){
+            var val_perc=$(this).val()*1;
+            if(val_perc){
+                $(this).parent().addClass("_active");
+            }else{
+                $(this).parent().removeClass("_active");
+            }
+            $("#change_products").val(1);
+            setOldPrice($(this).closest(".product_discount_item"))
+        });
+        */
+
+        $(document).click( function(e){
+            if ( $(e.target).closest('.product_discount_item').length ) {
+                return;
+            }
+            $(".product_discount_item").removeClass("show_info");
+        });
+        $(".product_discount_item._active").each(function(){
+            setOldPrice($(this));
+            $(this).parents(".subcat_wrapper").show();
+        });
+        $(".product_discount_item").click(function(e){
+            if ( $(e.target).closest('.product_discount_info').length ) {
+                return;
+            }
+            //if(!$(this).hasClass("show_info")){
+                $(".product_discount_item").removeClass("show_info");
+                $(this).addClass("show_info");
+            //}
+            
+        });
+        $(".product_discount_info").click(function(){
+            $(this).parent().removeClass("show_info");
+        });
+
+        $(".acc_cat_caption").click(function(){
+            var rel=$(this).attr("rel");
+            $(".subcat_wrapper[rel='"+rel+"']").slideToggle(200);
+            $(this).toggleClass("active");
+        });
+    });
+    /*
         function products_selected(){
             var products_used=[];
             $(".product_used_item._active").each(function(){
@@ -224,7 +342,7 @@
                 $(this).toggleClass("active");
             });
         });
-        
+    */   
     </script>
 
 

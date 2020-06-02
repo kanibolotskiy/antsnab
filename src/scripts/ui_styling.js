@@ -257,9 +257,9 @@ $(document).ready(function(){
     $("#category_banners").slick({
         speed: 500,
         autoplay:true,
-        autoplaySpeed:3000,
-        fade: true,
-        cssEase: 'linear'
+        autoplaySpeed:4000,
+        fade: false,
+        //cssEase: 'linear'
 
     });
     $(".ment_slider").each(function(){

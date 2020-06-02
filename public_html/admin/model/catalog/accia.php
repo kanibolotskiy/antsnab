@@ -29,7 +29,7 @@ class ModelCatalogAccia extends Model {
 		return $query->rows;
 	}
 	public function listProductsAll(){
-		$sql="SELECT od.product_id, od.name, op.sort_order, oc.category_id
+		$sql="SELECT od.product_id, op.price, op.price_wholesale, od.name, op.sort_order, oc.category_id
 		FROM oc_product op 
 		LEFT JOIN oc_product_description od ON op.product_id=od.product_id
 		LEFT JOIN oc_product_to_category oc ON od.product_id=oc.product_id and oc.main_category=1

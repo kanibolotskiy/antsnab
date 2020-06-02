@@ -78,12 +78,7 @@ class ControllerCatalogAccia extends Controller {
 			if (isset($this->request->get['filter_product'])) {
 				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
 			}
-			/*
-			if (isset($this->request->get['filter_author'])) {
-				$url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
-			}
-			*/
-
+			
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
@@ -402,16 +397,7 @@ class ControllerCatalogAccia extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		/*
-		$data['sort_product'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=pd.name' . $url, true);
-		$data['sort_author'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=r.author' . $url, true);
-		$data['sort_about'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=r.about' . $url, true);
-		$data['sort_rating'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=r.rating' . $url, true);
-		
-
-		$data['sort_date_added'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=r.date_added' . $url, true);
-		*/
-
+	
 		$data['sort_status'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=a.status' . $url, true);
 		$data['sort_sort_order'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=a.sort_order' . $url, true);
 		$data['sort_title'] = $this->url->link('catalog/accia', 'token=' . $this->session->data['token'] . '&sort=a.title' . $url, true);
@@ -513,11 +499,6 @@ class ControllerCatalogAccia extends Controller {
 		$data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
 
-
-		
-
-		
-
 		$data['entry_keyword'] = $this->language->get('entry_keyword');
 
 		
@@ -543,13 +524,7 @@ class ControllerCatalogAccia extends Controller {
 		} else {
 			$data['error_product'] = '';
 		}
-		/*
-		if (isset($this->error['author'])) {
-			$data['error_author'] = $this->error['author'];
-		} else {
-			$data['error_author'] = '';
-		}
-		*/
+	
 		if (isset($this->error['title'])) {
 			$data['error_title'] = $this->error['title'];
 		} else {
@@ -573,46 +548,6 @@ class ControllerCatalogAccia extends Controller {
 			$data['error_date_end'] = array();
 		}
 		
-
-		
-		/*
-		if (isset($this->error['description'])) {
-			$data['error_description'] = $this->error['description'];
-		} else {
-			$data['error_description'] = '';
-		}
-		if (isset($this->error['meta_title'])) {
-			$data['error_meta_title'] = $this->error['meta_title'];
-		} else {
-			$data['error_meta_title'] = array();
-		}
-		if (isset($this->error['meta_h1'])) {
-			$data['error_meta_h1'] = $this->error['meta_h1'];
-		} else {
-			$data['error_meta_h1'] = array();
-		}
-		if (isset($this->error['meta_description'])) {
-			$data['error_meta_description'] = $this->error['meta_description'];
-		} else {
-			$data['error_meta_description'] = array();
-		}
-		if (isset($this->error['keyword'])) {
-			$data['error_keyword'] = $this->error['keyword'];
-		} else {
-			$data['error_keyword'] = array();
-		}
-*/
-		
-		
-
-
-		/*
-		if (isset($this->error['rating'])) {
-			$data['error_rating'] = $this->error['rating'];
-		} else {
-			$data['error_rating'] = '';
-		}
-		*/
 
 		$url = '';
 
@@ -675,34 +610,6 @@ class ControllerCatalogAccia extends Controller {
 		$data['ckeditor'] = $this->config->get('config_editor_default');
 		$data['token'] = $this->session->data['token'];
 
-		/*
-		$this->load->model('catalog/product');
-		if (isset($this->request->post['product_id'])) {
-			$data['product_id'] = $this->request->post['product_id'];
-		} elseif (!empty($accia_info)) {
-			$data['product_id'] = $accia_info['product_id'];
-		} else {
-			$data['product_id'] = '';
-		}
-
-		if (isset($this->request->post['product'])) {
-			$data['product'] = $this->request->post['product'];
-		} elseif (!empty($accia_info)) {
-			$data['product'] = $accia_info['product'];
-		} else {
-			$data['product'] = '';
-		}
-
-		/*
-		if (isset($this->request->post['author'])) {
-			$data['author'] = $this->request->post['author'];
-		} elseif (!empty($accia_info)) {
-			$data['author'] = $accia_info['author'];
-		} else {
-			$data['author'] = '';
-		}
-		*/
-
 		if (isset($this->request->post['title'])) {
 			$data['title'] = $this->request->post['title'];
 		} elseif (!empty($accia_info)) {
@@ -764,16 +671,6 @@ class ControllerCatalogAccia extends Controller {
 		}
 		
 
-		/*
-		if (isset($this->request->post['rating'])) {
-			$data['rating'] = $this->request->post['rating'];
-		} elseif (!empty($accia_info)) {
-			$data['rating'] = $accia_info['rating'];
-		} else {
-			$data['rating'] = '';
-		}
-		*/
-
 		if (isset($this->request->post['date_start'])) {
 			$data['date_start'] = $this->request->post['date_start'];
 		} elseif (!empty($accia_info)) {
@@ -789,13 +686,6 @@ class ControllerCatalogAccia extends Controller {
 		} else {
 			$data['date_end'] = '';
 		}
-/*
-		if (isset($this->request->post['sended'])) {
-			$data['sended'] = $this->request->post['sended'];
-		} else {
-			$data['sended'] = '0';
-		}
-*/
 
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];

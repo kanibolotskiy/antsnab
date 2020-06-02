@@ -6411,6 +6411,12 @@ div.rur{display:inline;}
 .cat_price_val{
     font-weight:bold;
 }
+.cat_price_val .rur{
+    font-size: 17px;
+    font-weight: 400;
+    margin-left: 2px;
+}
+
 .cat_price_val._oldprice{
     color:#c00;    
 }
