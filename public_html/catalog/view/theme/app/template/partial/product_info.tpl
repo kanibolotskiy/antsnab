@@ -1,5 +1,5 @@
 <div class="card-product" id="product_id" product_id="<?=$product_id?>">
-
+    <div class="hideval" id="discount_val" data-value="<?=$discount_percent?>"></div>
     <div id="cart_preloader" class="ajax_loader">
         <div class="loader-classic">
             <span></span>

@@ -203,11 +203,21 @@ class ProductListHelper extends \Model
                     $price = false;
                 }
                 
+                /*
                 if($result['price_wholesaleold']*1){
                     $priceold = number_format($result['price_wholesaleold'],0,"."," ");
                     $discount_label = (int)(($result['price_wholesale']/$result['price_wholesaleold']-1)*100);
                 }
+                */
 
+                if($result['discount_percent']*1){
+                    //$priceold = number_format($result['price_wholesaleold'],0,"."," ");
+                    $discount_label = $result['discount_percent'];
+                    //Цена = Цена + Цена*(%скидки)/(100-%скидки)
+
+                    $price_temp = $result['price_wholesale']+$result['price_wholesale']*$discount_label/(100-$discount_label);
+                    $priceold = number_format($price_temp,0,"."," ");
+                }
                 if ((float) $result['special']) {
                     $uiUnitSpecial = 
                         $priceToUiKoef

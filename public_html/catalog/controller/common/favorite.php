@@ -208,7 +208,15 @@ class ControllerCommonFavorite extends Controller {
 
                 
                 //$price = $product['price'];
-
+                //Цена = Цена + Цена*(%скидки)/(100-%скидки)
+                if($product["discount_percent"]){
+                    $priceold=$product["price"]+$product["price"]*$product["discount_percent"]/(100-$product["discount_percent"]);
+                    $price_wholesaleold=$priceold=$product["price_wholesale"]+$product["price_wholesale"]*$product["discount_percent"]/(100-$product["discount_percent"]);
+                }else{
+                    $priceold=0;
+                    $price_wholesaleold=0;
+                }
+                
                 $data['products'][] = array(
                     'product_id' => $itm,
                     'thumb' => $image,
@@ -223,8 +231,11 @@ class ControllerCommonFavorite extends Controller {
                     'price_wholesale_val'=>$product['price_wholesale'],
                     'price' => $price,
                     'price_wholesale' => $price_wholesale,
-                    'priceold' => $product['priceold'],
-                    'price_wholesaleold' => $product['price_wholesaleold'],
+                    //'priceold' => $product['priceold'],
+                    //'price_wholesaleold' => $product['price_wholesaleold'],
+
+                    'priceold' => $priceold,
+                    'price_wholesaleold' => $price_wholesaleold,
 
                     'isWholesale' => $isWholesale,
                     'wholesale_threshold' => $product['wholesale_threshold'],

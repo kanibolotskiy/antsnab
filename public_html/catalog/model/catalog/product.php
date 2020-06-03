@@ -47,11 +47,12 @@ class ModelCatalogProduct extends Model {
 
 		//Скидка
 		$labels=[];
-		if($product['price_wholesaleold']*1){
-			$priceold = number_format($product['price_wholesaleold'],0,"."," ");
-			$discount_label = (int)(($product['price_wholesale']/$product['price_wholesaleold']-1)*100);
+		if($product['discount_percent']*1){
+			//$priceold = number_format($product['price_wholesaleold'],0,"."," ");
+			//$discount_label = (int)(($product['price_wholesale']/$product['price_wholesaleold']-1)*100);
+			$discount_label = $product['discount_percent'];
 			$labels["_discount"]=Array(
-				"label"=>$discount_label."%",
+				"label"=>"-".$discount_label."%",
 				"title"=>"Сегодня этот товар продается со скидкой"
 			);
 		}
@@ -241,8 +242,11 @@ class ModelCatalogProduct extends Model {
 				'calc_data3'	   => $query->row['calc_data3'],
 				'calc_data4'	   => $query->row['calc_data4'],
 
-				'priceold'     			=> $query->row['priceold'],
+				'discount_percent' => $query->row['discount_percent'],
+				/*'priceold'     			=> $query->row['priceold'],
 				'price_wholesaleold'	=> $query->row['price_wholesaleold'],
+				*/
+
 			);
 		} else {
 			return false;

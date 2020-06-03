@@ -169,17 +169,25 @@ function togglePrices($activeEl) {
         $wholeSalePrice.html(opt_price_str);
 
         if($("#discount_val").length){
+            /*
             var discount_val1=$("#discount_val").attr("discount_val1")*(-1);
             var discount_val2=$("#discount_val").attr("discount_val2")*(-1);
+            */
+            var discount_val=$("#discount_val").attr("data-value")*1;
 
-            var pr1=opt_price_val+opt_price_val*discount_val1/(100-discount_val1);
-            var pr2=price_val+price_val*discount_val2/(100-discount_val2);
+            var pr1=opt_price_val+opt_price_val*discount_val/(100-discount_val);
+            var pr2=price_val+price_val*discount_val/(100-discount_val);
             var pr1_str="";
             var pr2_str="";
 
+            //console.log(opt_price_val+"="+discount_val);
+
             pr1=pr1.toFixed(2);
             pr2=pr2.toFixed(2);
-
+            
+            pr1_str = number_format(pr1, 0, ",", " ") + " " + currency 
+            pr2_str = number_format(pr2, 0, ",", " ") + " " + currency 
+            /*
             if(pr1-parseInt(pr1)===0){
                 pr1_str = number_format(pr1, 0, ",", " ") + " " + currency 
             }else{
@@ -190,6 +198,8 @@ function togglePrices($activeEl) {
             }else{
                 pr2_str = number_format(pr2, 2, ",", " ") + " " + currency
             }
+            */
+            
             $(".product_old_price1").html(pr1_str);
             $(".product_old_price2").html(pr2_str);
         }

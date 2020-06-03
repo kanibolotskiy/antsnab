@@ -1,4 +1,5 @@
 <?php echo $header; ?>
+<div class="hideval" id="discount_val" data-value="<?=$discount_percent?>"></div>
 <div class="container main l_product">
     <?= $column_left ?>
     <div class="content">
@@ -106,6 +107,8 @@
                                         <?php foreach($labels as $key=>$label){ ?>
                                             <?php if($key=="_accia"){?>
                                                 <div class="item_label mainitem_accialabel <?php echo $key;?>"><?php echo $label['label'];?></div>
+                                            <?php }elseif($key=="_discount") {?>
+                                            <div class="item_label <?php echo $key;?>"><a target="_blank" title="<?php echo $label['title'];?>" href="sales/discounts/"><?php echo $label['label'];?></a></div>
                                             <?php }else{?>
                                                 <div class="item_label <?php echo $key;?>" title="<?php echo $label['title'];?>"><?php echo $label['label'];?></div>
                                             <?php }?>

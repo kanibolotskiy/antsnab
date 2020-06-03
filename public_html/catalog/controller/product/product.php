@@ -26,15 +26,25 @@ class ControllerProductProduct extends Controller {
 			$data['heading_title'] = $meta_h1;
 		}
 		$data['product_id'] = $product_id;
+		$data['discount_percent'] = $product_info['discount_percent'];
 		$data['sku'] = $product_info['sku'];
 		$data['manufacturer'] = $product_info['manufacturer'];
 		$data['description_mini'] = html_entity_decode($product_info['description_mini']);
 		$data['description'] = html_entity_decode($product_info['description']);
 		$data['price_wholesale'] = $product_info['price_wholesale'];
-		
-		
+		//print_r($product_info);
 
-
+		if($product_info['discount_percent']){
+			//Цена = Цена + Цена*(%скидки)/(100-%скидки)
+			$price_old = $product_info['price']+$product_info['price']*$product_info['discount_percent']/(100-$product_info['discount_percent']);
+			$price_wholesale_old = $product_info['price_wholesale']+$product_info['price_wholesale']*$product_info['discount_percent']/(100-$product_info['discount_percent']);
+		}else{
+			$price_old=0;
+			$price_wholesale_old=0;
+		}
+		$data['priceold'] = number_format($price_old,0,"."," ");
+		$data['price_wholesaleold'] = number_format($price_wholesale_old,0,"."," ");
+		/*
 		if($product_info['priceold']){
 			$data['priceold'] = number_format($product_info['priceold'],0,"."," ");
 		}
@@ -42,6 +52,7 @@ class ControllerProductProduct extends Controller {
 		if($product_info['price_wholesaleold']){
 			$data['price_wholesaleold'] = number_format($product_info['price_wholesaleold'],0,"."," ");
 		}
+		*/
 
 		$data['quantity_stock']=$product_info['quantity'];
 		if ($product_info['quantity'] > 0) {
@@ -95,13 +106,14 @@ class ControllerProductProduct extends Controller {
             $data['price_wholesale_val']=$registry->get('currency')->format((float)$data['price_wholesale'] ? $data['price_wholesale'] : $product_info['price_wholesale'], $registry->get('session')->data['currency']);
             $data['price'] = $registry->get('tax')->calculate($product_info['price'], $product_info['tax_class_id'], $registry->get('config')->get('config_tax'));
             $data['price_val']=$registry->get('currency')->format((float)$data['price'] ? $data['price'] : $product_info['price'], $registry->get('session')->data['currency']);
-
+			/*
             if($product_info['price_wholesaleold']*1){
                 $discount_val1=(($product_info['price_wholesale']/$product_info['price_wholesaleold']-1)*100);
                 $discount_val2=(($product_info['price']/$product_info['priceold']-1)*100);
 
                 $discount = (int)$discount_val1;
-            }
+			}
+			*/
 
         } else {
             $data['price_wholesale'] = false;
@@ -112,9 +124,10 @@ class ControllerProductProduct extends Controller {
         
 		$data['labels']=$this->model_catalog_product->getProductLabels($product_info);
 		
+		/*
         $data['discount_val1'] = $discount_val1;
         $data['discount_val2'] = $discount_val2;
-        
+        */
 		
 		if(isset($_COOKIE["favorite"])){
             $favorite_arr=json_decode($_COOKIE["favorite"]);
@@ -809,7 +822,7 @@ class ControllerProductProduct extends Controller {
 
 
 			$data['price_wholesale'] = $product_info['price_wholesale'];
-
+			/*
 			if($product_info['priceold']){
 				$data['priceold'] = number_format($product_info['priceold'],0,"."," ");
 			}
@@ -817,6 +830,17 @@ class ControllerProductProduct extends Controller {
 			if($product_info['price_wholesaleold']){
 				$data['price_wholesaleold'] = number_format($product_info['price_wholesaleold'],0,"."," ");
 			}
+			*/
+			if($product_info['discount_percent']){
+				//Цена = Цена + Цена*(%скидки)/(100-%скидки)
+				$price_old = $product_info['price']+$product_info['price']*$product_info['discount_percent']/(100-$product_info['discount_percent']);
+				$price_wholesale_old = $product_info['price_wholesale']+$product_info['price_wholesale']*$product_info['discount_percent']/(100-$product_info['discount_percent']);
+			}else{
+				$price_old=0;
+				$price_wholesale_old=0;
+			}
+			$data['priceold'] = number_format($price_old,0,"."," ");
+			$data['price_wholesaleold'] = number_format($price_wholesale_old,0,"."," ");
 			
 
 
@@ -1046,10 +1070,30 @@ class ControllerProductProduct extends Controller {
 					} else {
 						$rating = false;
 					}
-					$discount=0;
+
+					//$discount=0;
+					if($result['discount_percent']*1){
+						$discount = $result['discount_percent'];
+					}else{
+						$discount=0;
+					}
+					/*
 					if($result['price_wholesaleold']*1){
 						$discount = (int)(($result['price_wholesale']/$result['price_wholesaleold']-1)*100);
 					}
+					
+					if($result['discount_percent']){
+						//Цена = Цена + Цена*(%скидки)/(100-%скидки)
+						$price_wholesale_old = $result['price_wholesale']+$result['price_wholesale']*$result['discount_percent']/(100-$result['discount_percent']);
+					}else{
+						$price_wholesale_old=0;
+					}
+					$data['priceold'] = number_format($price_old,0,"."," ");
+					$data['price_wholesaleold'] = number_format($price_wholesale_old,0,"."," ");
+					*/
+
+					
+
 					
 					$labels = $this->model_catalog_product->getProductLabels($result);
 	

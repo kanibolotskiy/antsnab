@@ -214,9 +214,9 @@ class CategoryController extends \Controller
                     if((isset($data_url["param"][$key]))or(isset($data_url["?param"][$key]))){
                         //$sql_param_where[$key]["sql"][]=" AND price_wholesaleold>0";
                         $d_now=date("Y-m-d");
-                        $sql_param_where[$key]["sql"][]=" AND (price_wholesaleold>0 or product_id in (SELECT ap.product_id 
+                        $sql_param_where[$key]["sql"][]=" AND (discount_percent>0 or product_id in (SELECT ap.product_id 
 FROM accia_products ap LEFT JOIN accia a ON ap.accia_id=a.accia_id
-where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND (DATE(date_end) >= '".$d_now."' or date_end is null) order by sort_order DESC)";
+where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND (DATE(date_end) >= '".$d_now."' or date_end is null)))";
 
                     }
                     $sql_param_where[$key]["type"]=5;
@@ -319,18 +319,20 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
                         
                         /*Вывод товаров со скидкой */
                         $sql_temp="SELECT op.product_id from oc_product op WHERE op.status=1 and op.product_id in (".$avail_products_list.") ".implode(" ", $param["sql"])." group by op.product_id";
+                        //echo $sql_temp;
                         $query = $this->db->query($sql_temp);
                         foreach ($query->rows as $result) {
                             $products_by_param[]=$result["product_id"];
                         }
                         
-                        /*Вывод товаров по акциям */
+                        /*Вывод товаров по акциям 
                         $d_now=date("Y-m-d");
                         $sql_temp="SELECT ap.product_id FROM accia_products ap LEFT JOIN accia a ON ap.accia_id=a.accia_id where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND (DATE(date_end) >= '".$d_now."' or date_end is null)";
                         $query = $this->db->query($sql_temp);
                         foreach ($query->rows as $result) {
                             $products_by_param[]=$result["product_id"];
                         }
+                        */
                         
                         $array_result=array_intersect($array_result,$products_by_param);
                         $array_by_params_product[$key]["products"]=$products_by_param;
