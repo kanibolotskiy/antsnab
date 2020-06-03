@@ -22,7 +22,7 @@
             </div>
             <div class="calculator-block_error">Заполните все поля</div>
         </div>
-        <div class="wrap_table_data">
+        <div class="wrap_table_data wrap_table_calc">
             <div class="content-text">
                 <p>Расчет необходимого количества материалов для заполнения шва длиной <span class="input_area" id="input_area1">-</span> п.м., шириной <span class="input_area" id="input_area2">-</span> см, глубиной <span class="input_area" id="input_area3">-</span> см:
             </div>

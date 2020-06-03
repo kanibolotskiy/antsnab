@@ -240,7 +240,7 @@ function calc1(){
         $("#calc_out1").html(number_format(count_itm1,0,"."," ")+" "+unitpack1_str);
         //$("#calc_out1").attr("data-count",count_itm1);
         $("#input_area").html(data_calc2+"м<sup>2</sup>");
-        $(".wrap_table_data").fadeIn(200);
+        $(".wrap_table_calc").fadeIn(200);
 
         //var min_count=$("#priceSwitcher").attr("data-rosn_limit");
         var min_count=unitpack1.attr("data-ui_minimum");
@@ -270,7 +270,7 @@ function calc1(){
         $("#calc_out3").html(number_format(count_itm2,0,"."," ")+" "+unitpack2_str);
         $("#calc_out3").attr("data-count",count_itm2);
         $("#input_area").html(data_calc2+"м<sup>2</sup>");
-        $(".wrap_table_data").fadeIn(200);
+        $(".wrap_table_calc").fadeIn(200);
         
 
     }else{
@@ -280,7 +280,7 @@ function calc1(){
         $("#calc_out2").html("-");
         $("#calc_out3").html("-");
         $("#calc_out2").attr("data-count",0);
-        $(".wrap_table_data").fadeOut(200);
+        $(".wrap_table_calc").fadeOut(200);
     }
 }
 function calc2(){
@@ -314,7 +314,7 @@ function calc2(){
         $("#calc_out1").html(number_format(count_itm1,0,"."," ")+" "+unitpack1_str);
         //$("#calc_out1").attr("data-count",count_itm1);
         $("#input_area").html(data_calc2+"м<sup>2</sup>");
-        $(".wrap_table_data").fadeIn(200);
+        $(".wrap_table_calc").fadeIn(200);
 
         //var min_count=$("#priceSwitcher").attr("data-rosn_limit");
         var min_count=unitpack1.attr("data-ui_minimum");
@@ -331,7 +331,7 @@ function calc2(){
     }else{
         $("#calc_out1").html("-");
         $("#calc_out1").attr("data-count",0);
-        $(".wrap_table_data").fadeOut(200);
+        $(".wrap_table_calc").fadeOut(200);
     }
 }
 function calc3(){
@@ -376,7 +376,7 @@ function calc3(){
 
             var unitpack1_str=declOfNum(calc_rez, [unitpack1.attr("data-ui_name"),unitpack1.attr("data-ui_name_genitive"),unitpack1.attr("data-ui_name_plural")]);
             $("#calc_out1").html(number_format(calc_rez,0,"."," ")+" "+unitpack1_str);
-            $(".wrap_table_data").fadeIn(200);
+            $(".wrap_table_calc").fadeIn(200);
             var min_count=$("#priceSwitcher").attr("data-rosn_limit");
 
             var step=1;
@@ -407,7 +407,7 @@ function calc3(){
             $("#input_area1").html("-");
             $("#input_area2").html("-");
             $("#input_area3").html("-");
-            $(".wrap_table_data").fadeOut(200);
+            $(".wrap_table_calc").fadeOut(200);
     }
 
 }
@@ -457,7 +457,7 @@ function calc4(){
         $("#calc_out1").html(number_format(calc_rez,0,"."," ")+" "+unitpack1_str);
         
         
-        $(".wrap_table_data").fadeIn(200);
+        $(".wrap_table_calc").fadeIn(200);
     
         var min_count=$("#priceSwitcher").attr("data-rosn_limit");
         
@@ -473,7 +473,7 @@ function calc4(){
         $("#input_area1").html("-");
         $("#input_area2").html("-");
         $("#input_area3").html("-");
-        $(".wrap_table_data").fadeOut(200);
+        $(".wrap_table_calc").fadeOut(200);
     }
 }
 function calc5(){
@@ -523,7 +523,7 @@ function calc5(){
         $("#calc_out1").html(number_format(calc_rez,0,"."," ")+" "+unitpack1_str);
         
         
-        $(".wrap_table_data").fadeIn(200);
+        $(".wrap_table_calc").fadeIn(200);
     
         var min_count=$("#priceSwitcher").attr("data-rosn_limit");
         
@@ -555,7 +555,7 @@ function calc5(){
         $("#input_area1").html("-");
         $("#input_area2").html("-");
         $("#input_area3").html("-");
-        $(".wrap_table_data").fadeOut(200);
+        $(".wrap_table_calc").fadeOut(200);
     }
 
 }
@@ -887,8 +887,6 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
         var max_weight=$(this).val();
         var weight=$("#priceSwitcher").attr("data-base_weight");
 
-        
-
         var unitpack1=$(".unitpack1");
         var unitpack2=$(".unitpack2");
         
@@ -897,10 +895,11 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
             if (typeof ym != 'undefined') {
                 ym(14496178, 'reachGoal', 'loading-rates');
             }
-
-            $(".wrap_table_data").fadeIn();
+            $(".table_data_gruz").fadeIn();
+            //$(this).closest(".resp-tab-content").find(".wrap_table_data").fadeIn();
         }else{
-            $(".wrap_table_data").fadeOut();
+            $(".table_data_gruz").fadeOut();
+            //$(this).closest(".resp-tab-content").find(".wrap_table_data").fadeOut();
         }
         if(unitpack1.length){
             if(unitpack1_count>0){            

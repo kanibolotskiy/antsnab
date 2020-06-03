@@ -517,7 +517,7 @@
                                 </select>
                             </div>
                             
-                            <div class="wrap_table_data">
+                            <div class="wrap_table_data table_data_gruz">
                             <table class="table_data">
                                 <thead>
                                     <tr><th><?= $pUnits[1]['name']?></th><th><?= $pUnits[2]['name']?></th></tr>

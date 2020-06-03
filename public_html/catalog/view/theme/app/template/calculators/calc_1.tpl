@@ -12,7 +12,7 @@
             <div class="calculator-block_error">Заполните все поля</div>
         </div>
 
-        <div class="wrap_table_data">
+        <div class="wrap_table_data wrap_table_calc">
             <div class="content-text">
                 <p>Расчет необходимого количества материалов для гидроизоляции на площадь <span class="input_area" id="input_area">-</span></p>
             </div>

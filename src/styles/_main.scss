@@ -5767,7 +5767,7 @@ table.table_data td{color: #000000;
     line-height: 28px;
     vertical-align: middle;
     /*border: 1px solid #E8E5E2;*/
-    border: 2px solid #999;
+    border: 1px solid #999;
 
     width:50%;
     padding:10px 15px;
@@ -5779,8 +5779,8 @@ table.table_data th{
 text-align: center;
 font-weight: bold;
 line-height: 28px;
-border:2px solid transparent;
-border-bottom: 2px solid #999;
+border:1px solid transparent;
+border-bottom: 1px solid #999;
 }
 table.table_data td._left{text-align:left;}
 table.table_data td a{color:#598ba6;}
