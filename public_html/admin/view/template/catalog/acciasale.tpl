@@ -255,7 +255,7 @@
     $(document).ready(function(){
         $(".dis_percent").keyup(function(e){
             if(e.keyCode==27){
-                $(this).val("");
+                $(this).val("0");
                 $(this).parent().removeClass("_active");
                 $("#change_products").val(1);
                 $(this).closest(".product_discount_item").removeClass("show_info");

@@ -21,7 +21,7 @@ class ModelCatalogSale extends Model {
 		return $query->rows;
 	}
 	public function acciaProductsSale(){
-		$query = $this->db->query("SELECT product_id FROM oc_product where status=1 and priceold>0");
+		$query = $this->db->query("SELECT product_id FROM oc_product where status=1 and discount_percent>0");
 		return $query->rows;
 	}
 
@@ -45,7 +45,7 @@ class ModelCatalogSale extends Model {
 	public function activeAcciaDiscount(){
 		//Если есть товары со скидками
 		$result=[];
-		$sql="select count(product_id) as count from oc_product where status=1 and priceold>0";
+		$sql="select count(product_id) as count from oc_product where status=1 and discount_percent>0";
 		$query = $this->db->query($sql);
 		if($query->row["count"]){
 			$query = $this->db->query("SELECT DISTINCT * FROM accia_sale where id=1");
@@ -66,7 +66,8 @@ class ModelCatalogSale extends Model {
 			}
 
 			//Если есть товары со скидками
-			$sql="select count(product_id) as count from oc_product where status=1 and priceold>0";
+			//$sql="select count(product_id) as count from oc_product where status=1 and priceold>0";
+			$sql="select count(product_id) as count from oc_product where status=1 and discount_percent>0";
 			$query = $this->db->query($sql);
 			if($query->row["count"]){
 				//Дискаунт

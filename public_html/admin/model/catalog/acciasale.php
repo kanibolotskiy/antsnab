@@ -2,10 +2,10 @@
 class ModelCatalogAcciasale extends Model {
 	private function changeProductsDiscount($data){
 		foreach($data as $key=>$itm){
-			if($itm){
+			//if($itm){
 				//echo $key."=".$itm."|<br/>";
-				$this->db->query("UPDATE oc_product set discount_percent=".$itm." where product_id=".$key);
-			}
+				$this->db->query("UPDATE oc_product set discount_percent=".(int)$itm." where product_id=".$key);
+			//}
 		}
 		//print_r($data);
 	}
