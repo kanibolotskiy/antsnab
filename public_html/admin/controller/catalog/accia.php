@@ -754,25 +754,22 @@ class ControllerCatalogAccia extends Controller {
 			}
 		}
 		$data["accia_products"]="";
-		//print_r($categories_tree);
 		$data["categories_tree"]=$categories_tree;
-		//oc_category
 
 		$products=[];
 		$product_list=$this->model_catalog_accia->listProductsAll();
-		//echo "!".$accia_id."!";
 		$productsAccia_list=$this->model_catalog_accia->productsAccia($accia_id);
 		$productsAccia=[];
 		foreach($productsAccia_list as $pr_accia){
 			$productsAccia[$pr_accia["product_id"]]=1;
 		}
-		//print_r($productsAccia);
 
 		foreach($product_list as $product){
 			$products[$product["category_id"]][]=$product;
 		}
 		$data["products"]=$products;
 		$data["productAccia"]=$productsAccia;
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

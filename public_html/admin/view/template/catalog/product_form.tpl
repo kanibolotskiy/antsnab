@@ -132,6 +132,24 @@
                                         </div>
 
                                         <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="input-altvideo">
+                                                <?php echo $entry_altvideo; ?>
+                                            </label>
+                                            <div class="col-sm-1">
+                                            <div class="checkbox">
+                                                <label>
+                                                <?php if($altvideo) { ?>
+                                                <input  type="checkbox" name="altvideo" value="1" checked="checked" id="input-altvideo" />
+                                                <?php } else { ?>
+                                                <input type="checkbox" name="altvideo" value="1" id="input-altvideo" />
+                                                <?php } ?>
+                                                &nbsp; </label>
+                                            </div>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <div class="form-group">
                                             <label class="col-sm-2 control-label" for="input-disseo">
                                                 <?php echo $entry_disseo; ?>
                                             </label>

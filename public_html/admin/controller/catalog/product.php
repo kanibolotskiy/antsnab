@@ -693,6 +693,9 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_recurring'] = $this->language->get('entry_recurring');
 		$data['entry_main_category'] = $this->language->get('entry_main_category');
 		$data['entry_disseo'] = $this->language->get('entry_disseo');
+		$data['entry_altvideo'] = $this->language->get('entry_altvideo');
+		
+		
 		$data['entry_video'] = $this->language->get('entry_video');
 		$data['entry_showdiscount'] = $this->language->get('entry_showdiscount');
 		$data['entry_discount'] = $this->language->get('entry_discount');
@@ -875,6 +878,15 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['disseo'] = '';
 		}
+		
+		if (isset($this->request->post['altvideo'])) {
+			$data['altvideo'] = $this->request->post['altvideo'];
+		} elseif (!empty($product_info)) {
+			$data['altvideo'] = $product_info['altvideo'];
+		} else {
+			$data['altvideo'] = '';
+		}
+
 		/*
 		if (isset($this->request->post['showdiscount'])) {
 			$data['showdiscount'] = $this->request->post['showdiscount'];
