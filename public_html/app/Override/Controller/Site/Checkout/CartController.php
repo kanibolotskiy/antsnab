@@ -115,6 +115,7 @@ class CartController extends \ControllerCheckoutCart
         $this->load->model('catalog/product');
 
         $product_info = $this->model_catalog_product->getProduct($product_id);
+        
 
         if ($product_info) {
             if (isset($this->request->post['quantity']) && ((int) $this->request->post['quantity'] >= $product_info['minimum'])) {
@@ -279,9 +280,9 @@ class CartController extends \ControllerCheckoutCart
                     foreach($product_related_results as $related_result){
                         
                         if ($related_result['image']) {
-                            $image_rel = $this->model_tool_image->myResize($related_result['image'], 80,80,2);
+                            $image_rel = $this->model_tool_image->myResize($related_result['image'], 100,100,2);
                         } else {
-                            $image_rel = $this->model_tool_image->resize('placeholder.png', 80,80,2);
+                            $image_rel = $this->model_tool_image->resize('placeholder.png', 100,100,2);
                         }
 
                         $product_related[]=array(
@@ -434,8 +435,14 @@ class CartController extends \ControllerCheckoutCart
                             $rowTotal = $saleUnit_price_wholesale * $prodQuantity; 
                             $isWholesale = true;
                             $total = $this->currency->format($rowTotal, $this->session->data['currency']);
+                            /*
                             if($product['price_wholesaleold']!=0){
                                 $orderSumEco = $product['price_wholesaleold'] * $prodQuantity - $rowTotal;
+                            }
+                            */
+                            
+                            if($product['discount_percent']>0){
+                                $orderSumEco=$prodQuantity*$product['price_wholesale']*$product['discount_percent']/(100-$product['discount_percent']);
                             }
 
                         } else {
@@ -443,10 +450,23 @@ class CartController extends \ControllerCheckoutCart
                             $rowTotal = $saleUnit_price * $prodQuantity; 
                             $isWholesale = false;
                             $total = $this->currency->format($rowTotal, $this->session->data['currency']);
+                            //if($product['discount_percent']>0){
+                                //$orderSumEco = $product['priceold'] * $prodQuantity - $rowTotal;
+                            //}
+                            /*
                             if($product['priceold']!=0){
                                 $orderSumEco = $product['priceold'] * $prodQuantity - $rowTotal;
                             }
+                            
+                            if($product['discount_percent']>0){
+                                $orderSumEco=
+                            }*/
+                            if($product['discount_percent']>0){
+                                $orderSumEco=$prodQuantity*$product['price']*$product['discount_percent']/(100-$product['discount_percent']);
+                            }
                         }
+                        
+                        //Цена = Цена + Цена*(%скидки)/(100-%скидки)
                         
                         $orderSumTotal += $rowTotal;
                         $orderSumEcoTotal += $orderSumEco;
@@ -495,10 +515,85 @@ class CartController extends \ControllerCheckoutCart
             'phone' => '',
             'email' => '',
             'inn'=>'',
+            'payment_method'=>'',
+            'shipping_method'=>'',
+            'client'=>'',
             'need_shipping' => 0,
             'shipping_address' => '',
         ];
 
+        //яндекс карты во всплывающем модале
+        ///$registry->get('document')->addScript('https://api-maps.yandex.ru/2.0/?lang=ru_RU&load=package.standard','header');
+        $data['locations'] = array();
+        
+        $this->load->model('localisation/location');
+        $this->load->model('file/file');
+        $location_id=1;
+        $location_info = $this->model_localisation_location->getLocation($location_id);
+        if ($location_info) {
+            $location_files=[];
+            $files_data = $this->model_file_file->getLocationFiles($location_id);
+            foreach ($files_data as $file) {
+                $file_link = HTTP_SERVER . 'files/' . $file['filename']; 
+                if($file_link){
+                    $location_files[] = array(
+                        'name' 	    => $file['name'],
+                        'file_link' => $file_link
+                    );
+                }
+            }
+            $data["location"]=array(
+                'name'        => $location_info['name'],
+                'address'     => nl2br($location_info['address']),
+                'files'       => $location_files,
+                'map'         => html_entity_decode($location_info['map']),
+                'comment'     => $location_info['comment'],
+                'telephone'   => $location_info['telephone'],
+                'fax'         => $location_info['fax'],
+                'open'        => nl2br($location_info['open']),
+            );
+        }
+
+        //print_r($location_info);
+
+        /*
+        foreach ((array)$registry->get('config')->get('config_location') as $location_id) {
+            $location_info = $registry->get('model_localisation_location')->getLocation($location_id);
+
+            if ($location_info) {
+                if ($location_info['image']) {
+                    $image = $this->model_tool_image->resize($location_info['image'], $this->config->get($this->config->get('config_theme') . '_image_location_width'), $this->config->get($this->config->get('config_theme') . '_image_location_height'));
+                } else {
+                    $image = false;
+                }
+
+                $location_files=[];
+                $files_data = $registry->get('model_file_file')->getLocationFiles($location_id);
+                foreach ($files_data as $file) {
+                    $file_link = HTTP_SERVER . 'files/' . $file['filename']; 
+                    if($file_link){
+                        $location_files[] = array(
+                            'name' 	    => $file['name'],
+                            'file_link' => $file_link
+                        );
+                    }
+                }
+                $data['locations'][] = array(
+                    'location_id' => $location_info['location_id'],
+                    'name'        => $location_info['name'],
+                    'address'     => nl2br($location_info['address']),
+                    'geocode'     => $location_info['geocode'],
+                    'telephone'   => $location_info['telephone'],
+                    'fax'         => $location_info['fax'],
+                    'image'       => $image,
+                    'open'        => nl2br($location_info['open']),
+                    'comment'     => $location_info['comment'],
+                    'map'         => html_entity_decode($location_info['map']),
+                    'files'       => $location_files
+                );
+            }
+        }
+        */
         
         if ($this->request->server['REQUEST_METHOD'] == 'POST') {
             $data['form_data'] = $this->request->post;
@@ -604,6 +699,7 @@ class CartController extends \ControllerCheckoutCart
 
             //print_r($products);
             $totalWeight=0; 
+            $num=0;
             foreach ($products as $product) {
                 $product_total = 0;
 
@@ -740,19 +836,31 @@ class CartController extends \ControllerCheckoutCart
                     $orderSumEco=0;
                     $prodQuantity =(float)$product['quantity'];
                     $totalWeight+=$prodQuantity*$base_weight;
+                    //print_r($product);
                     if ($prodQuantity >= $wholesale_threshold) {
                         $rowTotal = $saleUnit_price_wholesale * $prodQuantity; 
 
+                        /*
                         if($product['price_wholesaleold']!=0){
                             $orderSumEco = $product['price_wholesaleold'] * $prodQuantity - $rowTotal;
                         }
+                        */
+                        if($product['discount_percent']>0){
+                            $orderSumEco=$prodQuantity*$product['price_wholesale']*$product['discount_percent']/(100-$product['discount_percent']);
+                        }
+                        
                         
                         $isWholesale = true;
                         $total = $this->currency->format($rowTotal, $this->session->data['currency']);
                     } else {
                         $rowTotal = $saleUnit_price * $prodQuantity; 
+                        /*
                         if($product['priceold']!=0){
                             $orderSumEco = $product['priceold'] * $prodQuantity - $rowTotal;
+                        }
+                        */
+                        if($product['discount_percent']>0){
+                            $orderSumEco=$prodQuantity*$product['price']*$product['discount_percent']/(100-$product['discount_percent']);
                         }
                         
                         //$orderSumEco+=3;
@@ -807,24 +915,26 @@ class CartController extends \ControllerCheckoutCart
                 $product_related_results = $this->model_catalog_product->getProductRelated($product['product_id'],true,6,'product_related');
                 $product_related=[];
                 foreach($product_related_results as $related_result){
-                    
-                    if ($related_result['image']) {
-                        $image_rel = $this->model_tool_image->myResize($related_result['image'], 80,80,2);
-                    } else {
-                        $image_rel = $this->model_tool_image->resize('placeholder.png', 80,80,2);
+                    if($related_result["quantity"]>0){
+                        if ($related_result['image']) {
+                            $image_rel = $this->model_tool_image->myResize($related_result['image'], 100,100,2);
+                        } else {
+                            $image_rel = $this->model_tool_image->resize('placeholder.png', 100,100,2);
+                        }
+                        //print_r($related_result);
+                        $product_related[]=array(
+                            'product_id' => $related_result['product_id'],
+                            'meta_h1' => $related_result['meta_h1'],
+                            'name' => $related_result['name'],
+                            'href' => $this->url->link('product/product', 'product_id=' . $related_result['product_id']),
+                            'image' => $image_rel, 
+                            'price' => $this->currency->format($this->tax->calculate($related_result['price'], $related_result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+                        );
                     }
-
-                    $product_related[]=array(
-                        'product_id' => $related_result['product_id'],
-                        'meta_h1' => $related_result['meta_h1'],
-                        'name' => $related_result['name'],
-                        'href' => $this->url->link('product/product', 'product_id=' . $related_result['product_id']),
-                        'image' => $image_rel, 
-                        'price' => $this->currency->format($this->tax->calculate($related_result['price'], $related_result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
-                    );
                 }
 
                 $data['products'][] = array(
+                    'num'=>$num,
                     'cart_id' => $product['cart_id'],
                     'thumb' => $image,
                     'name' => $product['name'],
@@ -853,6 +963,7 @@ class CartController extends \ControllerCheckoutCart
                     'step'=>$step,
                     'product_related'=>$product_related
                 );
+                $num++;
             }
 
             //print_r($data['products']);
@@ -873,6 +984,23 @@ class CartController extends \ControllerCheckoutCart
 
             /** @task - сделать в будущем нормально через некий оптовый модуль, кстати в заказе это как то работает!!!!!!  */
             //print_r($orderSumTotal);
+
+            //Переключалка (физлицо/юрлицо)
+            $client1="active";
+            $client2="";
+
+            if($_COOKIE["orderdata"]){
+                $orderdata=json_decode($_COOKIE["orderdata"]);
+                $orderdata->client;
+                if(isset($orderdata->client)){
+                    if($orderdata->client==2){
+                        $client1="";
+                        $client2="active";
+                    }
+                }
+            }
+            
+            $data['client']=[$client1,$client2];
             $data['totals'][] = array(
                 'title' => 'Сумма без учета доставки', 
                 'text' => $this->currency->format($orderSumTotal, $this->session->data['currency'])
@@ -1321,6 +1449,10 @@ class CartController extends \ControllerCheckoutCart
             $order_data['lastname'] = $customer_info['lastname'];
             $order_data['email'] = $customer_info['email'];
             $order_data['inn'] = $customer_info['inn'];
+            $order_data['client'] = $customer_info['client'];
+            $order_data['payment_method'] = $customer_info['payment_method'];
+            $order_data['shipping_method'] = $customer_info['shipping_method'];
+
             $order_data['telephone'] = $customer_info['telephone'];
             $order_data['fax'] = $customer_info['fax'];
             $order_data['custom_field'] = json_decode($customer_info['custom_field'], true);
@@ -1331,6 +1463,9 @@ class CartController extends \ControllerCheckoutCart
             $order_data['lastname'] = $this->request->post['name'];
             $order_data['email'] = trim($this->request->post['email']);
             $order_data['inn'] = trim($this->request->post['inn']);
+            $order_data['client'] = trim($this->request->post['client']);
+            $order_data['payment_method'] = trim($this->request->post['payment_method']);
+            $order_data['shipping_method'] = trim($this->request->post['shipping_method']);
             $order_data['telephone'] = $this->request->post['phone'];
             $order_data['custom_field'] = [];
         }
@@ -1350,7 +1485,7 @@ class CartController extends \ControllerCheckoutCart
         $order_data['payment_country_id'] = '';
         $order_data['payment_address_format'] = '';
         $order_data['payment_custom_field'] = [];
-        $order_data['payment_method'] = '';
+        //$order_data['payment_method'] = '';
         $order_data['payment_code'] = '';
 
         $order_data['shipping_firstname'] = $this->request->post['name'];
@@ -1366,7 +1501,7 @@ class CartController extends \ControllerCheckoutCart
         $order_data['shipping_country_id'] = '';
         $order_data['shipping_address_format'] = '';
         $order_data['shipping_custom_field'] = array();
-        $order_data['shipping_method'] = '';
+        //$order_data['shipping_method'] = '';
         $order_data['shipping_code'] = '';
 
         if(isset($_FILES)){

@@ -427,9 +427,12 @@ class SearchController extends \Controller
 						$rating = false;
 					}
 					$discount=0;
+					/*
 					if($result['price_wholesaleold']*1){
 						$discount = (int)(($result['price_wholesale']/$result['price_wholesaleold']-1)*100);
 					}
+					*/
+					$discount = $result['discount_percent'];
 	
 					$data['products_popular'][] = array(
 						'product_id'  => $result['product_id'],

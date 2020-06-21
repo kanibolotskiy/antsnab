@@ -15,6 +15,8 @@ import './responsive_tabs_tables';
 import './lib/opencart_product';
 import './lib/opencart_search';
 import './lib/jquery.mousewheel.min';
+import './lib/jquery.suggestions.min';
+
 
 
 import './lib/jquery-ui.min';

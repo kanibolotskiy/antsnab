@@ -105,7 +105,7 @@ function refresh_veiew_cart(json){
             $("#empty_cart_block").hide();
             $("#full_cart_block").show();
             for(var i=0;i<products.length;i++){
-                var itm=$("input[name='quantity["+products[i].cart_id+"]']").closest("ul");
+                var itm=$("input[name='quantity["+products[i].cart_id+"]']").closest(".basket-row");
                 if(products[i].isWholesale){
                     itm.find(".cart_price_caption_opt").show();
                     itm.find(".cart_price_caption_rozn").hide();
@@ -166,13 +166,93 @@ function check_opt_notification(itm){
     }
 }
 $(function(){
-   
+    if($("#order_name").length){$.cookie('orderdata')
+        if($.cookie('orderdata')){
+            var orderdata=JSON.parse($.cookie('orderdata'));
+            $("#order_name").val(orderdata['name']);
+            $("#order_phone").val(orderdata['phone']);
+            $("#order_email").val(orderdata['email']);
+            $("#order_inn").val(orderdata['inn']);
+            $("#order_address").val(orderdata['address']);
+            if(orderdata['delivery']){
+                //$(".delivery
+                $(".delivery_order_block").removeClass("active");
+                var del_itm=$(".delivery_order_block[rel='"+(orderdata['delivery']*1)+"']");
+                del_itm.addClass("active");
+                $("#shipping_method").val(del_itm.attr("data-caption"))
+            }
+            $(".payment_order_blocks").hide();
+            //console.log(orderdata)
+            if(orderdata['client']*1==2){
+                //console.log(2)
+                $(".payment_order_blocks[rel='2']").css({"display":"flex"});
+                $("#payment_method").val("Оплата по счёту для юридических лиц");
+            }else{
+                //console.log(1)
+                $(".payment_order_blocks[rel='1']").css({"display":"flex"});
+                $("#payment_method").val("Наличными при получении");
+            }
+        }
+        //console.log();
+    }
+    $('#order_form').submit(function(){
+        /**Сохраняем инфу в куки */
+        var orderdata={"name":$("#order_name").val(),"phone":$("#order_phone").val(),"email":$("#order_email").val(),"address":$("#order_address").val(),"inn":$("#order_inn").val(),"client":$("#lico").val(),"delivery":$(".delivery_order_block.active").attr("rel")};
+        $.cookie('orderdata', JSON.stringify(orderdata), { expires: 100, path: '/' });
+        //setcookie("ordername", $value, time()+31104000, "/card/");
+        
+        $(this).find('input[type=submit], button[type=submit]').prop('disabled', true);
+        
+
+	});
     $(".basket-row").each(function(){
         check_opt_notification($(this));
     });
 
-
     getDelivery();
+
+    $(".payment_order_block").click(function(){
+        if($(this).hasClass("_disable")){
+            var itm=$(this).find(".delivery_disabled");
+            itm.fadeIn(200,function(){
+                itm.delay(2000).fadeOut(150);
+            });
+
+        }else{
+            var rel=$(this).attr("rel");
+            $(this).parent().find(".payment_order_block").removeClass("active");
+            $(this).addClass("active");
+        }
+    });
+
+    $(".delivery_order_block").click(function(){
+        var rel=$(this).attr("rel");
+        var cap=$(this).attr("data-caption");
+        $("#shipping_method").val(cap);
+        $(".delivery_order_block1,.delivery_order_block2").removeClass("active");
+        $(this).addClass("active");
+    });
+    $(".inputAddress").suggestions({
+        token: "3bfe37ae8dd1e98a6ea74382d7b263fca50a58b2",
+        type: "ADDRESS",
+        onSelect: function(suggestion) {
+            //console.log(suggestion);
+        }
+    });
+
+    $('#file').on('change', function () {
+        var filename = this.files[0].name;
+        var filename_arr=filename.split('.');
+        var ext = filename_arr.pop();
+        
+        $('#filename').html('<span class="filename_info">'+filename_arr.join("")+'</span><span class="filename_ext">.'+ext+'</span><div class="uplodafile_del" id="uplodafile_del"></div>');
+        $('#filename').closest(".modal_form_row").removeClass("error");
+    });
+    $(document).on("click","#uplodafile_del",function(){
+        console.log("re");
+        $("#file").val("");
+        $("#filename").html("Прикрепите реквизиты");
+    });
     $(document).on("click",".actionbutton.del",function(){
         var key=$(this).attr("data-cartid");
         var data="key="+key;
@@ -258,24 +338,6 @@ $(function(){
             
         }
 
-        /*
-        if(($.trim(input_phone.val())!="")||($.trim(input_email.val())!="")){
-            input_phone.prev().fadeOut(100);
-            if($.trim(input_email.val())!=""){
-                if(!pattern.test($.trim(input_email.val()))){
-                    flag_order=false; 
-                    input_email.prev().fadeIn(100);
-                }else{
-                    input_email.prev().fadeOut(100);
-                }
-            }else{
-                input_email.prev().fadeOut(100);
-            }
-        }else{
-            flag_order=false; 
-            input_phone.prev().fadeIn(100);
-        }
-        */
         if($("input[name='need_shipping']").prop("checked")){
             if($.trim(input_address.val())==""){
                 flag_order=false;
@@ -308,7 +370,7 @@ $(function(){
         }
 
     });
-    
+    /*
     $("input[name='need_shipping']").change(function(){
         if($(this).prop("checked")){
             $(".delivery_row").stop().slideDown(150);
@@ -316,4 +378,178 @@ $(function(){
             $(".delivery_row").stop().slideUp(150);
         }
     });
+    */
+    $(".ordering_type").click(function(){
+        $(".ordering_type").removeClass("active");
+        $(this).addClass("active");
+        var rel=$(this).attr("rel");
+        $("#lico").val(rel);
+        var pay=$(this).attr("data-pay");
+        $("#payment_method").val(pay);
+
+        if(rel==2){
+            $(".client2").addClass("_showed");
+            //$(".client2").fadeIn(200);
+            //$(".client2").css({"visibility":"visible"})
+        }else{
+            $(".client2").removeClass("_showed");
+            $("#order_email").parent().removeClass("_error");
+
+            //$(".client2").fadeOut(200);
+            //$(".client2").css({"visibility":"hidden"})
+        }
+        $(".payment_order_blocks").hide();
+        $(".payment_order_blocks[rel='"+rel+"']").fadeIn(200)
+    });
+
+    $(".inpOrderText").keyup(function(){
+        $(this).parent().removeClass("_error");
+    });
+
+    $("#order_next1").click(function(){
+        var rel=$(".ordering_type.active").attr("rel");
+        var flag=true;
+
+        if($.trim($("#order_name").val())==""){
+            $("#order_name").parent().addClass("_error");
+            flag=false;
+        }
+        if($.trim($("#order_phone").val())==""){
+            $("#order_phone").parent().addClass("_error");
+            flag=false;
+        }
+        if($(".ordering_type.active").attr("rel")==2){
+            if($.trim($("#order_email").val())==""){
+                $("#order_email").parent().addClass("_error");
+                flag=false;
+            }
+        }
+        if(rel==2){
+            if($.trim($("#order_inn").val())==""){
+                $("#order_inn").parent().addClass("_error");
+                flag=false;
+            }
+        }
+        if(flag){
+            $(".order_block[rel='1']").hide();
+            $(".order_block[rel='2']").fadeIn(200);
+            $(".ordering_caption_item[rel='1']").addClass("apply");
+            $(".ordering_caption_item[rel='2']").addClass("active");
+        }
+    });
+
+    $("#order_next2").click(function(){
+        var rel=$(".delivery_order_block.active").attr("rel");
+        var flag=true;
+
+        if(rel==2){
+            if($.trim($("#order_address").val())==""){
+                $("#order_address").parent().addClass("_error");
+                flag=false;
+            }
+        }
+        if(flag){
+            $(".order_block[rel='2']").hide();
+            $(".order_block[rel='3']").fadeIn(200);
+            $(".ordering_caption_item[rel='2']").addClass("apply");
+            $(".ordering_caption_item[rel='3']").addClass("active");
+        }
+        //ordering_caption_item_numval
+
+    });
+    $("#order_next3").click(function(){
+
+    });
+
+    $("#button_prev1").click(function(){
+        $(".order_block[rel='2']").hide();
+        $(".order_block[rel='1']").fadeIn(200);
+        $(".ordering_caption_item[rel='1']").removeClass("apply");
+        $(".ordering_caption_item[rel='2']").removeClass("active");
+    });
+    $("#button_prev2").click(function(){
+        $(".order_block[rel='3']").hide();
+        $(".order_block[rel='2']").fadeIn(200);
+        $(".ordering_caption_item[rel='2']").removeClass("apply");
+        $(".ordering_caption_item[rel='3']").removeClass("active");
+    });
+    $(document).on("click",".similar_block_caption",function(){
+        var itm=$(this).parent();
+        itm.toggleClass("active");
+        //itm.find(".wrapper_similar_slider").slideToggle(200);
+    });
+    $(".cart_similar_block_products").slick({
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    arrows:false
+                }
+            },{
+                breakpoint: 640,
+                settings: {
+                    slidesToShow: 1,
+                    arrows:false
+                }
+            },
+        ]
+    });
+    
+    /*
+    if($(".cart_similar_block_products").length){
+        $(".cart_similar_block_products").each(function(){
+            $(this).slick({
+                infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 2,
+                            arrows:false
+                        }
+                    },{
+                        breakpoint: 640,
+                        settings: {
+                            slidesToShow: 1,
+                            arrows:false
+                        }
+                    },
+                ]
+            });
+        });
+    }
+    */
+    /*
+    $('.your-element').on('beforeChange', function(event, slick, currentSlide, nextSlide){
+        console.log(nextSlide);
+      });
+    /*
+    $(".cart_similar_block_products").slick({
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    arrows:false
+                }
+            },{
+                breakpoint: 640,
+                settings: {
+                    slidesToShow: 1,
+                    arrows:false
+                }
+            },
+        ]
+    });
+    */
+
 });

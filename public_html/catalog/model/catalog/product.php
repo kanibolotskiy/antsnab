@@ -81,8 +81,12 @@ class ModelCatalogProduct extends Model {
 		}
 
 		//Новинка
+		
+		$count_days_new=$this->config->get('config_product_new');
 		$datediff=time()-strtotime($product['date_added']);
-		$limit=15724800; //60*60*24*182 //182 дня (пол года)
+		//$limit=15724800; //60*60*24*182 //182 дня (пол года)
+		$limit=60*60*24*$count_days_new;
+
 		if($datediff<$limit){
 			$labels["_new"]=Array(
 				"label"=>"New",

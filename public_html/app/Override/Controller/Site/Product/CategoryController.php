@@ -501,12 +501,11 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
         if (isset($this->request->get['path'])) {
             //@removed
             $url = '';
-
             $path = '';
-
             $parts = explode('_', (string) $this->request->get['path']);
             $category_id = (int) array_pop($parts);
 
+            
             foreach ($parts as $path_id) {
                 if (!$path) {
                     $path = (int) $path_id;
@@ -532,7 +531,22 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
             if(isset($_GET["page"])){
                 $catalog_page=$_GET["page"];
             }
+            $bottom_text = '';
+            $description = '';
+            $catalogpage_notfirst=true;
 
+            if($catalog_page==1){
+                $catalogpage_notfirst=false;
+                if(isset($category_final_info["bottom_text"])){
+                    $bottom_text = $this->model_catalog_information->cleanText($category_final_info["bottom_text"]);
+                    $description = html_entity_decode($category_final_info['description'], ENT_QUOTES, 'UTF-8');
+                }
+            }
+            $this->data['bottom_text'] = $bottom_text;
+            $this->data['description'] = $description;
+            $this->data["catalogpage_notfirst"]=$catalogpage_notfirst;
+
+            /*
             if((isset($category_final_info["bottom_text"]))and($catalog_page==1)){
                 $this->data['bottom_text'] = $this->model_catalog_information->cleanText($category_final_info["bottom_text"]);
                 $this->data['description'] = html_entity_decode($category_final_info['description'], ENT_QUOTES, 'UTF-8');
@@ -540,6 +554,7 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
                 $this->data['bottom_text'] = '';
                 $this->data['description'] = '';
             }
+            */
         } else {
             $category_id = 0;
         }

@@ -405,6 +405,16 @@
             <div class="tab-pane" id="tab-option">
               <fieldset>
                 <legend><?php echo $text_product; ?></legend>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-product_new"><?php echo $entry_product_new; ?></label>
+                  
+                  <div class="col-sm-10">
+                    <input type="text" name="config_product_new" value="<?php echo $config_product_new; ?>" placeholder="<?php echo $entry_product_new; ?>" id="input-product_new" class="form-control" />
+                    <?php if ($error_product_new) { ?>
+                    <div class="text-danger"><?php echo $error_product_new; ?></div>
+                    <?php } ?>
+                  </div>
+                </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_product_count; ?>"><?php echo $entry_product_count; ?></span></label>
                   <div class="col-sm-10">

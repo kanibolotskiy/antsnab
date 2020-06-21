@@ -232,12 +232,19 @@ $(document).ready(function(){
     $('input[name="inn"]').inputmask("9999999999[99]",{
         "clearIncomplete": true,
     });
+    $('input[name="phone"]').inputmask("+7 (999) 999-99-99",{ 
+        "clearIncomplete": true,
+        "alias": 'numeric', 
+        "allowMinus": false
+    });
 
+    /*
     $('input[name="phone"]').inputmask("+7 9999999999",{ 
         "clearIncomplete": true,
         "alias": 'numeric', 
         "allowMinus": false
     });
+    */
     $('select').niceSelect();
     
     

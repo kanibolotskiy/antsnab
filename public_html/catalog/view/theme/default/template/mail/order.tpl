@@ -34,12 +34,20 @@
             <tr>
                 <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;"><b><?php echo $text_order_id; ?></b> <span name="order_id"><?php echo $order_id; ?></span><br />
                     <b><?php echo $text_date_added; ?></b> <span name="order_date"><?php echo $date_added; ?></span><br />
+                </td>
                 <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
                     <b><?php echo $text_name; ?></b> <span name="order_name"><?php echo $name; ?></span><br />
                     <b><?php echo $text_email; ?></b> <span name="order_email"><?php echo $email; ?></span><br />
                     <b><?php echo $text_telephone; ?></b> <span name="order_phone"><?php echo $telephone; ?></span><br />
-                    <b><?php echo $text_inn; ?></b> <span name="order_inn"><?php echo $inn; ?></span><br />
-                    <b><?php echo $text_ip; ?></b> <span name="order_ip"><?php echo $ip; ?></span><br />
+                    
+                    <b>Клиент: </b> <span name="order_client"><?php echo $client; ?></span><br />
+                    <?php if ($inn) { ?>
+                        <b><?php echo $text_inn; ?></b> <span name="order_inn"><?php echo $inn; ?></span><br />
+                    <?php }?>
+                    <b><?php echo $text_payment_method; ?></b> <span name="order_payment_method"><?php echo $payment_method; ?></span><br />
+                    <b><?php echo $text_shipping_method; ?></b> <span name="order_shipping_method"><?php echo $shipping_method; ?></span><br />
+                    
+                </td>
             </tr>
         </tbody>
     </table>

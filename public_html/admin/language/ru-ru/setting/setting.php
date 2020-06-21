@@ -314,3 +314,5 @@ $_['entry_m_telegram']    = 'Мессенджер (Telegram)';
 $_['entry_m_whatsapp']    = 'Мессенджер (Whatsapp)';
 $_['entry_m_viber']    = 'Мессенджер (Viber)';
 
+$_['entry_product_new']                 = 'Кол-во дней, когда товар новый';
+

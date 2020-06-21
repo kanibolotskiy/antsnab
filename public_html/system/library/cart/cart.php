@@ -277,6 +277,7 @@ class Cart {
 					'recurring'       => $recurring,
 					'mincount' 		  => $product_query->row['mincount'],
 					'quantity_in_store'=>$product_query->row['quantity'],
+					'discount_percent'=>$product_query->row['discount_percent'],
 				);
 			} else {
 				$this->remove($cart['cart_id']);

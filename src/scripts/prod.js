@@ -623,7 +623,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
         $.cookie('favorite', favorite_str, { expires: 30, path: '/' });
         $("#favorite").css({"opacity":0});
         $("#favorite").animate({"opacity":1},200);
-        $(this).closest(".basket-row").remove();
+        $(this).closest(".wrapper_basket-row").remove();
     });
     
     $(".favorite_link").click(function(e){
@@ -820,10 +820,11 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
     /**/
     $(document).on("click",".onclickButton",function(e){
         e.preventDefault();
-        //console.log("ok");
+        
         var frm=$(this).closest(".oneclickform");
 
         var itm_phone=frm.find(".onclickInputMain");
+        var itm_button=$(this)
         $(".onclickInputMain").removeClass("error");
 
         if(itm_phone.val()==""){
@@ -831,7 +832,10 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
         }else{
             itm_phone.removeClass("error");
             var data=frm.serialize();
+            itm_button.prop('disabled', true);
+
             $.ajax({
+                
                 url: '/index.php?route=product/product/sendOneForm/',
                 data: data,
                 cache: false,
@@ -840,17 +844,11 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                 type: 'POST', // For jQuery < 1.9
                 dataType: 'json',
                 success: function(data){
+                    itm_button.prop('disabled', false);
                     $(".oneclick_product_thanks").fadeIn(200,function(){
                         frm.find(".onclickInputMain").val("");
                         $(".oneclick_product_thanks").delay(2000).fadeOut(200);
                     });
-
-                    //$(".popup.thank-youone").addClass("visible");
-                    /*
-                    $(".modal").hide();
-                    $(".modal_one").fadeIn(200);
-                    */
-                    
                     if (typeof ym != 'undefined') {
                         ym(14496178, 'reachGoal', '1click');
                     }
@@ -922,11 +920,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
     });
 
 
-    $('#file').on('change', function () {
-        var filename = this.files[0].name;
-        $('#filename').html(filename);
-        $('#filename').closest(".modal_form_row").removeClass("error");
-    });
+    
     $("#discount_form .required").change(function(){
         $(this).parent().removeClass("error");
     });

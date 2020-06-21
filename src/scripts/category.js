@@ -450,6 +450,27 @@ function add_to_cart(product_id, count_add, show_added, fly_to_cart=false){
                     }else{
                         $(".basket-block").append(json["added_product"]);
                     }
+
+                    $(".cart_similar_block_products:not(.slick-initialized)").slick({
+                        infinite: true,
+                        slidesToShow: 3,
+                        slidesToScroll: 1,
+                        responsive: [
+                            {
+                                breakpoint: 1024,
+                                settings: {
+                                    slidesToShow: 2,
+                                    arrows:false
+                                }
+                            },{
+                                breakpoint: 640,
+                                settings: {
+                                    slidesToShow: 1,
+                                    arrows:false
+                                }
+                            },
+                        ]
+                    });
                     
                     if( $('.qnt-container-cart').length > 0) {
                         
@@ -857,6 +878,11 @@ $(document).ready(function(){
         }
     });
 
+    $(".part_title._collapse").click(function(){
+        $(this).toggleClass("active");
+        $(".list_subcats").slideToggle(200);
+    });
+
     $(document).on('click','.buy',function(e){
         e.preventDefault();
         var show_added=0;
@@ -880,6 +906,7 @@ $(document).ready(function(){
                 }
             }
             add_to_cart(product_id, 1, show_added);
+            
         }else{
             
             //Добавление в корзину из акции

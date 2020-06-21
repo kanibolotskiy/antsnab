@@ -321,6 +321,8 @@ class ControllerSettingSetting extends Controller {
 
 		$data['sms_gatenames'] = array();
 
+		$data['entry_product_new'] = $this->language->get('entry_product_new');
+
 		$files = glob(DIR_SYSTEM . 'smsgate/*.php');
 
 		foreach ($files as $file) {
@@ -463,6 +465,12 @@ class ControllerSettingSetting extends Controller {
 			$data['error_encryption'] = $this->error['encryption'];
 		} else {
 			$data['error_encryption'] = '';
+		}
+
+		if (isset($this->error['product_new'])) {
+			$data['error_product_new'] = $this->error['product_new'];
+		} else {
+			$data['error_product_new'] = '';
 		}
 
 		$data['breadcrumbs'] = array();
@@ -717,6 +725,13 @@ class ControllerSettingSetting extends Controller {
 			$data['config_currency'] = $this->request->post['config_currency'];
 		} else {
 			$data['config_currency'] = $this->config->get('config_currency');
+		}
+
+		
+		if (isset($this->request->post['config_product_new'])) {
+			$data['config_product_new'] = $this->request->post['config_product_new'];
+		} else {
+			$data['config_product_new'] = $this->config->get('config_product_new');
 		}
 
 		if (isset($this->request->post['config_currency_auto'])) {

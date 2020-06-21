@@ -40,9 +40,9 @@
                         </div>
                     <?php }?>
                 <?php }?>
-                <h2 class="part_title">Категории</h2>
+                <h2 class="part_title <?php echo $catalogpage_notfirst?'_collapse':'';?>">Категории</h2>
                 <div class="right_order_mob_filters">
-                    <div class="catalog-tab">
+                    <div class="catalog-tab list_subcats" style="<?php echo $catalogpage_notfirst?'display:none;':'';?>">
                         
                         <div id="mtab1" class="tab">
                             
