@@ -989,7 +989,7 @@ class CartController extends \ControllerCheckoutCart
             $client1="active";
             $client2="";
 
-            if($_COOKIE["orderdata"]){
+            if(isset($_COOKIE["orderdata"])){
                 $orderdata=json_decode($_COOKIE["orderdata"]);
                 $orderdata->client;
                 if(isset($orderdata->client)){
