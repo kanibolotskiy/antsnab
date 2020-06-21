@@ -4,6 +4,7 @@ var Fraction = require('fraction.js');
 var $switchers;
 var $firstSwitcher;
 var timeoutID;
+var sending=false;
 //var format = require('number-format.js');
 
 
@@ -768,53 +769,61 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
         itm.closest(".catalog_item_product").find(".input_test").html(vl);
     });
     */
+   
+    $(document).on("click",".onclickInput",function(e){
+        e.preventDefault();
+    })
     $(document).on("keyup input",".onclickInput",function(){
-
+        //console.log("send");
         var vl=$(this).val();
         var itm=$(this).closest(".wrap_oneclick");
-
+        
         if((vl.indexOf("_")==-1)&&(vl!="")){
-            
-            //console.log("посылаем");
-            var frm=$(this).closest(".oneclickform");
-            var data=frm.serialize();
-            var itm_thanks=itm.find(".oneclick_thanks");
+            if(!sending){
+                sending=true;
+                //console.log("посылаем");
+                var frm=$(this).closest(".oneclickform");
+                var data=frm.serialize();
+                var itm_thanks=itm.find(".oneclick_thanks");
 
-            itm.find(".oneclick_loader").fadeIn(100);
-            itm.find(".oneclick_hover_ok").hide();
-            
+                itm.find(".oneclick_loader").fadeIn(100);
+                itm.find(".oneclick_hover_ok").hide();
+                
+                
+                $.ajax({
+                    url: '/index.php?route=product/product/sendOneForm/',
+                    data: data,
+                    cache: false,
+                    method: 'POST',
+                    dataType: 'json',
+                    success: function(data){
 
-            $.ajax({
-                url: '/index.php?route=product/product/sendOneForm/',
-                data: data,
-                cache: false,
-                method: 'POST',
-                dataType: 'json',
-                success: function(data){
-
-                    itm.find(".oneclick_loader").hide();
-                    itm.find(".oneclick_hover_ok").fadeIn(100);
-                    frm.find(".onclickInput").val("");
-                    itm_thanks.fadeIn(100,function(){
-                        itm_thanks.delay(2000).fadeOut(200,function(){
-                            $(".wrap_oneclick").removeClass("active");
+                        itm.find(".oneclick_loader").hide();
+                        itm.find(".oneclick_hover_ok").fadeIn(100);
+                        frm.find(".onclickInput").val("");
+                        itm_thanks.fadeIn(100,function(){
+                            itm_thanks.delay(2000).fadeOut(200,function(){
+                                $(".wrap_oneclick").removeClass("active");
+                                sending=false;
+                            });
+                            
                         });
                         
-                    });
-                    
-                    if (typeof ym != 'undefined') {
-                        if(itm.closest(".tab-block").hasClass("accia_products")){
-                            //Быстрый заказ (акции)
-                            ym(14496178, 'reachGoal', 'sale-1click');
-                        }else{
-                            //Быстрый заказ (все остальное)
-                            ym(14496178, 'reachGoal', '1click');
+                        if (typeof ym != 'undefined') {
+                            if(itm.closest(".tab-block").hasClass("accia_products")){
+                                //Быстрый заказ (акции)
+                                ym(14496178, 'reachGoal', 'sale-1click');
+                            }else{
+                                //Быстрый заказ (все остальное)
+                                ym(14496178, 'reachGoal', '1click');
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
            
         }
+        
     });
 
     /**/
