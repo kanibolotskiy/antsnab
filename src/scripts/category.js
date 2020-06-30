@@ -534,6 +534,8 @@ function add_to_cart(product_id, count_add, show_added, fly_to_cart=false){
 }
 
 function add_favorite_to_cart(product_id, count_add){
+    $(".basket").addClass("bask_full");
+
     $.ajax({
         url:  '/index.php?route=checkout/cart/add',
         type: 'post',

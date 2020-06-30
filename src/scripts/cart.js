@@ -257,6 +257,11 @@ $(function(){
         var key=$(this).attr("data-cartid");
         var data="key="+key;
         var cart_row=$(this).closest(".basket-row");
+
+        cart_row.fadeOut(200,function(){
+            cart_row.remove();
+        })
+        
         $.ajax({
             url: '/index.php?route=checkout/cart/ajaxDel/',
             data: data,
@@ -275,9 +280,11 @@ $(function(){
                 }
 
                 refresh_veiew_cart(json);
+                /*
                 cart_row.fadeOut(200,function(){
                     cart_row.remove();
                 })
+                */
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -409,6 +416,7 @@ $(function(){
     $("#order_next1").click(function(){
         var rel=$(".ordering_type.active").attr("rel");
         var flag=true;
+        $("#order_email").val($("#order_email").val().replace(' ',''));
 
         if($.trim($("#order_name").val())==""){
             $("#order_name").parent().addClass("_error");
@@ -435,6 +443,10 @@ $(function(){
             $(".order_block[rel='2']").fadeIn(200);
             $(".ordering_caption_item[rel='1']").addClass("apply");
             $(".ordering_caption_item[rel='2']").addClass("active");
+            if($(window).width()<750){
+                var tp=$(".ordering").position().top+40
+                $("html,body").animate({"scrollTop":tp});
+            }
         }
     });
 
@@ -453,6 +465,10 @@ $(function(){
             $(".order_block[rel='3']").fadeIn(200);
             $(".ordering_caption_item[rel='2']").addClass("apply");
             $(".ordering_caption_item[rel='3']").addClass("active");
+            if($(window).width()<750){
+                var tp=$(".ordering").position().top+40
+                $("html,body").animate({"scrollTop":tp});
+            }
         }
         //ordering_caption_item_numval
 
@@ -482,6 +498,7 @@ $(function(){
         infinite: true,
         slidesToShow: 3,
         slidesToScroll: 1,
+        swipeToSlide:true,
         responsive: [
             {
                 breakpoint: 1024,

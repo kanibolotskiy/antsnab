@@ -66,15 +66,14 @@
         </div>
         <div class="basket_summa">
             <span>Сумма</span>
-            
             <div class="recalc"><span class="recal_tll"><?php echo $product['total']; ?></span> <div class="rur">i</div></div>
-
             <div class="basket_summa_empty"></div>
         </div>
     </div>
     <div class="basket_del favdel"></div>
-    
-    <div class="cart_favorite_button buy" ></div>
+    <div class="wrp_cart_favorite_button">
+        <div class="cart_favorite_button buy" ></div>
+    </div>
 
 </div>
 <!--

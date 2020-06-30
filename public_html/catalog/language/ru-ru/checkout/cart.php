@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']            = 'Корзина покупок';
+$_['heading_title']            = 'Корзина';
 
 // Text
 $_['text_success']             = 'Товар %s добавлен в вашу корзину!';

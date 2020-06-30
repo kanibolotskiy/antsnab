@@ -624,7 +624,10 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
         $.cookie('favorite', favorite_str, { expires: 30, path: '/' });
         $("#favorite").css({"opacity":0});
         $("#favorite").animate({"opacity":1},200);
-        $(this).closest(".wrapper_basket-row").remove();
+        var fav_itm=$(this).closest(".wrapper_basket-row");
+        fav_itm.fadeOut(200,function(){
+            fav_itm.remove();
+        });
     });
     
     $(".favorite_link").click(function(e){
@@ -773,6 +776,11 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
     $(document).on("click",".onclickInput",function(e){
         e.preventDefault();
     })
+    $(document).on("click",".oneclick_hover",function(e){
+        e.preventDefault();
+        $(this).closest(".wrap_oneclick").find(".onclickInput").focus();
+        
+    });
     $(document).on("keyup input",".onclickInput",function(){
         //console.log("send");
         var vl=$(this).val();

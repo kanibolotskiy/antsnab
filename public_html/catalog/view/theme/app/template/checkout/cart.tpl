@@ -103,8 +103,8 @@
                                             <div class="form-group_caption form-group_caption_empt">&nbsp;</div>
                                             <div class="file-block">
                                                 <div class="file-block_wrp">
-                                                    <span class="filename_or">или </span>
-                                                    <span id="filename" class="filename_caption">Прикрепите реквизиты</span>
+                                                    
+                                                    <span id="filename" class="filename_caption">прикрепить реквизиты</span>
                                                 </div>
                                                 <input id="file" type="file" value="" name="download">
                                             </div>
@@ -251,7 +251,6 @@
     </div>
 </div>
 <?php if(isset($location)):?>
-    
     <div class="modal modal_map">
         <div class="modal-block">
             <div class="modal_overlay"></div>

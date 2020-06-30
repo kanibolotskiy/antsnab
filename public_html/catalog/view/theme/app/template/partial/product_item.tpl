@@ -33,31 +33,33 @@
             </div>
         <?php }?>
         
-        <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>">
+        <!--<a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>">-->
         <?php if($p["rating"]){?>
             <div class="agg_rating">
                 <div class="agg_rating_ico"></div>
                 <div class="agg_rating_val"><?php echo $p["rating"];?></div>
             </div>
         <?php }?>
-
-        <div class="catalog-img">
-            <div class="fast_preview">
-                <div class="fast_preview_caption with_goal" goal="quick-view">
-                    <span>Быстрый просмотр</span>
+        <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>">
+            <div class="catalog-img">
+                <div class="fast_preview">
+                    <div class="fast_preview_caption with_goal" goal="quick-view">
+                        <span>Быстрый просмотр</span>
+                    </div>
+                </div>
+                <img class="wrp_fly_image" itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" title="<?= $p['name'] ?>" itemprop="image" />
+                <div class="wrp_favorite">
+                    <div rel="<?= $p['product_id']?>" title="Добавить товар в избранное" class="favorite <?= $p['favorite'] ?>"></div>        
+                    <div rel="<?= $p['product_id']?>" title="Добавить товар в сравнение" class="compare <?= $p['compare'] ?>"></div>
                 </div>
             </div>
-            <img class="wrp_fly_image" itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" title="<?= $p['name'] ?>" itemprop="image" />
-            <div class="wrp_favorite">
-                <div rel="<?= $p['product_id']?>" title="Добавить товар в избранное" class="favorite <?= $p['favorite'] ?>"></div>        
-                <div rel="<?= $p['product_id']?>" title="Добавить товар в сравнение" class="compare <?= $p['compare'] ?>"></div>
-            </div>
-        </div>
-        
+        </a>
         <div class="clr"></div>
 
         <div class="catalog-description">
-            <div class="catalog-block_caption" itemprop="name"><?= $p['name'] ?></div>
+            <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>">
+                <div class="catalog-block_caption" itemprop="name"><?= $p['name'] ?></div>
+            </a>
             <div class="catalog_lsi description" itemprop="description">
                 <div class="wrp_catalog_lsi">
                     <?= $p['descriptionPreview'] ?>
@@ -141,9 +143,11 @@
                 <?php endif;?>
             </div>
             <div class="clr_buy"></div>
-            <div class="more_product">Подробнее</div>
+            <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>">
+                <div class="more_product">Подробнее</div>
+            </a>
         </div>
-        </a>
+        <!--</a>-->
     </div>
     
 </li>
