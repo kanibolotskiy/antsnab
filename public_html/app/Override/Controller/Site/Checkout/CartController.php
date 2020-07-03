@@ -267,11 +267,13 @@ class CartController extends \ControllerCheckoutCart
                     $previewProperties = array();
                     foreach ($properties as $p) {
                         if ($p['showInProdPreview']) {
-                            $previewProperties[] = array(
-                                'name' => $p['cat_name'],
-                                'val' => htmlspecialchars_decode($p['val'],ENT_QUOTES),
-                                'unit' => $p['cat_unit']
-                            );
+                            if($p['cat_name']=="Упаковка"){
+                                $previewProperties[] = array(
+                                    'name' => $p['cat_name'],
+                                    'val' => htmlspecialchars_decode($p['val'],ENT_QUOTES),
+                                    'unit' => $p['cat_unit']
+                                );
+                            }
                         }
                     }
                     
@@ -339,6 +341,7 @@ class CartController extends \ControllerCheckoutCart
                         'meta_h1' => $product['meta_h1'],
                         'model' => $product['model'],
                         'recurring' => $recurring,
+                        'quantity_in_store' => $product['quantity_in_store'],
                         'quantity' => $product['quantity'],
                         'stock' => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
                         'reward' => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
@@ -911,7 +914,7 @@ class CartController extends \ControllerCheckoutCart
                         }
                     }
                 }
-
+                
                 $product_related_results = $this->model_catalog_product->getProductRelated($product['product_id'],true,6,'product_related');
                 $product_related=[];
                 foreach($product_related_results as $related_result){
@@ -944,6 +947,7 @@ class CartController extends \ControllerCheckoutCart
                     'model' => $product['model'],
                     'option' => $option_data,
                     'recurring' => $recurring,
+                    'quantity_in_store' => $product['quantity_in_store'],
                     'quantity' => $product['quantity'],
                     'stock' => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
                     'reward' => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),

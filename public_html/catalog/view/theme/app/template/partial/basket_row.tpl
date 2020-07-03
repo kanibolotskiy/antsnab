@@ -44,6 +44,7 @@
                 
                 <div 
                     class="qnt-container-cart without_input"
+                    data-cnt="<?=$product['quantity_in_store']?>"
                     data-el_name="quantity[<?php echo $product['cart_id']; ?>]"
                     data-sale_to_price_koef="<?=$product['saleToPriceKoef']?>" 
                     data-ui_name="<?=$product['priceUnit']['name']?>"
@@ -54,15 +55,15 @@
                     data-wholesale_threshold="<?=$product['wholesale_threshold']?>"
                     data-price_quantity="<?php echo $product['quantity']; ?>">
                 </div>
-                <?php if(!$product['stock']){?>
-                    <div class="basket-row_info">
-                        <p>Под заказ. Доставка 1-3 дня</p>
-                    </div>
-                <?php }else{?>
-                    <div class="basket-row_info _avail">
-                        <p>В наличии</p>
-                    </div>
-                <?php }?>
+
+                <div class="basket-row_info _unavail" <?php echo (!$product['stock'])?'style="display:block;"':''?> >
+                    <p>Под заказ. Доставка 1-3 дня</p>
+                </div>
+                <div class="basket-row_info _avail" <?php echo ($product['stock'])?'style="display:block;"':''?> >
+                    <p>В наличии</p>
+                </div>
+                
+                
                 <div class="min_count_hint" <?php if(($product['quantity']>1) and ($product['mincount']>1) and ($product['mincount']==$product['quantity'])){echo "style='display:block;'";}?>><span>минимально для заказа</span></div>
                 <div class="opt_limit_notification">добавьте еще <span class="opt_limit_notification_value"></span>, цена снизится</div>
             </div>

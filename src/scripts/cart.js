@@ -154,6 +154,7 @@ function refresh_cart(){
     });
 }
 function check_opt_notification(itm){
+    //Цена близка к оптовой (показываем подсказку)
     var row_count=itm.find(".qnt").val()*1;
     var itm_widget=itm.find(".qnt-widget");
     var opt_limit=itm_widget.attr("data-sale_to_price_koef")*itm_widget.attr("data-wholesale_threshold");
@@ -164,6 +165,17 @@ function check_opt_notification(itm){
     }else{
         itm.find(".opt_limit_notification").fadeOut(200);
     }
+
+    //Проверка кол-ва
+    
+    if(row_count>itm_widget.data("cnt")*1){
+        itm.find(".basket-row_info._unavail").fadeIn(150);
+        itm.find(".basket-row_info._avail").fadeOut(150);
+    }else{
+        itm.find(".basket-row_info._unavail").fadeOut(150);
+        itm.find(".basket-row_info._avail").fadeIn(150);
+    }
+
 }
 $(function(){
     if($("#order_name").length){$.cookie('orderdata')
@@ -416,7 +428,10 @@ $(function(){
     $("#order_next1").click(function(){
         var rel=$(".ordering_type.active").attr("rel");
         var flag=true;
-        $("#order_email").val($("#order_email").val().replace(' ',''));
+        $("#order_email").val($("#order_email").val().replace(/\s/ig, ''));
+
+        
+        //console.log($("#order_email").val());
 
         if($.trim($("#order_name").val())==""){
             $("#order_name").parent().addClass("_error");

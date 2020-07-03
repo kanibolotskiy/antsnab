@@ -607,6 +607,18 @@ function change_favorite_sum(){
     });
 }
 $(document).ready(function(){
+    /*
+    $('.buy').on('touchstart touchend', function(e) {
+        //e.preventDefault();
+        $(this).toggleClass('_hover');
+    });
+    */
+    $('.buy').on('mouseenter', function() {
+        $(this).addClass('_hover');
+    });
+    $('.buy').on('mouseleave', function() {
+        $(this).removeClass('_hover');
+    });
     $(".param_check:checked").each(function(){
         var prnts=$(this).closest(".row_checks_wrap");
         prnts.addClass("active");
@@ -890,6 +902,24 @@ $(document).ready(function(){
         var show_added=0;
         var itm=$(this);
         
+        
+        if(!itm.hasClass("cart_similar_button")){
+            var ttl_buy='';
+            if(itm.attr("button_name")){
+                ttl_buy=itm.attr("button_name");
+            }else{
+                ttl_buy=itm.html()
+                itm.attr("button_name",ttl_buy)
+            }
+            itm.css({"background-color":"#41737E"});
+            itm.html("Добавлено");
+            
+            let timerId=setTimeout(function(){
+                itm.css({"background-color":"#d3a06d"});
+                itm.html(ttl_buy);
+                clearTimeout(timerId);
+            }, 2000);
+        }
         //switch  add-to-card-compare
         if((itm.hasClass("cart_similar_button"))||(itm.hasClass("add-to-card-compare"))){
             

@@ -306,5 +306,20 @@ $(document).ready(function(){
         $(".mentioned_slider").removeClass("active");
         $(".mentioned_slider[rel='"+rel+"']").addClass("active");
     });
-    
+
+
+    $(".favorite").on("mouseenter",function(){
+        $(this).addClass("_hover");
+    });
+    $(".favorite").on("mouseleave",function(){
+        $(this).removeClass("_hover");
+    });
+
+    $(".compare").on("mouseenter",function(){
+        $(this).addClass("_hover");
+    });
+    $(".compare").on("mouseleave",function(){
+        $(this).removeClass("_hover");
+    });
+
 });
