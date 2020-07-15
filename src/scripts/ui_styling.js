@@ -82,6 +82,8 @@ function check_scroll(){
                     $(".catalog-product").css({"margin-top":lmt})
                 }else{
                     $(".wrapper_parameters").css({"margin-top":-202,"height":ht})
+                    
+                    $(".wrapper_left_data").css({"height":(ht-15)})
                     $(".catalog-product").css({"margin-top":0})
                     $(".filter_reset").css({"margin-bottom":0});
                 }
@@ -91,6 +93,7 @@ function check_scroll(){
                 var ht=wh+st-367-50;
                 //var ht=wh+st-417;
                 $(".wrapper_parameters").css({"margin-top":-st,"height":ht})
+                $(".wrapper_left_data").css({"height":(ht-15)})
                 $(".filter_reset").css({"margin-bottom":0});
                 //$(".catalog-product,.sidebar_filter_caption").removeClass("_fixed");
                 $(".catalog-product").removeClass("_fixed");
@@ -140,15 +143,22 @@ function check_resize(){
 $(window).scroll(function(){
     check_scroll();
 });
-$(window).resize(function(){
+$(window).resize(function() {
     check_resize();
+    check_scroll();
 });
 $(document).ready(function(){
+    var scrollWidth = window.innerWidth - document.documentElement.clientWidth;
+    if (scrollWidth > 1) {
+    $('<style type="text/css">')
+      .html('.is-compensate-for-scrollbar._hfixed .wrp_header{padding-right:' + scrollWidth + 'px;}.is-compensate-for-scrollbar { padding-right: ' + scrollWidth + 'px; }')
+      .appendTo('head');
+    }
     $(document).keyup(function(e) {
         if (e.key === "Escape") { // escape key maps to keycode `27`
             $(".modal").fadeOut(200);
-            $("html").css({"overflow":"inherit","margin-right":"0"});
-            $(".wrp_header").css({"padding-right":0});
+            //$("html").css({"overflow":"inherit","margin-right":"0"});
+            //$(".wrp_header").css({"padding-right":0});
             $("body").removeClass("_openmenu").removeClass("_lmenu"); 
             $(".catalog-product").removeClass("active");
 

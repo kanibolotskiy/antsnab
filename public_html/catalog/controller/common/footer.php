@@ -64,7 +64,8 @@ class ControllerCommonFooter extends Controller {
 		} else {
 			$data['logo'] = '';
 		}
-
+		$data['personaldata'] = $this->url->link('information/information', 'information_id=11', '', true);
+		
 		// Whos Online
 		if ($this->config->get('config_customer_online')) {
 			$this->load->model('tool/online');

@@ -11,20 +11,55 @@ class ModelCatalogReview extends Model
     private function sendReview($product_id, $data)
     {
         if (in_array('review', (array) $this->config->get('config_mail_alert'))) {
+            
             $this->load->language('mail/review');
             $this->load->model('catalog/product');
 
             $product_info = $this->model_catalog_product->getProduct($product_id);
-            
-            /*
-            $message = $this->language->get('text_waiting') . "\n";
-            $message .= sprintf($this->language->get('text_product'), html_entity_decode($product_info['name'], ENT_QUOTES, 'UTF-8')) . "\n";
-            $message .= sprintf($this->language->get('text_reviewer'), html_entity_decode($data['author'], ENT_QUOTES, 'UTF-8')) . "\n";
-            //$message .= sprintf($this->language->get('text_rating'), $data['rating']) . "\n";
-            $message .= $this->language->get('text_review') . "\n";
-            $message .= html_entity_decode($data['text'], ENT_QUOTES, 'UTF-8') . "\n\n";
-            */
+            $b_patch=$this->config->get('config_url').'image/';
+            //$data["logo"]= $b_patch . $this->config->get('config_logo');
+            //$data["logo"]= $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
+            $data["logo"]='image/' . $this->config->get('config_logo');
 
+            if($product_id){
+                $subject = $this->language->get('text_subject_product');
+                $data["caption"]=$this->language->get('text_caption_product');
+            }else{
+                $subject = $this->language->get('text_subject_company');
+                $data["caption"]=$this->language->get('text_caption_company');
+            }
+
+            $data["data_content"][]=array("Имя клиента",$data['author']);
+            $data["data_content"][]=array("Компания",$data['company']);
+            $data["data_content"][]=array("Email",trim($data['email']));
+            if($product_id){
+                //print_r($product_info);
+                $product_url= $this->url->link('product/product', '&product_id=' . $product_info['product_id']);
+                $data["data_content"][]=array("Название продукта",'<a href="'.$product_url.'">'.$product_info["name"].'</a>');
+            }
+            $data["data_content"][]=array("Текст отзыва",$data['text']);
+
+            $report_text=$this->load->view('extension/module/app/review_report', $data);
+            
+            $mail = new Mail();
+            $mail->protocol = $this->config->get('config_mail_protocol');
+            $mail->parameter = $this->config->get('config_mail_parameter');
+            $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+            $mail->smtp_username = $this->config->get('config_mail_smtp_username');
+            $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+            $mail->smtp_port = $this->config->get('config_mail_smtp_port');
+            $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+            
+            $mail->setTo($this->config->get('config_email_opt'));
+            $mail->setFrom($this->config->get('config_email'));
+            $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+            $mail->setSubject($subject);
+            
+            $mail->setHTML($report_text);
+            
+            $mail->send();
+        
+            /*
             $mail = new Mail();
             $mail->protocol = $this->config->get('config_mail_protocol');
             $mail->parameter = $this->config->get('config_mail_parameter');
@@ -34,16 +69,19 @@ class ModelCatalogReview extends Model
             $mail->smtp_port = $this->config->get('config_mail_smtp_port');
             $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
+            //echo $this->config->get('config_email_recall');
+            //echo $this->config->get('config_email');
             $mail->setTo($this->config->get('config_email_recall'));
             $mail->setFrom($this->config->get('config_email'));
             $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-            /*
-            if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-                $b_patch=$this->config->get('config_ssl').'image/';
-            } else {
-                $b_patch=$this->config->get('config_url').'image/';
-            }
-            */
+            
+            
+            //if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+            //    $b_patch=$this->config->get('config_ssl').'image/';
+            //} else {
+            //    $b_patch=$this->config->get('config_url').'image/';
+            //}
+            
             $b_patch=$this->config->get('config_url').'image/';
             if($product_id){
                 $subject = $this->language->get('text_subject_product');
@@ -52,12 +90,13 @@ class ModelCatalogReview extends Model
                 $subject = $this->language->get('text_subject_company');
                 $data["caption"]=$this->language->get('text_caption_company');
             }
+            
             $mail->setSubject($subject);
             
             //$data["logo"]= $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
             $data["logo"]= $b_patch . $this->config->get('config_logo');
             
-
+            
             
             $data["data_content"][]=array("Имя клиента",$data['author']);
             $data["data_content"][]=array("Компания",$data['company']);
@@ -71,10 +110,10 @@ class ModelCatalogReview extends Model
             
 
             $report_text=$this->load->view('extension/module/app/review_report', $data);
-
+            
             $mail->setHTML($report_text);
             $mail->send();
-
+            */
             // Send to additional alert emails
             /*
             $emails = explode(',', $this->config->get('config_alert_email'));
@@ -96,19 +135,15 @@ class ModelCatalogReview extends Model
 
     public function addReview($product_id, $data)
     {
-       /* $this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['name']) . "', customer_id = '" . (int) $this->customer->getId() . "', product_id = '" . (int) $product_id . "', text = '" . $this->db->escape($data['text']) . "', rating = '" . (int) $data['rating'] . "', date_added = NOW()");*/
+        /* $this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['name']) . "', customer_id = '" . (int) $this->customer->getId() . "', product_id = '" . (int) $product_id . "', text = '" . $this->db->escape($data['text']) . "', rating = '" . (int) $data['rating'] . "', date_added = NOW()");*/
         $rating=0;
         if($data['rating']){
             $rating=(int) $data['rating'];
-        }
+        }        
         $this->db->query("INSERT INTO " . DB_PREFIX . "review SET sended=0, company ='" . $this->db->escape($data['company']) . "', email = '" . $this->db->escape($data['email']) . "', author = '" . $this->db->escape($data['author']) . "', customer_id = '" . (int) $this->customer->getId() . "', product_id = '" . (int) $product_id . "', text = '" . $this->db->escape($data['text']) . "', rating = '" . $rating . "', date_added = NOW()");
-
-
         $review_id = $this->db->getLastId();
-
         //@moved to private
         $this->sendReview($product_id, $data);
-
         return $review_id;
     }
 

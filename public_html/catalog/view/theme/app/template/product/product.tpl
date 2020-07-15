@@ -552,6 +552,7 @@
                     <!-- TAB отзывы -->
                     <div>
                         <div class="reviews-container reviews-container2">
+                            <!--<div class="to_review_form">Оставить отзыв</div>-->
                             <?php if( count($reviews)>0): ?>
                                 <?php foreach ($reviews as $r): ?>
                                     <div class = "review-block" itemscope itemtype="http://schema.org/Review" itemprop="review">

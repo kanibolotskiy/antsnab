@@ -27,7 +27,6 @@ class ControllerCommonHeader extends Controller {
 		
 
 		$data['base'] = $server;
-		$data['personaldata'] = $this->url->link('information/information', 'information_id=11', '', true);
 		
 		$catalog_page=1;
 		if(isset($_GET["page"])){

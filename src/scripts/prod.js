@@ -8,12 +8,7 @@ var sending=false;
 //var format = require('number-format.js');
 
 
-function scrollbarWidth() {
-    var documentWidth = parseInt(document.documentElement.clientWidth);
-    var windowsWidth = parseInt(window.innerWidth);
-    var scrollbarWidth = windowsWidth - documentWidth;
-    return scrollbarWidth;
-}
+
 function getPlural(number, one, two) {///1,ведра,вёдер
     let n = Math.abs(number);
 
@@ -884,15 +879,22 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
             $("#form-review .error").html("");
         },
         success: function(json) {
+            
             $('.alert-success, .alert-danger').remove();
             if (json['error']) {
                 for(var err in json['error']){
                     $("#error_"+err).html(json['error'][err]);
                 }
             }else{
+                /*console.log("okk");
                 $(".popup.thank-you").addClass("visible");
+                */
+                $(".modal").hide();
+                $(".modal_thanks_feedback").fadeIn(200);
+                $("body").addClass("is-compensate-for-scrollbar");
                 $('input, textarea','#form-review').val('');
             }
+
         },
         error: function(data){},
     });
@@ -984,9 +986,9 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                 type: 'POST', // For jQuery < 1.9
                 dataType: 'json',
                 success: function(data){
-                    console.log(data);
                     $(".wrp_modal_body").hide();
                     $(".wrp_modal_thsnk").show();
+                    $("body").addClass("is-compensate-for-scrollbar");
                 }
             });
         }
@@ -1092,13 +1094,17 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                     "allowMinus": false
                 });
                 
+                $("body").addClass("is-compensate-for-scrollbar");
                 $(".modal").hide();
                 $(".modal_info").fadeIn(200);
-                
+                /*
                 var sw=scrollbarWidth();
                 $("html").css("overflow", "hidden");
                 $("html").css("margin-right", sw+"px");
+                
                 $("body._hfixed .wrp_header").css({"padding-right":sw+"px"});
+                */
+                
 
                 //import {Quantity} from './lib/quantity.es6.js';
                 initQuantityContainers($('.qnt-container-modal'));

@@ -24,7 +24,10 @@ $('#button-review_page').formSubmit({
                 $("#error_"+err).html(json['error'][err]);
             }
         }else{
-            $(".popup.thank-you").addClass("visible");
+            //$(".popup.thank-you").addClass("visible");
+            $(".modal").hide();
+            $(".modal_thanks_feedback").fadeIn(200);
+            $("body").addClass("is-compensate-for-scrollbar");
             $('input, textarea','#review_form').val('');
         }
     },
