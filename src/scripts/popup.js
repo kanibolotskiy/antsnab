@@ -1,9 +1,3 @@
-function scrollbarWidth() {
-    var documentWidth = parseInt(document.documentElement.clientWidth);
-    var windowsWidth = parseInt(window.innerWidth);
-    var scrollbarWidth = windowsWidth - documentWidth;
-    return scrollbarWidth;
-}
 $(document).ready(function(){
 
     $("#call_submit").click(function(){
@@ -105,18 +99,21 @@ $(document).ready(function(){
     });
 */
     $(".bene_item").click(function(){
-        var sw=scrollbarWidth();
-        $("html").css("overflow", "hidden");
-        $("html").css("margin-right", sw+"px");
+        $("body").addClass("is-compensate-for-scrollbar");
+        //var sw=scrollbarWidth();
+        //$("html").css("overflow", "hidden");
+        //$("html").css("margin-right", sw+"px");
 
         var bene_cap=$(this).find(".bene_item_val").html();
         var bene_text=$(this).find(".bene_item_desc").html();
         $("#caption_benefit").html(bene_cap);
         $("#text_benefit").html(bene_text);
+
+        $("body").addClass("is-compensate-for-scrollbar");
         $(".modal_benefits").fadeIn(200);
     });
 
-
+    /*
     $(".close, .close2").click(function () {
 
         //$(".popup").css("display", "none");
@@ -150,6 +147,7 @@ $(document).ready(function(){
         $("html").css("overflow", "inherit");
         $("html").css("margin-right", "0");
     });
+    */
 });
 
 

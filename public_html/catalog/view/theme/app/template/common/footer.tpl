@@ -122,7 +122,7 @@
         </div>
     </div>
 </footer>
-<script src="/catalog/view/theme/app/bundle/app2.js?v2.48"></script>
+<script src="/catalog/view/theme/app/bundle/app2.js?v2.49"></script>
 <!--<script src="https://www.google.com/recaptcha/api.js"></script>-->
 
     <!-- @task1 Счетчики, виджеты (comagic) -->
@@ -195,7 +195,7 @@
             <div class="modal_close"></div>
             <div class="wrp_modal_body">
                 
-                <form id="call_form" action="<?= $action ?>" method="post">
+                <form id="call_form" action="#" method="post">
                     <div class="popup_caption">Оставьте свои данные и сообщение, мы свяжемся с Вами в ближайшее время</div>
 
                     <input value="" name="workemail" type="text" placeholder="Рабочий email"/>

@@ -154,9 +154,20 @@ $(document).ready(function(){
       .html('.is-compensate-for-scrollbar._hfixed .wrp_header{padding-right:' + scrollWidth + 'px;}.is-compensate-for-scrollbar { padding-right: ' + scrollWidth + 'px; }')
       .appendTo('head');
     }
+
+    $(".to_ancor").click(function(){
+        var data_ancor=$(this).data("ancor");
+        console.log(data_ancor);
+        if($("#"+data_ancor).length){
+            var tp=$("#"+data_ancor).offset().top
+            $("html,body").animate({"scrollTop":tp},600);
+        }
+    });
+
     $(document).keyup(function(e) {
         if (e.key === "Escape") { // escape key maps to keycode `27`
             $(".modal").fadeOut(200);
+            $("body").removeClass("is-compensate-for-scrollbar");
             //$("html").css({"overflow":"inherit","margin-right":"0"});
             //$(".wrp_header").css({"padding-right":0});
             $("body").removeClass("_openmenu").removeClass("_lmenu"); 
