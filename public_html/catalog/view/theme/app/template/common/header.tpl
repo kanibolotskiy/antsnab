@@ -17,7 +17,7 @@
 
     
 
-        <link href="/catalog/view/theme/app/bundle/app2.css?v2.49" rel="stylesheet">
+        <link href="/catalog/view/theme/app/bundle/app2.css?v2.60" rel="stylesheet">
         <?php if ($description) { ?>
             <meta name="description" content="<?php echo $description; ?>" />
         <?php } ?>
