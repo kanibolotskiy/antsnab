@@ -270,17 +270,17 @@ $(document).ready(function(){
     
     
     $(".mob_menu_block").click(function(){
-        $("body").toggleClass("_openmenu");
+        $("body").toggleClass("_openmenu is-compensate-for-scrollbar");
     });
     $(document).click(function(event) {
         if ($(event.target).closest(".container-nav").length) return;
         if ($(event.target).closest(".mob_menu").length) return;
         
-        $("body").removeClass("_openmenu");
+        $("body").removeClass("_openmenu").removeClass("is-compensate-for-scrollbar");
         event.stopPropagation();
     });
     $(".container-nav_close").click(function(){
-        $("body").removeClass("_openmenu"); 
+        $("body").removeClass("_openmenu").removeClass("is-compensate-for-scrollbar");
     });
     $("#category_banners").slick({
         speed: 500,
