@@ -354,8 +354,8 @@ class ControllerCatalogCategory extends Controller {
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_data'] = $this->language->get('tab_data');
 		$data['tab_filter'] = $this->language->get('tab_filter');
-
 		$data['tab_design'] = $this->language->get('tab_design');
+		$data['tab_search'] = $this->language->get('tab_search');
 
 		$data['entry_filter_name'] = $this->language->get('entry_filter_name');
 		$data['entry_filter_type'] = $this->language->get('entry_filter_type');
@@ -717,10 +717,39 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['category_layout'] = array();
 		}
-
 		$this->load->model('design/layout');
 		
+
+
+		$categories=[];
+		$categories_tree=[];
 		
+		$category_list=$this->model_catalog_category->listCatalog();
+		$products_list=$this->model_catalog_category->listProducts(); 
+
+		foreach($category_list as $category){
+			$categories[$category["parent_id"]][]=$category;
+		}
+
+		foreach($categories[$parent_cat_id] as $key=>$cat_item){
+			$categories_tree[$key]=$cat_item;
+			$cat_child=[];
+			if(isset($categories[$cat_item["category_id"]])){
+				foreach($categories[$cat_item["category_id"]] as $cat_item_child){
+					$cat_child2=[];
+					if(isset($categories[$cat_item_child["category_id"]])){
+						foreach($categories[$cat_item_child["category_id"]] as $cat_item_child2){
+							$cat_item_child["list"][]=$cat_item_child2;
+						}
+					}
+					$categories_tree[$key]["list"][]=$cat_item_child;
+				}
+			}
+		}
+		
+
+		//print_r($categories_tree);
+		$data['categories_tree']=$categories_tree;
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
 

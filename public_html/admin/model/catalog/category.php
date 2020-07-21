@@ -552,5 +552,20 @@ class ModelCatalogCategory extends Model
 
         return $query->row['total'];
     }
-
+    public function listCatalog(){
+		$sql="SELECT oc.category_id, oc.parent_id, oc.top, od.name
+		FROM oc_category oc
+		LEFT JOIN oc_category_description od ON oc.category_id=od.category_id
+		where oc.isseo=0 order by oc.sort_order";
+		$query = $this->db->query($sql);
+		return $query->rows;
+	}
+    public function listProducts(){
+		$sql="select op.product_id, od.name, od.search, oc.category_id 
+        from oc_product op LEFT JOIN oc_product_description od ON op.product_id=od.product_id
+        LEFT JOIN oc_product_to_category oc ON op.product_id=oc.product_id
+        where op.status=1 and oc.main_category=1";
+		$query = $this->db->query($sql);
+		return $query->rows;
+	}
 }

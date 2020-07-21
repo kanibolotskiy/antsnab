@@ -43,8 +43,8 @@
         <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>">
             <div class="catalog-img">
                 <div class="fast_preview">
-                    <div class="fast_preview_caption with_goal" goal="quick-view">
-                        <span>Быстрый просмотр</span>
+                    <div class="fast_preview_caption">
+                        <span class="fast_preview_span with_goal" goal="quick-view">Быстрый просмотр</span>
                     </div>
                 </div>
                 <img class="wrp_fly_image" itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" title="<?= $p['name'] ?>" itemprop="image" />

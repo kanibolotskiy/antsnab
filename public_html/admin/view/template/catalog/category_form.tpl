@@ -29,7 +29,8 @@
             <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
             <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
             <li><a href="#tab-filter" data-toggle="tab"><?php echo $tab_filter; ?></a></li>
-            <li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
+            <li><a href="#tab-search" data-toggle="tab"><?php echo $tab_search; ?></a></li>
+            <!--<li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>-->
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
@@ -487,7 +488,52 @@
                 </table>
             </div>
             </div>
-            <div class="tab-pane" id="tab-design">
+            <div class="tab-pane" id="tab-search">
+            <div class="wrap_accia_products">
+              <?php foreach($categories_tree as $category){?>
+                <div class="accia_catalog_row acc_cat_caption" rel="<?php echo $category['category_id'];?>">
+                    <div class="accia_catalog_left">
+                        <div class="accia_column_category_caption"><?php echo $category["name"];?></div>
+                    </div>
+                    <div class="accia_catalog_right"></div>
+                </div>
+                <?php if(isset($category["list"])){ ?>
+                    <div class="subcat_wrapper" rel="<?php echo $category['category_id'];?>">
+                    <?php foreach($category["list"] as $category_item){?>
+                        
+                        <div class="accia_catalog_row acc_cat_caption" rel="<?php echo $category_item['category_id'];?>">
+                            <div class="accia_catalog_left">
+                                <div class="accia_column_subcategory_caption"><?php echo $category_item["name"];?></div>
+                            </div>
+                            <div class="accia_catalog_right">
+                                <?php if(isset($products[$category_item["category_id"]])){ foreach($products[$category_item["category_id"]] as $product){?>
+                                    <div class="product_used_item <?php echo isset($productAccia[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                                <?php }}?>
+                            </div>
+                        </div>
+                        <?php if(isset($category_item["list"])){ ?>
+                            <div class="subcat_wrapper" rel="<?php echo $category_item['category_id'];?>">
+                                <?php foreach($category_item["list"] as $category_item_child){?>
+                                <div class="accia_catalog_row">
+                                    <div class="accia_catalog_left">
+                                        <div class="accia_column_subcategory_caption _sub"><?php echo $category_item_child["name"];?></div>
+                                    </div>
+                                    <div class="accia_catalog_right">
+                                        <?php if(isset($products[$category_item_child["category_id"]])){ foreach($products[$category_item_child["category_id"]] as $product){?>
+                                            <div class="product_used_item <?php echo isset($productAccia[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                                        <?php }}?>
+                                    </div>
+                                </div>
+                                <?php }?>
+                            </div>
+                        <?php }?>
+                    <?php }?>
+                    </div>
+                <?php }?>
+            <?php }?>
+            </div>
+            </div>
+            <!--<div class="tab-pane" id="tab-design">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>
@@ -529,6 +575,7 @@
                 </table>
               </div>
             </div>
+            -->
           </div>
         </form>
       </div>
@@ -625,8 +672,14 @@
     };
     /*-----------------------------------------------*/
     $(document).ready(function(){
-
+      $(".acc_cat_caption").click(function(){
+          //console.log("ok");
+          var rel=$(this).attr("rel");
+          $(".subcat_wrapper[rel='"+rel+"']").slideToggle(200);
+          $(this).toggleClass("active");
+      });
       $(document).on("click",".remove_item_param",function(){
+          
           if($(this).hasClass("btn-danger_0")){
             $(this).closest("tr").remove();
             $("#change_params").val(1);
@@ -644,10 +697,7 @@
           }else{
             $(this).closest("tr").find(".param_block1").show();
             $(this).closest("tr").find(".param_block2").hide();
-
-            
           }
-          //console.log($(this).val());
         })
 
         $(document).on("change",".change_form_param",function(){

@@ -284,8 +284,19 @@ class ControllerCommonCart extends Controller {
 		}
 		$data['compare_count'] = count($compare_arr);
 
+		/*Отключаем ссылки на целевых страницах */		
+		if($_SERVER['REQUEST_URI']=='/compare/'){
+			$data['comp_link']=false;
+		}else{
+			$data['comp_link']=true;
+		}
+		if($_SERVER['REQUEST_URI']=='/favorite/'){
+			$data['fav_link']=false;
+		}else{
+			$data['fav_link']=true;
+		}
 		
-
+		
 		return $this->load->view('common/cart', $data);
 	}
 

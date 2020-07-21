@@ -271,16 +271,25 @@ $(document).ready(function(){
     
     $(".mob_menu_block").click(function(){
         $("body").toggleClass("_openmenu is-compensate-for-scrollbar");
+        $(".menu_overlay").fadeToggle(200);
+        /*
+        if($(this).hasClass("_active")){
+            $("body").toggleClass("_openmenu is-compensate-for-scrollbar");
+        }else{
+            
+        }*/
     });
     $(document).click(function(event) {
         if ($(event.target).closest(".container-nav").length) return;
         if ($(event.target).closest(".mob_menu").length) return;
         
-        $("body").removeClass("_openmenu").removeClass("is-compensate-for-scrollbar");
+        $("body").removeClass("_openmenu");//.removeClass("is-compensate-for-scrollbar");
+        $(".menu_overlay").fadeOut(200);
         event.stopPropagation();
     });
     $(".container-nav_close").click(function(){
         $("body").removeClass("_openmenu").removeClass("is-compensate-for-scrollbar");
+        $(".menu_overlay").fadeOut(200);
     });
     $("#category_banners").slick({
         speed: 500,

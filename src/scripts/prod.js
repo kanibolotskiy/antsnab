@@ -1075,8 +1075,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
         calc5();
     });
 
-    $(document).on("click",".fast_preview_caption span",function(e){
-
+    $(document).on("click",".fast_preview_span",function(e){
         e.preventDefault();
         var product_id=$(this).closest(".catalog_item_product").attr("rel");
         $.ajax({
@@ -1093,7 +1092,6 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                     "alias": 'numeric', 
                     "allowMinus": false
                 });
-                
                 $("body").addClass("is-compensate-for-scrollbar");
                 $(".modal").hide();
                 $(".modal_info").fadeIn(200);

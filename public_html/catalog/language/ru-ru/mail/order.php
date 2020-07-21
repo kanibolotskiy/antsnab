@@ -9,10 +9,12 @@ $_['text_new_instruction']      = 'Инструкции';
 $_['text_new_order_id']         = 'Заказ №:';
 $_['text_new_date_added']       = 'Дата добавления:';
 $_['text_new_order_status']     = 'Статус заказа:';
-$_['text_new_payment_method']   = 'Метод оплаты:';
-$_['text_new_shipping_method']  = 'Метод доставки:';
+$_['text_new_payment_method']   = 'Способ оплаты:';
+$_['text_new_shipping_method']  = 'Способ доставки:';
 $_['text_new_email']  			= 'E-mail:';
 $_['text_inn']        			= 'Инн:';
+$_['text_client']        			= 'Клиент:';
+
 $_['text_new_telephone']  		= 'Телефон:';
 $_['text_new_ip']  				= 'IP адрес:';
 $_['text_new_name']             = 'Имя:';
