@@ -41,30 +41,29 @@
                 <?php endif; ?>
             </div>
             <div class="quantity-buy">
-                
-                <div 
-                    class="qnt-container-cart without_input"
-                    data-cnt="<?=$product['quantity_in_store']?>"
-                    data-el_name="quantity[<?php echo $product['cart_id']; ?>]"
-                    data-sale_to_price_koef="<?=$product['saleToPriceKoef']?>" 
-                    data-ui_name="<?=$product['priceUnit']['name']?>"
-                    data-ui_step = "<?=$product['step']?>"
-                    data-ui_minimum = "<?=$product['mincount']?>"
-                    data-ui_name_plural="<?=$product['priceUnit']['name_plural']?>"
-                    data-ui_name_genitive="<?=$product['priceUnit']['name_package_dimension']?>"
-                    data-wholesale_threshold="<?=$product['wholesale_threshold']?>"
-                    data-price_quantity="<?php echo $product['quantity']; ?>">
+                <div class="wrapper_product_hint">
+                    <div 
+                        class="qnt-container-cart without_input"
+                        data-cnt="<?=$product['quantity_in_store']?>"
+                        data-el_name="quantity[<?php echo $product['cart_id']; ?>]"
+                        data-sale_to_price_koef="<?=$product['saleToPriceKoef']?>" 
+                        data-ui_name="<?=$product['priceUnit']['name']?>"
+                        data-ui_step = "<?=$product['step']?>"
+                        data-ui_minimum = "<?=$product['mincount']?>"
+                        data-ui_name_plural="<?=$product['priceUnit']['name_plural']?>"
+                        data-ui_name_genitive="<?=$product['priceUnit']['name_package_dimension']?>"
+                        data-wholesale_threshold="<?=$product['wholesale_threshold']?>"
+                        data-price_quantity="<?php echo $product['quantity']; ?>">
+                    </div>
+                    <div class="min_count_hint" <?php if(($product['quantity']>1) and ($product['mincount']>1) and ($product['mincount']==$product['quantity'])){echo "style='display:block;'";}?>><span>минимально для заказа</span></div>
                 </div>
-
-                <div class="basket-row_info _unavail" <?php echo (!$product['stock'])?'style="display:block;"':''?> >
-                    <p>Под заказ. Доставка 1-3 дня</p>
-                </div>
-                <div class="basket-row_info _avail" <?php echo ($product['stock'])?'style="display:block;"':''?> >
-                    <p>В наличии</p>
-                </div>
-                
-                
-                <div class="min_count_hint" <?php if(($product['quantity']>1) and ($product['mincount']>1) and ($product['mincount']==$product['quantity'])){echo "style='display:block;'";}?>><span>минимально для заказа</span></div>
+                    <div class="basket-row_info _unavail" <?php echo (!$product['stock'])?'style="display:block;"':''?> >
+                        <p>Под заказ. Доставка 1-3 дня</p>
+                    </div>
+                    <div class="basket-row_info _avail" <?php echo ($product['stock'])?'style="display:block;"':''?> >
+                        <p>В наличии</p>
+                    </div>
+                    
                 <div class="opt_limit_notification">добавьте еще <span class="opt_limit_notification_value"></span>, цена снизится</div>
             </div>
             <div class="basket_summa">

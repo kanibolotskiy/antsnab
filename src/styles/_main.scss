@@ -9001,7 +9001,7 @@ background-size:cover;-webkit-background-size:cover;-moz-background-size:cover;-
 .order_weight {font-size:15px;color:#000;line-height:32px;}
 .cart_description{margin-top:30px;}
 
-.basket-row .min_count_hint{right: 9px;top:32px;}
+.basket-row .min_count_hint{right: 0px;top:32px;}
 .basket-row .min_count_hint span{display:inline!important;line-height:13px;}
 .basket-block .basket-row ul li{position:relative;}
 
@@ -10598,6 +10598,10 @@ body.is-compensate-for-scrollbar{overflow:hidden;}
     .wrapper_basket {
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
     }
+    .basket-row .wrapper_product_hint{
+        order:2;
+    }
+
 }
 @media screen and (max-width: 400px){
     body .table_block_header,body._hfixed .table_block_header{right:140px;top: 80px;left: 0px;position: fixed;}

@@ -78,6 +78,7 @@ class ControllerProductProduct extends Controller {
 		} else {
 			$data['thumb'] = '';
 		}
+		
 		$data['images'][] = array(
 			//'popup' => $this->model_tool_image->myResize($product_info['image'],$this->config->get($this->config->get('config_theme') . '_image_thumb_width'), $this->config->get($this->config->get('config_theme') . '_image_thumb_height')),
 			'popup' => $this->model_tool_image->myResize($product_info['image'], 728, 668),

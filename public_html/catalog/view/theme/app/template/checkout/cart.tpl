@@ -197,7 +197,7 @@
                                         </div>
 
                                         <div class="form-group orderbutton2">
-                                            <button type="submit" class="order_button_next">
+                                            <button type="submit" class="order_button_next" id="send_order_button">
                                                 <span>Отправить заказ</span>
                                             </button>
                                             <!--<input type="submit" value="Отправить заказ">-->

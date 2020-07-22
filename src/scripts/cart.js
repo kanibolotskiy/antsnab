@@ -488,8 +488,14 @@ $(function(){
         //ordering_caption_item_numval
 
     });
-    $("#order_next3").click(function(){
 
+    /*Блокировка формы перед отправкой */
+    $("#send_order_button").click(function(e){
+        e.preventDefault();        
+        if (typeof ym != 'undefined') {
+            ym(14496178, 'reachGoal', 'order-send');
+        }
+        $(this).closest("form").submit();
     });
 
     $("#button_prev1").click(function(){
