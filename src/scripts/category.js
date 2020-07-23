@@ -613,12 +613,20 @@ $(document).ready(function(){
         $(this).toggleClass('_hover');
     });
     */
+    $(document).on("mouseenter",".buy",function(){
+        $(this).addClass('_hover');
+    });
+    $(document).on("mouseleave",".buy",function(){
+        $(this).removeClass('_hover');
+    });
+    /*
     $('.buy').on('mouseenter', function() {
         $(this).addClass('_hover');
     });
     $('.buy').on('mouseleave', function() {
         $(this).removeClass('_hover');
     });
+    */
     $(".param_check:checked").each(function(){
         var prnts=$(this).closest(".row_checks_wrap");
         prnts.addClass("active");
@@ -911,11 +919,14 @@ $(document).ready(function(){
                 ttl_buy=itm.html()
                 itm.attr("button_name",ttl_buy)
             }
-            itm.css({"background-color":"#41737E"});
+            
+            //itm.css({"background-color":"#41737E"});
+            itm.addClass("_clicked");
             itm.html("Добавлено");
             
             let timerId=setTimeout(function(){
-                itm.css({"background-color":"#d3a06d"});
+                //itm.css({"background-color":"#d3a06d"});
+                itm.removeClass("_clicked");
                 itm.html(ttl_buy);
                 clearTimeout(timerId);
             }, 2000);
