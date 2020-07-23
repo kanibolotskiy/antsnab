@@ -49,77 +49,8 @@ final class Image {
 		   
 	    imagedestroy($this->image);
     }	    
-	public function myResize($filename, $width, $height, $type = "", $watermark="") {
-		//echo "!myResize!<br/><br/>";
-		if (!is_file(DIR_IMAGE . $filename)) {
-			if (is_file(DIR_IMAGE . 'no_image.jpg')) {
-				$filename = 'no_image.jpg';
-			} elseif (is_file(DIR_IMAGE . 'no_image.png')) {
-				$filename = 'no_image.png';
-			} else {
-				return;
-			}
-		}
-		$info = pathinfo($filename);
-		$extension = $info['extension'];
-		$old_image = $filename;
-
-		$new_image = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . $width . 'x' . $height . $type .'.' . $extension;
-		if (!file_exists(DIR_IMAGE . $new_image) || (filemtime(DIR_IMAGE . $old_image) > filemtime(DIR_IMAGE . $new_image))) {
-			$path = '';
-			$directories = explode('/', dirname(str_replace('../', '', $new_image)));
-			foreach ($directories as $directory) {
-				$path = $path . '/' . $directory;
-				if (!file_exists(DIR_IMAGE . $path)) {
-					@mkdir(DIR_IMAGE . $path, 0777);
-				}
-			}
-			list($width_orig, $height_orig) = getimagesize(DIR_IMAGE . $old_image);
-			if ($width_orig != $width || $height_orig != $height) {
-				$scaleW = $width_orig/$width;
-				$scaleH = $height_orig/$height;
-				$image = new Image(DIR_IMAGE . $old_image);
-				if ($scaleH > $scaleW) {
-					$_height = $height * $scaleW;
-					$top_x = 0;
-					$top_y = ($height_orig - $_height) / 2;
-					$bottom_x = $width_orig;
-					$bottom_y = $top_y + $_height;
-					$image->crop($top_x, $top_y, $bottom_x, $bottom_y);
-				} elseif ($scaleH < $scaleW) {
-					$_width = $width * $scaleH;
-					$top_x = ($width_orig - $_width) / 2;
-					$top_y = 0;
-					$bottom_x = $top_x + $_width;
-					$bottom_y = $height_orig;
-					$image->crop($top_x, $top_y, $bottom_x, $bottom_y);
-				}
-				$image->resize($width, $height);
-				if($watermark){
-					$image->watermark(new Image(DIR_IMAGE . 'watermark.png'), 'middlecenter');
-				}
-				$image->save(DIR_IMAGE . $new_image);
-			} else {
-				if($watermark){
-					$image = new Image(DIR_IMAGE . $old_image);
-					$image->watermark(new Image(DIR_IMAGE . 'watermark.png'), 'middlecenter');
-					$image->save(DIR_IMAGE . $new_image);
-				}else{
-					copy(DIR_IMAGE . $old_image, DIR_IMAGE . $new_image);
-				}
-			}
-		}
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-			return $this->config->get('config_ssl') . 'image/' . $new_image;
-		} else {
-			return $this->config->get('config_url') . 'image/' . $new_image;
-		}
-				
-
-	}
+	
     public function resize($width = 0, $height = 0) {
-		//echo "!resize!<br/><br/>";
-
     	if (!$this->info['width'] || !$this->info['height']) {
 			return;
 		}
@@ -312,40 +243,80 @@ final class Image {
 	    }
     
     
-    ###################################################
-    
-    
-    public function watermark($file, $position = 'bottomright') {
-		if($file){
-			$watermark = $this->create($file);
-			$watermark_width = imagesx($watermark);
-			$watermark_height = imagesy($watermark);
-			
-			switch($position) {
-				case 'topleft':
-					$watermark_pos_x = 0;
-					$watermark_pos_y = 0;
-					break;
-				case 'topright':
-					$watermark_pos_x = $this->info['width'] - $watermark_width;
-					$watermark_pos_y = 0;
-					break;
-				case 'bottomleft':
-					$watermark_pos_x = 0;
-					$watermark_pos_y = $this->info['height'] - $watermark_height;
-					break;
-				case 'bottomright':
-					$watermark_pos_x = $this->info['width'] - $watermark_width;
-					$watermark_pos_y = $this->info['height'] - $watermark_height;
-					break;
-			}
-			
-			imagecopy($this->image, $watermark, $watermark_pos_x, $watermark_pos_y, 0, 0, 120, 40);
-			
-			imagedestroy($watermark);
+	###################################################
+	public function getImage() {	
+		return $this->image;	
+	}
+	public function watermark($watermark) {
+		
+		$watermark_width = imagesx($watermark->getImage());
+		$watermark_height = imagesy($watermark->getImage());
+
+		$watermark_pos_x = intval(($this->info['width'] - $watermark_width) / 2);	
+		$watermark_pos_y = intval(($this->info['height'] - $watermark_height) / 2);
+
+		imagealphablending( $this->image, true );
+		imagesavealpha( $this->image, true );
+		
+		imagecopy($this->image, $watermark->image, $watermark_pos_x, $watermark_pos_y, 0, 0, $watermark_width,$watermark_height);
+		imagedestroy($watermark->image);
+		
+	}
+	/*
+    public function watermark($watermark, $position = 'bottomright') {
+		//echo $this->info['width'];
+		//$watermark_width = imagesx($watermark);
+		//$watermark_height = imagesy($watermark);
+		
+		switch($position){
+			case 'middlecenter':
+				//$watermark_pos_x = intval(($this->info['width'] - $watermark->getWidth()) / 2);
+				//$watermark_pos_y = intval(($this->info['height'] - $watermark->getHeight()) / 2);
+			break;
 		}
+		$watermark_pos_x=0;
+		$watermark_pos_y=0;
+		
+		imagealphablending( $this->image, true );
+		imagesavealpha( $this->image, true );
+		//imagecopy($this->image, $watermark->getImage(), $watermark_pos_x, $watermark_pos_y, 0, 0, $watermark->getWidth(), $watermark->getHeight());
+		imagecopy($this->image, $watermark, $watermark_pos_x, $watermark_pos_y, 0, 0, 120, 40);
+
+		imagedestroy($watermark->getImage());
+		
+	}
+	*/
+	/*
+    public function watermark($file, $position = 'bottomright') {
+        $watermark = $this->create($file);
+
+        $watermark_width = imagesx($watermark);
+        $watermark_height = imagesy($watermark);
+
+        switch($position) {
+            case 'topleft':
+                $watermark_pos_x = 0;
+                $watermark_pos_y = 0;
+                break;
+            case 'topright':
+                $watermark_pos_x = $this->info['width'] - $watermark_width;
+                $watermark_pos_y = 0;
+                break;
+            case 'bottomleft':
+                $watermark_pos_x = 0;
+                $watermark_pos_y = $this->info['height'] - $watermark_height;
+                break;
+            case 'bottomright':
+                $watermark_pos_x = $this->info['width'] - $watermark_width;
+                $watermark_pos_y = $this->info['height'] - $watermark_height;
+                break;
+        }
+
+        imagecopy($this->image, $watermark, $watermark_pos_x, $watermark_pos_y, 0, 0, 120, 40);
+
+        imagedestroy($watermark);
     }
-    
+    */
     public function crop($top_x, $top_y, $bottom_x, $bottom_y) {
         $image_old = $this->image;
         $this->image = imagecreatetruecolor($bottom_x - $top_x, $bottom_y - $top_y);

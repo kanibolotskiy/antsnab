@@ -142,17 +142,20 @@ class ModelToolImage extends Model {
 				}
 				$image->resize($width, $height, $type);
 				if($watermark){
-					$image->watermark(new Image(DIR_IMAGE . 'watermark.png'), 'middlecenter');
+					$image->watermark(new Image(DIR_IMAGE . 'watermark.png'));
 				}
+				
 				$image->save(DIR_IMAGE . $new_image);
             } else {
+				
 				if($watermark){
 					$image = new Image(DIR_IMAGE . $old_image);
-					$image->watermark(new Image(DIR_IMAGE . 'watermark.png'), 'middlecenter');
+					$image->watermark(new Image(DIR_IMAGE . 'watermark.png'));
 					$image->save(DIR_IMAGE . $new_image);
 				}else{
 					copy(DIR_IMAGE . $old_image, DIR_IMAGE . $new_image);
 				}
+				
             }
         }        
 

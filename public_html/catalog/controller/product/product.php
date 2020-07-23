@@ -772,8 +772,7 @@ class ControllerProductProduct extends Controller {
 
 			if ($product_info['image']) {
 				//$data['popup'] = $b_patch . $product_info['image'];
-				$data['popup'] = $this->model_tool_image->myResize($product_info['image'], 1000,750,1,'watermark.png');
-
+				$data['popup'] = $this->model_tool_image->myResize($product_info['image'], 1000,750,14,'watermark.png');
 			} else {
 				$data['popup'] = '';
 			}
@@ -797,7 +796,7 @@ class ControllerProductProduct extends Controller {
 					$data['images'][] = array(
 						//'popup' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_popup_width'), $this->config->get($this->config->get('config_theme') . '_image_popup_height')),
 						//'popup' => $this->model_tool_image->resize($result['image'],1000,750),
-						'popup' => $this->model_tool_image->myResize($result['image'],1000,750,1,'watermark.png'),
+						'popup' => $this->model_tool_image->myResize($result['image'],1000,750,13,'watermark.png'),
 						//'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_additional_width'), $this->config->get($this->config->get('config_theme') . '_image_additional_height'))
 						'thumb' => $this->model_tool_image->resize($result['image'], 176,150)
 					);
