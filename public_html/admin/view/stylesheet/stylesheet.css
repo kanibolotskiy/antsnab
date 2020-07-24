@@ -812,3 +812,5 @@ input.dis_percent[type="number"]::-webkit-inner-spin-button {
 .product_discount_line_caption{font-weight:bold;}
 .product_discount_line{display:none;}
 .product_discount_line._active{display:block;}
+.accia_product_left{margin-left: 40px;color:#41737E;}
+.cat_product_list{display:none;}

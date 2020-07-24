@@ -8427,16 +8427,20 @@ body._hfixed._hmenu.checkout-cart .empty_block_header{
 }
 .tab-block2 .fast_preview_caption{bottom:24px;}
 
+/*
 @media screen and (min-width: 769px){
     .catalog_item_product:hover .fast_preview{
         opacity:1;
     }
-}
+}*/
 @media screen and (max-width: 768px){
     .catalog_item_product .fast_preview{
         display:none;
     }
 }
+
+.catalog_item_product._hover .fast_preview{opacity:1;}
+
 .catalog_item_product:hover .agg_rating{
     opacity:1;
 }

@@ -561,11 +561,15 @@ class ModelCatalogCategory extends Model
 		return $query->rows;
 	}
     public function listProducts(){
+        $results=[];
 		$sql="select op.product_id, od.name, od.search, oc.category_id 
         from oc_product op LEFT JOIN oc_product_description od ON op.product_id=od.product_id
         LEFT JOIN oc_product_to_category oc ON op.product_id=oc.product_id
         where op.status=1 and oc.main_category=1";
-		$query = $this->db->query($sql);
-		return $query->rows;
+        $query = $this->db->query($sql);
+        foreach($query->rows as $row){
+            $results[$row['category_id']][]=$row;
+        }
+        return $results;
 	}
 }

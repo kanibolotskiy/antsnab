@@ -904,6 +904,12 @@ $(document).ready(function(){
         $(this).toggleClass("active");
         $(".list_subcats").slideToggle(200);
     });
+    $(document).on("mouseenter",".catalog_item_product",function(){
+        $(this).addClass("_hover");
+    });
+    $(document).on("mouseleave",".catalog_item_product",function(){
+        $(this).removeClass("_hover");
+    });
 
     $(document).on('click','.buy',function(e){
         e.preventDefault();

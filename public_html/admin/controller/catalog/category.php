@@ -726,7 +726,7 @@ class ControllerCatalogCategory extends Controller {
 		
 		$category_list=$this->model_catalog_category->listCatalog();
 		$products_list=$this->model_catalog_category->listProducts(); 
-
+		//print_r($products_list);
 		foreach($category_list as $category){
 			$categories[$category["parent_id"]][]=$category;
 		}
@@ -743,6 +743,7 @@ class ControllerCatalogCategory extends Controller {
 						}
 					}
 					$categories_tree[$key]["list"][]=$cat_item_child;
+					//$categories_tree[$key]["products"]=$products_list[$key];
 				}
 			}
 		}
@@ -750,6 +751,7 @@ class ControllerCatalogCategory extends Controller {
 
 		//print_r($categories_tree);
 		$data['categories_tree']=$categories_tree;
+		$data['products_list']=$products_list;
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
 
