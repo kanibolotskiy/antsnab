@@ -1,5 +1,10 @@
 <?php
 class ModelExtensionFeedYandexMarket extends Model {
+	function declOfNum($number, $titles){
+		$cases = array (2, 0, 1, 1, 1, 2);
+		$format = $titles[ ($number%100 > 4 && $number %100 < 20) ? 2 : $cases[min($number%10, 5)] ];
+		return sprintf($format, $number);
+	}
 	public function getCategory($allowed_cats='') {
 		$query = $this->db->query("SELECT cd.name, c.category_id, c.parent_id FROM " . DB_PREFIX . "category c LEFT JOIN " . DB_PREFIX . "category_description cd ON (c.category_id = cd.category_id) LEFT JOIN " . DB_PREFIX . "category_to_store c2s ON (c.category_id = c2s.category_id) WHERE cd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND c2s.store_id = '" . (int)$this->config->get('config_store_id') . "'  AND c.status = '1' AND isseo='0' ".($allowed_cats?" AND c.category_id IN (".$allowed_cats.") ":"")." AND c.sort_order <> '-1'");
 		return $query->rows;

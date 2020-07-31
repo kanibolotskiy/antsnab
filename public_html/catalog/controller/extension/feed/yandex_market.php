@@ -95,16 +95,17 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 			$delivery_weights_rev=array_reverse($delivery_weights,true);
 
 			$z=0;
+			
 			foreach ($products as $product) {
 				
-
 				$prodUnits = $produnitsGateway->getUnitsByProduct($product['product_id']);
 				$price=0;
 				$weight=0;
-				//echo $product['product_id'];
-				//print_r($prodUnits);
+				$unit_array=[];
+				
 				foreach($prodUnits as $prodUnit){
 					if($prodUnit['isPackageBase']==1){
+						$unit_array=[$prodUnit["name"],$prodUnit["name_package_dimension"],$prodUnit["name_plural"]];
 						if($prodUnit['isPriceBase']==1){
 							$price=$prodUnit['price'];
 						}else{
@@ -114,10 +115,30 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 						
 					}
 				}
+				
+				
 				if(!$price){
 					$price=$product['price'];
 				}
+				//print_r($product['mincount']);
+				
 				$del_price=0;
+				if($product['quantity']<=0 and $product['mincount']>1){
+					$cnt=$this->model_extension_feed_yandex_market->declOfNum($product['mincount'],$unit_array);
+					$product_name=$product['meta_h1']." (".$product['mincount']." ".$cnt.")";
+					if($product['mincount']>0){
+						$weight=$weight*$product['mincount'];
+					}
+				}else{
+					$product_name=$product['meta_h1'];
+				}
+				/*
+				if($product['product_id']==794){
+					//echo $weight;
+				}
+				*/
+				
+				
 				foreach($delivery_weights_rev as $del_weight=>$key){
 					if($weight<=$del_weight){
 						$del_price=$key[0];
@@ -174,7 +195,9 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 				
 
 //				$data['local_delivery_cost'] = 100;
-				$data['name'] = $product['meta_h1'];
+
+				//$data['name'] = $product['meta_h1'];
+				$data['name'] = $product_name;
 				$data['vendor'] = $product['manufacturer'];
 				$data['vendorCode'] = $product['model'];
 				$data['model'] = $product['name'];
