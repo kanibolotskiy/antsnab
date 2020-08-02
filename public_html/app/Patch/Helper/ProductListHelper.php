@@ -93,7 +93,7 @@ class ProductListHelper extends \Model
             $prodUnits = $produnitsGateway->getUnitsByProduct($result['product_id']);
 
             
-            
+            unset($pUnits);
             //print_r($result);
             foreach ($prodUnits as $unit_id => $unit) {
                 if (0 != $unit['switchSortOrder']) {
@@ -129,7 +129,6 @@ class ProductListHelper extends \Model
             
             $step=1;
             if (isset($pUnits[2])){
-
                 if (( $result['quantity']<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){
                     $step = $pUnits[2]['denom'];
                     if($pUnits[1]['mincount']<$pUnits[2]['denom']){

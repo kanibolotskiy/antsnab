@@ -103,40 +103,81 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 				$weight=0;
 				$unit_array=[];
 				
-				foreach($prodUnits as $prodUnit){
-					if($prodUnit['isPackageBase']==1){
-						$unit_array=[$prodUnit["name"],$prodUnit["name_package_dimension"],$prodUnit["name_plural"]];
-						if($prodUnit['isPriceBase']==1){
-							$price=$prodUnit['price'];
+				$mincount=1;
+				unset($pUnits);
+				foreach ($prodUnits as $unit_id => $unit) {
+				//foreach($prodUnits as $prodUnit){
+					if($unit['isPackageBase']){
+						$unit_array=[$unit["name"],$unit["name_package_dimension"],$unit["name_plural"]];
+						if($unit['isPriceBase']==1){
+							$price=$unit['price'];
 						}else{
-							$price=$prodUnit['price']*$prodUnit['calcKoef'];
+							$price=$unit['price']*$unit['calcKoef'];
 						}
-						$weight=$prodUnit['weight'];
-						
+						$weight=$unit['weight'];						
 					}
+					if (0 != $unit['switchSortOrder']) {
+						$key = (int)$unit['switchSortOrder'];
+	
+						
+						$saleToUIKoef = $produnitsCalcGateway->getBaseToUnitKoef($product['product_id'], 'isSaleBase', $unit_id);
+						$array_koef = (array) $saleToUIKoef;
+						$z=0;
+						$koef_numerator=1;
+						$koef_denomirator=1;
+						foreach($array_koef as $koef_item){
+							if($z){
+								$koef_denomirator=$koef_item;
+							}else{
+								$koef_numerator=$koef_item;
+							}
+							$z++;
+						}
+						$pUnits[$key]['nom']=$koef_numerator;
+						$pUnits[$key]['denom']=$koef_denomirator;
+	
+						$koef_d=$koef_numerator/$koef_denomirator;
+						if($product['quantity']>0){
+							$pUnits[$key]['mincount']=ceil(1*$koef_d);
+						}else{
+							$pUnits[$key]['mincount']=ceil($product['mincount']*$koef_d);
+						}
+	
+					}
+					
 				}
-				
+				$step=1;
+				if (isset($pUnits[2])){
+
+					if (( $product['quantity']<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){
+						$step = $pUnits[2]['denom'];
+						if($pUnits[1]['mincount']<$pUnits[2]['denom']){
+							$mincount = $pUnits[2]['denom'];
+						}else{
+							$mincount = $pUnits[1]['mincount'];
+						}
+					}else{
+						$mincount = $pUnits[1]['mincount'];
+					}
+
+				}else{
+					$mincount = $pUnits[1]['mincount'];
+				}
 				
 				if(!$price){
 					$price=$product['price'];
 				}
-				//print_r($product['mincount']);
 				
 				$del_price=0;
-				if($product['quantity']<=0 and $product['mincount']>1){
-					$cnt=$this->model_extension_feed_yandex_market->declOfNum($product['mincount'],$unit_array);
-					$product_name=$product['meta_h1']." (".$product['mincount']." ".$cnt.")";
-					if($product['mincount']>0){
-						$weight=$weight*$product['mincount'];
+				if($product['quantity']<=0 and $mincount>1){
+					$cnt=$this->model_extension_feed_yandex_market->declOfNum($mincount,$unit_array);
+					$product_name=$product['meta_h1']." (".$mincount." ".$cnt.")";
+					if($mincount>0){
+						$weight=$weight*$mincount;
 					}
 				}else{
 					$product_name=$product['meta_h1'];
 				}
-				/*
-				if($product['product_id']==794){
-					//echo $weight;
-				}
-				*/
 				
 				
 				foreach($delivery_weights_rev as $del_weight=>$key){
