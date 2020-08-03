@@ -489,146 +489,94 @@
             </div>
             </div>
             <div class="tab-pane" id="tab-search">
-            <div class="wrap_accia_products">
-              <?php foreach($categories_tree as $category){?>
-                <div class="cat_products_fnd accia_catalog_row acc_cat_caption" rel="<?php echo $category['category_id'];?>">
-                    <div class="accia_catalog_left">
-                        <div class="accia_column_category_caption"><?php echo $category["name"];?></div>
-                    </div>
-                    <div class="accia_catalog_right"></div>
-                </div>
-                <?php if(isset($products_list[$category['category_id']])){?>
-                  <div class="cat_product_list" rel="<?php echo $category['category_id'];?>">
-                    <?php foreach($products_list[$category['category_id']] as $itm){?>
-                      <div class="accia_catalog_row">
-                        <div class="accia_catalog_left accia_product_left">
-                          <?php echo $itm["name"];?>
-                        </div>
-                        <div class="accia_catalog_right">
-                          tut
-                        </div>
+              <div class="wrap_accia_products search_catalog_products">
+                <?php foreach($categories_tree as $category){?>
+                  <div class="cat_products_fnd accia_catalog_row acc_cat_caption" rel="<?php echo $category['category_id'];?>">
+                      <div class="accia_catalog_left">
+                          <div class="accia_column_category_caption"><?php echo $category["name"];?></div>
                       </div>
-                    <?php }?>
-                    <?php //print_r($products_list[$category_item['category_id']]);?>
+                      <div class="accia_catalog_right"></div>
                   </div>
-                <?php }?>
-                <?php if(isset($category["list"])){ ?>
-                    <div class="subcat_wrapper" rel="<?php echo $category['category_id'];?>">
-                    <?php foreach($category["list"] as $category_item){?>
-                        
-                        <div class="cat_products_fnd accia_catalog_row acc_cat_caption" rel="<?php echo $category_item['category_id'];?>">
-                            <div class="accia_catalog_left">
-                                <div class="accia_column_subcategory_caption"><?php echo $category_item["name"];?></div>
-                            </div>
-                            
-                            <!--
-                            <div class="accia_catalog_right">
-                                <?php if(isset($products[$category_item["category_id"]])){ foreach($products[$category_item["category_id"]] as $product){?>
-                                    <div class="product_used_item <?php echo isset($productAccia[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
-                                <?php }}?>
-                            </div>
-                            -->
-                        </div>
-                        <?php if(isset($products_list[$category_item['category_id']])){?>
-                          <div class="cat_product_list"  rel="<?php echo $category_item['category_id'];?>">
-                            <?php foreach($products_list[$category_item['category_id']] as $itm){?>
-                              <div class="accia_catalog_row">
-                                <div class="accia_catalog_left accia_product_left">
-                                  <?php echo $itm["name"];?>
-                                </div>
-                                <div class="accia_catalog_right">
-                                  tut
-                                </div>
-                              </div>
-                            <?php }?>
-                            <?php //print_r($products_list[$category_item['category_id']]);?>
+                  <?php if(isset($products_list[$category['category_id']])){?>
+                    <div class="cat_product_list" rel="<?php echo $category['category_id'];?>">
+                      <?php foreach($products_list[$category['category_id']] as $itm){?>
+                        <div class="accia_catalog_row">
+                          <div class="accia_catalog_left accia_product_left">
+                            <?=$itm["name"] ?>
                           </div>
-                        <?php }?>
-                        <?php if(isset($category_item["list"])){ ?>
-                            <div class="subcat_wrapper" rel="<?php echo $category_item['category_id'];?>">
-                                <?php foreach($category_item["list"] as $category_item_child){?>
-                                <div class="cat_products_fnd accia_catalog_row">
-                                    <div class="accia_catalog_left">
-                                        <div class="accia_column_subcategory_caption _sub"><?php echo $category_item_child["name"];?></div>
-                                    </div>
-                                    <div class="accia_catalog_right">
-                                      test2
-                                    </div>
-                                    <!--
-                                    <div class="accia_catalog_right">
-                                        <?php if(isset($products[$category_item_child["category_id"]])){ foreach($products[$category_item_child["category_id"]] as $product){?>
-                                            <div class="product_used_item <?php echo isset($productAccia[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
-                                        <?php }}?>
-                                    </div>
-                                    -->
-                                </div>
-                                <?php if(isset($products_list[$category_item['category_id']])){?>
-                                  <div class="cat_product_list" rel="<?php echo $category_item['category_id'];?>">
-                                    <?php foreach($products_list[$category_item['category_id']] as $itm){?>
-                                      <div class="accia_catalog_row">
-                                        <div class="accia_catalog_left accia_product_left">
-                                          <?php echo $itm["name"];?>
-                                        </div>
-                                        <div class="accia_catalog_right">
-                                          tut
-                                        </div>
-                                      </div>
-                                    <?php }?>
-                                    <?php //print_r($products_list[$category_item['category_id']]);?>
-                                  </div>
-                                <?php }?>
-                                <?php }?>
-                            </div>
-                        <?php }?>
-                    <?php }?>
+                          <div class="accia_catalog_right">
+                            <textarea rows="1" class="search_append_text" name=""><?=$itm['search']?></textarea>
+                          </div>
+                        </div>
+                      <?php }?>
                     </div>
-                <?php }?>
-            <?php }?>
-            </div>
-            </div>
-            <!--<div class="tab-pane" id="tab-design">
-              <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <td class="text-left"><?php echo $entry_store; ?></td>
-                      <td class="text-left"><?php echo $entry_layout; ?></td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="text-left"><?php echo $text_default; ?></td>
-                      <td class="text-left"><select name="category_layout[0]" class="form-control">
-                          <option value=""></option>
-                          <?php foreach ($layouts as $layout) { ?>
-                          <?php if (isset($category_layout[0]) && $category_layout[0] == $layout['layout_id']) { ?>
-                          <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
-                          <?php } else { ?>
-                          <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
-                          <?php } ?>
-                          <?php } ?>
-                        </select></td>
-                    </tr>
-                    <?php foreach ($stores as $store) { ?>
-                    <tr>
-                      <td class="text-left"><?php echo $store['name']; ?></td>
-                      <td class="text-left"><select name="category_layout[<?php echo $store['store_id']; ?>]" class="form-control">
-                          <option value=""></option>
-                          <?php foreach ($layouts as $layout) { ?>
-                          <?php if (isset($category_layout[$store['store_id']]) && $category_layout[$store['store_id']] == $layout['layout_id']) { ?>
-                          <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
-                          <?php } else { ?>
-                          <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
-                          <?php } ?>
-                          <?php } ?>
-                        </select></td>
-                    </tr>
-                    <?php } ?>
-                  </tbody>
-                </table>
+                  <?php }?>
+                  <?php if(isset($category["list"])){ ?>
+                      <div class="subcat_wrapper" rel="<?php echo $category['category_id'];?>">
+                      <?php foreach($category["list"] as $category_item){?>
+                          
+                          <div class="cat_products_fnd accia_catalog_row acc_cat_caption" rel="<?php echo $category_item['category_id'];?>">
+                              <div class="accia_catalog_left">
+                                  <div class="accia_column_subcategory_caption"><?php echo $category_item["name"];?></div>
+                              </div>
+                              
+                              <!--
+                              <div class="accia_catalog_right">
+                                  <?php if(isset($products[$category_item["category_id"]])){ foreach($products[$category_item["category_id"]] as $product){?>
+                                      <div class="product_used_item <?php echo isset($productAccia[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                                  <?php }}?>
+                              </div>
+                              -->
+                          </div>
+                          <?php if(isset($products_list[$category_item['category_id']])){?>
+                            <div class="cat_product_list"  rel="<?php echo $category_item['category_id'];?>">
+                              <?php foreach($products_list[$category_item['category_id']] as $itm){?>
+                                <div class="accia_catalog_row">
+                                  <div class="accia_catalog_left accia_product_left">
+                                    <?php echo $itm["name"];?>
+                                  </div>
+                                  <div class="accia_catalog_right">
+                                    <textarea name="" value="тут1"></textarea>
+                                  </div>
+                                </div>
+                              <?php }?>
+                            </div>
+                          <?php }?>
+                          <?php if(isset($category_item["list"])){ ?>
+                              <div class="subcat_wrapper" rel="<?php echo $category_item['category_id'];?>">
+                                  <?php foreach($category_item["list"] as $category_item_child){?>
+                                  <div class="cat_products_fnd accia_catalog_row">
+                                      <div class="accia_catalog_left">
+                                          <div class="accia_column_subcategory_caption _sub"><?php echo $category_item_child["name"];?></div>
+                                      </div>
+                                      <div class="accia_catalog_right">
+                                        <textarea name="" value="тут2"></textarea>
+                                      </div>
+                                  </div>
+                                  <?php if(isset($products_list[$category_item['category_id']])){?>
+                                    <div class="cat_product_list" rel="<?php echo $category_item['category_id'];?>">
+                                      <?php foreach($products_list[$category_item['category_id']] as $itm){?>
+                                        <div class="accia_catalog_row">
+                                          <div class="accia_catalog_left accia_product_left">
+                                            <?php echo $itm["name"];?>
+                                          </div>
+                                          <div class="accia_catalog_right">
+                                            <textarea name="" value="тут3"></textarea>
+                                          </div>
+                                        </div>
+                                      <?php }?>
+                                    </div>
+                                  <?php }?>
+                                  <?php }?>
+                              </div>
+                          <?php }?>
+                      <?php }?>
+                      </div>
+                  <?php }?>
+              <?php }?>
               </div>
             </div>
-            -->
+            
           </div>
         </form>
       </div>
@@ -638,6 +586,13 @@
   <script type="text/javascript"><!--
       var filter_row = $("#filters tbody tr").length;
       var last_added_new=filter_row;
+      function autosize(){
+        var el = this;
+        setTimeout(function(){
+          el.style.cssText = 'height:auto; padding:0';
+          el.style.cssText = 'height:' + el.scrollHeight + 'px';
+        },0);
+      }
       function addFilter() {
           
           var last_order=-1;
@@ -725,6 +680,7 @@
     };
     /*-----------------------------------------------*/
     $(document).ready(function(){
+      $('.search_append_text').on('keydown', autosize)
       $(".cat_products_fnd").click(function(){
           var rel=$(this).attr("rel");
           $(".cat_product_list[rel='"+rel+"']").slideToggle(200);

@@ -174,6 +174,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 					$product_name=$product['meta_h1']." (".$mincount." ".$cnt.")";
 					if($mincount>0){
 						$weight=$weight*$mincount;
+						$price=$product['price']*$mincount;
 					}
 				}else{
 					$product_name=$product['meta_h1'];
