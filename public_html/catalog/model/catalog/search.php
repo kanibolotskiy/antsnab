@@ -26,20 +26,20 @@ class ModelCatalogSearch extends Model {
         foreach($query_arr as $query_itm){
             $query_itm_translit=$this->correctString($query_itm);
             $sql_add[]="(
-                        op.sku like '%".$query_itm."%' or od.meta_h1 like '%".$query_itm."%' or od.description like '%".$query_itm."%' or od.description_mini like '%".$query_itm."%' or od.name like '%".$query_itm."%' or od.search like '%".$query_itm."%' 
-                        or op.sku like '%".$query_itm_translit."%' or od.meta_h1 like '%".$query_itm_translit."%' or od.description like '%".$query_itm_translit."%' or od.description_mini like '%".$query_itm_translit."%' or od.name like '%".$query_itm_translit."%' or od.search like '%".$query_itm_translit."%'
+                        om.name like '%".$query_itm."%' or op.sku like '%".$query_itm."%' or od.meta_h1 like '%".$query_itm."%' or od.description like '%".$query_itm."%' or od.description_mini like '%".$query_itm."%' or od.name like '%".$query_itm."%' or od.search like '%".$query_itm."%' 
+                        or om.name like '%".$query_itm_translit."%' or op.sku like '%".$query_itm_translit."%' or od.meta_h1 like '%".$query_itm_translit."%' or od.description like '%".$query_itm_translit."%' or od.description_mini like '%".$query_itm_translit."%' or od.name like '%".$query_itm_translit."%' or od.search like '%".$query_itm_translit."%'
                     )";
         }
         if(is_array($sql_add)){
             $sql_str=implode(" AND",$sql_add);
         }
         $sql="SELECT od.meta_h1, op.product_id FROM oc_product op LEFT JOIN oc_product_description od ON op.product_id=od.product_id
+        LEFT JOIN oc_manufacturer om ON op.manufacturer_id=om.manufacturer_id
         WHERE op.status=1 AND 
         (
             ".$sql_str."
         )
         ORDER by op.viewed DESC ".$limit_str;
-
         //echo $sql;
         $query = $this->db->query($sql);
         return $query->rows;
