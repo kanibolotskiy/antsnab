@@ -1,10 +1,18 @@
 $(document).ready(function(){
-    $("#input_search" ).autocomplete({
-        source: '/index.php?route=product/search/liveSearch',
+  
+    $("#inputSearch" ).autocomplete({
+      serviceUrl: '/index.php?route=product/search/bestSearch',
          
-        dataType: 'json',
-        deferRequestBy: 300
-      });
+        //dataType: 'json',
+        deferRequestBy: 300,
+        minChars: 3,
+        zIndex:1,
+        appendTo:$(".wrapper_search"),
+        onSelect: function (suggestion) {
+          location.href=suggestion.data;
+          //alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+        }
+    });
     /*
     $("#input_search").autocomplete({
         dataType: "jsonp",

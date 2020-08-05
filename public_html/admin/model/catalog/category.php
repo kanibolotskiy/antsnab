@@ -188,6 +188,7 @@ class ModelCatalogCategory extends Model
 
     public function editCategory($category_id, $data)
     {
+        //print_r($data);
         if(!isset($data['isseo'])){
             $data['isseo']=0;
         }
@@ -220,7 +221,24 @@ class ModelCatalogCategory extends Model
             //$this->db->query("INSERT INTO " . DB_PREFIX . "category_description SET category_id = '" . (int) $category_id . "', language_id = '" . (int) $language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
             $this->db->query("INSERT INTO " . DB_PREFIX . "category_description SET category_id = '" . (int) $category_id . "', language_id = '" . (int) $language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', bottom_text = '" . $this->db->escape($value['bottom_text']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
         }
-        
+        foreach($data['product_search_update'] as $key=>$product_search_flag){
+            if($product_search_flag){
+                //echo "product_id=".$key."=".$data["product_search"][$key];
+                $sql_search_update="UPDATE " . DB_PREFIX . "product_description set search='".$data["product_search"][$key]."' where product_id=".$key;
+                //echo $sql_search_update;
+                $this->db->query($sql_search_update);
+                //$this->db->query("UPDATE " . DB_PREFIX . "oc_product_description where pru ");
+
+            }
+        }
+
+        /*
+        if($data['change_search']){
+            foreach($data['product_search'] as $product_search_id){
+                
+            }
+        }
+        */
 
         // MySQL Hierarchical Data Closure Table Pattern
         $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE path_id = '" . (int) $category_id . "' ORDER BY level ASC");

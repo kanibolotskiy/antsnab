@@ -5,7 +5,7 @@
         <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
         <?php echo $content_top; ?>
         
-        <h1><?php echo $heading_title; ?></h1>
+        <h1><?php echo $heading_title; ?> - <span class="search_word"><?php echo $search;?></span></h1>
         
         <?php if ($products) { ?>
             <h2><?php echo $text_search; ?></h2>

@@ -279,14 +279,18 @@ $(document).ready(function(){
             
         }*/
     });
+
     $(document).click(function(event) {
         if ($(event.target).closest(".container-nav").length) return;
         if ($(event.target).closest(".mob_menu").length) return;
-        
         $("body").removeClass("_openmenu");//.removeClass("is-compensate-for-scrollbar");
         $(".menu_overlay").fadeOut(200);
         event.stopPropagation();
     });
+    $(".menu_overlay").click(function(){
+        $("body").removeClass("_openmenu").removeClass("is-compensate-for-scrollbar");
+        $(".menu_overlay").fadeOut(200);
+    });    
     $(".container-nav_close").click(function(){
         $("body").removeClass("_openmenu").removeClass("is-compensate-for-scrollbar");
         $(".menu_overlay").fadeOut(200);

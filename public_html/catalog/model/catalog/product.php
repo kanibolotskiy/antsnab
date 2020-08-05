@@ -1,5 +1,6 @@
 <?php
 class ModelCatalogProduct extends Model {
+	
 	public function getCategoryParamsValues(){
 		$results=[];
 		$sql="SELECT id, param_value from category_param_values";

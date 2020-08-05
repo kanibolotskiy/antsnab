@@ -449,7 +449,8 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['category_description'] = array();
 		}
-	
+		$data['category_id']=$this->request->get['category_id'];
+
 		//print_r($data['category_description']);
 		// Categories
 		$categories = $this->model_catalog_category->getAllCategories();
@@ -730,25 +731,29 @@ class ControllerCatalogCategory extends Controller {
 		foreach($category_list as $category){
 			$categories[$category["parent_id"]][]=$category;
 		}
-
-		foreach($categories[$parent_cat_id] as $key=>$cat_item){
-			$categories_tree[$key]=$cat_item;
-			$cat_child=[];
-			if(isset($categories[$cat_item["category_id"]])){
-				foreach($categories[$cat_item["category_id"]] as $cat_item_child){
-					$cat_child2=[];
-					if(isset($categories[$cat_item_child["category_id"]])){
-						foreach($categories[$cat_item_child["category_id"]] as $cat_item_child2){
-							$cat_item_child["list"][]=$cat_item_child2;
+		//echo "!".$parent_cat_id."!";
+		//print_r($categories);
+		//print_r($category_list);
+		if(isset($categories[$parent_cat_id])){
+			foreach($categories[$parent_cat_id] as $key=>$cat_item){
+				$categories_tree[$key]=$cat_item;
+				$cat_child=[];
+				if(isset($categories[$cat_item["category_id"]])){
+					foreach($categories[$cat_item["category_id"]] as $cat_item_child){
+						$cat_child2=[];
+						if(isset($categories[$cat_item_child["category_id"]])){
+							foreach($categories[$cat_item_child["category_id"]] as $cat_item_child2){
+								$cat_item_child["list"][]=$cat_item_child2;
+							}
 						}
+						$categories_tree[$key]["list"][]=$cat_item_child;
+						//$categories_tree[$key]["products"]=$products_list[$key];
 					}
-					$categories_tree[$key]["list"][]=$cat_item_child;
-					//$categories_tree[$key]["products"]=$products_list[$key];
 				}
 			}
 		}
 		
-
+		//print_r($data);
 		//print_r($categories_tree);
 		$data['categories_tree']=$categories_tree;
 		$data['products_list']=$products_list;

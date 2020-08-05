@@ -505,12 +505,15 @@
                             <?=$itm["name"] ?>
                           </div>
                           <div class="accia_catalog_right">
-                            <textarea rows="1" class="search_append_text" name=""><?=$itm['search']?></textarea>
+                            <input type="hidden" class="product_search_update" name="product_search_update[<?=$itm['product_id']?>]" value="0"/>
+                            <textarea rows="1" class="search_append_text" name="product_search[<?=$itm['product_id']?>]"><?=$itm['search']?></textarea>
                           </div>
                         </div>
                       <?php }?>
                     </div>
                   <?php }?>
+                  
+                  
                   <?php if(isset($category["list"])){ ?>
                       <div class="subcat_wrapper" rel="<?php echo $category['category_id'];?>">
                       <?php foreach($category["list"] as $category_item){?>
@@ -533,10 +536,11 @@
                               <?php foreach($products_list[$category_item['category_id']] as $itm){?>
                                 <div class="accia_catalog_row">
                                   <div class="accia_catalog_left accia_product_left">
-                                    <?php echo $itm["name"];?>
+                                    <?=$itm["name"] ?>
                                   </div>
                                   <div class="accia_catalog_right">
-                                    <textarea name="" value="тут1"></textarea>
+                                    <input type="hidden" class="product_search_update" name="product_search_update[<?=$itm['product_id']?>]" value="0"/>
+                                    <textarea rows="1" class="search_append_text" name="product_search[<?=$itm['product_id']?>]"><?=$itm['search']?></textarea>
                                   </div>
                                 </div>
                               <?php }?>
@@ -545,23 +549,25 @@
                           <?php if(isset($category_item["list"])){ ?>
                               <div class="subcat_wrapper" rel="<?php echo $category_item['category_id'];?>">
                                   <?php foreach($category_item["list"] as $category_item_child){?>
-                                  <div class="cat_products_fnd accia_catalog_row">
-                                      <div class="accia_catalog_left">
-                                          <div class="accia_column_subcategory_caption _sub"><?php echo $category_item_child["name"];?></div>
-                                      </div>
-                                      <div class="accia_catalog_right">
-                                        <textarea name="" value="тут2"></textarea>
-                                      </div>
+                                  <div class="accia_catalog_row">
+                                    <div class="accia_catalog_left accia_product_left">
+                                      <?=$itm["name"] ?>
+                                    </div>
+                                    <div class="accia_catalog_right">
+                                      <input type="hidden" class="product_search_update" name="product_search_update[<?=$itm['product_id']?>]" value="0"/>
+                                      <textarea rows="1" class="search_append_text" name="product_search[<?=$itm['product_id']?>]"><?=$itm['search']?></textarea>
+                                    </div>
                                   </div>
                                   <?php if(isset($products_list[$category_item['category_id']])){?>
                                     <div class="cat_product_list" rel="<?php echo $category_item['category_id'];?>">
                                       <?php foreach($products_list[$category_item['category_id']] as $itm){?>
                                         <div class="accia_catalog_row">
                                           <div class="accia_catalog_left accia_product_left">
-                                            <?php echo $itm["name"];?>
+                                            <?=$itm["name"] ?>
                                           </div>
                                           <div class="accia_catalog_right">
-                                            <textarea name="" value="тут3"></textarea>
+                                            <input type="hidden" class="product_search_update" name="product_search_update[<?=$itm['product_id']?>]" value="0"/>
+                                            <textarea rows="1" class="search_append_text" name="product_search[<?=$itm['product_id']?>]"><?=$itm['search']?></textarea>
                                           </div>
                                         </div>
                                       <?php }?>
@@ -573,7 +579,20 @@
                       <?php }?>
                       </div>
                   <?php }?>
-              <?php }?>
+                <?php }?>
+                <?php if(isset($products_list[$category_id])){?>
+                  <?php foreach($products_list[$category_id] as $itm){?>
+                    <div class="accia_catalog_row">
+                      <div class="accia_catalog_left accia_product_left">
+                        <?=$itm["name"] ?>
+                      </div>
+                      <div class="accia_catalog_right">
+                        <input type="hidden" class="product_search_update" name="product_search_update[<?=$itm['product_id']?>]" value="0"/>
+                        <textarea rows="1" class="search_append_text" name="product_search[<?=$itm['product_id']?>]"><?=$itm['search']?></textarea>
+                      </div>
+                    </div>
+                  <?php }?>
+                <?php }?>
               </div>
             </div>
             
@@ -681,6 +700,11 @@
     /*-----------------------------------------------*/
     $(document).ready(function(){
       $('.search_append_text').on('keydown', autosize)
+      $('.search_append_text').on('change',function(){
+          //$("#change_search").val(1);
+          $(this).parent().children(".product_search_update").val(1);
+      });
+
       $(".cat_products_fnd").click(function(){
           var rel=$(this).attr("rel");
           $(".cat_product_list[rel='"+rel+"']").slideToggle(200);
