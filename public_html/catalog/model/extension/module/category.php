@@ -109,8 +109,8 @@
         public function getAvailProductsByCategory($cat_list){
             
             $used_products=[];
-            $sql_products="SELECT oc.product_id from oc_product_to_category oc 
-            where oc.category_id in (".$cat_list.") group by oc.product_id";
+            $sql_products="SELECT oc.product_id from oc_product_to_category oc LEFT JOIN oc_product op ON oc.product_id=op.product_id
+            where oc.category_id in (".$cat_list.") and op.status=1 group by oc.product_id";
             $query = $this->db->query($sql_products);
             foreach ($query->rows as $result) {
                 $used_products[]=$result["product_id"];

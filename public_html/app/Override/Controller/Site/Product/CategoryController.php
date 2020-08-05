@@ -168,6 +168,7 @@ class CategoryController extends \Controller
         $cat_list=implode(",",$categories);
 
         $avail_products=$this->model_extension_module_category->getAvailProductsByCategory($cat_list);
+        
         //$this->model_extension_module_category->getAvailProductsByCategory($cat_list);
         $avail_products_list=implode(",",$avail_products);
         $sql_add="";
@@ -478,6 +479,8 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
         }else{
             $data["products"] = "<li class='empty_list'>Товаров по заданному критерию не найдено</li>";
         }
+        //print_r($array_result);
+        //echo "!".count($array_result)."!";
         $data["products_count"]=count($array_result);
 
         return $data;
@@ -644,7 +647,6 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
             $this->showProducts($category_id,false,$parent_category_info);
             return;
         }
-    
         $this->showCategories($category_id);
     }
    
@@ -689,7 +691,6 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
     {
         $this->data['categories'] = array();
         $results = $this->model_catalog_category->getCategories($category_id);
-
         //@removed
         $url = '';
 
@@ -748,59 +749,63 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
             
             $this->data['sort_selected']=$sort_selected;
             $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
+            
+
             $productsHelper = new ProductListHelper($this->registry);
             
             
-        $catalog_info["category_url"]=$this->url->link('product/category', 'path=' . $category_id);
-        $catalog_info["category_id"]=$category_id;
-        $this->data["catalog_info"]=$catalog_info;
-        $this->data["params"]["items"]=$this->getFilterParams($category_id,[]);
-        if(isset($this->request->get["param"])){
-            $this->data["params"]["selected"]=$this->request->get["param"];
-        }else{
-            $this->data["params"]["selected"]=[];
-        }
+            $catalog_info["category_url"]=$this->url->link('product/category', 'path=' . $category_id);
+            $catalog_info["category_id"]=$category_id;
+            $this->data["catalog_info"]=$catalog_info;
+            $this->data["params"]["items"]=$this->getFilterParams($category_id,[]);
+            if(isset($this->request->get["param"])){
+                $this->data["params"]["selected"]=$this->request->get["param"];
+            }else{
+                $this->data["params"]["selected"]=[];
+            }
 
-        $get_data=$this->request->get;
-        $get_data["catalog_id"]=$category_id;
-        $param_data=$this->parseUrlParams($get_data);
-        //print_r($get_data["param"]);
-        $show_filter=false;
+            $get_data=$this->request->get;
+            $get_data["catalog_id"]=$category_id;
+            $param_data=$this->parseUrlParams($get_data);
+            //print_r($param_data);
+            //print_r($get_data["param"]);
+            $show_filter=false;
 
-        $added_url_str="";
-        if(isset($get_data["param"])){
-            if($get_data["param"]){
-                $show_filter=true;
-                foreach($get_data["param"] as $key=>$value) {
-                    if(($key=="availible")or($key=="sale")){
-                        $added_url_str.="&param[".$key."]=1";
-                    }else{
-                        foreach($value as $item_key=>$item){
-                            $added_url_str.="&param[".$key."][".$item_key."]=".$item;
-                        }
-                    }   
+            $added_url_str="";
+            if(isset($get_data["param"])){
+                if($get_data["param"]){
+                    $show_filter=true;
+                    foreach($get_data["param"] as $key=>$value) {
+                        if(($key=="availible")or($key=="sale")){
+                            $added_url_str.="&param[".$key."]=1";
+                        }else{
+                            foreach($value as $item_key=>$item){
+                                $added_url_str.="&param[".$key."][".$item_key."]=".$item;
+                            }
+                        }   
+                    }
                 }
             }
-        }
 
-        $queryString = $this->hierarhy->getPath($category_id);
-        if (isset($this->request->get['sort'])) {
-            $queryString .= '&sort=' . $this->request->get['sort'];
-        }
-        $queryString.=$added_url_str;
+            $queryString = $this->hierarhy->getPath($category_id);
+            if (isset($this->request->get['sort'])) {
+                $queryString .= '&sort=' . $this->request->get['sort'];
+            }
+            $queryString.=$added_url_str;
 
-        $this->data["show_filter"]=$show_filter;
-        $this->data["avail"]=$param_data["avail"];
-        $this->data["products"]=$param_data["products"];
-        
+            $this->data["show_filter"]=$show_filter;
+            $this->data["avail"]=$param_data["avail"];
+            $this->data["products"]=$param_data["products"];
+            
 
-        $paginationBaseUrl = $this->url->link('product/category', 'path=' . $queryString);
-        $lazyLoadBaseUrl = $this->url->link('product/category/showmore', 'cat_path=' . $queryString);
-        
-        $product_total_filter=$param_data["products_count"];
-        $paginationModel = PaginationHelper::getPaginationModel($product_total_filter, (int)$limit, (int)$page);
-        $this->data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl, $paginationModel);
-        $this->data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl."&category_id=".$category_id, $paginationModel);
+            $paginationBaseUrl = $this->url->link('product/category', 'path=' . $queryString);
+            $lazyLoadBaseUrl = $this->url->link('product/category/showmore', 'cat_path=' . $queryString);
+            
+            $product_total_filter=$param_data["products_count"];
+            //echo "!".$product_total_filter."!";
+            $paginationModel = PaginationHelper::getPaginationModel($product_total_filter, (int)$limit, (int)$page);
+            $this->data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl, $paginationModel);
+            $this->data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl."&category_id=".$category_id, $paginationModel);
 
         
             $this->setPartials();
@@ -837,7 +842,7 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
         $this->data["parent_name"]=$parent_category_name;
         $this->data["products_add"]=$products_add;
 
-        //print_r($filter_data);
+        
         
         //$this->data['products'] = $productsHelper->getProducts($filter_data);
 
