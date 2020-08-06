@@ -43,11 +43,12 @@ class ControllerCommonHeader extends Controller {
 			$data['description'] = "";
 			$data['keywords'] = "";
 		}
-		
-		if($this->request->get['route']=="product/search"){
-			$data['noindex'] = 1;
-		}else{
-			$data['noindex'] = $this->document->getNoindex();
+		if(isset($this->request->get['route'])){
+			if($this->request->get['route']=="product/search"){
+				$data['noindex'] = 1;
+			}else{
+				$data['noindex'] = $this->document->getNoindex();
+			}
 		}
 
 		$data['links'] = $this->document->getLinks();

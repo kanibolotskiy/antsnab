@@ -203,7 +203,7 @@
                     <textarea placeholder="Введите Ваше сообщение" name="text"></textarea>
                 </div>
                 <div class="row_cap">
-                    <p>Нажимая на кнопку Отправить, я даю <a target="_blank" href="http://antsnab.cp06038.tmweb.ru/agreement/">согласие на обработку персональных данных</a></p>
+                    <p>Нажимая на кнопку Отправить, я даю <a target="_blank" href="agreement/">согласие на обработку персональных данных</a></p>
                 </div>
                 <div id="feedback_submit" class="call_submit">Отправить</div>
             </form>
