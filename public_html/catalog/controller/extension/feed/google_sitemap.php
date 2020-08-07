@@ -8,8 +8,9 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 			$this->load->model('catalog/product');
 			$this->load->model('tool/image');
 
+			
 			$products = $this->model_catalog_product->getProducts();
-
+			
 			foreach ($products as $product) {
 				if ($product['image']) {
 					$output .= '<url>';
@@ -25,15 +26,13 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 					$output .= '</url>';
 				}
 			}
-
 			$this->load->model('catalog/category');
-
 			$output .= $this->getCategories(0);
-
 			
-			$this->load->model('catalog/manufacturer');
+
 
 			/*
+			$this->load->model('catalog/manufacturer');
 			$manufacturers = $this->model_catalog_manufacturer->getManufacturers();
 
 			foreach ($manufacturers as $manufacturer) {
@@ -55,11 +54,8 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 			}
 			*/
 			$this->load->model('catalog/information');
-
 			$informations = $this->model_catalog_information->getInformations();
-
 			foreach ($informations as $information) {
-				//#00b0dcprint_r($information);
 				if(!$information['notinmap']){
 					$output .= '<url>';
 					$output .= '<loc>' . $this->url->link('information/information', 'information_id=' . $information['information_id']) . '</loc>';
@@ -69,13 +65,42 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 				}
 			}
 
-			//$this->load->model('newsblog/category');
-			//$this->load->model('newsblog/article');
+			$this->load->model('newsblog/category');
+			$this->load->model('newsblog/article');
 
-			//$news_categories = $this->model_newsblog_category->getCategories(); 
-			//print_r($news_categories);
-			//foreach
+			/**Статьи, новости */
+			$newsblog_categories = $this->model_newsblog_category->getCategories(); 
 
+			$articles_cats=[];
+			foreach($newsblog_categories as $root_category){
+				$output .= '<url>';
+				$output .= '<loc>' . $this->url->link('newsblog/category', 'newsblog_path='.$root_category['category_id']) . '</loc>';
+				$output .= '<changefreq>weekly</changefreq>';
+				$output .= '<priority>0.5</priority>';
+				$output .= '</url>';
+				$articles_cats[]=$root_category['category_id'];
+
+				
+				$newsblog_category = $this->model_newsblog_category->getCategories($root_category['category_id']); 
+				foreach($newsblog_category as $item_category){
+					$output .= '<url>';
+					$output .= '<loc>' . $this->url->link('newsblog/category', 'newsblog_path='.$item_category['category_id']) . '</loc>';
+					$output .= '<changefreq>weekly</changefreq>';
+					$output .= '<priority>0.5</priority>';
+					$output .= '</url>';
+				}
+			}
+			foreach($articles_cats as $articles_cat){
+				$articles=$this->model_newsblog_article->getArticles($articles_cat);
+				foreach($articles as $article){
+					$output .= '<url>';
+					$output .= '<loc>' . $this->url->link('newsblog/article', 'newsblog_article_id='.$article['article_id']) . '</loc>';
+					$output .= '<changefreq>weekly</changefreq>';
+					$output .= '<priority>0.5</priority>';
+					$output .= '</url>';
+				}
+			}
+			
 			$output .= '</urlset>';
 
 			$this->response->addHeader('Content-Type: application/xml');
