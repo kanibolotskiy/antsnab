@@ -106,9 +106,17 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 				$mincount=1;
 				unset($pUnits);
 				foreach ($prodUnits as $unit_id => $unit) {
+					/*
+					if($product['product_id']==956){
+						print_r($unit);
+					}
+					*/
 				//foreach($prodUnits as $prodUnit){
-					if($unit['isPackageBase']){
+					if($unit['switchSortOrder']==1){
 						$unit_array=[$unit["name"],$unit["name_package_dimension"],$unit["name_plural"]];
+					}
+					if($unit['isPackageBase']){
+						
 						if($unit['isPriceBase']==1){
 							$price=$unit['price'];
 						}else{
@@ -118,7 +126,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 					}
 					if (0 != $unit['switchSortOrder']) {
 						$key = (int)$unit['switchSortOrder'];
-	
+						//print_r($unit);
 						
 						$saleToUIKoef = $produnitsCalcGateway->getBaseToUnitKoef($product['product_id'], 'isSaleBase', $unit_id);
 						$array_koef = (array) $saleToUIKoef;
@@ -164,6 +172,10 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 					$mincount = $pUnits[1]['mincount'];
 				}
 				
+				$uiUnit = null;
+				//print_r($prodUnits);
+				//$uiUnitAr = QueryHelper::arrayWhere($prodUnits, 'switchSortOrder', 1);
+
 				if(!$price){
 					$price=$product['price'];
 				}
