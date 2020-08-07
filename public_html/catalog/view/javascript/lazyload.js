@@ -105,19 +105,24 @@ document.addEventListener("DOMContentLoaded", function(){
                     $items = $([]);    
                 
                 /** append items */
-                ///console.log(data.result.tp*1);
+                
                 if(data.result.tp==1){
+                    
                     var $item = $(items);
                     $item.css("display", "none");
                     $container.append($item);
-                    $item.slideDown('slow');
+                    
+                    
+                    $item.fadeIn(200);
+                    //$item.slideDown('slow');
                     $items = $items.add($item);
                     $('input[name="phone"]').inputmask("+7 9999999999",{ 
                         "clearIncomplete": true,
                         "alias": 'numeric', 
                         "allowMinus": false
                     });
-                    
+
+                    /**/
                     //$items=$(data.result.items);
 
                 }else{
