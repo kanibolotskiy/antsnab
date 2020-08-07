@@ -464,7 +464,11 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
         }
         
         $limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');
+        if(isset($_GET["load_pages"])){
+            $limit=$limit*$_GET["load_pages"];
+        }
         $filter_data['start'] = ($page - 1) * $limit;
+        
         $filter_data["limit"] = $limit;
         $filter_data["filter_sub_category"]=1;
 
@@ -817,8 +821,9 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
     private function showProducts($category_id, $showPropertyTable=false, $parent_category=null)
     {
 
-        $filter_data = $this->getFilter($category_id, $limit, $page, $sort_selected, true);
         
+        $filter_data = $this->getFilter($category_id, $limit, $page, $sort_selected, true);
+        //print_r($filter_data);
         $this->data['sort_selected']=$sort_selected;
         $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
         $productsHelper = new ProductListHelper($this->registry);

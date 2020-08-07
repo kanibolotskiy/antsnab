@@ -124,7 +124,7 @@
 </footer>
 <div class="menu_overlay"></div>
 
-<script src="/catalog/view/theme/app/bundle/app2.js?v2.74"></script>
+<script src="/catalog/view/theme/app/bundle/app2.js?v2.75"></script>
 <!--<script src="https://www.google.com/recaptcha/api.js"></script>-->
 
     <!-- @task1 Счетчики, виджеты (comagic) -->
