@@ -69,17 +69,17 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 				}
 			}
 
-			$this->load->model('newsblog/category');
-			$this->load->model('newsblog/article');
+			//$this->load->model('newsblog/category');
+			//$this->load->model('newsblog/article');
 
-			$news_categories = $this->model_newsblog_category->getCategories(); 
-			print_r($news_categories);
-
+			//$news_categories = $this->model_newsblog_category->getCategories(); 
+			//print_r($news_categories);
+			//foreach
 
 			$output .= '</urlset>';
 
 			$this->response->addHeader('Content-Type: application/xml');
-			//$this->response->setOutput($output);
+			$this->response->setOutput($output);
 		}
 	}
 
