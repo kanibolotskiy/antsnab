@@ -70,6 +70,7 @@ class SearchController extends \Controller
 	}
     public function index()
     {
+		
         $this->load->language('product/search');
 
 		$this->load->model('catalog/category');
@@ -228,6 +229,7 @@ class SearchController extends \Controller
 
 		$this->load->model('catalog/category');
 
+		
 		$cat_view1="active";
         $cat_view2="";
         $cat_view_class="tab-block2";
@@ -278,12 +280,7 @@ class SearchController extends \Controller
 			);
 		}
 
-		
-
-		/*
-		echo "!".$url_search."!";
-		*/
-		
+	
 		//print_r($products_search);
 		
 
@@ -297,14 +294,14 @@ class SearchController extends \Controller
 			if (isset($this->request->get['page'])) {
 				$page_str="&page=".($this->request->get['page']-1);
 			}
-			/*
-			if(trim($this->request->get['text'])){
-				$url_search="https://catalogapi.site.yandex.net/v1.0?apikey=876ae57f-736c-456f-b961-7cae3d9d8942&text=".urlencode($this->request->get['text'])."&searchid=2367774&per_page=9".$page_str;
-				$products_search=file_get_contents($url_search);
-				$products_search_arr=json_decode($products_search,TRUE);
-				//print_r($products_search_arr);
-			}
-			*/
+			
+			//if(trim($this->request->get['text'])){
+			//	$url_search="https://catalogapi.site.yandex.net/v1.0?apikey=876ae57f-736c-456f-b961-7cae3d9d8942&text=".urlencode($this->request->get['text'])."&searchid=2367774&per_page=9".$page_str;
+			//	$products_search=file_get_contents($url_search);
+			//	$products_search_arr=json_decode($products_search,TRUE);
+			//	//print_r($products_search_arr);
+			//}
+			
 			//$products_search_arr=$products_search
 
 			
@@ -391,11 +388,11 @@ class SearchController extends \Controller
 						$rating = false;
 					}
 					$discount=0;
-					/*
-					if($result['price_wholesaleold']*1){
-						$discount = (int)(($result['price_wholesale']/$result['price_wholesaleold']-1)*100);
-					}
-					*/
+					
+					//if($result['price_wholesaleold']*1){
+					//	$discount = (int)(($result['price_wholesale']/$result['price_wholesaleold']-1)*100);
+					//}
+					
 					$discount = $result['discount_percent'];
 	
 					$data['products_popular'][] = array(
@@ -419,25 +416,24 @@ class SearchController extends \Controller
 			if (isset($this->request->get['search'])) {
 				$url .= '&search=' . urlencode(html_entity_decode($this->request->get['search'], ENT_QUOTES, 'UTF-8'));
 			}
-
+			
 						
-			/** Pagination */
+			//Pagination 
 			//$product_total=40;
             $paginationBaseUrl = $this->url->link('product/search', $url);
             $lazyLoadBaseUrl = $this->url->link('product/search/showmore', $url);
             $paginationModel = PaginationHelper::getPaginationModel($product_total, (int)$limit, (int)$page);
             $data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl, $paginationModel);
-            $data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl, $paginationModel);
-
-            /* @task cannonical
-            // http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
+			$data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl, $paginationModel);
+			
 			if ($page == 1) {
 			    $this->document->addLink($this->url->link('product/search', '', true), 'canonical');
 			} elseif ($page == 2) {
 			    $this->document->addLink($this->url->link('product/search', '', true), 'prev');
 			} else {
 			    $this->document->addLink($this->url->link('product/search', $url . '&page='. ($page - 1), true), 'prev');
-			}*/
+			}
+
 			if (isset($this->request->get['search']) && $this->config->get('config_customer_search')) {
 				$this->load->model('account/search');
 
@@ -465,6 +461,7 @@ class SearchController extends \Controller
 
 				$this->model_account_search->addSearch($search_data);
 			}
+			
 		}
 
 		$data['search'] = $search;
@@ -482,8 +479,9 @@ class SearchController extends \Controller
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-
+		
 		$this->response->setOutput($this->load->view('product/search', $data));
+		
     }
 
     private function getFilter($category_id, &$limit, &$page = 1)

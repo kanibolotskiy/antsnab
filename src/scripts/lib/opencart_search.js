@@ -6,7 +6,8 @@ $('#search input[name=\'search\']').parent().find('button').on('click', function
     var value = $('#search input[name=\'search\']').val();
 
     if (value) {
-        url += '&search=' + encodeURIComponent(value);
+        //url += '&search=' + encodeURIComponent(value);
+        url += '&search=' + value;
     }
 
     location = url;
