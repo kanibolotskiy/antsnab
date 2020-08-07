@@ -891,8 +891,10 @@
                     <p><?=$l['comment']?></p>
                     <p>Для вашего удобства можете <a target="_blank" href="<?php echo $l['files'][0]['file_link'];?>">скачать подробную схему проезда</a></p>
                 </div>
-                <div class="map">
-                    <?=$l['map']?>
+                <div class="map_" data-href="<?=$l['map']?>" data-added="0">
+                    <iframe width="100%" height="500" frameborder="0" src="<?=$l['map']?>">
+                    </iframe>
+                    <!--<?=$l['map']?>-->
                 </div>
             </div>
         </div>

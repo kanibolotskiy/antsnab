@@ -79,6 +79,14 @@ $(document).ready(function(){
         $("body._hfixed .wrp_header").css({"padding-right":sw+"px"});
         */
         $("."+modal).fadeIn(200);
+        if(modal=="modal_map"){
+            var map_item=$("."+modal).find(".map_");
+            if(map_item.attr("data-added")==0){
+                var map_src=map_item.data("href");
+                map_item.find("iframe").attr("src",map_src);
+                map_item.attr("data-added",1);
+            }
+        }
     });
 
     $(document).on("click",".modal_close,.modal_overlay,._modal_close",function(){
