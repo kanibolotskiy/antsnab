@@ -264,8 +264,10 @@
                     <p><?=$location['comment']?></p>
                     <p>Для вашего удобства можете <a target="_blank" href="<?php echo $location['files'][0]['file_link'];?>">скачать подробную схему проезда</a></p>
                 </div>
-                <div class="map">
-                    <?=trim($location['map'])?>
+                <div class="map_" data-href="<?=$location['map']?>" data-added="0">
+                    <iframe width="100%" height="500" frameborder="0" src="<?=$location['map']?>">
+                    </iframe>
+                    <!--<?=$l['map']?>-->
                 </div>
             </div>
         </div>

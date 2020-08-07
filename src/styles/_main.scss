@@ -7587,7 +7587,7 @@ transition: 0.4s;
     }
     .content{padding-left:20px;}
     .prehead_cap{display:none;}
-    .checkout-cart .container.main{padding-left:20px;padding-right:20px;}
+    .checkout-cart .container.main{padding-left:20px;padding-right:20px;overflow:hidden;}
 }
 
 @media screen and (max-width: 1100px){
