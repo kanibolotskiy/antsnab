@@ -128,8 +128,9 @@
                                             </div>
                                         </div>
                                         <div class="map map_data">
-                                            <?php echo trim($l['map']);?>
+                                            <iframe width="100%" height="500" frameborder="0" src="<?=$l['map']?>"></iframe>
                                         </div>
+                                        
                                         
                                         <?php foreach($l['files'] as $locaction_file){ ?>
                                             <a target="_blank" href="<?php echo $locaction_file['file_link'];?>" class="download-map">Скачать подробную карту</a>

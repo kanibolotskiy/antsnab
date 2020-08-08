@@ -73,7 +73,8 @@ class ControllerProductProduct extends Controller {
 
 		if ($product_info['image']) {
 			//$data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get($this->config->get('config_theme') . '_image_thumb_width'), $this->config->get($this->config->get('config_theme') . '_image_thumb_height'));
-			$data['thumb'] = $this->model_tool_image->resize($product_info['image'], 728, 668);
+			//$data['thumb'] = $this->model_tool_image->resize($product_info['image'], 728, 668);
+			$data['thumb'] = $this->model_tool_image->myResize($product_info['image'], 1000, 750,1,'watermark.png');
 			$this->document->setOgImage($data['thumb']);
 		} else {
 			$data['thumb'] = '';
@@ -171,10 +172,6 @@ class ControllerProductProduct extends Controller {
 		
         $base_weight=0;
         $base_vol=0;
-        
-
-        
-		
 
         try {
             foreach ($prodUnits as $unit_id => $unit) {
@@ -188,7 +185,7 @@ class ControllerProductProduct extends Controller {
                     $pUnits[ $key ] = $unit;
                     
                     //print_r($unit);
-                    //коэффициент пересчета из базовой еденицы продажи в данную отображаемую еденицу
+                    //коэффициент пересчета из базовой единицы продажи в данную отображаемую единицу
                     $saleToUIKoef = $produnitsCalcGateway->getBaseToUnitKoef($product_id, 'isSaleBase', $unit_id);
                     
                     $pUnits[$key]['sale_to_ui_koef'] = $saleToUIKoef;
@@ -779,8 +776,13 @@ class ControllerProductProduct extends Controller {
 
 			if ($product_info['image']) {
 				//$data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get($this->config->get('config_theme') . '_image_thumb_width'), $this->config->get($this->config->get('config_theme') . '_image_thumb_height'));
-				$data['thumb'] = $this->model_tool_image->resize($product_info['image'], 728, 668);
+				//$data['thumb'] = $this->model_tool_image->resize($product_info['image'], 728, 668);
+				$data['thumb'] = $this->model_tool_image->myResize($product_info['image'], 1000, 750,1,'watermark.png');
+				/*$data['thumb_alt'] = $this->model_tool_image->myResize($product_info['image'], 728, 668);
+				$data['thumb_alt2'] = 'http://antsnab.cp06038.tmweb.ru/image/'.$product_info['image'];
+				$data['thumb_alt3'] = $this->model_tool_image->myResize($product_info['image'], 1000, 750);
 				//$data['thumb'] = $this->model_tool_image->myResize($product_info['image'],$this->config->get($this->config->get('config_theme') . '_image_thumb_width'), 350,350,4,'watermark.png');
+				*/
 				$this->document->setOgImage($data['thumb']);
 			} else {
 				$data['thumb'] = '';

@@ -10152,7 +10152,7 @@ body.common-compare #ya-site-form0 .ya-site-form__submit{position: absolute;left
 @media screen and (max-width: 1100px){
     .common-compare .table_block_header{margin-left:10px;margin-right:10px;}
     /*body.common-compare #search{top:-59px;position:absolute;}*/
-    #search{top: 91px;position:fixed;}
+    /*#search{top: 91px;position:fixed;}*/
     
     /*body.common-compare #search{top:-59px;position:fixed;}*/
     
@@ -10161,7 +10161,7 @@ body.common-compare #ya-site-form0 .ya-site-form__submit{position: absolute;left
     .common-compare._hfixed .catalog-product {top: 130px;}
     body.common-compare .catalog-product{margin-top:0!important;}
     /*body.common-compare #search{top:-53px;}*/
-    #search{top:-53px;}
+    #search{top:-53px;position:fixed;}
     /*body.common-compare #search{top:-59px;}*/
 
     /*отключаем для мобилки*/
