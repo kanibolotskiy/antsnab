@@ -128,21 +128,10 @@
                                     <a class="" data-fancybox="gallery" data-caption="<?php echo $heading_title.'. #1'; ?>"
                                     href="<?php echo $popup; ?>" 
                                     title="<?php echo $heading_title; ?>">
+
                                         <img class="wrp_fly_image" src="<?php echo $thumb; ?>"
                                             title="<?php echo $heading_title; ?>"
                                             alt="<?php echo $heading_title; ?>" />
-                                        <!--
-                                        <img class="wrp_fly_image" src="<?php echo $thumb_alt; ?>"
-                                            title="<?php echo $heading_title; ?>"
-                                            alt="<?php echo $heading_title; ?>" />
-
-                                        <img class="wrp_fly_image" src="<?php echo $thumb_alt2; ?>"
-                                            title="<?php echo $heading_title; ?>"
-                                            alt="<?php echo $heading_title; ?>" />
-                                        <img class="wrp_fly_image" src="<?php echo $thumb_alt3; ?>"
-                                            title="<?php echo $heading_title; ?>"
-                                            alt="<?php echo $heading_title; ?>" />
-                                        -->
                                     </a>
                                 <?php } ?>
                                 <div class="wrp_favorite">
