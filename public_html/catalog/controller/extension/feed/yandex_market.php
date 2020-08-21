@@ -181,8 +181,8 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 				}
 				
 				$del_price=0;
-				// and $mincount>1 
-				if($product['quantity']<=0 and $product["mincount"]>1){
+				//and $product["mincount"]>1
+				if($product['quantity']<=0 and $mincount>1 ){
 					$cnt=$this->model_extension_feed_yandex_market->declOfNum($mincount,$unit_array);
 					$product_name=$product['meta_h1']." (".$mincount." ".$cnt.")";
 					if($mincount>0){
