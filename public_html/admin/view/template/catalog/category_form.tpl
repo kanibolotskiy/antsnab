@@ -523,13 +523,6 @@
                                   <div class="accia_column_subcategory_caption"><?php echo $category_item["name"];?></div>
                               </div>
                               
-                              <!--
-                              <div class="accia_catalog_right">
-                                  <?php if(isset($products[$category_item["category_id"]])){ foreach($products[$category_item["category_id"]] as $product){?>
-                                      <div class="product_used_item <?php echo isset($productAccia[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
-                                  <?php }}?>
-                              </div>
-                              -->
                           </div>
                           <?php if(isset($products_list[$category_item['category_id']])){?>
                             <div class="cat_product_list"  rel="<?php echo $category_item['category_id'];?>">
@@ -719,6 +712,11 @@
           var rel=$(this).attr("rel");
           $(".cat_product_list[rel='"+rel+"']").slideToggle(200);
           $(this).toggleClass("active");
+          if($(this).hasClass("active")){
+              $(".cat_product_list[rel='"+rel+"']").find('.search_append_text').each(function(){
+                autosize(this);
+              });
+          }
       });
       $(".acc_cat_caption").click(function(){
           //console.log("ok");
