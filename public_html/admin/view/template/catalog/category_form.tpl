@@ -605,13 +605,7 @@
   <script type="text/javascript"><!--
       var filter_row = $("#filters tbody tr").length;
       var last_added_new=filter_row;
-      function autosize(){
-        var el = this;
-        setTimeout(function(){
-          el.style.cssText = 'height:auto; padding:0';
-          el.style.cssText = 'height:' + el.scrollHeight + 'px';
-        },0);
-      }
+      
       function addFilter() {
           
           var last_order=-1;
@@ -699,7 +693,23 @@
     };
     /*-----------------------------------------------*/
     $(document).ready(function(){
-      $('.search_append_text').on('keydown', autosize)
+      function autosize(itm){
+        var el = itm;
+        setTimeout(function(){
+          el.style.cssText = 'height:auto; padding:0';
+          el.style.cssText = 'height:' + el.scrollHeight + 'px';
+        },0);
+      }
+      $(".nav-tabs li").click(function(){
+        $('.search_append_text').each(function(){
+          autosize(this);
+        });
+      });
+
+      
+      $('.search_append_text').on('keydown', function(){
+          autosize(this)
+      });
       $('.search_append_text').on('change',function(){
           //$("#change_search").val(1);
           $(this).parent().children(".product_search_update").val(1);

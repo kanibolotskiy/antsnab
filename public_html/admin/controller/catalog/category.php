@@ -449,7 +449,11 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['category_description'] = array();
 		}
-		$data['category_id']=$this->request->get['category_id'];
+		if(isset($this->request->get['category_id'])){
+			$data['category_id']=$this->request->get['category_id'];
+		}else{
+			$data['category_id']=0;
+		}
 
 		//print_r($data['category_description']);
 		// Categories
