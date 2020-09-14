@@ -490,6 +490,7 @@
             </div>
             <div class="tab-pane" id="tab-search">
               <div class="wrap_accia_products search_catalog_products">
+                
                 <?php foreach($categories_tree as $category){?>
                   <div class="cat_products_fnd accia_catalog_row acc_cat_caption" rel="<?php echo $category['category_id'];?>">
                       <div class="accia_catalog_left">
@@ -542,30 +543,34 @@
                           <?php if(isset($category_item["list"])){ ?>
                               <div class="subcat_wrapper" rel="<?php echo $category_item['category_id'];?>">
                                   <?php foreach($category_item["list"] as $category_item_child){?>
-                                  <div class="accia_catalog_row">
-                                    <div class="accia_catalog_left accia_product_left">
-                                      <?=$itm["name"] ?>
+
+                                    <!--
+                                    <div class="accia_catalog_row">
+                                      <div class="accia_catalog_left accia_product_left">
+                                        <?=$itm["name"] ?>!ok!
+                                      </div>
+                                      <div class="accia_catalog_right">
+                                        <input type="hidden" class="product_search_update" name="product_search_update[<?=$itm['product_id']?>]" value="0"/>
+                                        <textarea rows="1" class="search_append_text" name="product_search[<?=$itm['product_id']?>]"><?=$itm['search']?></textarea>
+                                      </div>
                                     </div>
-                                    <div class="accia_catalog_right">
-                                      <input type="hidden" class="product_search_update" name="product_search_update[<?=$itm['product_id']?>]" value="0"/>
-                                      <textarea rows="1" class="search_append_text" name="product_search[<?=$itm['product_id']?>]"><?=$itm['search']?></textarea>
-                                    </div>
-                                  </div>
-                                  <?php if(isset($products_list[$category_item['category_id']])){?>
-                                    <div class="cat_product_list" rel="<?php echo $category_item['category_id'];?>">
-                                      <?php foreach($products_list[$category_item['category_id']] as $itm){?>
-                                        <div class="accia_catalog_row">
-                                          <div class="accia_catalog_left accia_product_left">
-                                            <?=$itm["name"] ?>
+                                    -->
+
+                                    <?php if(isset($products_list[$category_item_child['category_id']])){?>
+                                      <div class="cat_product_list" rel="<?php echo $category_item['category_id'];?>">
+                                        <?php foreach($products_list[$category_item_child['category_id']] as $itm){?>
+                                          <div class="accia_catalog_row">
+                                            <div class="accia_catalog_left accia_product_left">
+                                              <?=$itm["name"] ?>
+                                            </div>
+                                            <div class="accia_catalog_right">
+                                              <input type="hidden" class="product_search_update" name="product_search_update[<?=$itm['product_id']?>]" value="0"/>
+                                              <textarea rows="1" class="search_append_text" name="product_search[<?=$itm['product_id']?>]"><?=$itm['search']?></textarea>
+                                            </div>
                                           </div>
-                                          <div class="accia_catalog_right">
-                                            <input type="hidden" class="product_search_update" name="product_search_update[<?=$itm['product_id']?>]" value="0"/>
-                                            <textarea rows="1" class="search_append_text" name="product_search[<?=$itm['product_id']?>]"><?=$itm['search']?></textarea>
-                                          </div>
-                                        </div>
-                                      <?php }?>
-                                    </div>
-                                  <?php }?>
+                                        <?php }?>
+                                      </div>
+                                    <?php }?>
                                   <?php }?>
                               </div>
                           <?php }?>
