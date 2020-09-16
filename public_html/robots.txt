@@ -13,6 +13,7 @@ Disallow: /*?*order=
 Disallow: /*?*limit=
 Disallow: /*?*tracking=
 Disallow: /*?*filter_*=
+Disallow: /search/?*
 
 Allow: /*/*.js  
 Allow: /*/*.css
