@@ -7,7 +7,7 @@
             
             <?php if( !empty($articles) ):?>
                 <div class="news-container" id="lazy-load_container">
-                    <div class="title">Новости</div>
+                    <h1 class="title">Новости</h1>
 
                     <?php if( !empty($years) ): ?>
                     <div class="month">
