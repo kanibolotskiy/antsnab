@@ -9,10 +9,10 @@
             <div class="wrapper_sale_title">
                 <h1 class="title"><?php echo $heading_title; ?></h1>
                 <select id="seltype" style="display: none;" data-href="sales/">
-                    <option value="" <?php if($select==0){echo 'selected="selected"';}?>  >
+                    <option value="&active=1" <?php if($select==1){echo 'selected="selected"';}?>  >
                         Все акции
                     </option>
-                    <option value="&active=1" <?php if($select==1){echo 'selected="selected"';}?>>
+                    <option value="" <?php if($select==0){echo 'selected="selected"';}?>>
                         Активные акции
                     </option>
                     <option value="&active=0" <?php if($select==2){echo 'selected="selected"';}?>>

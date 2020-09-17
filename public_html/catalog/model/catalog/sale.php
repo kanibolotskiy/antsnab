@@ -76,7 +76,7 @@ class ModelCatalogSale extends Model {
 				$results[]=$query->row;
 			}
 		}
-		if($data["select"]==2 or $data["select"]==0){
+		if($data["select"]==2 or $data["select"]==1){
 			//Закончившиеся акции
 			$sql="SELECT DISTINCT * FROM accia where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND (DATE(date_end) < '".$d_now."' or date_end is null) order by sort_order DESC";
 			$query = $this->db->query($sql);
