@@ -41,6 +41,18 @@ class SlideshowController extends \Controller
 				);
 			}
 		}
+		$activeAcciasDiscount=$this->model_catalog_sale->activeAcciaDiscount();
+        if($activeAcciasDiscount){
+            if($activeAcciasDiscount["banner"]){
+                //$banners[]=array(
+				$data['banners'][]=array(
+                    'title' => "Акция",
+                    'link'  => "sales/".$activeAcciasDiscount["keyword"],
+					'image' => $this->model_tool_image->cropsize($activeAcciasDiscount["banner"], 1100,540),
+					'descr'=>'Товар дня'
+                );
+            }
+        }
 		
 		foreach ($results as $result) {
 			if (is_file(DIR_IMAGE . $result['image'])) {

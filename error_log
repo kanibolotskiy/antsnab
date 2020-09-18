@@ -1,0 +1,1 @@
+antsnab.cp06038.tmweb.ru [Fri Sep 18 07:03:37 2020] [emerg] [pid 15531] sapi_apache2.c(362): [client 94.158.95.26:38014] PHP Parse error:  syntax error, unexpected '=', expecting ']' in /home/c/cp06038/antsnab/public_html/app/Override/Controller/Site/Extension/Module/SlideshowController.php on line 48

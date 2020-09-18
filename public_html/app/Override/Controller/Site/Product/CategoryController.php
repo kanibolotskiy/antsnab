@@ -634,7 +634,7 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
             if($activeAcciasDiscount["banner"]){
                 $banners[]=array(
                     'title' => $activeAcciasDiscount["title"],
-                    'link'  => "sale/".$activeAcciasDiscount["keyword"],
+                    'link'  => "sales/".$activeAcciasDiscount["keyword"],
                     'image' => $this->model_tool_image->cropsize($activeAcciasDiscount["banner"], 1100,210)
                 );
             }
