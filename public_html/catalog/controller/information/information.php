@@ -131,6 +131,7 @@ class ControllerInformationInformation extends Controller {
 			if($information_id==6){
 				/**Таблицы со стоимостью доставки */
 				$data_table = $this->model_catalog_information->getCouriers();
+				
 				foreach($data_table as $itm){
 					if(is_numeric($itm["price"])){
 						$price_str=number_format($itm["price"]*1,0,"."," ").'&nbsp;<div class="rur">i</div>';

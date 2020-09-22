@@ -84,7 +84,7 @@ class ModelCatalogInformation extends Model {
 		}
 	}
 	public function getCouriers(){
-		$query = $this->db->query("SELECT * FROM dopinfo_couriers");
+		$query = $this->db->query("SELECT * FROM dopinfo_couriers order by sort_order");
 
 		return $query->rows;
 	}
