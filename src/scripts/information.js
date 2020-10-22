@@ -1,18 +1,38 @@
 $(document).ready(function(){
-    $(".history_caption,.mob_caption").click(function(){
+    $(".history_caption").click(function(){
+        var prnt=$(this).closest(".row_about");
+        var rel=$(this).attr("rel");
+
         if(!$(this).hasClass("active")){
-            var prnt=$(this).closest(".row_about");
+            
             prnt.find(".history_caption").removeClass("active");
             prnt.find(".mob_caption").removeClass("active");
             
-            var rel=$(this).attr("rel");
             prnt.find(".mob_caption[rel='"+rel+"']").addClass("active");
             prnt.find(".history_caption[rel='"+rel+"']").addClass("active");
 
-            prnt.find(".history_block").hide();
-            prnt.find(".history_block[rel='"+rel+"']").fadeIn(200);
+            prnt.find(".history_block").removeClass("active active_mob");
+            prnt.find(".history_block[rel='"+rel+"']").addClass("active active_mob");
+            //prnt.find(".history_block").hide();
+            //prnt.find(".history_block[rel='"+rel+"']").fadeIn(200);
         }
     }); 
+
+    $(".mob_caption").click(function(){
+        var prnt=$(this).closest(".row_about");
+        var rel=$(this).attr("rel");
+        if($(this).hasClass("active")){
+            prnt.find(".mob_caption").removeClass("active");
+            prnt.find(".history_block").removeClass("active active_mob");
+        }else{
+            prnt.find(".mob_caption").removeClass("active");
+            prnt.find(".history_block").removeClass("active active_mob"); 
+            prnt.find(".mob_caption[rel='"+rel+"']").addClass("active");
+            prnt.find(".history_block[rel='"+rel+"']").addClass("active active_mob");
+        }
+        
+    });
+
     $(".media_slider").each(function(){
         $(this).slick({
             dots: false,

@@ -31,7 +31,7 @@
                             <?php if($row_block['list']){?>
                                 <div class="history_captions">  
                                     <?php foreach($row_block['list'] as $key=>$row){?>
-                                        <div class="history_caption <?=!$key?"active":""?>" rel="<?php echo $key_row.'_'.$key;?>">
+                                        <div class="history_caption <?=!$key?'active':''?>" rel="<?php echo $key_row.'_'.$key;?>">
                                             <?= $row['caption']?>
                                         </div>
                                     <?php } ?>
@@ -39,10 +39,10 @@
                                 <div class="history_blocks">
                                     <?php foreach($row_block['list'] as $key=>$row){?>
                                         <div class="m_block">
-                                            <div class="mob_caption <?=!$key?"active":""?>" rel="<?php echo $key_row.'_'.$key;?>">
+                                            <div class="mob_caption <?=!$key?'active':''?>" rel="<?php echo $key_row.'_'.$key;?>">
                                                 <?=$row['caption']?>
                                             </div>
-                                            <div class="history_block" rel="<?php echo $key_row.'_'.$key;?>" <?=!$key?"style='display:block;'":""?>>
+                                            <div class="history_block <?=!$key?'active active_mob':''?>" rel="<?php echo $key_row.'_'.$key;?>">
                                                 <?= html_entity_decode($row['text'], ENT_COMPAT, 'UTF-8')?>
                                             </div>
                                         </div>
