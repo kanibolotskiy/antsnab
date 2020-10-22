@@ -54,7 +54,7 @@
                 <?php }?>
 
                 <?=$description?>
-
+                
                 <?php if($customers){?>
                     <h2>Наши сотрудники</h2>
                     <div class="wrap_media_slider">

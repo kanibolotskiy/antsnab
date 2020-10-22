@@ -110,7 +110,7 @@ class ControllerInformationAbout extends Controller {
 
 		$this->load->model('module/referrer');
 		$contact_data_referrer=$this->model_module_referrer->getContactsReferrer();
-
+		$data['customers']=[];
 		foreach($customers_data as $customer){
 			$cust=$customer;
 			if($customer['phone']){
