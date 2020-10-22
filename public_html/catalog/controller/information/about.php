@@ -6,7 +6,7 @@ class ControllerInformationAbout extends Controller {
 
 		//http://antsnab.cp06038.tmweb.ru/image/cache/catalog/svg/cust1-400x4601.jpg
 		//$file='hnbrnocz.jpg';
-
+/*
 		$file='image/catalog/jpeg_test.jpg';
 		$image=  imagecreatefromjpeg($file);
 		ob_start();
@@ -17,7 +17,7 @@ class ControllerInformationAbout extends Controller {
 		$content =  imagecreatefromstring($cont);
 		imagewebp($content,'image/catalog/jpeg_test.webp');
 		imagedestroy($content);
-
+*/
 
 		$this->load->language('information/about');
 		$this->load->model('catalog/about');
