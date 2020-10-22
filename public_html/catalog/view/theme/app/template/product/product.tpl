@@ -567,8 +567,8 @@
                         <div class="reviews-container reviews-container2">
                             <div class="wrapper_type_reviews_captions">
                                 <div class="type_reviews_captions">
-                                    <div class="type_reviews_caption active" rel="1" data-caption="Оставить отзыв" data-plc="Поделитесь своим мнение о товаре:" data-label="Отзыв"><div>Отзывы (<?php echo count($reviews[1]);?>)</div></div>
-                                    <div class="type_reviews_caption" rel="2" data-caption="Задать вопрос" data-plc="Задайте свой вопрос о товаре:" data-label="Вопрос"><div>Вопросы и ответы (<?php echo count($reviews[2]);?>)</div></div>
+                                    <div class="type_reviews_caption active" rel="1" data-caption="Оставить отзыв" data-plc="Поделитесь своим мнение о товаре:" data-label="Отзыв:"><div>Отзывы (<?php echo count($reviews[1]);?>)</div></div>
+                                    <div class="type_reviews_caption" rel="2" data-caption="Задать вопрос" data-plc="Задайте свой вопрос о товаре:" data-label="Вопрос:"><div>Вопросы и ответы (<?php echo count($reviews[2]);?>)</div></div>
                                 </div>
                             </div>
                             

@@ -105,6 +105,7 @@ class ControllerCatalogAbout extends Controller {
 			$data['meta_description']=$about_info['meta_description'];
 			$data['meta_keywords']=$about_info['meta_keywords'];
 
+			$data['content_off']=$about_info['content_off'];
 			$data['content_cust']=$about_info['content_cust'];
 			$data['content_man']=$about_info['content_man'];
 			$data['content_sklad']=$about_info['content_sklad'];
