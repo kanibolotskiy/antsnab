@@ -203,10 +203,28 @@ class ControllerCommonColumnLeft extends Controller {
 			}
 
 			//Страница акция(скидочные товары)
-			if ($this->user->hasPermission('access', 'catalog/acciasale')) {		
+			if ($this->user->hasPermission('access', 'catalog/acciasale')) {
 				$dopinfo_arr[] = array(
 					'name'	   => $this->language->get('text_acciasale'),
 					'href'     => $this->url->link('catalog/acciasale', 'token=' . $this->session->data['token'], true),
+					'children' => array()
+				);					
+			}
+
+			//Страница "О компании"
+			if ($this->user->hasPermission('access', 'catalog/about')) {
+				$dopinfo_arr[] = array(
+					'name'	   => $this->language->get('text_about'),
+					'href'     => $this->url->link('catalog/about', 'token=' . $this->session->data['token'], true),
+					'children' => array()
+				);					
+			}
+
+			//Страница "Дилерам"
+			if ($this->user->hasPermission('access', 'catalog/diler')) {
+				$dopinfo_arr[] = array(
+					'name'	   => $this->language->get('text_diler'),
+					'href'     => $this->url->link('catalog/diler', 'token=' . $this->session->data['token'], true),
 					'children' => array()
 				);					
 			}

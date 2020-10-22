@@ -35,8 +35,16 @@ class CategoryController extends \Controller
             $category_id = 0;
         }
       
+        if(isset($this->request->get["limit"])){
+            if($this->request->get["limit"]=="all"){
+                $limit=999999;
+            }else{
+                $limit=$this->request->get["limit"]*1;
+            }            
+        }else{
+            $limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');
+        }
         
-        $limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');
         if (isset($this->request->get['page'])) {
             $page=$this->request->get['page'];
         } else {
@@ -82,6 +90,11 @@ class CategoryController extends \Controller
         }
         $queryString.=$added_url_str;
 
+//echo "!".$limit."!";
+
+        if($limit!=9){
+            $queryString.='&limit='.$limit;
+        }
 
         $paginationBaseUrl = $this->url->link('product/category', 'path=' . $queryString);
         $lazyLoadBaseUrl = $this->url->link('product/category/showmore', 'cat_path=' . $queryString);
@@ -103,7 +116,17 @@ class CategoryController extends \Controller
         $added_url="";
         $added_url_lazy="";
         
-        $limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');
+        //print_r($post_data);
+        //$limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');
+        if(isset($post_data["limit"])){
+            if($post_data["limit"]=="all"){
+                $limit=999999;
+            }else{
+                $limit=$post_data["limit"]*1;
+            }            
+        }else{
+            $limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');
+        }
         
         if(isset($post_data["param"])){
             if($post_data["param"]){
@@ -133,6 +156,11 @@ class CategoryController extends \Controller
             $queryString .= '&sort=' . $post_data['sort'];
         }
         $queryString.=$added_url_str;
+        
+        if($limit!=9){
+            $queryString.='&limit='.$limit;
+        }
+        //echo "!".$queryString."!";
 
         $paginationBaseUrl = $this->url->link('product/category', 'path=' . $queryString);
         $lazyLoadBaseUrl = $this->url->link('product/category/showmore', 'cat_path=' . $queryString);
@@ -463,7 +491,18 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
             $page=1;
         }
         
-        $limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');
+        //$limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');
+        if(isset($data_url["limit"])){
+            if($data_url["limit"]=="all"){
+                $limit=999999;
+            }else{
+                $limit=$data_url["limit"]*1;
+            }            
+        }else{
+            $limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');
+        }
+
+
         if(isset($_GET["load_pages"])){
             $limit=$limit*$_GET["load_pages"];
         }
@@ -538,6 +577,39 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
             if(isset($_GET["page"])){
                 $catalog_page=$_GET["page"];
             }
+            
+            /*
+            if(isset($_GET["limit"])){
+                $limit=$_GET["limit"];
+            }else{
+                $limit=9;
+            }
+            */
+            if(isset($_GET["limit"])){
+                if($_GET["limit"]=="all"){
+                    $limit=999999;
+                }else{
+                    $limit=$_GET["limit"]*1;
+                }            
+            }else{
+                $limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');
+            }
+
+            $this->data['showby_9']='';
+            $this->data['showby_18']='';
+            $this->data['showby_all']='';
+
+            if($limit==9){
+                $this->data['showby_9']='active';
+            }
+            if($limit==18){
+                $this->data['showby_18']='active';
+            }
+            if($limit=="all"){
+                $this->data['showby_all']='active';
+            }
+            //echo "!".$limit."!";
+
             $bottom_text = '';
             $description = '';
             $catalogpage_notfirst=true;
@@ -634,7 +706,7 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
             if($activeAcciasDiscount["banner"]){
                 $banners[]=array(
                     'title' => $activeAcciasDiscount["title"],
-                    'link'  => "sales/".$activeAcciasDiscount["keyword"],
+                    'link'  => "sales/".$activeAcciasDiscount["keyword"]."/",
                     'image' => $this->model_tool_image->cropsize($activeAcciasDiscount["banner"], 1100,210)
                 );
             }
@@ -918,7 +990,8 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
 
         //$paginationBaseUrl=$paginationBaseUrl.$added_url;
         $paginationModel = PaginationHelper::getPaginationModel($product_total_filter, (int)$limit, (int)$page);
-        $this->data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl.$added_url, $paginationModel);
+        //$this->data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl.$added_url, $paginationModel);
+        $this->data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl, $paginationModel);
         //$this->data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $paginationBaseUrl.$added_url."&category_id=".$category_id, $paginationModel);
         $this->data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl.$added_url_lazy."&category_id=".$category_id, $paginationModel);
 
@@ -1004,6 +1077,7 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
         }
 
         $catalog_page=1;
+        
         if(isset($_GET["page"])){
             $catalog_page=$_GET["page"]*1;
         }
@@ -1087,10 +1161,21 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
             $page = 1;
         }
 
+        /*
         if (isset($this->request->get['limit'])) {
             $limit = (int) $this->request->get['limit'];
         } else {
             $limit = (int) $this->config->get($this->config->get('config_theme') . '_product_limit');
+        }
+        */
+        if(isset($this->request->get["limit"])){
+            if($this->request->get["limit"]=="all"){
+                $limit=999999;
+            }else{
+                $limit=$this->request->get["limit"]*1;
+            }            
+        }else{
+            $limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');
         }
         
         

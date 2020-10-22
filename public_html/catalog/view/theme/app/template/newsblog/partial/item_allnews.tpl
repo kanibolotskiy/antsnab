@@ -1,5 +1,5 @@
-<div class="news-block" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-    <div class="wrp_news-block" itemprop="item" itemscope="" itemtype="http://schema.org/NewsArticle">
+<div class="news-block" itemscope="" itemtype="http://schema.org/ListItem">
+    <div class="wrp_news-block" itemscope="" itemtype="http://schema.org/NewsArticle">
         <meta itemprop="author" content='ООО "ТК Ант-Снаб"'/>
         
 
@@ -34,7 +34,7 @@
             <a href="<?php echo $article['href']; ?>" class="title-news" itemprop="headline">
                 <?php echo $article['name']; ?>
             </a>
-            <p><?php echo $article['preview']; ?></p>
+            <div itemprop="description"><p><?php echo $article['preview']; ?></p></div>
             <a href="<?php echo $article['href']; ?>" class="more">Читать далее</a>
         </div>
     </div>

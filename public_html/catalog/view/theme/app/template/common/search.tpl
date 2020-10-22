@@ -1,8 +1,19 @@
-<div id="search" class="search-form">
-    <form class="wrapper_search" action="/search" method="GET" >
-        <input type="text" id="inputSearch" placeholder="Поиск" name="search" value="<?= $search ?>"/>
-        <!--<button type="submit"></button>-->
+<div id="search" class="search-form" itemscope="" itemtype="https://schema.org/WebSite">
+    <meta itemprop="url" content="https://ant-snab.ru">
+    <form itemprop="potentialAction" itemscope="" itemtype="https://schema.org/SearchAction" class="wrapper_search" action="/search" method="GET" >
+        <meta itemprop="target" content="https://ant-snab.ru/search/?search={search}">
+        <input itemprop="query-input" type="text" id="inputSearch" placeholder="Поиск" name="search" value="<?= $search ?>"/>
         <button data-search-url="<?= $search_url ?>" ></button>
-        <!--<script type="text/javascript">window.ya_site_path = { serp: "//site.yandex.ru/search/site/catalog/" };</script><div class="ya-site-form ya-site-form_inited_no" data-bem="{&quot;action&quot;:&quot;https://ant-snab.ru/search/&quot;,&quot;arrow&quot;:false,&quot;bg&quot;:&quot;transparent&quot;,&quot;fontsize&quot;:&quot;15&quot;,&quot;fg&quot;:&quot;#000000&quot;,&quot;language&quot;:&quot;ru&quot;,&quot;logo&quot;:&quot;rb&quot;,&quot;publicname&quot;:&quot;&quot;,&quot;suggest&quot;:true,&quot;target&quot;:&quot;_self&quot;,&quot;tld&quot;:&quot;ru&quot;,&quot;type&quot;:2,&quot;usebigdictionary&quot;:false,&quot;searchid&quot;:2367774,&quot;input_fg&quot;:&quot;#000000&quot;,&quot;input_bg&quot;:&quot;#FFFFFF&quot;,&quot;input_fontStyle&quot;:&quot;normal&quot;,&quot;input_fontWeight&quot;:&quot;normal&quot;,&quot;input_placeholder&quot;:&quot;Поиск&quot;,&quot;input_borderColor&quot;:&quot;transparent&quot;,&quot;is_catalog&quot;:true}"><form action="//site.yandex.ru/search/site/catalog/" method="get" target="_self" accept-charset="utf-8"><input type="hidden" name="searchid" value="2367774"/><input type="hidden" name="l10n" value="ru"/><input type="hidden" name="reqenc" value=""/><input type="search" name="text" value="" style="height:48px;padding: 0 50px 0 16px;" placeholder="Поиск по каталогу"/><input type="submit"  style=""/></form></div><style type="text/css">.ya-page_js_yes .ya-site-form_inited_no { display: none; }</style><script type="text/javascript">(function(w,d,c){var s=d.createElement('script'),h=d.getElementsByTagName('script')[0],e=d.documentElement;if((' '+e.className+' ').indexOf(' ya-page_js_yes ')===-1){e.className+=' ya-page_js_yes';}s.type='text/javascript';s.async=true;s.charset='utf-8';s.src=(d.location.protocol==='https:'?'https:':'http:')+'//site.yandex.net/v2.0/js/all.js';h.parentNode.insertBefore(s,h);(w[c]||(w[c]=[])).push(function(){Ya.Site.Form.init()})})(window,document,'yandex_site_callbacks');</script>-->
+        <input type="submit" class="hidden_button_search">
     </form>
 </div>
+<!--
+<div itemscope="" itemtype="https://schema.org/WebSite">
+    <meta itemprop="url" content="https://ant-snab.ru">
+    <form itemprop="potentialAction" itemscope="" itemtype="https://schema.org/SearchAction">
+        <meta itemprop="target" content="https://ant-snab.ru/search/?search={query}">
+        <input itemprop="query-input" type="text" name="query" required="">
+        <input type="submit">
+    </form>
+</div>
+-->

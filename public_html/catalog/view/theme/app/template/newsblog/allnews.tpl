@@ -41,7 +41,7 @@
                                 <a href="<%href%>" class="title-news">
                                     <%name%>
                                 </a>
-                                <p><%preview%></p>
+                                <div itemprop="description"><p><%preview%></p></div>
                                 <a href="<%href%>" class="more">Читать далее</a>
                             </div>
                         </div>

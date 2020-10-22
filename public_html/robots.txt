@@ -21,6 +21,11 @@ Allow: /*/*.png
 Allow: /*/*.jpg 
 Allow: /*/*.jpeg
 Allow: /*/*.gif 
+Allow: /catalog/*.svg
+Allow: /catalog/*.ttf
+Allow: /catalog/*.js*
+Allow: /catalog/*.woff*
+
 Allow: /index.php?route=extension/feed/google_sitemap
 
 Sitemap: https://ant-snab.ru/index.php?route=extension/feed/google_sitemap

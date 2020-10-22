@@ -178,6 +178,23 @@ function check_opt_notification(itm){
 
 }
 $(function(){
+    $("#order_form input").on("keydown",function(e){
+        console.log(e.keyCode)  
+        if(e.keyCode==13){
+            e.preventDefault();
+            var rel=$(".ordering_caption_item.active:last").attr("rel");
+
+            $(".order_block[rel='"+rel+"']").find(".order_button_next").trigger("click");
+            if(rel==1){
+                $("#order_address").focus();
+            }
+            if(rel==2){
+                $("#send_order_button").focus();
+            }
+        }
+        
+    });
+
     if($("#order_name").length){$.cookie('orderdata')
         if($.cookie('orderdata')){
             var orderdata=JSON.parse($.cookie('orderdata'));
@@ -211,7 +228,6 @@ $(function(){
         /**Сохраняем инфу в куки */
         var orderdata={"name":$("#order_name").val(),"phone":$("#order_phone").val(),"email":$("#order_email").val(),"address":$("#order_address").val(),"inn":$("#order_inn").val(),"client":$("#lico").val(),"delivery":$(".delivery_order_block.active").attr("rel")};
         $.cookie('orderdata', JSON.stringify(orderdata), { expires: 100, path: '/' });
-        //setcookie("ordername", $value, time()+31104000, "/card/");
         
         $(this).find('input[type=submit], button[type=submit]').prop('disabled', true);
         
@@ -245,7 +261,7 @@ $(function(){
         $(this).addClass("active");
     });
     $(".inputAddress").suggestions({
-        token: "3bfe37ae8dd1e98a6ea74382d7b263fca50a58b2",
+        token: "b231f8faef5fbb8190930e4ade4f722e7b3f7a89",
         type: "ADDRESS",
         onSelect: function(suggestion) {
             //console.log(suggestion);
@@ -453,6 +469,9 @@ $(function(){
                 flag=false;
             }
         }
+        
+        $("#order_address").focus();
+    
         if(flag){
             $(".order_block[rel='1']").hide();
             $(".order_block[rel='2']").fadeIn(200);
@@ -468,7 +487,7 @@ $(function(){
     $("#order_next2").click(function(){
         var rel=$(".delivery_order_block.active").attr("rel");
         var flag=true;
-
+        $("#send_order_button").focus();
         if(rel==2){
             if($.trim($("#order_address").val())==""){
                 $("#order_address").parent().addClass("_error");

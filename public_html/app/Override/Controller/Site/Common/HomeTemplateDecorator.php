@@ -72,8 +72,91 @@ class HomeTemplateDecorator implements IDecorator
                 ];
             }
         }
+        $registry->get('load')->model('catalog/product');
 
+        //Хиты
+        $products_hit = $registry->get('model_catalog_product')->getHits();
+        shuffle($products_hit) ;
+        for($i=0;$i<10;$i++){
+            $product_item=$products_hit[$i];
+            $labels = $registry->get('model_catalog_product')->getProductLabels($products_hit[$i]);
+
+            $price = number_format($product_item['price'],0,".", " ");
+
+
+            if ($product_item['image']) {
+                $image = $model_tool_image->myResize($product_item['image'], 400,400,1);
+            } else {
+                $image = $model_tool_image->resize('placeholder.png', 400,400);
+            }
+
+            $data['products_hit'][] = array(
+                'product_id'  => $product_item['product_id'],
+                'thumb'       => $image,
+                'name'        => $product_item['name'],
+                'meta_h1'     => $product_item['meta_h1'],
+                'price'       => $price,
+                'href'        => $registry->get('url')->link('product/product', 'product_id=' . $product_item['product_id']),
+                'labels'	  => $labels,
+            );
+        }
+
+        //Акции
+        $products_accia = $registry->get('model_catalog_product')->getAccias();
+        shuffle($products_accia);
+        for($i=0;$i<count($products_accia);$i++){
+            $product_item=$products_accia[$i];
+            $price = number_format($product_item['price'],0,".", " ");
+            
+            if ($product_item['image']) {
+                $image = $model_tool_image->myResize($product_item['image'], 400,400,1);
+            } else {
+                $image = $model_tool_image->resize('placeholder.png', 400,400);
+            }
+            
+            $price_old_val = $product_item['price']+$product_item['price']*$product_item['discount_percent']/(100-$product_item['discount_percent']);
+            $price_old = number_format($price_old_val,0,".", " ");
+
+            $data['products_accia'][] = array(
+                'product_id'  => $product_item['product_id'],
+                'thumb'       => $image,
+                'name'        => $product_item['name'],
+                'meta_h1'     => $product_item['meta_h1'],
+                'price'       => $price,
+                'href'        => $registry->get('url')->link('product/product', 'product_id=' . $product_item['product_id']),
+                'percent'     => $product_item['discount_percent'],
+                'price_old'   => $price_old
+            );
+        }
+
+        //Новинки
+        $products_new = $registry->get('model_catalog_product')->getNews();
+        shuffle($products_new);
+        //print_r($products_new);
+
+        for($i=0;$i<4;$i++){
+            $product_item=$products_new[$i];
+            $price = number_format($product_item['price'],0,".", " ");
+            
+            if ($product_item['image']) {
+               $image = $model_tool_image->myResize($product_item['image'], 400,400,1);
+            } else {
+               $image = $model_tool_image->resize('placeholder.png', 400,400);
+            }
+            
+            $data['products_new'][] = array(
+                'product_id'  => $product_item['product_id'],
+                'thumb'       => $image,
+                'name'        => $product_item['name'],
+                'price'       => $price,
+                'href'        => $registry->get('url')->link('product/product', 'product_id=' . $product_item['product_id']),
+            );
+        }
+
+        //print_r($data['products_accia']);
+        //print_r($products_hit);
         //mobile articles and news
+
         /** @todo двойная нагрузка, невозможность управления из админки, хардкод idшников модулей*/
         $loader = $registry->get('load');
         $loader->model('extension/module');

@@ -42,10 +42,12 @@
                     
                     <div id="mtab1" class="tab">
                         <div class="wrap_select_view">
-                            <ul class="select_view_switch">
-                                <li class="select_view select_view1 <?php echo $cat_view1;?>" rel="view1"></li>
-                                <li class="select_view select_view2 <?php echo $cat_view2;?>" rel="view2"></li>
-                            </ul>
+                            <div class="wrapper_show_types">
+                                <ul class="select_view_switch">
+                                    <li class="select_view select_view1 <?php echo $cat_view1;?>" rel="view1"></li>
+                                    <li class="select_view select_view2 <?php echo $cat_view2;?>" rel="view2"></li>
+                                </ul>
+                            </div>
                         </div>
                         
                         <div class="tab-list">

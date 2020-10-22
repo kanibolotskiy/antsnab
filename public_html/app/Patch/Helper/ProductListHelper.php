@@ -235,9 +235,10 @@ class ProductListHelper extends \Model
             }
 
             $path = $this->hierarhy->getPath($result['main_category']);
-
+            
             $products[] = array(
                 'product_id' => $result['product_id'],
+                'quantity'=>$result['quantity'],
                 'unit_errors' => empty($unitErrors)?null:$unitErrors,
 
                 // этот для расчета количества, передаваемого в корзину
@@ -271,6 +272,7 @@ class ProductListHelper extends \Model
                 'favorite'=>$fav_active,
                 'compare'=>$compare_active,
                 'labels'=>$labels
+                
             );
         }
         return $products;

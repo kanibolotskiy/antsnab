@@ -11,19 +11,19 @@ document.addEventListener("DOMContentLoaded", function(){
             var max_value=$(this).attr("max_value")*1;
             if(select_min!=""){
                 if((select_min)*1!=min_value){
-                    str+=(str!=""?"&":"")+"param["+$(this).attr("name")+"][min]="+select_min;
+                    str+="&param["+$(this).attr("name")+"][min]="+select_min;
                 }
             }
             if(select_max!=""){
                 if((select_max*1)!=max_value){
-                    str+=(str!=""?"&":"")+"param["+$(this).attr("name")+"][max]="+select_max;
+                    str+="&param["+$(this).attr("name")+"][max]="+select_max;
                 }
             }
         });
         $(".param_check").each(function(){
             if($(this).prop("checked")){
                 //str+=(str!=""?"&":"")+$(this).attr("name")+"="+$(this).val();
-                str+=(str==""?"":"&")+$(this).attr("name")+"="+$(this).val();
+                str+="&"+$(this).attr("name")+"="+$(this).val();
             }
         });
 
@@ -38,14 +38,22 @@ document.addEventListener("DOMContentLoaded", function(){
         var sort_str="";
         if(sort){
             //str+=(str!=""?"&":"")+"sort="+sort;
-            str+=(str!=""?"&":"")+"sort="+sort;
+            str+="&sort="+sort;
         }
 
-        if(str){
-            str="?"+str;
+        //Пагинация
+        var limit=$(".showby_item.active").attr("rel");
+        if(limit!="9"){
+            str+="&limit="+limit;
         }
+        
+        if(str){
+            str_fin="?"+str.slice(1)
+        }
+        
+
         var url=$("#form_params").attr("action");
-        return str;
+        return str_fin;
 }
 //-------------------------------------------
    

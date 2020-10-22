@@ -129,9 +129,21 @@
                                     href="<?php echo $popup; ?>" 
                                     title="<?php echo $heading_title; ?>">
 
+<!--
+<?php //echo "!".$thumb_webm."!";?>
+<source type="image/webp" srcset="image.webp">
+-->
+<picture>
+    
+    <source type="image/jpeg" srcset="<?php echo $thumb; ?>">
+    <img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>">
+</picture>
+
+                                        <!--
                                         <img class="wrp_fly_image" src="<?php echo $thumb; ?>"
                                             title="<?php echo $heading_title; ?>"
                                             alt="<?php echo $heading_title; ?>" />
+                                        -->
                                     </a>
                                 <?php } ?>
                                 <div class="wrp_favorite">
@@ -424,7 +436,7 @@
                     <?php $i++; }?>
 
                     <?php if(count($reviews)>0):?>
-                    <li goal_data="card-review">Отзывы (<?= count($reviews) ?>)</li>
+                    <li goal_data="card-review">Отзывы (<?= $count_revs ?>)</li>
                     <?php else: ?>
                     <li goal_data="card-review">Отзывы </li>
                     <?php endif; ?>
@@ -553,58 +565,127 @@
                     <!-- TAB отзывы -->
                     <div>
                         <div class="reviews-container reviews-container2">
-                            <div class="to_review_form to_ancor" data-ancor="ancor_feedback">Оставить отзыв</div>
-                            <?php if( count($reviews)>0): ?>
-                                <?php foreach ($reviews as $r): ?>
-                                    <div class = "review-block" itemscope itemtype="http://schema.org/Review" itemprop="review">
-                                        <meta itemprop="itemReviewed" content="<?= $r['about_txt'] ?>"/>
+                            <div class="wrapper_type_reviews_captions">
+                                <div class="type_reviews_captions">
+                                    <div class="type_reviews_caption active" rel="1" data-caption="Оставить отзыв" data-plc="Поделитесь своим мнение о товаре:" data-label="Отзыв"><div>Отзывы (<?php echo count($reviews[1]);?>)</div></div>
+                                    <div class="type_reviews_caption" rel="2" data-caption="Задать вопрос" data-plc="Задайте свой вопрос о товаре:" data-label="Вопрос"><div>Вопросы и ответы (<?php echo count($reviews[2]);?>)</div></div>
+                                </div>
+                            </div>
+                            
+                            <div class="type_reviews_blocks">
+                                
+                                <div class="type_reviews_block" rel="1" style="display:block;">
+                                    <div class="to_review_form to_ancor" data-ancor="ancor_feedback">Оставить отзыв</div>
+                                    <?php if( count($reviews[1])>0): ?>
+                                        <?php foreach ($reviews[1] as $r): ?>
+                                            <div class = "review-block" itemscope itemtype="http://schema.org/Review" itemprop="review">
+                                                <meta itemprop="itemReviewed" content="<?= $r['about_txt'] ?>"/>
 
-                                        <span itemprop="reviewRating" itemscope="" itemtype="http://schema.org/Rating">
-                                            <meta itemprop="ratingValue" content="<?= $r['rating'] ?>">
-                                            <meta itemprop="worstRating" content="1">
-                                            <meta itemprop="bestRating" content="5">
-                                        </span>
-
-                                        <div class = "review">
-                                            <div class = "top">
-                                                <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-                                                    <strong itemprop="name"><?= $r['author'] ?></strong> о <b>"<?= $r['about'] ?>"</b>
+                                                <span itemprop="reviewRating" itemscope="" itemtype="http://schema.org/Rating">
+                                                    <meta itemprop="ratingValue" content="<?= $r['rating'] ?>">
+                                                    <meta itemprop="worstRating" content="1">
+                                                    <meta itemprop="bestRating" content="5">
                                                 </span>
-                                                <p><?= $r['date_added'] ?></p>
-                                            </div>
-                                            
-                                            <div class="rating_stars _reviews">
-                                                
-                                                <?php for($i=1;$i<=5;$i++){?>
+
+                                                <div class = "review">
+                                                    <div class = "top">
+                                                        <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                                            <strong itemprop="name"><?= $r['author'] ?></strong> о <b>"<?= $r['about'] ?>"</b>
+                                                        </span>
+                                                        <p><?= $r['date_added'] ?></p>
+                                                    </div>
                                                     
-                                                    <?php if($i<=$r['rating']){?>
-                                                        <div class="star_block"></div>
-                                                    <?php }else{?>
-                                                        <div class="star_block _hide"></div>
-                                                    <?php }?>
+                                                    <div class="rating_stars _reviews">
+                                                        
+                                                        <?php for($i=1;$i<=5;$i++){?>
+                                                            
+                                                            <?php if($i<=$r['rating']){?>
+                                                                <div class="star_block"></div>
+                                                            <?php }else{?>
+                                                                <div class="star_block _hide"></div>
+                                                            <?php }?>
 
-                                                <?php }?>
-                                            </div>
+                                                        <?php }?>
+                                                    </div>
 
-                                            <div class="reviewBody" itemprop="reviewBody"><?= $r['text'] ?></div>
-                                        </div>
-                                        <?php if (!empty($r['answer'])): ?>
-                                            <div class = "review answer-review">
-                                                <div class = "top">
-                                                    <span><strong><?= $r['moderator'] ?></strong></span>
+                                                    <div class="reviewBody" itemprop="reviewBody"><?= $r['text'] ?></div>
                                                 </div>
-                                                <em><?= $r['answer'] ?></em>
+                                                <?php if (!empty($r['answer'])): ?>
+                                                    <div class = "review answer-review">
+                                                        <div class = "top">
+                                                            <span><strong><?= $r['moderator'] ?></strong></span>
+                                                        </div>
+                                                        <em><?= $r['answer'] ?></em>
+                                                    </div>
+                                                <?php endif; ?>
                                             </div>
-                                        <?php endif; ?>
-                                    </div>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <p style="font-size:14px">
-                                    Никто еще не оставил отзыв об этом материале, Вы можете стать первым!
-                                </p>
-                                <br/>
-                                <br/>
-                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <p style="font-size:14px">
+                                            Никто еще не оставил отзыв об этом материале, Вы можете стать первым!
+                                        </p>
+                                        <br/>
+                                        <br/>
+                                    <?php endif; ?>
+                                </div>
+                                
+                                <div class="type_reviews_block" rel="2">
+                                    <div class="to_review_form to_ancor" data-ancor="ancor_feedback">Задать вопрос</div>
+                                    <?php if( count($reviews[2])>0): ?>
+                                        <?php foreach ($reviews[2] as $r): ?>
+                                            <div class = "review-block" itemscope itemtype="http://schema.org/Review" itemprop="review">
+                                                <meta itemprop="itemReviewed" content="<?= $r['about_txt'] ?>"/>
+
+                                                <span itemprop="reviewRating" itemscope="" itemtype="http://schema.org/Rating">
+                                                    <meta itemprop="ratingValue" content="<?= $r['rating'] ?>">
+                                                    <meta itemprop="worstRating" content="1">
+                                                    <meta itemprop="bestRating" content="5">
+                                                </span>
+
+                                                <div class = "review">
+                                                    <div class = "top">
+                                                        <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                                            <strong itemprop="name"><?= $r['author'] ?></strong> о <b>"<?= $r['about'] ?>"</b>
+                                                        </span>
+                                                        <p><?= $r['date_added'] ?></p>
+                                                    </div>
+                                                    
+                                                    <div class="rating_stars _reviews">
+                                                        
+                                                        <?php for($i=1;$i<=5;$i++){?>
+                                                            
+                                                            <?php if($i<=$r['rating']){?>
+                                                                <div class="star_block"></div>
+                                                            <?php }else{?>
+                                                                <div class="star_block _hide"></div>
+                                                            <?php }?>
+
+                                                        <?php }?>
+                                                    </div>
+
+                                                    <div class="reviewBody" itemprop="reviewBody"><?= $r['text'] ?></div>
+                                                </div>
+                                                <?php if (!empty($r['answer'])): ?>
+                                                    <div class = "review answer-review">
+                                                        <div class = "top">
+                                                            <span><strong><?= $r['moderator'] ?></strong></span>
+                                                        </div>
+                                                        <em><?= $r['answer'] ?></em>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <p style="font-size:14px">
+                                            Никто еще не оставил вопрос об этом материале, Вы можете стать первым!
+                                        </p>
+                                        <br/>
+                                        <br/>
+                                    <?php endif; ?>
+                                </div>
+                                
+                            </div>
+                            
                             <div class="give-feedback">
                                 <div class="ancor" id="ancor_feedback"></div>
                                 <div class="title-give-feedback">Оставить отзыв</div>
@@ -632,7 +713,7 @@
                                     <div class = "row">
                                         <div class="wrp_star">
                                             
-                                            <span>Отзыв:
+                                            <span><span id="label_review">Отзыв:</span>
                                                 <i id="error_text" class="error"></i>
                                             </span>
                                             <div class="wrp_star_rating">
@@ -648,7 +729,7 @@
                                                 <div class="rating_stars_value">(<span id="rating_stars_value">5</span>)</div>
                                             </div>
                                         </div>
-                                        <textarea  placeholder="<?= $entry_text ?>" name="text"></textarea>
+                                        <textarea id="txt_review" placeholder="<?= $entry_text ?>" name="text"></textarea>
                                     </div>
                                     <div class = "agreement">
                                         <input name="agree" type = "checkbox" id = "agree" value="1"/>
@@ -706,7 +787,7 @@
                 <!--<div class="title">Аналоги и сопутствующие товары</div>-->
 
                 <div class="mentioned_sliders">
-                    <div class="wrapper_mentioned_sliders">
+                    <div class="wrapper_mentioned_sliders main_slider">
                         <?php if(count($products[0])){ ?>
                             <div class="mentioned_slider active" rel="1">
                                 <ul class="ment_slider">
@@ -720,9 +801,6 @@
                                             </div>
                                         <?php }?>
                                         <div class="products-block">
-                                            <?php if($p["rating"]){?>
-                                                <div class="agg_rating"><?php echo $p["rating"];?></div>
-                                            <?php }?>
                                             
                                             <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
 

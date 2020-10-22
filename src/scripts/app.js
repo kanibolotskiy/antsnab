@@ -17,7 +17,7 @@ import './lib/opencart_search';
 import './lib/jquery.mousewheel.min';
 import './lib/jquery.suggestions.min';
 import './lib/jquery.autocomplete.min';
-
+import './lib/masonry.pkgd.min';
 
 import './lib/jquery-ui.min';
 import './lib/functions';
@@ -33,6 +33,7 @@ import './ui_styling';
 import './goals';
 import './search';
 import './compare';
+import './information';
 
 import './lib/jquery.ui.touch-punch.min';
 

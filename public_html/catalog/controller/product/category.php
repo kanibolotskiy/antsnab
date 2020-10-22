@@ -37,7 +37,7 @@ class ControllerProductCategory extends Controller {
 		} else {
 			$limit = $this->config->get($this->config->get('config_theme') . '_product_limit');
 		}
-
+		
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(

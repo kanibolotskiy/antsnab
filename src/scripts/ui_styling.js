@@ -303,9 +303,77 @@ $(document).ready(function(){
         //cssEase: 'linear'
 
     });
+    
+    $(".main_accia_slider").slick({
+        infinite: true,
+        //autoplay: true,
+        autoplaySpeed: 3000,
+        arrows: true,
+        slidesToShow: 3,
+        responsive: [
+            {
+            breakpoint: 1000,
+                settings: {
+                    slidesToShow: 2
+                }
+            },
+            {
+                breakpoint: 500,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                },
+        ]
+    });
+    $(".main_ment_slider").each(function(){
+        $(this).slick({
+            infinite: true,
+            autoplay: true,
+            autoplaySpeed: 3000,
+            arrows: true,
+            slidesToShow: 4,
+            responsive: [
+                {
+                breakpoint: 1100,
+                    settings: {
+                        slidesToShow: 3
+                    }
+                },
+                {
+                    breakpoint: 900,
+                        settings: {
+                            slidesToShow: 2
+                        }
+                },
+                {
+                    breakpoint: 856,
+                        settings: {
+                            slidesToShow: 3
+                        }
+                },
+                {
+                breakpoint: 768,
+                    settings: {
+                        slidesToShow: 3
+                    }
+                },
+                {
+                breakpoint: 650,
+                    settings: {
+                        slidesToShow: 2
+                    }
+                },
+                {
+                breakpoint: 375,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                }
+            ]
+        });
+    });
     $(".ment_slider").each(function(){
         $(this).slick({
-            //centerPadding: '60px',
             infinite: true,
             autoplay: true,
             autoplaySpeed: 3000,
@@ -355,5 +423,11 @@ $(document).ready(function(){
     $(".compare").on("mouseleave",function(){
         $(this).removeClass("_hover");
     });
+    $("#masonry").masonry({
+        columnWidth: '.masonry_item',
+        gutter: 5,
+        resize: true
+    });
+
 
 });

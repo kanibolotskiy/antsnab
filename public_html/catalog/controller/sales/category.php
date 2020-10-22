@@ -86,7 +86,7 @@ class ControllerSalesCategory extends Controller {
 				if(isset($result["accia_id"])){
 					$href=$this->url->link('sale/sale', 'sale_id=' . $result["accia_id"]);
 				}else{
-					$href="sales/".$result["keyword"];
+					$href="sales/".$result["keyword"]."/";
 				}
 
 				$sales[] = array(

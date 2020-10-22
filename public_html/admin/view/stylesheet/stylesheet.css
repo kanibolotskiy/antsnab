@@ -828,3 +828,74 @@ height:34px;
 	margin-right:20px;
 	box-sizing: border-box;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;-o-box-sizing: border-box;
 }
+.about_rows{margin-left:15px;margin-right:15px;position:relative;overflow:hidden;}
+
+.about_row{position:relative;overflow:hidden;margin-bottom:20px;}
+
+.wrapper_about_row_list{
+	border: 1px solid #eee;
+    padding: 0 20px 15px;
+	margin-top: 10px;
+	position:relative;overflow:hidden;
+}
+.about_row_title{font-weight:bold;margin-top:20px;margin-bottom:5px;}
+.about_row_listrow{margin-bottom:15px;}
+.about_row_listrow_caption{margin-bottom:5px;}
+.append_row_about_list{
+	float: right;
+	cursor:pointer;
+    
+}
+.append_block_about{
+	float: right;
+	cursor:pointer;
+    height: 30px;
+    line-height: 28px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border: 1px solid #ddd;
+    background: #41737E;
+	color: #fff;
+	margin-right: 15px;
+	margin-top: 20px;
+	font-weight:bold;
+}
+.wrp_about_row_caption{
+	display: flex;
+    align-items: flex-end;
+}
+.about_row_caption{
+	width: 100%;
+    margin-right: 10px;
+}
+.about_row_listrow_caption{
+	display:flex;
+}
+.marg_right{margin-right:10px;}
+.about_row_image{/*display:flex;*/}
+.about_row_image .img-thumbnail{margin-right:10px;}
+
+.cust_rows{margin:20px;}
+.cust_row{margin-bottom:20px;display: flex;align-items: start;padding-bottom: 20px;border-bottom: 1px solid #ddd;}
+.cust_row_info{width:100%;}
+.wrap_row_info{display:flex;}
+.cust_remove{margin-left:10px;}
+.wrpapper_append_button{margin-left:20px;margin-right:20px;position:relative;overflow:hidden;}
+.wrpapper_append_button .btn-primary{float:right;}
+.wrap_row_info button{margin-left:10px;}
+.about_row_title._first{margin-top:0;}
+
+.about_row_image .img-thumbnail{width:100px;height:100px;display:flex;justify-content: center;}
+.about_row_image .img-thumbnail img{
+	max-width: 100%;
+	height: auto;
+}
+.about_item_row._remove{display:none;}
+.media_group{padding-left:20px;padding-right:20px;margin-bottom:30px;}
+.video_input{margin-top:10px;}
+.about_row_image .img-thumbnail{float:left;}
+.wrapper_row_info{margin-left:110px;}
+.media_row{margin-bottom:10px;position:relative;overflow:hidden;}
+.wrapper_media_rows .wrpapper_append_button{margin-left:0;margin-right:0;}
+.wrapper_media_rows{margin-bottom: 30px;border-bottom: 1px solid #ddd;padding-bottom: 20px;}
+.about_row_text{margin-top:55px;}

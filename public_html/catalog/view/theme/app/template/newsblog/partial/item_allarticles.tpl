@@ -1,5 +1,5 @@
-<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-    <div class="news-block" itemprop="item" itemscope="" itemtype="http://schema.org/NewsArticle">
+<li itemscope="" itemtype="http://schema.org/ListItem">
+    <div class="news-block" itemscope="" itemtype="http://schema.org/NewsArticle">
         <meta itemprop="author" content='ООО "ТК Ант-Снаб"'/>
         <div style="display:none;" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
             <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
@@ -29,7 +29,7 @@
             <a href="<?php echo $article['href']; ?>" class="title-news" itemprop="headline">
                 <?php echo $article['name']; ?>
             </a>
-            <p><?php echo strip_tags($article['preview']); ?></p>
+            <div itemprop="description"><p><?php echo strip_tags($article['preview']); ?></p></div>
             <a href="<?php echo $article['href']; ?>" class="more">Читать далее</a>
         </div>
     </div>

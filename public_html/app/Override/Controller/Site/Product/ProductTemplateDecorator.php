@@ -244,7 +244,7 @@ class ProductTemplateDecorator implements IDecorator
                 $data['properties'][] = [
                    'name' => $p['cat_name'],
                    'val' => htmlspecialchars_decode($p['val'],ENT_QUOTES),
-                   'unit' => $p['cat_unit']
+                   'unit' => htmlspecialchars_decode($p['cat_unit'])
                ];
             }
         }

@@ -48,7 +48,7 @@ class SlideshowController extends \Controller
                 //$banners[]=array(
 				$data['banners'][]=array(
                     'title' => "Акция",
-                    'link'  => "sales/".$activeAcciasDiscount["keyword"],
+                    'link'  => "sales/".$activeAcciasDiscount["keyword"]."/",
 					'image' => $this->model_tool_image->cropsize($activeAcciasDiscount["image"], 1100,540),
 					'descr'=>$activeAcciasDiscount['shorttext'] //'Товар дня'
                 );

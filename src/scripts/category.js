@@ -118,9 +118,6 @@ function getParamsForm(){
         $("#reset_filter").removeClass("active");
     }
     
-    
-
-    //slice(1);
     //Сортировка
     var sort=$("#seldef1 option:selected").val();
     var sort_str="";
@@ -128,12 +125,13 @@ function getParamsForm(){
         //str+=(str!=""?"&":"")+"sort="+sort;
         str+="&sort="+sort;
     }
-/*
-    if(str){
-        str="?"+str;
-    }
-*/
 
+    //Пагинация
+    var limit=$(".showby_item.active").attr("rel");
+    if(limit!="9"){
+        str+="&limit="+limit;
+    }
+    console.log(str)
     var url=$("#form_params").attr("action");
     var str_fin="";
     if(str){
@@ -324,12 +322,8 @@ function change_params_form(flag=true){
         if (typeof ym != 'undefined') {
             ym(14496178, 'reachGoal', 'filter');
         }
-        //data_url1=getParamsForm()
-
-        //console.log("flag_update="+flag_update);
-
         
-        //var data_url=decodeURI($("#form_params").serialize());
+        
         if(flag_update){
             var data_url=getParamsForm();
             var catalog_id=$("#form_params").attr("catalog_id");
@@ -715,6 +709,13 @@ $(document).ready(function(){
             $(".up").removeClass("_filter");
         }
     });
+
+    $(".showby_item").click(function(){
+        $(".showby_item").removeClass("active");
+        $(this).addClass("active");
+        change_params_form(true);
+    });
+
     $(document).on("change",".param_check",function(){
         if(flag_update){
             var flag=true;

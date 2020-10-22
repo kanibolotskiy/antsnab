@@ -90,7 +90,7 @@
                                         <div class="form-group">
                                             <div class="form-group_caption">Ваша электронная почта <span class="client2 <?php echo $client[1]?'_showed':'';?>">*</span></div>
                                             <input id="order_email" class="inpOrderText" value="<?= $form_data['email'] ?>" name="email" type="text" placeholder="Введите электронную почту"/>
-                                            <div class="order_error">Неверный формат</div>
+                                            <div class="order_error">Неверный формат электронной почты</div>
                                         </div>
 
                                         <div class="form-group client2 <?php echo $client[1]?'_showed':'';?>" >

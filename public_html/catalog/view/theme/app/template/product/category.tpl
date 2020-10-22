@@ -200,10 +200,17 @@
                             </select>
                         </form>
                     
-                        <ul class="select_view_switch">
-                            <li class="select_view select_view1 <?php echo $cat_view1;?>" rel="view1"></li>
-                            <li class="select_view select_view2 <?php echo $cat_view2;?>" rel="view2"></li>
-                        </ul>
+                        <div class="wrapper_show_types">
+                            <div class="showby_list">
+                                <div class="showby_item <?=$showby_9?>" rel="9">9</div>
+                                <div class="showby_item <?=$showby_18?>" rel="18">18</div>
+                                <div class="showby_item <?=$showby_all?>" rel="all">Все</div>
+                            </div>
+                            <ul class="select_view_switch">
+                                <li class="select_view select_view1 <?php echo $cat_view1;?>" rel="view1"></li>
+                                <li class="select_view select_view2 <?php echo $cat_view2;?>" rel="view2"></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="clear"></div>
                     <div class="tab-list">

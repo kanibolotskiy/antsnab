@@ -130,6 +130,7 @@
                 </a>
                 -->
             </header>
+            
         </div>
         <div class="table_block_header">
             <div class="table_block_header_info">

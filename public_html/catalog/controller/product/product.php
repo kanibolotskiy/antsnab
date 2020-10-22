@@ -789,6 +789,10 @@ class ControllerProductProduct extends Controller {
 				*/
 				//$data['thumb'] = $this->model_tool_image->myResize($product_info['image'],$this->config->get($this->config->get('config_theme') . '_image_thumb_width'), 350,350,4,'watermark.png');
 				
+				
+
+				$data['thumb_webm'] = $this->model_tool_image->myResize($product_info['image'], 750, 560);
+
 				$this->document->setOgImage($data['thumb']);
 			} else {
 				$data['thumb'] = '';
@@ -960,10 +964,25 @@ class ControllerProductProduct extends Controller {
 			$review_total=$this->model_catalog_review->getTotalReviewsByProductId($data['product_id']);
 			$data['captcha_key'] = $this->config->get('google_captcha_key');
 			
-			$data['reviews']=[];
+			$def_reviews[1]=[];
+			$def_reviews[2]=[];
+			
+			$data['reviews']=$def_reviews;
+			//$data['reviews'][1]=[];
+			//$data['reviews'][2]=[];
+			
 			$summary_reviews=0;
+			
+			$count_revs=count($results);
+			$data['count_revs']=$count_revs;
 			foreach ($results as $result) {
-				$data['reviews'][] = array(
+				if($result['answer']){
+					$tp=2;
+				}else{
+					$tp=1;
+				}
+
+				$data['reviews'][$tp][] = array(
 					'review_id'  => $result['review_id'],
 					'name'       => $result['name'],
 					'text'       => $result['text'],
@@ -977,6 +996,7 @@ class ControllerProductProduct extends Controller {
 					'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 					//'edit'       => $this->url->link('catalog/review/edit',  '&review_id=' . $result['review_id'] . $url, true)
 				);
+				
 				$summary_reviews+=$result['rating'];
 			}
 
@@ -1090,23 +1110,7 @@ class ControllerProductProduct extends Controller {
 					}else{
 						$discount=0;
 					}
-					/*
-					if($result['price_wholesaleold']*1){
-						$discount = (int)(($result['price_wholesale']/$result['price_wholesaleold']-1)*100);
-					}
 					
-					if($result['discount_percent']){
-						//Цена = Цена + Цена*(%скидки)/(100-%скидки)
-						$price_wholesale_old = $result['price_wholesale']+$result['price_wholesale']*$result['discount_percent']/(100-$result['discount_percent']);
-					}else{
-						$price_wholesale_old=0;
-					}
-					$data['priceold'] = number_format($price_old,0,"."," ");
-					$data['price_wholesaleold'] = number_format($price_wholesale_old,0,"."," ");
-					*/
-
-					
-
 					
 					$labels = $this->model_catalog_product->getProductLabels($result);
 	

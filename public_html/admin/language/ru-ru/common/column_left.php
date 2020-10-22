@@ -112,6 +112,8 @@ $_['text_discount']              		    = 'Скидки';
 $_['text_calcs']                  		    = 'Калькуляторы';
 $_['text_main']                  		    = 'Главная';
 $_['text_acciasale']                  		= 'Акция (скидки)';
+$_['text_about']                  		    = 'О компании';
+$_['text_diler']                  		    = 'Дилерам';
 
 
 $_['text_accia']          					= 'Акции';

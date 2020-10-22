@@ -8,10 +8,12 @@ $_['heading_title_calcs']       = 'Калькуляторы';
 $_['heading_title_main']        = 'Главная (информация)';
 $_['heading_title_acciasale']   = 'Акция (скидки)';
 
+$_['heading_title_about']       = 'О компании';
+$_['heading_title_diler']       = 'Дилерам';
 
 
 // Text
-$_['text_success_benefits']     = 'Список преимуществ обновлен!';
+$_['1success_benefits']     = 'Список преимуществ обновлен!';
 $_['text_success_benefits_main']     = 'Список преимуществ обновлен!';
 $_['text_success_couriers']     = 'Список курьеров обновлен!';
 $_['text_success_docs']         = 'Список документов обновлен!';
@@ -42,6 +44,8 @@ $_['text_add_discounts']        = 'Добавление скидки';
 $_['text_edit_discounts']       = 'Редактирование скидки';
 
 $_['text_edit_main']            = 'Редактирование главная';
+$_['text_edit_about']            = 'Редактирование "О компании"';
+$_['text_edit_diler']            = 'Редактирование "Дилерам"';
 
 
 $_['text_add_calcs']            = 'Добавление калькулятора';
@@ -106,3 +110,28 @@ $_['error_product']          	= 'Этот производитель не мож
 $_['text_success']          	= 'Успешно сохранено';
 
 $_['tab_products']          	= 'Продукты';
+
+$_['entry_title']          	    = 'Заголовок';
+$_['entry_content']          	= 'Описание';
+$_['entry_meta_title']          = 'HTML-тег Title';
+$_['entry_h1']          	    = 'HTML-тег H1';
+$_['entry_meta_description']    = 'Мета-тег Description';
+$_['entry_meta_keywords']       = 'Мета-тег Keywords';
+$_['entry_link']                = 'Ссылка';
+$_['entry_link_caption']        = 'Заголовок ссылки';
+
+$_['entry_content_cust']        ='Текст "Сотрудники"';
+$_['entry_content_man']         ='Текст "Производство"';
+$_['entry_content_sklad']       ='Текст "Склады"';
+$_['entry_content_off']         ='Текст "Офис"';
+$_['entry_req']                 ='Реквизиты';
+
+$_['entry_download']            ='Загрузки';
+
+
+$_['tab_cust']          = 'Сотрудники';
+$_['tab_off']           = 'Офис';
+$_['tab_man']           = 'Производство';
+$_['tab_sklad']         = 'Склад';
+$_['tab_req']           = 'Реквизиты';
+$_['tab_sert']          = 'Сертификаты';
