@@ -19,6 +19,8 @@
 
         <link rel="preload" as="style" href="/catalog/view/theme/app/bundle/app2.css?v2.82" >
         <link rel="preload" as="script" href="catalog/view/theme/app/bundle/app2.js?v2.82" >
+        <link rel="stylesheet" href="/catalog/view/theme/app/bundle/app2.css?v2.82">
+        
         <?php if ($description) { ?>
             <meta name="description" content="<?php echo $description; ?>" />
         <?php } ?>
