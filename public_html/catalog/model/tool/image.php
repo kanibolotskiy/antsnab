@@ -94,7 +94,7 @@ class ModelToolImage extends Model {
 
         $old_image = $filename;
 
-        $new_image = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . $width . 'x' . $height . $type .'.' . $extension;
+		$new_image = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . $width . 'x' . $height . $type .'.' . $extension;
 		
 		
         if (!file_exists(DIR_IMAGE . $new_image) || (filemtime(DIR_IMAGE . $old_image) > filemtime(DIR_IMAGE . $new_image))) {
@@ -156,16 +156,18 @@ class ModelToolImage extends Model {
 					copy(DIR_IMAGE . $old_image, DIR_IMAGE . $new_image);
 				}
 				
-            }
-        }        
-		//if($extension=="jpg")
+			}
+			$this->makeWebP('image/'.$new_image);
+		}
 
         if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
             return $this->config->get('config_ssl') . 'image/' . $new_image;
         } else {
             return $this->config->get('config_url') . 'image/' . $new_image;
         }
-    }
+	}
+	
+
 	public function resize($filename, $width, $height) {
 		if (!is_file(DIR_IMAGE . $filename)) {
 			if (is_file(DIR_IMAGE . 'no_image.jpg')) {
@@ -208,15 +210,34 @@ class ModelToolImage extends Model {
 			} else {
 				copy(DIR_IMAGE . $image_old, DIR_IMAGE . $image_new);
 			}
+			$this->makeWebP('image/'.$new_image);
 		}
 
 		$imagepath_parts = explode('/', $image_new);
 		$new_image = implode('/', array_map('rawurlencode', $imagepath_parts));
-
+		
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
 			return $this->config->get('config_ssl') . 'image/' . $new_image;
 		} else {
 			return $this->config->get('config_url') . 'image/' . $new_image;
+		}
+	}
+	public function makeWebP($file_f){
+		$info_f = pathinfo($file_f);
+		$ext_f=$info_f['extension'];
+		if($ext_f=='jpg' or $ext_f=='png'){
+			if($ext_f=='jpg'){
+			  $img = imageCreateFromJpeg($file_f);
+			}
+			if($ext_f=='png'){
+			  $img = imageCreateFromPng($file_f);
+			}
+			$new=$info_f['dirname'] . '/' . $info_f['filename'] . '.' . 'webp';
+			imageWebp($img, $new, 100);
+			if (filesize($new) % 2 == 1) {
+				file_put_contents($new, "\0", FILE_APPEND);
+			}
+			imagedestroy($img);
 		}
 	}
 }

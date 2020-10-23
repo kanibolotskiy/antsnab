@@ -128,15 +128,10 @@
                                     <a class="" data-fancybox="gallery" data-loop="true" data-caption="<?php echo $heading_title.'. #1'; ?>"
                                     href="<?php echo $popup; ?>" 
                                     title="<?php echo $heading_title; ?>">
-
-<!--
-<?php //echo "!".$thumb_webm."!";?>
-<source type="image/webp" srcset="image.webp">
--->
-<picture>
-    
+<picture >
+    <!--<source type="image/webp" srcset="image.webp">-->
     <source type="image/jpeg" srcset="<?php echo $thumb; ?>">
-    <img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>">
+    <img class="wrp_fly_image" src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>">
 </picture>
 
                                         <!--
