@@ -210,7 +210,7 @@ class ModelToolImage extends Model {
 			} else {
 				copy(DIR_IMAGE . $image_old, DIR_IMAGE . $image_new);
 			}
-			$this->makeWebP('image/'.$new_image);
+			$this->makeWebP('image/'.$image_new);
 		}
 
 		$imagepath_parts = explode('/', $image_new);
