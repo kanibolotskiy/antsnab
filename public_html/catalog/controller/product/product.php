@@ -770,8 +770,16 @@ class ControllerProductProduct extends Controller {
 		
 
 			if ($product_info['image']) {
-				//$data['popup'] = $b_patch . $product_info['image'];
-				$data['popup'] = $this->model_tool_image->myResize($product_info['image'], 1000,750,14,'watermark.png');
+				 
+				
+				$img_filename = $this->model_tool_image->myResize($product_info['image'], 1000,750,14,'watermark.png');
+				$data['popup'] = $img_filename;
+
+				$img_webp=str_replace(".jpg",".webp",$img_filename);
+				$img_webp=str_replace(".png",".webp",$img_webp);
+
+				$data['popup_webp'] = $img_webp;
+
 			} else {
 				$data['popup'] = '';
 			}

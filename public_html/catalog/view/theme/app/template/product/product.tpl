@@ -37,7 +37,7 @@
         <div class="item_card_product" itemscope itemtype="http://schema.org/Product">
             <div class="card-product" id="product_id" product_id="<?=$product_id?>">
                 <h1 class="title" itemprop="name"><?=$heading_title?></h1>
-                <img itemprop="image" src="<?php echo $popup; ?>" style="display:none;">
+                <img itemprop="image" src="<?php echo $popup_webp; ?>" style="display:none;">
                 
                 <?php if($ratingSum){?>
                     <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" style="display:none">
