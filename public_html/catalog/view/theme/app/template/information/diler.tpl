@@ -7,7 +7,7 @@
         <?php echo $content_top; ?>
         <div class>
             <h1 class="title"><?php echo $heading_title; ?></h1>
-            <div class="content-text"><?php echo $description; ?></div>
+            <div class="article-content content-text"><?php echo $description; ?></div>
         </div>
         <div class="wrap_diler_link">
             <div class="diler_link">

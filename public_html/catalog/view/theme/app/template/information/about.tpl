@@ -5,7 +5,7 @@
         <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
         
         <?php echo $content_top; ?>
-        <div class="content-text">
+        <div class="article-content content-text">
             <h1 class="title"><?php echo $heading_title; ?></h1>
             <div class="wrapper_about">
                 <?php foreach($about_block as $key_row=>$row_block){ ?>
