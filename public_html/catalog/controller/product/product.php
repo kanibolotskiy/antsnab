@@ -777,21 +777,13 @@ class ControllerProductProduct extends Controller {
 			}
 
 			if ($product_info['image']) {
-				$data['thumb'] = $this->model_tool_image->myResize($product_info['image'], 750, 560);
-				//$data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get($this->config->get('config_theme') . '_image_thumb_width'), $this->config->get($this->config->get('config_theme') . '_image_thumb_height'));
-				//$data['thumb'] = $this->model_tool_image->resize($product_info['image'], 728, 668);
-				/*$data['thumb'] = $this->model_tool_image->myResize($product_info['image'], 1000, 750,1,'watermark.png');
-				$data['thumb_alt'] = $this->model_tool_image->myResize($product_info['image'], 728, 668);
-				$data['thumb_alt2'] = $this->model_tool_image->resize($product_info['image'], 728, 668);
-				$data['thumb_alt3'] = 'http://antsnab.cp06038.tmweb.ru/image/'.$product_info['image'];
-				$data['thumb_alt4'] = $this->model_tool_image->resize($product_info['image'], 1000, 750);
-				$data['thumb_alt5'] = $this->model_tool_image->myResize($product_info['image'], 1000, 750);
-				*/
-				//$data['thumb'] = $this->model_tool_image->myResize($product_info['image'],$this->config->get($this->config->get('config_theme') . '_image_thumb_width'), 350,350,4,'watermark.png');
-				
-				
+				$img_filename=$this->model_tool_image->myResize($product_info['image'], 750, 560);
+				$img_webp=str_replace(".jpg",".webp",$img_filename);
+				$img_webp=str_replace(".png",".webp",$img_webp);
 
-				$data['thumb_webm'] = $this->model_tool_image->myResize($product_info['image'], 750, 560);
+				$data['thumb'] = $img_filename;
+				$data['thumb_webm']=$img_webp;
+				
 
 				$this->document->setOgImage($data['thumb']);
 			} else {

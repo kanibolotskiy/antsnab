@@ -129,16 +129,11 @@
                                     href="<?php echo $popup; ?>" 
                                     title="<?php echo $heading_title; ?>">
 <picture >
-    <!--<source type="image/webp" srcset="image.webp">-->
-    <source type="image/jpeg" srcset="<?php echo $thumb; ?>">
+    <source type="image/webp" srcset="<?=$thumb_webm?>">
+    <source type="image/jpeg" srcset="<?=$thumb?>">
     <img class="wrp_fly_image" src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>">
 </picture>
 
-                                        <!--
-                                        <img class="wrp_fly_image" src="<?php echo $thumb; ?>"
-                                            title="<?php echo $heading_title; ?>"
-                                            alt="<?php echo $heading_title; ?>" />
-                                        -->
                                     </a>
                                 <?php } ?>
                                 <div class="wrp_favorite">
