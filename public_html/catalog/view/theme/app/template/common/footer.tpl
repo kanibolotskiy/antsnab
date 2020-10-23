@@ -1,11 +1,11 @@
 <footer class="footer">
 
     <div class="container" itemscope itemtype="http://schema.org/LocalBusiness">
-        <div itemprop="image" content="<?php echo $logo;?>" style="display:none;"></div>
+        <div itemprop="image" content="<?php echo $logo_webp;?>" style="display:none;"></div>
 
         <div itemprop="url" href="<?php echo $home;?>" content="<?php echo $home;?>" style="display:none;"></div>
         <div itemprop="logo" itemscope style="display:none;" itemtype="https://schema.org/ImageObject">
-            <img itemprop="url image" src="<?php echo $logo;?>" style="display:none;"/>
+            <img itemprop="url image" src="<?php echo $logo_webp;?>" style="display:none;"/>
             <meta itemprop="width" content="115">
             <meta itemprop="height" content="115">
         </div>

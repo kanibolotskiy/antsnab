@@ -64,6 +64,8 @@ class ControllerCommonFooter extends Controller {
 		} else {
 			$data['logo'] = '';
 		}
+		$data['logo_webp'] = $server . 'image/catalog/logo.webp';
+
 		$data['personaldata'] = $this->url->link('information/information', 'information_id=11', '', true);
 		
 		// Whos Online
