@@ -6106,9 +6106,10 @@ class ModelExtensionExchange1c extends Model {
             if(!$product_id) {
 				$file_log='import_log.txt';
 				$product_id = $this->getProductIdByModel($data['product_guid']);
-				file_put_contents($file_log, $offer->Артикул."==".print_r($data,1)."\r\n",FILE_APPEND);	
-            }
+				file_put_contents($file_log, $offer->Артикул."==".$data['product_guid']."\r\n",FILE_APPEND);	
+			}
 			*/
+			
             // Есть ли связь Ид с товаром в таблице product_to_1c
             // Original behaviour
 			// $product_id = $this->getProductIdByGuid($data['product_guid']);
