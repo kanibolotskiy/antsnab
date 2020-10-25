@@ -5643,6 +5643,7 @@ class ModelExtensionExchange1c extends Model {
 
 		// Определим product_id
 		$query = $this->query("SELECT `product_id` FROM `" . DB_PREFIX . "product` WHERE `model` = " . (int)$model);
+		$file_log='import_log.txt';
 		file_put_contents($file_log, "SELECT `product_id` FROM `" . DB_PREFIX . "product` WHERE `model` = " . (int)$model."\r\n",FILE_APPEND);
 
 		$product_id = isset($query->row['product_id']) ? $query->row['product_id'] : 0;
