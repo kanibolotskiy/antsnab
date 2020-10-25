@@ -131,7 +131,7 @@ function getParamsForm(){
     if(limit!="9"){
         str+="&limit="+limit;
     }
-    console.log(str)
+    //console.log(str)
     var url=$("#form_params").attr("action");
     var str_fin="";
     if(str){

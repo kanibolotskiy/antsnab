@@ -47,7 +47,12 @@
                         <span class="fast_preview_span with_goal" goal="quick-view">Быстрый просмотр</span>
                     </div>
                 </div>
-                <img class="wrp_fly_image" itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" title="<?= $p['name'] ?>" itemprop="image" />
+                
+<picture >
+    <source type="image/webp" srcset="<?= $p['thumb_webp'] ?>">
+    <source type="image/jpeg" srcset="<?= $p['thumb'] ?>">
+    <img class="wrp_fly_image" itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" title="<?= $p['name'] ?>" itemprop="image" />
+</picture>                
                 <div class="wrp_favorite">
                     <div rel="<?= $p['product_id']?>" title="Добавить товар в избранное" class="favorite <?= $p['favorite'] ?>"></div>        
                     <div rel="<?= $p['product_id']?>" title="Добавить товар в сравнение" class="compare <?= $p['compare'] ?>"></div>

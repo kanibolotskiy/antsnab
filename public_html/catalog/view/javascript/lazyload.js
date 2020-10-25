@@ -46,12 +46,11 @@ document.addEventListener("DOMContentLoaded", function(){
         if(limit!="9"){
             str+="&limit="+limit;
         }
-        
+        var str_fin="";
         if(str){
             str_fin="?"+str.slice(1)
         }
         
-
         var url=$("#form_params").attr("action");
         return str_fin;
 }

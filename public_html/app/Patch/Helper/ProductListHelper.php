@@ -234,8 +234,10 @@ class ProductListHelper extends \Model
                 }
             }
 
-            $path = $this->hierarhy->getPath($result['main_category']);
-            
+            //$path = $this->hierarhy->getPath($result['main_category']);
+            $img_webp=str_replace(".jpg",".webp",$image);
+            $img_webp=str_replace(".png",".webp",$img_webp);
+
             $products[] = array(
                 'product_id' => $result['product_id'],
                 'quantity'=>$result['quantity'],
@@ -254,6 +256,8 @@ class ProductListHelper extends \Model
                 'mincount'=>$mincount,
                 'step'=>$step,
                 'thumb' => $image,
+                'thumb_webp' => $img_webp,
+                
                 //'name' => $result['meta_h1'],
                 'name' => $result['name'],
                 'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
@@ -268,7 +272,7 @@ class ProductListHelper extends \Model
                 'rating' => $rating,
                 'reviews' => $result['reviews'],
                 'properties' => $previewProperties,
-                'href' => $this->url->link('product/product', 'path=' . $path . '&product_id=' . $result['product_id']),
+                'href' => $this->url->link('product/product', 'path=' . '&product_id=' . $result['product_id']),
                 'favorite'=>$fav_active,
                 'compare'=>$compare_active,
                 'labels'=>$labels
