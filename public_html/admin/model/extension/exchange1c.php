@@ -66,19 +66,19 @@ class ModelExtensionExchange1c extends Model {
 				$this->log->write($line . "(M):");
 				$this->log->write(print_r($message, true));
 
-				file_put_contents($file_log, $line . "(M):"."\r\n",FILE_APPEND);
-				file_put_contents($file_log, print_r($message, true)."\r\n",FILE_APPEND);
+				//file_put_contents($file_log, $line . "(M):"."\r\n",FILE_APPEND);
+				//file_put_contents($file_log, print_r($message, true)."\r\n",FILE_APPEND);
 			} else {
 				if (mb_substr($message,0,1) == '~') {
 					$this->log->write('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
 					$this->log->write($line . "(M) " . mb_substr($message, 1));
 
-					file_put_contents($file_log, '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'."\r\n",FILE_APPEND);
-					file_put_contents($file_log, $line . "(M) " . mb_substr($message, 1)."\r\n",FILE_APPEND);
+					//file_put_contents($file_log, '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'."\r\n",FILE_APPEND);
+					//file_put_contents($file_log, $line . "(M) " . mb_substr($message, 1)."\r\n",FILE_APPEND);
 
 				} else {
 					$this->log->write($line . "(M) " . $message);
-					file_put_contents($file_log, $line . "(M) " . $message."\r\n",FILE_APPEND);
+					//file_put_contents($file_log, $line . "(M) " . $message."\r\n",FILE_APPEND);
 				}
 			}
 		}
@@ -5643,6 +5643,8 @@ class ModelExtensionExchange1c extends Model {
 
 		// Определим product_id
 		$query = $this->query("SELECT `product_id` FROM `" . DB_PREFIX . "product` WHERE `model` = " . (int)$model);
+		file_put_contents($file_log, "SELECT `product_id` FROM `" . DB_PREFIX . "product` WHERE `model` = " . (int)$model."\r\n",FILE_APPEND);
+
 		$product_id = isset($query->row['product_id']) ? $query->row['product_id'] : 0;
 
 		if ($product_id) {
