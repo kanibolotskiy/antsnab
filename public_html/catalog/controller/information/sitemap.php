@@ -38,7 +38,7 @@ class ControllerInformationSitemap extends Controller {
 		$data['categories'] = array();
 
 		$categories_1 = $this->model_catalog_category->getCategories(0);
-		print_r($categories_1);
+		//print_r($categories_1);
 		foreach ($categories_1 as $category_1) {
 			$level_2_data = array();
 

@@ -9,6 +9,7 @@ class SitemapController extends \Controller {
 		$this->load->language('information/sitemap');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setDescription($this->language->get('heading_title'));
 
 		$data['breadcrumbs'] = array();
 

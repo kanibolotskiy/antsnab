@@ -71,7 +71,8 @@ class PaginationHelper
             $document->addLink($pageUrl($paginationModel->getNextPageNumber()), 'next');
             //$document->addLink($baseUrl, 'canonical');            
         }
-        $document->addLink('canonical',$baseUrl);
+        //$document->addLink('canonical',$baseUrl);
+        $document->addLink($baseUrl,'canonical');
         return $load->view(static::PAGINATION_TEMPLATE, ['pagination' => $paginationModel, 'pageUrl' => $pageUrl]);
     }
 

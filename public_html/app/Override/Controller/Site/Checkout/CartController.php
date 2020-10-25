@@ -690,7 +690,7 @@ class CartController extends \ControllerCheckoutCart
             $data['products'] = array();
 
             $products = $this->cart->getProducts();
-
+            
             $orderSumTotal = 0;
             $orderSumEcoTotal = 0;
 
