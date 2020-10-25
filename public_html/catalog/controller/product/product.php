@@ -777,7 +777,6 @@ class ControllerProductProduct extends Controller {
 
 				$img_webp=str_replace(".jpg",".webp",$img_filename);
 				$img_webp=str_replace(".png",".webp",$img_webp);
-
 				$data['popup_webp'] = $img_webp;
 
 			} else {
@@ -790,7 +789,7 @@ class ControllerProductProduct extends Controller {
 				$img_webp=str_replace(".png",".webp",$img_webp);
 
 				$data['thumb'] = $img_filename;
-				$data['thumb_webm']=$img_webp;
+				$data['thumb_webp']=$img_webp;
 				
 
 				$this->document->setOgImage($data['thumb']);
@@ -805,12 +804,15 @@ class ControllerProductProduct extends Controller {
 			//$count_images=0;
 			foreach ($results as $result) {
 				//if($count_images<4){
+					$img_filename=$this->model_tool_image->resize($result['image'], 176,150);
+					//echo $img_filename."<br/>!";
+					$img_webp=str_replace(".jpg",".webp",$img_filename);
+					$img_webp=str_replace(".png",".webp",$img_webp);
+					
 					$data['images'][] = array(
-						//'popup' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_popup_width'), $this->config->get($this->config->get('config_theme') . '_image_popup_height')),
-						//'popup' => $this->model_tool_image->resize($result['image'],1000,750),
 						'popup' => $this->model_tool_image->myResize($result['image'],1000,750,13,'watermark.png'),
-						//'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_additional_width'), $this->config->get($this->config->get('config_theme') . '_image_additional_height'))
-						'thumb' => $this->model_tool_image->resize($result['image'], 176,150)
+						'thumb' => $img_filename,
+						'thumb_webp' => $img_webp
 					);
 				//}
 				//$count_images++;
@@ -1068,11 +1070,14 @@ class ControllerProductProduct extends Controller {
 				foreach($results_rl as $result){
 					//$result_temp
 					if ($result['image']) {
-						//$image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
 						$image = $this->model_tool_image->myResize($result['image'], 200,200,1);
+						$img_webp=str_replace(".jpg",".webp",$image);
+						$img_webp=str_replace(".png",".webp",$img_webp);
 					} else {
 						$image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
+						$img_webp='';
 					}
+					
 	
 					if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 						$price_val=$this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'));
@@ -1117,6 +1122,7 @@ class ControllerProductProduct extends Controller {
 					$data['products'][$key][] = array(
 						'product_id'  => $result['product_id'],
 						'thumb'       => $image,
+						'thumb_webp'  => $img_webp,
 						'name'        => $result['name'],
 						'meta_h1'     => $result['meta_h1'],
 						'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
@@ -1132,83 +1138,7 @@ class ControllerProductProduct extends Controller {
 					);
 				}
 			}
-			//print_r($data['products']);
-			/*
-			$results_rl = $this->model_catalog_product->getProductRelated($this->request->get['product_id'],true,2,'product_analogs',$this->request->get['product_id']);
 			
-			$exclude_ids=array_keys($results_rl);
-			$exclude_ids[]=$this->request->get['product_id'];
-			$exclude_str=implode(",",$exclude_ids);
-			
-			$results_an = $this->model_catalog_product->getProductRelated($this->request->get['product_id'],true,2,'product_related',$exclude_str);
-
-			$results=array_merge($results_rl, $results_an);
-
-			foreach ($results as $result) {
-				if ($result['image']) {
-					//$image = $this->model_tool_image->resize($result['image'], $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
-					$image = $this->model_tool_image->myResize($result['image'], 200,200,1);
-				} else {
-					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
-				}
-
-				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$price_val=$this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax'));
-					//$price = $this->currency->format($price_val, );
-					$price = number_format($price_val,0,".", " ");
-
-	
-				} else {
-					$price = false;
-					$price_val=0;
-				}
-
-				if ((float)$result['special']) {
-					$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				} else {
-					$special = false;
-				}
-
-				if ($this->config->get('config_tax')) {
-					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price'], $this->session->data['currency']);
-				} else {
-					$tax = false;
-				}
-
-				if ($this->config->get('config_review_status')) {
-					//$rating = (int)$result['rating'];
-					$rating = round($result['rating'],1);
-				} else {
-					$rating = false;
-				}
-				$discount=0;
-				if($result['price_wholesaleold']*1){
-					$discount = (int)(($result['price_wholesale']/$result['price_wholesaleold']-1)*100);
-				}
-				
-				$labels = $this->model_catalog_product->getProductLabels($result);
-
-				$data['products'][] = array(
-					'product_id'  => $result['product_id'],
-					'thumb'       => $image,
-					'name'        => $result['name'],
-					'meta_h1'     => $result['meta_h1'],
-					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
-					'price'       => $price,
-					'price_val'	  => $price_val,
-					'special'     => $special,
-					'tax'         => $tax,
-					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
-					'rating'      => $rating,
-					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
-					'labels'	  => $labels,
-					'discount'	  => $discount
-				);
-			}
-			*/
-
-
-
 			$data['tags'] = array();
 			if ($product_info['tag']) {
 				$tags = explode(',', $product_info['tag']);

@@ -29,6 +29,7 @@ class ModelToolImage extends Model {
 			$image = new Image(DIR_IMAGE . $old_image);
 			$image->cropsize($width, $height);
 			$image->save(DIR_IMAGE . $new_image);
+			$this->makeWebP('image/'.$new_image);
 		}
 		
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
@@ -68,6 +69,8 @@ class ModelToolImage extends Model {
 			$image = new Image(DIR_IMAGE . $old_image);
 			$image->onesize($maxsize);
 			$image->save(DIR_IMAGE . $new_image);
+
+			$this->makeWebP('image/'.$new_image);
 		}
 		
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {

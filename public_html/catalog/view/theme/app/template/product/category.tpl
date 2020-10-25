@@ -55,7 +55,14 @@
                                                 <li>
                                                     <div class="catalog-block">
                                                         <div class="catalog-img">
-                                                            <a href="<?= $c['href'] ?>"><img src="<?= $c['thumb'] ?>" title="<?= $c['name']?>" alt="<?= $c['name']?>"></a>
+                                                            <a href="<?= $c['href'] ?>">
+                                                                
+<picture >
+    <source type="image/webp" srcset="<?= $c['thumb_webp'] ?>">
+    <source type="image/jpeg" srcset="<?= $c['thumb'] ?>">
+    <img src="<?= $c['thumb'] ?>" title="<?= $c['name']?>" alt="<?= $c['name']?>">
+</picture>                                                                
+                                                            </a>
                                                         </div>
                                                         <div class="catalog-description">
                                                             <a class="title-product" href="<?= $c['href'] ?>">
@@ -65,17 +72,7 @@
                                                                 <p>
                                                                 <?= $c['description'] ?>
                                                                 </p>
-                                                            </div>
-                                                            <!--   
-                                                            <div class="tags">
-                                                                <?php foreach( $c['sub'] as $sub ): ?>
-                                                                    <a href="<?=$sub['href']?>">
-                                                                        <?=$sub['name']?>
-                                                                    </a>
-                                                                <?php endforeach;?>
-                                                            </div> 
-                                                            -->
-                                                        </div> 
+                                                            </div>                                                        </div> 
                                                         <a href="<?= $c['href'] ?>" class="more">Смотреть все</a> 
                                                     </div> 
                                                 </li>

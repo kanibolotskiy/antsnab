@@ -693,10 +693,14 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
 		foreach($activeAccias as $accia){
 			$accia_url=$this->url->link('sale/sale', 'sale_id=' . $accia["accia_id"]);
 			if($accia['banner']){
+                $image=$this->model_tool_image->cropsize($accia['banner'], 1100,210);
+                $img_webp=str_replace(".jpg",".webp",$image);
+                $img_webp=str_replace(".png",".webp",$img_webp);
                 $banners[]=array(
 					'title' => $accia["title"],
 					'link'  => $accia_url,
-                    'image' => $this->model_tool_image->cropsize($accia['banner'], 1100,210)
+                    'image' => $image,
+                    'image_webp' => $img_webp,
 				);
 			}
         }
@@ -704,10 +708,14 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
         $activeAcciasDiscount=$this->model_catalog_sale->activeAcciaDiscount();
         if($activeAcciasDiscount){
             if($activeAcciasDiscount["banner"]){
+                $image=$this->model_tool_image->cropsize($activeAcciasDiscount["banner"], 1100,210);
+                $img_webp=str_replace(".jpg",".webp",$image);
+                $img_webp=str_replace(".png",".webp",$img_webp);
                 $banners[]=array(
                     'title' => $activeAcciasDiscount["title"],
                     'link'  => "sales/".$activeAcciasDiscount["keyword"]."/",
-                    'image' => $this->model_tool_image->cropsize($activeAcciasDiscount["banner"], 1100,210)
+                    'image' => $image,
+                    'image_webp' => $img_webp,
                 );
             }
         }
@@ -804,10 +812,14 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
                 }
             }
             
+            //$image=$this->model_tool_image->cropsize($activeAcciasDiscount["banner"], 1100,210);
+            $img_webp=str_replace(".jpg",".webp",$image);
+            $img_webp=str_replace(".png",".webp",$img_webp);
 
             $this->data['categories'][] = array(
                 'name' => $result['name'],
                 'thumb' => $image,
+                'thumb_webp' => $img_webp,
                 'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '...',
                 'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url),
                 'sub' => $sub

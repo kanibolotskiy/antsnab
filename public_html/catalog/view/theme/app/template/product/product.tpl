@@ -129,7 +129,7 @@
                                     href="<?php echo $popup; ?>" 
                                     title="<?php echo $heading_title; ?>">
 <picture >
-    <source type="image/webp" srcset="<?=$thumb_webm?>">
+    <source type="image/webp" srcset="<?=$thumb_webp?>">
     <source type="image/jpeg" srcset="<?=$thumb?>">
     <img class="wrp_fly_image" src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>">
 </picture>
@@ -152,9 +152,16 @@
                                             <a data-fancybox="gallery" data-loop="true"
                                             href="<?php echo $image['popup']; ?>" 
                                             data-caption="<?php echo $heading_title.'. #'.$i; ?>">
+<picture >
+    <source type="image/webp" srcset="<?php echo $image['thumb_webp']; ?>">
+    <source type="image/jpeg" srcset="<?php echo $image['thumb']; ?>">
+    <img src="<?php echo $image['thumb']; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" />
+</picture>
+                                                    <!--
                                                     <img src="<?php echo $image['thumb']; ?>" 
                                                         title="<?php echo $heading_title; ?>" 
                                                         alt="<?php echo $heading_title; ?>" />
+                                                    -->
                                             </a>
                                         </div>
                                     <?php $i++;} ?>
@@ -795,7 +802,14 @@
                                             <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
 
                                             <a href="<?=$p['href']?>" class="img-production">
-                                                <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+                                                
+<picture >
+    <?php if($p['thumb_webp']) {?>
+        <source type="image/webp" srcset="<?=$p['thumb_webp']?>">
+    <?php }?>
+    <source type="image/jpeg" srcset="<?=$p['thumb']?>">
+    <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+</picture>
                                             </a>
                                             
                                             <strong><?=$p['price']?> <div class="rur">i</div></strong>
@@ -820,7 +834,13 @@
                                             <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
 
                                             <a href="<?=$p['href']?>" class="img-production">
-                                                <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+<picture >
+    <?php if($p['thumb_webp']) {?>
+        <source type="image/webp" srcset="<?=$p['thumb_webp']?>">
+    <?php }?>
+    <source type="image/jpeg" srcset="<?=$p['thumb']?>">
+    <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+</picture>                                                                                      
                                             </a>
                                             
                                             <strong><?=$p['price']?> <div class="rur">i</div></strong>
@@ -852,7 +872,13 @@
                                             <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
 
                                             <a href="<?=$p['href']?>" class="img-production">
-                                                <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+<picture >
+    <?php if($p['thumb_webp']) {?>
+        <source type="image/webp" srcset="<?=$p['thumb_webp']?>">
+    <?php }?>
+    <source type="image/jpeg" srcset="<?=$p['thumb']?>">
+    <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+</picture>                                                
                                             </a>
                                             
                                             <strong><?=$p['price']?> <div class="rur">i</div></strong>
@@ -877,7 +903,13 @@
                                             <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
 
                                             <a href="<?=$p['href']?>" class="img-production">
-                                                <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+<picture >
+    <?php if($p['thumb_webp']) {?>
+        <source type="image/webp" srcset="<?=$p['thumb_webp']?>">
+    <?php }?>
+    <source type="image/jpeg" srcset="<?=$p['thumb']?>">
+    <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+</picture>
                                             </a>
                                             
                                             <strong><?=$p['price']?> <div class="rur">i</div></strong>
