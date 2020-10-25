@@ -260,7 +260,8 @@ if (isset($request->get['mode']) && $request->get['type'] == 'catalog') {
 	}
 
 } else if (isset($request->get['mode']) && $request->get['type'] == 'get_catalog') {
-
+	$file_log='import_log.txt';
+	file_put_contents($file_log, $request->get['mode'], 0);
 	switch ($request->get['mode']) {
 		case 'init':
 			$action = new Action('extension/module/exchange1c/modeInitGetCatalog');
