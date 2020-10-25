@@ -22,3 +22,4 @@ antsnab.cp06038.tmweb.ru 94.158.95.26 - - [25/Oct/2020:03:26:57 +0300] "GET /exp
 antsnab.cp06038.tmweb.ru 94.158.95.26 - - [25/Oct/2020:03:26:57 +0300] "GET /favicon.ico HTTP/1.0" 200 15086 "http://antsnab.cp06038.tmweb.ru/export/exchange1c.php" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36"
 antsnab.cp06038.tmweb.ru 185.191.171.4 - - [25/Oct/2020:03:48:42 +0300] "GET /diler/ HTTP/1.0" 503 27672 "-" "Mozilla/5.0 (compatible; SemrushBot/6~bl; +http://www.semrush.com/bot.html)"
 antsnab.cp06038.tmweb.ru 213.180.203.69 - - [25/Oct/2020:04:01:17 +0300] "GET /products/mastics/cold/ HTTP/1.0" 503 27752 "-" "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)"
+antsnab.cp06038.tmweb.ru 213.180.203.67 - - [25/Oct/2020:05:57:27 +0300] "GET /news/ HTTP/1.0" 503 27660 "-" "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)"
