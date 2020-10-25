@@ -2001,8 +2001,7 @@ class ControllerExtensionModuleExchange1c extends Controller {
 			echo "failure";
 			exit;
 		}
-		$file_log='import_log.txt';
-		file_put_contents($file_log, 'modeCatalogInit');
+		
 		
 		$result = $this->modeInit();
 		echo $result[0] . "\n";
@@ -2010,6 +2009,9 @@ class ControllerExtensionModuleExchange1c extends Controller {
 		$this->log($result, 2);
 		$this->log("Mode Catalog Init", 2);
 		$this->log($result, 2);
+		$file_log='import_log.txt';
+		file_put_contents($file_log, $result, 1);
+
 		//echo "sessid=" . md5($this->config->get('exchange1c_password')) . "\n";
 
 	} // modeCatalogInit()
