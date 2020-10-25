@@ -198,7 +198,7 @@ $controller = new Front($registry);
 
 if (isset($request->get['mode']) && $request->get['type'] == 'catalog') {
 	$file_log='export/import_log.txt';
-	file_put_contents($file_log, ($request->get['mode']."|"));
+	//file_put_contents($file_log, ($request->get['mode']."|"));
 
 	switch ($request->get['mode']) {
 		case 'checkauth':
