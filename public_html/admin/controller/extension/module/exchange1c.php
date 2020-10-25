@@ -2001,7 +2001,9 @@ class ControllerExtensionModuleExchange1c extends Controller {
 			echo "failure";
 			exit;
 		}
-
+		$file_log='import_log.txt';
+		file_put_contents($file_log, 'modeCatalogInit');
+		
 		$result = $this->modeInit();
 		echo $result[0] . "\n";
 		echo $result[1] . "\n";
