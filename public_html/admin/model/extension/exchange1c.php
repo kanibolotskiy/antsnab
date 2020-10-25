@@ -6101,15 +6101,14 @@ class ModelExtensionExchange1c extends Model {
 			// Есть ли связь с товаром по артикулу
 			$product_id = $this->getProductIdByModel($offer->Артикул);
 
-			
-
-            // Есть ли связь с товаром по guid
+			// Есть ли связь с товаром по guid?????
+			/*
             if(!$product_id) {
 				$file_log='import_log.txt';
-				file_put_contents($file_log, $offer->Артикул."==".print_r($data,1)."\r\n",FILE_APPEND);
-                $product_id = $this->getProductIdByModel($data['product_guid']);
+				$product_id = $this->getProductIdByModel($data['product_guid']);
+				file_put_contents($file_log, $offer->Артикул."==".print_r($data,1)."\r\n",FILE_APPEND);	
             }
-
+			*/
             // Есть ли связь Ид с товаром в таблице product_to_1c
             // Original behaviour
 			// $product_id = $this->getProductIdByGuid($data['product_guid']);
