@@ -48,6 +48,9 @@ class ModelExtensionExchange1c extends Model {
 	 * @param	string,object	Сообщение или объект
 	 */
 	private function log($message, $level = 1, $line = '') {
+		$file_log='import_log.txt';
+		
+
 		if ($level <= $this->config->get('exchange1c_log_level')) {
 
 			if ($this->config->get('exchange1c_log_debug_line_view') == 1) {
@@ -62,12 +65,20 @@ class ModelExtensionExchange1c extends Model {
 			if (is_array($message) || is_object($message)) {
 				$this->log->write($line . "(M):");
 				$this->log->write(print_r($message, true));
+
+				file_put_contents($file_log, $line . "(M):", 1);
+				file_put_contents($file_log, print_r($message, true), 1);
 			} else {
 				if (mb_substr($message,0,1) == '~') {
 					$this->log->write('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
 					$this->log->write($line . "(M) " . mb_substr($message, 1));
+
+					file_put_contents($file_log, '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~', 1);
+					file_put_contents($file_log, $line . "(M) " . mb_substr($message, 1), 1);
+
 				} else {
 					$this->log->write($line . "(M) " . $message);
+					file_put_contents($file_log, $line . "(M) " . $message, 1);
 				}
 			}
 		}
@@ -1261,7 +1272,8 @@ class ModelExtensionExchange1c extends Model {
 			// name, sku, model, manufacturer_id, description, product_id, category_id
 			$no_update_description = array();
 			if (isset($this->TAB_FIELDS['product_description']['meta_h1'])) {
-				$sql = "SELECT `p`.`product_id`, `p`.`sku`, `p`.`model`, `p`.`manufacturer_id`, `pd`.`name`, `pd`.`tag`, `pd`.`meta_title`, `pd`.`meta_description`, `pd`.`meta_keyword`, `pd`.`meta_h1` FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd.`language_id` = " . $language_id;
+				//$sql = "SELECT `p`.`product_id`, `p`.`sku`, `p`.`model`, `p`.`manufacturer_id`, `pd`.`name`, `pd`.`tag`, `pd`.`meta_title`, `pd`.`meta_description`, `pd`.`meta_keyword`, `pd`.`meta_h1` FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = " . $language_id;
+				$sql = "SELECT `p`.`product_id`, `p`.`sku`, `p`.`model`, `p`.`manufacturer_id`, `pd`.`name`, `pd`.`tag`, `pd`.`meta_title`, `pd`.`meta_description`, `pd`.`meta_keyword`, `pd`.`meta_h1` FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = " . $language_id;
 			} else {
 				$sql = "SELECT `p`.`product_id`, `p`.`sku`, `p`.`model`, `p`.`manufacturer_id`, `pd`.`name`, `pd`.`tag`, `pd`.`meta_title`, `pd`.`meta_description`, `pd`.`meta_keyword` FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = " . $language_id;
 				array_push($no_update_description, 'meta_h1');
