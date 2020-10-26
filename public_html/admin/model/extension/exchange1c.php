@@ -48,6 +48,9 @@ class ModelExtensionExchange1c extends Model {
 	 * @param	string,object	Сообщение или объект
 	 */
 	private function log($message, $level = 1, $line = '') {
+		$file_log='import_log.txt';
+		
+
 		if ($level <= $this->config->get('exchange1c_log_level')) {
 
 			if ($this->config->get('exchange1c_log_debug_line_view') == 1) {
@@ -62,12 +65,20 @@ class ModelExtensionExchange1c extends Model {
 			if (is_array($message) || is_object($message)) {
 				$this->log->write($line . "(M):");
 				$this->log->write(print_r($message, true));
+
+				//file_put_contents($file_log, $line . "(M):"."\r\n",FILE_APPEND);
+				//file_put_contents($file_log, print_r($message, true)."\r\n",FILE_APPEND);
 			} else {
 				if (mb_substr($message,0,1) == '~') {
 					$this->log->write('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
 					$this->log->write($line . "(M) " . mb_substr($message, 1));
+
+					//file_put_contents($file_log, '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'."\r\n",FILE_APPEND);
+					//file_put_contents($file_log, $line . "(M) " . mb_substr($message, 1)."\r\n",FILE_APPEND);
+
 				} else {
 					$this->log->write($line . "(M) " . $message);
+					//file_put_contents($file_log, $line . "(M) " . $message."\r\n",FILE_APPEND);
 				}
 			}
 		}
@@ -1261,7 +1272,8 @@ class ModelExtensionExchange1c extends Model {
 			// name, sku, model, manufacturer_id, description, product_id, category_id
 			$no_update_description = array();
 			if (isset($this->TAB_FIELDS['product_description']['meta_h1'])) {
-				$sql = "SELECT `p`.`product_id`, `p`.`sku`, `p`.`model`, `p`.`manufacturer_id`, `pd`.`name`, `pd`.`tag`, `pd`.`meta_title`, `pd`.`meta_description`, `pd`.`meta_keyword`, `pd`.`meta_h1` FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd.`language_id` = " . $language_id;
+				//$sql = "SELECT `p`.`product_id`, `p`.`sku`, `p`.`model`, `p`.`manufacturer_id`, `pd`.`name`, `pd`.`tag`, `pd`.`meta_title`, `pd`.`meta_description`, `pd`.`meta_keyword`, `pd`.`meta_h1` FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = " . $language_id;
+				$sql = "SELECT `p`.`product_id`, `p`.`sku`, `p`.`model`, `p`.`manufacturer_id`, `pd`.`name`, `pd`.`tag`, `pd`.`meta_title`, `pd`.`meta_description`, `pd`.`meta_keyword`, `pd`.`meta_h1` FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = " . $language_id;
 			} else {
 				$sql = "SELECT `p`.`product_id`, `p`.`sku`, `p`.`model`, `p`.`manufacturer_id`, `pd`.`name`, `pd`.`tag`, `pd`.`meta_title`, `pd`.`meta_description`, `pd`.`meta_keyword` FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = " . $language_id;
 				array_push($no_update_description, 'meta_h1');
@@ -5631,6 +5643,7 @@ class ModelExtensionExchange1c extends Model {
 
 		// Определим product_id
 		$query = $this->query("SELECT `product_id` FROM `" . DB_PREFIX . "product` WHERE `model` = " . (int)$model);
+		
 		$product_id = isset($query->row['product_id']) ? $query->row['product_id'] : 0;
 
 		if ($product_id) {
@@ -6088,11 +6101,15 @@ class ModelExtensionExchange1c extends Model {
 			// Есть ли связь с товаром по артикулу
 			$product_id = $this->getProductIdByModel($offer->Артикул);
 
-            // Есть ли связь с товаром по guid
+			// Есть ли связь с товаром по guid?????
+			/*
             if(!$product_id) {
-                $product_id = $this->getProductIdByModel($data['product_guid']);
-            }
-
+				$file_log='import_log.txt';
+				$product_id = $this->getProductIdByModel($data['product_guid']);
+				file_put_contents($file_log, $offer->Артикул."==".$data['product_guid']."\r\n",FILE_APPEND);	
+			}
+			*/
+			
             // Есть ли связь Ид с товаром в таблице product_to_1c
             // Original behaviour
 			// $product_id = $this->getProductIdByGuid($data['product_guid']);
