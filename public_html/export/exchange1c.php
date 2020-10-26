@@ -60,7 +60,7 @@ if ($config->get('exchange1c_log_filename')) {
 	$log = new Log($config->get('config_error_filename'));
 }
 $registry->set('log', $log);
-echo $config->get('exchange1c_log_filename');
+
 // ДЛЯ ОТЛАДКИ АВТОРИЗАЦИИ
 //$server_info = print_r($_SERVER, true);
 //$log->write($server_info);
@@ -195,12 +195,7 @@ $controller = new Front($registry);
 
 // Router
 
-
-
-
-
 if (isset($request->get['mode']) && $request->get['type'] == 'catalog') {
-	
 
 	switch ($request->get['mode']) {
 		case 'checkauth':
@@ -260,7 +255,7 @@ if (isset($request->get['mode']) && $request->get['type'] == 'catalog') {
 	}
 
 } else if (isset($request->get['mode']) && $request->get['type'] == 'get_catalog') {
-	
+
 	switch ($request->get['mode']) {
 		case 'init':
 			$action = new Action('extension/module/exchange1c/modeInitGetCatalog');
