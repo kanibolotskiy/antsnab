@@ -21,9 +21,12 @@
         <?php if ($article['thumb']) { ?>
             <div class="news-img">
                 <a itemprop="mainEntityOfPage" href="<?php echo $article['href']; ?>">
-                    <img itemprop="image" src="<?php echo $article['thumb']; ?>" 
-                            alt="<?php echo $article['name']; ?>" 
-                            title="<?php echo $article['name']; ?>" />
+<picture>
+    <source type="image/webp" srcset="<?php echo $article['thumb_webp']; ?>">
+    <source type="image/jpeg" srcset="<?php echo $article['thumb']; ?>">
+    <img itemprop="image" src="<?php echo $article['thumb']; ?>" alt="<?php echo $article['name']; ?>" title="<?php echo $article['name']; ?>" />
+</picture>                
+                    
                 </a>
                 
                 <time><?php echo $article['date']?></time>

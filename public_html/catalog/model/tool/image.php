@@ -41,7 +41,7 @@ class ModelToolImage extends Model {
 	}
 	
 	// Function to resize image with one given max size.
-	function onesize($filename, $maxsize) {
+	public function onesize($filename, $maxsize) {
 	
 		if (!file_exists(DIR_IMAGE . $filename) || !is_file(DIR_IMAGE . $filename)) {
 			return;

@@ -134,7 +134,13 @@ class ControllerInformationAbout extends Controller {
 			}
 			$cust['phone'] = $phone;
 			$cust['email'] = $email;
-			$cust['thumb'] = $this->model_tool_image->myResize($customer['image'], 400,460,1);
+
+			$thumb = $this->model_tool_image->myResize($customer['image'], 400,460,1);
+			$image_webp=str_replace(".jpg",".webp",$thumb);
+			$image_webp=str_replace(".png",".webp",$image_webp);
+			
+			$cust['thumb'] = $thumb;
+			$cust['thumb_webp'] = $image_webp;
 			$data['customers'][]=$cust;
 		}
 		
@@ -153,6 +159,7 @@ class ControllerInformationAbout extends Controller {
 				}else{
 					$img='//img.youtube.com/vi/'.$video_id.'/maxresdefault.jpg';
 				}
+				
 				$off[]=Array(
 					'caption'=>$off_row['caption'],
 					'video'=>'1',
@@ -161,10 +168,15 @@ class ControllerInformationAbout extends Controller {
 				);
 				
 			}else{
+				$thumb=$this->model_tool_image->myResize($off_row['image'], 400,400,1);
+				$image_webp=str_replace(".jpg",".webp",$thumb);
+				$image_webp=str_replace(".png",".webp",$image_webp);
+				
 				$off[]=Array(
 					'caption'=>$off_row['caption'],
 					'video'=>'0',
-					'thumb'=>$this->model_tool_image->myResize($off_row['image'], 400,400,1),
+					'thumb'=>$thumb,
+					'thumb_webp'=>$image_webp,
 					'url'=>"image/".$off_row['image']
 				);
 			}
@@ -197,10 +209,14 @@ class ControllerInformationAbout extends Controller {
 				);
 				
 			}else{
+				$thumb=$this->model_tool_image->myResize($man_row['image'], 400,400,1);
+				$image_webp=str_replace(".jpg",".webp",$thumb);
+				$image_webp=str_replace(".png",".webp",$image_webp);
 				$man[]=Array(
 					'caption'=>$man_row['caption'],
 					'video'=>'0',
-					'thumb'=>$this->model_tool_image->myResize($man_row['image'], 400,400,1),
+					'thumb'=>$thumb,
+					'thumb_webp'=>$image_webp,
 					'url'=>"image/".$man_row['image']
 				);
 			}
@@ -232,10 +248,14 @@ class ControllerInformationAbout extends Controller {
 				);
 				
 			}else{
+				$thumb=$this->model_tool_image->myResize($sklad_row['image'], 400,400,1);
+				$image_webp=str_replace(".jpg",".webp",$thumb);
+				$image_webp=str_replace(".png",".webp",$image_webp);
 				$sklad[]=Array(
 					'caption'=>$sklad_row['caption'],
 					'video'=>'0',
-					'thumb'=>$this->model_tool_image->myResize($sklad_row['image'], 400,400,1),
+					'thumb'=>$thumb,
+					'thumb_webp'=>$image_webp,
 					'url'=>"image/".$sklad_row['image']
 				);
 			}
@@ -245,9 +265,19 @@ class ControllerInformationAbout extends Controller {
 
 		$sert_data=$this->model_catalog_about->getAboutSert();
 		$sert=[];
+
 		foreach($sert_data as $sert_row){	
+			//$thumb=$this->model_tool_image->myResize($sklad_row['image'], 400,400,1);
+			//$image_webp=str_replace(".jpg",".webp",$thumb);
+			//$image_webp=str_replace(".png",".webp",$image_webp);
+			$thumb=$this->model_tool_image->onesize($sert_row['image'], 1100);
+			$image_webp=str_replace(".jpg",".webp",$thumb);
+			$image_webp=str_replace(".png",".webp",$image_webp);
+
 			$sert[]=Array(
 				'caption'=>$sert_row['caption'],
+				'thumb' =>$thumb,
+				'thumb_webp' =>$image_webp,
 				'image'=>"image/".$sert_row['image']
 			);
 		}
@@ -273,21 +303,3 @@ class ControllerInformationAbout extends Controller {
 	}
 
 }
-
-/*
-if($product_info['video']){
-				preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $product_info['video'], $matches);
-				if(isset($matches[0])){
-					$video_id=$matches[0];
-					
-					$data['video_link'] = $product_info['video'];
-					
-					//$data['video_img']='//img.youtube.com/vi/'.$video_id.'/sddefault.jpg';
-					if($product_info['altvideo']){
-						$data['video_img']='//img.youtube.com/vi/'.$video_id.'/sddefault.jpg';
-					}else{
-						$data['video_img']='//img.youtube.com/vi/'.$video_id.'/maxresdefault.jpg';
-					}
-				}
-			}
-			 */

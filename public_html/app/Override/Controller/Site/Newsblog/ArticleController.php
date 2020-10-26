@@ -160,15 +160,21 @@ class ArticleController extends \Controller
             $this->load->model('tool/image');
 
             if ($article_info['image']) {
+                $thumb = $this->model_tool_image->resize($article_info['image'], 660,440);
+                $image_webp=str_replace(".jpg",".webp",$thumb);
+                $image_webp=str_replace(".png",".webp",$image_webp);
+
                 $data['original'] = HTTP_SERVER . 'image/' . $article_info['image'];
                 $data['popup'] = $this->model_tool_image->resize($article_info['image'], $images_size_articles_big[0], $images_size_articles_big[1]);
-                $data['thumb'] = $this->model_tool_image->resize($article_info['image'], 660,440);
+                $data['thumb'] = $thumb;
+                $data['thumb_webp'] = $image_webp;
 
                 $this->document->setOgimage($data['original']);
             } else {
                 $data['original'] = false;
                 $data['popup'] = false;
                 $data['thumb'] = false;
+                $data['thumb_webp'] =false;
             }
             
             //$data['og_image']=$data['original'];
@@ -198,10 +204,15 @@ class ArticleController extends \Controller
             $results = $this->model_newsblog_article->getArticleImages($newsblog_article_id);
 
             foreach ($results as $result) {
+                $thumb = $this->model_tool_image->myResize($result['image'], $images_size_articles_small[0], $images_size_articles_small[1],1);
+                $image_webp=str_replace(".jpg",".webp",$thumb);
+                $image_webp=str_replace(".png",".webp",$image_webp);
+
                 $data['images'][] = array(
                     'original' => HTTP_SERVER . 'image/' . $result['image'],
                     'popup' => $this->model_tool_image->resize($result['image'], $images_size_articles_big[0], $images_size_articles_big[1]),
-                    'thumb' => $this->model_tool_image->myResize($result['image'], $images_size_articles_small[0], $images_size_articles_small[1],1)
+                    'thumb' => $thumb,
+                    'thumb_webp' => $image_webp,
                 );
             }
 
@@ -251,10 +262,15 @@ class ArticleController extends \Controller
                 /** @todo hardcoded later */
                 $preview = mb_substr($preview, 0, $settings['desc_limit']) . '...';
 
+
+                $image_webp=str_replace(".jpg",".webp",$thumb);
+                $image_webp=str_replace(".png",".webp",$image_webp);
+
                 $data['articles'][] = array(
                     'article_id' => $result['article_id'],
                     'original' => $original,
                     'thumb' => $thumb,
+                    'thumb_webp' => $image_webp,
                     'name' => $result['name'],
                     'preview' => $preview,
                     'attributes' => $result['attributes'],
@@ -301,11 +317,15 @@ class ArticleController extends \Controller
                 } else {
                     $rating = false;
                 }
-                
+
+                $image_webp=str_replace(".jpg",".webp",$image);
+                $image_webp=str_replace(".png",".webp",$image_webp);
+
                 /** @changed name is meta_h1 */
                 $data['products'][] = array(
                     'product_id' => $result['product_id'],
                     'thumb' => $image,
+                    'thumb_webp' => $image_webp,
                     'name' => $result['name'],
                     'meta_h1' => $result['meta_h1'],
                     'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',

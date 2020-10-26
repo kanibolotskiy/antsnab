@@ -58,17 +58,25 @@ class HomeTemplateDecorator implements IDecorator
             
             if($node->get('isseo')){
                 if($node->get('isbrand')){
+
+                    $image_webp=str_replace(".jpg",".webp",$resizedImage);
+                    $image_webp=str_replace(".png",".webp",$image_webp);
                     $data['rootCategoriesBrands'][] = [
                         'name' => $node->get('name'),
                         'href' => $href,
-                        'image' => $resizedImage
+                        'image' => $resizedImage,
+                        'image_webp' => $image_webp
+
                     ];
                 }
             }else{
+                $image_webp=str_replace(".jpg",".webp",$resizedImage);
+                $image_webp=str_replace(".png",".webp",$image_webp);
                 $data['rootCategories'][] = [
                     'name' => $node->get('name'),
                     'href' => $href,
-                    'image' => $resizedImage
+                    'image' => $resizedImage,
+                    'image_webp' => $image_webp
                 ];
             }
         }
@@ -89,10 +97,13 @@ class HomeTemplateDecorator implements IDecorator
             } else {
                 $image = $model_tool_image->resize('placeholder.png', 400,400);
             }
+            $image_webp=str_replace(".jpg",".webp",$image);
+            $image_webp=str_replace(".png",".webp",$image_webp);
 
             $data['products_hit'][] = array(
                 'product_id'  => $product_item['product_id'],
                 'thumb'       => $image,
+                'thumb_webp'  => $image_webp,
                 'name'        => $product_item['name'],
                 'meta_h1'     => $product_item['meta_h1'],
                 'price'       => $price,
@@ -117,9 +128,12 @@ class HomeTemplateDecorator implements IDecorator
             $price_old_val = $product_item['price']+$product_item['price']*$product_item['discount_percent']/(100-$product_item['discount_percent']);
             $price_old = number_format($price_old_val,0,".", " ");
 
+            $image_webp=str_replace(".jpg",".webp",$image);
+            $image_webp=str_replace(".png",".webp",$image_webp);
             $data['products_accia'][] = array(
                 'product_id'  => $product_item['product_id'],
                 'thumb'       => $image,
+                'thumb_webp'  => $image_webp,
                 'name'        => $product_item['name'],
                 'meta_h1'     => $product_item['meta_h1'],
                 'price'       => $price,
@@ -143,10 +157,13 @@ class HomeTemplateDecorator implements IDecorator
             } else {
                $image = $model_tool_image->resize('placeholder.png', 400,400);
             }
-            
+
+            $image_webp=str_replace(".jpg",".webp",$image);
+            $image_webp=str_replace(".png",".webp",$image_webp);
             $data['products_new'][] = array(
                 'product_id'  => $product_item['product_id'],
                 'thumb'       => $image,
+                'thumb_webp'       => $image_webp,
                 'name'        => $product_item['name'],
                 'price'       => $price,
                 'href'        => $registry->get('url')->link('product/product', 'product_id=' . $product_item['product_id']),
@@ -232,10 +249,14 @@ class HomeTemplateDecorator implements IDecorator
             $preview = strip_tags($preview);
             $preview = mb_substr($preview, 0, static::PREVIEW_SYMBOLS_COUNT ) . '...';
             
+            $image_webp=str_replace(".jpg",".webp",$thumb);
+            $image_webp=str_replace(".png",".webp",$image_webp);
+
             $data['articles'][] = array(
                 'article_id' => $result['article_id'],
                 'original' => $original,
                 'thumb' => $thumb,
+                'thumb_webp' => $image_webp,
                 'name' => $result['name'],
                 //@added
                 'cat_name' => $result['cat_name'],

@@ -9,7 +9,12 @@
             <h1 class="title"><?php echo $heading_title; ?></h1>
             <?php if ($thumb) { ?>
                 <div class="img-article">
-                    <img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" />
+                    
+<picture>
+    <source type="image/webp" srcset="<?=$thumb_webp?>">
+    <source type="image/jpeg" srcset="<?=$thumb?>">
+    <img src="<?=$thumb?>" title="<?=$heading_title ?>" alt="<?=$heading_title ?>" />
+</picture>                     
                     <?php if ($show_cat_name): ?>
                         <span><?= $cat_name ?></span>
                         <time class="_hidden"><?= $date ?></time>
@@ -48,7 +53,12 @@
                     <li>
                         <div class="products-block">
                             <a href="<?=$p['href']?>" class="img-production">
-                                <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+                                
+<picture>
+    <source type="image/webp" srcset="<?=$p['thumb_webp']?>">
+    <source type="image/jpeg" srcset="<?=$p['thumb']?>">
+    <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+</picture>                                
                             </a>
                             <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
                             <strong><?=$p['price']?></strong>

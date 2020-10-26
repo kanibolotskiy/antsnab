@@ -41,7 +41,12 @@
                             
                             <div class="news-img category_sale_img">
                                 <a itemprop="mainEntityOfPage" href="<?php echo $sale['href']; ?>">
-                                    <img itemprop="image" src="<?php echo $sale['thumb']; ?>" alt="<?php echo $sale['title']; ?>" title="<?php echo $sale['title']; ?>">
+                                    
+<picture>
+    <source type="image/webp" srcset="<?=$sale['thumb_webp']?>">
+    <source type="image/jpeg" srcset="<?=$sale['thumb']?>">
+    <img itemprop="image" src="<?=$sale['thumb']?>" alt="<?=$sale['title']?>" title="<?=$sale['title']?>">
+</picture>                                    
                                 </a>
                                 <?php if($sale['accia_type']==0) {?>
                                     <time class="accia_time_enabled">Действует до <?=$sale["date_end"]?></time>

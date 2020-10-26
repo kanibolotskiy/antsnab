@@ -13,9 +13,12 @@
                 </a>
                 <?php if ($article['thumb']) : ?>
                     <a href="<?php echo $article['href']; ?>">
-                        <img src="<?php echo $article['thumb']; ?>" 
-                             alt="<?php echo $article['name']; ?>" 
-                             title="<?php echo $article['name']; ?>" />
+<picture>
+    <source type="image/webp" srcset="<?=$article['thumb_webp'] ?>">
+    <source type="image/jpeg" srcset="<?=$article['thumb'] ?>">
+    <img src="<?=$article['thumb'] ?>" alt="<?= $article['name'] ?>" title="<?= $article['name'] ?>" />
+</picture>                    
+                        
                     </a>
                 <?php endif; ?>
                 <div class="news-text">

@@ -15,7 +15,12 @@
                         <?php endif;?>
                             
                             <a href="<?php echo $banner['link']; ?>" title="<?php echo $banner['title']; ?>">
-                                <img class="mainslide_row" src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" title="<?php echo $banner['title']; ?>">
+                                
+<picture>
+    <source type="image/webp" srcset="<?=$banner['image_webp'] ?>">
+    <source type="image/jpeg" srcset="<?=$banner['image'] ?>">
+    <img class="mainslide_row" src="<?=$banner['image'] ?>" alt="<?=$banner['title'] ?>" title="<?= $banner['title'] ?>">
+</picture>                                
                             <div class="slide-block">
                                 <div class="slide-block-border">
                                     <div class="slide-block_caption"><?=$banner['title'];?></div>

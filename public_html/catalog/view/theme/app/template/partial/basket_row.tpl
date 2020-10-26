@@ -4,10 +4,12 @@
         <div class="basket_image">
             <?php if ($product['thumb']) { ?>
                 <a target="_blank" href="<?php echo $product['href']; ?>">
-                    <img src="<?php echo $product['thumb']; ?>" 
-                            alt="<?php echo $product['name']; ?>" 
-                            title="<?php echo $product['name']; ?>" 
-                            class="img-thumbnail" />
+<picture>
+    <source type="image/webp" srcset="<?=$product['thumb_webp']?>">
+    <source type="image/jpeg" srcset="<?=$product['thumb']?>">
+    <img src="<?=$product['thumb']?>" alt="<?=$product['name'] ?>" title="<?=$product['name'] ?>" class="img-thumbnail" />
+</picture>
+                    
                 </a>
             <?php } ?>
         </div>
@@ -88,7 +90,12 @@
                         <div class="similar_slide_row">
                             <div class="similar_slide_row_info">
                                 <div class="cart_similar_img">
-                                    <img src="<?=$product_result['image']?>" />
+<picture>
+    <source type="image/webp" srcset="<?=$product_result['image_webp']?>">
+    <source type="image/jpeg" srcset="<?=$product_result['image']?>">
+    <img src="<?=$product_result['image']?>" alt="<?=$product_result['name']?>" title="<?=$product_result['name']?>"/>
+</picture>                                
+                                    
                                 </div>
                                 <div class="similar_slide_info">
                                     <div class="similar_slide_cap"><?=$product_result['name']?></div>

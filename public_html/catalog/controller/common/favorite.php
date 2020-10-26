@@ -216,10 +216,14 @@ class ControllerCommonFavorite extends Controller {
                     $priceold=0;
                     $price_wholesaleold=0;
                 }
-                
+
+                $img_webp=str_replace(".jpg",".webp",$image);
+                $img_webp=str_replace(".png",".webp",$img_webp);
+
                 $data['products'][] = array(
                     'product_id' => $itm,
                     'thumb' => $image,
+                    'thumb_webp' => $img_webp,
                     'name' => $product['name'],
 
                     

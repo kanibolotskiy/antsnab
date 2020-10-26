@@ -89,11 +89,14 @@ class ControllerSalesCategory extends Controller {
 					$href="sales/".$result["keyword"]."/";
 				}
 
+				$image_webp=str_replace(".jpg",".webp",$thumb);
+				$image_webp=str_replace(".png",".webp",$image_webp);
 				$sales[] = array(
 					"accia_type"=>$accia_type,
 					//"sale_id"=>$result["accia_id"],
 					"title"=>$result["title"],
 					"thumb"=>$thumb,
+					"thumb_webp"=>$image_webp,
 					"date_end"=>$date_end_str,
 					"shorttext"=>$result["shorttext"],
 					"href"=>$href

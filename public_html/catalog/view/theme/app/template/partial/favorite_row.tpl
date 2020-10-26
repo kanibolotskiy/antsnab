@@ -2,10 +2,12 @@
     <div class="basket_image">
         <?php if ($product['thumb']) { ?>
             <a target="_blank" href="<?php echo $product['href']; ?>">
-                <img src="<?php echo $product['thumb']; ?>" 
-                        alt="<?php echo $product['name']; ?>" 
-                        title="<?php echo $product['name']; ?>" 
-                        class="img-thumbnail" />
+<picture >
+    <source type="image/webp" srcset="<?php echo $product['thumb_webp']; ?>">
+    <source type="image/jpeg" srcset="<?php echo $product['thumb']; ?>">
+    <img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-thumbnail" />
+</picture>
+                
             </a>
         <?php } ?>
     </div>

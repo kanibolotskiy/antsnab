@@ -18,8 +18,12 @@
                         <div class="production-block">
                             <a href="<?= $category['href'] ?>">
                                 <span><?= $category['name'] ?></span>
-                                <div class="img-production">
-                                    <img src="<?= $category['image'] ?>" alt="<?= $category['name'] ?>" title="<?= $category['name'] ?>" />
+                                <div class="img-production">                       
+<picture>
+    <source type="image/webp" srcset="<?= $category['image_webp'] ?>">
+    <source type="image/jpeg" srcset="<?= $category['image'] ?>">
+    <img src="<?= $category['image'] ?>" alt="<?= $category['name'] ?>" title="<?= $category['name'] ?>" />
+</picture>
                                 </div>
                                 <div class="main_category_link">
                                     <!--<a href="<?= $category['href'] ?>" class="more">Смотреть все</a>-->
@@ -49,7 +53,11 @@
                                         <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
 
                                         <a href="<?=$p['href']?>" class="img-production">
-                                            <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+<picture>
+    <source type="image/webp" srcset="<?=$p['thumb_webp']?>">
+    <source type="image/jpeg" srcset="<?=$p['thumb']?>">
+    <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+</picture>
                                         </a>
                                         
                                         <strong><?=$p['price']?> <div class="rur">i</div></strong>
@@ -87,7 +95,12 @@
                                                 <div class="wrp_product-accia-block_img">
                                                     <div class="product-accia-block_sale">-<?=$p['percent']?>%</div>
                                                     <div class="product-accia-block_img">
-                                                        <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+<picture>
+    <source type="image/webp" srcset="<?=$p['thumb_webp']?>">
+    <source type="image/jpeg" srcset="<?=$p['thumb']?>">
+    <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+</picture>                                                    
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -110,7 +123,11 @@
                         <div class="production-block">
                             <a href="<?= $category['href'] ?>">
                                 <div class="img-production">
-                                    <img src="<?= $category['image'] ?>" alt="<?= $category['name'] ?>" title="<?= $category['name'] ?>" />
+<picture>
+    <source type="image/webp" srcset="<?= $category['image_webp'] ?>">
+    <source type="image/jpeg" srcset="<?= $category['image'] ?>">
+    <img src="<?= $category['image'] ?>" alt="<?= $category['name'] ?>" title="<?= $category['name'] ?>" />
+</picture>
                                 </div>
                                 <span><?= $category['name'] ?></span>
                             </a>
@@ -129,7 +146,11 @@
                                 <div class="wrp_acc_product">
                                     <div class="wrp_new_product_info">
                                         <div class="new_product_info_img">
-                                            <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+<picture>
+    <source type="image/webp" srcset="<?=$p['thumb_webp']?>">
+    <source type="image/jpeg" srcset="<?=$p['thumb']?>">
+    <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+</picture>                                            
                                         </div>
                                         <div class="new_product_info">
                                             <div class="new_product_info_caption"><?=$p['name']?></div>

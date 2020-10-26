@@ -61,7 +61,13 @@ class ControllerSalesSales extends Controller {
 
 			if($sale_info['image']){
 				$this->load->model('tool/image');
-				$data['image']=$this->model_tool_image->resize($sale_info['image'], 1100, 540);
+				
+				$image=$this->model_tool_image->resize($sale_info['image'], 1100, 540);
+				$image_webp=str_replace(".jpg",".webp",$image);
+				$image_webp=str_replace(".png",".webp",$image_webp);
+
+				$data['image']=$image;
+				$data['image_webp']=$image_webp;
 			}else{
 				$data['image']='';
 			}

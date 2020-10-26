@@ -63,7 +63,12 @@
                                     <div class="media_slider_row">
                                         <div class="customers_row">
                                             <div class="customers_row_image">
-                                                <img src="<?=$customer['thumb']?>" alt="<?=$customer['fio']?>" title="<?=$customer['fio']?>"/>
+                                                
+<picture>
+    <source type="image/webp" srcset="<?=$customer['thumb_webp']?>">
+    <source type="image/jpeg" srcset="<?=$customer['thumb']?>">
+    <img src="<?=$customer['thumb']?>" alt="<?=$customer['fio']?>" title="<?=$customer['fio']?>"/>
+</picture>
                                             </div>
                                             <div class="customers_row_info">
                                                 <div class="customers_row_ttl"><?=$customer['fio']?></div>
@@ -99,7 +104,12 @@
                                 <div class="off_row <?php echo ($off_row['video']?'_video':'');?>">
                                     <a href="<?=$off_row['url']?>" data-fancybox="office" data-caption="<?=$off_row['caption']?>">
                                         <div class="off_image">
-                                            <img src="<?=$off_row['thumb']?>" alt="<?=$off_row['caption']?>" title="<?=$off_row['caption']?>"/>
+<picture>
+    <source type="image/webp" srcset="<?=$off_row['thumb_webp']?>">
+    <source type="image/jpeg" srcset="<?=$off_row['thumb']?>">
+    <img src="<?=$off_row['thumb']?>" alt="<?=$off_row['caption']?>" title="<?=$off_row['caption']?>"/>
+</picture>
+                                            
                                         </div>
                                     </a>
                                 </div>
@@ -121,7 +131,12 @@
                                 <div class="off_row <?php echo ($man_row['video']?'_video':'');?>">
                                     <a href="<?=$man_row['url']?>" data-fancybox="manufacture" data-caption="<?=$man_row['caption']?>">
                                         <div class="off_image">
-                                            <img src="<?=$man_row['thumb']?>" alt="<?=$man_row['caption']?>" title="<?=$man_row['caption']?>"/>
+                                            
+<picture>
+    <source type="image/webp" srcset="<?=$man_row['thumb_webp']?>">
+    <source type="image/jpeg" srcset="<?=$man_row['thumb']?>">
+    <img src="<?=$man_row['thumb']?>" alt="<?=$man_row['caption']?>" title="<?=$man_row['caption']?>"/>
+</picture>
                                         </div>
                                     </a>
                                 </div>
@@ -143,7 +158,11 @@
                                 <div class="off_row <?php echo ($sklad_row['video']?'_video':'');?>">
                                     <a href="<?=$sklad_row['url']?>" data-fancybox="sklad" data-caption="<?=$sklad_row['caption']?>">
                                         <div class="off_image">
-                                            <img src="<?=$sklad_row['thumb']?>" alt="<?=$sklad_row['caption']?>" title="<?=$sklad_row['caption']?>"/>
+<picture>
+    <source type="image/webp" srcset="<?=$sklad_row['thumb_webp']?>">
+    <source type="image/jpeg" srcset="<?=$sklad_row['thumb']?>">
+    <img src="<?=$sklad_row['thumb']?>" alt="<?=$sklad_row['caption']?>" title="<?=$sklad_row['caption']?>"/>
+</picture>
                                         </div>
                                     </a>
                                 </div>
@@ -161,7 +180,12 @@
                     <?php foreach($sert as $sert_row) {?>
                         <div class="masonry_item">
                             <a href="<?=$sert_row['image']?>" data-fancybox="sert" data-caption="<?=$sert_row['caption']?>">
-                                <img src="<?=$sert_row['image']?>" title="<?=$sert_row['caption']?>" alt="<?=$sert_row['caption']?>">
+                                
+<picture>
+    <source type="image/webp" srcset="<?=$sert_row['thumb_webp']?>">
+    <source type="image/jpeg" srcset="<?=$sert_row['thumb']?>">
+    <img src="<?=$sert_row['thumb']?>" title="<?=$sert_row['caption']?>" alt="<?=$sert_row['caption']?>">
+</picture>                                
                             </a>
                         </div>
                     <?php }?>

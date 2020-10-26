@@ -18,7 +18,12 @@
                             <time class="accia_time accia_time_disabled">Акция закончена</time>
                         <?php }?>
                     <?php }?>
-                    <img src="<?php echo $image;?>" alt="<?php echo $heading_title;?>"/>
+<picture>
+    <source type="image/webp" srcset="<?=$image_webp?>">
+    <source type="image/jpeg" srcset="<?=$image?>">
+    <img src="<?=$image?>" alt="<?=$heading_title?>" title="<?=$heading_title?>"/>
+</picture>                    
+                    
                 </div>
             <?php }?>
             <div class="sale_content content-text">

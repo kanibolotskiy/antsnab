@@ -134,13 +134,15 @@ class ControllerCommonCompare extends Controller {
             //print_r($item_properties);
             
             
-            
+            $img_webp=str_replace(".jpg",".webp",$image);
+            $img_webp=str_replace(".png",".webp",$img_webp);
             $fav_product[$main_category_id][$product['product_id']]=Array(
                 "product_id"=>$product['product_id'],
                 "produnit_template_id"=>$product["produnit_template_id"],
                 "name"=>$product["name"],
                 "price"=>number_format($product["price_wholesale"],0,".", " "),
                 "image"=>$image,
+                "image_webp"=>$img_webp,
                 "href"=>$this->url->link('product/product', '&product_id=' . $product['product_id']),
                 "data_stock"=>$data_stock,
                 "properties"=>$item_properties,

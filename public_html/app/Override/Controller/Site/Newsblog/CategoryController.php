@@ -146,12 +146,18 @@ class CategoryController extends \Controller
             );
 
             if ($category_info['image']) {
+                $thumb=$this->model_tool_image->resize($category_info['image'], $category_image_size[0], $category_image_size[1]);
+                $image_webp=str_replace(".jpg",".webp",$thumb);
+                $image_webp=str_replace(".png",".webp",$image_webp);
+
                 $data['original'] = HTTP_SERVER . 'image/' . $category_info['image'];
-                $data['thumb'] = $this->model_tool_image->resize($category_info['image'], $category_image_size[0], $category_image_size[1]);
+                $data['thumb'] = $thumb;
+                $data['thumb_webp'] = $image_webp;
                 //$data['thumb'] = $this->model_tool_image->resize($category_info['image'], 660, 440);
             } else {
                 $data['original'] = '';
                 $data['thumb'] = '';
+                $data['thumb_webp'] = '';
             }
 
             $data['description'] = html_entity_decode($category_info['description'], ENT_QUOTES, 'UTF-8');
@@ -411,10 +417,15 @@ class CategoryController extends \Controller
             $preview = strip_tags($preview);
             $preview = mb_substr($preview, 0, static::PREVIEW_SYMBOLS_COUNT ) . '...';
 
+            $image_webp=str_replace(".jpg",".webp",$thumb);
+            $image_webp=str_replace(".png",".webp",$image_webp);
+
             $articles[] = array(
                 'article_id' => $result['article_id'],
                 'original' => $original,
                 'thumb' => $thumb,
+                'thumb_webp' => $image_webp,
+                
                 'name' => $result['name'],
                 //@added
                 'cat_name' => $result['cat_name'],

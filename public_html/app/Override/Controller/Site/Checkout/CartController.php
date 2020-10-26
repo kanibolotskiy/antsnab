@@ -286,13 +286,16 @@ class CartController extends \ControllerCheckoutCart
                         } else {
                             $image_rel = $this->model_tool_image->resize('placeholder.png', 100,100,2);
                         }
-
+                        
+                        $img_webp_rel=str_replace(".jpg",".webp",$image_rel);
+                        $img_webp_rel=str_replace(".png",".webp",$img_webp_rel);
                         $product_related[]=array(
                             'product_id' => $related_result['product_id'],
                             'meta_h1' => $related_result['meta_h1'],
                             'name' => $related_result['name'],
                             'href' => $this->url->link('product/product', 'product_id=' . $related_result['product_id']),
                             'image' => $image_rel, 
+                            'image_webp' => $img_webp_rel,
                             'price' => $this->currency->format($this->tax->calculate($related_result['price'], $related_result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
                         );
                     }
@@ -332,9 +335,14 @@ class CartController extends \ControllerCheckoutCart
                     }
                     $step=1;
                     $mincount=$product['mincount']*$koef_d;
+
+                    $img_webp=str_replace(".jpg",".webp",$image);
+                    $img_webp=str_replace(".png",".webp",$img_webp);
+                    
                     $data['product'] = array(
                         'cart_id' => $product['cart_id'],
                         'thumb' => $image,
+                        'thumb_webp' => $img_webp,
                         'name' => $product['name'],
     
                         /// @added 
@@ -925,21 +933,26 @@ class CartController extends \ControllerCheckoutCart
                             $image_rel = $this->model_tool_image->resize('placeholder.png', 100,100,2);
                         }
                         //print_r($related_result);
+                        $img_webp_rel=str_replace(".jpg",".webp",$image_rel);
+                        $img_webp_rel=str_replace(".png",".webp",$img_webp_rel);
                         $product_related[]=array(
                             'product_id' => $related_result['product_id'],
                             'meta_h1' => $related_result['meta_h1'],
                             'name' => $related_result['name'],
                             'href' => $this->url->link('product/product', 'product_id=' . $related_result['product_id']),
                             'image' => $image_rel, 
+                            'image_webp' => $img_webp_rel,
                             'price' => $this->currency->format($this->tax->calculate($related_result['price'], $related_result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
                         );
                     }
                 }
-
+                $img_webp=str_replace(".jpg",".webp",$image);
+                $img_webp=str_replace(".png",".webp",$img_webp);
                 $data['products'][] = array(
                     'num'=>$num,
                     'cart_id' => $product['cart_id'],
                     'thumb' => $image,
+                    'thumb_webp' => $img_webp,
                     'name' => $product['name'],
 
                     /** @added */

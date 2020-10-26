@@ -33,11 +33,15 @@ class SlideshowController extends \Controller
 		foreach($activeAccias as $accia){
 			$accia_url=$this->url->link('sale/sale', 'sale_id=' . $accia["accia_id"]);
 			if($accia['image']){
+				$image = $this->model_tool_image->cropsize($accia['image'], 1100, 540);
+				$image_webp = str_replace(".jpg",".webp",$image);
+                $image_webp = str_replace(".png",".webp",$image_webp);
 				$data['banners'][] = array(
 					'title' => "Акция",
 					'link'  => $accia_url,
 					'descr' => $accia["shorttext"],
-					'image' => $this->model_tool_image->cropsize($accia['image'], 1100, 540)
+					'image' => $image,
+					'image_webp' => $image_webp,
 				);
 			}
 		}
@@ -45,11 +49,16 @@ class SlideshowController extends \Controller
 		//print_r($activeAcciasDiscount);
         if($activeAcciasDiscount){
             if($activeAcciasDiscount["image"]){
-                //$banners[]=array(
+				
+				$image = $this->model_tool_image->cropsize($activeAcciasDiscount["image"], 1100,540);
+				$image_webp = str_replace(".jpg",".webp",$image);
+				$image_webp = str_replace(".png",".webp",$image_webp);
+				
 				$data['banners'][]=array(
                     'title' => "Акция",
                     'link'  => "sales/".$activeAcciasDiscount["keyword"]."/",
-					'image' => $this->model_tool_image->cropsize($activeAcciasDiscount["image"], 1100,540),
+					'image' => $image,
+					'image_webp' => $image_webp,
 					'descr'=>$activeAcciasDiscount['shorttext'] //'Товар дня'
                 );
             }
@@ -57,12 +66,16 @@ class SlideshowController extends \Controller
 		
 		foreach ($results as $result) {
 			if (is_file(DIR_IMAGE . $result['image'])) {
+				$image = $this->model_tool_image->cropsize($result['image'],  781, 385);
+				$image_webp = str_replace(".jpg",".webp",$image);
+				$image_webp = str_replace(".png",".webp",$image_webp);
 				$data['banners'][] = array(
 					'title' => $result['title'],
 					'link'  => $result['link'],
                     'descr' => html_entity_decode($result['descr']),
 					//'image' => $this->model_tool_image->cropsize($result['image'], $setting['width'], $setting['height'])
-					'image' => $this->model_tool_image->cropsize($result['image'],  781, 385)
+					'image' => $image,
+					'image_webp' => $image_webp
 				);
 			}
 		}

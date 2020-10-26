@@ -183,10 +183,18 @@ class ContactpageController extends \Controller
         $sklads = $this->model_catalog_information->getBanner(9);
         $data['sklads']=[];
         foreach($sklads as $sklad){
+            
+			$thumb = $this->model_tool_image->resize($sklad["image"], 300, 300, 1);
+				
+            $image_webp=str_replace(".jpg",".webp",$thumb);
+            $image_webp=str_replace(".png",".webp",$image_webp);
+
+                
             $data['sklads'][]=Array(
                 "title"=>$sklad["title"],
                 "image"=>$this->model_tool_image->resize($sklad["image"], 1000,750, 1),
-                "thumb"=>$this->model_tool_image->resize($sklad["image"], 300, 300, 1)
+                "thumb"=>$thumb,
+                "thumb_webp"=>$image_webp
             );
         }
         //$data['sklads']=

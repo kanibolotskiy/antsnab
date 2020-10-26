@@ -71,10 +71,14 @@ class ControllerExtensionModuleNewsBlogArticles extends Controller {
 			}
 			$preview = mb_substr($preview, 0, $setting['desc_limit']) . '...';
 
+			$image_webp=str_replace(".jpg",".webp",$thumb);
+            $image_webp=str_replace(".png",".webp",$image_webp);
+
 			$data['articles'][] = array(
 				'article_id'  		=> $result['article_id'],
 				'original' 			=> $original,
 				'thumb' 			=> $thumb,
+				'thumb_webp'		=> $image_webp,
 				'name'        		=> $result['name'],
 				'preview'  			=> $preview,
 				'attributes'  		=> $result['attributes'],

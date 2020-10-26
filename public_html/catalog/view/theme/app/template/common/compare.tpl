@@ -100,7 +100,14 @@
                                                         </a>
                                                     </div>
                                                     <div class="compare_product_img">
-                                                        <a target="_blank" href="<?=$product['href']?>"><img src="<?=$product['image']?>" alt="<?=$product['name']?>"/></a>
+                                                        <a target="_blank" href="<?=$product['href']?>">
+<picture >
+    <source type="image/webp" srcset="<?=$product['image_webp']?>">
+    <source type="image/jpeg" srcset="<?=$product['image']?>">
+    <img src="<?=$product['image']?>" alt="<?=$product['name']?>"/>
+</picture>                                                        
+                                                            
+                                                        </a>
                                                     </div>
                                                     <div class="compare_priceline">
                                                         <div class="compare_price">от <span class="compare_price_val"><?=$product["price"]?></span> <div class="rur compare_currency">i</div></div>
