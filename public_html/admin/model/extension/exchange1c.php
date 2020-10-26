@@ -48,7 +48,7 @@ class ModelExtensionExchange1c extends Model {
 	 * @param	string,object	Сообщение или объект
 	 */
 	private function log($message, $level = 1, $line = '') {
-		//$file_log='import_log.txt';
+		$file_log='import_log.txt';
 		
 
 		if ($level <= $this->config->get('exchange1c_log_level')) {
@@ -65,12 +65,20 @@ class ModelExtensionExchange1c extends Model {
 			if (is_array($message) || is_object($message)) {
 				$this->log->write($line . "(M):");
 				$this->log->write(print_r($message, true));
+
+				//file_put_contents($file_log, $line . "(M):"."\r\n",FILE_APPEND);
+				//file_put_contents($file_log, print_r($message, true)."\r\n",FILE_APPEND);
 			} else {
 				if (mb_substr($message,0,1) == '~') {
 					$this->log->write('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
 					$this->log->write($line . "(M) " . mb_substr($message, 1));
+
+					//file_put_contents($file_log, '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'."\r\n",FILE_APPEND);
+					//file_put_contents($file_log, $line . "(M) " . mb_substr($message, 1)."\r\n",FILE_APPEND);
+
 				} else {
 					$this->log->write($line . "(M) " . $message);
+					//file_put_contents($file_log, $line . "(M) " . $message."\r\n",FILE_APPEND);
 				}
 			}
 		}
@@ -6094,13 +6102,13 @@ class ModelExtensionExchange1c extends Model {
 			$product_id = $this->getProductIdByModel($offer->Артикул);
 
 			// Есть ли связь с товаром по guid?????
-			
+			/*
             if(!$product_id) {
 				$file_log='import_log.txt';
 				$product_id = $this->getProductIdByModel($data['product_guid']);
-				//file_put_contents($file_log, $offer->Артикул."==".$data['product_guid']."\r\n",FILE_APPEND);	
+				file_put_contents($file_log, $offer->Артикул."==".$data['product_guid']."\r\n",FILE_APPEND);	
 			}
-			
+			*/
 			
             // Есть ли связь Ид с товаром в таблице product_to_1c
             // Original behaviour
