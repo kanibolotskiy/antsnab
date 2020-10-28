@@ -23,18 +23,70 @@ class ModelCatalogInformation extends Model {
 		}
 		return $a;
 	}
-	public function cleanText($text){
-		$text=html_entity_decode($text, ENT_QUOTES, 'UTF-8');
-		/*
-		$text_arr=explode("<a",$text);
-		for($i=0;$i<count($text_arr);$i++){
-
+	public function makeWebP($file_f){
+		$out=false;
+		if(is_file($file_f)){
+			$info_f = pathinfo($file_f);
+			$ext_f=$info_f['extension'];
+			if($ext_f=='jpg' or $ext_f=='png'){
+				$new = $info_f['dirname'] . '/' . $info_f['filename'] . '.' . 'webp';
+				if(!is_file($new)){
+					if($ext_f=='jpg'){
+						$img = imageCreateFromJpeg($file_f);
+					}
+					if($ext_f=='png'){
+						$img = imageCreateFromPng($file_f);
+					}
+					
+					imageWebp($img, $new, 100);
+					if (filesize($new) % 2 == 1) {
+						file_put_contents($new, "\0", FILE_APPEND);
+					}
+					imagedestroy($img);
+					$out=$new;
+				}
+				$out=$new;
+			}
 		}
-		*/
-		//$html = preg_replace('/(alt=")(.*?)(")/i', '$1'.$post_title.'$3', $text);
-		//$html = str_replace('/>', 'title="'.$post_title.'" />', $html);
+		return $out;
+	}
+	public function cleanText($text){
+		
+		$text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
 
-		//$text = preg_replace('/(alt=")(.*?)(")/i', '$1'.$post_title.'$3', $text);
+	
+		$dom = new DOMDocument();
+		$dom->loadHTML(mb_convert_encoding($text, 'HTML-ENTITIES', 'UTF-8'));
+		foreach( $dom->getElementsByTagName("img") as $pnode ) {
+			$src_img=$pnode->getAttribute('src');
+			$src_img=str_replace ("../","", $src_img);
+		
+			$webp_file=$this->makeWebP($src_img);
+			if($webp_file){
+				$new_div_clone = $pnode->cloneNode();
+				$nodeDiv_jpeg = $dom->createElement("source", "");
+				$nodeDiv_jpeg->setAttribute("type","image/jpeg");
+				$nodeDiv_jpeg->setAttribute("srcset",$src_img);
+				
+				$nodeDiv_webp = $dom->createElement("source", "");
+				$nodeDiv_webp->setAttribute("type","image/webp");
+				$nodeDiv_webp->setAttribute("srcset",$webp_file);
+
+				$nodeDiv = $dom->createElement("picture", "");
+				$nodeDiv->appendChild($nodeDiv_jpeg);
+				$nodeDiv->appendChild($nodeDiv_webp);
+				$nodeDiv->appendChild($new_div_clone);
+				$pnode->parentNode->replaceChild($nodeDiv, $pnode);
+			}
+		}
+		$text = $dom->saveHTML();
+		/*
+		<picture>
+			<source type="image/webp" srcset="http://antsnab.cp06038.tmweb.ru/image/cache/no_image-400x4002.webp">
+			<source type="image/jpeg" srcset="http://antsnab.cp06038.tmweb.ru/image/cache/no_image-400x4002.png">
+			<img class="wrp_fly_image" itemprop="image" src="http://antsnab.cp06038.tmweb.ru/image/cache/no_image-400x4002.png" alt="Мастика МБР-Х-65" title="Мастика МБР-Х-65">
+		</picture>
+		*/
 		$text = preg_replace('/alt="([^"]+)"/i', 'alt="$1" title="$1"', $text);
 		
 		

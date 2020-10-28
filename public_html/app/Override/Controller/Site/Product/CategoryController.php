@@ -618,8 +618,8 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
                 $catalogpage_notfirst=false;
                 if(isset($category_final_info["bottom_text"])){
                     $bottom_text = $this->model_catalog_information->cleanText($category_final_info["bottom_text"]);
-                    $description = html_entity_decode($category_final_info['description'], ENT_QUOTES, 'UTF-8');
                 }
+                $description = $this->model_catalog_information->cleanText($category_final_info['description']);
             }
             $this->data['bottom_text'] = $bottom_text;
             $this->data['description'] = $description;
