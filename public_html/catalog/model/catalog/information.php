@@ -25,12 +25,16 @@ class ModelCatalogInformation extends Model {
 	}
 	public function makeWebP($file_f){
 		$out=false;
+		echo "ok1<br/>";
 		if(is_file($file_f)){
+			echo "ok2<br/>";
 			$info_f = pathinfo($file_f);
 			$ext_f=$info_f['extension'];
 			if($ext_f=='jpg' or $ext_f=='png'){
+				echo "ok3<br/>";
 				$new = $info_f['dirname'] . '/' . $info_f['filename'] . '.' . 'webp';
 				if(!is_file($new)){
+					echo "ok4<br/>";
 					if($ext_f=='jpg'){
 						$img = imageCreateFromJpeg($file_f);
 					}
@@ -58,9 +62,11 @@ class ModelCatalogInformation extends Model {
 		$dom = new DOMDocument();
 		$dom->loadHTML(mb_convert_encoding($text, 'HTML-ENTITIES', 'UTF-8'));
 		foreach( $dom->getElementsByTagName("img") as $pnode ) {
+			
 			$src_img=$pnode->getAttribute('src');
+			
 			$src_img=str_replace ("../","", $src_img);
-		
+			echo "!".$src_img."!<br/>";
 			$webp_file=$this->makeWebP($src_img);
 			if($webp_file){
 				$new_div_clone = $pnode->cloneNode();
