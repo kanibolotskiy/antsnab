@@ -93,8 +93,6 @@
                     <?php }?>
                 </div>
                 <div class="wrapper_count_line">
-                    <?php echo $p['quantity']; ?>
-
                     <?php if($p['quantity']>5){ ?>
                         <div class="prod_cnt _mnogo">На складе</div>
                     <?php }?>
