@@ -4,7 +4,7 @@ namespace WS\Override\Controller\Site\Extension\Module;
 use WS\Override\Gateway\ProdUnits\ProdUnits;
 use WS\Override\Gateway\FinalCategory;
 use WS\Override\Controller\Admin\Extension\Module\PriceController as AdminModule;
-
+//use fpdf\pdf;
 /**
  * Вывод модуля прайса 
  * 
@@ -17,6 +17,21 @@ class PriceController extends \Controller
     /** Значение для опции в селекте, "Отобразить все" */
     const SHOW_ALL_OPTION_VALUE = "-1";
 
+    public function makepdf(){
+        //define('FPDF_FONTPATH','system/library/fpdf/fonts/');
+        require_once('system/library/fpdf/fpdf.php');
+        //ob_start();
+
+        $pdf = new FPDF();
+        //$dompdf = new Dompdf\Dompdf();
+        /*
+        $pdf->AddPage();
+        $pdf->SetFont('Arial','B',16);
+        $pdf->Cell(40,10,'Hello World!');
+        */
+        //$pdf->Output();
+        //ob_end_flush();
+    }
     public function index()
     {
         $this->load->language('extension/module/price');

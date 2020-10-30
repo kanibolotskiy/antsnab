@@ -30,6 +30,10 @@ if( $('.qnt-container-cart').length > 0) {
 
     });
 }
+function validateEmail(email) {
+    var re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    return re.test(String(email).toLowerCase());
+  }
 function getDelivery(){
     var koef=$("#priceSwitcher .active").attr("data-sale_to_ui_koef")*1;
     var base_weight=$("#priceSwitcher").attr("data-base_weight")*1;
@@ -179,7 +183,7 @@ function check_opt_notification(itm){
 }
 $(function(){
     $("#order_form input").on("keydown",function(e){
-        console.log(e.keyCode)  
+        //console.log(e.keyCode)  
         if(e.keyCode==13){
             e.preventDefault();
             var rel=$(".ordering_caption_item.active:last").attr("rel");
@@ -263,6 +267,12 @@ $(function(){
     $(".inputAddress").suggestions({
         token: "b231f8faef5fbb8190930e4ade4f722e7b3f7a89",
         type: "ADDRESS",
+        constraints: {
+            // ISO-код страны
+            // Список ISO-кодов: https://ru.wikipedia.org/wiki/ISO_3166-1
+            locations: [{ "region": "Московская"},{"region": "Москва"}],
+        },
+        //"locations":[{"kladr_id":"50"}]
         onSelect: function(suggestion) {
             //console.log(suggestion);
         }
@@ -441,13 +451,22 @@ $(function(){
         $(this).parent().removeClass("_error");
     });
 
+    $(document).on("click",".ordering_caption_item.active.apply",function(){
+        var rel=$(this).attr("rel");
+        var itm=$(".ordering_caption_item[rel='"+rel+"']");
+        itm.removeClass("apply");
+        itm.nextAll().removeClass("apply active");
+        $(".order_block").hide();
+        $(".order_block[rel='"+rel+"']").fadeIn(200)
+
+
+        console.log(rel);
+    });
+
     $("#order_next1").click(function(){
         var rel=$(".ordering_type.active").attr("rel");
         var flag=true;
         $("#order_email").val($("#order_email").val().replace(/\s/ig, ''));
-
-        
-        //console.log($("#order_email").val());
 
         if($.trim($("#order_name").val())==""){
             $("#order_name").parent().addClass("_error");
@@ -458,11 +477,20 @@ $(function(){
             flag=false;
         }
         if($(".ordering_type.active").attr("rel")==2){
-            if($.trim($("#order_email").val())==""){
+            if(!validateEmail($("#order_email").val())){
                 $("#order_email").parent().addClass("_error");
                 flag=false;
             }
+        }else{
+            if($.trim($("#order_email").val())!=""){
+                if(!validateEmail($("#order_email").val())){
+                    $("#order_email").parent().addClass("_error");
+                    flag=false;
+                }
+            }
         }
+        
+
         if(rel==2){
             if($.trim($("#order_inn").val())==""){
                 $("#order_inn").parent().addClass("_error");

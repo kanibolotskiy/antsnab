@@ -885,12 +885,15 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
             $this->data["avail"]=$param_data["avail"];
             $this->data["products"]=$param_data["products"];
             
-
+            if($limit!=9){
+                $queryString.='&limit='.$limit;
+            }
             $paginationBaseUrl = $this->url->link('product/category', 'path=' . $queryString);
             $lazyLoadBaseUrl = $this->url->link('product/category/showmore', 'cat_path=' . $queryString);
             
             $product_total_filter=$param_data["products_count"];
             //echo "!".$product_total_filter."!";
+            
             $paginationModel = PaginationHelper::getPaginationModel($product_total_filter, (int)$limit, (int)$page);
             $this->data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl, $paginationModel);
             $this->data['paginationLazy'] = PaginationHelper::renderLazy($this->registry, $lazyLoadBaseUrl."&category_id=".$category_id, $paginationModel);
@@ -994,6 +997,8 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
         if (isset($this->request->get['sort'])) {
             $queryString .= '&sort=' . $this->request->get['sort'];
         }
+        
+
         $paginationBaseUrl = $this->url->link('product/category', 'path=' . $queryString);
         $lazyLoadBaseUrl = $this->url->link('product/category/showmore', 'cat_path=' . $queryString);
         

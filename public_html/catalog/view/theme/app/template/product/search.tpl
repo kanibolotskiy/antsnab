@@ -12,10 +12,43 @@
 
             <div class="catalog-tab">
                 <div class="wrap_select_view">
-                    <ul class="select_view_switch">
-                        <li class="select_view select_view1 <?php echo $cat_view1;?>" rel="view1"></li>
-                        <li class="select_view select_view2 <?php echo $cat_view2;?>" rel="view2"></li>
-                    </ul>
+                    <div class="wrapper_show_types">
+                        
+                        <div class="showby_list">
+<div class="showby_item_link <?=$showby_9?>" rel="9">
+    <?php if($showby_9_link){?>
+        <a href="<?=$showby_9_link?>">9</a>
+    <?php }else{ ?>
+        9
+    <?php }?>
+</div>
+<div class="showby_item_link <?=$showby_18?>" rel="18">
+    <?php if($showby_18_link){?>
+        <a href="<?=$showby_18_link?>">18</a>
+    <?php }else{ ?>
+        18
+    <?php }?>
+</div>
+<div class="showby_item_link <?=$showby_all?>" rel="all">
+    <?php if($showby_all_link){?>
+        <a href="<?=$showby_all_link?>">Все</a>
+    <?php }else{ ?>
+        Все
+    <?php }?>
+</div>
+                        </div>
+                        <!--
+                        <div class="showby_list">
+                            <div class="showby_item <?=$showby_9?>" rel="9">9</div>
+                            <div class="showby_item <?=$showby_18?>" rel="18">18</div>
+                            <div class="showby_item <?=$showby_all?>" rel="all">Все</div>
+                        </div>
+                        -->
+                        <ul class="select_view_switch">
+                            <li class="select_view select_view1 <?php echo $cat_view1;?>" rel="view1"></li>
+                            <li class="select_view select_view2 <?php echo $cat_view2;?>" rel="view2"></li>
+                        </ul>
+                    </div>
                 </div>
                 
                 <div class="tab-list">

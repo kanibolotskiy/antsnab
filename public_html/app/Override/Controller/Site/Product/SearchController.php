@@ -130,10 +130,28 @@ class SearchController extends \Controller
 		}
 
 		if (isset($this->request->get['limit'])) {
-			$limit = (int)$this->request->get['limit'];
+			if($this->request->get['limit']=="all"){
+				$limit=999999;
+			}else{
+				$limit = (int)$this->request->get['limit'];
+			}
+			
 		} else {
 			$limit = $this->config->get($this->config->get('config_theme') . '_product_limit');
 		}
+		/*
+		if(isset($_GET["limit"])){
+			if($_GET["limit"]=="all"){
+				$limit=999999;
+			}else{
+				$limit=$_GET["limit"]*1;
+			}            
+		}else{
+			$limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');
+		}
+		*/
+
+		
 
 		if (isset($this->request->get['search'])) {
 			$this->document->setTitle($this->language->get('heading_title') .  ' - ' . $this->request->get['search']);
@@ -230,6 +248,8 @@ class SearchController extends \Controller
 		$this->load->model('catalog/category');
 
 		
+		
+		
 		$cat_view1="active";
         $cat_view2="";
         $cat_view_class="tab-block2";
@@ -323,7 +343,7 @@ class SearchController extends \Controller
 			//print_r($search_results);
 			$product_total=0;
 			if(count($search_results)){
-				$per_page=9;
+				$per_page=$limit;
 
 				if (isset($this->request->get['page'])) {
 					$pg=($this->request->get['page'])-1;
@@ -344,6 +364,7 @@ class SearchController extends \Controller
 				$filter_data['limit']=$per_page;
 				$filter_data['start']=$pg*$per_page;
 				$productsHelper = new ProductListHelper($this->registry);
+				
 				$results = $productsHelper->getProducts($filter_data);
 
 				$data['products'] = $results;
@@ -417,10 +438,39 @@ class SearchController extends \Controller
 				$url .= '&search=' . urlencode(html_entity_decode($this->request->get['search'], ENT_QUOTES, 'UTF-8'));
 			}
 			
-						
-			//Pagination 
-			//$product_total=40;
-            $paginationBaseUrl = $this->url->link('product/search', $url);
+			$searchUrl = $this->url->link('product/search', $url);
+
+
+			if($limit!=9){
+                $url.='&limit='.$limit;
+			}
+			
+			$paginationBaseUrl = $this->url->link('product/search', $url);
+			
+			
+			$data['showby_9']='';
+			$data['showby_18']='';
+			$data['showby_all']='';
+			
+			if($limit==9){
+				$data['showby_9']='active';
+				$data['showby_9_link']='';	
+			}else{
+				$data['showby_9_link']=$searchUrl;
+			}
+			if($limit==18){
+				$data['showby_18']='active';
+				$data['showby_18_link']='';
+			}else{
+				$data['showby_18_link']=$searchUrl."&limit=18";
+			}
+			if($limit==999999){
+				$data['showby_all']='active';
+				$data['showby_all_link']='';
+			}else{
+				$data['showby_all_link']=$searchUrl."&limit=all";
+			}
+
             $lazyLoadBaseUrl = $this->url->link('product/search/showmore', $url);
             $paginationModel = PaginationHelper::getPaginationModel($product_total, (int)$limit, (int)$page);
             $data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl, $paginationModel);

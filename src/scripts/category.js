@@ -318,6 +318,7 @@ function set_state_checks(avail_data){
 }
 //-------------------------------------------
 function change_params_form(flag=true){
+    
     if(flag){
         if (typeof ym != 'undefined') {
             ym(14496178, 'reachGoal', 'filter');
