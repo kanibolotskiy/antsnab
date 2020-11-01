@@ -4,6 +4,59 @@ use WS\Override\Gateway\ProdTabs;
 
 class ModelCatalogProduct extends Model
 {
+    public function getProductLinks($product_id){
+        $sql="select * from analog_products where product_id='".$product_id."' OR link_product_id='".$product_id."'";
+        $query=$this->db->query($sql);
+        $temp_prod_id=$query->row['product_id'];
+        //echo "!".$temp_prod_id."!";
+
+        $sql_final="select * from analog_products where product_id='".$temp_prod_id."' OR link_product_id='".$temp_prod_id."'";
+        //echo "!".$sql_final."!";
+        $query_final=$this->db->query($sql_final);
+        foreach ($query_final->rows as $result) {
+            $data[$result['link_product_id']][$result['type']][]=Array('name'=>$result['name'],'code'=>$result['code'],'type'=>$result['type']);
+        }
+        return $data;
+    }
+    public function getGrandParentCategories($product_id){
+       
+        $sql="SELECT oc.parent_id FROM oc_product_to_category opc LEFT JOIN oc_category oc 
+        ON opc.category_id=oc.category_id where product_id='".$product_id."' and main_category=1";
+        $query=$this->db->query($sql);
+        
+        $temp_cat_id=$query->row["parent_id"];
+        
+        
+        //$data[]=;
+        $cats[]=$temp_cat_id;
+        $sql_cats="SELECT od.category_id,od.name FROM oc_category oc LEFT JOIN oc_category_description od ON oc.category_id=od.category_id WHERE oc.parent_id='".$temp_cat_id."' AND isseo=0  order by sort_order";
+        $query_cats=$this->db->query($sql_cats);
+        $data["categories"]=[];
+        $data["products"]=[];
+        foreach ($query_cats->rows as $result) {
+            $cats[]=$result['category_id'];
+            $data["categories"][$result['category_id']]=$result['name'];
+        }
+        
+        if(is_array($cats)){
+            $cats_str=implode(",",$cats);
+            $sql_products="SELECT od.product_id, od.name, oc.category_id from oc_product_to_category oc 
+            LEFT JOIN oc_product op ON oc.product_id=op.product_id
+            LEFT JOIN oc_product_description od ON oc.product_id=od.product_id 
+            where category_id IN (".$cats_str.")
+            order by op.sort_order";
+
+            $query_products=$this->db->query($sql_products);
+
+            foreach ($query_products->rows as $result_prods) {
+                $data["products"][$result_prods['category_id']][]=$result_prods;
+            }
+
+        }
+        
+        return $data;
+        
+    }
     public function setParamValues($product_id,$data){
         
         if($data["change_params"]){

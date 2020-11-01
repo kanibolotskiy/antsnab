@@ -1,1 +1,0 @@
-antsnab.cp06038.tmweb.ru [Fri Oct 30 04:41:01 2020] [emerg] [pid 7124] sapi_apache2.c(362): [client 94.158.95.26:59340] PHP Parse error:  syntax error, unexpected ')' in /home/c/cp06038/antsnab/public_html/app/Override/Controller/Site/Product/SearchController.php on line 454

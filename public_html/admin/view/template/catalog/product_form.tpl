@@ -38,6 +38,8 @@
                         <li><a href="#tab-prices" data-toggle="tab"><?php echo $tab_prices; ?></a></li>
                         <li><a href="#tab-calcs" data-toggle="tab"><?php echo $tab_calcs; ?></a></li>
 
+                        <li><a href="#tab_iden" data-toggle="tab"><?php echo $tab_iden; ?></a></li>
+
                         <li style="display:none"><a href="#tab-attribute" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
                         <li style="display:none"><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
                         <li style="display:none"><a href="#tab-recurring" data-toggle="tab"><?php echo $tab_recurring; ?></a></li>
@@ -46,8 +48,14 @@
                         <li style="display:none"><a href="#tab-special" data-toggle="tab"><?php echo $tab_special; ?></a></li>
                         <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
                         <li><a href="#tab-filter" data-toggle="tab"><?php echo $tab_filter; ?></a></li>
+                        <li><a href="#tab_files" data-toggle="tab"><?php echo $tab_files; ?></a></li>
+                        <!--
                         <li style="display:none"><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
-                        <li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
+                        <<li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
+                        -->
+
+                        
+
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab-general">
@@ -181,6 +189,21 @@
                                     <?php if ($error_model) { ?>
                                         <div class="text-danger"><?php echo $error_model; ?></div>
                                     <?php } ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-manufacturer"><?php echo $entry_manufacturer; ?></label>
+                                <div class="col-sm-10">
+                                    <select id="input-manufacturer" name="manufacturer_id" class="form-control">
+                                        <option value="0" selected="selected"><?php echo $text_none; ?></option>
+                                        <?php foreach ($manufacturers as $manufacturer) { ?>
+                                            <?php if ($manufacturer['manufacturer_id'] == $manufacturer_id) { ?>
+                                                <option value="<?php echo $manufacturer['manufacturer_id']; ?>" selected="selected"><?php echo $manufacturer['name']; ?></option>
+                                            <?php } else { ?>
+                                                <option value="<?php echo $manufacturer['manufacturer_id']; ?>"><?php echo $manufacturer['name']; ?></option>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -400,6 +423,59 @@
                                     <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-category"><?php echo $entry_main_category; ?></label>
+                                <div class="col-sm-10">
+                                    <select id="main_category_id" name="main_category_id" class="form-control">
+                                        <option value="0" selected="selected"><?php echo $text_none; ?></option>
+                                        <?php foreach ($categories as $category) { ?>
+                                            <?php if ($category['category_id'] == $main_category_id) { ?>
+                                                <option value="<?php echo $category['category_id']; ?>" selected="selected"><?php echo $category['name']; ?></option>
+                                            <?php } else { ?>
+                                                <option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-category"><?php echo $entry_category; ?></label>
+                                <div class="col-sm-10">
+                                    <div class="well well-sm" style="min-height: 150px;max-height: 500px;overflow: auto;padding-left:17px;">
+                                        <table class="table table-striped">
+                                            <?php foreach ($categories as $category) { ?>
+                                                <tr>
+                                                    <td class="checkbox cat_isseo_<?php echo $category['isseo'];?>" >
+                                                        <label>
+                                                            <?php if (in_array($category['category_id'], $product_category)) { ?>
+                                                                <input type="checkbox" name="product_category[]" value="<?php echo $category['category_id']; ?>" checked="checked" />
+                                                                <?php echo $category['name']; ?>
+                                                            <?php } else { ?>
+                                                                <input type="checkbox" name="product_category[]" value="<?php echo $category['category_id']; ?>" />
+                                                                <?php echo $category['name']; ?>
+                                                            <?php } ?>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+                                        </table>
+                                    </div>
+                                    <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a>
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-benefits"><?php echo $entry_benefits; ?></span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="benefits" value="" placeholder="<?php echo $entry_benefits; ?>" id="input-benefits" class="form-control" />
+                                    <div id="product-benefits" class="well well-sm" style="height: 150px; overflow: auto;">
+                                        <?php foreach ($product_benefits as $product_benefit) { ?>
+                                            <div id="product-benefit<?php echo $product_benefit['benefit_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_benefit['name']; ?>
+                                                <input type="hidden" name="product_benefit[]" value="<?php echo $product_benefit['benefit_id']; ?>" />
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane" id="tab-prices">
                             <div class="form-group">
@@ -494,6 +570,21 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-discount"><?php echo $entry_discount; ?></label>
+                                <div class="col-sm-10">
+                                    <select id="input-discount" name="discount" class="form-control">
+                                        <option value="0" selected="selected"><?php echo $text_none; ?></option>
+                                        <?php foreach ($discounts as $discount_itm) { ?>
+                                            <?php if ($discount_itm['discount_id'] == $discount) { ?>
+                                                <option value="<?php echo $discount_itm['discount_id']; ?>" selected="selected"><?php echo $discount_itm['name']; ?></option>
+                                            <?php } else { ?>
+                                                <option value="<?php echo $discount_itm['discount_id']; ?>"><?php echo $discount_itm['name']; ?></option>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="tab-pane" id="tab-calcs">
@@ -562,60 +653,8 @@
 
                         </div>
                         <div class="tab-pane" id="tab-links">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-manufacturer"><?php echo $entry_manufacturer; ?></label>
-                                <div class="col-sm-10">
-                                    <select id="input-manufacturer" name="manufacturer_id" class="form-control">
-                                        <option value="0" selected="selected"><?php echo $text_none; ?></option>
-                                        <?php foreach ($manufacturers as $manufacturer) { ?>
-                                            <?php if ($manufacturer['manufacturer_id'] == $manufacturer_id) { ?>
-                                                <option value="<?php echo $manufacturer['manufacturer_id']; ?>" selected="selected"><?php echo $manufacturer['name']; ?></option>
-                                            <?php } else { ?>
-                                                <option value="<?php echo $manufacturer['manufacturer_id']; ?>"><?php echo $manufacturer['name']; ?></option>
-                                            <?php } ?>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-category"><?php echo $entry_main_category; ?></label>
-                                <div class="col-sm-10">
-                                    <select id="main_category_id" name="main_category_id" class="form-control">
-                                        <option value="0" selected="selected"><?php echo $text_none; ?></option>
-                                        <?php foreach ($categories as $category) { ?>
-                                            <?php if ($category['category_id'] == $main_category_id) { ?>
-                                                <option value="<?php echo $category['category_id']; ?>" selected="selected"><?php echo $category['name']; ?></option>
-                                            <?php } else { ?>
-                                                <option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
-                                            <?php } ?>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-category"><?php echo $entry_category; ?></label>
-                                <div class="col-sm-10">
-                                    <div class="well well-sm" style="min-height: 150px;max-height: 500px;overflow: auto;">
-                                        <table class="table table-striped">
-                                            <?php foreach ($categories as $category) { ?>
-                                                <tr>
-                                                    <td class="checkbox cat_isseo_<?php echo $category['isseo'];?>" >
-                                                        <label>
-                                                            <?php if (in_array($category['category_id'], $product_category)) { ?>
-                                                                <input type="checkbox" name="product_category[]" value="<?php echo $category['category_id']; ?>" checked="checked" />
-                                                                <?php echo $category['name']; ?>
-                                                            <?php } else { ?>
-                                                                <input type="checkbox" name="product_category[]" value="<?php echo $category['category_id']; ?>" />
-                                                                <?php echo $category['name']; ?>
-                                                            <?php } ?>
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                            <?php } ?>
-                                        </table>
-                                    </div>
-                                    <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
-                            </div>
+                            
+                            <!--
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-filter"><span data-toggle="tooltip" title="<?php echo $help_filter; ?>"><?php echo $entry_filter; ?></span></label>
                                 <div class="col-sm-10">
@@ -660,19 +699,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-download"><span data-toggle="tooltip" title="<?php echo $help_download; ?>"><?php echo $entry_download; ?></span></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="download" value="" placeholder="<?php echo $entry_download; ?>" id="input-download" class="form-control" />
-                                    <div id="product-download" class="well well-sm" style="height: 150px; overflow: auto;">
-                                        <?php foreach ($product_downloads as $product_download) { ?>
-                                            <div id="product-download<?php echo $product_download['download_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_download['name']; ?>
-                                                <input type="hidden" name="product_download[]" value="<?php echo $product_download['download_id']; ?>" />
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                            </div>
+                            -->
+                            
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-analog"><?php echo $entry_analog; ?></span></label>
                                 <div class="col-sm-10">
@@ -700,35 +728,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-benefits"><?php echo $entry_benefits; ?></span></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="benefits" value="" placeholder="<?php echo $entry_benefits; ?>" id="input-benefits" class="form-control" />
-                                    <div id="product-benefits" class="well well-sm" style="height: 150px; overflow: auto;">
-                                        <?php foreach ($product_benefits as $product_benefit) { ?>
-                                            <div id="product-benefit<?php echo $product_benefit['benefit_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_benefit['name']; ?>
-                                                <input type="hidden" name="product_benefit[]" value="<?php echo $product_benefit['benefit_id']; ?>" />
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                            </div>
                             
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-discount"><?php echo $entry_discount; ?></label>
-                                <div class="col-sm-10">
-                                    <select id="input-discount" name="discount" class="form-control">
-                                        <option value="0" selected="selected"><?php echo $text_none; ?></option>
-                                        <?php foreach ($discounts as $discount_itm) { ?>
-                                            <?php if ($discount_itm['discount_id'] == $discount) { ?>
-                                                <option value="<?php echo $discount_itm['discount_id']; ?>" selected="selected"><?php echo $discount_itm['name']; ?></option>
-                                            <?php } else { ?>
-                                                <option value="<?php echo $discount_itm['discount_id']; ?>"><?php echo $discount_itm['name']; ?></option>
-                                            <?php } ?>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
+                            
+                            
 
 
                         </div>
@@ -1393,6 +1395,7 @@
                                 </table>
                             </div>
                         </div>
+                        <!--
                         <div class="tab-pane" id="tab-design">
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover">
@@ -1433,6 +1436,81 @@
                                         <?php } ?>
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                        -->
+                        <div class="tab-pane" id="tab_iden">
+                            <div class="wrap_iden">
+                                <table class="table_iden">
+                                    <thead>
+                                        <tr>
+                                            <td></td>
+                                            <td colspan="2">Цвет</td>
+                                            <td>Упаковка</td>
+                                            <td>Сезон</td>
+                                            <td>Применение</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>Код</td>
+                                            <td>Название</td>
+                                            <td>Название</td>
+                                            <td>Название</td>
+                                            <td>Название</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+<?php foreach($iden['categories'] as $key=>$category){?>
+    <tr>
+        <td colspan="6" class="iden_cat_name" rel="<?=$key?>"><?=$category?></td>
+    </tr>
+    <?php foreach($iden['products'][$key] as $product){?>
+    
+    <tr rel="<?=$product['product_id'] ?>" class="<?php echo ($product_id==$product['product_id']?'current':'');?>">
+        
+        <?php if(isset($iden_links[$product['product_id']][1])) {  ?>
+            <?php print_r($iden_links[$product['product_id']][1]); ?>
+            <?php //echo $iden_links[$product['product_id']][1]['name']; ?>
+            
+        <?php }?>
+
+        <?php //print_r($product);?>
+        <td class="iden_product_name"><?=$product['name']?></td>
+        <!--
+        <td>
+            <input type="text" value="<?php echo $iden_links[$product['product_id']][1]['code'];?>"/>
+        </td>
+        
+        <td>
+            <input type="text" value="<?php echo $iden_links[$product_id][1]['name'];?>"/>
+        </td>
+        --> 
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+        <td><input type="text" /></td>
+    </tr>
+    <?php }?>
+<?php }?>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="tab_files">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-download"><span data-toggle="tooltip" title="<?php echo $help_download; ?>"><?php echo $entry_download; ?></span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="download" value="" placeholder="<?php echo $entry_download; ?>" id="input-download" class="form-control" />
+                                    <div id="product-download" class="well well-sm" style="height: 150px; overflow: auto;">
+                                        <?php foreach ($product_downloads as $product_download) { ?>
+                                            <div id="product-download<?php echo $product_download['download_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_download['name']; ?>
+                                                <input type="hidden" name="product_download[]" value="<?php echo $product_download['download_id']; ?>" />
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

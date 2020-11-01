@@ -899,3 +899,37 @@ height:34px;
 .wrapper_media_rows .wrpapper_append_button{margin-left:0;margin-right:0;}
 .wrapper_media_rows{margin-bottom: 30px;border-bottom: 1px solid #ddd;padding-bottom: 20px;}
 .about_row_text{margin-top:55px;}
+.check-table-stripped{padding-left:17px;}
+
+.table_iden{width:100%;}
+.table_iden thead{
+	text-align: center;
+    font-size: 12px;
+    background: #dff0d8;
+    font-weight: bold;
+    
+}
+.table_iden thead td{
+	border: 1px solid #ccc;
+	padding:5px 10px;
+}
+.table_iden td{
+	border: 1px solid #ccc;
+	padding:5px 10px;font-size:12px;
+}
+.table_iden td input{
+	width:100%;
+	border: 1px solid #ddd;
+    padding: 5px 10px;
+    box-sizing: border-box;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;-o-box-sizing: border-box;
+}
+.iden_cat_name{
+	font-weight:bold;font-size:13px;
+	background:#f5f5f5;
+}
+
+.table_iden tr.current{
+	background: #eee;
+	font-weight:bold;
+}
+.iden_product_name{white-space:nowrap;}

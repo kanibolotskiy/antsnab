@@ -755,8 +755,10 @@ class ControllerCatalogProduct extends Controller {
 
 		$data['tab_design'] = $this->language->get('tab_design');
 		$data['tab_openbay'] = $this->language->get('tab_openbay');
-
 		$data['tab_calcs'] = $this->language->get('tab_calcs');
+
+		$data['tab_iden'] = $this->language->get('tab_iden');
+		$data['tab_files'] = $this->language->get('tab_files');
 		
 
 
@@ -1712,6 +1714,13 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
+
+		/*Идентичные товары */
+		$data['iden']=$this->model_catalog_product->getGrandParentCategories($this->request->get['product_id']);
+		$data['product_id']=$this->request->get['product_id'];
+
+		$data['iden_links']=$this->model_catalog_product->getProductLinks($this->request->get['product_id']);
+
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

@@ -1017,11 +1017,7 @@ div.title:after {
     display:block;
     height: 175px;
     position: relative;
-    img{
-        max-height:100%;
-        max-width:100%;
-        display: block;
-        margin: 0 auto;
+    picture{
         top:50%;
         position: relative;
         -webkit-transform: translate(0, -50%);
@@ -1029,6 +1025,15 @@ div.title:after {
         -ms-transform: translate(0, -50%);
         -o-transform: translate(0, -50%);
         transform: translate(0, -50%);
+        display: block;
+        margin-top:10px;
+    }
+    img{
+        max-height:100%;
+        max-width:100%;
+        display: block;
+        margin: 0 auto;
+        
     }
 }
 .reviews{
