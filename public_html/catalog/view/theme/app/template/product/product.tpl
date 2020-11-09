@@ -163,11 +163,7 @@
     <source type="image/jpeg" srcset="<?php echo $image['thumb']; ?>">
     <img src="<?php echo $image['thumb']; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" />
 </picture>
-                                                    <!--
-                                                    <img src="<?php echo $image['thumb']; ?>" 
-                                                        title="<?php echo $heading_title; ?>" 
-                                                        alt="<?php echo $heading_title; ?>" />
-                                                    -->
+                                                    
                                             </a>
                                         </div>
                                     <?php $i++;} ?>
@@ -376,28 +372,6 @@
                                 </div>
                                 <div class="state_stock_link js_modal with_goal" goal="payment-receipt" data-modal="modal_delivery_pay">Способы оплаты и получения товара</div>
                             </div>
-
-                            <!--
-                            <div class="in-stock">
-                                <?php if($quantity_stock>0){?>
-                                <span><?php echo $stock;?></span>
-                                <ul>
-                                    <?php if(isset($locations[0])):?>
-                                        <li class="stock1">
-                                        <?=$locations[0]['name'];?> 
-                                        </li>
-                                    <?php endif;?>
-                                    <?php if(isset($locations[1])):?>
-                                        <li class="stock2">
-                                        <?=$locations[1]['name'];?> 
-                                        </li>
-                                    <?php endif;?>
-                                </ul>
-                                <?php } else{?>
-                                    <div class="notinstock"><?php echo $stock;?></div>
-                                <?php }?>
-                            </div>
-                            -->
                         </div>
                     </div>
                 </div>
@@ -463,6 +437,10 @@
 <?php }else{ ?>
     <div class="viriant_itm_color _itm_color_transparent"></div>
 <?php }?>
+<div class="product_color_hint">
+    <div class="product_color_hint_caption">Цвет:</div>
+    <div class="product_color_hint_val"><?=$variant['name']?></div>
+</div>
 
 
                                         </div>
@@ -475,16 +453,13 @@
     <div class="viriant_itm_color _itm_color_transparent"></div>
 <?php }?>                                                
                                             </a>
+<div class="product_color_hint">
+    <div class="product_color_hint_caption">Цвет:</div>
+    <div class="product_color_hint_val"><?=$variant['name']?></div>
+</div>
                                         </div>
                                     <?php }?>
                                 
-                                    <!--
-                                    <?php if($variant['product_id']==$product_id) { ?>
-                                        <div class="viriant_itm current"><span><?=$variant['name']?></span></div>
-                                    <?php }else{?>
-                                        <div class="viriant_itm"><a href="<?=$variant['link']?>"><?=$variant['name']?></a></div>
-                                    <?php }?>
-                                    -->
                                 <?php }?>
                             </div>
                         </div>
