@@ -333,9 +333,27 @@ class ModelCatalogCategory extends Model
         }
         $this->setParamValues($category_id,$data);
         
+
+        if($data['products_change']){
+            //print_r($data['products']);
+            $this->db->query("DELETE FROM " . DB_PREFIX . "product_to_category WHERE main_category=0 and category_id ='" . (int) $category_id . "'");
+            //echo "DELETE FROM " . DB_PREFIX . "product_to_category WHERE main_category=0 and category_id ='" . (int) $category_id . "'";
+            $cats_str=$data['products'];
+            $cats=explode(",",$cats_str);
+            foreach($cats as $cat){
+                $this->db->query("INSERT INTO " . DB_PREFIX . "product_to_category 
+                (category_id,product_id,main_category) 
+                values ('".$category_id."','".($cat*1)."','0')"); 
+            }
+        }
+
+
         $this->cache->delete('category');
     }
-
+    public function productsByCategory($category_id){
+        $query = $this->db->query("SELECT product_id FROM " . DB_PREFIX . "product_to_category WHERE category_id = '" . (int) $category_id . "'");        
+        return $query->rows;
+    }
     public function deleteCategory($category_id)
     {
         

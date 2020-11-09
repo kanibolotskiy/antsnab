@@ -229,6 +229,15 @@ class ControllerCommonColumnLeft extends Controller {
 				);					
 			}
 
+			//Предустановленные сопутствующие"
+			if ($this->user->hasPermission('access', 'catalog/accompany')) {
+				$dopinfo_arr[] = array(
+					'name'	   => $this->language->get('text_accompany'),
+					'href'     => $this->url->link('catalog/accompany', 'token=' . $this->session->data['token'], true),
+					'children' => array()
+				);					
+			}
+
 			if ($dopinfo_arr) {
 				$catalog[] = array(
 					'name'	   => $this->language->get('text_dopinfo'),

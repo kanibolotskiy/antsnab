@@ -1,8 +1,14 @@
 <?php
 class ModelCatalogProduct extends Model {
+	public function getColorProduct($product_id){
+		
+		$sql="SELECT name,code FROM `analog_products` WHERE link_product_id='".$product_id."' and type=1";
+		$query = $this->db->query($sql);
+		return $query->row;
+	}
 	public function getNews(){
 		$sql="SELECT op.product_id, op.discount_percent, op.image, op.date_added, op.discount_percent, op.price, od.name, od.meta_h1 FROM oc_product op INNER JOIN oc_product_description od ON op.product_id=od.product_id
-		WHERE op.status=1 and discount_percent>0 order by RAND() limit 10";
+		WHERE op.status=1 order by date_added desc limit 10";
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
@@ -35,6 +41,41 @@ class ModelCatalogProduct extends Model {
 		*/
 		return $results;
 	}
+	
+	public function getProductLinks($product_id){
+		$data=[];
+		
+		$sql="select * from analog_products where product_id='".$product_id."' OR link_product_id='".$product_id."'";
+		$query=$this->db->query($sql);
+		if($row=$query->row){
+			$f_product_id=$row['product_id'];
+		}else{
+			$f_product_id=$product_id;
+		}
+/*
+		$sql_final="select * from analog_products where product_id='".$f_product_id."' OR link_product_id='".$f_product_id."'";
+		$query_final=$this->db->query($sql_final);
+		foreach ($query_final->rows as $result) {
+			$data[$result['link_product_id']][$result['type']]=Array('name'=>$result['name'],'code'=>$result['code'],'type'=>$result['type']);
+		}
+		*/
+
+		$sql_final="select *, IF(link_product_id='".$product_id."',0,1) as pr from analog_products where product_id='".$f_product_id."' OR link_product_id='".$f_product_id."' order by pr";
+		//echo $sql_final;
+		$query_final=$this->db->query($sql_final);
+		foreach ($query_final->rows as $result) {
+			$data[$result['type']][]=Array(
+				'product_id'=>$result['link_product_id'],
+				'name'=>$result['name'],
+				'code'=>$result['code'],
+				'type'=>$result['type']
+			);
+		}
+
+		//print_r($data);
+		return $data;
+	}	
+
 
 	public function getMainCategory($temp_cat_id){
         $fin_cat_id=0;

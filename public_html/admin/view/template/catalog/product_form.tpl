@@ -32,13 +32,15 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
                         <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
-                        <li><a href="#tab-links" data-toggle="tab"><?php echo $tab_links; ?></a></li>
+                        
                         <li><a href="#tab-prodproperties" data-toggle="tab"><?php echo $tab_prodproperties; ?></a></li>
                         <li><a href="#tab-tabs" data-toggle="tab"><?php echo $tab_tabs; ?></a></li>
                         <li><a href="#tab-prices" data-toggle="tab"><?php echo $tab_prices; ?></a></li>
                         <li><a href="#tab-calcs" data-toggle="tab"><?php echo $tab_calcs; ?></a></li>
 
                         <li><a href="#tab_iden" data-toggle="tab"><?php echo $tab_iden; ?></a></li>
+                        <li><a href="#tab_analog" data-toggle="tab"><?php echo $tab_analog; ?></a></li>
+                        <li><a href="#tab_accompany" data-toggle="tab"><?php echo $tab_accompany; ?></a></li>
 
                         <li style="display:none"><a href="#tab-attribute" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
                         <li style="display:none"><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
@@ -51,7 +53,8 @@
                         <li><a href="#tab_files" data-toggle="tab"><?php echo $tab_files; ?></a></li>
                         <!--
                         <li style="display:none"><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
-                        <<li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
+                        
+                        <li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
                         -->
 
                         
@@ -652,89 +655,7 @@
                             </div>
 
                         </div>
-                        <div class="tab-pane" id="tab-links">
-                            
-                            <!--
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-filter"><span data-toggle="tooltip" title="<?php echo $help_filter; ?>"><?php echo $entry_filter; ?></span></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />
-                                    <div id="product-filter" class="well well-sm" style="height: 150px; overflow: auto;">
-                                        <?php foreach ($product_filters as $product_filter) { ?>
-                                            <div id="product-filter<?php echo $product_filter['filter_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_filter['name']; ?>
-                                                <input type="hidden" name="product_filter[]" value="<?php echo $product_filter['filter_id']; ?>" />
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label"><?php echo $entry_store; ?></label>
-                                <div class="col-sm-10">
-                                    <div class="well well-sm" style="height: 150px; overflow: auto;">
-                                        <div class="checkbox">
-                                            <label>
-                                                <?php if (in_array(0, $product_store)) { ?>
-                                                    <input type="checkbox" name="product_store[]" value="0" checked="checked" />
-                                                    <?php echo $text_default; ?>
-                                                <?php } else { ?>
-                                                    <input type="checkbox" name="product_store[]" value="0" />
-                                                    <?php echo $text_default; ?>
-                                                <?php } ?>
-                                            </label>
-                                        </div>
-                                        <?php foreach ($stores as $store) { ?>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <?php if (in_array($store['store_id'], $product_store)) { ?>
-                                                        <input type="checkbox" name="product_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
-                                                        <?php echo $store['name']; ?>
-                                                    <?php } else { ?>
-                                                        <input type="checkbox" name="product_store[]" value="<?php echo $store['store_id']; ?>" />
-                                                        <?php echo $store['name']; ?>
-                                                    <?php } ?>
-                                                </label>
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                            </div>
-                            -->
-                            
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-analog"><?php echo $entry_analog; ?></span></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="analog" value="" placeholder="<?php echo $entry_analog; ?>" id="input-analog" class="form-control" />
-                                    <div id="product-analog" class="well well-sm" style="height: 150px; overflow: auto;">
-                                    
-                                        <?php foreach ($product_analogs as $product_analog) { ?>
-                                            <div id="product-analog<?php echo $product_analog['product_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_analog['name']; ?>
-                                                <input type="hidden" name="product_analog[]" value="<?php echo $product_analog['product_id']; ?>" />
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-related"><?php echo $entry_related; ?></span></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="related" value="" placeholder="<?php echo $entry_related; ?>" id="input-related" class="form-control" />
-                                    <div id="product-related" class="well well-sm" style="height: 150px; overflow: auto;">
-                                        <?php foreach ($product_relateds as $product_related) { ?>
-                                            <div id="product-related<?php echo $product_related['product_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_related['name']; ?>
-                                                <input type="hidden" name="product_related[]" value="<?php echo $product_related['product_id']; ?>" />
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            
-                            
-
-
-                        </div>
-                        
+                    
                         <!-- @task1 move somewhere styles-->
                         <style>
                             #tab-prodproperties input,
@@ -1441,6 +1362,8 @@
                         -->
                         <div class="tab-pane" id="tab_iden">
                             <div class="wrap_iden">
+                                <input type="hidden" name="iden_change" id="iden_change" value="0"/>
+
                                 <table class="table_iden">
                                     <thead>
                                         <tr>
@@ -1468,27 +1391,24 @@
     <?php foreach($iden['products'][$key] as $product){?>
     
     <tr rel="<?=$product['product_id'] ?>" class="<?php echo ($product_id==$product['product_id']?'current':'');?>">
-        
-        <?php if(isset($iden_links[$product['product_id']][1])) {  ?>
-            <?php print_r($iden_links[$product['product_id']][1]); ?>
-            <?php //echo $iden_links[$product['product_id']][1]['name']; ?>
-            
-        <?php }?>
-
-        <?php //print_r($product);?>
-        <td class="iden_product_name"><?=$product['name']?></td>
-        <!--
+        <td class="iden_product_name"><?=$product['name']?></td>        
         <td>
-            <input type="text" value="<?php echo $iden_links[$product['product_id']][1]['code'];?>"/>
+            <input class="idenInput idenInput_code1" name="iden[<?=$product['product_id']?>][1][code]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][1]['code'])?$iden_links[$product['product_id']][1]['code']:'');?>"/>
         </td>
         
         <td>
-            <input type="text" value="<?php echo $iden_links[$product_id][1]['name'];?>"/>
+            <input class="idenInput idenInput_name1" name="iden[<?=$product['product_id']?>][1][name]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][1]['name'])?$iden_links[$product['product_id']][1]['name']:'');?>"/>
         </td>
-        --> 
-        <td><input type="text" /></td>
-        <td><input type="text" /></td>
-        <td><input type="text" /></td>
+        
+        <td>
+            <input class="idenInput idenInput_name2" name="iden[<?=$product['product_id']?>][2][name]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][2]['name'])?$iden_links[$product['product_id']][2]['name']:'');?>"/>
+        </td>
+        <td>
+            <input class="idenInput idenInput_name3" name="iden[<?=$product['product_id']?>][3][name]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][3]['name'])?$iden_links[$product['product_id']][3]['name']:'');?>"/>
+        </td>
+        <td>
+            <input class="idenInput idenInput_name4" name="iden[<?=$product['product_id']?>][4][name]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][4]['name'])?$iden_links[$product['product_id']][4]['name']:'');?>"/>
+        </td>
     </tr>
     <?php }?>
 <?php }?>
@@ -1497,6 +1417,124 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="tab-pane" id="tab_accompany">
+                            <div class="form-group">
+                                <label style="text-align:left;" class="col-sm-2 control-label" for="input-accompany_select"><?php echo $entry_accompany_select; ?></label>
+                                <div class="col-sm-10">
+                                    <select id="input-accompany_select" name="accompany_select" class="form-control">
+                                        <option value="0" selected="selected"><?php echo $text_none; ?></option>
+                                        <?php foreach ($accompanies as $accompany) { ?>
+                                            <option data-products="<?=$accompany['products']?>" value="<?=$accompany['accompany_id']?>"><?=$accompany['name'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="wrap_accia_products">
+
+    <input name="products_change" id="products_change" type="hidden"/>
+    <input name="products" id="products" type="hidden"/>
+
+    <?php foreach($categories_tree as $category){?>
+        <div class="accia_catalog_row acc_cat_caption" rel="<?php echo $category['category_id'];?>">
+            <div class="accia_catalog_left">
+                <div class="accia_column_category_caption"><?php echo $category["name"];?></div>
+            </div>
+            <div class="accia_catalog_right"></div>
+        </div>
+        <?php if(isset($category["list"])){ ?>
+            <div class="subcat_wrapper" rel="<?php echo $category['category_id'];?>">
+            <?php foreach($category["list"] as $category_item){?>
+                
+                <div class="accia_catalog_row acc_cat_caption" rel="<?php echo $category_item['category_id'];?>">
+                    <div class="accia_catalog_left">
+                        <div class="accia_column_subcategory_caption"><?php echo $category_item["name"];?></div>
+                    </div>
+                    <div class="accia_catalog_right">
+                        <?php if(isset($products[$category_item["category_id"]])){ foreach($products[$category_item["category_id"]] as $product){?>
+                            <div class="product_used_accompany <?php echo isset($products_related[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                        <?php }}?>
+                    </div>
+                </div>
+                <?php if(isset($category_item["list"])){ ?>
+                    <div class="subcat_wrapper" rel="<?php echo $category_item['category_id'];?>">
+                        <?php foreach($category_item["list"] as $category_item_child){?>
+                        <div class="accia_catalog_row">
+                            <div class="accia_catalog_left">
+                                <div class="accia_column_subcategory_caption _sub"><?php echo $category_item_child["name"];?></div>
+                            </div>
+                            <div class="accia_catalog_right">
+                                <?php if(isset($products[$category_item_child["category_id"]])){ foreach($products[$category_item_child["category_id"]] as $product){?>
+                                    <div class="product_used_accompany <?php echo isset($products_related[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                                <?php }}?>
+                            </div>
+                        </div>
+                        <?php }?>
+                    </div>
+                <?php }?>
+            <?php }?>
+            </div>
+        <?php }?>
+    <?php }?>
+</div>
+                        </div>
+                        <div class="tab-pane" id="tab_analog">
+                        <div class="form-group">
+                            <div class="btns_analog">
+                                <div class="btn iden_apply" id="iden_apply">Заполнить из идентичных</div>
+                                <div class="btn iden_reset">Очистить</div>
+                            </div>
+                        </div>
+
+<div class="wrap_accia_products wrap_analog_products">
+
+    <input name="products_change_analog" id="products_change_analog" type="hidden"/>
+    <input name="products_analog" id="products_analog" type="hidden"/>
+
+    <?php foreach($categories_tree as $category){?>
+        <div class="accia_catalog_row acc_cat_caption" rel="<?php echo $category['category_id'];?>">
+            <div class="accia_catalog_left">
+                <div class="accia_column_category_caption"><?php echo $category["name"];?></div>
+            </div>
+            <div class="accia_catalog_right"></div>
+        </div>
+        <?php if(isset($category["list"])){ ?>
+            <div class="subcat_wrapper" rel="<?php echo $category['category_id'];?>">
+            <?php foreach($category["list"] as $category_item){?>
+                
+                <div class="accia_catalog_row acc_cat_caption" rel="<?php echo $category_item['category_id'];?>">
+                    <div class="accia_catalog_left">
+                        <div class="accia_column_subcategory_caption"><?php echo $category_item["name"];?></div>
+                    </div>
+                    <div class="accia_catalog_right">
+                        <?php if(isset($products[$category_item["category_id"]])){ foreach($products[$category_item["category_id"]] as $product){?>
+                            <div class="product_used_analog <?php echo isset($product_analogs[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                        <?php }}?>
+                    </div>
+                </div>
+                
+                <?php if(isset($category_item["list"])){ ?>
+                    <div class="subcat_wrapper" rel="<?php echo $category_item['category_id'];?>">
+                        <?php foreach($category_item["list"] as $category_item_child){?>
+                        <div class="accia_catalog_row">
+                            <div class="accia_catalog_left">
+                                <div class="accia_column_subcategory_caption _sub"><?php echo $category_item_child["name"];?></div>
+                            </div>
+                            <div class="accia_catalog_right">
+                                <?php if(isset($products[$category_item_child["category_id"]])){ foreach($products[$category_item_child["category_id"]] as $product){?>
+                                    <div class="product_used_analog <?php echo isset($product_analogs[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                                <?php }}?>
+                            </div>
+                        </div>
+                        <?php }?>
+                    </div>
+                <?php }?>
+            <?php }?>
+            </div>
+        <?php }?>
+    <?php }?>
+</div>
+                        </div>
+                        
 
                         <div class="tab-pane" id="tab_files">
                             <div class="form-group">
@@ -1532,7 +1570,137 @@
          
                                
         <script type="text/javascript"><!--
+        function products_selected(){
+            var products_used=[];
+            $(".product_used_accompany._active").each(function(){
+                var product_id=$(this).attr("rel");
+                products_used.push(product_id);
+            });
+            $("#products_change").val(1);
+            $("#products").val(products_used.join(","));
+        }
+        function products_selected_analog(){
+            var products_used=[];
+            $(".product_used_analog._active").each(function(){
+                var product_id=$(this).attr("rel");
+                products_used.push(product_id);
+            });
+            $("#products_change_analog").val(1);
+            $("#products_analog").val(products_used.join(","));
+        }
+         
 
+        $(document).ready(function(){
+            $("#iden_apply").click(function(){
+                $(".product_used_analog").removeClass("_active");
+                $(".table_iden tr:not(.current) .idenInput").each(function(){
+                    if($(this).val()){
+                        var rel=$(this).closest("tr").attr("rel");
+                        $(".product_used_analog[rel='"+rel+"']").addClass("_active");
+                    }
+                });
+                $(".wrap_analog_products .subcat_wrapper").hide();
+                $(".product_used_analog._active").each(function(){
+                    $(this).parents(".subcat_wrapper").show();
+                });
+                products_selected_analog();
+            });
+
+            $(".table_iden tr.current .idenInput_name1").change(function(){
+                if($(this).val()==""){
+                    $(".table_iden tr:not(.current) .idenInput_name1").prop("disabled","disabled");
+                }else{
+                    $(".table_iden tr:not(.current) .idenInput_name1").prop("disabled",false);
+                }
+            });
+            $(".table_iden tr.current .idenInput_name2").change(function(){
+                if($(this).val()==""){
+                    $(".table_iden tr:not(.current) .idenInput_name2").prop("disabled","disabled");
+                }else{
+                    $(".table_iden tr:not(.current) .idenInput_name2").prop("disabled",false);
+                }
+            });                        
+            $(".table_iden tr.current .idenInput_name3").change(function(){
+                if($(this).val()==""){
+                    $(".table_iden tr:not(.current) .idenInput_name3").prop("disabled","disabled");
+                }else{
+                    $(".table_iden tr:not(.current) .idenInput_name3").prop("disabled",false);
+                }
+            });
+            $(".table_iden tr.current .idenInput_name4").change(function(){
+                if($(this).val()==""){
+                    $(".table_iden tr:not(.current) .idenInput_name4").prop("disabled","disabled");
+                }else{
+                    $(".table_iden tr:not(.current) .idenInput_name4").prop("disabled",false);
+                }
+            });
+            if($(".table_iden tr.current .idenInput_name1").val()==""){
+                $(".table_iden tr:not(.current) .idenInput_name1").prop("disabled","disabled");
+            }
+            if($(".table_iden tr.current .idenInput_name2").val()==""){
+                $(".table_iden tr:not(.current) .idenInput_name2").prop("disabled","disabled");
+            }
+            if($(".table_iden tr.current .idenInput_name3").val()==""){
+                $(".table_iden tr:not(.current) .idenInput_name3").prop("disabled","disabled");
+            }
+            if($(".table_iden tr.current .idenInput_name4").val()==""){
+                $(".table_iden tr:not(.current) .idenInput_name4").prop("disabled","disabled");
+            }
+
+
+            $(".idenInput").change(function(){
+                $("#iden_change").val(1);
+            });
+            $("#input-accompany_select").change(function(){
+                var products_str=$("#input-accompany_select option:selected").data("products");
+                //console.log(products_str);
+                $(".product_used_accompany").removeClass("_active");
+                if(products_str!=""){
+                   products_arr=products_str.split(",");
+                   for(product in products_arr){
+                        product_id=products_arr[product];
+                        $(".product_used_accompany[rel='"+product_id+"']").addClass("_active");
+                   }
+                   
+                }
+                $("#products_change").val(1);
+                $("#products").val(products_str);
+                //products_selected();
+                $(".subcat_wrapper").hide();
+                $(".product_used_accompany._active").each(function(){
+                    $(this).parents(".subcat_wrapper").show();
+                });
+            });
+
+            $(".product_used_analog._active").each(function(){
+                $(this).parents(".subcat_wrapper").show();
+            });
+            $(".product_used_accompany._active").each(function(){
+                $(this).parents(".subcat_wrapper").show();
+            });
+
+            $(".product_used_accompany").click(function(){
+                $(this).toggleClass("_active");
+                products_selected();
+            });
+            $(".iden_reset").click(function(){
+                $(".product_used_analog").removeClass("_active");
+                $("#products_change_analog").val(1);
+                $("#products_analog").val("");
+            });
+            $(".product_used_analog").click(function(){
+                $(this).toggleClass("_active");
+                products_selected_analog();
+            });
+            $(".acc_cat_caption").click(function(){
+                var rel=$(this).attr("rel");
+                $(".subcat_wrapper[rel='"+rel+"']").slideToggle(200);
+                $(this).toggleClass("active");
+            });
+        });
+         
+
+            
             $(".product_used_item").click(function(){
                 $("#change_params").val(1);
                 if($(this).hasClass("_active")){

@@ -675,7 +675,7 @@ div.ckeditor {
 	position:relative;float:left;
 	min-height: 23px;
 }
-.product_used_item{
+.product_used_analog,.product_used_item,.product_used_accompany{
 	position:relative;
 	float:left;
 	font-size: 12px;
@@ -689,6 +689,10 @@ div.ckeditor {
 	position:relative;float:left;
 	line-height: 22px;
 	cursor:pointer;
+}
+.product_used_analog._active,.product_used_accompany._active {
+    background: #41737E;
+    color: #fff;
 }
 .product_used_item.active{background:#fff;}
 .wrp_used_item{
@@ -760,7 +764,7 @@ div.ckeditor {
 .accia_catalog_row{display: flex;border-bottom: 1px solid #eee;padding: 5px 0;}
 .accia_catalog_left{order:1;min-width:230px;max-width:230px;width:230px;}
 .accia_catalog_right{order:2;width:100%;}
-.accia_column_category_caption{font-size:13px;font-weight: bold;cursor:pointer;}
+.accia_column_category_caption{font-size:12px;font-weight: bold;cursor:pointer;}
 .accia_column_subcategory_caption{font-size:12px;cursor:pointer;margin-left:15px;}
 .accia_column_subcategory_caption._sub{margin-left:30px;}
 .subcat_wrapper{display:none;}
@@ -933,3 +937,52 @@ height:34px;
 	font-weight:bold;
 }
 .iden_product_name{white-space:nowrap;}
+
+/*
+.wrp_cat_name._level1 .cat_name{padding-left:20px;font-weight:600;}
+.wrp_cat_name._level2 .cat_name{padding-left:40px;font-weight:600;}
+.cat_name{font-size: 12px;padding-top:5px;padding-bottom:2px;}
+.cat_name.main_cat_name{
+	font-size: 13px;
+    font-weight: bold;cursor:pointer;line-height: 22px;
+}
+.accompany_row{    
+	border: 1px solid #ccc;
+    padding: 2px 8px;
+    float: left;
+    border-radius: 2px;
+	margin-right: 5px;margin-bottom:5px;
+	cursor:pointer;
+}
+.accompany_row.active{
+	
+}
+.products_list_accompany{position:relative;overflow:hidden;padding:10px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.wrp_cat_name._level1 .products_list_accompany{margin-left:20px;}
+.wrp_cat_name._level2 .products_list_accompany{margin-left:40px;}
+*/
+.btns_analog{margin-left: 16px;}
+.btn.iden_apply{
+	transition:.2s;
+	border: 1px solid #ddd;
+	margin-right:10px;
+	font-size: 12px;
+	
+}
+.btn.iden_reset{
+	transition:.2s;
+	border: 1px solid #ddd;
+	margin-right:10px;
+	font-size: 12px;
+}
+.btn.iden_reset:hover,.btn.iden_apply:hover{
+	border: 1px solid #ddd;
+	margin-right:10px;
+	background: #41737E;
+	color: #fff;
+	font-size: 12px;
+}

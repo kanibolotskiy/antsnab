@@ -1216,6 +1216,33 @@ class ControllerProductProduct extends Controller {
 				}
 			}
 			
+			$products_links=$this->model_catalog_product->getProductLinks($product_id);
+			$data['products_links']=[];
+			$flags=[];
+			$color_product=[];
+			foreach($products_links as $key=>$products_link){
+				
+				foreach($products_links[$key] as $itm){
+					if($itm['product_id']==$product_id){
+						$flags[$key]=true;
+						if($key==1){
+							$color_product=Array("name"=>$itm['name'],"code"=>$itm['code']);
+						}
+					}
+					$data_temp[$key][]=Array(
+						"name"=>$itm['name'],
+						"code"=>$itm['code'],
+						"product_id"=>$itm['product_id'],
+						"link"=>$this->url->link('product/product', 'product_id=' . $itm['product_id']),
+					);
+				}
+			}
+			foreach($flags as $key=>$flag){
+				$data['products_links'][$key]=$data_temp[$key];
+			}
+
+			
+			$data['color_product']=$color_product;
 
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
 
@@ -1225,8 +1252,7 @@ class ControllerProductProduct extends Controller {
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
-			//echo "ok";
-			//$data1["test"]="test";
+			
 
 			$this->response->setOutput($this->load->view('product/product', $data));
 			

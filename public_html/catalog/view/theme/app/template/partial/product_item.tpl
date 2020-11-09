@@ -40,6 +40,7 @@
                 <div class="agg_rating_val"><?php echo $p["rating"];?></div>
             </div>
         <?php }?>
+        
         <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>">
             <div class="catalog-img">
                 <div class="fast_preview">
@@ -57,6 +58,20 @@
                     <div rel="<?= $p['product_id']?>" title="Добавить товар в избранное" class="favorite <?= $p['favorite'] ?>"></div>        
                     <div rel="<?= $p['product_id']?>" title="Добавить товар в сравнение" class="compare <?= $p['compare'] ?>"></div>
                 </div>
+
+                <?php if($p["color_name"]){?>
+                    <?php if($p['color_code']){?>
+                        <div class="wrp_product_color " style="background-color:#<?=$p['color_code']?>">
+                    <?php }else {?>
+                        <div class="wrp_product_color _transparent">
+                    <?php }?>
+                    
+                        <div class="product_color_hint">
+                            <div class="product_color_hint_caption">Цвет:</div>
+                            <div class="product_color_hint_val"><?=$p["color_name"]?></div>
+                        </div>
+                    </div>
+                <?php }?>
             </div>
         </a>
         <div class="clr"></div>

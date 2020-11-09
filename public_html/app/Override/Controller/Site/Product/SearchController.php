@@ -211,11 +211,7 @@ class SearchController extends \Controller
 			'href' => $this->url->link('product/search', $url)
 		);
 
-		if (isset($this->request->get['text'])) {
-			$data['heading_title'] = $this->language->get('heading_title') .  ' - ' . $this->request->get['text'];
-		} else {
-			$data['heading_title'] = $this->language->get('heading_title');
-		}
+		
 
 		$data['text_empty'] = $this->language->get('text_empty');
 		$data['text_search'] = $this->language->get('text_search');
@@ -304,6 +300,7 @@ class SearchController extends \Controller
 		//print_r($products_search);
 		
 
+
 		$data['products'] = array();
 		$data['products_popular']=[];
 		$this->load->model('catalog/search');
@@ -326,6 +323,7 @@ class SearchController extends \Controller
 
 			
 			$query=$_GET["search"];
+			$query=str_replace([",","-"]," ",$query);
 			$query = preg_replace('/\s/', ' ', $query);
 			$query_arr=explode(" ",$query);
 			
@@ -342,9 +340,11 @@ class SearchController extends \Controller
 
 			//print_r($search_results);
 			$product_total=0;
-			if(count($search_results)){
-				$per_page=$limit;
 
+			if(count($search_results)){
+				$data['heading_title'] = $this->language->get('heading_title');
+				$per_page=$limit;
+				
 				if (isset($this->request->get['page'])) {
 					$pg=($this->request->get['page'])-1;
 				}else{
@@ -369,6 +369,8 @@ class SearchController extends \Controller
 
 				$data['products'] = $results;
 			}else{
+				$data['heading_title'] = $this->language->get('heading_title_nofound');
+			
 				$products_popular=$this->model_catalog_product->getProductsPopular(4);
 				
 				foreach ($products_popular as $product_popular_id) {

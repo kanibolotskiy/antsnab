@@ -237,7 +237,19 @@ class ProductListHelper extends \Model
             //$path = $this->hierarhy->getPath($result['main_category']);
             $img_webp=str_replace(".jpg",".webp",$image);
             $img_webp=str_replace(".png",".webp",$img_webp);
-
+            
+            $color_result = $this->model_catalog_product->getColorProduct($result['product_id']);
+            
+            $colorname='';
+            $colorcode='';
+            
+            if(isset($color_result['name'])){
+                $colorname=$color_result['name'];
+            }
+            if(isset($color_result['code'])){
+                $colorcode=$color_result['code'];
+            }
+            
             $products[] = array(
                 'product_id' => $result['product_id'],
                 'quantity'=>$result['quantity'],
@@ -275,7 +287,9 @@ class ProductListHelper extends \Model
                 'href' => $this->url->link('product/product', 'path=' . '&product_id=' . $result['product_id']),
                 'favorite'=>$fav_active,
                 'compare'=>$compare_active,
-                'labels'=>$labels
+                'labels'=>$labels,
+                'color_name'=>$colorname,
+                'color_code'=>$colorcode
                 
             );
         }

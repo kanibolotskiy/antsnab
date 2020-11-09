@@ -72,6 +72,7 @@ $_['entry_filter_type']             = 'Тип параметра';
 $_['entry_filter_unit']             = 'Ед. измерения';
 $_['entry_filter_sort_order']       = 'Сортировка';
 
-$_['tab_search']       = 'Поиск';
+$_['tab_search']                    = 'Поиск';
+$_['tab_collections']               = 'Товары в подборке';
 
 

@@ -1,6 +1,8 @@
 <?php
 // Heading
 $_['heading_title']     = 'Поиск';
+$_['heading_title_nofound']     = 'Ничего не найдено по запросу';
+
 $_['heading_tag']		= 'Тег - ';
 
 // Text

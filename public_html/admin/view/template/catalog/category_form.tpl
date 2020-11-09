@@ -29,7 +29,13 @@
             <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
             <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
             <li><a href="#tab-filter" data-toggle="tab"><?php echo $tab_filter; ?></a></li>
-            <li><a href="#tab-search" data-toggle="tab"><?php echo $tab_search; ?></a></li>
+            
+            
+            <?php if($isseo) { ?>
+              <li><a href="#tab-collections" data-toggle="tab"><?php echo $tab_collections; ?></a></li>
+            <?php }else{?>
+              <li><a href="#tab-search" data-toggle="tab"><?php echo $tab_search; ?></a></li>
+            <?php }?>
             <!--<li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>-->
           </ul>
           <div class="tab-content">
@@ -593,7 +599,61 @@
                 <?php }?>
               </div>
             </div>
+            <div class="tab-pane" id="tab-collections">
+
+<div class="wrap_accia_products">
+
+    <input name="products_change" id="products_change" type="hidden"/>
+    <input name="products" id="products" type="hidden"/>
+
+    <?php foreach($categories_tree_collect as $category){?>
+        <div class="accia_catalog_row acc_cat_caption" rel="<?php echo $category['category_id'];?>">
+            <div class="accia_catalog_left">
+                <div class="accia_column_category_caption"><?php echo $category["name"];?></div>
+            </div>
+            <div class="accia_catalog_right"></div>
+        </div>
+        <?php if(isset($category["list"])){ ?>
+            <div class="subcat_wrapper" rel="<?php echo $category['category_id'];?>">
+            <?php foreach($category["list"] as $category_item){?>
+                
+                <div class="accia_catalog_row acc_cat_caption" rel="<?php echo $category_item['category_id'];?>">
+                    <div class="accia_catalog_left">
+                        <div class="accia_column_subcategory_caption"><?php echo $category_item["name"];?></div>
+                    </div>
+                    <div class="accia_catalog_right">
+                        <?php if(isset($products_list[$category_item["category_id"]])){ foreach($products_list[$category_item["category_id"]] as $product){?>
+                            <div class="product_used_item <?php echo isset($products_category[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                        <?php }}?>
+                    </div>
+                </div>
+                <?php if(isset($category_item["list"])){ ?>
+                    <div class="subcat_wrapper" rel="<?php echo $category_item['category_id'];?>">
+                        <?php foreach($category_item["list"] as $category_item_child){?>
+                        <div class="accia_catalog_row">
+                            <div class="accia_catalog_left">
+                                <div class="accia_column_subcategory_caption _sub"><?php echo $category_item_child["name"];?></div>
+                            </div>
+                            <div class="accia_catalog_right">
+                                <?php if(isset($products_list[$category_item_child["category_id"]])){ foreach($products_list[$category_item_child["category_id"]] as $product){?>
+                                    <div class="product_used_item <?php echo isset($products_category[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                                <?php }}?>
+                            </div>
+                        </div>
+                        <?php }?>
+                    </div>
+                <?php }?>
+            <?php }?>
+            </div>
+        <?php }?>
+    <?php }?>
+</div>
+
+<!---->
+
+
             
+            </div>
           </div>
         </form>
       </div>
@@ -603,7 +663,16 @@
   <script type="text/javascript"><!--
       var filter_row = $("#filters tbody tr").length;
       var last_added_new=filter_row;
-      
+      function products_selected(){
+            var products_used=[];
+            $(".product_used_item._active").each(function(){
+                var product_id=$(this).attr("rel");
+                products_used.push(product_id);
+            });
+            $("#products_change").val(1);
+            $("#products").val(products_used.join(","));
+      }
+     
       function addFilter() {
           
           var last_order=-1;
@@ -698,6 +767,16 @@
           el.style.cssText = 'height:' + el.scrollHeight + 'px';
         },0);
       }
+
+      $(".product_used_item._active").each(function(){
+          $(this).parents(".subcat_wrapper").show();
+      });
+
+      $(".product_used_item").click(function(){
+          $(this).toggleClass("_active");
+          products_selected();
+      });
+      
       $(".nav-tabs li").click(function(){
         $('.search_append_text').each(function(){
           autosize(this);

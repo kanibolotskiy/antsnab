@@ -114,6 +114,7 @@ $_['text_main']                  		    = 'Главная';
 $_['text_acciasale']                  		= 'Акция (скидки)';
 $_['text_about']                  		    = 'О компании';
 $_['text_diler']                  		    = 'Дилерам';
+$_['text_accompany']                  		= 'Сопутствующие';
 
 
 $_['text_accia']          					= 'Акции';

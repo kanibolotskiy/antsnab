@@ -751,7 +751,8 @@ class ControllerCatalogProduct extends Controller {
 		$data['tab_links'] = $this->language->get('tab_links');
 		$data['tab_reward'] = $this->language->get('tab_reward');
 		$data['tab_filter'] = $this->language->get('tab_filter');
-		
+		$data['tab_accompany'] = $this->language->get('tab_accompany');
+		$data['tab_analog'] = $this->language->get('tab_analog');
 
 		$data['tab_design'] = $this->language->get('tab_design');
 		$data['tab_openbay'] = $this->language->get('tab_openbay');
@@ -759,7 +760,8 @@ class ControllerCatalogProduct extends Controller {
 
 		$data['tab_iden'] = $this->language->get('tab_iden');
 		$data['tab_files'] = $this->language->get('tab_files');
-		
+
+		$data['entry_accompany_select'] = $this->language->get('entry_accompany_select');
 
 
 		if (isset($this->error['warning'])) {
@@ -1634,7 +1636,31 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$products = array();
 		}
+		$this->load->model('catalog/accompany');
+		$accompanies = $this->model_catalog_accompany->getAccompanies(['sort'=>'sort_order']);
+		//print_r($accompanies);
+		foreach($accompanies as $accompany){
+			//echo $accompany['accompany_id'];
+			$accompany_products=$this->model_catalog_accompany->getAccompanyProducts($accompany['accompany_id']);
+			$acc_product=[];
+			$acc_product_str="";
+			foreach($accompany_products as $accompany_product){
+				$acc_product[]=$accompany_product['product_id'];
+			}
+			if(is_array($acc_product)){
+				$acc_product_str=implode(",",$acc_product);
+			}
+			$data['accompanies'][]=Array(
+				'accompany_id'=>$accompany['accompany_id'],
+				'name'=>$accompany['name'],
+				'products'=>$acc_product_str
+			);
+			//print_r($accompany_products);
+		}
 
+		//$data['accompanies'] 
+		
+		/*
 		$data['product_relateds'] = array();
 		foreach ($products as $product_id) {
 			$related_info = $this->model_catalog_product->getProduct($product_id);
@@ -1646,6 +1672,22 @@ class ControllerCatalogProduct extends Controller {
 				);
 			}
 		}
+		*/
+		$data['products_related'] = array();
+		foreach ($products as $product_id) {
+			$related_info = $this->model_catalog_product->getProduct($product_id);
+
+			if ($related_info) {
+				$data['products_related'][$related_info['product_id']]=1;
+				
+				//$data['product_relateds'][] = array(
+				//	'product_id' => $related_info['product_id'],
+				//	'name'       => $related_info['name']
+				//);
+				
+			}
+		}
+		
 		if (isset($this->request->post['product_analog'])) {
 			$products = $this->request->post['product_analog'];
 		} elseif (isset($this->request->get['product_id'])) {
@@ -1658,6 +1700,8 @@ class ControllerCatalogProduct extends Controller {
 		$data['product_analogs'] = array();
 		
 		foreach ($products as $product_id) {
+			$data['product_analogs'][$product_id]=1;
+			/*
 			$analog_info = $this->model_catalog_product->getProduct($product_id);
 
 			if ($analog_info) {
@@ -1666,6 +1710,7 @@ class ControllerCatalogProduct extends Controller {
 					'name'       => $analog_info['name']
 				);
 			}
+			*/
 		}
 
 
@@ -1721,6 +1766,39 @@ class ControllerCatalogProduct extends Controller {
 
 		$data['iden_links']=$this->model_catalog_product->getProductLinks($this->request->get['product_id']);
 
+
+
+		$parent_cat_id=71;
+		$categories=[];
+		$categories_tree=[];
+		
+		$category_list=$this->model_catalog_category->listCatalog();
+		$products_list=$this->model_catalog_category->listProducts(); 
+		
+		foreach($category_list as $category){
+			$categories[$category["parent_id"]][]=$category;
+		}
+
+		if(isset($categories[$parent_cat_id])){
+			foreach($categories[$parent_cat_id] as $key=>$cat_item){
+				$categories_tree[$key]=$cat_item;
+				$cat_child=[];
+				if(isset($categories[$cat_item["category_id"]])){
+					foreach($categories[$cat_item["category_id"]] as $cat_item_child){
+						$cat_child2=[];
+						if(isset($categories[$cat_item_child["category_id"]])){
+							foreach($categories[$cat_item_child["category_id"]] as $cat_item_child2){
+								$cat_item_child["list"][]=$cat_item_child2;
+							}
+						}
+						$categories_tree[$key]["list"][]=$cat_item_child;
+					}
+				}
+			}
+		}
+
+		$data['categories_tree']=$categories_tree;
+		$data['products']=$products_list;
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

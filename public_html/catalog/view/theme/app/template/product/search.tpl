@@ -5,7 +5,7 @@
         <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
         <?php echo $content_top; ?>
         
-        <h1><?php echo $heading_title; ?> - <span class="search_word"><?php echo $search;?></span></h1>
+        <h1><?php echo $heading_title; ?> &mdash; <span class="search_word"><?php echo $search;?></span></h1>
         
         <?php if ($products) { ?>
             <h2><?php echo $text_search; ?></h2>
@@ -65,7 +65,6 @@
 
             </div>
         <?php } else { ?>
-            <h2>К сожалению по вашему запросу ничего не найдено</h2>
             <div class="content-text emptysearch-text">
                 <p>Мы сожалеем, но нам не удалось найти в <a href="products/">каталоге</a> товары, соответствующие вашему запросу.</p>
                 <p>Пожалуйста проверьте правильность запроса и попробуйте еще раз.</p>

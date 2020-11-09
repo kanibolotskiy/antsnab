@@ -115,7 +115,13 @@
                                         <?php } ?>
                                     </div>
                                 <?php }?>
-
+                                <?php if($color_product) {?>
+                                    <?php if($color_product['code']) {?>
+                                        <div class="product_color" style="background-color:#<?=$color_product['code']?>"></div>
+                                    <?php }else{?>
+                                        <div class="product_color _product_color_transparent"></div>
+                                    <?php }?>
+                                <?php }?>
                                 <?php if($rating){?>
                                     <div class="agg_rating">
                                         <div class="agg_rating_ico"></div>
@@ -396,6 +402,96 @@
                     </div>
                 </div>
                 
+                <?php if($products_links){ ?>
+                    <div class="wrap_product_links">
+                    <?php if(isset($products_links[2])) {?>
+                        <div class="wrap_variant">
+                            <div class="viriant_caption">Упаковка:</div>
+                            <div class="viriant_list">
+                                <?php foreach($products_links[2] as $variant){?>
+                                    <?php if($variant['product_id']==$product_id) { ?>
+                                        <div class="viriant_itm current"><span><?=$variant['name']?></span></div>
+                                    <?php }else{?>
+                                        <div class="viriant_itm"><a href="<?=$variant['link']?>"><?=$variant['name']?></a></div>
+                                    <?php }?>
+                                <?php }?>
+                            </div>
+                        </div>
+                    <?php }?>
+
+                    <?php if(isset($products_links[3])) {?>
+                        <div class="wrap_variant">
+                            <div class="viriant_caption">Сезон:</div>
+                            <div class="viriant_list">
+                                <?php foreach($products_links[3] as $variant){?>
+                                    <?php if($variant['product_id']==$product_id) { ?>
+                                        <div class="viriant_itm current"><span><?=$variant['name']?></span></div>
+                                    <?php }else{?>
+                                        <div class="viriant_itm"><a href="<?=$variant['link']?>"><?=$variant['name']?></a></div>
+                                    <?php }?>
+                                <?php }?>
+                            </div>
+                        </div>
+                    <?php }?>
+
+                    <?php if(isset($products_links[4])) {?>
+                        <div class="wrap_variant">
+                            <div class="viriant_caption">Применение:</div>
+                            <div class="viriant_list">
+                                <?php foreach($products_links[4] as $variant){?>
+                                    <?php if($variant['product_id']==$product_id) { ?>
+                                        <div class="viriant_itm current"><span><?=$variant['name']?></span></div>
+                                    <?php }else{?>
+                                        <div class="viriant_itm"><a href="<?=$variant['link']?>"><?=$variant['name']?></a></div>
+                                    <?php }?>
+                                <?php }?>
+                            </div>
+                        </div>
+                    <?php }?>
+
+                    <?php if(isset($products_links[1])) {?>
+                        
+                        <div class="wrap_variant">
+                            <div class="viriant_caption">Цвет:</div>
+                            <div class="viriant_list">
+                                <?php foreach($products_links[1] as $variant){?>
+                                     
+                                    <?php if($variant['product_id']==$product_id) { ?>
+                                        <div class="wrap_viriant_itm_color current">
+<?php if($variant['code']){ ?>
+    <div class="viriant_itm_color <?php echo ($variant['code']=='fff' or $variant['code']=='ffffff' or $variant['code']=='FFF' or $variant['code']=='FFFFFF')?'_border':''; ?>" style="background-color:#<?=$variant['code']?>"></div>
+<?php }else{ ?>
+    <div class="viriant_itm_color _itm_color_transparent"></div>
+<?php }?>
+
+
+                                        </div>
+                                    <?php }else{ ?>
+                                        <div class="wrap_viriant_itm_color">
+                                            <a href="<?=$variant['link']?>">
+<?php if($variant['code']){ ?>
+    <div class="viriant_itm_color <?php echo ($variant['code']=='fff' or $variant['code']=='ffffff' or $variant['code']=='FFF' or $variant['code']=='FFFFFF')?'_border':''; ?>" style="background-color:#<?=$variant['code']?>"></div>
+<?php }else{ ?>
+    <div class="viriant_itm_color _itm_color_transparent"></div>
+<?php }?>                                                
+                                            </a>
+                                        </div>
+                                    <?php }?>
+                                
+                                    <!--
+                                    <?php if($variant['product_id']==$product_id) { ?>
+                                        <div class="viriant_itm current"><span><?=$variant['name']?></span></div>
+                                    <?php }else{?>
+                                        <div class="viriant_itm"><a href="<?=$variant['link']?>"><?=$variant['name']?></a></div>
+                                    <?php }?>
+                                    -->
+                                <?php }?>
+                            </div>
+                        </div>
+                    <?php }?>
+                    </div>
+                <?php }?>
+
                 <?php if($benefits) {?>
                     <div class="benefits">
                         <?php foreach($benefits as $benefit){ ?>

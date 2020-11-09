@@ -10,10 +10,11 @@ $_['heading_title_acciasale']   = 'Акция (скидки)';
 
 $_['heading_title_about']       = 'О компании';
 $_['heading_title_diler']       = 'Дилерам';
+$_['heading_title_accompany']   = 'Сопутствующие';
 
 
 // Text
-$_['1success_benefits']     = 'Список преимуществ обновлен!';
+$_['text_success_benefits']     = 'Список преимуществ обновлен!';
 $_['text_success_benefits_main']     = 'Список преимуществ обновлен!';
 $_['text_success_couriers']     = 'Список курьеров обновлен!';
 $_['text_success_docs']         = 'Список документов обновлен!';
@@ -27,7 +28,7 @@ $_['text_list_couriers']        = 'Список курьеров';
 $_['text_list_docs']            = 'Список документов';
 $_['text_list_discounts']       = 'Список скидок';
 $_['text_list_calcs']           = 'Список калькуляторов';
-
+$_['text_list_accompanies']        = 'Список сопутствующих';
 
 $_['text_add_benefits']         = 'Добавление преимущества';
 $_['text_edit_benefits']        = 'Редактирование преимущества';
@@ -44,8 +45,9 @@ $_['text_add_discounts']        = 'Добавление скидки';
 $_['text_edit_discounts']       = 'Редактирование скидки';
 
 $_['text_edit_main']            = 'Редактирование главная';
-$_['text_edit_about']            = 'Редактирование "О компании"';
-$_['text_edit_diler']            = 'Редактирование "Дилерам"';
+$_['text_edit_about']           = 'Редактирование "О компании"';
+$_['text_edit_accompany']       = 'Редактирование "Сопутствующие"';
+$_['text_edit_diler']           = 'Редактирование "Дилерам"';
 
 
 $_['text_add_calcs']            = 'Добавление калькулятора';
@@ -58,6 +60,7 @@ $_['column_name_couriers']      = 'Название курьера';
 $_['column_name_docs']          = 'Название документа';
 $_['column_name_discounts']     = 'Скидка';
 $_['column_name_calcs']         = 'Название калькулятора';
+$_['column_name_accompanies']   = 'Название';
 
 
 $_['column_sort_order']         = 'Порядок сортировки';

@@ -66,7 +66,9 @@ class ModelCatalogInformation extends Model {
 				
 				$nodeDiv_webp = $dom->createElement("source", "");
 				$nodeDiv_webp->setAttribute("type","image/webp");
-				$nodeDiv_webp->setAttribute("srcset",$webp_file);
+				if($webp_file){
+					$nodeDiv_webp->setAttribute("srcset",$webp_file);
+				}
 
 				$nodeDiv = $dom->createElement("picture", "");
 				$nodeDiv->appendChild($nodeDiv_jpeg);

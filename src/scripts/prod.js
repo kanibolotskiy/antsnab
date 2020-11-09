@@ -556,8 +556,13 @@ function calc5(){
 
 }
 $( document ).ready(function() {
-    
 
+    $(document).on("mouseenter",".wrp_product_color",function(){
+        $(this).children(".product_color_hint").stop().fadeIn(150);
+    });
+    $(document).on("mouseleave",".wrp_product_color",function(){
+        $(this).children(".product_color_hint").stop().fadeOut(100);
+    });
     if($('#priceSwitcher').length){
         $switchers = $('li','#priceSwitcher' );
         $firstSwitcher = $($switchers[0]);
