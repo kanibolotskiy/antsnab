@@ -1796,7 +1796,7 @@ class ControllerCatalogProduct extends Controller {
 				}
 			}
 		}
-
+		
 		$data['categories_tree']=$categories_tree;
 		$data['products']=$products_list;
 

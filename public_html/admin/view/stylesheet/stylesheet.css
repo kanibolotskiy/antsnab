@@ -986,3 +986,20 @@ height:34px;
 	color: #fff;
 	font-size: 12px;
 }
+.table_iden .status_0{opacity:.6;}
+.product_used_item.status_0{opacity:.6;}
+.iden_cat_name{cursor:pointer;}
+.iden_cat_name span{position:relative;}
+.iden_cat_name span:after{
+	font-family: FontAwesome;
+	content: "\f107";
+	position:absolute;    
+	width: 12px;
+    height: 12px;
+    top: 1px;
+    right: -18px;
+}
+.iden_cat_name.active span:after{
+	content: "\f105";
+}
+

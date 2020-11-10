@@ -600,10 +600,10 @@ class ModelCatalogCategory extends Model
 	}
     public function listProducts(){
         $results=[];
-		$sql="select op.product_id, op.sort_order, od.name, od.search, oc.category_id 
+		$sql="select op.product_id, op.sort_order, od.name, od.search, oc.category_id, op.status 
         from oc_product op LEFT JOIN oc_product_description od ON op.product_id=od.product_id
         LEFT JOIN oc_product_to_category oc ON op.product_id=oc.product_id
-        where op.status=1 and oc.main_category=1 order by op.sort_order ASC";
+        where oc.main_category=1 order by op.sort_order ASC";
         $query = $this->db->query($sql);
         foreach($query->rows as $row){
             $results[$row['category_id']][]=$row;

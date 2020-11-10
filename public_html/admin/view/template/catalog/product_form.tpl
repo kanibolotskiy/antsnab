@@ -1386,12 +1386,14 @@
 
 <?php foreach($iden['categories'] as $key=>$category){?>
     <tr>
-        <td colspan="6" class="iden_cat_name" rel="<?=$key?>"><?=$category?></td>
+        <td colspan="6" class="iden_cat_name <?=$main_category_id==$key?'active':''?>" rel="<?=$key?>"><span><?=$category?></span></td>
     </tr>
     <?php foreach($iden['products'][$key] as $product){?>
-    
-    <tr rel="<?=$product['product_id'] ?>" class="<?php echo ($product_id==$product['product_id']?'current':'');?>">
-        <td class="iden_product_name"><?=$product['name']?></td>        
+
+    <tr <?=$main_category_id==$key?'':'style="display:none;"'?> rel="<?=$product['product_id'] ?>" class="tr_category_<?=$key?>  status_<?=$product['status']?> <?php echo ($product_id==$product['product_id']?'current':'');?>">
+        <td class="iden_product_name">
+            <?=$product['name']?>
+        </td>
         <td>
             <input class="idenInput idenInput_code1" name="iden[<?=$product['product_id']?>][1][code]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][1]['code'])?$iden_links[$product['product_id']][1]['code']:'');?>"/>
         </td>
@@ -1591,6 +1593,17 @@
          
 
         $(document).ready(function(){
+            $(".iden_cat_name").click(function(){
+                var rel=$(this).attr("rel");
+                console.log(rel);
+                if($(this).hasClass("active")){
+                   $(this).removeClass("active");
+                   $(".tr_category_"+rel).hide();
+                }else{
+                   $(this).addClass("active"); 
+                   $(".tr_category_"+rel).show();
+                }
+            });
             $("#iden_apply").click(function(){
                 $(".product_used_analog").removeClass("_active");
                 $(".table_iden tr:not(.current) .idenInput").each(function(){

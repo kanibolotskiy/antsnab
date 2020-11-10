@@ -623,7 +623,7 @@
                     </div>
                     <div class="accia_catalog_right">
                         <?php if(isset($products_list[$category_item["category_id"]])){ foreach($products_list[$category_item["category_id"]] as $product){?>
-                            <div class="product_used_item <?php echo isset($products_category[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                            <div class="product_used_item status_<?=$product['status']?> <?php echo isset($products_category[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
                         <?php }}?>
                     </div>
                 </div>
@@ -636,7 +636,7 @@
                             </div>
                             <div class="accia_catalog_right">
                                 <?php if(isset($products_list[$category_item_child["category_id"]])){ foreach($products_list[$category_item_child["category_id"]] as $product){?>
-                                    <div class="product_used_item <?php echo isset($products_category[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                                    <div class="product_used_item status_<?=$product['status']?> <?php echo isset($products_category[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
                                 <?php }}?>
                             </div>
                         </div>

@@ -15,6 +15,7 @@ class ModelCatalogProduct extends Model
         }
 
         $sql_final="select * from analog_products where product_id='".$f_product_id."' OR link_product_id='".$f_product_id."'";
+
         $query_final=$this->db->query($sql_final);
         foreach ($query_final->rows as $result) {
             $data[$result['link_product_id']][$result['type']]=Array('name'=>$result['name'],'code'=>$result['code'],'type'=>$result['type']);
@@ -45,7 +46,7 @@ class ModelCatalogProduct extends Model
         
         if(is_array($cats)){
             $cats_str=implode(",",$cats);
-            $sql_products="SELECT od.product_id, od.name, oc.category_id from oc_product_to_category oc 
+            $sql_products="SELECT od.product_id, od.name, oc.category_id, op.status from oc_product_to_category oc 
             LEFT JOIN oc_product op ON oc.product_id=op.product_id
             LEFT JOIN oc_product_description od ON oc.product_id=od.product_id 
             where category_id IN (".$cats_str.")
