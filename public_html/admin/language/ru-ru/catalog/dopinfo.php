@@ -55,7 +55,8 @@ $_['text_edit_calcs']           = 'Редактирование калькуля
 
 // Column
 $_['column_name_benefits']      = 'Название преимущества';
-$_['column_name_benefits_main']      = 'Название преимущества(главная)';
+$_['column_name_admin_benefits']      = 'Название преимущества (админка)';
+$_['column_name_benefits_main']      = 'Название преимущества (главная)';
 $_['column_name_couriers']      = 'Название курьера';
 $_['column_name_docs']          = 'Название документа';
 $_['column_name_discounts']     = 'Скидка';
@@ -69,7 +70,8 @@ $_['column_action']          	= 'Действие';
 
 // Entry
 $_['entry_name_benefits']       = 'Название преимущества';
-$_['entry_name_benefits_main']       = 'Название преимущества(главная)';
+$_['entry_name_admin_benefits']       = 'Название преимущества (админка)';
+$_['entry_name_benefits_main']       = 'Название преимущества (главная)';
 $_['entry_name_couriers']       = 'Название курьера';
 $_['entry_name_docs']           = 'Название документа';
 $_['entry_name_discounts']      = 'Название скидки';

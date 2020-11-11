@@ -2,7 +2,7 @@
 class ModelCatalogBenefits extends Model {
 	public function addBenefit($data) {
 	
-		$this->db->query("INSERT INTO dopinfo_benefits SET name = '" . $this->db->escape($data['name']) . "', goal='" . $this->db->escape($data['goal']) . "',filename='" . $this->db->escape($data['filename']) . "', description='" . $this->db->escape($data['benefit_description']) . "', sort_order = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO dopinfo_benefits SET name_admin = '" . $this->db->escape($data['name_admin']) . "',name = '" . $this->db->escape($data['name']) . "', goal='" . $this->db->escape($data['goal']) . "',filename='" . $this->db->escape($data['filename']) . "', description='" . $this->db->escape($data['benefit_description']) . "', sort_order = '" . (int)$data['sort_order'] . "'");
 		$benefit_id = $this->db->getLastId();
 
 		$this->cache->delete('benefit');
@@ -12,7 +12,7 @@ class ModelCatalogBenefits extends Model {
 
 	public function editBenefit($benefit_id, $data) {
 		
-		$this->db->query("UPDATE dopinfo_benefits SET name = '" . $this->db->escape($data['name']) . "', goal='" . $this->db->escape($data['goal']) . "',filename='" . $this->db->escape($data['filename']) . "', description='" . $this->db->escape($data['benefit_description']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE benefit_id = '" . (int)$benefit_id . "'");
+		$this->db->query("UPDATE dopinfo_benefits SET name_admin = '" . $this->db->escape($data['name_admin']) . "', name = '" . $this->db->escape($data['name']) . "', goal='" . $this->db->escape($data['goal']) . "',filename='" . $this->db->escape($data['filename']) . "', description='" . $this->db->escape($data['benefit_description']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE benefit_id = '" . (int)$benefit_id . "'");
 		
 		$this->cache->delete('benefit');
 		
@@ -34,14 +34,14 @@ class ModelCatalogBenefits extends Model {
 	public function getBenefits($data = array()) {
 		$sql = "SELECT * FROM dopinfo_benefits";
 
-		
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " where name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+			$sql .= " where name_admin LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
 		}
 
 		$sort_data = array(
 			'name',
+			'name_admin',
 			'sort_order'
 		);
 

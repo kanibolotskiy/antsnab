@@ -32,7 +32,7 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
                         <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
-                        
+
                         <li><a href="#tab-prodproperties" data-toggle="tab"><?php echo $tab_prodproperties; ?></a></li>
                         <li><a href="#tab-tabs" data-toggle="tab"><?php echo $tab_tabs; ?></a></li>
                         <li><a href="#tab-prices" data-toggle="tab"><?php echo $tab_prices; ?></a></li>
@@ -45,19 +45,19 @@
                         <li style="display:none"><a href="#tab-attribute" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
                         <li style="display:none"><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
                         <li style="display:none"><a href="#tab-recurring" data-toggle="tab"><?php echo $tab_recurring; ?></a></li>
-                        
+
                         <li style="display:none"><a href="#tab-discount" data-toggle="tab"><?php echo $tab_discount; ?></a></li>
                         <li style="display:none"><a href="#tab-special" data-toggle="tab"><?php echo $tab_special; ?></a></li>
                         <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
                         <li><a href="#tab-filter" data-toggle="tab"><?php echo $tab_filter; ?></a></li>
-                        <li><a href="#tab_files" data-toggle="tab"><?php echo $tab_files; ?></a></li>
+                        <li style="display:none"><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
+                        <!--<li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>-->
+                        
                         <!--
                         <li style="display:none"><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
-                        
-                        <li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
                         -->
 
-                        
+
 
                     </ul>
                     <div class="tab-content">
@@ -90,9 +90,9 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label" for="input-description_mini<?php echo $language['language_id']; ?>"><?php echo $entry_description_mini; ?></label>
                                             <div class="col-sm-10">
-                                                <textarea name="product_description_mini[<?php echo $language['language_id']; ?>]" 
-                                                          placeholder="<?php echo $entry_description_mini; ?>" 
-                                                          id="input-description_mini<?php echo $language['language_id']; ?>" data-lang="<?php echo $lang; ?>" 
+                                                <textarea name="product_description_mini[<?php echo $language['language_id']; ?>]"
+                                                          placeholder="<?php echo $entry_description_mini; ?>"
+                                                          id="input-description_mini<?php echo $language['language_id']; ?>" data-lang="<?php echo $lang; ?>"
                                                           class="form-control summernote">
                                                             <?php if(isset($product_description[$language['language_id']])): ?>
                                                                 <?php if(isset($product_description[$language['language_id']]['description_mini'])): ?>
@@ -157,7 +157,7 @@
                                                 &nbsp; </label>
                                             </div>
                                             </div>
-                                            
+
                                         </div>
 
                                         <div class="form-group">
@@ -175,11 +175,11 @@
                                                 &nbsp; </label>
                                             </div>
                                             </div>
-                                            
+
                                         </div>
 
-                                        
-                                        
+
+
                                     </div>
                                 <?php } ?>
                             </div>
@@ -472,7 +472,7 @@
                                     <input type="text" name="benefits" value="" placeholder="<?php echo $entry_benefits; ?>" id="input-benefits" class="form-control" />
                                     <div id="product-benefits" class="well well-sm" style="height: 150px; overflow: auto;">
                                         <?php foreach ($product_benefits as $product_benefit) { ?>
-                                            <div id="product-benefit<?php echo $product_benefit['benefit_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_benefit['name']; ?>
+                                            <div id="product-benefit<?php echo $product_benefit['benefit_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_benefit['name_admin']; ?>
                                                 <input type="hidden" name="product_benefit[]" value="<?php echo $product_benefit['benefit_id']; ?>" />
                                             </div>
                                         <?php } ?>
@@ -497,7 +497,7 @@
                                 </div>
                             </div>
 
-                            
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-discount_percent">
                                     <?php echo $entry_discount_percent; ?>
@@ -553,19 +553,19 @@
                                     <?php echo $entry_produnit_template_id; ?>
                                 </label>
                                 <div class="col-sm-10">
-                                    <select name="produnit_template_id" 
+                                    <select name="produnit_template_id"
                                             id="produnit_template_id" class="form-control">
                                         <option value="">Нет</option>
                                         <?php foreach ($produnitTemplates as $template) { ?>
                                             <?php if ($template['produnit_template_id'] == $produnit_template_id) { ?>
-                                                <option 
-                                                    value="<?php echo $template['produnit_template_id']; ?>" 
+                                                <option
+                                                    value="<?php echo $template['produnit_template_id']; ?>"
                                                     selected="selected">
                                                         <?php echo $template['name']; ?>
                                                 </option>
                                             <?php } else { ?>
-                                               <option 
-                                                    value="<?php echo $template['produnit_template_id']; ?>"> 
+                                               <option
+                                                    value="<?php echo $template['produnit_template_id']; ?>">
                                                         <?php echo $template['name']; ?>
                                                 </option>
                                             <?php } ?>
@@ -589,7 +589,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="tab-pane" id="tab-calcs">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-calc_category"><?php echo $entry_calc_category; ?></label>
@@ -655,7 +655,7 @@
                             </div>
 
                         </div>
-                    
+
                         <!-- @task1 move somewhere styles-->
                         <style>
                             #tab-prodproperties input,
@@ -666,8 +666,8 @@
                         <script>
                             $(window).on('load', function(){
                                 $('#main_category_id').on('change', function(){
-                                   $('#tab-prodproperties table tbody').html(''); 
-                                   $('#tab-prodtabs table tbody').html(''); 
+                                   $('#tab-prodproperties table tbody').html('');
+                                   $('#tab-prodtabs table tbody').html('');
                                 });
                             });
                         </script>
@@ -726,7 +726,7 @@
                                             <?= ( (1 == $t['showInSummary'] ) ? $yes : $no ) ?>
                                         </td>
                                         <td class="text-center">
-                                            <?= ( (1 == $t['showInProdPreview'] ) ? $yes : $no ) ?> 
+                                            <?= ( (1 == $t['showInProdPreview'] ) ? $yes : $no ) ?>
                                         </td>
                                         <td>
                                             <?= $t['cat_name'] ?>
@@ -747,7 +747,7 @@
                                             <?php else: ?>
                                                 <input type="checkbox"  name="prodproperties[<?=$t['category_prodproperty_id']?>][hide]" value="1"  class="form-control">
                                             <?php endif; ?>
-                                        </td>    
+                                        </td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -791,7 +791,7 @@
                                             <?php $v = (null == $t['prod_val']) ? '' : $t['prod_val'] ?>
                                             <textarea
                                                 class="summernote"
-                                                name="prodtabs[<?=$t['category_prodtab_id']?>][val]"><?= $v?></textarea> 
+                                                name="prodtabs[<?=$t['category_prodtab_id']?>][val]"><?= $v?></textarea>
                                         </td>
                                         <td style="width: 1px;" class="text-center">
                                             <?php if ($t['prod_hide'] == 1): ?>
@@ -799,7 +799,7 @@
                                             <?php else: ?>
                                                 <input type="checkbox"  name="prodtabs[<?=$t['category_prodtab_id']?>][hide]" value="1"  class="form-control">
                                             <?php endif; ?>
-                                        </td>    
+                                        </td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -1202,7 +1202,7 @@
                             <input type="text" name="change_params" value="0" id="change_params">
                             <div class="table-responsive">
                                 <table id="filter" class="table table-solid table-bordered table-hover">
-                                
+
                                     <thead>
                                         <tr>
                                             <td class="text-left" style="width:150px;">Все параметры категории</td>
@@ -1219,13 +1219,13 @@
                                                     <?php if($filter_param["type_param"]==1) {?>
                                                         <div class="product_availparam_dispason">
                                                             <div class="param_block_wrapper">
-                                                                
+
                                                                 <div class="param_block_cap">от</div>
                                                                 <input type="text" class="param_inp form-control" name="param_value_d[<?php echo $filter_param["id"];?>][value1]" value="<?php echo $filter_param["list"]["value1"];?>" />
                                                                 <div class="param_block_cap">до</div>
                                                                 <input type="text" class="param_inp form-control" name="param_value_d[<?php echo $filter_param["id"];?>][value2]"  value="<?php echo $filter_param["list"]["value2"];?>" />
                                                             </div>
-                                                        </div>                                                    
+                                                        </div>
                                                     <?php }else{?>
                                                         <div class="product_availparam_list">
                                                             <?php foreach($filter_param["list"] as $param_item){?>
@@ -1236,7 +1236,7 @@
                                                             <?php }?>
                                                         </div>
                                                     <?php } ?>
-                                                    
+
                                                 </td>
                                             </tr>
                                         <?php }?>
@@ -1397,11 +1397,11 @@
         <td>
             <input class="idenInput idenInput_code1" name="iden[<?=$product['product_id']?>][1][code]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][1]['code'])?$iden_links[$product['product_id']][1]['code']:'');?>"/>
         </td>
-        
+
         <td>
             <input class="idenInput idenInput_name1" name="iden[<?=$product['product_id']?>][1][name]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][1]['name'])?$iden_links[$product['product_id']][1]['name']:'');?>"/>
         </td>
-        
+
         <td>
             <input class="idenInput idenInput_name2" name="iden[<?=$product['product_id']?>][2][name]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][2]['name'])?$iden_links[$product['product_id']][2]['name']:'');?>"/>
         </td>
@@ -1446,7 +1446,7 @@
         <?php if(isset($category["list"])){ ?>
             <div class="subcat_wrapper" rel="<?php echo $category['category_id'];?>">
             <?php foreach($category["list"] as $category_item){?>
-                
+
                 <div class="accia_catalog_row acc_cat_caption" rel="<?php echo $category_item['category_id'];?>">
                     <div class="accia_catalog_left">
                         <div class="accia_column_subcategory_caption"><?php echo $category_item["name"];?></div>
@@ -1502,7 +1502,7 @@
         <?php if(isset($category["list"])){ ?>
             <div class="subcat_wrapper" rel="<?php echo $category['category_id'];?>">
             <?php foreach($category["list"] as $category_item){?>
-                
+
                 <div class="accia_catalog_row acc_cat_caption" rel="<?php echo $category_item['category_id'];?>">
                     <div class="accia_catalog_left">
                         <div class="accia_column_subcategory_caption"><?php echo $category_item["name"];?></div>
@@ -1513,7 +1513,7 @@
                         <?php }}?>
                     </div>
                 </div>
-                
+
                 <?php if(isset($category_item["list"])){ ?>
                     <div class="subcat_wrapper" rel="<?php echo $category_item['category_id'];?>">
                         <?php foreach($category_item["list"] as $category_item_child){?>
@@ -1536,7 +1536,7 @@
     <?php }?>
 </div>
                         </div>
-                        
+
 
                         <div class="tab-pane" id="tab_files">
                             <div class="form-group">
@@ -1567,10 +1567,10 @@
 //--></script>
 
     <script type="text/javascript"><!--
-        
+
     //--></script>
-         
-                               
+
+
         <script type="text/javascript"><!--
         function products_selected(){
             var products_used=[];
@@ -1590,9 +1590,11 @@
             $("#products_change_analog").val(1);
             $("#products_analog").val(products_used.join(","));
         }
-         
+
 
         $(document).ready(function(){
+            $("a[href='#tab-design']").parent().hide();
+
             $(".iden_cat_name").click(function(){
                 var rel=$(this).attr("rel");
                 console.log(rel);
@@ -1600,7 +1602,7 @@
                    $(this).removeClass("active");
                    $(".tr_category_"+rel).hide();
                 }else{
-                   $(this).addClass("active"); 
+                   $(this).addClass("active");
                    $(".tr_category_"+rel).show();
                 }
             });
@@ -1632,7 +1634,7 @@
                 }else{
                     $(".table_iden tr:not(.current) .idenInput_name2").prop("readonly",false).removeClass("_readonly");
                 }
-            });                        
+            });
             $(".table_iden tr.current .idenInput_name3").change(function(){
                 if($(this).val()==""){
                     $(".table_iden tr:not(.current) .idenInput_name3").prop("readonly","readonly").addClass("_readonly");
@@ -1674,7 +1676,7 @@
                         product_id=products_arr[product];
                         $(".product_used_accompany[rel='"+product_id+"']").addClass("_active");
                    }
-                   
+
                 }
                 $("#products_change").val(1);
                 $("#products").val(products_str);
@@ -1711,9 +1713,9 @@
                 $(this).toggleClass("active");
             });
         });
-         
 
-            
+
+
             $(".product_used_item").click(function(){
                 $("#change_params").val(1);
                 if($(this).hasClass("_active")){
@@ -1722,7 +1724,7 @@
                 }else{
                     $(this).addClass("_active");
                     $(this).find(".param_value_input").val(1);
-                } 
+                }
             });
             $(".param_inp").change(function(){
                 $("#change_params").val(1);
@@ -1788,8 +1790,8 @@
                                 }
                        })     );
                         }
-               });     
-           },     
+               });
+           },
                 'select': function (item) {
                     $('input[name=\'category\']').val('');
 
@@ -1853,7 +1855,7 @@
 
                     $('#product-download' + item['value']).remove();
 
-               $('#product-download').append('<div id="product-download' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_download[]" value="' + item['value'] + '" /></div>');     
+               $('#product-download').append('<div id="product-download' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_download[]" value="' + item['value'] + '" /></div>');
                 }
             });
 
@@ -1920,7 +1922,7 @@
                 }
             });
 
-            
+
 
             $('input[name=\'benefits\']').autocomplete({
                 'source': function (request, response) {
@@ -1930,7 +1932,7 @@
                         success: function (json) {
                             response($.map(json, function (item) {
                                 return {
-                                    label: item['name'],
+                                    label: item['name_admin'],
                                     value: item['benefit_id']
                                 }
                             }));
@@ -2002,7 +2004,7 @@
                  //--></script>
                 <script type="text/javascript"><!--
       var option_row = <?php echo $option_row; ?>;
-                          
+
       $('input[name=\'option\']').autocomplete({
           'source': function (request, response) {
               $.ajax({

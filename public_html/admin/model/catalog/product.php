@@ -649,6 +649,7 @@ class ModelCatalogProduct extends Model
 
         /**Идентичные товары */
         if($data['iden_change']){
+            
             $sql="select * from analog_products where product_id='".$product_id."' OR link_product_id='".$product_id."'";
             $query=$this->db->query($sql);
             if($row=$query->row){
@@ -1105,7 +1106,7 @@ class ModelCatalogProduct extends Model
     public function getProductBenefits($product_id)
     {
         $product_related_data = array();
-        $query = $this->db->query("SELECT dbp.product_id,db.benefit_id,db.name FROM `dopinfo_benefits_to_product` dbp left join dopinfo_benefits db ON dbp.benefit_id=db.benefit_id WHERE dbp.product_id='" . (int) $product_id . "'");
+        $query = $this->db->query("SELECT dbp.product_id,db.benefit_id,db.name,db.name_admin FROM `dopinfo_benefits_to_product` dbp left join dopinfo_benefits db ON dbp.benefit_id=db.benefit_id WHERE dbp.product_id='" . (int) $product_id . "'");
         return $query->rows;
     }
     

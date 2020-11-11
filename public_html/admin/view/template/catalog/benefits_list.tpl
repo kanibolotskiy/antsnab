@@ -40,6 +40,11 @@
                     <?php } else { ?>
                     <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
                     <?php } ?></td>
+                  <td class="text-left"><?php if ($sort == 'name_admin') { ?>
+                    <a href="<?php echo $sort_name_admin; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name_admin; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_name_admin; ?>"><?php echo $column_name_admin; ?></a>
+                    <?php } ?></td>  
                   <td class="text-right"><?php if ($sort == 'sort_order') { ?>
                     <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
                     <?php } else { ?>
@@ -58,6 +63,7 @@
                     <input type="checkbox" name="selected[]" value="<?php echo $benefit['benefit_id']; ?>" />
                     <?php } ?></td>
                   <td class="text-left"><?php echo $benefit['name']; ?></td>
+                  <td class="text-left"><?php echo $benefit['name_admin']; ?></td>
                   <td class="text-right"><?php echo $benefit['sort_order']; ?></td>
                   <td class="text-right"><a href="<?php echo $benefit['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>

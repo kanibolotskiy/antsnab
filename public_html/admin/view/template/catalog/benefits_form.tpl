@@ -34,6 +34,15 @@
                             <?php } ?>
                         </div>
                     </div>
+                    <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-benefit_admin"><?php echo $entry_name_admin; ?></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="name_admin" value="<?php echo $benefit_admin; ?>" placeholder="<?php echo $entry_name_admin; ?>" id="input-benefit_admin" class="form-control" />
+                            <?php if ($error_name) { ?>
+                                <div class="text-danger"><?php echo $error_name; ?></div>
+                            <?php } ?>
+                        </div>
+                    </div>
                     
                     <div class="form-group">
                       <label class="col-sm-2 control-label" for="input-description"><?php echo $entry_description; ?></label>

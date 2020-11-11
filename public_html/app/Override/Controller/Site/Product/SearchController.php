@@ -153,13 +153,7 @@ class SearchController extends \Controller
 
 		
 
-		if (isset($this->request->get['search'])) {
-			$this->document->setTitle($this->language->get('heading_title') .  ' - ' . $this->request->get['search']);
-		} elseif (isset($this->request->get['tag'])) {
-			$this->document->setTitle($this->language->get('heading_title') .  ' - ' . $this->language->get('heading_tag') . $this->request->get['tag']);
-		} else {
-			$this->document->setTitle($this->language->get('heading_title'));
-		}
+		
 
 		$data['breadcrumbs'] = array();
 
@@ -342,6 +336,7 @@ class SearchController extends \Controller
 			$product_total=0;
 
 			if(count($search_results)){
+				$this->document->setTitle($this->language->get('heading_title') .  ' - ' . $this->request->get['search']);
 				$data['heading_title'] = $this->language->get('heading_title');
 				$per_page=$limit;
 				
@@ -368,7 +363,11 @@ class SearchController extends \Controller
 				$results = $productsHelper->getProducts($filter_data);
 
 				$data['products'] = $results;
+				
 			}else{
+				
+				$this->document->setTitle($this->language->get('heading_title_nofound') .  ' - ' . $this->request->get['search']);
+				
 				$data['heading_title'] = $this->language->get('heading_title_nofound');
 			
 				$products_popular=$this->model_catalog_product->getProductsPopular(4);

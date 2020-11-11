@@ -1726,7 +1726,7 @@ class ControllerCatalogProduct extends Controller {
 		foreach ($products_bene as $product_bene) {
 			$data['product_benefits'][] = array(
 				'benefit_id'=>$product_bene['benefit_id'],
-				'name'=>$product_bene['name']
+				'name_admin'=>$product_bene['name_admin']
 			);
 		}
 		
@@ -1966,7 +1966,7 @@ class ControllerCatalogProduct extends Controller {
 			foreach ($results as $result) {
 				$json[] = array(
 					'benefit_id' => $result['benefit_id'],
-					'name'       => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
+					'name_admin'       => strip_tags(html_entity_decode($result['name_admin'], ENT_QUOTES, 'UTF-8'))
 				);
 			}
 			

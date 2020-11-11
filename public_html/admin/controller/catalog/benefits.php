@@ -79,6 +79,7 @@ class ControllerCatalogBenefits extends Controller {
 			$data['benefits'][] = array(
 				'benefit_id' => $result['benefit_id'],
 				'name'            => $result['name'],
+				'name_admin'      => $result['name_admin'],
 				'sort_order'      => $result['sort_order'],
 				'edit'            => $this->url->link('catalog/benefits/edit', 'token=' . $this->session->data['token'] . '&benefit_id=' . $result['benefit_id'] . $url, true)
 			);
@@ -92,6 +93,7 @@ class ControllerCatalogBenefits extends Controller {
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['column_name'] = $this->language->get('column_name_benefits');
+		$data['column_name_admin'] = $this->language->get('column_name_admin_benefits');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
 
@@ -280,7 +282,8 @@ class ControllerCatalogBenefits extends Controller {
             $data['text_form'] = $this->language->get('text_edit_benefits');
                 
 
-            $data['entry_name'] = $this->language->get('entry_name_benefits');
+			$data['entry_name'] = $this->language->get('entry_name_benefits');
+			$data['entry_name_admin'] = $this->language->get('entry_name_admin_benefits');
 			$data['entry_description'] = $this->language->get('entry_description');
 			$data['entry_goal'] = $this->language->get('entry_goal');
 			$data['entry_image'] = $this->language->get('entry_image');
@@ -348,12 +351,14 @@ class ControllerCatalogBenefits extends Controller {
                 $benefit_info = $this->model_catalog_benefits->getBenefit($this->request->get['benefit_id']);
             }
             if(isset($benefit_info)){
-                $data['benefit']=$benefit_info['name'];
+				$data['benefit']=$benefit_info['name'];
+				$data['benefit_admin']=$benefit_info['name_admin'];
 				$data['benefit_description']=$benefit_info['description'];
 				$data['goal']=$benefit_info['goal'];
 				$data['filename']=$benefit_info['filename'];
             }else{
-                $data['benefit']='';
+				$data['benefit']='';
+				$data['benefit_admin']='';
 				$data['benefit_description']='';
 				$data['goal']='';
 				$data['filename']='';
