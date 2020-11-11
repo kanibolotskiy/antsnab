@@ -299,6 +299,8 @@ class SearchController extends \Controller
 		$data['products_popular']=[];
 		$this->load->model('catalog/search');
 		//echo "ok1";
+		$this->document->setTitle($this->language->get('heading_title') .  ' - ' . $this->request->get['search']);
+		$data['heading_title'] = $this->language->get('heading_title');
 		if (isset($this->request->get['search'])) {
 			//echo "ok2";
 			$page_str="";

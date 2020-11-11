@@ -739,6 +739,8 @@ class ModelCatalogProduct extends Model
                 if($iden[2]['name']){
                     $this->db->query('INSERT INTO analog_products (product_id,link_product_id,type,name,code) 
                     VALUES ("'.$f_product_id.'","'.$key.'","2","'.$iden[2]['name'].'","")');
+                    echo 'INSERT INTO analog_products (product_id,link_product_id,type,name,code) 
+                    VALUES ("'.$f_product_id.'","'.$key.'","2","'.$iden[2]['name'].'","")';
                 }
             }
         }

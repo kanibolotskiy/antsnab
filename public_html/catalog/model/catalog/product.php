@@ -243,12 +243,13 @@ class ModelCatalogProduct extends Model {
 		
 	}
 	public function getProductsPopular(){
-		$start_cats=[264,263,265,354];
+		
+		$start_cats=[264,"263,276,277",265,354,];
 		//$start_cats=[263];
 		$product_result=[];
 		foreach($start_cats as $start_cat){
 			$products=[];
-			$sql="select category_id from oc_category where isseo=0 and parent_id=".$start_cat;
+			$sql="select category_id from oc_category where isseo=0 and parent_id in (".$start_cat.")";
 			$query = $this->db->query($sql);
 			$subcats=[];
 			foreach ($query->rows as $result_s) {
@@ -263,6 +264,7 @@ class ModelCatalogProduct extends Model {
 				}
 				if($subcats_childs){
 					$sql_product="select op.product_id,(SELECT AVG(rating) AS total FROM oc_review r1 WHERE r1.product_id = op.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating from oc_product op INNER JOIN oc_product_to_category oc ON op.product_id=oc.product_id where oc.category_id in (".implode(",",$subcats_childs).") order by rating desc limit 5";
+					//echo $sql_product."<br/>";
 					$query_product = $this->db->query($sql_product);
 					if ($query_product->num_rows) {
 						foreach ($query_product->rows as $result_product) {
@@ -270,6 +272,7 @@ class ModelCatalogProduct extends Model {
 						}
 					}
 				}
+				//print_r($products);
 				$k = array_rand($products);
 				$product_result[] = $products[$k];
 			}
