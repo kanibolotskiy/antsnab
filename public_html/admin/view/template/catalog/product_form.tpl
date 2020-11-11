@@ -1398,21 +1398,21 @@
             <?=$product['name']?>
         </td>
         <td>
-            <input class="idenInput idenInput_code1" name="iden[<?=$product['product_id']?>][1][code]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][1]['code'])?$iden_links[$product['product_id']][1]['code']:'');?>"/>
+            <input class="idenInput idenInput_code1" name="iden['<?=$product['product_id']?>'][1][code]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][1]['code'])?$iden_links[$product['product_id']][1]['code']:'');?>"/>
         </td>
 
         <td>
-            <input class="idenInput idenInput_name1" name="iden[<?=$product['product_id']?>][1][name]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][1]['name'])?$iden_links[$product['product_id']][1]['name']:'');?>"/>
+            <input class="idenInput idenInput_name1" name="iden['<?=$product['product_id']?>'][1][name]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][1]['name'])?$iden_links[$product['product_id']][1]['name']:'');?>"/>
         </td>
 
         <td>
-            <input class="idenInput idenInput_name2" name="iden[<?=$product['product_id']?>][2][name]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][2]['name'])?$iden_links[$product['product_id']][2]['name']:'');?>"/>
+            <input class="idenInput idenInput_name2" name="iden['<?=$product['product_id']?>'][2][name]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][2]['name'])?$iden_links[$product['product_id']][2]['name']:'');?>"/>
         </td>
         <td>
-            <input class="idenInput idenInput_name3" name="iden[<?=$product['product_id']?>][3][name]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][3]['name'])?$iden_links[$product['product_id']][3]['name']:'');?>"/>
+            <input class="idenInput idenInput_name3" name="iden['<?=$product['product_id']?>'][3][name]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][3]['name'])?$iden_links[$product['product_id']][3]['name']:'');?>"/>
         </td>
         <td>
-            <input class="idenInput idenInput_name4" name="iden[<?=$product['product_id']?>][4][name]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][4]['name'])?$iden_links[$product['product_id']][4]['name']:'');?>"/>
+            <input class="idenInput idenInput_name4" name="iden['<?=$product['product_id']?>'][4][name]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][4]['name'])?$iden_links[$product['product_id']][4]['name']:'');?>"/>
         </td>
     </tr>
     <?php }?>

@@ -716,16 +716,17 @@ class ModelCatalogProduct extends Model
             }else{
                 $f_product_id=$product_id;
             }
-            $this->db->query("DELETE FROM analog_products WHERE type=1 and (link_product_idproduct_id = '" .$product_id . "'");
+            $this->db->query("DELETE FROM analog_products WHERE type=1 and (product_id = '" .$product_id . "'");
 
             foreach($data["iden"] as $key=>$iden){
                 if($iden[1]['name']){
                     $this->db->query('INSERT INTO analog_products (product_id,link_product_id,type,name,code) 
-                    VALUES ("'.$f_product_id.'","'.$key.'","1","'.$iden[1]['name'].'","'.$iden[1]['code'].'")');
+                    VALUES ("'.$f_product_id.'",'.$key.',"1","'.$iden[1]['name'].'","'.$iden[1]['code'].'")');
                 }
             }
         }
         if($data['iden_change2']){
+            //print_r($data["iden"]);
             $sql="select * from analog_products where type=2 and (product_id='".$product_id."' OR link_product_id='".$product_id."')";
             $query=$this->db->query($sql);
             if($row=$query->row){
@@ -738,9 +739,9 @@ class ModelCatalogProduct extends Model
             foreach($data["iden"] as $key=>$iden){
                 if($iden[2]['name']){
                     $this->db->query('INSERT INTO analog_products (product_id,link_product_id,type,name,code) 
-                    VALUES ("'.$f_product_id.'","'.$key.'","2","'.$iden[2]['name'].'","")');
-                    //echo 'INSERT INTO analog_products (product_id,link_product_id,type,name,code) 
-                    //VALUES ("'.$f_product_id.'","'.$key.'","2","'.$iden[2]['name'].'","")';
+                    VALUES ("'.$f_product_id.'",'.$key.',"2","'.$iden[2]['name'].'","")');
+                    echo 'INSERT INTO analog_products (product_id,link_product_id,type,name,code) 
+                    VALUES ("'.$f_product_id.'","'.$key.'","2","'.$iden[2]['name'].'","")';
                 }
             }
         }
@@ -757,7 +758,7 @@ class ModelCatalogProduct extends Model
             foreach($data["iden"] as $key=>$iden){
                 if($iden[3]['name']){
                     $this->db->query('INSERT INTO analog_products (product_id,link_product_id,type,name,code) 
-                    VALUES ("'.$f_product_id.'","'.$key.'","3","'.$iden[3]['name'].'","")');
+                    VALUES ("'.$f_product_id.'",'.$key.',"3","'.$iden[3]['name'].'","")');
                 }
             }
         }
@@ -774,7 +775,7 @@ class ModelCatalogProduct extends Model
             foreach($data["iden"] as $key=>$iden){
                 if($iden[4]['name']){
                     $this->db->query('INSERT INTO analog_products (product_id,link_product_id,type,name,code) 
-                    VALUES ("'.$f_product_id.'","'.$key.'","4","'.$iden[4]['name'].'","")');
+                    VALUES ("'.$f_product_id.'",'.$key.',"4","'.$iden[4]['name'].'","")');
                 }
             }
         }
