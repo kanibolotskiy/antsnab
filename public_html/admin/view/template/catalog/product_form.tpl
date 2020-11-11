@@ -1626,43 +1626,43 @@
 
             $(".table_iden tr.current .idenInput_name1").change(function(){
                 if($(this).val()==""){
-                    $(".table_iden tr:not(.current) .idenInput_name1").prop("readonly","readonly").addClass("_readonly");
+                    $(".table_iden tr:not(.current) .idenInput_name1").prop("disabled","disabled");
                 }else{
-                    $(".table_iden tr:not(.current) .idenInput_name1").prop("readonly",false).removeClass("_readonly");
+                    $(".table_iden tr:not(.current) .idenInput_name1").prop("disabled",false);
                 }
             });
             $(".table_iden tr.current .idenInput_name2").change(function(){
                 if($(this).val()==""){
-                    $(".table_iden tr:not(.current) .idenInput_name2").prop("readonly","readonly").addClass("_readonly");
+                    $(".table_iden tr:not(.current) .idenInput_name2").prop("disabled","disabled");
                 }else{
-                    $(".table_iden tr:not(.current) .idenInput_name2").prop("readonly",false).removeClass("_readonly");
+                    $(".table_iden tr:not(.current) .idenInput_name2").prop("disabled",false);
                 }
             });
             $(".table_iden tr.current .idenInput_name3").change(function(){
                 if($(this).val()==""){
-                    $(".table_iden tr:not(.current) .idenInput_name3").prop("readonly","readonly").addClass("_readonly");
+                    $(".table_iden tr:not(.current) .idenInput_name3").prop("disabled","disabled");
                 }else{
-                    $(".table_iden tr:not(.current) .idenInput_name3").prop("readonly",false).removeClass("_readonly");
+                    $(".table_iden tr:not(.current) .idenInput_name3").prop("disabled",false);
                 }
             });
             $(".table_iden tr.current .idenInput_name4").change(function(){
                 if($(this).val()==""){
-                    $(".table_iden tr:not(.current) .idenInput_name4").prop("readonly","readonly").addClass("_readonly");
+                    $(".table_iden tr:not(.current) .idenInput_name4").prop("disabled","disabled");
                 }else{
-                    $(".table_iden tr:not(.current) .idenInput_name4").prop("readonly",false).removeClass("_readonly");
+                    $(".table_iden tr:not(.current) .idenInput_name4").prop("disabled",false);
                 }
             });
             if($(".table_iden tr.current .idenInput_name1").val()==""){
-                $(".table_iden tr:not(.current) .idenInput_name1").prop("readonly","readonly").addClass("_readonly");
+                $(".table_iden tr:not(.current) .idenInput_name1").prop("disabled","disabled");
             }
             if($(".table_iden tr.current .idenInput_name2").val()==""){
-                $(".table_iden tr:not(.current) .idenInput_name2").prop("readonly","readonly").addClass("_readonly");
+                $(".table_iden tr:not(.current) .idenInput_name2").prop("disabled","disabled");
             }
             if($(".table_iden tr.current .idenInput_name3").val()==""){
-                $(".table_iden tr:not(.current) .idenInput_name3").prop("readonly","readonly").addClass("_readonly");
+                $(".table_iden tr:not(.current) .idenInput_name3").prop("disabled","disabled");
             }
             if($(".table_iden tr.current .idenInput_name4").val()==""){
-                $(".table_iden tr:not(.current) .idenInput_name4").prop("readonly","readonly").addClass("_readonly");
+                $(".table_iden tr:not(.current) .idenInput_name4").prop("disabled","disabled");
             }
 
 
