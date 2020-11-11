@@ -77,7 +77,7 @@ class ModelCatalogProduct extends Model {
         }else{
             $f_product_id=$product_id;
         }
-        $sql_final="select *, IF(link_product_id='".$product_id."',0,1) as pr from analog_products where type=1 and (product_id='".$f_product_id."' OR link_product_id='".$f_product_id."') order by pr";
+        $sql_final="select ap.link_product_id, ap.name, ap.code, ap.type, IF(link_product_id='".$product_id."',0,1) as pr from analog_products ap LEFT JOIN oc_product op ON ap.link_product_id=op.product_id where type=1 and (ap.product_id='".$f_product_id."' OR link_product_id='".$f_product_id."') and op.status=1 order by pr";
 
         $query_final=$this->db->query($sql_final);
         foreach ($query_final->rows as $result) {
@@ -91,7 +91,7 @@ class ModelCatalogProduct extends Model {
         }else{
             $f_product_id=$product_id;
         }
-        $sql_final="select *, IF(link_product_id='".$product_id."',0,1) as pr from analog_products where type=2 and (product_id='".$f_product_id."' OR link_product_id='".$f_product_id."') order by pr";
+        $sql_final="select ap.link_product_id, ap.name, ap.code, ap.type, IF(link_product_id='".$product_id."',0,1) as pr from analog_products ap LEFT JOIN oc_product op ON ap.link_product_id=op.product_id where type=2 and (ap.product_id='".$f_product_id."' OR link_product_id='".$f_product_id."') and op.status=1 order by pr";
 
         $query_final=$this->db->query($sql_final);
         foreach ($query_final->rows as $result) {
@@ -105,7 +105,7 @@ class ModelCatalogProduct extends Model {
         }else{
             $f_product_id=$product_id;
         }
-        $sql_final="select *, IF(link_product_id='".$product_id."',0,1) as pr from analog_products where type=3 and (product_id='".$f_product_id."' OR link_product_id='".$f_product_id."') order by pr";
+        $sql_final="select ap.link_product_id, ap.name, ap.code, ap.type, IF(link_product_id='".$product_id."',0,1) as pr from analog_products ap LEFT JOIN oc_product op ON ap.link_product_id=op.product_id where type=3 and (ap.product_id='".$f_product_id."' OR link_product_id='".$f_product_id."') and op.status=1 order by pr";
 
         $query_final=$this->db->query($sql_final);
         foreach ($query_final->rows as $result) {
@@ -119,7 +119,7 @@ class ModelCatalogProduct extends Model {
         }else{
             $f_product_id=$product_id;
         }
-        $sql_final="select *, IF(link_product_id='".$product_id."',0,1) as pr from analog_products where type=4 and (product_id='".$f_product_id."' OR link_product_id='".$f_product_id."') order by pr";
+        $sql_final="select ap.link_product_id, ap.name, ap.code, ap.type, IF(link_product_id='".$product_id."',0,1) as pr from analog_products ap LEFT JOIN oc_product op ON ap.link_product_id=op.product_id where type=4 and (ap.product_id='".$f_product_id."' OR link_product_id='".$f_product_id."') and op.status=1 order by pr";
 
         $query_final=$this->db->query($sql_final);
         foreach ($query_final->rows as $result) {
