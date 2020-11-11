@@ -734,13 +734,13 @@ class ModelCatalogProduct extends Model
                 $f_product_id=$product_id;
             }
             $this->db->query("DELETE FROM analog_products WHERE type=2 and product_id = '" . (int) $f_product_id . "'");
-            print_r($data["iden"]);
+            //print_r($data["iden"]);
             foreach($data["iden"] as $key=>$iden){
                 if($iden[2]['name']){
                     $this->db->query('INSERT INTO analog_products (product_id,link_product_id,type,name,code) 
                     VALUES ("'.$f_product_id.'","'.$key.'","2","'.$iden[2]['name'].'","")');
-                    echo 'INSERT INTO analog_products (product_id,link_product_id,type,name,code) 
-                    VALUES ("'.$f_product_id.'","'.$key.'","2","'.$iden[2]['name'].'","")';
+                    //echo 'INSERT INTO analog_products (product_id,link_product_id,type,name,code) 
+                    //VALUES ("'.$f_product_id.'","'.$key.'","2","'.$iden[2]['name'].'","")';
                 }
             }
         }
