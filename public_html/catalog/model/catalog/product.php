@@ -43,8 +43,8 @@ class ModelCatalogProduct extends Model {
 	}
 	
 	public function getProductLinks($product_id){
+		/*
 		$data=[];
-		
 		$sql="select * from analog_products where product_id='".$product_id."' OR link_product_id='".$product_id."'";
 		
 		$query=$this->db->query($sql);
@@ -69,6 +69,62 @@ class ModelCatalogProduct extends Model {
 		}
 
 		//print_r($data);
+		*/
+		$sql="select * from analog_products where type=1 and (product_id='".$product_id."' OR link_product_id='".$product_id."')";
+        $query=$this->db->query($sql);
+        if($row=$query->row){
+            $f_product_id=$row['product_id'];
+        }else{
+            $f_product_id=$product_id;
+        }
+        $sql_final="select *, IF(link_product_id='".$product_id."',0,1) as pr from analog_products where type=1 and (product_id='".$f_product_id."' OR link_product_id='".$f_product_id."') order by pr";
+
+        $query_final=$this->db->query($sql_final);
+        foreach ($query_final->rows as $result) {
+            $data[1][]=Array('product_id'=>$result['link_product_id'],'name'=>$result['name'],'code'=>$result['code'],'type'=>$result['type']);
+        }
+		
+        $sql="select * from analog_products where type=2 and (product_id='".$product_id."' OR link_product_id='".$product_id."')";
+        $query=$this->db->query($sql);
+        if($row=$query->row){
+            $f_product_id=$row['product_id'];
+        }else{
+            $f_product_id=$product_id;
+        }
+        $sql_final="select *, IF(link_product_id='".$product_id."',0,1) as pr from analog_products where type=2 and (product_id='".$f_product_id."' OR link_product_id='".$f_product_id."') order by pr";
+
+        $query_final=$this->db->query($sql_final);
+        foreach ($query_final->rows as $result) {
+            $data[2][]=Array('product_id'=>$result['link_product_id'],'name'=>$result['name'],'type'=>$result['type'],'code'=>'');
+        }
+
+        $sql="select * from analog_products where type=3 and (product_id='".$product_id."' OR link_product_id='".$product_id."')";
+        $query=$this->db->query($sql);
+        if($row=$query->row){
+            $f_product_id=$row['product_id'];
+        }else{
+            $f_product_id=$product_id;
+        }
+        $sql_final="select *, IF(link_product_id='".$product_id."',0,1) as pr from analog_products where type=3 and (product_id='".$f_product_id."' OR link_product_id='".$f_product_id."') order by pr";
+
+        $query_final=$this->db->query($sql_final);
+        foreach ($query_final->rows as $result) {
+            $data[3][]=Array('product_id'=>$result['link_product_id'],'name'=>$result['name'],'type'=>$result['type'],'code'=>'');
+        }
+        
+        $sql="select * from analog_products where type=4 and (product_id='".$product_id."' OR link_product_id='".$product_id."')";
+        $query=$this->db->query($sql);
+        if($row=$query->row){
+            $f_product_id=$row['product_id'];
+        }else{
+            $f_product_id=$product_id;
+        }
+        $sql_final="select *, IF(link_product_id='".$product_id."',0,1) as pr from analog_products where type=4 and (product_id='".$f_product_id."' OR link_product_id='".$f_product_id."') order by pr";
+
+        $query_final=$this->db->query($sql_final);
+        foreach ($query_final->rows as $result) {
+            $data[4][]=Array('product_id'=>$result['link_product_id'],'name'=>$result['name'],'type'=>$result['type'],'code'=>'');
+        }
 		return $data;
 	}	
 

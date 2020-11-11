@@ -6,6 +6,66 @@ class ModelCatalogProduct extends Model
 {
     public function getProductLinks($product_id){
         $data=[];
+
+        /*Цвета */
+        $sql="select * from analog_products where type=1 and (product_id='".$product_id."' OR link_product_id='".$product_id."')";
+        $query=$this->db->query($sql);
+        if($row=$query->row){
+            $f_product_id=$row['product_id'];
+        }else{
+            $f_product_id=$product_id;
+        }
+        $sql_final="select * from analog_products where type=1 and (product_id='".$f_product_id."' OR link_product_id='".$f_product_id."')";
+
+        $query_final=$this->db->query($sql_final);
+        foreach ($query_final->rows as $result) {
+            $data[$result['link_product_id']][1]=Array('name'=>$result['name'],'code'=>$result['code'],'type'=>$result['type']);
+        }
+
+        $sql="select * from analog_products where type=2 and (product_id='".$product_id."' OR link_product_id='".$product_id."')";
+        $query=$this->db->query($sql);
+        if($row=$query->row){
+            $f_product_id=$row['product_id'];
+        }else{
+            $f_product_id=$product_id;
+        }
+        $sql_final="select * from analog_products where type=2 and (product_id='".$f_product_id."' OR link_product_id='".$f_product_id."')";
+
+        $query_final=$this->db->query($sql_final);
+        foreach ($query_final->rows as $result) {
+            $data[$result['link_product_id']][2]=Array('name'=>$result['name'],'type'=>$result['type']);
+        }
+
+        $sql="select * from analog_products where type=3 and (product_id='".$product_id."' OR link_product_id='".$product_id."')";
+        $query=$this->db->query($sql);
+        if($row=$query->row){
+            $f_product_id=$row['product_id'];
+        }else{
+            $f_product_id=$product_id;
+        }
+        $sql_final="select * from analog_products where type=3 and (product_id='".$f_product_id."' OR link_product_id='".$f_product_id."')";
+
+        $query_final=$this->db->query($sql_final);
+        foreach ($query_final->rows as $result) {
+            $data[$result['link_product_id']][3]=Array('name'=>$result['name'],'type'=>$result['type']);
+        }
+        
+        $sql="select * from analog_products where type=4 and (product_id='".$product_id."' OR link_product_id='".$product_id."')";
+        $query=$this->db->query($sql);
+        if($row=$query->row){
+            $f_product_id=$row['product_id'];
+        }else{
+            $f_product_id=$product_id;
+        }
+        $sql_final="select * from analog_products where type=4 and (product_id='".$f_product_id."' OR link_product_id='".$f_product_id."')";
+
+        $query_final=$this->db->query($sql_final);
+        foreach ($query_final->rows as $result) {
+            $data[$result['link_product_id']][4]=Array('name'=>$result['name'],'type'=>$result['type']);
+        }
+
+
+        /*
         $sql="select * from analog_products where product_id='".$product_id."' OR link_product_id='".$product_id."'";
         $query=$this->db->query($sql);
         if($row=$query->row){
@@ -20,7 +80,7 @@ class ModelCatalogProduct extends Model
         foreach ($query_final->rows as $result) {
             $data[$result['link_product_id']][$result['type']]=Array('name'=>$result['name'],'code'=>$result['code'],'type'=>$result['type']);
         }
-
+        */
         //print_r($data);
         return $data;
     }
@@ -648,21 +708,87 @@ class ModelCatalogProduct extends Model
         }
 
         /**Идентичные товары */
-        if($data['iden_change']){
-            
-            $sql="select * from analog_products where product_id='".$product_id."' OR link_product_id='".$product_id."'";
+        if($data['iden_change1']){
+            $sql="select * from analog_products where type=1 and (product_id='".$product_id."' OR link_product_id='".$product_id."')";
             $query=$this->db->query($sql);
             if($row=$query->row){
                 $f_product_id=$row['product_id'];
             }else{
                 $f_product_id=$product_id;
             }
-            
-            //echo "DELETE FROM analog_products WHERE product_id = '" . (int) $product_id . "'";
-            $this->db->query("DELETE FROM analog_products WHERE product_id = '" . (int) $f_product_id . "'");
-            
+            $this->db->query("DELETE FROM analog_products WHERE type=1 and (link_product_idproduct_id = '" .$product_id . "'");
+
+            foreach($data["iden"] as $key=>$iden){
+                if($iden[1]['name']){
+                    $this->db->query('INSERT INTO analog_products (product_id,link_product_id,type,name,code) 
+                    VALUES ("'.$f_product_id.'","'.$key.'","1","'.$iden[1]['name'].'","'.$iden[1]['code'].'")');
+                }
+            }
+        }
+        if($data['iden_change2']){
+            $sql="select * from analog_products where type=2 and (product_id='".$product_id."' OR link_product_id='".$product_id."')";
+            $query=$this->db->query($sql);
+            if($row=$query->row){
+                $f_product_id=$row['product_id'];
+            }else{
+                $f_product_id=$product_id;
+            }
+            $this->db->query("DELETE FROM analog_products WHERE type=2 and product_id = '" . (int) $f_product_id . "'");
+
+            foreach($data["iden"] as $key=>$iden){
+                if($iden[2]['name']){
+                    $this->db->query('INSERT INTO analog_products (product_id,link_product_id,type,name,code) 
+                    VALUES ("'.$f_product_id.'","'.$key.'","2","'.$iden[2]['name'].'","")');
+                }
+            }
+        }
+        if($data['iden_change3']){
+            $sql="select * from analog_products where type=3 and (product_id='".$product_id."' OR link_product_id='".$product_id."')";
+            $query=$this->db->query($sql);
+            if($row=$query->row){
+                $f_product_id=$row['product_id'];
+            }else{
+                $f_product_id=$product_id;
+            }
+            $this->db->query("DELETE FROM analog_products WHERE type=3 and product_id = '" . (int) $f_product_id . "'");
+
+            foreach($data["iden"] as $key=>$iden){
+                if($iden[3]['name']){
+                    $this->db->query('INSERT INTO analog_products (product_id,link_product_id,type,name,code) 
+                    VALUES ("'.$f_product_id.'","'.$key.'","3","'.$iden[3]['name'].'","")');
+                }
+            }
+        }
+        if($data['iden_change4']){
+            $sql="select * from analog_products where type=4 and (product_id='".$product_id."' OR link_product_id='".$product_id."')";
+            $query=$this->db->query($sql);
+            if($row=$query->row){
+                $f_product_id=$row['product_id'];
+            }else{
+                $f_product_id=$product_id;
+            }
+            $this->db->query("DELETE FROM analog_products WHERE type=4 and product_id = '" . (int) $f_product_id . "'");
+
+            foreach($data["iden"] as $key=>$iden){
+                if($iden[4]['name']){
+                    $this->db->query('INSERT INTO analog_products (product_id,link_product_id,type,name,code) 
+                    VALUES ("'.$f_product_id.'","'.$key.'","4","'.$iden[4]['name'].'","")');
+                }
+            }
+        }
+        
+            /*
             foreach($data["iden"] as $key=>$iden){
                 if(isset($iden[1]['name'])){
+                    $sql="select * from analog_products where type=1 and (product_id='".$product_id."' OR link_product_id='".$product_id."')";
+                    $query=$this->db->query($sql);
+                    if($row=$query->row){
+                        $f_product_id=$row['product_id'];
+                    }else{
+                        $f_product_id=$product_id;
+                    }
+                    
+                    $this->db->query("DELETE FROM analog_products WHERE type=1 and product_id = '" . (int) $f_product_id . "'");
                     if($iden[1]['code'] or $iden[1]['name']){
                         $this->db->query('INSERT INTO analog_products (product_id,link_product_id,type,name,code) 
                         VALUES ("'.$f_product_id.'","'.$key.'","1","'.$iden[1]['name'].'","'.$iden[1]['code'].'")');
@@ -671,6 +797,14 @@ class ModelCatalogProduct extends Model
                     }
                 }
                 if(isset($iden[2]['name'])){
+                    $sql="select * from analog_products where type=2 and (product_id='".$product_id."' OR link_product_id='".$product_id."')";
+                    $query=$this->db->query($sql);
+                    if($row=$query->row){
+                        $f_product_id=$row['product_id'];
+                    }else{
+                        $f_product_id=$product_id;
+                    }
+                    $this->db->query("DELETE FROM analog_products WHERE type=1 and product_id = '" . (int) $f_product_id . "'");
                     if($iden[2]['name']){
                         $this->db->query('INSERT INTO analog_products (product_id,link_product_id,type,name) 
                         VALUES ("'.$f_product_id.'","'.$key.'","2","'.$iden[2]['name'].'")');
@@ -696,7 +830,7 @@ class ModelCatalogProduct extends Model
                 }
                 //echo $iden[1]['code']."<br/>";
             }
-            
+           
 
             //$this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int) $product_id . "'");
             //$this->db->query("DELETE FROM analog_products where");
@@ -704,6 +838,7 @@ class ModelCatalogProduct extends Model
 
             //}
         }
+         */
         /*
         $this->db->query("DELETE FROM " . DB_PREFIX . "product_reward WHERE product_id = '" . (int) $product_id . "'");
         if (isset($data['product_reward'])) {

@@ -274,11 +274,8 @@ class ControllerCatalogAccompany extends Controller {
 		}
 
 		$data['categories_tree']=$categories_tree;
-		//print_r($products_list);
 		$data['products']=$products_list;
-
-		//$data_accompany=$this->model_catalog_accompany->getAccompany();
-		//title
+		
 
 		$data['token'] = $this->session->data['token'];
 		$data['ckeditor'] = $this->config->get('config_editor_default');

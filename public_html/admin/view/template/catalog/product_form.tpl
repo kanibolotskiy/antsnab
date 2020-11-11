@@ -1362,7 +1362,10 @@
                         -->
                         <div class="tab-pane" id="tab_iden">
                             <div class="wrap_iden">
-                                <input type="hidden" name="iden_change" id="iden_change" value="0"/>
+                                <input type="hidden" name="iden_change1" id="iden_change1" value="0"/>
+                                <input type="hidden" name="iden_change2" id="iden_change2" value="0"/>
+                                <input type="hidden" name="iden_change3" id="iden_change3" value="0"/>
+                                <input type="hidden" name="iden_change4" id="iden_change4" value="0"/>
 
                                 <table class="table_iden">
                                     <thead>
@@ -1663,9 +1666,19 @@
             }
 
 
-            $(".idenInput").change(function(){
-                $("#iden_change").val(1);
+            $(".idenInput_code1,.idenInput_name1").change(function(){
+                $("#iden_change1").val(1);
             });
+            $(".idenInput_name2").change(function(){
+                $("#iden_change2").val(1);
+            });
+            $(".idenInput_name3").change(function(){
+                $("#iden_change3").val(1);
+            });
+            $(".idenInput_name4").change(function(){
+                $("#iden_change4").val(1);
+            });
+
             $("#input-accompany_select").change(function(){
                 var products_str=$("#input-accompany_select option:selected").data("products");
                 //console.log(products_str);
