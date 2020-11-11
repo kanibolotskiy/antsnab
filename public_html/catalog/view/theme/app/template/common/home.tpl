@@ -120,7 +120,7 @@
             <ul>
                 <?php foreach ($rootCategoriesBrands as $category): ?>
                     <li>
-                        <div class="production-block">
+                        <div class="production-block production-block_brand">
                             <a href="<?= $category['href'] ?>">
                                 <div class="img-production">
 <picture>

@@ -45,14 +45,14 @@ class HomeTemplateDecorator implements IDecorator
             if (!empty( $node->get('image') ) ) {
                 $resizedImage = $model_tool_image->resize(
                     $node->get('image'),
-                    $config->get($config->get('config_theme') . '_image_category_width'), 
-                    $config->get($config->get('config_theme') . '_image_category_height')
+                    320, 
+                    400
                 );
             } else {
                 $resizedImage = $model_tool_image->resize(
                     'placeholder.png', 
-                    $config->get($config->get('config_theme') . '_image_category_width'), 
-                    $config->get($config->get('config_theme') . '_image_category_height')
+                    320, 
+                    400
                 );
             }
             
