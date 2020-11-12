@@ -645,12 +645,12 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$products_bene = array();
 		}
-		
+		//print_r($products_bene);
 		$data['product_benefits'] = array();
 		foreach ($products_bene as $product_bene) {
 			$data['product_benefits'][] = array(
 				'benefit_id'=>$product_bene['benefit_id'],
-				'name'=>$product_bene['name']
+				'name_admin'=>$product_bene['name_admin']
 			);
 		}
 

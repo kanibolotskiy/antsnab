@@ -1246,6 +1246,7 @@ class ModelCatalogProduct extends Model
     {
         $product_related_data = array();
         $query = $this->db->query("SELECT dbp.product_id,db.benefit_id,db.name,db.name_admin FROM `dopinfo_benefits_to_product` dbp left join dopinfo_benefits db ON dbp.benefit_id=db.benefit_id WHERE dbp.product_id='" . (int) $product_id . "'");
+        //echo "!"."SELECT dbp.product_id,db.benefit_id,db.name,db.name_admin FROM `dopinfo_benefits_to_product` dbp left join dopinfo_benefits db ON dbp.benefit_id=db.benefit_id WHERE dbp.product_id='" . (int) $product_id . "'"."!";
         return $query->rows;
     }
     

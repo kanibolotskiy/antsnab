@@ -282,8 +282,9 @@
                   <div class="col-sm-10">
                       <input type="text" name="benefits" value="" placeholder="<?php echo $entry_benefits; ?>" id="input-benefits" class="form-control" />
                       <div id="product-benefits" class="well well-sm" style="height: 150px; overflow: auto;">
+                      
                           <?php foreach ($product_benefits as $product_benefit) { ?>
-                              <div id="product-benefit<?php echo $product_benefit['benefit_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_benefit['name']; ?>
+                              <div id="product-benefit<?php echo $product_benefit['benefit_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_benefit['name_admin']; ?>
                                   <input type="hidden" name="product_benefit[]" value="<?php echo $product_benefit['benefit_id']; ?>" />
                               </div>
                           <?php } ?>
@@ -895,7 +896,7 @@
                 success: function (json) {
                     response($.map(json, function (item) {
                         return {
-                            label: item['name'],
+                            label: item['name_admin'],
                             value: item['benefit_id']
                         }
                     }));
