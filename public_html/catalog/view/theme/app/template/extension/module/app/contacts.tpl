@@ -3,7 +3,12 @@
         <!--<a target="blank" href="<?=$rekviziti?>" class="requisites">Наши реквизиты</a>-->
         <div class="contacts-block">
             <div class="contacts-block_wrapper">
-                <address class="left_contacts">
+            
+                <address class="left_contacts" itemscope itemtype="http://schema.org/Organization">
+                    
+                    <meta itemprop="name" content='ООО "ТК Ант-Снаб"' />
+                    <meta itemprop="url" href="<?php echo $home;?>" content="<?php echo $home;?>" />
+
                     <div class="contacts_phone">
                         <div class="contacts_phone_line">
                             <a href="tel:<?= $telephone ?>"><?= $telephone ?></a>
@@ -23,6 +28,7 @@
                     <div class="contacts_time">
                         <?php echo $open ?>
                     </div>
+                    
                 </address>
                 
                 <div class="right_contacts">
