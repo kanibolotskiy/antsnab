@@ -694,6 +694,9 @@ div.ckeditor {
     background: #41737E;
     color: #fff;
 }
+.product_used_analog._current{
+	background:#ddd;cursor:auto;
+}
 .product_used_item.active{background:#fff;}
 .wrp_used_item{
 	position:relative;

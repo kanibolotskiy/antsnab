@@ -1657,6 +1657,7 @@ class ControllerCatalogProduct extends Controller {
 			);
 			//print_r($accompany_products);
 		}
+		$data['accompany_id']=$product_info['accompany_id'];
 
 		//$data['accompanies'] 
 		

@@ -1423,13 +1423,14 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="tab_accompany">
+                        
                             <div class="form-group">
                                 <label style="text-align:left;" class="col-sm-2 control-label" for="input-accompany_select"><?php echo $entry_accompany_select; ?></label>
                                 <div class="col-sm-10">
                                     <select id="input-accompany_select" name="accompany_select" class="form-control">
                                         <option value="0" selected="selected"><?php echo $text_none; ?></option>
                                         <?php foreach ($accompanies as $accompany) { ?>
-                                            <option data-products="<?=$accompany['products']?>" value="<?=$accompany['accompany_id']?>"><?=$accompany['name'] ?></option>
+                                            <option <?php echo $accompany['accompany_id']==$accompany_id?'selected':'';?> data-products="<?=$accompany['products']?>" value="<?=$accompany['accompany_id']?>"><?=$accompany['name'] ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -1512,7 +1513,7 @@
                     </div>
                     <div class="accia_catalog_right">
                         <?php if(isset($products[$category_item["category_id"]])){ foreach($products[$category_item["category_id"]] as $product){?>
-                            <div class="product_used_analog <?php echo isset($product_analogs[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                            <div class="<?php echo ($product_id==$product['product_id']?'_current':'');?> product_used_analog <?php echo isset($product_analogs[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
                         <?php }}?>
                     </div>
                 </div>
@@ -1526,7 +1527,7 @@
                             </div>
                             <div class="accia_catalog_right">
                                 <?php if(isset($products[$category_item_child["category_id"]])){ foreach($products[$category_item_child["category_id"]] as $product){?>
-                                    <div class="product_used_analog <?php echo isset($product_analogs[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                                    <div class="<?php echo ($product_id==$product['product_id']?'_current':'');?> product_used_analog <?php echo isset($product_analogs[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
                                 <?php }}?>
                             </div>
                         </div>
@@ -1694,7 +1695,7 @@
                 $("#products_change").val(1);
                 $("#products").val(products_str);
                 //products_selected();
-                $(".subcat_wrapper").hide();
+                $("#tab_accompany .subcat_wrapper").hide();
                 $(".product_used_accompany._active").each(function(){
                     $(this).parents(".subcat_wrapper").show();
                 });
@@ -1708,6 +1709,7 @@
             });
 
             $(".product_used_accompany").click(function(){
+                $("#input-accompany_select").val("0");
                 $(this).toggleClass("_active");
                 products_selected();
             });
@@ -1717,8 +1719,10 @@
                 $("#products_analog").val("");
             });
             $(".product_used_analog").click(function(){
-                $(this).toggleClass("_active");
-                products_selected_analog();
+                if(!$(this).hasClass("_current")){
+                    $(this).toggleClass("_active");
+                    products_selected_analog();
+                }
             });
             $(".acc_cat_caption").click(function(){
                 var rel=$(this).attr("rel");

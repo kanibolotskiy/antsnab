@@ -1151,7 +1151,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
         $(this).removeClass("_enter");
     });
     */
-    $(".item_label._accia").mouseleave(function(){
+    $(document).on("mouseleave",".item_label._accia",function(){
         var itm=$(this).closest(".catalog_item_product").find(".product_accia_text");
         setTimeout(function () {
             if(!itm.hasClass("_hover")){
@@ -1159,8 +1159,8 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
             }
             
         }, 500)
-    })
-    $(".item_label._accia").mouseenter(function(){
+    });
+    $(document).on("mouseenter",".item_label._accia",function(){
 
         if($(this).hasClass("mainitem_accialabel")){
             $(".product_accia_text").addClass("active");
