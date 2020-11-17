@@ -549,12 +549,31 @@ class ModelCatalogProduct extends Model
             $this->db->query("UPDATE " . DB_PREFIX . "product SET image = '" . $this->db->escape($data['image']) . "' WHERE product_id = '" . (int) $product_id . "'");
         }
 
+        foreach ($data['product_description'] as $language_id => $value) {
+            $this->db->query("UPDATE ". DB_PREFIX . "product_description SET name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', video = '" . $this->db->escape($value['video']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'
+            WHERE product_id = '" . (int) $product_id . "' and language_id = '" . (int) $language_id."'");
+            
+            /*
+            echo "UPDATE ". DB_PREFIX . "product_description SET 
+            name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', video = '" . $this->db->escape($value['video']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'
+            WHERE product_id = '" . (int) $product_id . "' and language_id = '" . (int) $language_id."'";
+            */
+        }
+
+        /*
+        $this->db->query("UPDATE ". DB_PREFIX . "product_description SET 
+        
+        WHERE product_id = '" . (int) $product_id . "' and language_id = '" . (int) $language_id);
+*/
+        /*
         $this->db->query("DELETE FROM " . DB_PREFIX . "product_description WHERE product_id = '" . (int) $product_id . "'");
 
         foreach ($data['product_description'] as $language_id => $value) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "product_description SET product_id = '" . (int) $product_id . "', language_id = '" . (int) $language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', video = '" . $this->db->escape($value['video']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
+            $this->db->query("INSERT INTO " . DB_PREFIX . "product_description 
+            SET product_id = '" . (int) $product_id . "', language_id = '" . (int) $language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', video = '" . $this->db->escape($value['video']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
         }
-
+        */
+        
         $this->db->query("DELETE FROM " . DB_PREFIX . "product_to_store WHERE product_id = '" . (int) $product_id . "'");
         /*
         if (isset($data['product_store'])) {
