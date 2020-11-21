@@ -558,7 +558,30 @@ function calc5(){
 $( document ).ready(function() {
 
     $(document).on("mouseenter",".wrp_product_color,.wrap_viriant_itm_color",function(){
-        $(this).children(".product_color_hint").stop().fadeIn(150);
+        var itm=$(this).children(".product_color_hint");
+        itm.css({"display":"block","opacity":0})
+        var lft=itm.offset().left*1;
+        var wd=itm.width()+50;
+        
+
+        console.log(lft)
+        var delta=$(window).width()-(lft+wd);
+        if(delta<0){
+            itm.css({"margin-left":delta});
+            itm.find(".product_color_hint_arrow").css({"margin-left":-delta});
+        }
+        if(lft<0){
+            var delta_lft=lft-12
+            itm.css({"margin-left":-delta_lft});
+            itm.find(".product_color_hint_arrow").css({"margin-left":delta_lft});
+        }
+        //console.log($(window).width()+"=="+(lft+wd))
+        //console.log(itm.width());
+        //console.log(itm.position().left);
+        //console.log();
+
+        itm.animate({"opacity":1},150);
+        //$(this).children(".product_color_hint").stop().fadeIn(150);
     });
     $(document).on("mouseleave",".wrp_product_color,.wrap_viriant_itm_color ",function(){
         $(this).children(".product_color_hint").stop().fadeOut(100);

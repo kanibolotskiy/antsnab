@@ -2,7 +2,7 @@
 <div class="hideval" id="discount_val" data-value="<?=$discount_percent?>"></div>
 <div class="container main l_product">
     <?= $column_left ?>
-    <div class="content">
+    <div class="content content_visible">
         <ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
 
             <?php $i=0;foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -437,9 +437,13 @@
 <?php }else{ ?>
     <div class="viriant_itm_color _itm_color_transparent"></div>
 <?php }?>
+
 <div class="product_color_hint">
-    <div class="product_color_hint_caption">Цвет:</div>
-    <div class="product_color_hint_val"><?=$variant['name']?></div>
+    <div class="product_color_hint_arrow"></div>
+    <div class="product_color_hint_info">
+        <div class="product_color_hint_caption">Цвет:</div>
+        <div class="product_color_hint_val"><?=$variant['name']?></div>
+    </div>
 </div>
 
 
@@ -454,8 +458,11 @@
 <?php }?>                                                
                                             </a>
 <div class="product_color_hint">
-    <div class="product_color_hint_caption">Цвет:</div>
-    <div class="product_color_hint_val"><?=$variant['name']?></div>
+    <div class="product_color_hint_arrow"></div>
+    <div class="product_color_hint_info">
+        <div class="product_color_hint_caption">Цвет:</div>
+        <div class="product_color_hint_val"><?=$variant['name']?></div>
+    </div>
 </div>
                                         </div>
                                     <?php }?>
