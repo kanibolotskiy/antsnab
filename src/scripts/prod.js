@@ -559,7 +559,11 @@ $( document ).ready(function() {
 
     $(document).on("mouseenter",".wrp_product_color,.wrap_viriant_itm_color",function(){
         var itm=$(this).children(".product_color_hint");
-        itm.stop().css({"display":"block","opacity":0})
+        //itm.css({"margin-left":0});
+        //itm.find(".product_color_hint_arrow").css({"margin-left":0});
+
+        itm.stop().css({"display":"block","opacity":0,"margin-left":0,})
+        itm.find(".product_color_hint_arrow").css({"margin-left":0});
         var lft=itm.offset().left*1;
         var wd=itm.width()+50;
         var wd_window=0;
