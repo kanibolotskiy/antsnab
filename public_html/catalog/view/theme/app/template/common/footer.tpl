@@ -124,7 +124,7 @@
 </footer>
 <div class="menu_overlay"></div>
 
-<script src="/catalog/view/theme/app/bundle/app2.js?v2.96"></script>
+<script src="/catalog/view/theme/app/bundle/app2.js?v<?php echo filectime('catalog/view/theme/app/bundle/app2.js');?>"></script>
 
 <!--<script src="https://www.google.com/recaptcha/api.js"></script>-->
 
