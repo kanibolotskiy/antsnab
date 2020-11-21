@@ -44,31 +44,34 @@
         </div>
         <div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,moimir,gplus,pocket,viber,whatsapp,skype,telegram"></div>
         <div style="clear:both; margin-bottom:40px"></div>
+
         <?php if( !empty($products) ):?>
+        <div class="title">Упоминаемые товары:</div>
         <div class="mentioned-products mentioned-products2">
-            <?php if( $products):?>
-                <div class="title">Упоминаемые товары:</div>
-                <ul>
-                    <?php foreach( $products as $p):?>
-                    <li>
-                        <div class="products-block">
-                            <a href="<?=$p['href']?>" class="img-production">
-                                
+            
+                
+            <ul>
+                <?php foreach( $products as $p):?>
+                <li>
+                    <div class="products-block">
+                        <a href="<?=$p['href']?>" class="img-production">
+                            
 <picture>
-    <source type="image/webp" srcset="<?=$p['thumb_webp']?>">
-    <source type="image/jpeg" srcset="<?=$p['thumb']?>">
-    <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
+<source type="image/webp" srcset="<?=$p['thumb_webp']?>">
+<source type="image/jpeg" srcset="<?=$p['thumb']?>">
+<img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
 </picture>                                
-                            </a>
-                            <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
-                            <strong><?=$p['price']?></strong>
-                            <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
-                        </div>
-                    </li>
-                    <?php endforeach;?>
-                </ul>
-            <?php endif;?>
+                        </a>
+                        <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
+                        <strong><?=$p['price']?></strong>
+                        <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
+                    </div>
+                </li>
+                <?php endforeach;?>
+            </ul>
+        
         </div>
+
         <?php endif;?>
         <?php echo $content_bottom; ?>
     </div>

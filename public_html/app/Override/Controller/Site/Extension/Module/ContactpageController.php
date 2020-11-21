@@ -213,7 +213,7 @@ class ContactpageController extends \Controller
         //$this->document->addScript($yamap, 'footer');
         $this->document->addScript($yamap, 'header');
         $data['rekviziti'] = $this->url->link(AdminModule::CONF_REKVIZITI_LINK) . "#rekvizit";
-
+        $data['home'] = $this->url->link('common/home');
         return $this->load->view('extension/module/app/contacts', $data);
     }
 }

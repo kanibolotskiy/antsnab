@@ -57,6 +57,7 @@ class ControllerInformationContact extends Controller {
 
 		$data['button_map'] = $this->language->get('button_map');
 
+		
 		if (isset($this->error['name'])) {
 			$data['error_name'] = $this->error['name'];
 		} else {

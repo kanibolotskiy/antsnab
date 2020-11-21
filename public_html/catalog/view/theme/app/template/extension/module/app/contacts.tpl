@@ -2,28 +2,31 @@
     <div class="contacts-container">
         <!--<a target="blank" href="<?=$rekviziti?>" class="requisites">Наши реквизиты</a>-->
         <div class="contacts-block">
-            <div class="contacts-block_wrapper">
+            <div class="contacts-block_wrapper" itemscope itemtype="http://schema.org/Organization">
             
-                <address class="left_contacts" itemscope itemtype="http://schema.org/Organization">
+                <address class="left_contacts">
                     
                     <meta itemprop="name" content='ООО "ТК Ант-Снаб"' />
                     <meta itemprop="url" href="<?php echo $home;?>" content="<?php echo $home;?>" />
 
                     <div class="contacts_phone">
                         <div class="contacts_phone_line">
-                            <a href="tel:<?= $telephone ?>"><?= $telephone ?></a>
+                            <a href="tel:<?= $telephone ?>"><span itemprop="telephone"><?= $telephone ?></span></a>
                         </div>
                         <?php if (!empty($fax)): ?>
                             <div class="contacts_phone_line2">
-                                <a href="tel:<?= $fax ?>"><?= $fax ?></a> — <span class="contacts_phone_hint">бесплатно по РФ</span>
+                                <a href="tel:<?= $fax ?>"><span itemprop="telephone"><?= $fax ?></span></a> — <span class="contacts_phone_hint">бесплатно по РФ</span>
                             </div>
                         <?php endif; ?>
                     </div>
                     <div class="contacts_email">
-                        <a href="mailto:<?= $email_site ?>"><?= $email_site ?></a>
+                        <a href="mailto:<?= $email_site ?>"><span itemprop="email"><?= $email_site ?></span></a>
                     </div>
-                    <div class="contacts_address">
-                        <?php echo $address ?>
+                    <div class="contacts_address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                        <span itemprop="streetAddress" ><?php echo $address ?></span>
+                        <meta itemprop="postalCode" content="127566">
+                        <meta itemprop="addressLocality" content="Москва">
+                        <meta itemprop="addressCountry" content="RU">
                     </div>
                     <div class="contacts_time">
                         <?php echo $open ?>

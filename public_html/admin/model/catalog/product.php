@@ -735,8 +735,8 @@ class ModelCatalogProduct extends Model
             }else{
                 $f_product_id=$product_id;
             }
-            $this->db->query("DELETE FROM analog_products WHERE type=1 and (product_id = '" .$product_id . "'");
-
+            
+            $this->db->query("DELETE FROM analog_products WHERE type=1 and product_id = '" .$f_product_id . "'");
             foreach($data["iden"] as $key=>$iden){
                 if($iden[1]['name']){
                     $this->db->query('INSERT INTO analog_products (product_id,link_product_id,type,name,code) 
