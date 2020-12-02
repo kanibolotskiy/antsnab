@@ -709,6 +709,7 @@
       }
 /*-------------------------------------------*/
     function add_param_value(itm){
+      
       var itm_val=itm.find("input");
       var itm_list=itm.closest("td").find(".product_availparam_list");
 
@@ -718,6 +719,9 @@
       }else{
           itm.closest("td").find(".used_item").each(function(){
             if($.trim(itm_val.val()).toLowerCase()==$.trim($(this).text()).toLowerCase()){
+              flag_add=false;
+            }
+            if($.trim(itm_val.val()).toLowerCase()==$.trim($(this).find(".input_param_val").text()).toLowerCase()){
               flag_add=false;
             }
           });

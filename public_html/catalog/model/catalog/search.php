@@ -26,7 +26,8 @@ class ModelCatalogSearch extends Model {
             $limit_str=" limit ".$limit;
         }
         foreach($query_arr as $query_itm){
-            $query_itm=str_replace(["(",")","'",'"',";"],"", $query_itm);
+            //$query_itm=str_replace(["(",")","'",'"',";"],"", $query_itm);
+            $query_itm=addslashes($query_itm);
             $query_itm_translit=$this->correctString($query_itm);
             $alt_word="";
             $sql_sel[]="od.name like '%".$query_itm."%'";
@@ -55,8 +56,6 @@ class ModelCatalogSearch extends Model {
             ".$sql_str."
         )
         ORDER by name_like, op.viewed DESC ".$limit_str;
-
-        //echo $sql;
         $query = $this->db->query($sql);
         return $query->rows;
         

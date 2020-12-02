@@ -225,7 +225,7 @@ class ModelCatalogCategory extends Model
             foreach($data['product_search_update'] as $key=>$product_search_flag){
                 if($product_search_flag){
                     //echo "product_id=".$key."=".$data["product_search"][$key];
-                    $sql_search_update="UPDATE " . DB_PREFIX . "product_description set search='".$data["product_search"][$key]."' where product_id=".$key;
+                    $sql_search_update="UPDATE " . DB_PREFIX . "product_description set search='".addslashes($data["product_search"][$key])."' where product_id=".$key;
                     //echo $sql_search_update;
                     $this->db->query($sql_search_update);
                     //$this->db->query("UPDATE " . DB_PREFIX . "oc_product_description where pru ");
