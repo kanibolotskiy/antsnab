@@ -50,7 +50,12 @@
                 <a href="<?=$sitemap?>">Карта сайта</a> 
                 <a href="<?=$confidence?>">Политика конфиденциальности</a>
             </div>
+            <div itemscope itemtype="http://schema.org/WPFooter">
+                <meta itemprop="copyrightYear" content='<?php echo date("Y");?>'>
+                <meta itemprop="copyrightHolder" content='ООО "ТК Ант-Снаб'>
+            </div>
             <p>© <span itemprop="name">ООО "ТК Ант-Снаб"</span>, 2012-<?php echo date("Y");?>.</p>
+            
         </div>
         <div class="footer-column footer-column2">
             <nav class="footer-nav">
