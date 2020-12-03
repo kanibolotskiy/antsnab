@@ -40,8 +40,8 @@ class ControllerCommonHeader extends Controller {
 			$data['title'] = str_replace("[+page+]","", $this->document->getTitle());
 		}else{
 			$data['title'] = str_replace("[+page+]",". Страница ".$catalog_page, $this->document->getTitle());
-			$data['description'] = "";
-			$data['keywords'] = "";
+			$data['description'] = $this->document->getDescription().". Страница ".$catalog_page;
+			$data['keywords'] = $this->document->getKeywords().". Страница ".$catalog_page;
 		}
 		if(isset($this->request->get['route'])){
 			if($this->request->get['route']=="product/search"){
@@ -64,9 +64,12 @@ class ControllerCommonHeader extends Controller {
 		} else {
 			$data['logo'] = '';
 		}
+		
+		//echo "!".$this->request->server['REQUEST_URI']."!";
+		$url_uri = strtok($this->request->server["REQUEST_URI"], '?');
 
 		$this->load->language('common/header');
-		$data['og_url'] = (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1')) ? HTTPS_SERVER : HTTP_SERVER) . substr($this->request->server['REQUEST_URI'], 1, (strlen($this->request->server['REQUEST_URI'])-1));
+		$data['og_url'] = (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1')) ? HTTPS_SERVER : HTTP_SERVER) . substr($url_uri, 1, (strlen($url_uri)-1));
 		$data['og_image'] = $this->document->getOgImage();
 		
 		
