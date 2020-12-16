@@ -1070,11 +1070,11 @@ class ControllerProductProduct extends Controller {
 				foreach($results_rl as $result){
 					//$result_temp
 					if ($result['image']) {
-						$image = $this->model_tool_image->myResize($result['image'], 200,200,1);
+						$image = $this->model_tool_image->myResize($result['image'], 400,400,1);
 						$img_webp=str_replace(".jpg",".webp",$image);
 						$img_webp=str_replace(".png",".webp",$img_webp);
 					} else {
-						$image = $this->model_tool_image->resize('placeholder.png', $this->config->get($this->config->get('config_theme') . '_image_related_width'), $this->config->get($this->config->get('config_theme') . '_image_related_height'));
+						$image = $this->model_tool_image->resize('placeholder.png', 400,400);
 						$img_webp='';
 					}
 					

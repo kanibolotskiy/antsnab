@@ -758,12 +758,13 @@ class ControllerCatalogCategory extends Controller {
 		$data['products_list']=$products_list;
 
 		/**Коллекции */
-		$products_category=$this->model_catalog_category->productsByCategory($this->request->get['category_id']);
-		$data['products_category']=[];
-		foreach($products_category as $product){
-			$data['products_category'][$product['product_id']]=1;
+		$data['products_category']=[];		
+		if(isset($this->request->get['category_id'])){
+			$products_category=$this->model_catalog_category->productsByCategory($this->request->get['category_id']);
+			foreach($products_category as $product){
+				$data['products_category'][$product['product_id']]=1;
+			}
 		}
-		
 		$parent_cat_id=71;
 		$categories=[];
 		$categories_tree=[];
