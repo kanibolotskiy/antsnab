@@ -90,17 +90,24 @@ function getParamsForm(){
         var select_max=$(this).attr("select_max");
         var min_value=$(this).attr("min_value")*1;
         var max_value=$(this).attr("max_value")*1;
+
         if(select_min!=""){
             if((select_min)*1!=min_value){
-                //str+=(str!=""?"&":"")+"param["+$(this).attr("name")+"][min]="+select_min;
                 str+="&param["+$(this).attr("name")+"][min]="+select_min;
+            }
+            if(select_max==""){
+                str+="&param["+$(this).attr("name")+"][max]="+max_value;
             }
         }
         if(select_max!=""){
+            if(select_min==""){
+                str+="&param["+$(this).attr("name")+"][min]="+min_value;
+            }
             if((select_max*1)!=max_value){
                 //str+=(str!=""?"&":"")+"param["+$(this).attr("name")+"][max]="+select_max;
                 str+="&param["+$(this).attr("name")+"][max]="+select_max;
             }
+            
         }
     });
     $(".param_check").each(function(){
