@@ -62,17 +62,27 @@
                     
 
                     case 2: //Диапазон
-                        $sql="SELECT min(value1) as min,max(value2) as max FROM `product_param_values` pv WHERE product_id in (".$used_products_list.") AND pv.param_id=".(int)$param_id;
-
+                        
+/*
                         $sql="SELECT min(value1*1) as min, max(value2*1) as max 
+                        FROM `product_param_values` pv 
+                        INNER JOIN oc_product op ON pv.product_id=op.product_id
+                        WHERE op.product_id in (".$used_products_list.") AND op.status=1 AND pv.param_id=".(int)$param_id;
+*/
+                        $sql="SELECT min(value1*1) as min_start,max(value1*1) as max_start, 
+                        min(value2*1) as min_end, max(value2*1) as max_end
                         FROM `product_param_values` pv 
                         INNER JOIN oc_product op ON pv.product_id=op.product_id
                         WHERE op.product_id in (".$used_products_list.") AND op.status=1 AND pv.param_id=".(int)$param_id;
 
                         $query = $this->db->query($sql);
                         $result=$query->row;
-                        $param_list["min"]=$result["min"];
-                        $param_list["max"]=$result["max"];
+                        //$param_list["min"]=$result["min"];
+                        //$param_list["max"]=$result["max"];
+                        $param_list["start"]["min"]=$result["min_start"];
+                        $param_list["start"]["max"]=$result["max_start"];
+                        $param_list["end"]["min"]=$result["min_end"];
+                        $param_list["end"]["max"]=$result["max_end"];
                     break;
                         
                     case 3: //Цены
@@ -195,21 +205,45 @@
 
                         if($result["type_param"]==1){  //Дипазон
                             $avail_params=$this->getParamsValues($used_products,$result["id"],2);
+                            //print_r($avail_params);
+                            $out[]=[
+                                "id"=>$result["id"],
+                                "name"=>html_entity_decode($result["name"])." Min",
+                                "translit"=>$result["translit"]."_start",
+                                "unit"=>html_entity_decode($result["unit"]),
+                                "type_param"=>$result["type_param"],
+                                "param_sort_type"=>$result["param_sort_type"],
+                                "avail_params"=>$avail_params["start"],
+                                "step"=>$result["step"]*1,
+                            ];
+                            $out[]=[
+                                "id"=>$result["id"],
+                                "name"=>html_entity_decode($result["name"])." Max",
+                                "translit"=>$result["translit"]."_end",
+                                "unit"=>html_entity_decode($result["unit"]),
+                                "type_param"=>$result["type_param"],
+                                "param_sort_type"=>$result["param_sort_type"],
+                                "avail_params"=>$avail_params["end"],
+                                "step"=>$result["step"]*1,
+                            ];
+
                         }else{                      //Список
                             //echo $result["id"]."|".$result["param_sort_type"]."<br/>";
                             $avail_params=$this->getParamsValues($used_products,$result["id"],$result["param_sort_type"]);
+                            $out[]=[
+                                "id"=>$result["id"],
+                                "name"=>html_entity_decode($result["name"]),
+                                "translit"=>$result["translit"],
+                                "unit"=>html_entity_decode($result["unit"]),
+                                "type_param"=>$result["type_param"],
+                                "param_sort_type"=>$result["param_sort_type"],
+                                "avail_params"=>$avail_params,
+                                "step"=>$result["step"]*1,
+                            ];
                         }
-
-                        $out[]=[
-                            "id"=>$result["id"],
-                            "name"=>html_entity_decode($result["name"]),
-                            "translit"=>$result["translit"],
-                            "unit"=>html_entity_decode($result["unit"]),
-                            "type_param"=>$result["type_param"],
-                            "param_sort_type"=>$result["param_sort_type"],
-                            "avail_params"=>$avail_params,
-                            "step"=>$result["step"]*1,
-                        ];
+                        
+                        
+                        
                     }
                 }
                 

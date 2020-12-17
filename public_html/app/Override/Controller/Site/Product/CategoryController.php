@@ -266,10 +266,44 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
                     }
                     
                     if($param_type==1){
+                        //echo "tut=".$key."<br/>";
                         $sql_param_where[$key]["type"]=1;
                         $sql_param_where[$key]["param_id"]=$param_id;
+                        if(isset($data_url["param"][$key."_start"]["min"])){
+                            if($param_sort_type){
+                                $sql_param_where[$key]["sql"][]=" AND pv0.value1!='' AND (pv0.value1*1)>=".$data_url["param"][$key."_start"]["min"];
+                            }else{
+                                $sql_param_where[$key]["sql"][]=" AND pv0.value1!='' AND (pv0.value1*1)<=".$data_url["param"][$key."_start"]["min"];
+                            }
+                        }
+                        if(isset($data_url["param"][$key."_start"]["max"])){
+                            if($param_sort_type){
+                                $sql_param_where[$key]["sql"][]=" AND pv0.value1!='' AND (pv0.value1*1)<=".$data_url["param"][$key."_start"]["max"];
+                            }else{
+                                $sql_param_where[$key]["sql"][]=" AND pv0.value1!='' AND (pv0.value1*1)<=".$data_url["param"][$key."_start"]["max"];
+                            }
+                        }
+
+                        if(isset($data_url["param"][$key."_end"]["min"])){
+                            if($param_sort_type){
+                                $sql_param_where[$key]["sql"][]=" AND pv0.value2!='' AND (pv0.value2*1)>=".$data_url["param"][$key."_end"]["min"];
+                            }else{
+                                $sql_param_where[$key]["sql"][]=" AND pv0.value2!='' AND (pv0.value2*1)<=".$data_url["param"][$key."_end"]["min"];
+                            }
+                        }
+                        if(isset($data_url["param"][$key."_end"]["max"])){
+                            if($param_sort_type){
+                                $sql_param_where[$key]["sql"][]=" AND pv0.value2!='' AND (pv0.value2*1)<=".$data_url["param"][$key."_end"]["max"];
+                            }else{
+                                $sql_param_where[$key]["sql"][]=" AND pv0.value2!='' AND (pv0.value2*1)<=".$data_url["param"][$key."_end"]["max"];
+                            }
+                        }
+
+                        /*
                         if(isset($data_url["param"][$key]["min"])){
                             //echo "!".$param_sort_type."!";
+                            //echo "!".$data_url["param"][$key]["min"]."!";
+
                             if($param_sort_type){
                                 $sql_param_where[$key]["sql"][]=" AND pv0.value1!='' AND (pv0.value1*1)>=".$data_url["param"][$key]["min"];
                             }else{
@@ -284,6 +318,7 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
                                 $sql_param_where[$key]["sql"][]=" AND pv0.value2!='' AND (pv0.value2*1)>=".$data_url["param"][$key]["max"];
                             }
                         }
+                        */
                        
                     }else{
                        
