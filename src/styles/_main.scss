@@ -2508,9 +2508,10 @@ button.show-more{
     }
 }
 .month{
-    position: absolute;
+    /*position: absolute;
     top: -8px;
     right: 0;
+    */
     ul{
         display: flex;
         flex-wrap: wrap;
@@ -11398,11 +11399,18 @@ margin-bottom:30px;
 }
 .wrap_viriant_itm_color{position:relative;}
 .wrap_viriant_itm_color .product_color_hint{top: 40px;left: -24px;}
+.wrap_news_years{display:flex;justify-content: space-between;margin-bottom:25px;}
+.wrap_news_years h1{white-space: nowrap;margin-right:50px;margin-bottom:0;margin-top: 3px;}
+.wrapper_sale_title .title.art_title{margin-bottom:20px;width:100%;}
 @media screen and (max-width: 750px){
+    .wrap_news_years h1{white-space:initial;margin-top: 0;}
     .viriant_caption{float:none;width:100%;}
     .viriant_list{margin-left:0;}
+    .wrap_news_years{flex-wrap:wrap;}
 }
 .sale_content p{
     padding-top:0;padding-bottom:0;
     margin-top:12px;margin-bottom:12px;
 }
+
+

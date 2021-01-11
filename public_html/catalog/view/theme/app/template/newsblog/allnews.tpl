@@ -7,21 +7,31 @@
             
             <?php if( !empty($articles) ):?>
                 <div class="news-container" id="lazy-load_container">
-                    <h1 class="title">Новости</h1>
+                    <?php $year_str="";?>
+                    <?php if( !empty($years) ){ ?>
+                        <?php foreach($years as $y){ ?>
+                            <?php if( $y['active'] ){$year_str="за ".$y['text']." год";}?>
+                        <?php }?>
 
-                    <?php if( !empty($years) ): ?>
-                    <div class="month">
-                        <ul id="lazy-load_container">
-                            <?php foreach($years as $y): ?>
-                                <?php if( $y['active'] ): ?>
-                                <li><a class="active" href="<?=$y['href']?>"><?=$y['text']?></a></li>
-                                <?php else: ?>
-                                <li><a href="<?=$y['href']?>"><?=$y['text']?></a></li>
-                                <?php endif;?>
-                            <?php endforeach;?>
-                        </ul>
+                    <?php }?>
+                    
+                    <div class="wrap_news_years">
+                        <h1 class="title">Новости <?php echo $year_str;?></h1>
+
+                        <?php if( !empty($years) ): ?>
+                        <div class="month">
+                            <ul id="lazy-load_container">
+                                <?php foreach($years as $y): ?>
+                                    <?php if( $y['active'] ): ?>
+                                    <li><a class="active" href="<?=$y['href']?>"><?=$y['text']?></a></li>
+                                    <?php else: ?>
+                                    <li><a href="<?=$y['href']?>"><?=$y['text']?></a></li>
+                                    <?php endif;?>
+                                <?php endforeach;?>
+                            </ul>
+                        </div>
+                        <?php endif;?>
                     </div>
-                    <?php endif;?>
 
                     <?php foreach ($articles as $article) : ?>
                         <?php include __DIR__ . "/partial/item_allnews.tpl" ?> 

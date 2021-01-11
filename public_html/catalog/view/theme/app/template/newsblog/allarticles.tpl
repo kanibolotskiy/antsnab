@@ -14,7 +14,21 @@
         <div class="news-container staty-container">
             <?php if( !empty($articles) ):?>
                     <div class="wrapper_sale_title">
-                        <h1 class="title">Статьи<?php echo $article_page;?></h1>
+                    
+                        <?php $cat_str="";?>
+                        <?php if( !empty($subCats) ){ ?>
+                            <?php foreach($subCats as $sc){ ?>
+                                <?php if( $sc['active'] and $sc['name']!="Все статьи" ){$cat_str="о &quot;".$sc['name']."&quot;";}?>
+                            <?php }?>
+
+                        <?php }?>
+                        <?php if($cat_str){?>
+                            <h1 class="title art_title">Статьи <?php echo $cat_str.$article_page;?></h1>
+                        <?php }else{?>
+                            <h1 class="title art_title">Статьи<?php echo $article_page;?></h1>
+                        <?php }?>
+                        
+                        <div style="width:100%;">
                         <?php if( !empty($subCats) ):?>
                         <select id="seldef1" >
                             <?php foreach($subCats as $sc): ?>
@@ -29,6 +43,7 @@
                                 <?php endif;?>
                             <?php endforeach;?>
                         </select>
+                        </div>
                     </div>
                     <?php endif; ?>
                     <div class="staty-list">
