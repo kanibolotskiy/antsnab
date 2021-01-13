@@ -229,13 +229,22 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 				
 				if($product['quantity'] > 0){
 					$data['pickup'] = 'true';
-					$data['delivery-options'] = Array(
+					/*$data['delivery-options'] = Array(
+						
 						'option'=>Array(
 							"cost"=>$del_price_val,
 							"days"=>"1",
 							"order-before"=>"14"
 						)
 					);
+					*/	
+					$data['delivery-options'] = Array(
+						'option'=>Array(
+							"cost"=>$del_price_val,
+							"days"=>"1-3"
+						)
+					);
+				
 				}else{
 					$data['pickup'] = 'false';
 					$data['delivery-options'] = Array(
