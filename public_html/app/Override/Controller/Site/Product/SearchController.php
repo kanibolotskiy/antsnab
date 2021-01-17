@@ -12,6 +12,7 @@ class SearchController extends \Controller
 		$query=$_GET["query"];
 		
 		$query = preg_replace('/\s/', ' ', $query);
+			
 		$query_arr=explode(" ",$query);
 		
 		$query_rez=[];
@@ -319,7 +320,7 @@ class SearchController extends \Controller
 
 			
 			$query=$_GET["search"];
-			$query=str_replace([",","-"]," ",$query);
+			$query=str_replace([",","-",":"]," ",$query);
 			$query = preg_replace('/\s/', ' ', $query);
 			$query_arr=explode(" ",$query);
 			

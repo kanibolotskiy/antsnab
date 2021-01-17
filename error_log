@@ -1,2 +1,0 @@
-antsnab.cp06038.tmweb.ru [Wed Jan 13 09:36:55 2021] [emerg] [pid 19250] sapi_apache2.c(362): [client 94.158.95.26:41516] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/c/cp06038/antsnab/public_html/catalog/controller/extension/feed/yandex_market.php on line 245
-antsnab.cp06038.tmweb.ru [Wed Jan 13 09:36:57 2021] [emerg] [pid 19303] sapi_apache2.c(362): [client 94.158.95.26:41614] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/c/cp06038/antsnab/public_html/catalog/controller/extension/feed/yandex_market.php on line 245
