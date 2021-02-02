@@ -53,6 +53,7 @@ $(document).ready(function(){
                     ym(14496178, 'reachGoal', 'watch-video');
                     break;
 
+                /*
                 case 'tabdat_0':     //Применение
                     ym(14496178, 'reachGoal', 'tab-use');
                     break;
@@ -64,7 +65,8 @@ $(document).ready(function(){
                 case 'tabdat_2':     //Скидки
                     ym(14496178, 'reachGoal', 'tab-sale');
                     break;
-
+                */
+               
                 case 'card-review':     //Отзывы
                     ym(14496178, 'reachGoal', 'tab-comments');
                     break;

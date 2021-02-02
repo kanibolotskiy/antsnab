@@ -506,8 +506,9 @@
                         <li goal_data="card-calc">Калькулятор</li>
                     <?php }?>
                     
+                    
                     <?php $i=0; foreach($tabs as $t){ ?>
-                    <li goal_data="tabdat_<?php echo $i;?>"><?=$t['name']?></li>
+                    <li goal_data="<?=$t['tab_name']?>"><?=$t['name']?></li>
                     <?php $i++; }?>
 
                     <?php if(count($reviews)>0):?>

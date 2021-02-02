@@ -255,10 +255,26 @@ class ProductTemplateDecorator implements IDecorator
         $data['tabs'] = [];
         foreach ($tabs as $t) {
             if (!$t['prod_hide']) {
+                $tab_name='';
+                switch ($t['cat_name']){
+                    case 'Применение';
+                        $tab_name="tab-use";
+                        break;
+                    case 'Хранение';
+                        $tab_name="tab-save";
+                        break;
+                    case 'Скидки';
+                        $tab_name="tab-sale";
+                        break;
+                    case 'Подробнее';
+                        $tab_name="tab-more";
+                        break;
+                }
                 $data['tabs'][] = [
                     'id'   => $t['category_prodtab_id'],
                     'name' => $t['cat_name'],
-                    'text' => html_entity_decode($t['val'])
+                    'text' => html_entity_decode($t['val']),
+                    'tab_name'=>$tab_name
                 ];
             }
         }
