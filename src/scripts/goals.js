@@ -60,7 +60,6 @@ $(document).ready(function(){
                 case 'tab-save':     //Хранение
                     ym(14496178, 'reachGoal', 'tab-save');
                     break;
-
                 case 'tab-sale':     //Скидки
                     ym(14496178, 'reachGoal', 'tab-sale');
                     break;
