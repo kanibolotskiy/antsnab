@@ -53,20 +53,22 @@ $(document).ready(function(){
                     ym(14496178, 'reachGoal', 'watch-video');
                     break;
 
-                /*
-                case 'tabdat_0':     //Применение
+                case 'tab-use':     //Применение
                     ym(14496178, 'reachGoal', 'tab-use');
                     break;
 
-                case 'tabdat_1':     //Хранение
+                case 'tab-save':     //Хранение
                     ym(14496178, 'reachGoal', 'tab-save');
                     break;
 
-                case 'tabdat_2':     //Скидки
+                case 'tab-sale':     //Скидки
                     ym(14496178, 'reachGoal', 'tab-sale');
                     break;
-                */
-               
+                
+                case 'tab-more':     //Подробнее
+                    ym(14496178, 'reachGoal', 'tab-more');
+                    break;
+
                 case 'card-review':     //Отзывы
                     ym(14496178, 'reachGoal', 'tab-comments');
                     break;
