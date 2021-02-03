@@ -267,10 +267,13 @@ class ModelCatalogProduct extends Model
         if (!empty($data['disseo'])) {
             $disseo = (float) $data['disseo'];
         }
+        /*
         $altvideo=0;
         if (!empty($data['altvideo'])) {
             $altvideo = (float) $data['altvideo'];
         }
+        */
+
         $discount=0;
         if (!empty($data['discount'])) {
             $discount = (float) $data['discount'];
@@ -329,11 +332,11 @@ class ModelCatalogProduct extends Model
         }
 
 
-        $sql = "update " . DB_PREFIX . "product set consumption = :consumption, calc_data1 = :calc_data1, calc_data2 = :calc_data2, calc_data3 = :calc_data3, calc_data4 = :calc_data4, disseo = :disseo, altvideo = :altvideo, discount = :discount, price_wholesale = :price_wholesale, priceold = :priceold, price_wholesaleold = :price_wholesaleold, wholesale_threshold=:wholesale_threshold, produnit_template_id=:produnit_template_id where product_id = :id";
+        $sql = "update " . DB_PREFIX . "product set consumption = :consumption, calc_data1 = :calc_data1, calc_data2 = :calc_data2, calc_data3 = :calc_data3, calc_data4 = :calc_data4, disseo = :disseo, discount = :discount, price_wholesale = :price_wholesale, priceold = :priceold, price_wholesaleold = :price_wholesaleold, wholesale_threshold=:wholesale_threshold, produnit_template_id=:produnit_template_id where product_id = :id";
         $res = $this->db->query($sql, [
             ':discount' => $discount,
             ':disseo' => $disseo,
-            ':altvideo' => $altvideo,
+            //':altvideo' => $altvideo,
             ':consumption' => $consumption,
             ':calc_data1' => $calc_data1,
             ':calc_data2' => $calc_data2,
@@ -377,7 +380,8 @@ class ModelCatalogProduct extends Model
                 'meta_description' => $result['meta_description'],
                 'meta_keyword' => $result['meta_keyword'],
                 'tag' => $result['tag'],
-                'video' => $result['video']
+                'video' => $result['video'],
+                'video_preview' => $result['video_preview']
 
             );
         }
@@ -397,7 +401,7 @@ class ModelCatalogProduct extends Model
         }
 
         foreach ($data['product_description'] as $language_id => $value) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "product_description SET product_id = '" . (int) $product_id . "', language_id = '" . (int) $language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', video = '" . $this->db->escape($value['video']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
+            $this->db->query("INSERT INTO " . DB_PREFIX . "product_description SET product_id = '" . (int) $product_id . "', language_id = '" . (int) $language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', video = '" . $this->db->escape($value['video']) . "',video_preview = '" . $this->db->escape($value['video_preview']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
         }
 
         /*
@@ -550,7 +554,7 @@ class ModelCatalogProduct extends Model
         }
 
         foreach ($data['product_description'] as $language_id => $value) {
-            $this->db->query("UPDATE ". DB_PREFIX . "product_description SET name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', video = '" . $this->db->escape($value['video']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'
+            $this->db->query("UPDATE ". DB_PREFIX . "product_description SET name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', video = '" . $this->db->escape($value['video']) . "', video_preview = '" . $this->db->escape($value['video_preview']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'
             WHERE product_id = '" . (int) $product_id . "' and language_id = '" . (int) $language_id."'");
             
             /*

@@ -138,28 +138,19 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label" for="input-video<?php echo $language['language_id']; ?>"><span><?php echo $entry_video; ?></span></label>
                                             <div class="col-sm-10">
-                                                <input type="text" name="product_description[<?php echo $language['language_id']; ?>][video]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['video'] : ''; ?>" placeholder="<?php echo $entry_video; ?>" id="input-video<?php echo $language['language_id']; ?>" class="form-control" />
+                                                <input type="text" name="product_description[<?php echo $language['language_id']; ?>][video]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['video'] : ''; ?>" placeholder="<?php echo $entry_video; ?>" id="input-video" class="form-control" />
                                             </div>
                                         </div>
-
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label" for="input-altvideo">
-                                                <?php echo $entry_altvideo; ?>
-                                            </label>
-                                            <div class="col-sm-1">
-                                            <div class="checkbox">
-                                                <label>
-                                                <?php if($altvideo) { ?>
-                                                <input  type="checkbox" name="altvideo" value="1" checked="checked" id="input-altvideo" />
-                                                <?php } else { ?>
-                                                <input type="checkbox" name="altvideo" value="1" id="input-altvideo" />
-                                                <?php } ?>
-                                                &nbsp; </label>
+                                            <label class="col-sm-2 control-label" for="input-video<?php echo $language['language_id']; ?>"><span><?php echo $entry_video_preview; ?></span></label>
+                                            <div class="col-sm-10">
+                                                <a href="" id="thumb-video_preview" data-toggle="image" class="img-thumbnail">
+                                                    <img id="image-video_preview" src="../image/<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['video_preview'] : ''; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>">
+                                                </a>
+                                                <input type="hidden" name="product_description[<?php echo $language['language_id']; ?>][video_preview]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['video_preview'] : ''; ?>" id="input-video_preview">
                                             </div>
-                                            </div>
-
                                         </div>
-
+                                        
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label" for="input-disseo">
                                                 <?php echo $entry_disseo; ?>
@@ -1597,6 +1588,20 @@
 
 
         $(document).ready(function(){
+
+            $("#input-video").change(function(){
+                $.ajax({
+                        url: 'index.php?route=catalog/product/videoPreview&token=<?php echo $token; ?>&video='+$(this).val(),
+                        dataType: 'json',
+                        success: function (json) {
+                            var src="../image/"+json.preview;
+                            $("#input-video_preview").val(json['preview']);
+                            $("#image-video_preview").attr("src",src.toString());
+                        }   
+                })     
+            });
+
+
             $("a[href='#tab-design']").parent().hide();
 
             $(".iden_cat_name").click(function(){

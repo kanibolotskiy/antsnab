@@ -51,33 +51,35 @@ class ModelCatalogInformation extends Model {
 	}
 	public function cleanText($text){
 		$text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
-		$dom = new DOMDocument();
-		$dom->loadHTML(mb_convert_encoding($text, 'HTML-ENTITIES', 'UTF-8'));
-		foreach( $dom->getElementsByTagName("img") as $pnode ) {
-			$src_img=$pnode->getAttribute('src');
-			$src_img=str_replace ("../","", $src_img);
-			$src_img=str_replace ("https://ant-snab.ru/","", $src_img);
-			$webp_file=$this->makeWebP($src_img);
-			if($webp_file){
-				$new_div_clone = $pnode->cloneNode();
-				$nodeDiv_jpeg = $dom->createElement("source", "");
-				$nodeDiv_jpeg->setAttribute("type","image/jpeg");
-				$nodeDiv_jpeg->setAttribute("srcset",$src_img);
-				
-				$nodeDiv_webp = $dom->createElement("source", "");
-				$nodeDiv_webp->setAttribute("type","image/webp");
+		if($text){
+			$dom = new DOMDocument();
+			$dom->loadHTML(mb_convert_encoding($text, 'HTML-ENTITIES', 'UTF-8'));
+			foreach( $dom->getElementsByTagName("img") as $pnode ) {
+				$src_img=$pnode->getAttribute('src');
+				$src_img=str_replace ("../","", $src_img);
+				$src_img=str_replace ("https://ant-snab.ru/","", $src_img);
+				$webp_file=$this->makeWebP($src_img);
 				if($webp_file){
-					$nodeDiv_webp->setAttribute("srcset",$webp_file);
-				}
+					$new_div_clone = $pnode->cloneNode();
+					$nodeDiv_jpeg = $dom->createElement("source", "");
+					$nodeDiv_jpeg->setAttribute("type","image/jpeg");
+					$nodeDiv_jpeg->setAttribute("srcset",$src_img);
+					
+					$nodeDiv_webp = $dom->createElement("source", "");
+					$nodeDiv_webp->setAttribute("type","image/webp");
+					if($webp_file){
+						$nodeDiv_webp->setAttribute("srcset",$webp_file);
+					}
 
-				$nodeDiv = $dom->createElement("picture", "");
-				$nodeDiv->appendChild($nodeDiv_jpeg);
-				$nodeDiv->appendChild($nodeDiv_webp);
-				$nodeDiv->appendChild($new_div_clone);
-				$pnode->parentNode->replaceChild($nodeDiv, $pnode);
+					$nodeDiv = $dom->createElement("picture", "");
+					$nodeDiv->appendChild($nodeDiv_jpeg);
+					$nodeDiv->appendChild($nodeDiv_webp);
+					$nodeDiv->appendChild($new_div_clone);
+					$pnode->parentNode->replaceChild($nodeDiv, $pnode);
+				}
 			}
+			$text = $dom->saveHTML();
 		}
-		$text = $dom->saveHTML();
 		/*
 		<picture>
 			<source type="image/webp" srcset="http://antsnab.cp06038.tmweb.ru/image/cache/no_image-400x4002.webp">

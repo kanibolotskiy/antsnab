@@ -292,7 +292,8 @@ class ModelCatalogProduct extends Model {
 				'meta_keyword'     => $query->row['meta_keyword'],
 				'tag'              => $query->row['tag'],
 				'video'            => $query->row['video'],
-				'altvideo'         => $query->row['altvideo'],
+				'video_preview'            => $query->row['video_preview'],
+				/*'altvideo'         => $query->row['altvideo'],*/
 
 				'model'            => $query->row['model'],
 				'sku'              => $query->row['sku'],

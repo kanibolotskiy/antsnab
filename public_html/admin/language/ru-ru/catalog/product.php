@@ -197,6 +197,7 @@ $_['entry_disseo'] = 'Не показывать в YML?';
 $_['entry_altvideo'] = 'Альтернативное превью для видео';
 
 $_['entry_video'] = 'Видео';
+$_['entry_video_preview'] = 'Видео превью';
 $_['entry_showdiscount'] = 'Показывать скидку?';
 
 

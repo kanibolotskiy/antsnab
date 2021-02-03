@@ -693,10 +693,13 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_recurring'] = $this->language->get('entry_recurring');
 		$data['entry_main_category'] = $this->language->get('entry_main_category');
 		$data['entry_disseo'] = $this->language->get('entry_disseo');
+		/*
 		$data['entry_altvideo'] = $this->language->get('entry_altvideo');
-		
+		*/
 		
 		$data['entry_video'] = $this->language->get('entry_video');
+		$data['entry_video_preview'] = $this->language->get('entry_video_preview');
+		
 		$data['entry_showdiscount'] = $this->language->get('entry_showdiscount');
 		$data['entry_discount'] = $this->language->get('entry_discount');
 		$data['entry_consumption'] = $this->language->get('entry_consumption');
@@ -882,7 +885,7 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['disseo'] = '';
 		}
-		
+		/*
 		if (isset($this->request->post['altvideo'])) {
 			$data['altvideo'] = $this->request->post['altvideo'];
 		} elseif (!empty($product_info)) {
@@ -1972,6 +1975,74 @@ class ControllerCatalogProduct extends Controller {
 			}
 			
 		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+	public function videoPreview(){
+		//$json['test']=$_GET['video'];
+		$variants=Array("default","mqdefault","hqdefault","0","sddefault","maxresdefault");
+		$video_id=0;
+		preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $_GET['video'], $matches);
+		if(isset($matches[0])){
+			$video_id=$matches[0];			
+		}
+		$json['video_id']=$video_id;
+
+		//$url='https://img.youtube.com/vi/WDAhMyZnYsc/hqdefault.jpg';
+		//$url='https://img.youtube.com/vi/WDAhMyZnYsc/maxresdefault.jpg';
+
+		//$json['file1']=file_get_contents('//img.youtube.com/vi/JMJXvsCLu6s/maxresdefault.jpg');  // Есть
+		//$json['file2']=file_get_contents('//img.youtube.com/vi/WDAhMyZnYsc/maxresdefault.jpg');
+		//return json_encode($json);		
+		//img.youtube.com/vi/JMJXvsCLu6s/maxresdefault.jpg
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_HEADER, 1);
+		//curl_setopt($ch, CURLOPT_HTTPHEADER, array("HeaderName: HeaderValue"));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Устанавливаем параметр, чтобы curl возвращал данные, вместо того, чтобы выводить их в браузер.
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION,true);
+		
+		//$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		//$httpCode = curl_getinfo($ch);
+		//$local_path="image/video_preview/";
+		$local_path="video_preview/";
+		$url="";
+		$flag=true;
+		$i=count($variants)-1;
+		while(($flag) or ($i>0)){
+			$url='https://img.youtube.com/vi/'.$video_id.'/'.$variants[$i].'.jpg';
+			curl_setopt($ch, CURLOPT_URL, $url);
+			$data = curl_exec($ch);
+			$pos = strpos($data, 'HTTP/1.1 200 OK');
+			if ($pos === false) {
+				$rez=0;
+			}else{
+				$rez=1;
+				$flag=false;
+				break;
+			}
+			$json['test'][]=Array("url"=>$url,"rez"=>$rez);
+			$i--;
+		}
+		if($url){
+			$local_file=$local_path.$video_id.".jpg";
+			file_put_contents("../image/".$local_file, file_get_contents($url));
+			$json['preview']=$local_file;
+		}
+		
+        
+/*		
+		if ($pos === false) {
+			$json['rez']=0;
+		}else{
+			$json['rez']=1;
+		}
+		*/
+        //$json["errno"]=$httpCode;
+        curl_close($ch);
+		//return $out;
 		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

@@ -822,7 +822,8 @@ class ControllerProductProduct extends Controller {
 			$data['video_link']='';
 			$data['video_img']='';
 			$data['labels']=$this->model_catalog_product->getProductLabels($product_info);
-
+			
+			/*
 			if($product_info['video']){
 				preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $product_info['video'], $matches);
 				if(isset($matches[0])){
@@ -836,6 +837,17 @@ class ControllerProductProduct extends Controller {
 					}else{
 						$data['video_img']='//img.youtube.com/vi/'.$video_id.'/maxresdefault.jpg';
 					}
+				}
+			}
+			*/
+			$data['video_link'] = $product_info['video'];
+			if($product_info['video_preview']){
+				$data['video_img']="../image/".$product_info['video_preview'];
+			}else{
+				preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $product_info['video'], $matches);
+				if(isset($matches[0])){
+					$video_id=$matches[0];
+					$data['video_img']='//img.youtube.com/vi/'.$video_id.'/maxresdefault.jpg';
 				}
 			}
 
