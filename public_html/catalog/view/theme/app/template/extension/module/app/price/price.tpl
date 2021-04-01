@@ -1,5 +1,6 @@
 <div class="price-list">
     <div class="price-heading">
+    <!--<div><a target="_blank" href="/index.php?route=extension/module/price/makepdf">test_price</a></div>-->
         <div class="price-dat">Цены по состоянию на: <span><?php echo $date;?></span></div>
         <div class="download download3">
                 <span><?=$price_download?></span>

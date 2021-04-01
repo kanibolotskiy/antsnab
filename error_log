@@ -1,2 +1,0 @@
-antsnab.cp06038.tmweb.ru [Wed Feb 03 10:39:09 2021] [emerg] [pid 13190] sapi_apache2.c(362): [client 94.158.95.26:38216] PHP Parse error:  syntax error, unexpected 'if' (T_IF), expecting ',' or ';' in /home/c/cp06038/antsnab/public_html/catalog/model/catalog/product.php on line 284
-antsnab.cp06038.tmweb.ru [Wed Feb 03 10:39:26 2021] [emerg] [pid 13889] sapi_apache2.c(362): [client 94.158.95.26:39464] PHP Parse error:  syntax error, unexpected 'if' (T_IF), expecting ',' or ';' in /home/c/cp06038/antsnab/public_html/catalog/model/catalog/product.php on line 278

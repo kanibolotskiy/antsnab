@@ -6,11 +6,9 @@ if( $('#priceTableContent').length == 1 ) {
                 var $container = $('#' + id),
                     $selector = $container.find('select'),
                     $newSelector;
-
-                
-                console.warn(id);
-                console.warn(options);
-                console.warn(currentValue);
+                //console.warn(id);
+                //console.warn(options);
+                //console.warn(currentValue);
                 $newSelector = $(document.createElement('select'));
                 $newSelector.addClass('catSelector');
                 $.each(options, function(text, val) {
@@ -104,3 +102,16 @@ if( $('#priceTableContent').length == 1 ) {
         }); 
     });
 }
+$(document).ready(function(){
+    $("#test_price").click(function(){
+        console.log("test_price")
+        $.ajax({
+            url:  '/index.php?route=extension/module/price/makepdf',
+            type: 'post',
+            dataType: 'json',
+            success: function(json) {
+                console.log(json);
+            }
+        });
+    });
+})

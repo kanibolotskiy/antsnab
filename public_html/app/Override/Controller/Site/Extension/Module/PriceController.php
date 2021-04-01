@@ -4,7 +4,8 @@ namespace WS\Override\Controller\Site\Extension\Module;
 use WS\Override\Gateway\ProdUnits\ProdUnits;
 use WS\Override\Gateway\FinalCategory;
 use WS\Override\Controller\Admin\Extension\Module\PriceController as AdminModule;
-//use fpdf\pdf;
+use Fpdf\Fpdf;
+
 /**
  * Вывод модуля прайса 
  * 
@@ -18,19 +19,66 @@ class PriceController extends \Controller
     const SHOW_ALL_OPTION_VALUE = "-1";
 
     public function makepdf(){
-        //define('FPDF_FONTPATH','system/library/fpdf/fonts/');
-        require_once('system/library/fpdf/fpdf.php');
-        //ob_start();
+        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
-        $pdf = new FPDF();
+        //define('FPDF_FONTPATH','system/library/fpdf/fonts/');
+        
+        //require('system/library/fpdf/fpdf.php');
+        //ob_start();
+        //$this->load->
+        
+        //$this->load->model('system/library/fpdf/fpdf.php');
+        //$pdf = new FPDF();
+
         //$dompdf = new Dompdf\Dompdf();
         /*
         $pdf->AddPage();
         $pdf->SetFont('Arial','B',16);
         $pdf->Cell(40,10,'Hello World!');
-        */
+        
         //$pdf->Output();
         //ob_end_flush();
+        //require_once(DIR_SYSTEM . 'library/fpdf.php');
+        $pdf = new FPDF();
+        $pdf->SetAuthor('Lana Kovacevic');
+        $pdf->SetTitle('FPDF tutorial');
+        //$pdf->SetFont('verdana','B',20);
+        $pdf->AddFont('Arial','','arial.php'); 
+        $pdf->SetFont('Arial');
+        
+        $pdf->SetTextColor(50,60,100);
+        //$pdf->AddPage('P');
+
+        $pdf->SetMargins(1,2);
+        $pdf->AddPage();
+
+        $pdf->Cell(80);
+        // Framed title
+        $pdf->Cell(30,10,'Title',1,0,'C');
+        // Line break
+        $pdf->Ln(20);
+
+        /*
+        $pdf->Cell(10,10,'FPDF Tutorial',1,0,'C',0);
+        //Set x and y position for the main text, reduce font size and write content
+        $pdf->SetXY (10,50);
+        $pdf->SetFontSize(10);
+        $pdf->Write(5,'Congratulations! You have generated a PDF.Привет прайс-лист');
+        $pdf->Write(0,iconv('utf-8', 'windows-1251',"Коммерческое предложение"));
+        //Output the document
+        
+        $pdf->SetTitle("Тестовый документ");
+        $pdf->SetAuthor('Steven Wittens');
+
+
+        $pdf->Write(12, "Test.\n");
+        $pdf->Write(12, "Тестовая строка.\n");
+
+
+        $pdf->Output('example1.pdf','I');
+
+        $pdf->Output('example1.pdf','I');
+        */
     }
     public function index()
     {
