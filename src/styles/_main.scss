@@ -543,7 +543,7 @@ a.btn-nav{
     margin-right:0;
 }
 .content{padding-left:30px;position:relative;z-index:1;background:#fff;padding-bottom:50px;}
-
+.content.content_visible{overflow:visible;}
 .search-form{
     border: 1px solid #cbcbcb;
     width: 100%;
