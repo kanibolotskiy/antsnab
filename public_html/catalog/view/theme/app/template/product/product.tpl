@@ -2,7 +2,7 @@
 <div class="hideval" id="discount_val" data-value="<?=$discount_percent?>"></div>
 <div class="container main l_product">
     <?= $column_left ?>
-    <div class="content content_visible">
+    <div class="content ">
         <ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
 
             <?php $i=0;foreach ($breadcrumbs as $breadcrumb) { ?>

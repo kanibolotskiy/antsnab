@@ -45,14 +45,7 @@ class ProductTemplateDecorator implements IDecorator
             $data['price_wholesale_val']=$registry->get('currency')->format((float)$data['price_wholesale'] ? $data['price_wholesale'] : $product_info['price_wholesale'], $registry->get('session')->data['currency']);
             $data['price'] = $registry->get('tax')->calculate($product_info['price'], $product_info['tax_class_id'], $registry->get('config')->get('config_tax'));
             $data['price_val']=$registry->get('currency')->format((float)$data['price'] ? $data['price'] : $product_info['price'], $registry->get('session')->data['currency']);
-            /*
-            if($product_info['price_wholesaleold']*1){
-                $discount_val1=(($product_info['price_wholesale']/$product_info['price_wholesaleold']-1)*100);
-                $discount_val2=(($product_info['price']/$product_info['priceold']-1)*100);
-
-                $discount = (int)$discount_val1;
-            }
-            */
+            
 
         } else {
             $data['price_wholesale'] = false;
@@ -60,11 +53,6 @@ class ProductTemplateDecorator implements IDecorator
             $data['price'] = false;
             $data['price_val'] = false;
         }
-        /*
-        $data['discount'] = $discount;
-        $data['discount_val1'] = $discount_val1;
-        $data['discount_val2'] = $discount_val2;
-        */
         
         $data['discount_percent']=$product_info['discount_percent'];
 
