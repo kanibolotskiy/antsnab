@@ -155,7 +155,7 @@
                         
                         <div class="oneclick_hover">
                             <div class="oneclick_hover_ok"></div>
-                            <span>Купить в 1 клик
+                            <span>Купить в 1 клик</span>
                             <div class="oneclick_loader">
                                 <div class="loader-sonar">
                                     <span></span>

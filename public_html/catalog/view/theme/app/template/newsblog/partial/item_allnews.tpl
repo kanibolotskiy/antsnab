@@ -5,7 +5,7 @@
 
         <div style="display:none;" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
             <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-                <img itemprop="url image" src="https://ant-snab.ru/image/catalog/logo.jpg"/>
+                <img itemprop="url image" src="https://ant-snab.ru/image/catalog/logo.jpg" alt="Ант-Снаб"/>
                 <meta itemprop="width" content="102">
                 <meta itemprop="height" content="94">
             </div>

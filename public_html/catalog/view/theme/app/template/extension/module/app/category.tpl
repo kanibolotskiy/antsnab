@@ -68,20 +68,7 @@
             <?php } ?>
 
             </ul>
-            <div class="collapse">
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
-                    width="48" 
-                    height="48" 
-                    viewBox="0 0 32 32" 
-                    transform="rotate(90)">
-                <g data-width="32" data-height="32"  >
-                    <path  d="M0 0h6v32h-6z"/>
-                    <path  d="M16 0h2v32h-2z"/>
-                    <path d="M5 15.5l6-4.5v9z"/>
-                </g>
-                <text x="-31" y="26" font-family="sans-serif" font-size="7px" fill="" transform="rotate(-90)">cвернуть</text>
-                </svg>
-            </div> 
+            
             <div class="catalog_hide"><span>Свернуть каталог</span></div>
         </div>
     </div>

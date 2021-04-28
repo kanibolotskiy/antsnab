@@ -6360,7 +6360,7 @@ background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0i
 .header_email a{color: #000;font-weight: 600;padding-left:35px;display:block;font-size:14px;}
 .header_email a:hover{text-decoration: none;}
 .preheader_info a{color:#666;text-decoration:none;}
-.prehead_call .prehead_val{white-space: nowrap;}
+.prehead_call .prehead_val{white-space: nowrap;cursor:pointer;}
 .header {position:relative;} 
 .benefits{/*align-items: center;*/
     flex-wrap:wrap;
@@ -7166,6 +7166,7 @@ div.rur{display:inline;}
 }
 .cat_price_val{
     font-weight:bold;
+    height:19px;
 }
 .cat_price_val .rur{
     font-size: 17px;
@@ -7175,7 +7176,6 @@ div.rur{display:inline;}
 
 .cat_price_val._oldprice{
     color:#c00;    
-    height:19px;
 }
 .tovar_main_image{position:relative;text-align:center;}
 .tovar_main_image .agg_rating{height:40px;width:40px;line-height:42px;font-size:11px;}
@@ -11416,5 +11416,13 @@ margin-bottom:30px;
     padding-top:0;padding-bottom:0;
     margin-top:12px;margin-bottom:12px;
 }
-
+.main_ment_price{
+    display: block;
+    text-align: center;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
 

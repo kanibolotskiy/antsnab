@@ -12,6 +12,7 @@ class PaginationHelper
 
     /** @const string pattern to build a pagination link*/
     const LINK_PATTERN = '~baseUrl~&page=~page~';
+    const LINK_PATTERN_FILTER = '~baseUrl~?page=~page~';
 
     /** @const route (in OC terms) to pagination template */
     const PAGINATION_TEMPLATE = 'partial/pagination';
@@ -72,7 +73,8 @@ class PaginationHelper
             //$document->addLink($baseUrl, 'canonical');            
         }
         //$document->addLink('canonical',$baseUrl);
-        $document->addLink($baseUrl,'canonical');
+        $baseUrl_arr=explode("?",$baseUrl);
+        $document->addLink($baseUrl_arr[0],'canonical');
         return $load->view(static::PAGINATION_TEMPLATE, ['pagination' => $paginationModel, 'pageUrl' => $pageUrl]);
     }
 
@@ -129,8 +131,13 @@ class PaginationHelper
             if ( $page == 1 ) {
                 return $baseUrl;
             }
-     
-            return str_replace(['~page~', '~baseUrl~'], [$page, $baseUrl], $urlPattern);
+            if(!strpos($baseUrl, '?')){
+                $urlPattern=str_replace('&page', '?page',$urlPattern);
+            }
+            $out = str_replace(['~page~', '~baseUrl~'], [$page, $baseUrl], $urlPattern);
+
+            
+            return $out;
         };
         return $pageUrlCallback;
     }

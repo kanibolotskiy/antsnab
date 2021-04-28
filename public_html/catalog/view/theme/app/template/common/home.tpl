@@ -60,7 +60,7 @@
 </picture>
                                         </a>
                                         
-                                        <strong><?=$p['price']?> <div class="rur">i</div></strong>
+                                        <div class="main_ment_price"><?=$p['price']?> <div class="rur">i</div></div>
                                         <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
                                     </div>
                                 </li>

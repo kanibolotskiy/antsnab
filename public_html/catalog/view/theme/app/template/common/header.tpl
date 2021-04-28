@@ -113,7 +113,7 @@
             <header class="header container">
                 
                 <div class="wrap_logo">
-                    <strong class="logo">
+                    <div class="logo">
                         <?php if ($home == $og_url) { ?>
                             <div class="logo_bg"></div>
                             <div class="logo_cap"></div>
@@ -125,7 +125,7 @@
                                 <div class="logo_caption">строительные материалы</div>
                             </a>
                         <?php } ?>
-                    </strong>
+                    </div>
                 </div>
                 <?php if($class != "checkout-cart"){ ?>
                     <div class="header_email">
@@ -139,11 +139,11 @@
                     <?php }?>
                     
                 </div>
-                <a href="#" class="js-call with_goal" rel="nofollow" goal="callme">
+                <div href="#" class="js-call with_goal" rel="nofollow" goal="callme">
                     <div class="prehead_call">
                         <span class="prehead_val order_call js_modal" data-modal="modal_call">Заказать звонок</span>
                     </div>
-                </a>
+                </div>
                 
                 <?php if($class != "checkout-cart"){ ?>
                     <?= $cart ?>
