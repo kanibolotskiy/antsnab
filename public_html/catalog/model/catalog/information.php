@@ -86,13 +86,11 @@ class ModelCatalogInformation extends Model {
 					$pnode->parentNode->replaceChild($nodeDiv, $pnode);
 				}
 			}
-			//echo $dom->htmlContent;
+			
 			$xpath = new DOMXPath($dom);
 			$body = $xpath->query('/html/body');
 			$text = $dom->saveXml($body->item(0));
 
-			//echo $dom->getElementsByTagName("body");
-			// $dom->getElementsByTagName("body")->saveHTML();
 		}
 		/*
 		<picture>
@@ -101,6 +99,8 @@ class ModelCatalogInformation extends Model {
 			<img class="wrp_fly_image" itemprop="image" src="http://antsnab.cp06038.tmweb.ru/image/cache/no_image-400x4002.png" alt="Мастика МБР-Х-65" title="Мастика МБР-Х-65">
 		</picture>
 		*/
+		$text=str_replace(['<body>','</body>','<html>','</html>'],'',$text);
+
 		$text = preg_replace('/alt="([^"]+)"/i', 'alt="$1" title="$1"', $text);
 		
 		
