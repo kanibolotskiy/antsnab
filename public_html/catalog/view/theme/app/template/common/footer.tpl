@@ -129,8 +129,6 @@
 
 <script src="/catalog/view/theme/app/bundle/app2.js?v<?php echo filectime('catalog/view/theme/app/bundle/app2.js');?>"></script>
 
-<!--<script src="https://www.google.com/recaptcha/api.js"></script>-->
-
     <!-- @task1 Счетчики, виджеты (comagic) -->
 <?php foreach ($scripts as $script) { ?>
     <script src="<?php echo $script.'?v01'; ?>"></script>
@@ -223,7 +221,7 @@
                     </div>
                     <div class="call_submit" id="call_submit">Отправить</div>
                 </form>
-                <script type="text/javascript">
+                <script>
                     function submitCallForm()
                     {
                         $('#call_form').submit();
