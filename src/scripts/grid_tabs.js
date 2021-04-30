@@ -15,7 +15,7 @@ $(function(){
 				}
 			});
 			
-			var rel=$(this).attr("rel");
+			var rel=$(this).data("rel");
 			$.cookie('cat_view', rel, { expires: 7, path: '/' });
 		}
 	});

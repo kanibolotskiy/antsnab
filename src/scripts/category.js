@@ -82,7 +82,7 @@ function getParamsForm(){
     }
 
     //Пагинация
-    var limit=$(".showby_item.active").attr("rel");
+    var limit=$(".showby_item.active").data("rel");
     if(limit!="18"){
         str+="&limit="+limit;
     }
