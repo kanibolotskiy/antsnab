@@ -33,12 +33,6 @@
                     <?php }?>
                 <?php }?>
                 <div class="catalog-tab">
-                    <!--@task1 move to css-->
-                    <style>
-                        #mtab1 {
-                            min-height: 30px;
-                        }
-                    </style>
                     
                     <div id="mtab1" class="tab">
                         <div class="wrap_select_view">
