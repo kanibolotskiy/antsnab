@@ -1594,9 +1594,11 @@
                 if($(this).hasClass("active")){
                     $(this).removeClass("active");
                     $(this).closest(".accia_catalog_row").find(".product_used_analog").removeClass("_active")
+                    $(this).closest(".accia_catalog_row").find(".product_used_accompany").removeClass("_active")                     
                 }else{
                     $(this).addClass("active");
                     $(this).closest(".accia_catalog_row").find(".product_used_analog").addClass("_active")
+                    $(this).closest(".accia_catalog_row").find(".product_used_accompany").addClass("_active")
                 }
                 
             });
