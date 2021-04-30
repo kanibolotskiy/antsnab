@@ -253,7 +253,7 @@
                                         </div>
                                         <?php if($discount_form){?>
                                         <div class="price_disc">
-                                            <div class="js_modal with_goal" goal="<?php echo $discount_goal;?>" data-modal="modal_discount">Получить скидку</div>
+                                            <div class="js_modal with_goal" data-goal="<?php echo $discount_goal;?>" data-modal="modal_discount">Получить скидку</div>
                                         </div>
                                         <?php }?>
                                     </div>
@@ -354,10 +354,10 @@
                                             <div class="state_stock_cap">Наличие на складе:</div>
                                             <div class="state_stock_val">
                                             <?php if($quantity_stock>0){?>
-                                                <!--<span class="stock1 with_goal" goal="in-stock">Алтуфьево</span>-->
-                                                <span class="js_modal with_goal" goal="in-stock" data-modal="modal_map">Алтуфьево</span>
+                                                <!--<span class="stock1 with_goal" data-goal="in-stock">Алтуфьево</span>-->
+                                                <span class="js_modal with_goal" data-goal="in-stock" data-modal="modal_map">Алтуфьево</span>
                                             <?php }else{ ?>
-                                                <span class="notinstock js_modal with_goal" goal="pre-order" data-modal="modal_delivery">Под заказ</span>
+                                                <span class="notinstock js_modal with_goal" data-goal="pre-order" data-modal="modal_delivery">Под заказ</span>
                                             <?php }?>
                                             </div>
                                         </div>
@@ -366,11 +366,11 @@
                                     <div class="state_stock_col">
                                         <div class="state_stock_col_info  _delivery">
                                             <div class="state_stock_cap">Доставка:</div>
-                                            <div class="state_stock_val js_modal with_goal" goal="delivery" data-modal="modal_delivery_cost" id="delivery_text"></div>
+                                            <div class="state_stock_val js_modal with_goal" data-goal="delivery" data-modal="modal_delivery_cost" id="delivery_text"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="state_stock_link js_modal with_goal" goal="payment-receipt" data-modal="modal_delivery_pay">Способы оплаты и получения товара</div>
+                                <div class="state_stock_link js_modal with_goal" data-goal="payment-receipt" data-modal="modal_delivery_pay">Способы оплаты и получения товара</div>
                             </div>
                         </div>
                     </div>
@@ -477,7 +477,7 @@
                 <?php if($benefits) {?>
                     <div class="benefits">
                         <?php foreach($benefits as $benefit){ ?>
-                            <div class="bene_item with_goal" goal="<?php echo $benefit['goal'];?>">
+                            <div class="bene_item with_goal" data-goal="<?php echo $benefit['goal'];?>">
                                 <div class="bene_item_ico"><img src="<?php echo $benefit['filename'];?>"/></div>
                                 <div class="bene_item_val"><?php echo $benefit['name'];?></div>
                                 <div class="bene_item_desc"><?php echo $benefit['description'];?></div>
@@ -495,26 +495,26 @@
                 <ul class="resp-tabs-list vert">
 
                     <?php if(!empty($properties)): ?>
-                        <li goal_data="card-description">Описание</li>
+                        <li data-goal="card-description">Описание</li>
                     <?php endif;?>
                     <?php if($video_link) {?>
-                        <li goal_data="card-video">Видео</li>
+                        <li data-goal="card-video">Видео</li>
                     <?php }?>
-                    <li goal_data="card-pack">Упаковка</li>
+                    <li data-goal="card-pack">Упаковка</li>
                     
                     <?php if($calculator){ ?>
-                        <li goal_data="card-calc">Калькулятор</li>
+                        <li data-goal="card-calc">Калькулятор</li>
                     <?php }?>
                     
                     
                     <?php $i=0; foreach($tabs as $t){ ?>
-                    <li goal_data="<?=$t['tab_name']?>"><?=$t['name']?></li>
+                    <li data-goal="<?=$t['tab_name']?>"><?=$t['name']?></li>
                     <?php $i++; }?>
 
                     <?php if(count($reviews)>0):?>
-                    <li goal_data="card-review">Отзывы (<?= $count_revs ?>)</li>
+                    <li data-goal="card-review">Отзывы (<?= $count_revs ?>)</li>
                     <?php else: ?>
-                    <li goal_data="card-review">Отзывы </li>
+                    <li data-goal="card-review">Отзывы </li>
                     <?php endif; ?>
                 </ul>
 

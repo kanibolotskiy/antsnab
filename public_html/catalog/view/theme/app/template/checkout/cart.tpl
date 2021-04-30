@@ -128,7 +128,7 @@
                                                 <div class="delivery_order_block_text">
                                                     <div class="delivery_order_block_caption">Самовывоз</div>
                                                     <p>г. Москва, Высоковольтный проезд, д. 1, стр. 43</p>
-                                                    <p><a class="js_modal with_goal" goal="in-stock" data-modal="modal_map" href="#">Схема проезда</a></p>
+                                                    <p><a class="js_modal with_goal" data-goal="in-stock" data-modal="modal_map" href="#">Схема проезда</a></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -168,14 +168,14 @@
                                                 <div class="delivery_order_block_cap">Наличными при получении</div>
                                             </div>
                                         </div>
-                                        <div class="payment_order_block _disable with_goal" goal="cart-pay-card-online">
+                                        <div class="payment_order_block _disable with_goal" data-goal="cart-pay-card-online">
                                             <div class="delivery_order_block_info">
                                                 <div class="delivery_order_block_point"></div>
                                                 <div class="delivery_order_block_cap nowrap">Картой на сайте</div>
                                                 <div class="delivery_disabled">Временно недоступно</div>
                                             </div>
                                         </div>
-                                        <div class="payment_order_block _disable with_goal" goal="cart-pay-card-delievery">
+                                        <div class="payment_order_block _disable with_goal" data-goal="cart-pay-card-delievery">
                                             <div class="delivery_order_block_info">
                                                 <div class="delivery_order_block_point"></div>
                                                 <div class="delivery_order_block_cap nowrap">Картой при получении</div>

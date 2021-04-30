@@ -45,7 +45,7 @@
             <div class="catalog-img">
                 <div class="fast_preview">
                     <div class="fast_preview_caption">
-                        <span class="fast_preview_span with_goal" goal="quick-view">Быстрый просмотр</span>
+                        <span class="fast_preview_span with_goal" data-goal="quick-view">Быстрый просмотр</span>
                     </div>
                 </div>
                 

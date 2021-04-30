@@ -31,7 +31,7 @@ $(document).ready(function(){
     });
 
     $(".with_goal").click(function(){
-        var goal=$(this).attr("goal");
+        var goal=$(this).data("goal");
         if(goal!=""){
             //console.log(goal);
             ym(14496178, 'reachGoal', goal);
@@ -40,7 +40,8 @@ $(document).ready(function(){
     
 
     $(".resp-tabs-list li").click(function(){
-        var goal_data=$(this).attr("goal_data");
+        //var goal_data=$(this).attr("goal_data");
+        var goal_data=$(this).data("goal");
         if (typeof ym != 'undefined') {
             switch(goal_data) {
                 case 'card-pack':     //Упаковка
