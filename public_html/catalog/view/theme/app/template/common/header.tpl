@@ -1,6 +1,6 @@
 <!doctype html>
 <!--[if IE 9]><html lang="en" xmlns:og="http://ogp.me/ns#" class="no-js ie9"><![endif]-->
-<!--[if (gte IE 9) | !(IE)]><!--><html lang="en" class="no-js"><!--<![endif]-->
+<!--[if (gte IE 9) | !(IE)]><!--><html lang="ru" class="no-js"><!--<![endif]-->
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">

@@ -101,6 +101,7 @@ class ModelCatalogInformation extends Model {
 		*/
 		$text=str_replace(['<body>','</body>','<html>','</html>'],'',$text);
 
+		$text = preg_replace('/title="([^"]+)"/i', '', $text);
 		$text = preg_replace('/alt="([^"]+)"/i', 'alt="$1" title="$1"', $text);
 		
 		
