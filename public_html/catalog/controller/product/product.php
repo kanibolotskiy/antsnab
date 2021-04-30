@@ -1003,7 +1003,7 @@ class ControllerProductProduct extends Controller {
 					'about'      => $result['name'],
 					'about_txt'  => $result['name'],
 					'date'       => $result['date_added'],
-					'answer'     => $result['answer'],
+					'answer'     => $this->model_catalog_information->cleanText($result['answer']),
 					'author'     => $result['author'],
 					'moderator'  => $result['moderator'],
 					'rating'     => $result['rating'],
