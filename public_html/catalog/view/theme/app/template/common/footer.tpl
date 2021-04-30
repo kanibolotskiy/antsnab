@@ -3,7 +3,7 @@
     <div class="container" itemscope itemtype="http://schema.org/LocalBusiness">
         <div itemprop="image" content="<?php echo $logo_webp;?>" style="display:none;"></div>
         <meta itemprop="name" content='ООО "ТК Ант-Снаб"'/>
-        <div itemprop="url" href="<?php echo $home;?>" content="<?php echo $home;?>" style="display:none;"></div>
+        <div itemprop="url" content="<?php echo $home;?>" style="display:none;"></div>
         <div itemprop="logo" itemscope style="display:none;" itemtype="https://schema.org/ImageObject">
             <img itemprop="url image" src="<?php echo $logo_webp;?>" style="display:none;" alt='ООО "ТК Ант-Снаб"'/>
             <meta itemprop="width" content="115">
@@ -114,9 +114,7 @@
                         <meta itemprop="addressCountry" content="RU">
                     </p>
                 </a>
-                <div style="display:none;" itemprop="openingHours" datetime="Mo-Fr 09:00−18:00">
-                    Пн-Пт: 09.00 до 18.00, Сб-Вс: Выходные дни
-                </div>
+                <meta itemprop="openingHours" datetime="Mo-Fr 09:00−18:00" />
                 <meta itemprop="priceRange" content="<?php echo $priceRange;?>">
             </div>
             
