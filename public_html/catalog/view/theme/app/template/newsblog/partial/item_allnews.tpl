@@ -29,7 +29,7 @@
                     
                 </a>
                 
-                <time><?php echo $article['date']?></time>
+                <div class="time"><?php echo $article['date']?></div>
             </div>
         <?php } ?>
         <div class="news-description">

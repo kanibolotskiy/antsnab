@@ -17,9 +17,9 @@
 </picture>                     
                     <?php if ($show_cat_name): ?>
                         <span><?= $cat_name ?></span>
-                        <time class="_hidden"><?= $date ?></time>
+                        <div class="time _hidden"><?= $date ?></div>
                     <?php else: ?>
-                        <time><?= $date ?></time>
+                        <div class="time"><?= $date ?></div>
                     <?php endif; ?>
                 </div>
             <?php } ?>

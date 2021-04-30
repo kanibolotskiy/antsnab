@@ -24,7 +24,7 @@
 </picture>
                 </a>
                 <span><?=$article['cat_name']?></span>
-                <time class="_hidden"><?=$article['date']?></time>
+                <div class="time _hidden"><?=$article['date']?></div>
             </div>
         <?php } ?>
         <div class="news-description">
