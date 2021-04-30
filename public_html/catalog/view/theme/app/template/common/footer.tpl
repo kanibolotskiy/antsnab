@@ -114,7 +114,7 @@
                         <meta itemprop="addressCountry" content="RU">
                     </p>
                 </a>
-                <meta itemprop="openingHours" datetime="Mo-Fr 09:00−18:00" />
+                <meta itemprop="openingHours" content="Mo-Fr 09:00−18:00" />
                 <meta itemprop="priceRange" content="<?php echo $priceRange;?>">
             </div>
             
