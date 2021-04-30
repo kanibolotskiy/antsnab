@@ -2,10 +2,10 @@
 
     <div class="container" itemscope itemtype="http://schema.org/LocalBusiness">
         <div itemprop="image" content="<?php echo $logo_webp;?>" style="display:none;"></div>
-
+        <meta itemprop="name" content='ООО "ТК Ант-Снаб"'/>
         <div itemprop="url" href="<?php echo $home;?>" content="<?php echo $home;?>" style="display:none;"></div>
         <div itemprop="logo" itemscope style="display:none;" itemtype="https://schema.org/ImageObject">
-            <img itemprop="url image" src="<?php echo $logo_webp;?>" style="display:none;"/>
+            <img itemprop="url image" src="<?php echo $logo_webp;?>" style="display:none;" alt='ООО "ТК Ант-Снаб"'/>
             <meta itemprop="width" content="115">
             <meta itemprop="height" content="115">
         </div>
