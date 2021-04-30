@@ -1588,7 +1588,19 @@
 
 
         $(document).ready(function(){
-
+            
+            $(".accia_column_subcategory_caption").click(function(){
+                
+                if($(this).hasClass("active")){
+                    $(this).removeClass("active");
+                    $(this).closest(".accia_catalog_row").find(".product_used_analog").removeClass("_active")
+                }else{
+                    $(this).addClass("active");
+                    $(this).closest(".accia_catalog_row").find(".product_used_analog").addClass("_active")
+                }
+                
+            });
+            /**/
             $("#input-video").change(function(){
                 $.ajax({
                         url: 'index.php?route=catalog/product/videoPreview&token=<?php echo $token; ?>&video='+$(this).val(),
