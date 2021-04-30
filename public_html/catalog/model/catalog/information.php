@@ -86,7 +86,13 @@ class ModelCatalogInformation extends Model {
 					$pnode->parentNode->replaceChild($nodeDiv, $pnode);
 				}
 			}
-			$text = $dom->saveHTML();
+			//echo $dom->htmlContent;
+			$xpath = new DOMXPath($dom);
+			$body = $xpath->query('/html/body');
+			$text = $dom->saveXml($body->item(0));
+
+			//echo $dom->getElementsByTagName("body");
+			// $dom->getElementsByTagName("body")->saveHTML();
 		}
 		/*
 		<picture>
