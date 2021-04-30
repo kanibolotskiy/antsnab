@@ -55,7 +55,7 @@ class ModelCatalogInformation extends Model {
 			"http://ant-snab.ru","https://www.ant-snab.ru","http://www.ant-snab.ru",
 		);
 		
-		$text=str_replace("&#13;","", $text);
+		
 		$text=str_replace($arr_site_replace,"https://ant-snab.ru/", $text);
 		
 		
@@ -92,7 +92,8 @@ class ModelCatalogInformation extends Model {
 			$xpath = new DOMXPath($dom);
 			$body = $xpath->query('/html/body');
 			$text = $dom->saveXml($body->item(0));
-
+			
+			$text=str_replace("&#13;","", $text);
 		}
 		/*
 		<picture>
