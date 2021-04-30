@@ -3,56 +3,6 @@ import './lib/jquery.cookie';
 var Fraction = require('fraction.js');
 var Noty = require('noty');
 var min_width_filter=1100;
-/*
-function initBuyButtons($buttons){
-    $buttons.on('click', function(e){
-        e.preventDefault();
-        var $container = $(this).parents('.quantity-buy'),
-            qntController = $container.find('.qnt-widget').data('quantity'), 
-            quantityInSaleUnits = qntController.getQuantityInSaleUnits(), 
-            toPriceQuantityKoef = new Fraction( $(this).attr('data-sale_to_price_koef') ), 
-            quantityInPriceUnits = toPriceQuantityKoef.mul(quantityInSaleUnits); 
-    
-        $.ajax({
-            url:  '/index.php?route=checkout/cart/add',
-            type: 'post',
-            data: {
-                quantity: quantityInPriceUnits.valueOf(),
-                product_id: $(this).attr('data-product_id'), 
-            },
-            dataType: 'json',
-            beforeSend: function() {
-                $('#cart_preloader').fadeIn(200);
-            },
-            complete: function() {
-                $('#cart_preloader').fadeOut(200);
-            },
-            success: function(json) {
-                if (json['success']) {
-                    $('.basket').html(json['total']);
-                    $('html, body').animate({ scrollTop: 0 }, 'slow');
-     
-                    new Noty({
-                        text: json['success'],
-                        type: 'warning',
-                        theme: 'relax',
-                        timeout: 3000, 
-                    }).show();
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    });
-}
-*/
-/** add to cart */
-/*
-$(window).on('load', function () {
-    initBuyButtons($('.buy'));
-})
-*/
 
 /**Дублируется в prod.js */
 function initQuantityContainers($collection) {
@@ -86,35 +36,33 @@ var flag_update=true;
 function getParamsForm(){
     var str='';
     $(".range_slider").each(function(){
-        var select_min=$(this).attr("select_min");
-        var select_max=$(this).attr("select_max");
-        var min_value=$(this).attr("min_value")*1;
-        var max_value=$(this).attr("max_value")*1;
+        var select_min=$(this).data("select_min");
+        var select_max=$(this).data("select_max");
+        var min_value=$(this).data("min_value")*1;
+        var max_value=$(this).data("max_value")*1;
 
         if(select_min!=""){
             if((select_min)*1!=min_value){
-                str+="&param["+$(this).attr("name")+"][min]="+select_min;
+                str+="&param["+$(this).data("name")+"][min]="+select_min;
             }
             if(select_max==""){
-                str+="&param["+$(this).attr("name")+"][max]="+max_value;
+                str+="&param["+$(this).data("name")+"][max]="+max_value;
             }
         }
         if(select_max!=""){
             if(select_min==""){
-                str+="&param["+$(this).attr("name")+"][min]="+min_value;
+                str+="&param["+$(this).data("name")+"][min]="+min_value;
             }
             if((select_max*1)!=max_value){
                 //str+=(str!=""?"&":"")+"param["+$(this).attr("name")+"][max]="+select_max;
-                str+="&param["+$(this).attr("name")+"][max]="+select_max;
+                str+="&param["+$(this).data("name")+"][max]="+select_max;
             }
             
         }
     });
     $(".param_check").each(function(){
         if($(this).prop("checked")){
-            //str+=(str!=""?"&":"")+$(this).attr("name")+"="+$(this).val();
-            //str+=(str==""?"":"&")+$(this).attr("name")+"="+$(this).val();
-            str+="&"+$(this).attr("name")+"="+$(this).val();
+            str+="&"+$(this).data("name")+"="+$(this).val();
         }
     });
 
@@ -151,18 +99,18 @@ function getParamsForm(){
 function resetSliders(){
     $(".range_slider").each(function(){
 
-        var min_value=$(this).attr("def_min_value")*1;
-        var max_value=$(this).attr("def_max_value")*1;
+        var min_value=$(this).data("def_min_value")*1;
+        var max_value=$(this).data("def_max_value")*1;
 
-        var sel_min_value=$(this).attr("def_min_value")*1;
-        var sel_max_value=$(this).attr("def_max_value")*1;
+        var sel_min_value=$(this).data("def_min_value")*1;
+        var sel_max_value=$(this).data("def_max_value")*1;
 
 
-        $(this).attr("select_min",min_value);
-        $(this).attr("select_max",max_value);
+        $(this).data("select_min",min_value);
+        $(this).data("select_max",max_value);
 
-        $(this).attr("min_value",min_value);
-        $(this).attr("max_value",max_value);
+        $(this).data("min_value",min_value);
+        $(this).data("max_value",max_value);
 
         $(this).slider("option",{"min":min_value,"max":max_value});
         $(this).slider("values",[min_value,max_value]);
@@ -194,77 +142,10 @@ function set_state_checks(avail_data){
         
         var flag_empty=false;
         let itm=avail_data[avail_item];
-        //if(itm.type==1){
-            /*
-            let min_value=itm.result.min;
-            let max_value=itm.result.max;
-            
-            
-            let range_row=$(".param_row[param_name='"+avail_item+"']");
-            let range_row_slider=range_row.find(".range_slider");
-
-
-            let inputMin=range_row.find(".inputRangeMin").val()*1;
-            let inputMax=range_row.find(".inputRangeMax").val()*1;
-
-            //var select_min=range_row_slider.attr("select_min")*1;
-            //var select_max=range_row_slider.attr("select_max")*1;
-
-            var select_min=range_row_slider.attr("select_min")*1;
-            var select_max=range_row_slider.attr("select_max")*1;
-          
-            if(min_value>=inputMin){
-        
-                range_row.find(".inputRangeMin").val(min_value);
-                range_row_slider.slider("value",0,min_value)
-            }else{
-                if(select_min){
-                    if(select_min<max_value){
-                        range_row.find(".inputRangeMin").val(select_min);
-                        range_row_slider.slider("value",0,select_min)
-                    }else{
-                        range_row.find(".inputRangeMin").val(max_value);
-                        range_row_slider.slider("value",0,max_value)
-                    }
-                }else{
-                    range_row.find(".inputRangeMin").val(min_value);
-                    range_row_slider.slider("value",0,min_value)
-                }
-            }
-        
-            if(max_value<=inputMax){
-                range_row.find(".inputRangeMax").val(max_value);
-                range_row_slider.slider("value",1,max_value)
-            }else{
-                if(select_max){
-                    if(select_max>min_value){
-                        range_row.find(".inputRangeMax").val(select_max);
-                        range_row_slider.slider("value",1,select_max)
-                    }else{
-                        range_row.find(".inputRangeMax").val(max_value);
-                        range_row_slider.slider("value",1,max_value)
-                    }
-                }else{
-                    range_row.find(".inputRangeMax").val(max_value);
-                    range_row_slider.slider("value",1,max_value)
-                    
-                }
-            }
-            
-            range_row_slider.slider("option",{"min":min_value,"max":max_value});
-            if(min_value==max_value){
-                range_row_slider.closest(".param_row").addClass("unactive");
-            }else{
-                range_row_slider.closest(".param_row").removeClass("unactive");
-            }
-            range_row_slider.attr("min_value",min_value);
-            range_row_slider.attr("max_value",max_value);
-            */
-        //}else{ 
         
         if((itm.type==0)||(itm.type==2)){
             //console.log(avail_item)
-            $(".param_row[param_name='"+avail_item+"'] .param_check").each(function(){
+            $(".param_row[data-param_name='"+avail_item+"'] .param_check").each(function(){
                 //console.log($(this).val());
                 //)
                 let flag=true;
@@ -288,7 +169,7 @@ function set_state_checks(avail_data){
 
         if((itm.type==4)||(itm.type==5)){
             //console.log(avail_item)
-            $(".param_row[param_name='"+avail_item+"'] .param_check").each(function(){
+            $(".param_row[data-param_name='"+avail_item+"'] .param_check").each(function(){
                 //console.log(avail_item)
                 if(itm.result.count){
                     $(this).attr("disabled",false);
@@ -297,23 +178,7 @@ function set_state_checks(avail_data){
                     $(this).attr("disabled",true);
                     $(this).closest(".row_check").addClass("_unactive");
                 }
-                //let flag=true;
-                /*
-                for(var itm_result in itm.result){
-                    
-                    //if((itm.result[itm_result]["param_id"]*1)==$(this).val()){
-                    if((itm_result*1)==$(this).val()){
-                        flag=false;
-                    }
-                }
-                if(flag){
-                    $(this).attr("disabled",true);
-                    $(this).closest(".row_check").addClass("_unactive");
-                }else{
-                    $(this).attr("disabled",false);
-                    $(this).closest(".row_check").removeClass("_unactive");
-                }
-                */
+                
             });
         }
         
@@ -734,23 +599,23 @@ $(document).ready(function(){
         }
     });
     $(".range_slider").each(function(){
-        var min_value=$(this).attr("min_value")*1;
-        var max_value=$(this).attr("max_value")*1;
+        var min_value=$(this).data("min_value")*1;
+        var max_value=$(this).data("max_value")*1;
         var slider_item=$(this);
 
-        if($(this).attr("select_min")!=""){
-            var sel_min_value=$(this).attr("select_min")*1;
+        if($(this).data("select_min")!=""){
+            var sel_min_value=$(this).data("select_min")*1;
         }else{
             var sel_min_value=min_value;
         }
 
-        if($(this).attr("select_max")!=""){
-            var sel_max_value=$(this).attr("select_max")*1;
+        if($(this).data("select_max")!=""){
+            var sel_max_value=$(this).data("select_max")*1;
         }else{
             var sel_max_value=max_value;
         }
-        if($(this).attr("step")!=0){
-            var step=$(this).attr("step")*1;
+        if($(this).data("step")!=0){
+            var step=$(this).data("step")*1;
         }else{
             var step=1;
         }
@@ -769,21 +634,21 @@ $(document).ready(function(){
                 
             },
             change:function(event, ui){
-                var min_value=slider_item.attr("min_value");
-                var max_value=slider_item.attr("max_value");
+                var min_value=slider_item.data("min_value");
+                var max_value=slider_item.data("max_value");
 
                 if(flag_update){
                     //console.log($(this).attr("min_value")+"="+$(this).attr("max_value"))
                     if(min_value!=max_value){
                         if(min_value==ui.values[0]){
-                            slider_item.attr("select_min","");
+                            slider_item.data("select_min","");
                         }else{
-                            slider_item.attr("select_min",ui.values[0]);
+                            slider_item.data("select_min",ui.values[0]);
                         }
                         if(max_value==ui.values[1]){
-                            slider_item.attr("select_max","");
+                            slider_item.data("select_max","");
                         }else{
-                            slider_item.attr("select_max",ui.values[1]);
+                            slider_item.data("select_max",ui.values[1]);
                         }
 
                     }
@@ -799,8 +664,8 @@ $(document).ready(function(){
     $(".inputRangeMin").change(function(){
         var vl=$(this).val()*1;
         var itm=$(this).closest(".wrapper_range_slider").find(".range_slider");
-        var avail_min = itm.attr("min_value")*1;
-        var avail_max = itm.attr("max_value")*1;
+        var avail_min = itm.data("min_value")*1;
+        var avail_max = itm.data("max_value")*1;
         if(vl<avail_min){
             $(this).val(avail_min);
             vl=avail_min;
@@ -815,8 +680,8 @@ $(document).ready(function(){
     $(".inputRangeMax").change(function(){
         var vl=$(this).val()*1;
         var itm=$(this).closest(".wrapper_range_slider").find(".range_slider");
-        var avail_min = itm.attr("min_value")*1;
-        var avail_max = itm.attr("max_value")*1;
+        var avail_min = itm.data("min_value")*1;
+        var avail_max = itm.data("max_value")*1;
         if(vl<avail_min){
             $(this).val(avail_min);
             vl=avail_min;

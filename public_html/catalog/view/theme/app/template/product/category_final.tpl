@@ -64,93 +64,92 @@
                         </div>
                         <div class="param_item" <?php echo ($show_filter?'style="display:block;"':'');  ?>>
                             <div class="param_item_rows">
-                                
-                                <form id="form_params" action="<?=$catalog_info['category_url']?>" catalog_id="<?=$catalog_info['category_id']?>">
                                     
-                                    
-                                    <?php foreach($params["items"] as $param_item){?>
+                                    <form id="form_params" action="<?=$catalog_info['category_url']?>" catalog_id="<?=$catalog_info['category_id']?>">
                                         
-                                        <?php if($param_item["type_param"]==1){?>
-                                            <div class="param_row" rel="<?=$param_item['id']?>" param_name="<?=$param_item['translit']?>">
-                                                <div class="param_item_caption"><?=$param_item['name']?><?php echo $param_item['unit']?', '.$param_item['unit']:'';  ?></div>
-                                                <div class="wrapper_range_slider">
-                                                    <div name="<?=$param_item['translit']?>" class="range_slider" select_min="<?php echo isset($params['selected'][$param_item['translit']]['min'])?$params['selected'][$param_item['translit']]['min']:'';?>" select_max="<?php echo isset($params['selected'][$param_item['translit']]['max'])?$params['selected'][$param_item['translit']]['max']:'';?>" min_value="<?=$param_item['avail_params']['min']?>" max_value="<?=$param_item['avail_params']['max']?>" def_min_value="<?=$param_item['avail_params']['min']?>" def_max_value="<?=$param_item['avail_params']['max']?>" step="<?=$param_item['step']?>"></div>
-                                                    <div class="wrapper_range_input">
-                                                        <div class="range_input_part _first">
-                                                            <div class="range_input_caption">от</div>
-                                                            
-                                                            <input type="number" class="inputRange inputRangeMin" value="<?php echo isset($params['selected'][$param_item['translit']]['min'])?$params['selected'][$param_item['translit']]['min']:$param_item['avail_params']['min'];?>" />
-                                                        </div>
-                                                        <div class="range_input_part">
-                                                            <div class="range_input_caption">до</div>
-                                                            <input type="number" class="inputRange inputRangeMax" value="<?php echo isset($params['selected'][$param_item['translit']]['max'])?$params['selected'][$param_item['translit']]['max']:$param_item['avail_params']['max'];?>" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php }?>
                                         
-                                        <?php if($param_item["type_param"]==5){?>
-                                            <div class="param_row param_row_full" rel="<?=$param_item['id']?>" param_name="<?=$param_item['translit']?>">
-                                                <!--<div class="param_item_caption"><?=$param_item['name']?></div>-->
-                                                <div class="row_checks_wrap">
-                                                    <div class="row_checks">    
-                                                        <?php foreach($param_item['avail_params'] as $key=>$param_list_item) {?>    
-                                                            <?php if(isset($avail[$param_item['translit']]['result']['count'])){$cnt=$avail[$param_item['translit']]['result']['count'];}else{$cnt=0;} ?>
-                                                            <div class="row_check <?php echo $cnt?'':'_unactive'; ?>">
-                                                                <input <?php echo $cnt?'':'disabled'; ?> <?php echo isset($params["selected"][$param_item['translit']])?'checked':'' ?> class="param_check" name="param[<?=$param_item['translit']?>]" type="checkbox" id="check_sale" value="1">
-                                                                <label for="check_sale"><?php echo html_entity_decode($param_list_item);?></label>
-                                                            </div>
-                                                        <?php } ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php }?>
-
-                                        <?php if($param_item["type_param"]==4){?>
-                                            <div class="param_row param_row_full" rel="<?=$param_item['id']?>" param_name="<?=$param_item['translit']?>">
-                                                <!--<div class="param_item_caption"><?=$param_item['name']?></div>-->
-                                                <div class="row_checks_wrap">
-                                                    <div class="row_checks">    
-                                                        <?php foreach($param_item['avail_params'] as $key=>$param_list_item) {?>
-                                                            <?php if(isset($avail[$param_item['translit']]['result']['count'])){$cnt=$avail[$param_item['translit']]['result']['count'];}else{$cnt=0;} ?>
-                                                            <div class="row_check <?php echo $cnt?'':'_unactive'; ?>">
-                                                                <input <?php echo $cnt?'':'disabled'; ?> <?php echo isset($params["selected"][$param_item['translit']])?'checked':'' ?> class="param_check" name="param[<?=$param_item['translit']?>]" type="checkbox" id="check_availible" value="1">
-                                                                <label for="check_availible"><?php echo html_entity_decode($param_list_item);?></label>
-                                                            </div>
-                                                        <?php } ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php }?>
-                                        
-                                        <?php if($param_item["type_param"]==0 or $param_item["type_param"]==2){?>
+                                        <?php foreach($params["items"] as $param_item){?>
                                             
-                                            <?php if(count($param_item['avail_params'])>1) {?>
-                                                <div class="param_row" rel="<?=$param_item['id']?>" param_name="<?=$param_item['translit']?>">
+                                            <?php if($param_item["type_param"]==1){?>
+                                                <div class="param_row" rel="<?=$param_item['id']?>" data-param_name="<?=$param_item['translit']?>">
                                                     <div class="param_item_caption"><?=$param_item['name']?><?php echo $param_item['unit']?', '.$param_item['unit']:'';  ?></div>
-                                                    <div class="row_checks_wrap">
-                                                        <div class="row_checks">
-                                                            
-                                                            <?php foreach($param_item['avail_params'] as $key=>$param_list_item) {?>
+                                                    <div class="wrapper_range_slider">
+                                                        <div data-name="<?=$param_item['translit']?>" class="range_slider" data-select_min="<?php echo isset($params['selected'][$param_item['translit']]['min'])?$params['selected'][$param_item['translit']]['min']:'';?>" data-select_max="<?php echo isset($params['selected'][$param_item['translit']]['max'])?$params['selected'][$param_item['translit']]['max']:'';?>" data-min_value="<?=$param_item['avail_params']['min']?>" data-max_value="<?=$param_item['avail_params']['max']?>" data-def_min_value="<?=$param_item['avail_params']['min']?>" data-def_max_value="<?=$param_item['avail_params']['max']?>" data-step="<?=$param_item['step']?>"></div>
+                                                        <div class="wrapper_range_input">
+                                                            <div class="range_input_part _first">
+                                                                <div class="range_input_caption">от</div>
                                                                 
-                                                                <?php $fl=false;if(isset($params["selected"][$param_item['translit']])){foreach($params["selected"][$param_item['translit']] as $pitm){ if($pitm==$key) {$fl=true;}}}?>
-                                                                <div class="row_check <?php echo isset($avail[$param_item['translit']]['result'][$key])?'':'_unactive'; ?>">
-                                                                    <input <?php echo isset($avail[$param_item['translit']]['result'][$key])?'':'disabled'; ?> <?php echo $fl?'checked':''; ?> class="param_check" name="param[<?=$param_item['translit']?>][]" type="checkbox" id="check_<?=$key?>" value="<?=$key?>">
-                                                                    <label for="check_<?=$key?>"><?php echo html_entity_decode($param_list_item);?></label>
+                                                                <input type="number" class="inputRange inputRangeMin" value="<?php echo isset($params['selected'][$param_item['translit']]['min'])?$params['selected'][$param_item['translit']]['min']:$param_item['avail_params']['min'];?>" />
+                                                            </div>
+                                                            <div class="range_input_part">
+                                                                <div class="range_input_caption">до</div>
+                                                                <input type="number" class="inputRange inputRangeMax" value="<?php echo isset($params['selected'][$param_item['translit']]['max'])?$params['selected'][$param_item['translit']]['max']:$param_item['avail_params']['max'];?>" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php }?>
+                                            
+                                            <?php if($param_item["type_param"]==5){?>
+                                                <div class="param_row param_row_full" rel="<?=$param_item['id']?>" data-param_name="<?=$param_item['translit']?>">
+                                                    <!--<div class="param_item_caption"><?=$param_item['name']?></div>-->
+                                                    <div class="row_checks_wrap">
+                                                        <div class="row_checks">    
+                                                            <?php foreach($param_item['avail_params'] as $key=>$param_list_item) {?>    
+                                                                <?php if(isset($avail[$param_item['translit']]['result']['count'])){$cnt=$avail[$param_item['translit']]['result']['count'];}else{$cnt=0;} ?>
+                                                                <div class="row_check <?php echo $cnt?'':'_unactive'; ?>">
+                                                                    <input <?php echo $cnt?'':'disabled'; ?> <?php echo isset($params["selected"][$param_item['translit']])?'checked':'' ?> class="param_check" data-name="param[<?=$param_item['translit']?>]" type="checkbox" id="check_sale" value="1">
+                                                                    <label for="check_sale"><?php echo html_entity_decode($param_list_item);?></label>
                                                                 </div>
                                                             <?php } ?>
                                                         </div>
                                                     </div>
-                                                    <div class="show_more_params"><span>Показать еще</span></div>
                                                 </div>
                                             <?php }?>
+
+                                            <?php if($param_item["type_param"]==4){?>
+                                                <div class="param_row param_row_full" rel="<?=$param_item['id']?>" data-param_name="<?=$param_item['translit']?>">
+                                                    <!--<div class="param_item_caption"><?=$param_item['name']?></div>-->
+                                                    <div class="row_checks_wrap">
+                                                        <div class="row_checks">    
+                                                            <?php foreach($param_item['avail_params'] as $key=>$param_list_item) {?>
+                                                                <?php if(isset($avail[$param_item['translit']]['result']['count'])){$cnt=$avail[$param_item['translit']]['result']['count'];}else{$cnt=0;} ?>
+                                                                <div class="row_check <?php echo $cnt?'':'_unactive'; ?>">
+                                                                    <input <?php echo $cnt?'':'disabled'; ?> <?php echo isset($params["selected"][$param_item['translit']])?'checked':'' ?> class="param_check" data-name="param[<?=$param_item['translit']?>]" type="checkbox" id="check_availible" value="1">
+                                                                    <label for="check_availible"><?php echo html_entity_decode($param_list_item);?></label>
+                                                                </div>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php }?>
+                                            <?php //print_r($param_item);?>
+                                            <?php if($param_item["type_param"]==0 or $param_item["type_param"]==2){?>
+                                                
+                                                <?php if(count($param_item['avail_params'])>1) {?>
+                                                    <div class="param_row" rel="<?=$param_item['id']?>" data-param_name="<?=$param_item['translit']?>">
+                                                        <div class="param_item_caption"><?=$param_item['name']?><?php echo $param_item['unit']?', '.$param_item['unit']:'';  ?></div>
+                                                        <div class="row_checks_wrap">
+                                                            <div class="row_checks">
+                                                                
+                                                                <?php foreach($param_item['avail_params'] as $key=>$param_list_item) {?>
+                                                                    
+                                                                    <?php $fl=false;if(isset($params["selected"][$param_item['translit']])){foreach($params["selected"][$param_item['translit']] as $pitm){ if($pitm==$key) {$fl=true;}}}?>
+                                                                    <div class="row_check <?php echo isset($avail[$param_item['translit']]['result'][$key])?'':'_unactive'; ?>">
+                                                                        <input <?php echo isset($avail[$param_item['translit']]['result'][$key])?'':'disabled'; ?> <?php echo $fl?'checked':''; ?> class="param_check" data-name="param[<?=$param_item['translit']?>][]" type="checkbox" id="check_<?=$key?>" value="<?=$key?>">
+                                                                        <label for="check_<?=$key?>"><?php echo html_entity_decode($param_list_item);?></label>
+                                                                    </div>
+                                                                <?php } ?>
+                                                            </div>
+                                                        </div>
+                                                        <div class="show_more_params"><span>Показать еще</span></div>
+                                                    </div>
+                                                <?php }?>
+                                            <?php }?>
+                                        
                                         <?php }?>
-                                    
-                                    <?php }?>
-                                </form>
-                            </div>
-                            
+                                    </form>
+                                </div>
                         </div>
                     </div>                    
                 </div>
