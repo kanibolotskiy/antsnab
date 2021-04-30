@@ -182,7 +182,7 @@
                     <div class="clear"></div>
                     <div class="tab-list">
                         <div class="tab-block tab-block3 <?php echo $cat_view_class;?>" >
-                            <ul id="lazy-load_container">
+                            <ul id="lazy-load_container" itemtype="https://schema.org/ItemList" itemscope>
                                 <?php echo $products;?>
                             </ul>
                         </div>
