@@ -94,11 +94,11 @@
         <div class="footer-column footer-column4">
             <div class="footer_phone">
                 <div class="call-us">
-                    <a href="tel:<?= $telephone ?>"><span class="footer_phone_v" itemprop="telephone"><?= $telephone ?></span></a>
+                    <a href="tel:<?= $telephone_link ?>"><span class="footer_phone_v" itemprop="telephone"><?= $telephone ?></span></a>
                 </div>
                 <?php if( !empty($telephone2) ):?>
                 <div class="call-us call-us2">
-                    <a href="tel:<?= $telephone2 ?>"><span class="footer_phone_v" itemprop="telephone"><?= $telephone2 ?></span></a>
+                    <a href="tel:<?= $telephone2_link ?>"><span class="footer_phone_v" itemprop="telephone"><?= $telephone2 ?></span></a>
                     <div>бесплатный звонок по России</div>
                 </div>
                 <?php endif;?>

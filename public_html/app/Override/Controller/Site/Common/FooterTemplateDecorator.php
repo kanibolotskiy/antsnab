@@ -42,10 +42,13 @@ class FooterTemplateDecorator implements IDecorator
         }
         if(isset($contact_data_referrer['phone'])){
             $data['telephone']=$contact_data_referrer['phone'];
+            $data['telephone_link'] = preg_replace('/[^0-9]/', '', $contact_data_referrer['phone']);
             $data['telephone2'] = '';
 		}else{
             $data['telephone'] = $config->get('config_telephone');
+            $data['telephone_link'] = preg_replace('/[^0-9]/', '', $config->get('config_telephone'));
             $data['telephone2'] = $config->get('config_fax');
+            $data['telephone2_link'] = preg_replace('/[^0-9]/', '', $config->get('config_fax')); 
         }
         
         $data['link_vk']=$config->get('config_soc_vk');

@@ -133,9 +133,9 @@
                     </div>
                 <?php }?>
                 <div class="tel">
-                    <a href="tel:<?php echo $telephone; ?>"><?php echo $telephone; ?></a>
+                    <a href="tel:<?= $telephone_link ?>"><?php echo $telephone; ?></a>
                     <?php if($telephone2){ ?>
-                        <a href="tel:<?= $telephone2 ?>">&nbsp;&nbsp;<?= $telephone2 ?></a>
+                        <a href="tel:<?= $telephone2_link ?>">&nbsp;&nbsp;<?= $telephone2 ?></a>
                     <?php }?>
                     
                 </div>
