@@ -90,9 +90,9 @@ class CategoryController extends \Controller
         }
         $queryString.=$added_url_str;
 
-//echo "!".$limit."!";
 
-        if($limit!=9){
+
+        if($limit!=18){
             $queryString.='&limit='.$limit;
         }
 
@@ -157,11 +157,9 @@ class CategoryController extends \Controller
         }
         $queryString.=$added_url_str;
         
-        if($limit!=9){
+        if($limit!=18){
             $queryString.='&limit='.$limit;
         }
-        //echo "!".$queryString."!";
-
         $paginationBaseUrl = $this->url->link('product/category', 'path=' . $queryString);
         $lazyLoadBaseUrl = $this->url->link('product/category/showmore', 'cat_path=' . $queryString);
 
@@ -527,6 +525,7 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
         }
         
         //$limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');
+        
         if(isset($data_url["limit"])){
             if($data_url["limit"]=="all"){
                 $limit=999999;
@@ -536,7 +535,6 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
         }else{
             $limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');
         }
-
 
         if(isset($_GET["load_pages"])){
             $limit=$limit*$_GET["load_pages"];
@@ -627,7 +625,7 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
                     $limit=$_GET["limit"]*1;
                 }            
             }else{
-                $limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');
+                $limit=(int) $this->config->get($this->config->get('config_theme') . '_product_limit');                
             }
 
             $this->data['showby_9']='';
@@ -920,14 +918,13 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
             $this->data["avail"]=$param_data["avail"];
             $this->data["products"]=$param_data["products"];
             
-            if($limit!=9){
+            if($limit!=18){
                 $queryString.='&limit='.$limit;
             }
             $paginationBaseUrl = $this->url->link('product/category', 'path=' . $queryString);
             $lazyLoadBaseUrl = $this->url->link('product/category/showmore', 'cat_path=' . $queryString);
             
             $product_total_filter=$param_data["products_count"];
-            //echo "!".$product_total_filter."!";
             
             $paginationModel = PaginationHelper::getPaginationModel($product_total_filter, (int)$limit, (int)$page);
             $this->data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl, $paginationModel);
@@ -1039,7 +1036,6 @@ where status=1 AND (DATE(date_start) <= '".$d_now."' or date_start is null) AND 
         
         $product_total_filter=$param_data["products_count"];
         //$product_total_filter=14;
-
         //$paginationBaseUrl=$paginationBaseUrl.$added_url;
         $paginationModel = PaginationHelper::getPaginationModel($product_total_filter, (int)$limit, (int)$page);
         //$this->data['pagination'] = PaginationHelper::render($this->registry, $paginationBaseUrl.$added_url, $paginationModel);

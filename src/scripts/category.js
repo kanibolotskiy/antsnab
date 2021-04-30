@@ -135,7 +135,7 @@ function getParamsForm(){
 
     //Пагинация
     var limit=$(".showby_item.active").attr("rel");
-    if(limit!="9"){
+    if(limit!="18"){
         str+="&limit="+limit;
     }
     //console.log(str)
