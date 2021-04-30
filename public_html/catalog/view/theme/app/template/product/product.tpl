@@ -891,7 +891,7 @@
 </picture>
                                             </a>
                                             
-                                            <strong><?=$p['price']?> <div class="rur">i</div></strong>
+                                            <div class="pr_price_block"><?=$p['price']?> <div class="rur">i</div></div>
                                             <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
                                         </div>
                                     </li>
@@ -922,7 +922,7 @@
 </picture>                                                                                      
                                             </a>
                                             
-                                            <strong><?=$p['price']?> <div class="rur">i</div></strong>
+                                            <div class="pr_price_block"><?=$p['price']?> <div class="rur">i</div></div>
                                             <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
                                         </div>
                                     </li>
@@ -960,7 +960,7 @@
 </picture>                                                
                                             </a>
                                             
-                                            <strong><?=$p['price']?> <div class="rur">i</div></strong>
+                                            <div class="pr_price_block"><?=$p['price']?> <div class="rur">i</div></div>
                                             <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
                                         </div>
                                     </li>
@@ -991,7 +991,7 @@
 </picture>
                                             </a>
                                             
-                                            <strong><?=$p['price']?> <div class="rur">i</div></strong>
+                                            <div class="pr_price_block"><?=$p['price']?> <div class="rur">i</div></div>
                                             <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
                                         </div>
                                     </li>
@@ -1072,7 +1072,7 @@
                     <p>Для вашего удобства можете <a target="_blank" href="<?php echo $l['files'][0]['file_link'];?>">скачать подробную схему проезда</a></p>
                 </div>
                 <div class="map_" data-href="<?=$l['map']?>" data-added="0">
-                    <iframe width="100%" height="500" frameborder="0" src="<?=$l['map']?>">
+                    <iframe height="500" src="<?=$l['map']?>">
                     </iframe>
                     <!--<?=$l['map']?>-->
                 </div>
@@ -1119,8 +1119,8 @@
                     
                     <div class="modal_form">
                         <form id="discount_form" action="#" method="post" enctype="multipart/form-data">
-                        <input name="label" type="hidden" placeholder="" value="<?php echo $discount_label;?>"/>
-                        <input name="product" type="hidden" placeholder="" value="<?php echo $heading_title;?>"/>
+                        <input name="label" type="hidden" value="<?php echo $discount_label;?>"/>
+                        <input name="product" type="hidden" value="<?php echo $heading_title;?>"/>
 
                         <div class="modal_form_group">
                             <div class="modal_form_row">
@@ -1155,7 +1155,7 @@
                             <div class="file">
                                 <div class="file-block">
                                     <div id="filename">Прикрепить реквизиты</div>
-                                    <input id="file" type="file" value="" name="download">
+                                    <input id="file" type="file" name="download">
                                 </div>
                             </div>
                             
@@ -1184,7 +1184,7 @@
                         <p style="text-align: center">Мы свяжемся с вами в ближайшее время!</p>
                     </div>
                 </div>
-                <script type="text/javascript">
+                <script>
                     function submitDiscountForm(){ 
                         $('#discount_form').submit();
                     }
