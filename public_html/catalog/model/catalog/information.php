@@ -50,6 +50,12 @@ class ModelCatalogInformation extends Model {
 		return $out;
 	}
 	public function cleanText($text){
+		$arr_site_replace=Array(
+			"http://ant-snab.ru/","https://www.ant-snab.ru/","http://www.ant-snab.ru/",
+			"http://ant-snab.ru","https://www.ant-snab.ru","http://www.ant-snab.ru",
+		);
+		$text=str_replace ($arr_site_replace,"https://ant-snab.ru/", $text);
+
 		$text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
 		if($text){
 			$dom = new DOMDocument();
@@ -90,7 +96,6 @@ class ModelCatalogInformation extends Model {
 		$text = preg_replace('/alt="([^"]+)"/i', 'alt="$1" title="$1"', $text);
 		
 		
-
 		$text = preg_replace_callback('/<a[^>]+/', array($this, 'cleanInternalUrl'), $text);
 		
 		$text=str_replace("₽","<div class='rur'>i</div>",$text);

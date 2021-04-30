@@ -66,6 +66,7 @@ class ContactpageController extends \Controller
         }
 
         $this->load->model('tool/image');
+        $this->load->model('catalog/information');
 
         if ($this->config->get('config_image')) {
             $data['image'] = $this->model_tool_image->resize($this->config->get('config_image'), $this->config->get($this->config->get('config_theme') . '_image_location_width'), $this->config->get($this->config->get('config_theme') . '_image_location_height'));
@@ -98,7 +99,7 @@ class ContactpageController extends \Controller
             $data['telephone'] = $this->config->get('config_telephone');
 			$data['fax'] = $this->config->get('config_fax');
         }
-        $data['requisites'] = html_entity_decode($this->config->get('config_req'));
+        $data['requisites'] = $this->model_catalog_information->cleanText($this->config->get('config_req'));
 
         $data['open'] = nl2br($this->config->get('config_open'));
         $data['comment'] = $this->config->get('config_comment');
