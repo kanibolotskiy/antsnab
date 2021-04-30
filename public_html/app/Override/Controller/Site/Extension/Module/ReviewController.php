@@ -24,6 +24,7 @@ class ReviewController extends \Controller
         $data['visible'] = $this->config->get('review_visible');
         $data['count'] = $this->config->get('review_count');
         $this->load->model('catalog/review');
+        $this->load->model('catalog/information');
         //$data['reviews'] = $this->model_catalog_review->getRandReviews($data['count']);
         $data_reviews = $this->model_catalog_review->getRandReviews($data['count']);
 
@@ -31,7 +32,7 @@ class ReviewController extends \Controller
         $review_link = $this->url->link('information/information', 'information_id=' . $review_page_id);
         
         foreach($data_reviews as $review){
-            $review_data=$review;
+            $review_data=$this->model_catalog_information->cleanText($review);
             
 
             if($review['product_id']){
