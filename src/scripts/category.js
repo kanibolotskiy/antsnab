@@ -87,7 +87,7 @@ function getParamsForm(){
         str+="&limit="+limit;
     }
     //console.log(str)
-    var url=$("#form_params").attr("action");
+    var url=$("[data-id='form_params']").attr("action");
     var str_fin="";
     if(str){
         str_fin="?"+str.slice(1)
@@ -199,7 +199,7 @@ function change_params_form(flag=true){
         
         if(flag_update){
             var data_url=getParamsForm();
-            var catalog_id=$("#form_params").attr("catalog_id");
+            var catalog_id=$("[data-id='form_params']").data("catalog_id");
             
             var tp=$(".catalog-list").offset().top-$(".header").height();
             flag_update=false;

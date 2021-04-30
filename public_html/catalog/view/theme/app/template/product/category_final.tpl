@@ -65,13 +65,13 @@
                         <div class="param_item" <?php echo ($show_filter?'style="display:block;"':'');  ?>>
                             <div class="param_item_rows">
                                     
-                                    <form id="form_params" action="<?=$catalog_info['category_url']?>" catalog_id="<?=$catalog_info['category_id']?>">
+                                    <form data-id="form_params" action="<?=$catalog_info['category_url']?>" data-catalog_id="<?=$catalog_info['category_id']?>">
                                         
                                         
                                         <?php foreach($params["items"] as $param_item){?>
                                             
                                             <?php if($param_item["type_param"]==1){?>
-                                                <div class="param_row" rel="<?=$param_item['id']?>" data-param_name="<?=$param_item['translit']?>">
+                                                <div class="param_row" data-rel="<?=$param_item['id']?>" data-param_name="<?=$param_item['translit']?>">
                                                     <div class="param_item_caption"><?=$param_item['name']?><?php echo $param_item['unit']?', '.$param_item['unit']:'';  ?></div>
                                                     <div class="wrapper_range_slider">
                                                         <div data-name="<?=$param_item['translit']?>" class="range_slider" data-select_min="<?php echo isset($params['selected'][$param_item['translit']]['min'])?$params['selected'][$param_item['translit']]['min']:'';?>" data-select_max="<?php echo isset($params['selected'][$param_item['translit']]['max'])?$params['selected'][$param_item['translit']]['max']:'';?>" data-min_value="<?=$param_item['avail_params']['min']?>" data-max_value="<?=$param_item['avail_params']['max']?>" data-def_min_value="<?=$param_item['avail_params']['min']?>" data-def_max_value="<?=$param_item['avail_params']['max']?>" data-step="<?=$param_item['step']?>"></div>
@@ -91,7 +91,7 @@
                                             <?php }?>
                                             
                                             <?php if($param_item["type_param"]==5){?>
-                                                <div class="param_row param_row_full" rel="<?=$param_item['id']?>" data-param_name="<?=$param_item['translit']?>">
+                                                <div class="param_row param_row_full" data-rel="<?=$param_item['id']?>" data-param_name="<?=$param_item['translit']?>">
                                                     <!--<div class="param_item_caption"><?=$param_item['name']?></div>-->
                                                     <div class="row_checks_wrap">
                                                         <div class="row_checks">    
@@ -108,7 +108,7 @@
                                             <?php }?>
 
                                             <?php if($param_item["type_param"]==4){?>
-                                                <div class="param_row param_row_full" rel="<?=$param_item['id']?>" data-param_name="<?=$param_item['translit']?>">
+                                                <div class="param_row param_row_full" data-rel="<?=$param_item['id']?>" data-param_name="<?=$param_item['translit']?>">
                                                     <!--<div class="param_item_caption"><?=$param_item['name']?></div>-->
                                                     <div class="row_checks_wrap">
                                                         <div class="row_checks">    
@@ -127,7 +127,7 @@
                                             <?php if($param_item["type_param"]==0 or $param_item["type_param"]==2){?>
                                                 
                                                 <?php if(count($param_item['avail_params'])>1) {?>
-                                                    <div class="param_row" rel="<?=$param_item['id']?>" data-param_name="<?=$param_item['translit']?>">
+                                                    <div class="param_row" data-rel="<?=$param_item['id']?>" data-param_name="<?=$param_item['translit']?>">
                                                         <div class="param_item_caption"><?=$param_item['name']?><?php echo $param_item['unit']?', '.$param_item['unit']:'';  ?></div>
                                                         <div class="row_checks_wrap">
                                                             <div class="row_checks">
