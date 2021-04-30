@@ -986,7 +986,7 @@ class ControllerProductProduct extends Controller {
 			//$data['reviews'][2]=[];
 			
 			$summary_reviews=0;
-			
+			$this->load->model('catalog/information');
 			$count_revs=count($results);
 			$data['count_revs']=$count_revs;
 			foreach ($results as $result) {
@@ -999,7 +999,7 @@ class ControllerProductProduct extends Controller {
 				$data['reviews'][$tp][] = array(
 					'review_id'  => $result['review_id'],
 					'name'       => $result['name'],
-					'text'       => $result['text'],
+					'text'       => $this->model_catalog_information->cleanText($result['text']),
 					'about'      => $result['name'],
 					'about_txt'  => $result['name'],
 					'date'       => $result['date_added'],
