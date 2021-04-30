@@ -133,13 +133,13 @@
                     </div>
                 <?php }?>
                 <div class="tel">
-                    <a rel="nofollow" href="tel:<?php echo $telephone; ?>"><?php echo $telephone; ?></a>
+                    <a href="tel:<?php echo $telephone; ?>"><?php echo $telephone; ?></a>
                     <?php if($telephone2){ ?>
-                        <a rel="nofollow" href="tel:<?= $telephone2 ?>">&nbsp;&nbsp;<?= $telephone2 ?></a>
+                        <a href="tel:<?= $telephone2 ?>">&nbsp;&nbsp;<?= $telephone2 ?></a>
                     <?php }?>
                     
                 </div>
-                <div href="#" class="js-call with_goal" rel="nofollow" goal="callme">
+                <div href="#" class="js-call with_goal" goal="callme">
                     <div class="prehead_call">
                         <span class="prehead_val order_call js_modal" data-modal="modal_call">Заказать звонок</span>
                     </div>
