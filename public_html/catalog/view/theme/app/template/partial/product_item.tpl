@@ -1,4 +1,4 @@
-<li class="catalog_item_product wrp_fly" rel="<?= $p['product_id']?>" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+<li class="catalog_item_product wrp_fly" data-rel="<?= $p['product_id']?>" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
     
     <?php if($p["labels"]){  ?>
         <div class="item_labels">
@@ -55,8 +55,8 @@
     <img class="wrp_fly_image" itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" title="<?= $p['name'] ?>" itemprop="image" />
 </picture>                
                 <div class="wrp_favorite">
-                    <div rel="<?= $p['product_id']?>" title="Добавить товар в избранное" class="favorite <?= $p['favorite'] ?>"></div>        
-                    <div rel="<?= $p['product_id']?>" title="Добавить товар в сравнение" class="compare <?= $p['compare'] ?>"></div>
+                    <div data-rel="<?= $p['product_id']?>" title="Добавить товар в избранное" class="favorite <?= $p['favorite'] ?>"></div>        
+                    <div data-rel="<?= $p['product_id']?>" title="Добавить товар в сравнение" class="compare <?= $p['compare'] ?>"></div>
                 </div>
 
                 <?php if($p["color_name"]){?>

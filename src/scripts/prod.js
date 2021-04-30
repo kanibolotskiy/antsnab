@@ -688,7 +688,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
         }, 210);
 
 
-        var item_id=$(this).attr("rel");
+        var item_id=$(this).data("rel");
 
         var compare_str=$.cookie('compare');
         if(compare_str!=null){
@@ -744,7 +744,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
 
 
         e.preventDefault();
-        var item_id=$(this).attr("rel");
+        var item_id=$(this).data("rel");
 
         var favorite_str=$.cookie('favorite');//$.cookie('cat_view', rel, { expires: 7, path: '/' });
         if(favorite_str!=null){
@@ -1117,7 +1117,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
 
     $(document).on("click",".fast_preview_span",function(e){
         e.preventDefault();
-        var product_id=$(this).closest(".catalog_item_product").attr("rel");
+        var product_id=$(this).closest(".catalog_item_product").data("rel");
         $.ajax({
             url: '/index.php?route=product/product/getFastInfo/',
             data: "&product_id="+product_id,
