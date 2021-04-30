@@ -52,7 +52,7 @@
 <picture >
     <source type="image/webp" srcset="<?= $p['thumb_webp'] ?>">
     <source type="image/jpeg" srcset="<?= $p['thumb'] ?>">
-    <img class="wrp_fly_image" itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" title="<?= $p['name'] ?>" itemprop="image" />
+    <img class="wrp_fly_image" itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" title="<?= $p['name'] ?>" />
 </picture>                
                 <div class="wrp_favorite">
                     <div data-rel="<?= $p['product_id']?>" title="Добавить товар в избранное" class="favorite <?= $p['favorite'] ?>"></div>        
@@ -95,7 +95,7 @@
                 
             </div>
             
-            <span class="price cat_item_price">
+            <div class="price cat_item_price">
                 <div class="wrapper_price_line">
                     <div class="cat_item_price_caption">от</div>
                     <div class="cat_price_val <?php if($p["priceold"]){echo "_oldprice";}?>" content="<?=$p['price_val']?>">
@@ -118,7 +118,7 @@
                         <div class="prod_cnt _podzakaz">Под заказ</div>
                     <?php }?>
                 </div>
-            </span>
+            </div>
 
             <div class="quantity-buy">
     
