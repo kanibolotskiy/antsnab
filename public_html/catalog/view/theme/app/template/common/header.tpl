@@ -139,7 +139,7 @@
                     <?php }?>
                     
                 </div>
-                <div href="#" class="js-call with_goal" goal="callme">
+                <div class="js-call with_goal" goal="callme">
                     <div class="prehead_call">
                         <span class="prehead_val order_call js_modal" data-modal="modal_call">Заказать звонок</span>
                     </div>

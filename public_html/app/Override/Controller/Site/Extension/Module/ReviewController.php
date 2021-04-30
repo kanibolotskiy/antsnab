@@ -32,7 +32,7 @@ class ReviewController extends \Controller
         $review_link = $this->url->link('information/information', 'information_id=' . $review_page_id);
         
         foreach($data_reviews as $review){
-            $review_data=$this->model_catalog_information->cleanText($review);
+            $review_data=$review;
             
 
             if($review['product_id']){

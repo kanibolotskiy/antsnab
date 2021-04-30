@@ -54,7 +54,9 @@ class ModelCatalogInformation extends Model {
 			"http://ant-snab.ru/","https://www.ant-snab.ru/","http://www.ant-snab.ru/",
 			"http://ant-snab.ru","https://www.ant-snab.ru","http://www.ant-snab.ru",
 		);
-		$text=str_replace ($arr_site_replace,"https://ant-snab.ru/", $text);
+		$text=str_replace($arr_site_replace,"https://ant-snab.ru/", $text);
+		
+		
 
 		$text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
 		if($text){
