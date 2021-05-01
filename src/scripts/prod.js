@@ -1065,7 +1065,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
         $(this).prevAll().addClass("_rate");
         $(this).nextAll().addClass("_hide");
         $(".rating_stars").removeClass("active");
-        var rel=$(this).attr("rel");
+        var rel=$(this).data("rel");
         $("#rating_stars_value").html(rel);
         $("#star_value").val(rel);
     });
