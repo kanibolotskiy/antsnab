@@ -1,4 +1,4 @@
-<li class="catalog_item_product wrp_fly" data-rel="<?= $p['product_id']?>" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+<li class="catalog_item_product wrp_fly" data-rel="<?= $p['product_id']?>" itemprop="itemListElement" itemtype="http://schema.org/ListItem">
     <meta itemprop="position" content="<?= $p['position'] ?>" />
     
     <?php if($p["labels"]){  ?>
@@ -20,7 +20,7 @@
     
         <meta itemprop="sku" content="<?=$p['sku']?>" />
         <meta itemprop="url" content="<?=$p['href']?>" />
-        
+
         <?php if($p['reviews']){ ?>
             <div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
                 <meta itemprop="ratingValue" content="<?=$p['rating']?>" />
