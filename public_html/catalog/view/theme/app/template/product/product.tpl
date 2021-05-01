@@ -559,13 +559,13 @@
                     <?php if($video_link) {?>
                         <div>
                             <div class="wrap_youtube_image">
-                                <nofollow>
+                            	&lt;!--noindex--&gt;
                                     <a rel="nofollow" href="<?php echo $video_link;?>" data-fancybox data-caption="<?php echo $heading_title;?>. #Видео">
                                         <div class="youtube_image">
                                             <img src="<?php echo $video_img;?>" alt="<?=$heading_title?>. Видео">
                                         </div>
                                     </a>
-                                </nofollow>
+                                &lt;!--/noindex--&gt;
                             </div>
                         </div>
                     <?php }?>
