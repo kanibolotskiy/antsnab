@@ -302,8 +302,8 @@
                                     <div class="wholesale wholesale2">
                                         <div class="wholesale-price <?php if($priceold){echo "_oldprice";}?>">
                                             <div class="wrp_price_i">
-                                                <strong class="price_i" id="price"  data-value="<?=$price?>"><?=$price_val?>
-                                                </strong>
+                                                <div class="wholesale-price_value price_i" id="price"  data-value="<?=$price?>"><?=$price_val?>
+                                                </div>
                                                 <?php if($priceold){?>
                                                     <div class="product_old_price product_old_price2">
                                                         <?=$priceold?> <div class="rur">i</div>
