@@ -212,7 +212,7 @@
                     <div class="clear"></div>
                     <div class="tab-list">
                         <div class="tab-block tab-block3 <?php echo $cat_view_class;?>" >
-                            <ul id="lazy-load_container" itemtype="https://schema.org/ItemList">
+                            <ul id="lazy-load_container" itemscope itemtype="https://schema.org/ItemList">
                                 <?php echo $products;?>
                             </ul>
                         </div>
