@@ -271,8 +271,8 @@
 
                                         <div class="help_cont <?php if($price_wholesaleold){echo "_oldprice";}?>"> 
                                             <div class="wrp_price_i">
-                                                <strong class="price_i" id="wholesale_price" data-value="<?=$price_wholesale?>"><?=$price_wholesale_val?>
-                                                </strong>
+                                                <div class="wholesale-price_value price_i" id="wholesale_price" data-value="<?=$price_wholesale?>"><?=$price_wholesale_val?>
+                                                </div>
                                                 <?php if($price_wholesaleold){?>
                                                     <div class="product_old_price product_old_price1">
                                                         <?=$price_wholesaleold?> <div class="rur">i</div>
@@ -479,9 +479,9 @@
                     <div class="benefits">
                         <?php foreach($benefits as $benefit){ ?>
                             <div class="bene_item with_goal" data-goal="<?php echo $benefit['goal'];?>">
-                                <div class="bene_item_ico"><img src="<?php echo $benefit['filename'];?>"/></div>
-                                <div class="bene_item_val"><?php echo $benefit['name'];?></div>
-                                <div class="bene_item_desc"><?php echo $benefit['description'];?></div>
+                                <div class="bene_item_ico"><img src="<?php echo $benefit['filename'];?>" alt="<?= $benefit['name'] ?>"/></div>
+                                <div class="bene_item_val"><?= $benefit['name'] ?></div>
+                                <div class="bene_item_desc"><?= $benefit['description'] ?></div>
                             </div>
                         <?php }?>
                     </div>
@@ -562,7 +562,7 @@
                                 <nofollow>
                                     <a rel="nofollow" href="<?php echo $video_link;?>" data-fancybox data-caption="<?php echo $heading_title;?>. #Видео">
                                         <div class="youtube_image">
-                                            <img src="<?php echo $video_img;?>">
+                                            <img src="<?php echo $video_img;?>" alt="<?=$heading_title?>. Видео">
                                         </div>
                                     </a>
                                 </nofollow>
@@ -644,14 +644,14 @@
                         <div class="reviews-container reviews-container2">
                             <div class="wrapper_type_reviews_captions">
                                 <div class="type_reviews_captions">
-                                    <div class="type_reviews_caption active" rel="1" data-caption="Оставить отзыв" data-plc="Поделитесь своим мнение о товаре:" data-label="Отзыв:"><div>Отзывы (<?php echo count($reviews[1]);?>)</div></div>
-                                    <div class="type_reviews_caption" rel="2" data-caption="Задать вопрос" data-plc="Задайте свой вопрос о товаре:" data-label="Вопрос:"><div>Вопросы и ответы (<?php echo count($reviews[2]);?>)</div></div>
+                                    <div class="type_reviews_caption active" data-rel="1" data-caption="Оставить отзыв" data-plc="Поделитесь своим мнение о товаре:" data-label="Отзыв:"><div>Отзывы (<?php echo count($reviews[1]);?>)</div></div>
+                                    <div class="type_reviews_caption" data-rel="2" data-caption="Задать вопрос" data-plc="Задайте свой вопрос о товаре:" data-label="Вопрос:"><div>Вопросы и ответы (<?php echo count($reviews[2]);?>)</div></div>
                                 </div>
                             </div>
                             
                             <div class="type_reviews_blocks">
                                 
-                                <div class="type_reviews_block" rel="1" style="display:block;">
+                                <div class="type_reviews_block" data-rel="1" style="display:block;">
                                     <div class="to_review_form to_ancor" data-ancor="ancor_feedback">Оставить отзыв</div>
                                     <?php if( count($reviews[1])>0): ?>
                                         <?php foreach ($reviews[1] as $r): ?>
@@ -706,7 +706,7 @@
                                     <?php endif; ?>
                                 </div>
                                 
-                                <div class="type_reviews_block" rel="2">
+                                <div class="type_reviews_block" data-rel="2">
                                     <div class="to_review_form to_ancor" data-ancor="ancor_feedback">Задать вопрос</div>
                                     <?php if( count($reviews[2])>0): ?>
                                         <?php foreach ($reviews[2] as $r): ?>

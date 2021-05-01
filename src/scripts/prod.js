@@ -1243,7 +1243,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
     });
     $(".type_reviews_caption").click(function(){
         if(!$(this).hasClass("active")){
-            var rel=$(this).attr("rel");
+            var rel=$(this).data("rel");
             var ttl=$(this).data("caption");
             var lbl=$(this).data("label");
             var plc=$(this).data("plc");
@@ -1252,7 +1252,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
             $(".type_reviews_caption").removeClass("active");
             $(this).addClass("active");
             $(".type_reviews_block").hide();
-            $(".type_reviews_block[rel='"+rel+"']").fadeIn(150);
+            $(".type_reviews_block[data-rel='"+rel+"']").fadeIn(150);
             $(".title-give-feedback").html(ttl);
             $("#button-review").html(ttl)
         }
