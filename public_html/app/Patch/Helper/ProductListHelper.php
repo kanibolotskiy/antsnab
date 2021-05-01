@@ -289,7 +289,8 @@ class ProductListHelper extends \Model
                 'labels'=>$labels,
                 'color_name'=>$colorname,
                 'color_code'=>$colorcode,
-                'position'=>$result['position']
+                'position'=>$result['position'],
+                'sku' => $result['sku'],
             );
         }
         return $products;

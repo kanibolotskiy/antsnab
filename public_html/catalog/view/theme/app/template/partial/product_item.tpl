@@ -17,7 +17,19 @@
     <?php }?>
     
     <div class="catalog-block" itemprop="item" itemscope itemtype="http://schema.org/Product">
-        
+    
+        <meta itemprop="sku" content="<?=$p['sku']?>" />
+        <?php if($p['reviews']){ ?>
+            <div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+                <meta itemprop="ratingValue" content="<?=$p['rating']?>" />
+                <meta itemprop="reviewCount" content="<?=$p['reviews']?>" />
+            </div>
+        <?php }else{ ?>
+            <div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+                <meta itemprop="ratingValue" content="5" />
+                <meta itemprop="reviewCount" content="1" />
+            </div>
+        <?php } ?>
         <?php if(isset($p["labels"]["_accia"])){?>
             <div class="product_accia_text">
                 <div class="icon_del close_accia_info"></div>
