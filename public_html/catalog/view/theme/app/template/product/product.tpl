@@ -122,7 +122,6 @@
                                         <div class="product_color _product_color_transparent"></div>
                                     <?php }?>
                                 <?php }?>
-                                echo "!rating=".$rating."!";
                                 <?php if($rating){?>
                                     <div class="agg_rating">
                                         <div class="agg_rating_ico"></div>
