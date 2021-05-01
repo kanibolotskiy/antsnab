@@ -123,7 +123,6 @@
                                                     </div>
                                                 </div>
                                             <?php }?>
-                                            <?php //print_r($param_item);?>
                                             <?php if($param_item["type_param"]==0 or $param_item["type_param"]==2){?>
                                                 
                                                 <?php if(count($param_item['avail_params'])>1) {?>
@@ -182,7 +181,7 @@
                     <div class="clear"></div>
                     <div class="tab-list">
                         <div class="tab-block tab-block3 <?php echo $cat_view_class;?>" >
-                            <ul id="lazy-load_container" itemtype="https://schema.org/ItemList">
+                            <ul id="lazy-load_container" itemscope itemtype="https://schema.org/ItemList">
                                 <?php echo $products;?>
                             </ul>
                         </div>
