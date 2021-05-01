@@ -19,6 +19,8 @@
     <div class="catalog-block" itemprop="item" itemscope itemtype="http://schema.org/Product">
     
         <meta itemprop="sku" content="<?=$p['sku']?>" />
+        <meta itemprop="url" content="<?=$p['href']?>" />
+        
         <?php if($p['reviews']){ ?>
             <div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
                 <meta itemprop="ratingValue" content="<?=$p['rating']?>" />
@@ -56,7 +58,7 @@
         <?php }?>
         
         
-        <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>" itemprop="url">
+        <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>" >
             <div class="catalog-img">
                 <div class="fast_preview">
                     <div class="fast_preview_caption">
