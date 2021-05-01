@@ -625,7 +625,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
 */
     $(".favdel").click(function(){
         
-        var item_id=$(this).closest(".fav_row").attr("data-product_id");
+        var item_id=$(this).closest(".fav_row").data("product_id");
 
         var favorite_str=$.cookie('favorite');
         var fav_count=0;        
@@ -912,7 +912,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
     /** submit reviews */
     $('#button-review').formSubmit({
         loaderSelector: '#ajax_loader',
-        url: '/index.php?route=product/product/write&product_id=' + $('#button-review').attr('data-product_id'),
+        url: '/index.php?route=product/product/write&product_id=' + $('#button-review').data('product_id'),
         type: 'post',
         dataType: 'json',
         before: function() {

@@ -732,7 +732,7 @@ $(document).ready(function(){
     $("#add_all_favorites").click(function(){
         $(".fav_row").each(function(){
             var fav_itm=$(this);
-            var product_id=fav_itm.attr("data-product_id")
+            var product_id=fav_itm.data("product_id")
             var count_add=fav_itm.find(".qnt").val();
             add_favorite_to_cart(product_id, count_add);
         });
@@ -755,7 +755,7 @@ $(document).ready(function(){
     $("#add_calcdata_tocart1").click(function(){
         //console.log("tut"+$("#calc_out1").attr("data-count"))
         /**Рассчитываемый товар */
-        add_to_cart($("#product_id").attr("product_id"), $("#calc_out1").attr("data-count"), 1);
+        add_to_cart($("#product_id").data("product_id"), $("#calc_out1").attr("data-count"), 1);
 
         /**Праймер */
         console.log("770+"+$("#calc_out3").attr("data-count"))
@@ -768,7 +768,7 @@ $(document).ready(function(){
 
     });
     $("#add_calcdata_tocart2").click(function(){        
-        add_to_cart($("#product_id").attr("product_id"), $("#calc_out1").attr("data-count"), 1);
+        add_to_cart($("#product_id").data("product_id"), $("#calc_out1").attr("data-count"), 1);
         if (typeof ym != 'undefined') {
             ym(14496178, 'reachGoal', 'calc-cart');
         }
@@ -815,7 +815,7 @@ $(document).ready(function(){
         if((itm.hasClass("cart_similar_button"))||(itm.hasClass("add-to-card-compare"))){
             
             show_added=1;
-            var product_id=$(this).attr('data-product_id');
+            var product_id=$(this).data('product_id');
             //Добавление в козину из подобных товаров
             if(itm.hasClass("cart_similar_button")){
                 if (typeof ym != 'undefined') {
@@ -845,7 +845,7 @@ $(document).ready(function(){
             toPriceQuantityKoef = new Fraction( $(this).attr('data-sale_to_price_koef') ), 
             quantityInPriceUnits = toPriceQuantityKoef.mul(quantityInSaleUnits); 
 
-            var product_id=$(this).attr('data-product_id');
+            var product_id=$(this).data('product_id');
             var count_add=quantityInPriceUnits.valueOf();
             var itm_fly=$(this).closest(".wrp_fly");
             add_to_cart(product_id, count_add,0,itm_fly);

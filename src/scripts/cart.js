@@ -38,7 +38,7 @@ function getDelivery(){
     var koef=$("#priceSwitcher .active").attr("data-sale_to_ui_koef")*1;
     var base_weight=$("#priceSwitcher").attr("data-base_weight")*1;
     
-    var product_id=$("#product_id").attr("product_id");
+    var product_id=$("#product_id").data("product_id");
     //console.log(koef);
     if(!koef){
         koef=1;

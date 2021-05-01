@@ -35,7 +35,7 @@
 
         <?php echo $content_top; ?>
         <div class="item_card_product" itemscope itemtype="http://schema.org/Product">
-            <div class="card-product" id="product_id" product_id="<?=$product_id?>">
+            <div class="card-product" id="product_id" data-product_id="<?=$product_id?>">
                 <h1 class="title" itemprop="name"><?=$heading_title?></h1>
                 <meta itemprop="image" content="<?php echo $popup_webp; ?>"/>
                 
@@ -143,8 +143,8 @@
                                     </a>
                                 <?php } ?>
                                 <div class="wrp_favorite">
-                                    <div title="Добавить товар в избранное" class="favorite <?php echo $favorite;?>" rel="<?php echo $product_id;?>"></div>
-                                    <div title="Добавить товар в сравнение" class="compare <?php echo $compare;?>" rel="<?php echo $product_id;?>"></div>
+                                    <div title="Добавить товар в избранное" class="favorite <?php echo $favorite;?>" data-rel="<?php echo $product_id;?>"></div>
+                                    <div title="Добавить товар в сравнение" class="compare <?php echo $compare;?>" data-rel="<?php echo $product_id;?>"></div>
                                 </div>
                                 
                             </div>
