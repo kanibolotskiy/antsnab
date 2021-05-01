@@ -797,11 +797,11 @@
                                                 <input type="hidden" name="rating" value="5" id="star_value"/>
                                                 <span class="rating_caption">Рейтинг:</span>
                                                 <div class="rating_stars">
-                                                    <div class="star_block rating_star _rate" rel="1"></div>
-                                                    <div class="star_block rating_star _rate" rel="2"></div>
-                                                    <div class="star_block rating_star _rate" rel="3"></div>
-                                                    <div class="star_block rating_star _rate" rel="4"></div>
-                                                    <div class="star_block rating_star _rate" rel="5"></div>
+                                                    <div class="star_block rating_star _rate" data-rel="1"></div>
+                                                    <div class="star_block rating_star _rate" data-rel="2"></div>
+                                                    <div class="star_block rating_star _rate" data-rel="3"></div>
+                                                    <div class="star_block rating_star _rate" data-rel="4"></div>
+                                                    <div class="star_block rating_star _rate" data-rel="5"></div>
                                                 </div>
                                                 <div class="rating_stars_value">(<span id="rating_stars_value">5</span>)</div>
                                             </div>
@@ -853,10 +853,10 @@
                     <div class="wrp_mentioned_products_captions">
                         <div id="mentioned_active_line" class="mentioned_active_line"></div>
                         <?php if(count($products[0])){ ?>
-                            <div class="mentioned_products_caption active" rel="1">Аналоги</div>
+                            <div class="mentioned_products_caption active" data-rel="1">Аналоги</div>
                         <?php }?>
                         <?php if(count($products[1])){ ?>
-                            <div class="mentioned_products_caption" rel="2">Сопутствующие</div>
+                            <div class="mentioned_products_caption" data-rel="2">Сопутствующие</div>
                         <?php }?>
                     </div>
                 </div>
@@ -866,7 +866,7 @@
                 <div class="mentioned_sliders">
                     <div class="wrapper_mentioned_sliders main_slider">
                         <?php if(count($products[0])){ ?>
-                            <div class="mentioned_slider active" rel="1">
+                            <div class="mentioned_slider active" data-rel="1">
                                 <ul class="ment_slider">
                                     <?php foreach( $products[0] as $p):?>
                                     <li>
@@ -933,7 +933,7 @@
                         <?php } ?>
 
                         <?php if(count($products[1])){ ?>
-                            <div class="mentioned_slider second" rel="2">
+                            <div class="mentioned_slider second" data-rel="2">
                                 <ul class="ment_slider">
                                     <?php foreach( $products[1] as $p):?>
                                     <li>

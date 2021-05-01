@@ -1040,7 +1040,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
         $(this).addClass("_current");
         $(this).prevAll().addClass("_hide");
         $(this).nextAll().addClass("_hide");
-        var rel=$(this).attr("rel");
+        var rel=$(this).data("rel");
         $("#rating_stars_value").html(rel);
     });
 

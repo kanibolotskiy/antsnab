@@ -402,15 +402,15 @@ $(document).ready(function(){
         });
     });
     $(".mentioned_products_caption:first").addClass("active");
-    var rel=$($(".mentioned_products_caption:first")).attr("rel");
-    $(".mentioned_slider[rel='"+rel+"']").addClass("active");
+    var rel=$($(".mentioned_products_caption:first")).data("rel");
+    $(".mentioned_slider[data-rel='"+rel+"']").addClass("active");
 
     $(".mentioned_products_caption").click(function(){
         $(".mentioned_products_caption").removeClass("active");
         $(this).addClass("active");
-        var rel=$(this).attr("rel");
+        var rel=$(this).data("rel");
         $(".mentioned_slider").removeClass("active");
-        $(".mentioned_slider[rel='"+rel+"']").addClass("active");
+        $(".mentioned_slider[data-rel='"+rel+"']").addClass("active");
     });
 
 
