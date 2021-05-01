@@ -37,11 +37,11 @@
         <div class="item_card_product" itemscope itemtype="http://schema.org/Product">
             <div class="card-product" id="product_id" product_id="<?=$product_id?>">
                 <h1 class="title" itemprop="name"><?=$heading_title?></h1>
-                <img itemprop="image" src="<?php echo $popup_webp; ?>" style="display:none;">
+                <meta itemprop="image" content="<?php echo $popup_webp; ?>"/>
                 
                 <?php if($ratingSum){?>
                     <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" style="display:none">
-                        <meta itemprop="ratingValue" content="<?=$ratingValue?>" />
+                        <meta itemprop="ratingValue" content="<?=$rating?>" />
                         <meta itemprop="bestRating" content="5"/>
                         <meta itemprop="worstRating" content="1"/>
                         <meta itemprop="ratingCount" content="<?php echo count($reviews);?>" />
@@ -122,6 +122,7 @@
                                         <div class="product_color _product_color_transparent"></div>
                                     <?php }?>
                                 <?php }?>
+                                echo "!rating=".$rating."!";
                                 <?php if($rating){?>
                                     <div class="agg_rating">
                                         <div class="agg_rating_ico"></div>
@@ -1189,8 +1190,6 @@
                         $('#discount_form').submit();
                     }
                 </script>
-                
-                </div>
                 
             </div>
         </div>
