@@ -692,7 +692,7 @@
                                                         <div class = "top">
                                                             <span><strong><?= $r['moderator'] ?></strong></span>
                                                         </div>
-                                                        <em><?= $r['answer'] ?></em>
+                                                        <div><?= $r['answer'] ?></div>
                                                     </div>
                                                 <?php endif; ?>
                                             </div>
@@ -747,7 +747,7 @@
                                                         <div class = "top">
                                                             <span><strong><?= $r['moderator'] ?></strong></span>
                                                         </div>
-                                                        <em><?= $r['answer'] ?></em>
+                                                        <div><?= $r['answer'] ?></div>
                                                     </div>
                                                 <?php endif; ?>
                                             </div>
