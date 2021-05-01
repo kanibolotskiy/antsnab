@@ -55,7 +55,7 @@
                         <p>
                             <span itemprop="sku"><?=$sku?></span>
                             <?php if ($manufacturer) { ?>
-                                <span>Производитель:&nbsp<span><?php echo $manufacturer; ?></span></span>
+                                <span>Производитель:&nbsp;<span><?php echo $manufacturer; ?></span></span>
                             <?php } ?>
                         </p>
                     </div>
@@ -66,8 +66,9 @@
                             <meta itemprop="availability" content="http://schema.org/PreOrder" />
                         <?php }?>
 
-                        <meta itemprop="seller" content="<?php echo $manufacturer; ?>">
-                        <div itemprop="url" href="<?php echo $product_link;?>" style="display:none;"><?php echo $product_link;?></div>
+                        <meta itemprop="seller" content="<?= $manufacturer ?>">
+                        <meta itemprop="url" content="<?= $product_link ?>">
+
                         <div id="cart_preloader" class="ajax_loader">
                             <div class="loader-classic">
                                 <span></span>
@@ -225,7 +226,7 @@
                                                         data-ui_name = "<?=$pUnits[1]['name']?>"
                                                         data-ui_name_plural = "<?=$pUnits[1]['name_plural']?>"
                                                         data-ui_name_genitive = "<?=$pUnits[1]['name_package_dimension']?>"
-                                                        data-ui_descr="<?=$pUnits[1]['relStr']?>" class="active">
+                                                        data-ui_descr="<?=$pUnits[1]['relStr']?>" >
                                                         <a href="#"><?= $pUnits[1]['showName']?></a>
                                                     </li>
 
