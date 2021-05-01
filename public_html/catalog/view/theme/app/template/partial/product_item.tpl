@@ -1,4 +1,5 @@
 <li class="catalog_item_product wrp_fly" data-rel="<?= $p['product_id']?>" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+    <meta itemprop="position" content="<?= $p['position'] ?>" />
     
     <?php if($p["labels"]){  ?>
         <div class="item_labels">
@@ -14,8 +15,9 @@
             <?php } ?>
         </div>
     <?php }?>
-
-    <div class="catalog-block" itemprop="item" itemscope itemtype="http://schema.org/Offer">
+    
+    <div class="catalog-block" itemprop="item" itemscope itemtype="http://schema.org/Product">
+        
         <?php if(isset($p["labels"]["_accia"])){?>
             <div class="product_accia_text">
                 <div class="icon_del close_accia_info"></div>
@@ -41,7 +43,8 @@
             </div>
         <?php }?>
         
-        <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>">
+        
+        <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>" itemprop="url">
             <div class="catalog-img">
                 <div class="fast_preview">
                     <div class="fast_preview_caption">
@@ -131,14 +134,15 @@
                                 data-ui_name_plural="<?=$p['ui_unit_name_plural']?>"
                                 data-ui_name_genitive="<?=$p['ui_unit_name_genitive']?>"
                                 
-                                data-ui_step = "<?=$p['step']?>"
-                                data-ui_minimum = "<?=$p['mincount']?>"
-
-                                <?php if($p['ui_unit_force_step_by_one'] == 1):?>
-                                data-ui_minimum="1"
-                                data-ui_step= 1"
-                                <?php endif; ?>
-
+                                
+                                
+                                <?php if($p['ui_unit_force_step_by_one'] == 1){ ?>
+                                    data-ui_minimum="1" 
+                                    data-ui_step= "1"
+                                <?php }else{ ?>
+                                    data-ui_minimum = "<?=$p['mincount']?>" 
+                                    data-ui_step = "<?=$p['step']?>"
+                                <?php } ?>
                             >
                             </div>
 

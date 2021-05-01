@@ -5,25 +5,25 @@ document.addEventListener("DOMContentLoaded", function(){
     function getParamsForm(){
         var str='';
         $(".range_slider").each(function(){
-            var select_min=$(this).attr("select_min");
-            var select_max=$(this).attr("select_max");
-            var min_value=$(this).attr("min_value")*1;
-            var max_value=$(this).attr("max_value")*1;
+            var select_min=$(this).data("select_min");
+            var select_max=$(this).data("select_max");
+            var min_value=$(this).data("min_value")*1;
+            var max_value=$(this).data("max_value")*1;
             if(select_min!=""){
                 if((select_min)*1!=min_value){
-                    str+="&param["+$(this).attr("name")+"][min]="+select_min;
+                    str+="&param["+$(this).data("name")+"][min]="+select_min;
                 }
             }
             if(select_max!=""){
                 if((select_max*1)!=max_value){
-                    str+="&param["+$(this).attr("name")+"][max]="+select_max;
+                    str+="&param["+$(this).data("name")+"][max]="+select_max;
                 }
             }
         });
         $(".param_check").each(function(){
             if($(this).prop("checked")){
                 //str+=(str!=""?"&":"")+$(this).attr("name")+"="+$(this).val();
-                str+="&"+$(this).attr("name")+"="+$(this).val();
+                str+="&"+$(this).data("name")+"="+$(this).val();
             }
         });
 
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function(){
         }
 
         //Пагинация
-        var limit=$(".showby_item.active").attr("rel");
+        var limit=$(".showby_item.active").data("rel");
         if(limit!="18"){
             str+="&limit="+limit;
         }

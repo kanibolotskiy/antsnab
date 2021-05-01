@@ -131,7 +131,7 @@
 
     <!-- @task1 Счетчики, виджеты (comagic) -->
 <?php foreach ($scripts as $script) { ?>
-    <script src="<?php echo $script.'?v01'; ?>"></script>
+    <script src="<?php echo $script.'?v02'; ?>"></script>
 <?php } ?>
 <?php foreach ($analytics as $analytic) { ?>
     <?php echo $analytic; ?>

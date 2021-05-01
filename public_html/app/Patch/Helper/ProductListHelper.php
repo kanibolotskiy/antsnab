@@ -249,7 +249,6 @@ class ProductListHelper extends \Model
             if(isset($color_result['code'])){
                 $colorcode=$color_result['code'];
             }
-            
             $products[] = array(
                 'product_id' => $result['product_id'],
                 'quantity'=>$result['quantity'],
@@ -289,8 +288,8 @@ class ProductListHelper extends \Model
                 'compare'=>$compare_active,
                 'labels'=>$labels,
                 'color_name'=>$colorname,
-                'color_code'=>$colorcode
-                
+                'color_code'=>$colorcode,
+                'position'=>$result['position']
             );
         }
         return $products;
