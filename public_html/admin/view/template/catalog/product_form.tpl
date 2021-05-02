@@ -1582,6 +1582,7 @@
                 var product_id=$(this).attr("rel");
                 products_used.push(product_id);
             });
+            console.log(products_used);
             $("#products_change_analog").val(1);
             $("#products_analog").val(products_used.join(","));
         }
@@ -1600,7 +1601,13 @@
                     $(this).closest(".accia_catalog_row").find(".product_used_analog").addClass("_active")
                     $(this).closest(".accia_catalog_row").find(".product_used_accompany").addClass("_active")
                 }
-                
+                var prnt_itm=$(this).closest(".wrap_accia_products");
+                if(prnt_itm.hasClass("wrap_analog_products")){
+                    products_selected_analog();
+                }else{
+                    products_selected();
+                    
+                }
             });
             /**/
             $("#input-video").change(function(){

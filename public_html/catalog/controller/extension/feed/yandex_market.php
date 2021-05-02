@@ -219,7 +219,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 
 				// Параметры товарного предложения
 				//."&utm_source=market&utm_medium=cpc"
-				$data['url'] = $this->url->link('product/product', 'path=' . $this->getPath($product['category_id']) . '&product_id=' . $product['product_id'])."?utm_source=market&utm_medium=cpc";
+				$data['url'] = $this->url->link('product/product', 'path=' . $this->getPath($product['category_id']) . '&product_id=' . $product['product_id'])."?utm_source=market&utm_medium=cpc&utm_term=".$product['product_id'];
 				
 				$data['price'] = $this->currency->convert($this->tax->calculate($price, $product['tax_class_id']), $shop_currency, $offers_currency);
 				$data['currencyId'] = $offers_currency;
