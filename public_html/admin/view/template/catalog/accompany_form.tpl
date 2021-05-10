@@ -119,6 +119,17 @@
         $("#products").val(products_used.join(","));
     }
     $(document).ready(function(){
+        $(".accia_column_subcategory_caption").click(function(){
+            if($(this).hasClass("active")){
+                $(this).removeClass("active");
+                $(this).closest(".accia_catalog_row").find(".product_used_item").removeClass("_active");
+            }else{
+                $(this).addClass("active");
+                $(this).closest(".accia_catalog_row").find(".product_used_item").addClass("_active");
+            }
+            products_selected();
+        });
+
         $(".product_used_item._active").each(function(){
             $(this).parents(".subcat_wrapper").show();
             //itm.show();
