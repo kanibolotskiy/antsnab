@@ -1,5 +1,5 @@
 <?php
-
+//use WS\Override\Gateway\ProdProperties;
 use WS\Override\Gateway\ProdTabs;
 
 class ModelCatalogProduct extends Model
@@ -229,7 +229,9 @@ class ModelCatalogProduct extends Model
 
     public function updateProperties($product_id, $data)
     {
+        
         if (isset($data['prodproperties'])) {
+            
             $sql = "delete from product_prodproperty where product_id = :id";
             $this->db->query($sql, [':id' => $product_id]);
 
@@ -237,7 +239,6 @@ class ModelCatalogProduct extends Model
                 if ('' !== trim($p['val']) || '' !== trim($p['sortOrder']) || isset($p['hide'])) {
                     $sql = "insert into product_prodproperty  (category_prodproperty_id, product_id, val, sortOrder, hide) values "
                         . "(:category_prodproperty_id, :product_id, :val, :sortOrder, :hide) ";
-
                     $this->db->query($sql, [
                         ':category_prodproperty_id' => $k,
                         ':product_id' => $product_id,
@@ -613,11 +614,33 @@ class ModelCatalogProduct extends Model
         //product_param_values
         $this->setParamValues($product_id, $data);
 
+        /*
+        $gateway = new ProdProperties($this->registry);
+		$data['prodproperties'] = $gateway->getPropertiesWithProductValues($product_id, 'order by showInSummary DESC, sortOrder ASC');
+        $this->updateProperties($product_id, $data);
+        */
+        $this->copyProperties($data['product_id'],$product_id);
+
         $this->cache->delete('product');
 
         return $product_id;
     }
+    private function copyProperties($old_product_id,$new_product_id){
+        $sql="select * from product_prodproperty where product_id='".$old_product_id."'";
+        $query = $this->db->query($sql);
+        foreach ($query->rows as $row){
+            if($row['sortOrder']){
+                $sql_ins="insert into product_prodproperty (category_prodproperty_id,product_id,val,sortOrder,hide)
+                values ('".$row['category_prodproperty_id']."','".$new_product_id."','".$row['val']."','".$row['sortOrder']."','".$row['hide']."')";
+            }else{
+                $sql_ins="insert into product_prodproperty (category_prodproperty_id,product_id,val,hide)
+                values ('".$row['category_prodproperty_id']."','".$new_product_id."','".$row['val']."','".$row['hide']."')";
+            }
+            
+            $this->db->query($sql_ins);
+        }
 
+    }
     public function editProduct($product_id, $data)
     {
         /*, location = '" . $this->db->escape($data['location']) . "'*/
@@ -969,6 +992,8 @@ class ModelCatalogProduct extends Model
             $data['viewed'] = '0';
             //$data['keyword'] = '';
             $data['status'] = '0';
+            
+            $data['product_id'] = $product_id;
 
             $data['keyword'] = $this->getProductAlias($product_id);
             $data['product_attribute'] = $this->getProductAttributes($product_id);

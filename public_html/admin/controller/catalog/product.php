@@ -1,4 +1,5 @@
 <?php
+
 class ControllerCatalogProduct extends Controller {
 	private $error = array();
 
@@ -1771,10 +1772,7 @@ class ControllerCatalogProduct extends Controller {
 		/*Идентичные товары */
 		$data['iden']=$this->model_catalog_product->getGrandParentCategories($this->request->get['product_id']);
 		$data['product_id']=$this->request->get['product_id'];
-
 		$data['iden_links']=$this->model_catalog_product->getProductLinks($this->request->get['product_id']);
-
-
 
 		$parent_cat_id=71;
 		$categories=[];
@@ -1804,7 +1802,8 @@ class ControllerCatalogProduct extends Controller {
 				}
 			}
 		}
-		
+	
+
 		$data['categories_tree']=$categories_tree;
 		$data['products']=$products_list;
 
