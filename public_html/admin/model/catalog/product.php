@@ -620,6 +620,7 @@ class ModelCatalogProduct extends Model
         $this->updateProperties($product_id, $data);
         */
         $this->copyProperties($data['product_id'],$product_id);
+        $this->copyProdtabs($data['product_id'],$product_id);
 
         $this->cache->delete('product');
 
@@ -637,6 +638,20 @@ class ModelCatalogProduct extends Model
                 values ('".$row['category_prodproperty_id']."','".$new_product_id."','".$row['val']."','".$row['hide']."')";
             }
             
+            $this->db->query($sql_ins);
+        }
+    }
+    private function copyProdtabs($old_product_id,$new_product_id){
+        $sql="select * from product_prodtab where product_id='".$old_product_id."'";
+        $query = $this->db->query($sql);
+        foreach ($query->rows as $row){
+            if($row['sortOrder']){
+                $sql_ins="insert into product_prodtab (category_prodtab_id,product_id,val,sortOrder,hide)
+                values ('".$row['category_prodtab_id']."','".$new_product_id."','".$row['val']."','".$row['sortOrder']."','".$row['hide']."')";
+            }else{
+                $sql_ins="insert into product_prodtab (category_prodtab_id,product_id,val,hide)
+                values ('".$row['category_prodtab_id']."','".$new_product_id."','".$row['val']."','".$row['hide']."')";
+            }
             $this->db->query($sql_ins);
         }
 
