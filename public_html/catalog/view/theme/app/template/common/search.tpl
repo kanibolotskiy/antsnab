@@ -1,5 +1,5 @@
 <div id="search" class="search-form" itemscope="" itemtype="https://schema.org/WebSite">
-    <meta itemprop="url" content="https://ant-snab.ru">
+    <link itemprop="url" content="https://ant-snab.ru" />
     <form itemprop="potentialAction" itemscope="" itemtype="https://schema.org/SearchAction" class="wrapper_search" action="/search" method="GET" >
         <meta itemprop="target" content="https://ant-snab.ru/search/?search={search}">
         <input itemprop="query-input" type="text" id="inputSearch" placeholder="Поиск" name="search" value="<?= $search ?>"/>

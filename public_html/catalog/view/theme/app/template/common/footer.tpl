@@ -3,7 +3,7 @@
     <div class="container" itemscope itemtype="http://schema.org/LocalBusiness">
         <div itemprop="image" content="<?php echo $logo_webp;?>" style="display:none;"></div>
         <meta itemprop="name" content='ООО "ТК Ант-Снаб"'/>
-        <div itemprop="url" content="<?php echo $home;?>" style="display:none;"></div>
+        <link itemprop="url" content="<?php echo $home;?>" />
         <div itemprop="logo" itemscope style="display:none;" itemtype="https://schema.org/ImageObject">
             <img itemprop="url image" src="<?php echo $logo_webp;?>" style="display:none;" alt='ООО "ТК Ант-Снаб"'/>
             <meta itemprop="width" content="115">
