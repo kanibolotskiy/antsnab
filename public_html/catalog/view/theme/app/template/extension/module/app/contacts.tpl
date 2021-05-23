@@ -7,7 +7,7 @@
                 <address class="left_contacts">
                     
                     <meta itemprop="name" content='ООО "ТК Ант-Снаб"' />
-                    <meta itemprop="url" href="<?php echo $home;?>" content="<?php echo $home;?>" />
+                    <link itemprop="url" href="<?php echo $home;?>" />
 
                     <div class="contacts_phone">
                         <div class="contacts_phone_line">
