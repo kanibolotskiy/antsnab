@@ -1,5 +1,5 @@
 <li itemscope="" itemtype="http://schema.org/ListItem">
-    <div class="news-block" itemscope="" itemtype="http://schema.org/NewsArticle">
+    <div class="news-block" itemscope="" itemtype="http://schema.org/Article">
         <meta itemprop="author" content='ООО "ТК Ант-Снаб"'/>
         <div style="display:none;" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
             <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
