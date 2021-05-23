@@ -67,7 +67,7 @@
                         <?php }?>
 
                         <meta itemprop="seller" content="<?= $manufacturer ?>">
-                        <meta itemprop="url" content="<?= $product_link ?>">
+                        <link itemprop="url" href="<?= $product_link ?>"/>
 
                         <div id="cart_preloader" class="ajax_loader">
                             <div class="loader-classic">

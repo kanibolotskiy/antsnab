@@ -17,7 +17,7 @@
     <?php }?>
     
     <div class="catalog-block" >
-        <meta itemprop="url" content="<?=$p['href']?>" />
+        <link itemprop="url" href="<?=$p['href']?>" />
         
         <?php if(isset($p["labels"]["_accia"])){?>
             <div class="product_accia_text">
