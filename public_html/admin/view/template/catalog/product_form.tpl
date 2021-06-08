@@ -587,6 +587,8 @@
                                 <div class="col-sm-10">
                                     <select id="input-calc_category" name="calc_category" class="form-control" disabled>
                                         <option value="0" selected="selected"><?php echo $text_none; ?></option>
+
+
                                         <?php foreach ($calcs as $calc_itm) { ?>
                                             <?php if ($calc_itm['calc_id'] == $calc_category_id) { ?>
                                                 <option value="<?php echo $calc_itm['calc_id']; ?>" selected="selected"><?php echo $calc_itm['name']; ?></option>
@@ -603,6 +605,8 @@
                                 <div class="col-sm-10">
                                     <select id="input-calc" name="calc" class="form-control">
                                         <option value="0" selected="selected"><?php echo $text_none; ?></option>
+                                        <option value="-1" <?php echo $calc_product_id==-1?'selected="selected"':""; ?> ><?php echo $text_null; ?></option>
+                                        
                                         <?php foreach ($calcs as $calc_itm) { ?>
                                             <?php if ($calc_itm['calc_id'] == $calc_product_id) { ?>
                                                 <option value="<?php echo $calc_itm['calc_id']; ?>" selected="selected"><?php echo $calc_itm['name']; ?></option>
