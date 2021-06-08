@@ -11453,3 +11453,4 @@ margin-bottom:30px;
     display: inline-block; /* Needed to add space between the bullet and the text */
     width: 7px; /* Also needed for space (tweak if needed) */
   }
+.pagination ul li::before {display:none;}
