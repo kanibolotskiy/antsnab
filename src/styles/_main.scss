@@ -5896,6 +5896,7 @@ filter: grayscale(1); /* W3C */
 
 }
 .content-text ul li:before {content:'';display:none;}
+/*
 .content-text ul li:after {
     content: '';
     display: block;
@@ -5911,7 +5912,7 @@ filter: grayscale(1); /* W3C */
     border-radius: 100px;
     background-color: #d3a06d;
 }
-
+*/
 .content-text .table-responsive{
     width:100%;overflow:auto;
     margin-top:10px;margin-bottom:10px;
@@ -8000,7 +8001,7 @@ transition: 0.4s;
 
 #ya-site-form0 .ya-site-form__search-input{padding:0!important;}
 
-.img-article time {
+.img-article time, .img-article .time{
     display: block;
     position: absolute;
     top: 18px;
@@ -11438,3 +11439,17 @@ margin-bottom:30px;
 .wrp_requisites table a:hover{text-decoration:none;}
 .map_{margin-top:20px;}
 .map_ iframe{width:100%;}
+
+/*
+.content-text ul li::marker{
+    color:red;
+}
+*/
+
+.content-text ul li::before {
+    content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+    color: #d3a06d; /* Change the color */
+    font-weight: bold; /* If you want it to be bold */
+    display: inline-block; /* Needed to add space between the bullet and the text */
+    width: 7px; /* Also needed for space (tweak if needed) */
+  }
