@@ -5877,7 +5877,6 @@ filter: grayscale(1); /* W3C */
     font-size: 14px;
     color: #000;
     line-height: 18px;
-    padding-left: 10px;
     margin-bottom: 10px;
     p{
         padding-top:0;
@@ -11447,6 +11446,7 @@ margin-bottom:30px;
 */
 
 .content-text ul li::before {
+    margin-left:10px;
     content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
     color: #d3a06d; /* Change the color */
     font-weight: bold; /* If you want it to be bold */
