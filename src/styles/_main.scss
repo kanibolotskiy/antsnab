@@ -5872,12 +5872,12 @@ filter: grayscale(1); /* W3C */
 .content-text b,.content-text strong{font-weight: bold;}
 .content-text ul {margin-top: 12px;margin-bottom: 12px;}
 .content-text ul li {
-    margin-left: 10px;
+    margin-left: 0px;
     position: relative;
     font-size: 14px;
     color: #000;
     line-height: 18px;
-    padding-left: 15px;
+    padding-left: 10px;
     margin-bottom: 10px;
     p{
         padding-top:0;
