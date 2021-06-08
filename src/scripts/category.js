@@ -791,7 +791,7 @@ $(document).ready(function(){
         var itm=$(this);
         
         
-        if(!itm.hasClass("cart_similar_button")){
+        if((!itm.hasClass("cart_similar_button"))&&(!itm.hasClass("cart_favorite_button"))){
             var ttl_buy='';
             if(itm.attr("button_name")){
                 ttl_buy=itm.attr("button_name");
