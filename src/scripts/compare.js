@@ -155,14 +155,32 @@ $(document).ready(function(){
         var compare_str=$.cookie('compare');
         var compare_arr=JSON.parse(compare_str);
         
-        //console.log(compare_arr);
-        var index = compare_arr.indexOf(rel);
+        /*
+        console.log(compare_arr);
+        
+        ///var index = compare_arr.indexOf(rel);
+        var new_compare_arr=compare_arr
+        var index =-1;
+        for(i in compare_arr){
+            if(compare_arr[i]==rel){
+                new_compare_arr.splice(index, 1);
+            }
+        }
+        ////console.log("rel="+rel)
+        //console.log("splice="+index)
+        /*
         if (index > -1) {
             compare_arr.splice(index, 1);
         }
+        */
+        var new_compare_arr=[];
+        for(i in compare_arr){
+            if(compare_arr[i]!=rel){
+                new_compare_arr.push(compare_arr[i]);
+            }
+        }
         
-        
-        $.cookie('compare', JSON.stringify(compare_arr), { expires: 30, path: '/' });
+        $.cookie('compare', JSON.stringify(new_compare_arr), { expires: 30, path: '/' });
 
         product.fadeOut(200,function(){
             product.remove();

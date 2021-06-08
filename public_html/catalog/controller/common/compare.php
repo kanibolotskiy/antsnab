@@ -196,6 +196,7 @@ class ControllerCommonCompare extends Controller {
                             switch ($type_param){
                                 case 0: //Список       
                                     $str_param=$param_values_result[$product_param["value1"]];
+                                    
                                     //$str_param=$product_param["value1"];
                                 break;
 
@@ -213,7 +214,8 @@ class ControllerCommonCompare extends Controller {
                     $params_final=[];
                     foreach($params as $key=>$param){
                         if($param){
-                            //sort($param);
+                            sort($param);
+
                             $params_final[$key]=implode(", ",$param);
                         }
                     }
