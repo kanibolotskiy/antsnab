@@ -55,12 +55,24 @@ class ModelCatalogAccompany extends Model {
 	public function editAccompany($accompany_id,$data){
 		$this->db->query("UPDATE dopinfo_accompanies SET name = '" . $this->db->escape($data['name']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE accompany_id = '" . (int)$accompany_id . "'");
 		if($data['products_change']){
+			
+
+			
 			$this->db->query("DELETE FROM dopinfo_accompany_products WHERE accompany_id = '" . (int)$accompany_id . "'");
 			$products_str=$data['products'];
 			if($products_str){
 				$products=explode(",",$products_str);
 				foreach($products as $product){
 					$this->db->query("INSERT INTO dopinfo_accompany_products SET accompany_id = '" . $accompany_id . "', product_id = '" . (int)$product . "'");
+				}
+
+				$query = $this->db->query("select product_id from oc_product where accompany_id='".$accompany_id."'");
+				foreach($query->rows as $row){
+					$product_id=$row['product_id'];
+					$this->db->query("DELETE FROM oc_product_related where product_id='".$product_id."'");
+					foreach($products as $product){
+							$this->db->query("INSERT INTO oc_product_related SET product_id = '" . $product_id . "', related_id = '" . (int)$product . "'");	
+					}
 				}
 			}
 		}
