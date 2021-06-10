@@ -83,47 +83,48 @@
         <div class="catalog-description">
             <a href="<?= $p['href'] ?>" class="full_item_link" title="<?= $p['name'] ?>">
                 <div class="catalog-block_caption" itemprop="name"><?= $p['name'] ?></div>
-            </a>
-            <div class="catalog_lsi description" itemprop="description">
-                <div class="wrp_catalog_lsi">
-                    <?= $p['descriptionPreview'] ?>
-                </div>
-            </div>
-            <div class="complement">
             
-                <?php foreach ($p['properties'] as $prop): ?>
-                    <span>
-                        <?= $prop['name'] ?>:&nbsp;<span class="prop_unit"><?= $prop['val'] ?>&nbsp;<?= $prop['unit'] ?></span>
-                    </span>
-                <?php endforeach ?>
-                
-            </div>
-            
-            <div class="price cat_item_price">
-                <div class="wrapper_price_line">
-                    <div class="cat_item_price_caption">от</div>
-                    <div class="cat_price_val <?php if($p["priceold"]){echo "_oldprice";}?>" content="<?=$p['price_val']?>">
-                        <div class="cat_price_value">
-                            <?=$p['price']?>
-                        </div> <div class="rur">i</div>
-                    </div>
-                    <?php if($p["priceold"]){?>
-                        <div class="cat_priceold"><?php echo $p["priceold"];?> <div class="rur">i</div></div>
-                    <?php }?>
-                </div>
-                <div class="wrapper_count_line">
-                    <?php if($p['quantity']>5){ ?>
-                        <div class="prod_cnt _mnogo">На складе</div>
-                    <?php }?>
-                    <?php if($p['quantity']>0 and $p['quantity']<=5){ ?>
-                        <div class="prod_cnt _malo">Мало</div>
-                    <?php }?>
-                    <?php if($p['quantity']==0){ ?>
-                        <div class="prod_cnt _podzakaz">Под заказ</div>
-                    <?php }?>
-                </div>
-            </div>
 
+                <div class="catalog_lsi description" itemprop="description">
+                    <div class="wrp_catalog_lsi">
+                        <?= $p['descriptionPreview'] ?>
+                    </div>
+                </div>
+                <div class="complement">
+                
+                    <?php foreach ($p['properties'] as $prop): ?>
+                        <span>
+                            <?= $prop['name'] ?>:&nbsp;<span class="prop_unit"><?= $prop['val'] ?>&nbsp;<?= $prop['unit'] ?></span>
+                        </span>
+                    <?php endforeach ?>
+                    
+                </div>
+            
+                <div class="price cat_item_price">
+                    <div class="wrapper_price_line">
+                        <div class="cat_item_price_caption">от</div>
+                        <div class="cat_price_val <?php if($p["priceold"]){echo "_oldprice";}?>" content="<?=$p['price_val']?>">
+                            <div class="cat_price_value">
+                                <?=$p['price']?>
+                            </div> <div class="rur">i</div>
+                        </div>
+                        <?php if($p["priceold"]){?>
+                            <div class="cat_priceold"><?php echo $p["priceold"];?> <div class="rur">i</div></div>
+                        <?php }?>
+                    </div>
+                    <div class="wrapper_count_line">
+                        <?php if($p['quantity']>5){ ?>
+                            <div class="prod_cnt _mnogo">На складе</div>
+                        <?php }?>
+                        <?php if($p['quantity']>0 and $p['quantity']<=5){ ?>
+                            <div class="prod_cnt _malo">Мало</div>
+                        <?php }?>
+                        <?php if($p['quantity']==0){ ?>
+                            <div class="prod_cnt _podzakaz">Под заказ</div>
+                        <?php }?>
+                    </div>
+                </div>
+            </a>
             <div class="quantity-buy">
     
                 <?php if(empty($p['unit_errors'])): ?>
