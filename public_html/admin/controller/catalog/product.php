@@ -1658,7 +1658,7 @@ class ControllerCatalogProduct extends Controller {
 			}
 			$data['accompanies'][]=Array(
 				'accompany_id'=>$accompany['accompany_id'],
-				'name'=>$accompany['name'],
+				'name'=>html_entity_decode($accompany['name']),
 				'products'=>$acc_product_str
 			);
 			//print_r($accompany_products);

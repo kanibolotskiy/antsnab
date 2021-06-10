@@ -1390,7 +1390,7 @@
 
     <tr <?=$main_category_id==$key?'':'style="display:none;"'?> rel="<?=$product['product_id'] ?>" class="tr_category_<?=$key?>  status_<?=$product['status']?> <?php echo ($product_id==$product['product_id']?'current':'');?>">
         <td class="iden_product_name">
-            <?=$product['name']?>
+            <?=html_entity_decode($product['name'])?>
         </td>
         <td>
             <input class="idenInput idenInput_code1" name="iden[<?=$product['product_id']?>][1][code]" type="text" value="<?php echo (isset($iden_links[$product['product_id']][1]['code'])?$iden_links[$product['product_id']][1]['code']:'');?>"/>
@@ -1452,7 +1452,7 @@
                     </div>
                     <div class="accia_catalog_right">
                         <?php if(isset($products[$category_item["category_id"]])){ foreach($products[$category_item["category_id"]] as $product){?>
-                            <div class="product_used_accompany <?php echo isset($products_related[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                            <div class="product_used_accompany <?php echo isset($products_related[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo html_entity_decode($product["name"]);?></div>
                         <?php }}?>
                     </div>
                 </div>
@@ -1465,7 +1465,7 @@
                             </div>
                             <div class="accia_catalog_right">
                                 <?php if(isset($products[$category_item_child["category_id"]])){ foreach($products[$category_item_child["category_id"]] as $product){?>
-                                    <div class="product_used_accompany <?php echo isset($products_related[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                                    <div class="product_used_accompany <?php echo isset($products_related[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo html_entity_decode($product["name"]);?></div>
                                 <?php }}?>
                             </div>
                         </div>
@@ -1508,7 +1508,7 @@
                     </div>
                     <div class="accia_catalog_right">
                         <?php if(isset($products[$category_item["category_id"]])){ foreach($products[$category_item["category_id"]] as $product){?>
-                            <div class="<?php echo ($product_id==$product['product_id']?'_current':'');?> product_used_analog <?php echo isset($product_analogs[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                            <div class="<?php echo ($product_id==$product['product_id']?'_current':'');?> product_used_analog <?php echo isset($product_analogs[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo html_entity_decode($product["name"]);?></div>
                         <?php }}?>
                     </div>
                 </div>
@@ -1522,7 +1522,7 @@
                             </div>
                             <div class="accia_catalog_right">
                                 <?php if(isset($products[$category_item_child["category_id"]])){ foreach($products[$category_item_child["category_id"]] as $product){?>
-                                    <div class="<?php echo ($product_id==$product['product_id']?'_current':'');?> product_used_analog <?php echo isset($product_analogs[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
+                                    <div class="<?php echo ($product_id==$product['product_id']?'_current':'');?> product_used_analog <?php echo isset($product_analogs[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo html_entity_decode($product["name"]);?></div>
                                 <?php }}?>
                             </div>
                         </div>
