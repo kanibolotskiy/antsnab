@@ -292,7 +292,7 @@ class CartController extends \ControllerCheckoutCart
                         $product_related[]=array(
                             'product_id' => $related_result['product_id'],
                             'meta_h1' => $related_result['meta_h1'],
-                            'name' => $related_result['name'],
+                            'name' => html_entity_decode($related_result['name']),
                             'href' => $this->url->link('product/product', 'product_id=' . $related_result['product_id']),
                             'image' => $image_rel, 
                             'image_webp' => $img_webp_rel,
@@ -343,7 +343,7 @@ class CartController extends \ControllerCheckoutCart
                         'cart_id' => $product['cart_id'],
                         'thumb' => $image,
                         'thumb_webp' => $img_webp,
-                        'name' => $product['name'],
+                        'name' => html_entity_decode($product['name']),
     
                         /// @added 
                         'meta_h1' => $product['meta_h1'],
@@ -938,7 +938,7 @@ class CartController extends \ControllerCheckoutCart
                         $product_related[]=array(
                             'product_id' => $related_result['product_id'],
                             'meta_h1' => $related_result['meta_h1'],
-                            'name' => $related_result['name'],
+                            'name' => html_entity_decode($related_result['name']),
                             'href' => $this->url->link('product/product', 'product_id=' . $related_result['product_id']),
                             'image' => $image_rel, 
                             'image_webp' => $img_webp_rel,
@@ -953,7 +953,7 @@ class CartController extends \ControllerCheckoutCart
                     'cart_id' => $product['cart_id'],
                     'thumb' => $image,
                     'thumb_webp' => $img_webp,
-                    'name' => $product['name'],
+                    'name' => html_entity_decode($product['name']),
 
                     /** @added */
                     'meta_h1' => $product['meta_h1'],
