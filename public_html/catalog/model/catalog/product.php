@@ -725,7 +725,7 @@ class ModelCatalogProduct extends Model {
 		return $query->rows;
 	}
 
-	public function getProductRelated($product_ids, $rand=false,$limit=0,$table,$exclude_ids='') {
+	public function getProductRelated($product_ids, $rand=false,$limit=0,$table,$exclude_ids='',$showonstore=false) {
 		$product_data = array();
 		$order_rand="";
 		$limit_str="";
@@ -739,7 +739,11 @@ class ModelCatalogProduct extends Model {
 		if($exclude_ids){
 			$exclude_sql=" AND p.product_id NOT IN (".$exclude_ids.")";
 		}
-		$query = $this->db->query("SELECT related_id FROM " . DB_PREFIX .$table. " pr LEFT JOIN " . DB_PREFIX . "product p ON (pr.related_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pr.product_id in (" . $product_ids . ") ".$exclude_sql." AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' group by related_id ".$order_rand.$limit_str);
+		$showonstore_str="";
+		if($showonstore){
+			$showonstore_str=" AND p.quantity>0";
+		}
+		$query = $this->db->query("SELECT related_id FROM " . DB_PREFIX .$table. " pr LEFT JOIN " . DB_PREFIX . "product p ON (pr.related_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pr.product_id in (" . $product_ids . ") ".$exclude_sql." ".$showonstore_str." AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' group by related_id ".$order_rand.$limit_str);
 
 		foreach ($query->rows as $result) {
 			$product_data[$result['related_id']] = $this->getProduct($result['related_id']);

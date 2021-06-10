@@ -923,7 +923,7 @@ class CartController extends \ControllerCheckoutCart
                     }
                 }
                 
-                $product_related_results = $this->model_catalog_product->getProductRelated($product['product_id'],true,6,'product_related');
+                $product_related_results = $this->model_catalog_product->getProductRelated($product['product_id'],true,6,'product_related',true);
                 $product_related=[];
                 foreach($product_related_results as $related_result){
                     if($related_result["quantity"]>0){
