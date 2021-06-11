@@ -138,6 +138,8 @@ class ControllerCommonCompare extends Controller {
             $img_webp=str_replace(".png",".webp",$img_webp);
             $fav_product[$main_category_id][$product['product_id']]=Array(
                 "product_id"=>$product['product_id'],
+                "sale1"=>$product['sale1'],
+                "quantity"=>$product['quantity'],
                 "produnit_template_id"=>$product["produnit_template_id"],
                 "name"=>$product["name"],
                 "price"=>number_format($product["price_wholesale"],0,".", " "),
@@ -146,7 +148,8 @@ class ControllerCommonCompare extends Controller {
                 "href"=>$this->url->link('product/product', '&product_id=' . $product['product_id']),
                 "data_stock"=>$data_stock,
                 "properties"=>$item_properties,
-                "delivery"=>$delivery_str
+                "delivery"=>$delivery_str,
+                "mincount"=>$product["mincount"]
             );
             //echo $product["product_id"]."<br/>";
             //$price = number_format($price_val,0,".", " ");
@@ -154,7 +157,10 @@ class ControllerCommonCompare extends Controller {
         
         $favorite_products=[];
         $pack_list=[];
-        
+        $produnitsGateway = new ProdUnits($this->registry);
+        $produnitsCalcGateway = new ProdUnitsCalc($this->registry);
+        $propGateway = new ProdProperties($this->registry);
+
         if(isset($fav_product)){
             foreach($fav_product as $key_catalog=>$fav_product_catalog){
                 //Все параметры для категории
@@ -170,6 +176,73 @@ class ControllerCommonCompare extends Controller {
                 $final_fav_product_catalog=[];
                 
                 foreach($fav_product_catalog as $favorite_product){
+                    $product=$favorite_product;
+                    $prodUnits = $produnitsGateway->getUnitsByProduct($product['product_id']);
+                    $priceUnit = null;
+                    
+                    foreach ($prodUnits as $unit_id => $unit) {
+                        if ($unit['isPriceBase'] == 1 && !$priceUnit) {
+                            $priceUnit = $unit;
+                            //коэффициент пересчета из базовой еденицы продажи (кратности) в еденицы учета (цены)
+                            $saleToPriceKoef = $produnitsCalcGateway->getBaseToUnitKoef($product['product_id'], 'isSaleBase', $unit_id);
+                        } elseif ($unit['isPriceBase'] == 1) {
+                            throw new \Exception('Too many price bases for product ' . $product['product_id']);
+                        }
+                        if (0 != $unit['switchSortOrder']) {
+                            $key = (int)$unit['switchSortOrder'];
+    
+                            
+                            $saleToUIKoef = $produnitsCalcGateway->getBaseToUnitKoef($product['product_id'], 'isSaleBase', $unit_id);
+                            $array_koef = (array) $saleToUIKoef;
+                            $z=0;
+                            $koef_numerator=1;
+                            $koef_denomirator=1;
+                            foreach($array_koef as $koef_item){
+                                if($z){
+                                    $koef_denomirator=$koef_item;
+                                }else{
+                                    $koef_numerator=$koef_item;
+                                }
+                                $z++;
+                            }
+                            $pUnits[$key]['nom']=$koef_numerator;
+                            $pUnits[$key]['denom']=$koef_denomirator;
+    
+                            $koef_d=$koef_numerator/$koef_denomirator;
+                            
+                            if($product['quantity']>0){
+                                $pUnits[$key]['mincount']=ceil(1*$koef_d);
+                            }else{
+                                $pUnits[$key]['mincount']=ceil($product['mincount']*$koef_d);
+                            }
+    
+                        }                    
+                    }
+    
+                    $mincount = 1;
+                    $step=1;
+                    if($product['sale1']){
+                        $mincount = 1;
+                        $step=1;
+                    }else{
+                        if (isset($pUnits[2])){
+                            if (( $product["quantity"]<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){
+                                $step = $pUnits[2]['denom'];
+                                $mincount=$pUnits[2]['denom'];
+                                if($pUnits[1]['mincount']<$pUnits[2]['denom']){
+                                    $mincount = $pUnits[2]['denom'];
+                                }else{
+                                    $mincount = $pUnits[1]['mincount'];
+                                }
+                            }else{
+                                $mincount = $pUnits[1]['mincount'];
+                            }
+                        }else{
+                            $mincount = $pUnits[1]['mincount'];
+                        }
+                    }
+//echo "!".$mincount."!";
+
                     $product_params=$this->model_extension_module_category->getProductParams($favorite_product['product_id']);
 
                     //print_r($favorite_product);
@@ -182,6 +255,7 @@ class ControllerCommonCompare extends Controller {
                         $pack_list[$key_catalog][$unit_desc]=1;
                         $params_pack[$unit_desc]=$pack_item["value"];
                     }
+                    
 
                     //print_r($data_packageStrings);
                     
@@ -222,6 +296,7 @@ class ControllerCommonCompare extends Controller {
                     
                     $favorite_product["compare_filter"]=$params_final;
                     $favorite_product["params_pack"]=$params_pack;
+                    $favorite_product["mincount"]=$mincount;
 
                     $final_fav_product_catalog[]=$favorite_product;
                 }

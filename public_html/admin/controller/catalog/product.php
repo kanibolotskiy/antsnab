@@ -696,6 +696,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_recurring'] = $this->language->get('entry_recurring');
 		$data['entry_main_category'] = $this->language->get('entry_main_category');
 		$data['entry_disseo'] = $this->language->get('entry_disseo');
+		$data['entry_sale1'] = $this->language->get('entry_sale1');
 		/*
 		$data['entry_altvideo'] = $this->language->get('entry_altvideo');
 		*/
@@ -888,6 +889,14 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['disseo'] = '';
 		}
+		if (isset($this->request->post['sale1'])) {
+			$data['sale1'] = $this->request->post['sale1'];
+		} elseif (!empty($product_info)) {
+			$data['sale1'] = $product_info['sale1'];
+		} else {
+			$data['sale1'] = '';
+		}
+
 		/*
 		if (isset($this->request->post['altvideo'])) {
 			$data['altvideo'] = $this->request->post['altvideo'];

@@ -136,15 +136,10 @@
                                 data-ui_name_plural="<?=$p['ui_unit_name_plural']?>"
                                 data-ui_name_genitive="<?=$p['ui_unit_name_genitive']?>"
                                 
+                                data-ui_minimum="<?=$p['mincount']?>"
+                                data-ui_step="<?=$p['step']?>"
                                 
                                 
-                                <?php if($p['ui_unit_force_step_by_one'] == 1){ ?>
-                                    data-ui_minimum="1" 
-                                    data-ui_step= "1"
-                                <?php }else{ ?>
-                                    data-ui_minimum = "<?=$p['mincount']?>" 
-                                    data-ui_step = "<?=$p['step']?>"
-                                <?php } ?>
                             >
                             </div>
 

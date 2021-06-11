@@ -344,6 +344,7 @@ class ModelCatalogProduct extends Model {
 				'calc_data4'	   => $query->row['calc_data4'],
 
 				'discount_percent' => $query->row['discount_percent'],
+				'sale1'			   => $query->row['sale1'],
 				/*'priceold'     			=> $query->row['priceold'],
 				'price_wholesaleold'	=> $query->row['price_wholesaleold'],
 				*/

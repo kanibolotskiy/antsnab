@@ -274,6 +274,27 @@ class ControllerProductProduct extends Controller {
             $pUnitsErrors = $e->getMessage();
 		}
 		
+		$dataui_min=1;
+        if($product_info['sale1']){
+            $dataui_min = 1;
+            $pUnits[1]['force_step_by_one']=1;
+        }else{
+            if (isset($pUnits[2])){
+                if (( $product_info["quantity"]<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){
+                    $dataui_min=$pUnits[2]['denom'];
+                    if($pUnits[1]['mincount']<$pUnits[2]['denom']){
+                        $dataui_min = $pUnits[2]['denom'];
+                    }else{
+                        $dataui_min = $pUnits[1]['mincount'];
+                    }
+                }else{
+                    $dataui_min = $pUnits[1]['mincount'];
+                }
+            }else{
+                $dataui_min = $pUnits[1]['mincount'];
+            }
+        }
+
 		$delivery_info = $this->model_catalog_product->getDelivery($product_id,$base_weight);
 		
 		if(is_numeric($delivery_info["price_delivery"])){
@@ -288,6 +309,9 @@ class ControllerProductProduct extends Controller {
 		$data['baseVol']=$base_vol;
 
         $data['pUnits'] = $pUnits;
+		$data['dataui_min'] = $dataui_min;
+		
+
         $data['pUnitsErrors'] = $pUnitsErrors;
         $data['priceUnit'] = $priceUnit;
         $data['saleUnit'] = $saleUnit;

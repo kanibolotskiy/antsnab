@@ -828,7 +828,8 @@ $(document).ready(function(){
                     ym(14496178, 'reachGoal', 'add-to-card-compare');
                 }
             }
-            add_to_cart(product_id, 1, show_added);
+            var cnt=itm.data("ui_minimum")*1;
+            add_to_cart(product_id, cnt, show_added);
             
         }else{
             

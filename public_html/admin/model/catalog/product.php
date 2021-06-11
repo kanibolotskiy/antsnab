@@ -269,6 +269,10 @@ class ModelCatalogProduct extends Model
         if (!empty($data['disseo'])) {
             $disseo = (float) $data['disseo'];
         }
+        $sale1=0;
+        if (!empty($data['sale1'])) {
+            $sale1 = (float) $data['sale1'];
+        }
         /*
         $altvideo=0;
         if (!empty($data['altvideo'])) {
@@ -334,10 +338,11 @@ class ModelCatalogProduct extends Model
         }
 
 
-        $sql = "update " . DB_PREFIX . "product set consumption = :consumption, calc_data1 = :calc_data1, calc_data2 = :calc_data2, calc_data3 = :calc_data3, calc_data4 = :calc_data4, disseo = :disseo, discount = :discount, price_wholesale = :price_wholesale, priceold = :priceold, price_wholesaleold = :price_wholesaleold, wholesale_threshold=:wholesale_threshold, produnit_template_id=:produnit_template_id where product_id = :id";
+        $sql = "update " . DB_PREFIX . "product set consumption = :consumption, calc_data1 = :calc_data1, calc_data2 = :calc_data2, calc_data3 = :calc_data3, calc_data4 = :calc_data4, disseo = :disseo, sale1 = :sale1, discount = :discount, price_wholesale = :price_wholesale, priceold = :priceold, price_wholesaleold = :price_wholesaleold, wholesale_threshold=:wholesale_threshold, produnit_template_id=:produnit_template_id where product_id = :id";
         $res = $this->db->query($sql, [
             ':discount' => $discount,
             ':disseo' => $disseo,
+            ':sale1' => $sale1,
             //':altvideo' => $altvideo,
             ':consumption' => $consumption,
             ':calc_data1' => $calc_data1,
@@ -409,6 +414,7 @@ class ModelCatalogProduct extends Model
         $this->db->query("INSERT INTO " . DB_PREFIX . "product SET 
         accompany_id='".$acc_id."',
         disseo = '" . $this->db->escape($data['disseo']) . "', 
+        sale1 = '" . $this->db->escape($data['sale1']) . "', 
         
         sku = '" . $this->db->escape($data['sku']) . "', 
         upc = '" . $this->db->escape($data['upc']) . "', 

@@ -156,17 +156,16 @@
                                                 <?php echo $entry_disseo; ?>
                                             </label>
                                             <div class="col-sm-1">
-                                            <div class="checkbox">
-                                                <label>
-                                                <?php if($disseo) { ?>
-                                                <input  type="checkbox" name="disseo" value="1" checked="checked" id="input-disseo" />
-                                                <?php } else { ?>
-                                                <input type="checkbox" name="disseo" value="1" id="input-disseo" />
-                                                <?php } ?>
-                                                &nbsp; </label>
+                                                <div class="checkbox">
+                                                    <label>
+                                                    <?php if($disseo) { ?>
+                                                    <input  type="checkbox" name="disseo" value="1" checked="checked" id="input-disseo" />
+                                                    <?php } else { ?>
+                                                    <input type="checkbox" name="disseo" value="1" id="input-disseo" />
+                                                    <?php } ?>
+                                                    &nbsp; </label>
+                                                </div>
                                             </div>
-                                            </div>
-
                                         </div>
 
 
@@ -537,7 +536,25 @@
                                     <input type="text" name="mincount" value="<?php echo $mincount; ?>" placeholder="<?php echo $entry_mincount; ?>" id="input-mincount" class="form-control" />
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-sale1">
+                                    <?php echo $entry_sale1; ?>
+                                </label>
+                                <div class="col-sm-1">
+                                    <div class="checkbox">
+                                        <label>
+                                        <input  type="checkbox" name="sale1" value="1" <?php echo $sale1?'checked="checked"':'';?> id="input-sale1" />
+                                        <!--
+                                        <?php if($sale1) { ?>
+                                        <input  type="checkbox" name="sale1" value="1" checked="checked" id="input-sale1" />
+                                        <?php } else { ?>
+                                        <input type="checkbox" name="sale1" value="1" id="input-sale1" />
+                                        <?php } ?>
+                                        -->
+                                        &nbsp; </label>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="produnit_template_id">

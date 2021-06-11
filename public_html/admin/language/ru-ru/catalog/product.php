@@ -194,6 +194,7 @@ $_['tab_column_hide'] = 'Скрыть';
 $_['tab_entry_linkto_tabmanagement'] = 'Изменить на уровне категории';
 
 $_['entry_disseo'] = 'Не показывать в YML?';
+$_['entry_sale1'] = 'Продажа от 1 штуки';
 $_['entry_altvideo'] = 'Альтернативное превью для видео';
 
 $_['entry_video'] = 'Видео';

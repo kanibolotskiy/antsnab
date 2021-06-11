@@ -777,8 +777,6 @@ class CartController extends \ControllerCheckoutCart
                     }
                     if (0 != $unit['switchSortOrder']) {
                         $key = (int)$unit['switchSortOrder'];
-    
-                        
                         $saleToUIKoef = $produnitsCalcGateway->getBaseToUnitKoef($product['product_id'], 'isSaleBase', $unit_id);
                         $array_koef = (array) $saleToUIKoef;
                         $z=0;
@@ -796,23 +794,20 @@ class CartController extends \ControllerCheckoutCart
                         $pUnits[$key]['denom']=$koef_denomirator;
     
                         $koef_d=$koef_numerator/$koef_denomirator;
+                        
                         if($product['quantity_in_store']>0){
                             $pUnits[$key]['mincount']=ceil(1*$koef_d);
                         }else{
                             $pUnits[$key]['mincount']=ceil($product['mincount']*$koef_d);
-                        }
-    
+                        }    
                     }                    
                 }
                 
-                $step=1;
-        
-                
-                if (isset($pUnits[2])){
-                
+                /*
+                $step=1;                
+                if (isset($pUnits[2])){                
                     if (( $product['quantity_in_store']<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){
-                        $step = $pUnits[2]['denom'];
-                        
+                        $step = $pUnits[2]['denom'];                        
                         if($pUnits[1]['mincount']<$pUnits[2]['denom']){
                             $mincount = $pUnits[2]['denom'];
                         }else{
@@ -821,10 +816,39 @@ class CartController extends \ControllerCheckoutCart
                     }else{
                         $mincount = $pUnits[1]['mincount'];
                     }
-    
                 }else{
                     $mincount = $pUnits[1]['mincount'];
                 }
+                */
+                //$dataui_min=1;
+                $mincount = 1;
+                $step=1;
+                if($product['sale1']){
+                    $mincount = 1;
+                    $step=1;
+                }else{
+                    //echo "ok1";
+                    if (isset($pUnits[2])){
+                        //echo "ok2";
+                        
+                        if (( $product["quantity_in_store"]<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){
+                            //echo "!".$step."!";
+                            $step = $pUnits[2]['denom'];
+                            $mincount=$pUnits[2]['denom'];
+                            if($pUnits[1]['mincount']<$pUnits[2]['denom']){
+                                $mincount = $pUnits[2]['denom'];
+                            }else{
+                                $mincount = $pUnits[1]['mincount'];
+                            }
+                        }else{
+                            $mincount = $pUnits[1]['mincount'];
+                        }
+                    }else{
+                        $mincount = $pUnits[1]['mincount'];
+                    }
+                }
+                /**-----------------*/
+
 
                 if (!$priceUnit) {
                     throw new \Exception('Price base wasnt found for product ' . $product['product_id']);

@@ -119,10 +119,31 @@ class ControllerCommonFavorite extends Controller {
 
                     }                    
                 }
-    
+                $mincount = 1;
+                $step=1;
+                if($product['sale1']){
+                    $mincount = 1;
+                    $step=1;
+                }else{
+                    if (isset($pUnits[2])){
+                        if (( $product["quantity"]<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){
+                            $step = $pUnits[2]['denom'];
+                            $mincount=$pUnits[2]['denom'];
+                            if($pUnits[1]['mincount']<$pUnits[2]['denom']){
+                                $mincount = $pUnits[2]['denom'];
+                            }else{
+                                $mincount = $pUnits[1]['mincount'];
+                            }
+                        }else{
+                            $mincount = $pUnits[1]['mincount'];
+                        }
+                    }else{
+                        $mincount = $pUnits[1]['mincount'];
+                    }
+                }
+                /*
                 $step=1;
                 $mincount=1;
-        
                 
                 if (isset($pUnits[2])){
                 
@@ -141,7 +162,7 @@ class ControllerCommonFavorite extends Controller {
                 }else{
                     $mincount = $pUnits[1]['mincount'];
                 }
-
+                */
                 
 
                 if (!$priceUnit) {

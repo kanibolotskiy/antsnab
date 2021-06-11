@@ -99,24 +99,20 @@
                                     data-currency_symbol="<?=$currencySymb?>" data-base_vol="<?=$baseVol?>" data-base_weight="<?=$baseWeight?>" data-opt_limit="<?=$optLimit?>" data-rosn_limit="<?=$mincount?>"> 
 
                                     <li class="unitpack1" data-sale_to_ui_koef="<?=$pUnits[1]['sale_to_ui_koef']?>" 
-                                        <?php if($pUnits[1]['force_step_by_one'] == 1):?>
-                                        data-ui_step = "1"
-                                        <?php endif; ?>
+                                        <?php if($pUnits[1]['force_step_by_one'] == 1){ ?>
+                                            data-ui_step = "1"
+                                        <?php } ?>
+                                        
                                         <?php if (isset($pUnits[2])){ ?>
                                             <?php if (( $quantity_stock<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){ ?>
                                                 data-ui_step = "<?=$pUnits[2]['denom']?>"
-                                                <?php if($pUnits[1]['mincount']<$pUnits[2]['denom']){ ?>
-                                                    data-ui_minimum = "<?=$pUnits[2]['denom']?>"
-                                                <?php }else{ ?>
-                                                    data-ui_minimum = "<?=$pUnits[1]['mincount']?>"
-                                                <?php } ?>
-                                            <?php }else{ ?>
-                                                    data-ui_minimum = "<?=$pUnits[1]['mincount']?>"
                                             <?php }?>
-
-                                        <?php }else{?>
-                                            data-ui_minimum = "<?=$pUnits[1]['mincount']?>"
                                         <?php }?>
+                                        
+                                        <?php if($dataui_min){?>
+                                            data-ui_minimum=<?=$dataui_min ?>
+                                        <?php }?>
+                                        
                                         data-nom=<?=$pUnits[1]['nom']?>
                                         data-denom=<?=$pUnits[1]['denom']?>
                                         

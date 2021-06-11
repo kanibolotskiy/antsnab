@@ -126,24 +126,58 @@ class ProductListHelper extends \Model
                 }
             
             }
-            
+            /*
+            <?php if($p['ui_unit_force_step_by_one'] == 1){ ?>
+                data-ui_minimum="1" 
+                data-ui_step= "1"
+            <?php }else{ ?>
+                data-ui_minimum = "<?=$p['mincount']?>" 
+                data-ui_step = "<?=$p['step']?>"
+            <?php } ?>
+            */
+            /*
             $step=1;
             if (isset($pUnits[2])){
                 if (( $result['quantity']<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){
                     $step = $pUnits[2]['denom'];
+                    
                     if($pUnits[1]['mincount']<$pUnits[2]['denom']){
                         $mincount = $pUnits[2]['denom'];
                     }else{
                         $mincount = $pUnits[1]['mincount'];
                     }
                 }else{
-                    $mincount = $pUnits[1]['mincount'];
+                    //$mincount = $pUnits[1]['mincount'];
                 }
 
             }else{
-                $mincount = $pUnits[1]['mincount'];
+                //$mincount = $pUnits[1]['mincount'];
             }
             
+            /**-----------------*/
+            $dataui_min=1;
+            $step=1;
+            if($result['sale1']){
+                $mincount = 1;
+                $step=1;
+            }else{
+                if (isset($pUnits[2])){
+                    if (( $result["quantity"]<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){
+                        $step = $pUnits[2]['denom'];
+                        $mincount=$pUnits[2]['denom'];
+                        if($pUnits[1]['mincount']<$pUnits[2]['denom']){
+                            $mincount = $pUnits[2]['denom'];
+                        }else{
+                            $mincount = $pUnits[1]['mincount'];
+                        }
+                    }else{
+                        $mincount = $pUnits[1]['mincount'];
+                    }
+                }else{
+                    $mincount = $pUnits[1]['mincount'];
+                }
+            }
+            /**-----------------*/
 
             $priceUnit = null;
             $uiUnit = null;

@@ -205,7 +205,29 @@ class ProductTemplateDecorator implements IDecorator
         } catch (\Exception $e) {
             $pUnitsErrors = $e->getMessage();
         }
-        
+
+        $dataui_min=1;
+        if($product_info['sale1']){
+            $dataui_min = 1;
+            $pUnits[1]['force_step_by_one']=1;
+        }else{
+            if (isset($pUnits[2])){
+                if (( $product_info["quantity"]<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){
+                    $dataui_min=$pUnits[2]['denom'];
+                    if($pUnits[1]['mincount']<$pUnits[2]['denom']){
+                        $dataui_min = $pUnits[2]['denom'];
+                    }else{
+                        $dataui_min = $pUnits[1]['mincount'];
+                    }
+                }else{
+                    $dataui_min = $pUnits[1]['mincount'];
+                }
+            }else{
+                $dataui_min = $pUnits[1]['mincount'];
+            }
+        }
+		
+        $data['dataui_min'] = $dataui_min;
         $data['pUnits'] = $pUnits;
         $data['pUnitsErrors'] = $pUnitsErrors;
         $data['priceUnit'] = $priceUnit;

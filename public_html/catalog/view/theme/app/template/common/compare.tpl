@@ -112,7 +112,11 @@
                                                     <div class="compare_priceline">
                                                         <div class="compare_price">от <span class="compare_price_val"><?=$product["price"]?></span> <div class="rur compare_currency">i</div></div>
                                                     </div>
-                                                    <div title="Добавить в корзину" class="buy add-to-card add-to-card-compare" data-product_id="<?php echo $product['product_id'];?>" data-sale_to_price_koef="1">
+                                                    <div title="Добавить в корзину" class="buy add-to-card add-to-card-compare" 
+                                                        data-product_id="<?php echo $product['product_id'];?>" 
+                                                        data-sale_to_price_koef="1"
+                                                        data-ui_minimum = "<?=$product['mincount']?>"
+                                                        >
                                                         В корзину
                                                     </div>
                                                 </div>
