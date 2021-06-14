@@ -946,6 +946,7 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
 
         var unitpack1=$(".unitpack1");
         var unitpack2=$(".unitpack2");
+
         
         var unitpack1_count=Math.floor(max_weight*unitpack1.attr("data-sale_to_ui_koef")/weight);
         if($(this).val()>0){
