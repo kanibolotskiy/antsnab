@@ -1,5 +1,7 @@
 import {Quantity} from './lib/quantity.es6.js';
 import './lib/formsubmit.js';
+import {getDelivery} from './lib/functions.js';
+
 var Fraction = require('fraction.js');
 var $switchers;
 var $firstSwitcher;
@@ -81,6 +83,7 @@ function toggleSwitchHandler(e){
     togglePriceDescr($el);
     toggleQuantityInput($el);
     togglePrices($el);
+    getDelivery();
 }
 
 function togglePriceDescr($activeEl) {
