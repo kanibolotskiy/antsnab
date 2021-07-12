@@ -164,7 +164,7 @@
                                 </strong>
                                 <?php if($price_wholesaleold){?>
                                     <div class="product_old_price product_old_price1">
-                                        <?=$price_wholesaleold?> <div class="rur">i</div>
+                                        <?=$price_wholesaleold?> ₽
                                     </div>
                                 <?php }?>
                             </div>
@@ -195,7 +195,7 @@
                                 </strong>
                                 <?php if($priceold){?>
                                     <div class="product_old_price product_old_price2">
-                                        <?=$priceold?> <div class="rur">i</div>
+                                        <?=$priceold?> ₽
                                     </div>
                                 <?php }?>
                             </div>

@@ -102,14 +102,15 @@
             
                 <div class="price cat_item_price">
                     <div class="wrapper_price_line">
-                        <div class="cat_item_price_caption">от</div>
+                        <div class="cat_item_price_caption">от</div> 
+                       
                         <div class="cat_price_val <?php if($p["priceold"]){echo "_oldprice";}?>" content="<?=$p['price_val']?>">
                             <div class="cat_price_value">
                                 <?=$p['price']?>
-                            </div> <div class="rur">i</div>
+                            </div><span class="cat_item_price_curr"> ₽</span>
                         </div>
                         <?php if($p["priceold"]){?>
-                            <div class="cat_priceold"><?php echo $p["priceold"];?> <div class="rur">i</div></div>
+                            <div class="cat_priceold"><?php echo $p["priceold"];?> ₽</div>
                         <?php }?>
                     </div>
                     <div class="wrapper_count_line">

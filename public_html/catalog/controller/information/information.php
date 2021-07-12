@@ -134,12 +134,12 @@ class ControllerInformationInformation extends Controller {
 				
 				foreach($data_table as $itm){
 					if(is_numeric($itm["price"])){
-						$price_str=number_format($itm["price"]*1,0,"."," ").'&nbsp;<div class="rur">i</div>';
+						$price_str=number_format($itm["price"]*1,0,"."," ").'&nbsp;<span>₽</span>';
 					}else{
 						$price_str=$itm["price"];
 					}
 					if(is_numeric($itm["price_urgent"])){
-						$price_urgent_str=number_format ($itm["price_urgent"]*1,0,"."," ").'&nbsp;<div class="rur">i</div>';
+						$price_urgent_str=number_format ($itm["price_urgent"]*1,0,"."," ").'&nbsp;<span>₽</span>';
 					}else{
 						$price_urgent_str=$itm["price_urgent"];
 					}

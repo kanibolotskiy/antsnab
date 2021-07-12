@@ -538,7 +538,13 @@ class ModelCatalogProduct extends Model {
 		$product_data = array();
 
 		$query = $this->db->query($sql);
-		$z=$data['start']*1+1;
+
+		if(isset($data['start'])){
+			$z=$data['start']*1+1;	
+		}else{
+			$z=1;
+		}
+		
 		foreach ($query->rows as $result) {
 			$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
 			$product_data[$result['product_id']]['position']=$z;

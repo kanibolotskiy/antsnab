@@ -467,7 +467,7 @@ function change_favorite_sum(){
             price=$(this).attr("price");
         }
         row_sum=price*count;
-        var price_str=number_format(price, 0,"."," ")+' <div class="rur">i</div>';
+        var price_str=number_format(price, 0,"."," ")+' &#x20bd;';
         $(this).find(".cart_price_val").html(price_str);
 
         $(this).find(".recal_tll").html(number_format(row_sum, 0,"."," "));

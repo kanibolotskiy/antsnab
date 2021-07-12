@@ -60,7 +60,7 @@
 </picture>
                                         </a>
                                         
-                                        <div class="main_ment_price"><?=$p['price']?> <div class="rur">i</div></div>
+                                        <div class="main_ment_price"><?=$p['price']?> <span>₽</span></div>
                                         <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
                                     </div>
                                 </li>
@@ -86,10 +86,10 @@
                                                 </div>
                                                 <div class="product-accia-block_prices">
                                                     <div class="product-accia-block_price">
-                                                        <?=$p['price']?> <div class="rur">i</div>
+                                                        <?=$p['price']?> <span>₽</span>
                                                     </div>
                                                     <div class="product-accia-block_priceold">
-                                                        <?=$p['price_old']?> <div class="rur">i</div>
+                                                        <?=$p['price_old']?> <span>₽</span>
                                                     </div>
                                                 </div>
                                                 <div class="wrp_product-accia-block_img">
@@ -155,7 +155,7 @@
                                         <div class="new_product_info">
                                             <div class="new_product_info_caption"><?=$p['name']?></div>
                                             <div class="product-accia-block_price">
-                                                <?=$p['price']?> <div class="rur">i</div>
+                                                <?=$p['price']?> <span>₽</span>
                                             </div>
                                             <div class="new_product_label">New</div>
                                         </div>

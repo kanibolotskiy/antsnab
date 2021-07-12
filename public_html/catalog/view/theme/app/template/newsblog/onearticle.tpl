@@ -63,7 +63,7 @@
 </picture>                                
                         </a>
                         <a href="<?=$p['href']?>" class="title-product"><?=$p['name']?></a>
-                        <strong><?=$p['price']?></strong>
+                        <div class="article_product_price"><?=$p['price']?></div>
                         <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
                     </div>
                 </li>

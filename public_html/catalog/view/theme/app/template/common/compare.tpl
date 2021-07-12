@@ -96,7 +96,7 @@
                                                     
                                                     <div class="compare_ttl">
                                                         <a target="_blank" href="<?php echo $product['href'];?>">
-                                                            <?=$product["name"]?>
+                                                            <?=html_entity_decode($product["name"])?>
                                                         </a>
                                                     </div>
                                                     <div class="compare_product_img">
@@ -110,7 +110,7 @@
                                                         </a>
                                                     </div>
                                                     <div class="compare_priceline">
-                                                        <div class="compare_price">от <span class="compare_price_val"><?=$product["price"]?></span> <div class="rur compare_currency">i</div></div>
+                                                        <div class="compare_price">от <div class="compare_price_val"><?=$product["price"]?></div> <span>₽</span></div>
                                                     </div>
                                                     <div title="Добавить в корзину" class="buy add-to-card add-to-card-compare" 
                                                         data-product_id="<?php echo $product['product_id'];?>" 

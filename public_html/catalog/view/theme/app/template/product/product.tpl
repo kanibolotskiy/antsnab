@@ -258,7 +258,6 @@
 
                                 </div>
                                 <div class="border"></div>
-                                
                                 <!-- Оптовая цена -->
                                 <div class="wholesale">
                                     <div class="wholesale-price">
@@ -272,7 +271,7 @@
                                                 </div>
                                                 <?php if($price_wholesaleold){?>
                                                     <div class="product_old_price product_old_price1">
-                                                        <?=$price_wholesaleold?> <div class="rur">i</div>
+                                                        <?=$price_wholesaleold?> ₽
                                                     </div>
                                                 <?php }?>
                                             </div>
@@ -303,7 +302,7 @@
                                                 </div>
                                                 <?php if($priceold){?>
                                                     <div class="product_old_price product_old_price2">
-                                                        <?=$priceold?> <div class="rur">i</div>
+                                                        <?=$priceold?> ₽
                                                     </div>
                                                 <?php }?>
                                             </div>
@@ -889,7 +888,7 @@
 </picture>
                                             </a>
                                             
-                                            <div class="pr_price_block"><?=$p['price']?> <div class="rur">i</div></div>
+                                            <div class="pr_price_block"><?=$p['price']?> <span>₽</span></div>
                                             <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
                                         </div>
                                     </li>
@@ -920,7 +919,7 @@
 </picture>                                                                                      
                                             </a>
                                             
-                                            <div class="pr_price_block"><?=$p['price']?> <div class="rur">i</div></div>
+                                            <div class="pr_price_block"><?=$p['price']?> <span>₽</span></div>
                                             <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
                                         </div>
                                     </li>
@@ -958,7 +957,7 @@
 </picture>                                                
                                             </a>
                                             
-                                            <div class="pr_price_block"><?=$p['price']?> <div class="rur">i</div></div>
+                                            <div class="pr_price_block"><?=$p['price']?> <span>₽</span></div>
                                             <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
                                         </div>
                                     </li>
@@ -989,7 +988,7 @@
 </picture>
                                             </a>
                                             
-                                            <div class="pr_price_block"><?=$p['price']?> <div class="rur">i</div></div>
+                                            <div class="pr_price_block"><?=$p['price']?> <span>₽</span></div>
                                             <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
                                         </div>
                                     </li>

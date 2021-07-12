@@ -18,7 +18,6 @@
             <?php if (!empty($categories)): ?>
                 <div class="catalog-info">
                     <h1 class="title"><?= $heading_title ?></h1>
-                    <?= $description ?>
                 </div>
                 <?php if(isset($categories_isseo)) {?>
                     <?php if(count($categories_isseo)) {?>
@@ -54,6 +53,20 @@
                                             <?php foreach ($categories as $c): ?>
                                                 <li>
                                                     <div class="catalog-block">
+                                                        <div class="ct_title"><a href="<?= $c['href'] ?>"><?= $c['name'] ?></a></div>
+                                                        <div class="cat_info">
+                                                            <div class="cat_img">
+                                                                <a href="<?= $c['href'] ?>">
+                                                                    <picture >
+                                                                        <source type="image/webp" srcset="<?= $c['thumb_webp'] ?>">
+                                                                        <source type="image/jpeg" srcset="<?= $c['thumb'] ?>">
+                                                                        <img src="<?= $c['thumb'] ?>" title="<?= $c['name']?>" alt="<?= $c['name']?>">
+                                                                    </picture>
+                                                                </a>
+                                                            </div>
+                                                            <a href="<?= $c['href'] ?>" class="more">Смотреть все</a> 
+                                                        </div>
+<!--
                                                         <div class="catalog-img">
                                                             <a href="<?= $c['href'] ?>">
                                                                 
@@ -61,9 +74,10 @@
     <source type="image/webp" srcset="<?= $c['thumb_webp'] ?>">
     <source type="image/jpeg" srcset="<?= $c['thumb'] ?>">
     <img src="<?= $c['thumb'] ?>" title="<?= $c['name']?>" alt="<?= $c['name']?>">
-</picture>                                                                
+</picture>
                                                             </a>
                                                         </div>
+
                                                         <div class="catalog-description">
                                                             <a class="title-product" href="<?= $c['href'] ?>">
                                                                 <?= $c['name'] ?>
@@ -72,8 +86,10 @@
                                                                 <p>
                                                                 <?= $c['description'] ?>
                                                                 </p>
-                                                            </div>                                                        </div> 
+                                                            </div>                                                        
+                                                        </div> 
                                                         <a href="<?= $c['href'] ?>" class="more">Смотреть все</a> 
+-->                                                        
                                                     </div> 
                                                 </li>
                                             <?php endforeach; ?>
@@ -224,7 +240,8 @@
 
                 </div>
                 <div class="bottom_text content-text">
-                    <?php echo $bottom_text; ?>
+                    <?= $description ?>
+                    <?= $bottom_text ?>
                 </div>
             <?php else: ?>
                 <h1>Категорий не найдено</h1>

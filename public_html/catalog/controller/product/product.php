@@ -298,7 +298,7 @@ class ControllerProductProduct extends Controller {
 		$delivery_info = $this->model_catalog_product->getDelivery($product_id,$base_weight);
 		
 		if(is_numeric($delivery_info["price_delivery"])){
-			$del_price="от ".number_format($delivery_info["price_delivery"],0,"."," ").' <div class="rur">i</div>';
+			$del_price="от ".number_format($delivery_info["price_delivery"],0,"."," ").' ₽';
 		}else{
 			$del_price=$delivery_info["price_delivery"];
 		}
@@ -339,7 +339,7 @@ class ControllerProductProduct extends Controller {
 		
 		//echo "!".$delivery_info['price_delivery']."!".is_numeric($delivery_info['price_delivery']);
 		if(is_numeric($delivery_info['price_delivery'])){
-			$price_del="от ".number_format($delivery_info['price_delivery'],0,"."," ").' <div class="rur">i</div>';
+			$price_del="от ".number_format($delivery_info['price_delivery'],0,"."," ").' ₽';
 		}else{
 			$price_del=$delivery_info['price_delivery'];
 		}

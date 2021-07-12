@@ -13,7 +13,7 @@
     </div>
     <div class="basket_info">
         <a target="_blank" class="prod-name" href="<?php echo $product['href']; ?>">
-            <?php echo $product['name']; ?>
+            <?php echo html_entity_decode($product['name']); ?>
         </a>
 
         <p><?=$product['location']?></p>
@@ -68,7 +68,7 @@
         </div>
         <div class="basket_summa">
             <span>Сумма</span>
-            <div class="recalc"><span class="recal_tll"><?php echo $product['total']; ?></span> <div class="rur">i</div></div>
+            <div class="recalc"><span class="recal_tll"><?php echo $product['total']; ?></span> ₽</div>
             <div class="basket_summa_empty"></div>
         </div>
     </div>

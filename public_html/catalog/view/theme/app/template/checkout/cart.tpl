@@ -31,7 +31,7 @@
                         
 
                         <div class="recalc intotal economy" style="<?php if($ecosum==0){echo 'display:none';}?>" > 
-                            Вы сэкономили: <span><span id="ecosum"><?php echo $ecosum;?></span> <div class="rur">i</div></span>
+                            Вы сэкономили: <span><span id="ecosum"><?php echo $ecosum;?></span> ₽</span>
                         </div>
                         
                         <!--<div class="order_weight">Ориентировочная стоимость доставки: <span><span id="order_weight_cost"><?php echo $total_del;?></span> <div class="rur">i</div></span></div>-->
@@ -137,7 +137,7 @@
                                                 <div class="delivery_order_block_point"></div>
                                                 <div class="delivery_order_block_text">
                                                     <div class="delivery_order_block_caption">Доставка</div>
-                                                    <p>Ориентировочная стоимость доставки по Москве от <span id="order_weight_cost"><?php echo $total_del;?></span> <span class="rur">i</span>, окончательную стоимость сообщит менеджер при подтверждении заказа.</p>
+                                                    <p>Ориентировочная стоимость доставки по Москве от <span id="order_weight_cost"><?php echo $total_del;?></span> ₽, окончательную стоимость сообщит менеджер при подтверждении заказа.</p>
                                                     <div class="form-group">
                                                         <div class="form-group_caption">Адрес доставки <span>*</span></div>
                                                         <input id="order_address" autocomplete="new-password" class="inpOrderText inputAddress" value="<?= $form_data['shipping_address'] ?>" name="shipping_address" type="text" placeholder="Введите адрес"/>

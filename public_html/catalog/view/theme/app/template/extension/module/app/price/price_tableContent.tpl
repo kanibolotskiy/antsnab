@@ -8,7 +8,7 @@
         <tr>
             <td>
                 <a href="<?=$prodData['href']?>" class="no-formated">
-                    <?=$prodData['name']?>
+                    <?=html_entity_decode($prodData['name'])?>
                 </a>
             </td>
             <td class="hide_on_mobile sec_column_price">
@@ -41,11 +41,11 @@
 
             <td class="column-price column-price-1" style="display: table-cell;">
                 <!--<?= $cur->format($prodData['price'], $curSym) . $currencyPerUnit;?>-->
-                <?= number_format($prodData['price'],0,".", " ") . "<div class='rur'>i</div>" . $currencyPerUnit;?>
+                <?= number_format($prodData['price'],0,".", " ") . " ₽" . $currencyPerUnit;?>
             </td>
             <td class="column-price column-price-1" style="display: table-cell;">
                 <!--<?= $cur->format($prodData['price_wholesale'], $curSym) . $currencyPerUnit?>-->
-                <?= number_format($prodData['price_wholesale'],0,".", " ") . "<div class='rur'>i</div>" . $currencyPerUnit;?>
+                <?= number_format($prodData['price_wholesale'],0,".", " ") . " ₽" . $currencyPerUnit;?>
 
             </td>
             <td class="column-price column-price-2" style="display: none;">

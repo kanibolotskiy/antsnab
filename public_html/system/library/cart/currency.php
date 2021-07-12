@@ -26,12 +26,14 @@ class Currency {
 			$currency="RUB";
 		}
 		$symbol_left = $this->currencies[$currency]['symbol_left'];
-		//$symbol_right = $this->currencies[$currency]['symbol_right'];
+		$symbol_right = $this->currencies[$currency]['symbol_right'];
+		/*
 		if($currency=="RUB"){
 			$symbol_right=" <div class='rur'>i</div>";
 		}else{
 			$symbol_right = $this->currencies[$currency]['symbol_right'];
 		}
+		*/
 		$decimal_place = $this->currencies[$currency]['decimal_place'];
 
 		if (!$value) {
@@ -63,7 +65,7 @@ class Currency {
 		// $string .= number_format($amount, (int)$decimal_place, $this->language->get('decimal_point'), $this->language->get('thousand_point'));
 
 		if ($symbol_right) {
-			$string .= $symbol_right;
+			$string .= '<span>'.$symbol_right.'</span>';
 		}
 
 		return $string;

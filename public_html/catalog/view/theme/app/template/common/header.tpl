@@ -38,12 +38,12 @@
 
     
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
-
+<!--
         <link href="../catalog/view/theme/app/fonts/rouble-webfont.eot" rel="preload" as="font" type="font/eot" crossorigin>
         <link href="../catalog/view/theme/app/fonts/rouble-webfont.woff2" rel="preload" as="font" type="font/woff2" crossorigin>
         <link href="../catalog/view/theme/app/fonts/rouble-webfont.woff" rel="preload" as="font" type="font/woff" crossorigin>
         <link href="../catalog/view/theme/app/fonts/rouble-webfont.ttf" rel="preload" as="font" type="font/ttf" crossorigin>
-
+-->
         <link rel="preload" as="style" href="/catalog/view/theme/app/bundle/app2.css" >
         <link rel="preload" as="script" href="catalog/view/theme/app/bundle/app2.js" >
 

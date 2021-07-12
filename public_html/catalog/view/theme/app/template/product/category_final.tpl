@@ -19,18 +19,7 @@
             <?php if (!empty($products)): ?>
                 <div class="catalog-info">
                     <h1 class="title"><?= $heading_title ?></h1>
-                    <?php if($description){ ?>
-
-                        <div class="wrp_description">
-                            <?php if($catalog_brand_img) {?>
-                                <div class="catalog-info_img">
-                                    <img src="<?php echo $catalog_brand_img;?>" alt="<?= $heading_title ?>"/>
-                                </div>
-                            <?php }?>
-                            
-                            <?php echo $description; ?>
-                        </div>
-                    <?php }?>
+                    
                 </div>
                 <?php if(isset($categories_isseo)) {?>
                     <?php if(count($categories_isseo)) {?>
@@ -213,7 +202,7 @@
                                             <img src="<?=$p['thumb']?>" alt="<?=$p['name']?>" title="<?=$p['name']?>">
                                         </a>
                                         
-                                        <strong><?=$p['price']?> <div class="rur">i</div></strong>
+                                        <strong><?=$p['price']?> ₽</strong>
                                         <a href="<?=$p['href']?>" class="order-btn">Подробнее</a>
                                     </div>
                                 </li>
@@ -229,6 +218,18 @@
                 </div>
                 <?php if($bottom_text){ ?>
                     <div class="bottom_text content-text">
+                        <?php if($description){ ?>
+
+                            <div class="wrp_description">
+                                <?php if($catalog_brand_img) {?>
+                                    <div class="catalog-info_img">
+                                        <img src="<?php echo $catalog_brand_img;?>" alt="<?= $heading_title ?>"/>
+                                    </div>
+                                <?php }?>
+                                
+                                <?php echo $description; ?>
+                            </div>
+                        <?php }?>
                         <?php echo $bottom_text; ?>
                     </div>
                 <?php }?>

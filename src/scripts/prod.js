@@ -127,8 +127,8 @@ function togglePrices($activeEl) {
         uiPrice = saleToPriceKoef.div(saleToUiKoef).mul(price),
         uiWholeSalePrice = saleToPriceKoef.div(saleToUiKoef).mul(wholeSalePrice),
         //currency = $('#priceSwitcher').attr('data-currency_symbol');
-        currency = '<div class="rur">i</div>';
-        
+        //currency = '<div class="rur">i</div>';
+        currency=' ₽';    
     
     var plural1=$("#priceSwitcher .active").attr("data-ui_name_genitive");
     var plural2=$("#priceSwitcher .active").attr("data-ui_name_plural");
