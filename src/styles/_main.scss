@@ -11527,3 +11527,8 @@ margin-bottom:30px;
     font-size: 18px;
     font-weight: 600;color:#000;
 }
+@media screen and (max-width: 1024px){
+    .fast_preview{
+        display:none;
+    }
+}

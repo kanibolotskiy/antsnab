@@ -733,8 +733,9 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
         $("#compare").animate({"opacity":1},200);
         $.cookie('compare', compare_str, { expires: 30, path: '/' });
     });
-
+    
     $(document).on("click",".favorite",function(e){
+        
         var fav_itm=$(this);
         
 

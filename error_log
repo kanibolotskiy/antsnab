@@ -1,0 +1,1 @@
+antsnab.cp06038.tmweb.ru [Sat Jul 17 12:20:28 2021] [error] [pid 11583] mod_autoindex.c(2318): [client 94.141.176.50:55690] AH01276: Cannot serve directory /home/c/cp06038/antsnab/public_html/files/: No matching DirectoryIndex (index.php,index.htm,index.html,index.pl) found, and server-generated directory index forbidden by Options directive
