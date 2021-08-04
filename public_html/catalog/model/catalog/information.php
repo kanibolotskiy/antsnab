@@ -110,7 +110,7 @@ class ModelCatalogInformation extends Model {
 		
 		$text = preg_replace_callback('/<a[^>]+/', array($this, 'cleanInternalUrl'), $text);
 		
-		$text=str_replace("₽","<div class='rur'>i</div>",$text);
+		///$text=str_replace("₽","<div class='rur'>i</div>",$text);
 		$text=str_replace('<b ','<span class="textBold"',$text);
 		$text=str_replace('<b>','<span class="textBold">',$text);
 		$text=str_replace('<strong','<span class="textBold"',$text);

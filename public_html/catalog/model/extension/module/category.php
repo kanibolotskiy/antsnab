@@ -156,7 +156,7 @@
                         "id"=>"price_id",
                         "name"=>"Цена",
                         "translit"=>"price",
-                        "unit"=>html_entity_decode('<div class="rur">i</div>'),
+                        "unit"=>'<span>₽</span>',
                         "type_param"=>1,
                         "param_sort_type"=>0,
                         "avail_params"=>$this->getParamsValues($used_products,null,3),
