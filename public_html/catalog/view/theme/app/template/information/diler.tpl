@@ -11,7 +11,7 @@
         </div>
         <div class="wrap_diler_link">
             <div class="diler_link">
-                <a target="_blank" href="<?php echo $link; ?>"><?php echo $link_caption; ?></a>
+                <a rel="nofollow" target="_blank" href="<?php echo $link; ?>"><?php echo $link_caption; ?></a>
             </div>
         </div>
         <?php if(isset($feedbackform)){ 

@@ -477,7 +477,9 @@
                             <div class="bene_item with_goal" data-goal="<?php echo $benefit['goal'];?>">
                                 <div class="bene_item_ico"><img src="<?php echo $benefit['filename'];?>" alt="<?= $benefit['name'] ?>"/></div>
                                 <div class="bene_item_val"><?= $benefit['name'] ?></div>
+                                <!--noindex-->
                                 <div class="bene_item_desc"><?= $benefit['description'] ?></div>
+                                <!--/noindex-->
                             </div>
                         <?php }?>
                     </div>
