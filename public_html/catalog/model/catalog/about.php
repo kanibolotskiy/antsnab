@@ -5,7 +5,7 @@ class ModelCatalogAbout extends Model {
 		return $query->row;
   }
   public function getAboutOff(){
-    $query = $this->db->query("SELECT DISTINCT * from dopinfo_about_off");
+    $query = $this->db->query("SELECT DISTINCT * from dopinfo_about_off order by sort_order");
 		return $query->rows;
   }
   public function getAboutMan(){
@@ -17,7 +17,7 @@ class ModelCatalogAbout extends Model {
 		return $query->rows;
   }
   public function getAboutSert(){
-		$query = $this->db->query("SELECT DISTINCT * from dopinfo_about_sert");
+		$query = $this->db->query("SELECT DISTINCT * from dopinfo_about_sert order by sort_order");
 		return $query->rows;
 	}
   public function getAboutBlock(){
@@ -31,7 +31,7 @@ class ModelCatalogAbout extends Model {
     return $results;
   }
   public function getAboutCustomers(){
-    $query = $this->db->query("SELECT DISTINCT * from dopinfo_about_customers");
+    $query = $this->db->query("SELECT DISTINCT * from dopinfo_about_customers order by sort_order");
     return $query->rows;
   }
 }

@@ -542,7 +542,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!--noindex-->
+                        
                         <?php if(isset($files)){ ?>
                             <div class="tovar_files">
                                 <?php foreach($files as $file){ ?>
@@ -550,7 +550,7 @@
                                 <?php } ?>
                             </div>
                         <?php } ?>
-                        <!--/noindex-->
+                        
                     </div>
                     
                     <?php endif;?>

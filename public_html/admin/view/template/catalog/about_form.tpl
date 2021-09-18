@@ -178,14 +178,16 @@
                 <input type="text" class="cust_change form-control" name="customer[<?=$key?>][fio]" value="<?=$cust_row['fio']?>" />    
                 <button type="button" class="r_remove btn btn-danger"><i class="fa fa-minus-circle"></i></button>
             </div>
-            <div class="about_row_title">Должность</div>
+            <div class="about_row_title">Должность:</div>
             <input type="text" class="cust_change form-control" name="customer[<?=$key?>][position]" value="<?=$cust_row['position']?>" />
-            <div class="about_row_title">Телефон</div>
+            <div class="about_row_title">Телефон:</div>
             <input type="text" class="cust_change form-control" name="customer[<?=$key?>][phone]" value="<?=$cust_row['phone']?>" />
-            <div class="about_row_title">Код</div>
+            <div class="about_row_title">Код:</div>
             <input type="text" class="cust_change form-control" name="customer[<?=$key?>][code]" value="<?=$cust_row['code']?>" />
-            <div class="about_row_title">Email</div>
+            <div class="about_row_title">Email:</div>
             <input type="text" class="cust_change form-control" name="customer[<?=$key?>][email]" value="<?=$cust_row['email']?>" />
+            <div class="about_row_title">Порядок сортировки:</div>
+            <input type="text" class="cust_change form-control" name="customer[<?=$key?>][sort_order]" value="<?=$cust_row['sort_order']?>" />
         </div>
     </div>
 <?php }?>
@@ -226,6 +228,8 @@
                         <button type="button" class="r_remove btn btn-danger"><i class="fa fa-minus-circle"></i></button>
                     </div>
                     <input name="off[<?=$key?>][video]" value="<?=$off_row['video']?>" placeholder="Видео" class="video_input form-control" />
+                    
+                    <input placeholder="Порядок сортировки" type="text" class="margtop_form-control form-control" name="off[<?=$key?>][sort_order]" value="<?=$off_row['sort_order']?>" />
                 </div>
             </div>
         </div>
@@ -295,7 +299,7 @@
                 <div class="wrapper_row_image">
                     <a href="" id="thumb-image_sklad_<?=$key?>"  class="img-thumbnail" data-toggle='image'>
                         <img src="<?php echo $sklad_row['thumb']; ?>" alt="" title="" data-placeholder="<?=$image_placeholder?>" />
-                        <input name="sklad[<?=$key?>][image]" value="<?=$sklad_row['image']?>" type="hidden" class="cust_change form-control" id="input-image_sklad_<?=$key?>"  readonly  />
+                        <input name="sklad[<?=$key?>][image]" value="<?=$sklad_row['image']?>" type="hidden" class="margtop_form-control form-control" id="input-image_sklad_<?=$key?>"  readonly  />
                     </a>
                 </div>
                 <div class="wrapper_row_info">
@@ -364,6 +368,7 @@
                         <input name="sert[<?=$key?>][caption]" value="<?=$sert_row['caption']?>" placeholder="Заголовок" type="text" class="cust_change form-control" />    
                         <button type="button" class="r_remove btn btn-danger"><i class="fa fa-minus-circle"></i></button>
                     </div>
+                    <input placeholder="Порядок сортировки" type="text" class="margtop_form-control form-control" name="sert[<?=$key?>][sort_order]" value="<?=$sert_row['sort_order']?>" />
                 </div>
             </div>
         </div>
