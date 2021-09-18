@@ -1995,55 +1995,61 @@ class ControllerCatalogProduct extends Controller {
 	}
 	public function videoPreview(){
 		//$json['test']=$_GET['video'];
-		$variants=Array("default","mqdefault","hqdefault","0","sddefault","maxresdefault");
-		$video_id=0;
-		preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $_GET['video'], $matches);
-		if(isset($matches[0])){
-			$video_id=$matches[0];			
-		}
-		$json['video_id']=$video_id;
-
-		//$url='https://img.youtube.com/vi/WDAhMyZnYsc/hqdefault.jpg';
-		//$url='https://img.youtube.com/vi/WDAhMyZnYsc/maxresdefault.jpg';
-
-		//$json['file1']=file_get_contents('//img.youtube.com/vi/JMJXvsCLu6s/maxresdefault.jpg');  // Есть
-		//$json['file2']=file_get_contents('//img.youtube.com/vi/WDAhMyZnYsc/maxresdefault.jpg');
-		//return json_encode($json);		
-		//img.youtube.com/vi/JMJXvsCLu6s/maxresdefault.jpg
-
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_HEADER, 1);
-		//curl_setopt($ch, CURLOPT_HTTPHEADER, array("HeaderName: HeaderValue"));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Устанавливаем параметр, чтобы curl возвращал данные, вместо того, чтобы выводить их в браузер.
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION,true);
-		
-		//$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		//$httpCode = curl_getinfo($ch);
-		//$local_path="image/video_preview/";
-		$local_path="video_preview/";
-		$url="";
-		$flag=true;
-		$i=count($variants)-1;
-		while(($flag) or ($i>0)){
-			$url='https://img.youtube.com/vi/'.$video_id.'/'.$variants[$i].'.jpg';
-			curl_setopt($ch, CURLOPT_URL, $url);
-			$data = curl_exec($ch);
-			$pos = strpos($data, 'HTTP/1.1 200 OK');
-			if ($pos === false) {
-				$rez=0;
-			}else{
-				$rez=1;
-				$flag=false;
-				break;
+		$video_src=$_GET['video'];
+		if(trim($video_src)){
+			$variants=Array("default","mqdefault","hqdefault","0","sddefault","maxresdefault");
+			$video_id=0;
+			preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $video_src, $matches);
+			if(isset($matches[0])){
+				$video_id=$matches[0];			
 			}
-			$json['test'][]=Array("url"=>$url,"rez"=>$rez);
-			$i--;
-		}
-		if($url){
-			$local_file=$local_path.$video_id.".jpg";
-			file_put_contents("../image/".$local_file, file_get_contents($url));
-			$json['preview']=$local_file;
+			$json['video_id']=$video_id;
+
+			//$url='https://img.youtube.com/vi/WDAhMyZnYsc/hqdefault.jpg';
+			//$url='https://img.youtube.com/vi/WDAhMyZnYsc/maxresdefault.jpg';
+
+			//$json['file1']=file_get_contents('//img.youtube.com/vi/JMJXvsCLu6s/maxresdefault.jpg');  // Есть
+			//$json['file2']=file_get_contents('//img.youtube.com/vi/WDAhMyZnYsc/maxresdefault.jpg');
+			//return json_encode($json);		
+			//img.youtube.com/vi/JMJXvsCLu6s/maxresdefault.jpg
+
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_HEADER, 1);
+			//curl_setopt($ch, CURLOPT_HTTPHEADER, array("HeaderName: HeaderValue"));
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Устанавливаем параметр, чтобы curl возвращал данные, вместо того, чтобы выводить их в браузер.
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION,true);
+			
+			//$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			//$httpCode = curl_getinfo($ch);
+			//$local_path="image/video_preview/";
+			$local_path="video_preview/";
+			$url="";
+			$flag=true;
+			$i=count($variants)-1;
+			while(($flag) or ($i>0)){
+				$url='https://img.youtube.com/vi/'.$video_id.'/'.$variants[$i].'.jpg';
+				curl_setopt($ch, CURLOPT_URL, $url);
+				$data = curl_exec($ch);
+				$pos = strpos($data, 'HTTP/1.1 200 OK');
+				if ($pos === false) {
+					$rez=0;
+				}else{
+					$rez=1;
+					$flag=false;
+					break;
+				}
+				$json['test'][]=Array("url"=>$url,"rez"=>$rez);
+				$i--;
+			}
+			if($url){
+				$local_file=$local_path.$video_id.".jpg";
+				file_put_contents("../image/".$local_file, file_get_contents($url));
+				$json['preview']=$local_file;
+			}
+			curl_close($ch);
+		}else{
+			$json['preview']='';
 		}
 		
         
@@ -2055,7 +2061,7 @@ class ControllerCatalogProduct extends Controller {
 		}
 		*/
         //$json["errno"]=$httpCode;
-        curl_close($ch);
+        
 		//return $out;
 		
 		$this->response->addHeader('Content-Type: application/json');
