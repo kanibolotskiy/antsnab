@@ -169,6 +169,7 @@ class ControllerInformationAbout extends Controller {
 				
 			}else{
 				$thumb=$this->model_tool_image->myResize($off_row['image'], 400,400,1);
+				$thumb_big=$this->model_tool_image->myResize($off_row['image'], 1000,800,1);
 				$image_webp=str_replace(".jpg",".webp",$thumb);
 				$image_webp=str_replace(".png",".webp",$image_webp);
 				
@@ -177,7 +178,7 @@ class ControllerInformationAbout extends Controller {
 					'video'=>'0',
 					'thumb'=>$thumb,
 					'thumb_webp'=>$image_webp,
-					'url'=>"image/".$off_row['image']
+					'url'=>$thumb_big
 				);
 			}
 			
@@ -210,6 +211,7 @@ class ControllerInformationAbout extends Controller {
 				
 			}else{
 				$thumb=$this->model_tool_image->myResize($man_row['image'], 400,400,1);
+				$thumb_big=$this->model_tool_image->myResize($man_row['image'], 1000,800,1);
 				$image_webp=str_replace(".jpg",".webp",$thumb);
 				$image_webp=str_replace(".png",".webp",$image_webp);
 				$man[]=Array(
@@ -217,7 +219,7 @@ class ControllerInformationAbout extends Controller {
 					'video'=>'0',
 					'thumb'=>$thumb,
 					'thumb_webp'=>$image_webp,
-					'url'=>"image/".$man_row['image']
+					'url'=>$thumb_big
 				);
 			}
 			
@@ -249,6 +251,7 @@ class ControllerInformationAbout extends Controller {
 				
 			}else{
 				$thumb=$this->model_tool_image->myResize($sklad_row['image'], 400,400,1);
+				$thumb_big=$this->model_tool_image->myResize($sklad_row['image'], 1000,800,1);
 				$image_webp=str_replace(".jpg",".webp",$thumb);
 				$image_webp=str_replace(".png",".webp",$image_webp);
 				$sklad[]=Array(
@@ -256,7 +259,7 @@ class ControllerInformationAbout extends Controller {
 					'video'=>'0',
 					'thumb'=>$thumb,
 					'thumb_webp'=>$image_webp,
-					'url'=>"image/".$sklad_row['image']
+					'url'=>$thumb_big
 				);
 			}
 			
@@ -271,6 +274,7 @@ class ControllerInformationAbout extends Controller {
 			//$image_webp=str_replace(".jpg",".webp",$thumb);
 			//$image_webp=str_replace(".png",".webp",$image_webp);
 			$thumb=$this->model_tool_image->onesize($sert_row['image'], 1100);
+			
 			$image_webp=str_replace(".jpg",".webp",$thumb);
 			$image_webp=str_replace(".png",".webp",$image_webp);
 
@@ -278,7 +282,7 @@ class ControllerInformationAbout extends Controller {
 				'caption'=>$sert_row['caption'],
 				'thumb' =>$thumb,
 				'thumb_webp' =>$image_webp,
-				'image'=>"image/".$sert_row['image']
+				'image'=>$thumb
 			);
 		}
 		$data['sert']=$sert;
