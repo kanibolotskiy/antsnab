@@ -345,6 +345,7 @@ class ModelCatalogProduct extends Model {
 
 				'discount_percent' => $query->row['discount_percent'],
 				'sale1'			   => $query->row['sale1'],
+				'notavail'		   => $query->row['notavail'],
 				/*'priceold'     			=> $query->row['priceold'],
 				'price_wholesaleold'	=> $query->row['price_wholesaleold'],
 				*/

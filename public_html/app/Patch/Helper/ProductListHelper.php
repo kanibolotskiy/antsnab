@@ -157,24 +157,27 @@ class ProductListHelper extends \Model
             /**-----------------*/
             $dataui_min=1;
             $step=1;
-            if($result['sale1']){
-                $mincount = 1;
-                $step=1;
-            }else{
-                if (isset($pUnits[2])){
-                    if (( $result["quantity"]<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){
-                        $step = $pUnits[2]['denom'];
-                        $mincount=$pUnits[2]['denom'];
-                        if($pUnits[1]['mincount']<$pUnits[2]['denom']){
-                            $mincount = $pUnits[2]['denom'];
+            $mincount = 1;
+            if(isset($pUnits)){
+                if($result['sale1']){
+                    $mincount = 1;
+                    $step=1;
+                }else{
+                    if (isset($pUnits[2])){
+                        if (( $result["quantity"]<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){
+                            $step = $pUnits[2]['denom'];
+                            $mincount=$pUnits[2]['denom'];
+                            if($pUnits[1]['mincount']<$pUnits[2]['denom']){
+                                $mincount = $pUnits[2]['denom'];
+                            }else{
+                                $mincount = $pUnits[1]['mincount'];
+                            }
                         }else{
                             $mincount = $pUnits[1]['mincount'];
                         }
                     }else{
                         $mincount = $pUnits[1]['mincount'];
                     }
-                }else{
-                    $mincount = $pUnits[1]['mincount'];
                 }
             }
             /**-----------------*/
@@ -325,6 +328,7 @@ class ProductListHelper extends \Model
                 'color_code'=>$colorcode,
                 'position'=>$result['position'],
                 'sku' => $result['sku'],
+                'notavail' => $result['notavail'],
             );
         }
         return $products;

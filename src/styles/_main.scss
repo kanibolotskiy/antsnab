@@ -11533,3 +11533,39 @@ margin-bottom:30px;
     }
 }
 .param_item_caption span{font-weight:400;}
+.quantity-buy_text{
+    margin-bottom:10px;float:none!important;
+    min-height: 40px;
+}
+.quantity-buy_text p{
+    font-size: 12px;
+    line-height: 16px;
+}
+.btn_analog{
+    display:block;
+    text-decoration:none;
+    cursor: pointer;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 14px;
+    width: 100%;
+    line-height: 40px;
+    background-color: #d3a06d;
+    text-align: center;
+    -webkit-transition: background-color 0.4s;
+    -moz-transition: background-color 0.4s;
+    -ms-transition: background-color 0.4s;
+    -o-transition: background-color 0.4s;
+    transition: background-color 0.4s;
+    white-space:nowrap;
+}
+.btn_analog:hover{
+    background-color: #c97c2f;
+}
+.compare_priceline{height:20px;}
+.compare_product_header_info .btn_analog{
+    margin-top: 8px;
+}
+.notavail_analogs{
+    margin-top:30px;
+}

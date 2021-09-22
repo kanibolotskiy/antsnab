@@ -472,6 +472,19 @@
                         </div>
                         <div class="tab-pane" id="tab-prices">
                             <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-notavail">
+                                    <?php echo $entry_notavail; ?>
+                                </label>
+                                <div class="col-sm-1">
+                                    <div class="checkbox">
+                                        <label>
+                                        <input  type="checkbox" name="notavail" value="1" <?php echo $notavail?'checked="checked"':'';?> id="input-notavail" />
+                                        &nbsp; </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-price"><?php echo $entry_price; ?></label>
                                 <div class="col-sm-10">
                                     <input type="text" name="price" value="<?php echo $price; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control" />

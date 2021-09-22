@@ -273,6 +273,12 @@ class ModelCatalogProduct extends Model
         if (!empty($data['sale1'])) {
             $sale1 = (float) $data['sale1'];
         }
+        $notavail=0;
+        if (!empty($data['notavail'])) {
+            $notavail = (float) $data['notavail'];
+        }
+        
+
         /*
         $altvideo=0;
         if (!empty($data['altvideo'])) {
@@ -338,11 +344,13 @@ class ModelCatalogProduct extends Model
         }
 
 
-        $sql = "update " . DB_PREFIX . "product set consumption = :consumption, calc_data1 = :calc_data1, calc_data2 = :calc_data2, calc_data3 = :calc_data3, calc_data4 = :calc_data4, disseo = :disseo, sale1 = :sale1, discount = :discount, price_wholesale = :price_wholesale, priceold = :priceold, price_wholesaleold = :price_wholesaleold, wholesale_threshold=:wholesale_threshold, produnit_template_id=:produnit_template_id where product_id = :id";
+        $sql = "update " . DB_PREFIX . "product set consumption = :consumption, calc_data1 = :calc_data1, calc_data2 = :calc_data2, calc_data3 = :calc_data3, calc_data4 = :calc_data4, disseo = :disseo, sale1 = :sale1, notavail = :notavail, discount = :discount, price_wholesale = :price_wholesale, priceold = :priceold, price_wholesaleold = :price_wholesaleold, wholesale_threshold=:wholesale_threshold, produnit_template_id=:produnit_template_id where product_id = :id";
         $res = $this->db->query($sql, [
             ':discount' => $discount,
             ':disseo' => $disseo,
             ':sale1' => $sale1,
+            ':notavail' => $notavail,
+            
             //':altvideo' => $altvideo,
             ':consumption' => $consumption,
             ':calc_data1' => $calc_data1,
@@ -378,10 +386,16 @@ class ModelCatalogProduct extends Model
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_description WHERE product_id = '" . (int) $product_id . "'");
 
         foreach ($query->rows as $result) {
+            if(isset($result['description_mini'])){
+                $desc_mini=$result['description_mini'];
+            }else{
+                $desc_mini='';
+            }
+
             $product_description_data[$result['language_id']] = array(
                 'name' => $result['name'],
                 'description' => $result['description'],
-                'description_mini' => $result['description_mini'],
+                'description_mini' => $desc_mini,
                 'meta_title' => $result['meta_title'],
                 'meta_h1' => $result['meta_h1'],
                 'meta_description' => $result['meta_description'],
@@ -405,6 +419,23 @@ class ModelCatalogProduct extends Model
         }else{
             $acc_id=0;
         }
+        if(isset($data['disseo'])){
+            $disseo=$this->db->escape($data['disseo']);
+        }else{
+            $disseo=0;
+        }
+        if(isset($data['sale1'])){
+            $sale1=$this->db->escape($data['sale1']);
+        }else{
+            $sale1=0;
+        }
+        if(isset($data['notavail'])){
+            $notavail=$this->db->escape($data['notavail']);
+        }else{
+            $notavail=0;
+        }
+        
+
         /*
         location = '" . $this->db->escape($data['location']) . "',
         model = '" . $this->db->escape($data['model']) . "', 
@@ -413,8 +444,9 @@ class ModelCatalogProduct extends Model
         */
         $this->db->query("INSERT INTO " . DB_PREFIX . "product SET 
         accompany_id='".$acc_id."',
-        disseo = '" . $this->db->escape($data['disseo']) . "', 
-        sale1 = '" . $this->db->escape($data['sale1']) . "', 
+        disseo = '" . $disseo . "', 
+        sale1 = '" . $sale1 . "', 
+        notavail = '" . $notavail . "', 
         
         sku = '" . $this->db->escape($data['sku']) . "', 
         upc = '" . $this->db->escape($data['upc']) . "', 
@@ -458,7 +490,12 @@ class ModelCatalogProduct extends Model
         }
 
         foreach ($data['product_description'] as $language_id => $value) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "product_description SET product_id = '" . (int) $product_id . "', language_id = '" . (int) $language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', description_mini = '" . $this->db->escape($value['description_mini']) . "', video = '" . $this->db->escape($value['video']) . "',video_preview = '" . $this->db->escape($value['video_preview']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
+            $desc_mini='';
+            if(isset($value['description_mini'])){
+                $desc_mini=$this->db->escape($value['description_mini']);
+            }
+
+            $this->db->query("INSERT INTO " . DB_PREFIX . "product_description SET product_id = '" . (int) $product_id . "', language_id = '" . (int) $language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', description_mini = '" .$desc_mini . "', video = '" . $this->db->escape($value['video']) . "',video_preview = '" . $this->db->escape($value['video_preview']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
         }
 
         /*
@@ -625,8 +662,10 @@ class ModelCatalogProduct extends Model
 		$data['prodproperties'] = $gateway->getPropertiesWithProductValues($product_id, 'order by showInSummary DESC, sortOrder ASC');
         $this->updateProperties($product_id, $data);
         */
-        $this->copyProperties($data['product_id'],$product_id);
-        $this->copyProdtabs($data['product_id'],$product_id);
+        if(isset($data['product_id'])){
+            $this->copyProperties($data['product_id'],$product_id);
+            $this->copyProdtabs($data['product_id'],$product_id);
+        }
 
         $this->cache->delete('product');
 

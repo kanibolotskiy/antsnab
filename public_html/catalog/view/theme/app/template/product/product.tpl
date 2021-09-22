@@ -144,7 +144,9 @@
                                     </a>
                                 <?php } ?>
                                 <div class="wrp_favorite">
-                                    <div title="Добавить товар в избранное" class="favorite <?php echo $favorite;?>" data-rel="<?php echo $product_id;?>"></div>
+                                    <?php if(!$notavail){ ?>
+                                        <div title="Добавить товар в избранное" class="favorite <?php echo $favorite;?>" data-rel="<?php echo $product_id;?>"></div>
+                                    <?php }?>
                                     <div title="Добавить товар в сравнение" class="compare <?php echo $compare;?>" data-rel="<?php echo $product_id;?>"></div>
                                 </div>
                                 
@@ -178,197 +180,223 @@
                                     <div class="description-mini">
                                         <?=$description_mini?>
                                     </div>
-                                    <meta itemprop="priceCurrency" content="RUB"/>
-                                    <span itemprop="priceSpecification" itemscope  itemtype="http://schema.org/PriceSpecification">
+                                    <?php if(!$notavail){ ?>
                                         <meta itemprop="priceCurrency" content="RUB"/>
-                                        <meta itemprop="minPrice" content="<?php echo $price_wholesale;?>">                                        
-                                        <meta itemprop="maxPrice" content="<?php echo $price;?>">
-                                        
-                                    </span>    
-                                    <meta itemprop="price" content="<?php echo $price;?>">
-                                    <div class="wrap_price-for">
-
-                                        <div class="price-for">
-                                            <span>Цена за:</span>
+                                        <span itemprop="priceSpecification" itemscope  itemtype="http://schema.org/PriceSpecification">
+                                            <meta itemprop="priceCurrency" content="RUB"/>
+                                            <meta itemprop="minPrice" content="<?php echo $price_wholesale;?>">                                        
+                                            <meta itemprop="maxPrice" content="<?php echo $price;?>">
                                             
-                                            <!--Переключатель цен-->
-                                            <?php if($pUnitsErrors):?>
-                                                <?= $pUnitsErrors ?>
-                                            <?php else: ?>
+                                        </span>    
+                                        <meta itemprop="price" content="<?php echo $price;?>">
+                                        <div class="wrap_price-for">
 
-                                            
-                                            
-                                                <ul id="priceSwitcher"
-                                                    data-currency_symbol="<?=$currencySymb?>" data-base_vol="<?=$baseVol?>" data-base_weight="<?=$baseWeight?>" data-opt_limit="<?=$optLimit?>" data-rosn_limit="<?=$mincount?>"> 
+                                            <div class="price-for">
+                                                <span>Цена за:</span>
+                                                
+                                                <!--Переключатель цен-->
+                                                <?php if($pUnitsErrors):?>
+                                                    <?= $pUnitsErrors ?>
+                                                <?php else: ?>
 
-                                                    <li class="unitpack1" data-sale_to_ui_koef="<?=$pUnits[1]['sale_to_ui_koef']?>" 
-                                                        
-                                                        <?php if($pUnits[1]['force_step_by_one'] == 1){ ?>
-                                                            data-ui_step = "1"
-                                                        <?php } ?>
-                                                        
-                                                        <?php if (isset($pUnits[2])){ ?>
-                                                            <?php if (( $quantity_stock<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){ ?>
-                                                                data-ui_step = "<?=$pUnits[2]['denom']?>"
+                                                
+                                                
+                                                    <ul id="priceSwitcher"
+                                                        data-currency_symbol="<?=$currencySymb?>" data-base_vol="<?=$baseVol?>" data-base_weight="<?=$baseWeight?>" data-opt_limit="<?=$optLimit?>" data-rosn_limit="<?=$mincount?>"> 
+
+                                                        <li class="unitpack1" data-sale_to_ui_koef="<?=$pUnits[1]['sale_to_ui_koef']?>" 
+                                                            
+                                                            <?php if($pUnits[1]['force_step_by_one'] == 1){ ?>
+                                                                data-ui_step = "1"
+                                                            <?php } ?>
+                                                            
+                                                            <?php if (isset($pUnits[2])){ ?>
+                                                                <?php if (( $quantity_stock<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){ ?>
+                                                                    data-ui_step = "<?=$pUnits[2]['denom']?>"
+                                                                <?php }?>
                                                             <?php }?>
-                                                        <?php }?>
-                                                        
-                                                        <?php if($dataui_min){?>
-                                                            data-ui_minimum=<?=$dataui_min ?>
-                                                        <?php }?>
+                                                            
+                                                            <?php if($dataui_min){?>
+                                                                data-ui_minimum=<?=$dataui_min ?>
+                                                            <?php }?>
 
-                                                        data-nom=<?=$pUnits[1]['nom']?>
-                                                        data-denom=<?=$pUnits[1]['denom']?>
-                                                        
-                                                        data-ui_name = "<?=$pUnits[1]['name']?>"
-                                                        data-ui_name_plural = "<?=$pUnits[1]['name_plural']?>"
-                                                        data-ui_name_genitive = "<?=$pUnits[1]['name_package_dimension']?>"
-                                                        data-ui_descr="<?=$pUnits[1]['relStr']?>" >
-                                                        <a href="#"><?= $pUnits[1]['showName']?></a>
-                                                    </li>
+                                                            data-nom=<?=$pUnits[1]['nom']?>
+                                                            data-denom=<?=$pUnits[1]['denom']?>
+                                                            
+                                                            data-ui_name = "<?=$pUnits[1]['name']?>"
+                                                            data-ui_name_plural = "<?=$pUnits[1]['name_plural']?>"
+                                                            data-ui_name_genitive = "<?=$pUnits[1]['name_package_dimension']?>"
+                                                            data-ui_descr="<?=$pUnits[1]['relStr']?>" >
+                                                            <a href="#"><?= $pUnits[1]['showName']?></a>
+                                                        </li>
 
-                                                    <?php if(isset($pUnits[2])):?>
-                                                    <li class="unitpack2" data-sale_to_ui_koef="<?=$pUnits[2]['sale_to_ui_koef']?>"
-                                                        <?php if($pUnits[2]['force_step_by_one'] == 1):?>
-                                                        data-ui_step = "1"
-                                                        <?php endif; ?>
-                                                        data-nom=<?=$pUnits[2]['nom']?>
-                                                        data-denom=<?=$pUnits[2]['denom']?>
-                                                        
-                                                        data-ui_minimum = "<?=$pUnits[2]['mincount']?>"
-                                                        data-ui_name = "<?=$pUnits[2]['name']?>"
-                                                        data-ui_name_plural = "<?=$pUnits[2]['name_plural']?>"
-                                                        data-ui_name_genitive = "<?=$pUnits[2]['name_package_dimension']?>"
-                                                        data-ui_descr="<?=$pUnits[2]['relStr']?>">
-                                                        <a href="#"><?= $pUnits[2]['showName']?></a>
-                                                    </li>
-                                                    <?php endif;?>
+                                                        <?php if(isset($pUnits[2])):?>
+                                                        <li class="unitpack2" data-sale_to_ui_koef="<?=$pUnits[2]['sale_to_ui_koef']?>"
+                                                            <?php if($pUnits[2]['force_step_by_one'] == 1):?>
+                                                            data-ui_step = "1"
+                                                            <?php endif; ?>
+                                                            data-nom=<?=$pUnits[2]['nom']?>
+                                                            data-denom=<?=$pUnits[2]['denom']?>
+                                                            
+                                                            data-ui_minimum = "<?=$pUnits[2]['mincount']?>"
+                                                            data-ui_name = "<?=$pUnits[2]['name']?>"
+                                                            data-ui_name_plural = "<?=$pUnits[2]['name_plural']?>"
+                                                            data-ui_name_genitive = "<?=$pUnits[2]['name_package_dimension']?>"
+                                                            data-ui_descr="<?=$pUnits[2]['relStr']?>">
+                                                            <a href="#"><?= $pUnits[2]['showName']?></a>
+                                                        </li>
+                                                        <?php endif;?>
 
-                                                </ul>
-                                            <?php endif;?>
-                                            <!-- // -->
+                                                    </ul>
+                                                <?php endif;?>
+                                                <!-- // -->
 
-                                        </div>
-                                        <?php if($discount_form){?>
-                                        <div class="price_disc">
-                                            <div class="js_modal with_goal" data-goal="<?php echo $discount_goal;?>" data-modal="modal_discount">Получить скидку</div>
-                                        </div>
-                                        <?php }?>
-                                    </div>
-
-                                </div>
-                                <div class="border"></div>
-                                <!-- Оптовая цена -->
-                                <div class="wholesale">
-                                    <div class="wholesale-price">
-                                        <?php if($pUnitsErrors):?>
-                                            HAS ERRORS, SEE ABOVE
-                                        <?php else: ?>
-
-                                        <div class="help_cont <?php if($price_wholesaleold){echo "_oldprice";}?>"> 
-                                            <div class="wrp_price_i">
-                                                <div class="wholesale-price_value price_i" id="wholesale_price" data-value="<?=$price_wholesale?>"><?=$price_wholesale_val?>
-                                                </div>
-                                                <?php if($price_wholesaleold){?>
-                                                    <div class="product_old_price product_old_price1">
-                                                        <?=$price_wholesaleold?> ₽
-                                                    </div>
-                                                <?php }?>
                                             </div>
+                                            <?php if($discount_form){?>
+                                            <div class="price_disc">
+                                                <div class="js_modal with_goal" data-goal="<?php echo $discount_goal;?>" data-modal="modal_discount">Получить скидку</div>
+                                            </div>
+                                            <?php }?>
+                                        </div>
+                                    <?php }?>
+                                </div>
+                               
+                                    <div class="border"></div>
+                                    <!-- Оптовая цена -->
+                                    <div class="wholesale">
+                                        <?php if(!$notavail){ ?>
+
+                                        <div class="wholesale-price">
+                                            <?php if($pUnitsErrors):?>
+                                                HAS ERRORS, SEE ABOVE
+                                            <?php else: ?>
+                                                
+                                            
+                                                <div class="help_cont <?php if($price_wholesaleold){echo "_oldprice";}?>"> 
+                                                    <div class="wrp_price_i">
+                                                        <div class="wholesale-price_value price_i" id="wholesale_price" data-value="<?=$price_wholesale?>"><?=$price_wholesale_val?>
+                                                        </div>
+                                                        <?php if($price_wholesaleold){?>
+                                                            <div class="product_old_price product_old_price1">
+                                                                <?=$price_wholesaleold?> ₽
+                                                            </div>
+                                                        <?php }?>
+                                                    </div>
+                                                </div>
+                                                <span id="priceWholesaleDescr"></span>
+                                            
+                                            <?php endif;?>
                                         </div>
                                         
-                                        <span id="priceWholesaleDescr">
-                                        </span>
-                                        <?php endif;?>
-                                    </div>
-                                    <div class="count_limit">
-                                        <p>Оптом</p>
-                                        <p id="opt_limit"></p>
-                                    </div>
-                                </div> 
-                                <!-- // -->
+                                        <div class="count_limit">
+                                            <p>Оптом</p>
+                                            <p id="opt_limit"></p>
+                                        </div>
+                                        <?php }else{ ?>
+                                            <p>в данный момент оптовая цена неизвестна</p>
+                                        <?php } ?>
+                                    </div> 
+                                    <!-- // -->
 
-                                <div class="border"></div>
+                                    <div class="border"></div>
 
-                                <?php if($pUnitsErrors):?>
-                                        HAS ERRORS, SEE ABOVE
-                                <?php else: ?>
+                                    <?php if($pUnitsErrors):?>
+                                            HAS ERRORS, SEE ABOVE
+                                    <?php else: ?>
 
                                     <!-- Розничная цена -->
                                     <div class="wholesale wholesale2">
-                                        <div class="wholesale-price <?php if($priceold){echo "_oldprice";}?>">
-                                            <div class="wrp_price_i">
-                                                <div class="wholesale-price_value price_i" id="price"  data-value="<?=$price?>"><?=$price_val?>
-                                                </div>
-                                                <?php if($priceold){?>
-                                                    <div class="product_old_price product_old_price2">
-                                                        <?=$priceold?> ₽
+                                        <?php if(!$notavail){ ?>
+                                            <div class="wholesale-price <?php if($priceold){echo "_oldprice";}?>">
+                                                <div class="wrp_price_i">
+                                                    <div class="wholesale-price_value price_i" id="price"  data-value="<?=$price?>"><?=$price_val?>
                                                     </div>
-                                                <?php }?>
+                                                    <?php if($priceold){?>
+                                                        <div class="product_old_price product_old_price2">
+                                                            <?=$priceold?> ₽
+                                                        </div>
+                                                    <?php }?>
+                                                </div>
+                                                <br/>
+                                                <span id="priceDescr">
+                                                </span>
                                             </div>
-                                            <br/>
-                                            <span id="priceDescr">
-                                            </span>
-                                        </div>
-                                        <div class="count_limit">
-                                            <p>В розницу</p>
-                                            <p id="rosn_limit"></p>
-                                        </div>
+                                            <div class="count_limit">
+                                                <p>В розницу</p>
+                                                <p id="rosn_limit"></p>
+                                            </div>
+                                        <?php }else{?>
+                                            <p>в данный момент розничная цена неизвестна</p>
+                                        <?php }?>
                                     </div>
                                     <!-- // -->
-                                    
-                                    <div class="quantity-buy quantity-buy_product">
-                                        
-                                        <div class="quantity-buy-block mincount_container">
-                                            <div class="min_count_hint" id="min_count_hint"><span>минимально для заказа</span></div>
-                                            <div class="qnt-container-spec"></div>
+                                    <?php if(!$notavail){ ?>
+                                        <div class="quantity-buy quantity-buy_product">
+                                            
+                                            <div class="quantity-buy-block mincount_container">
+                                                <div class="min_count_hint" id="min_count_hint"><span>минимально для заказа</span></div>
+                                                <div class="qnt-container-spec"></div>
+                                            </div>
+                                            <a data-loading-text="Добавление..." 
+                                            id="button-cart" 
+                                            href="#" 
+                                            data-product_id="<?=$product_id?>"
+                                            data-sale_to_price_koef="<?=$sale_to_price_koef?>"
+                                            class="buy add-to-card add-to-card-product">В корзину</a>
                                         </div>
-                                        <a data-loading-text="Добавление..." 
-                                        id="button-cart" 
-                                        href="#" 
-                                        data-product_id="<?=$product_id?>"
-                                        data-sale_to_price_koef="<?=$sale_to_price_koef?>"
-                                        class="buy add-to-card add-to-card-product">В корзину</a>
-                                    </div>
+                                    <?php } ?>
                                     <div class="wrap_oneclick">
                                         <div class="oneclick_product_thanks">Спасибо за обращение. Мы Вам перезвоним.</div>
                                         <form action="#" class="oneclickform">
                                             <input type="hidden" name="product" value="<?=$heading_title?>"/>
                                             <input type="text" class="workemail" name="workemail"/>
                                             <input type="tel" class="onclickInputMain" placeholder="Введите телефон" name="phone"/>
-                                            <button type="submit" class="onclickButton">Купить в 1 клик</button>
+                                            
+                                            <button type="submit" class="onclickButton <?=$notavail?'fk_item':''?>">
+                                                <?php echo (!$notavail?'Купить в 1 клик':'Оставить заявку'); ?>
+                                            </button>
+                                            
                                         </form>
                                     </div>
                                     
 
                                 <?php endif;?>
+                                
                             <!--</div>--> 
-                            <div class="wrap_state_stock">
-                                <div class="state_stock">
+                            
+                                <div class="wrap_state_stock">
+                                    <div class="state_stock">
 
-                                    <div class="state_stock_col">
-                                        <div class="state_stock_col_info _avail">
-                                            <div class="state_stock_cap">Наличие на складе:</div>
-                                            <div class="state_stock_val">
-                                            <?php if($quantity_stock>0){?>
-                                                <!--<span class="stock1 with_goal" data-goal="in-stock">Алтуфьево</span>-->
-                                                <span class="js_modal with_goal" data-goal="in-stock" data-modal="modal_map">Алтуфьево</span>
-                                            <?php }else{ ?>
-                                                <span class="notinstock js_modal with_goal" data-goal="pre-order" data-modal="modal_delivery">Под заказ</span>
-                                            <?php }?>
+                                        <div class="state_stock_col">
+                                            <div class="state_stock_col_info _avail">
+                                                <div class="state_stock_cap">Наличие на складе:</div>
+                                                <div class="state_stock_val">
+                                                
+                                                    <?php if($quantity_stock>0){?>
+                                                        <!--<span class="stock1 with_goal" data-goal="in-stock">Алтуфьево</span>-->
+                                                        <span class="js_modal with_goal" data-goal="in-stock" data-modal="modal_map">Алтуфьево</span>
+                                                    <?php }else{ ?>
+                                                        <span class="notinstock js_modal with_goal" data-goal="pre-order" data-modal="modal_delivery">Под заказ</span>
+                                                    <?php }?>
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="state_stock_del"></div>
+                                        <div class="state_stock_col">
+                                            <div class="state_stock_col_info  _delivery">
+                                                <div class="state_stock_cap">Доставка:</div>
+                                                <?php if(!$notavail){ ?>
+                                                    <div class="state_stock_val js_modal with_goal" data-goal="delivery" data-modal="modal_delivery_cost" id="delivery_text"></div>
+                                                <?php }else{ ?>
+                                                    <div class="state_stock_val js_modal with_goal" data-goal="delivery" data-modal="modal_delivery_cost">Под заказ</div>
+                                                <?php }?>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="state_stock_del"></div>
-                                    <div class="state_stock_col">
-                                        <div class="state_stock_col_info  _delivery">
-                                            <div class="state_stock_cap">Доставка:</div>
-                                            <div class="state_stock_val js_modal with_goal" data-goal="delivery" data-modal="modal_delivery_cost" id="delivery_text"></div>
-                                        </div>
-                                    </div>
+                                    <div class="state_stock_link js_modal with_goal" data-goal="payment-receipt" data-modal="modal_delivery_pay">Способы оплаты и получения товара</div>
                                 </div>
-                                <div class="state_stock_link js_modal with_goal" data-goal="payment-receipt" data-modal="modal_delivery_pay">Способы оплаты и получения товара</div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -489,6 +517,7 @@
                 </div>
             </div>
             
+            <?php if(!$notavail){ ?>
 
             <div id="demoTab">
                 <ul class="resp-tabs-list vert">
@@ -841,9 +870,10 @@
                 </div>
             </div>
 
+            <?php } ?>
 
             
-
+            <?php if(!$notavail){ ?>
             <div class="mentioned-products mentioned-products2 wrp_mentioned_slider">
                 <?php if( $products):?>
 
@@ -1004,6 +1034,19 @@
                 
                 <?php endif;?>
             </div>
+            <?php }else{ ?>
+                <?php if($products_analog){ ?>
+                    <h2>На сегодняшний день материал не поставляется</h2>
+                    <p>Мы подготовили для вас список доступных для заказа аналогов:</p>
+                    <div class="tab-block tab-block2 notavail_analogs">
+                        <ul id="lazy-load_container" itemscope itemtype="https://schema.org/ItemList">
+                            <?php echo $products_analog;?>
+                        </ul>
+                    </div>
+                <?php } ?>        
+            <?php } ?>
+
+
         </div>
         <?php echo $content_bottom; ?>
     </div>

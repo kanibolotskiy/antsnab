@@ -74,7 +74,6 @@ class ControllerCommonCompare extends Controller {
         foreach($products_arr as $product_item){
             
             $product=$this->model_catalog_product->getProduct($product_item);
-
             if ($product['image']) {
                 $image = $this->model_tool_image->myResize($product['image'], 400, 400,2);
             } else {
@@ -149,7 +148,8 @@ class ControllerCommonCompare extends Controller {
                 "data_stock"=>$data_stock,
                 "properties"=>$item_properties,
                 "delivery"=>$delivery_str,
-                "mincount"=>$product["mincount"]
+                "mincount"=>$product["mincount"],
+                "notavail"=>$product["notavail"],
             );
             //echo $product["product_id"]."<br/>";
             //$price = number_format($price_val,0,".", " ");
@@ -297,6 +297,7 @@ class ControllerCommonCompare extends Controller {
                     $favorite_product["compare_filter"]=$params_final;
                     $favorite_product["params_pack"]=$params_pack;
                     $favorite_product["mincount"]=$mincount;
+                    $favorite_product["notavail"]=$product["notavail"];
 
                     $final_fav_product_catalog[]=$favorite_product;
                 }

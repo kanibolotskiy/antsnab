@@ -55,7 +55,7 @@ class ProductTemplateDecorator implements IDecorator
         }
         
         $data['discount_percent']=$product_info['discount_percent'];
-
+        $data['notavail'] = $product_info['notavail'];
         if(isset($_COOKIE["favorite"])){
             $favorite_arr=json_decode($_COOKIE["favorite"]);
         }else{

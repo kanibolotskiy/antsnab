@@ -861,8 +861,13 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                                 //Быстрый заказ (акции)
                                 ym(14496178, 'reachGoal', 'sale-1click');
                             }else{
-                                //Быстрый заказ (все остальное)
-                                ym(14496178, 'reachGoal', '1click');
+                                if(itm.closest(".catalog_item_product").hasClass("fk_item")){
+                                    ym(14496178, 'reachGoal', 'fake-zakaz');
+                                }else{
+                                    //Быстрый заказ (все остальное)
+                                    ym(14496178, 'reachGoal', '1click');
+                                }
+                                
                             }
                         }
                     }
@@ -874,6 +879,10 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
     });
 
     /**/
+    
+    $(document).on("click",".btn_analog",function(e){
+        ym(14496178, 'reachGoal', 'fake-view');
+    });
     $(document).on("click",".onclickButton",function(e){
         e.preventDefault();
         
@@ -906,7 +915,12 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
                         $(".oneclick_product_thanks").delay(2000).fadeOut(200);
                     });
                     if (typeof ym != 'undefined') {
-                        ym(14496178, 'reachGoal', '1click');
+                        if(itm_button.hasClass("fk_item")){
+                            ym(14496178, 'reachGoal', 'fake-zakaz');
+                        }else{
+                            ym(14496178, 'reachGoal', '1click');
+                        }
+                        
                     }
                 }
             });

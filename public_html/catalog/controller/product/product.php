@@ -5,6 +5,8 @@ use WS\Override\Gateway\ProdUnits\ProdUnitsCalc;
 use WS\Override\Gateway\ProdUnits\ProdUnitStrings;
 use WS\Override\Gateway\ProdProperties; 
 use WS\Patch\Helper\QueryHelper;
+use WS\Patch\Helper\ProductListHelper;
+
 class ControllerProductProduct extends Controller {
 	private $error = array();
 
@@ -27,6 +29,9 @@ class ControllerProductProduct extends Controller {
 		}
 		$data['product_id'] = $product_id;
 		$data['discount_percent'] = $product_info['discount_percent'];
+		
+		$data['notavail'] = $product_info['notavail'];
+		
 		$data['sku'] = $product_info['sku'];
 		$data['manufacturer'] = $product_info['manufacturer'];
 		$data['description_mini'] = html_entity_decode($product_info['description_mini']);
@@ -1101,6 +1106,7 @@ class ControllerProductProduct extends Controller {
 
 			$data['products'][0]=[];
 			$data['products'][1]=[];
+			$notavail_analogs=[];
 			foreach($results_rls as $key=>$results_rl){
 				$result_temp=[];
 				foreach($results_rl as $result){
@@ -1172,9 +1178,28 @@ class ControllerProductProduct extends Controller {
 						'labels'	  => $labels,
 						'discount'	  => $discount
 					);
+					if(!$key and !$result['notavail']){
+						$notavail_analogs[]=$result['product_id'];
+					}
 				}
 			}
-			
+
+			if($notavail_analogs){
+				$ids=implode(",",$notavail_analogs);
+			}
+
+			if($ids){
+				$filter_data=['product_ids'=>$ids];
+				$productsHelper = new ProductListHelper($this->registry);
+				
+				$data_products=$productsHelper->getProducts($filter_data);
+				$products_str="";
+				foreach($data_products as $p){
+					$data["p"]=$p;
+					$products_str.=$this->load->view('partial/product_item.tpl', $data);
+				}
+				$data['products_analog']=$products_str;
+			}
 			$data['tags'] = array();
 			if ($product_info['tag']) {
 				$tags = explode(',', $product_info['tag']);

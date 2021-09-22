@@ -34,7 +34,7 @@
                         
                         
                             <?php $z=0;foreach($favorite_products as $favorite_product){ ?>
-                        
+                            
                             <div class="compare_catalog_block" rel="<?=$favorite_product['catalog_id']?>" style="<?php echo ($z==0?'display:block;':''); ?>">
                                 <div class="left_compare">
                                     <div class="compare_header compare_header_ico">
@@ -88,6 +88,7 @@
                                 <div class="right_compare scroll_content">
                                     <div class="compare_products">
                                         <?php foreach($favorite_product["products"] as $product) {?>
+                                        
                                         <div class="compare_product" rel="<?php echo $product['product_id'];?>">
                                             
                                             <div class="compare_header compare_product_header notfixed">
@@ -109,16 +110,27 @@
                                                             
                                                         </a>
                                                     </div>
-                                                    <div class="compare_priceline">
-                                                        <div class="compare_price">от <div class="compare_price_val"><?=$product["price"]?></div> <span>₽</span></div>
-                                                    </div>
-                                                    <div title="Добавить в корзину" class="buy add-to-card add-to-card-compare" 
-                                                        data-product_id="<?php echo $product['product_id'];?>" 
-                                                        data-sale_to_price_koef="1"
-                                                        data-ui_minimum = "<?=$product['mincount']?>"
-                                                        >
-                                                        В корзину
-                                                    </div>
+                                                    
+
+                                                    <?php if($product['notavail']){ ?>
+                                                        <div class="compare_priceline">
+                                                            <p>Нет в наличии<p>
+                                                        </div>
+                                                        <a href="<?=$product['href']?>" title="Посмотреть аналоги" class="btn_analog">
+                                                            Аналоги
+                                                        </a>
+                                                    <? }else { ?>
+                                                        <div class="compare_priceline">
+                                                            <div class="compare_price">от <div class="compare_price_val"><?=$product["price"]?></div> <span>₽</span></div>
+                                                        </div>
+                                                        <div title="Добавить в корзину" class="buy add-to-card add-to-card-compare" 
+                                                            data-product_id="<?php echo $product['product_id'];?>" 
+                                                            data-sale_to_price_koef="1"
+                                                            data-ui_minimum = "<?=$product['mincount']?>"
+                                                            >
+                                                            В корзину
+                                                        </div>
+                                                    <? }?>
                                                 </div>
                                             </div>
                                             <div class="empty_compare_header"></div>

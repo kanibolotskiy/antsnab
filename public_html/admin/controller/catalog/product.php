@@ -697,6 +697,9 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_main_category'] = $this->language->get('entry_main_category');
 		$data['entry_disseo'] = $this->language->get('entry_disseo');
 		$data['entry_sale1'] = $this->language->get('entry_sale1');
+		$data['entry_notavail'] = $this->language->get('entry_notavail');
+		
+
 		/*
 		$data['entry_altvideo'] = $this->language->get('entry_altvideo');
 		*/
@@ -896,6 +899,14 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['sale1'] = '';
 		}
+		if (isset($this->request->post['notavail'])) {
+			$data['notavail'] = $this->request->post['notavail'];
+		} elseif (!empty($product_info)) {
+			$data['notavail'] = $product_info['notavail'];
+		} else {
+			$data['notavail'] = '';
+		}
+		
 
 		/*
 		if (isset($this->request->post['altvideo'])) {
@@ -1781,9 +1792,17 @@ class ControllerCatalogProduct extends Controller {
 		$data['layouts'] = $this->model_design_layout->getLayouts();
 
 		/*Идентичные товары */
-		$data['iden']=$this->model_catalog_product->getGrandParentCategories($this->request->get['product_id']);
-		$data['product_id']=$this->request->get['product_id'];
-		$data['iden_links']=$this->model_catalog_product->getProductLinks($this->request->get['product_id']);
+		$iden=[];
+		if(isset($this->request->get['product_id'])){
+			$iden=$this->model_catalog_product->getGrandParentCategories($this->request->get['product_id']);
+			$data['product_id']=$this->request->get['product_id'];
+			$data['iden_links']=$this->model_catalog_product->getProductLinks($this->request->get['product_id']);
+		}else{
+			$data['product_id']=0;
+			$data['iden_links']='';
+		}
+		$data['iden']=$iden;
+		
 
 		$parent_cat_id=71;
 		$categories=[];
