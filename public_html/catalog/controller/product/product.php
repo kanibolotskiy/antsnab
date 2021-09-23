@@ -1183,11 +1183,11 @@ class ControllerProductProduct extends Controller {
 					}
 				}
 			}
-
+			$ids='';
 			if($notavail_analogs){
 				$ids=implode(",",$notavail_analogs);
 			}
-
+			$products_str='';
 			if($ids){
 				$filter_data=['product_ids'=>$ids];
 				$productsHelper = new ProductListHelper($this->registry);
@@ -1198,8 +1198,9 @@ class ControllerProductProduct extends Controller {
 					$data["p"]=$p;
 					$products_str.=$this->load->view('partial/product_item.tpl', $data);
 				}
-				$data['products_analog']=$products_str;
 			}
+			$data['products_analog']=$products_str;
+
 			$data['tags'] = array();
 			if ($product_info['tag']) {
 				$tags = explode(',', $product_info['tag']);

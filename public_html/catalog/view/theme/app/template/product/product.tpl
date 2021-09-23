@@ -268,7 +268,7 @@
 
                                         <div class="wholesale-price">
                                             <?php if($pUnitsErrors):?>
-                                                HAS ERRORS, SEE ABOVE
+                                                <!--HAS ERRORS, SEE ABOVE-->
                                             <?php else: ?>
                                                 
                                             
@@ -301,7 +301,7 @@
                                     <div class="border"></div>
 
                                     <?php if($pUnitsErrors):?>
-                                            HAS ERRORS, SEE ABOVE
+                                        <!--HAS ERRORS, SEE ABOVE-->
                                     <?php else: ?>
 
                                     <!-- Розничная цена -->
@@ -1037,11 +1037,13 @@
             <?php }else{ ?>
                 <?php if($products_analog){ ?>
                     <h2>На сегодняшний день материал не поставляется</h2>
-                    <p>Мы подготовили для вас список доступных для заказа аналогов:</p>
-                    <div class="tab-block tab-block2 notavail_analogs">
-                        <ul id="lazy-load_container" itemscope itemtype="https://schema.org/ItemList">
-                            <?php echo $products_analog;?>
-                        </ul>
+                    <div class="info-block info-block2">
+                        <p>Мы подготовили для вас список доступных для заказа аналогов:</p>
+                        <div class="tab-block tab-block2 notavail_analogs">
+                            <ul id="lazy-load_container" itemscope itemtype="https://schema.org/ItemList">
+                                <?php echo $products_analog;?>
+                            </ul>
+                        </div>
                     </div>
                 <?php } ?>        
             <?php } ?>

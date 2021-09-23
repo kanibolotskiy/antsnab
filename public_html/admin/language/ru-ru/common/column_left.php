@@ -118,3 +118,4 @@ $_['text_accompany']                  		= 'Сопутствующие';
 
 
 $_['text_accia']          					= 'Акции';
+$_['text_ozon']          					= 'Товары Ozon';

@@ -13,11 +13,13 @@ use WS\Override\Gateway\ProdUnits\ProdUnits;
 use WS\Override\Gateway\ProdUnits\ProdUnitStrings;
 use WS\Override\Gateway\ProdUnits\ProdUnitsCalc;
 
-class ControllerExtensionFeedYandexMarket extends Controller {
+class ControllerExtensionFeedOzon extends Controller {
 	private $shop = array();
+	/*
 	private $currencies = array();
 	private $categories = array();
 	private $deliveries = array();
+	*/
 	private $offers = array();
 	private $from_charset = 'utf-8';
 	private $eol = "\n";
@@ -39,6 +41,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 			$this->setShop('platform', 'ocStore');
 			$this->setShop('version', VERSION);
 
+			/*
 			// Валюты
 			// TODO: Добавить возможность настраивать проценты в админке.
 			$offers_currency = $this->config->get('yandex_market_currency');
@@ -48,6 +51,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 
 			$shop_currency = $this->config->get('config_currency');
 
+			
 			$this->setCurrency($offers_currency, 1);
 
 			$currencies = $this->model_localisation_currency->getCurrencies();
@@ -74,7 +78,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 				$this->setCategory($category['name'], $category['category_id'], $category['parent_id']);
 
 			}
-
+			*/
 			
 			// Товарные предложения
 			$in_stock_id = $this->config->get('yandex_market_in_stock'); // id статуса товара "В наличии"
@@ -221,10 +225,11 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 				//."&utm_source=market&utm_medium=cpc"
 				$data['url'] = $this->url->link('product/product', 'path=' . $this->getPath($product['category_id']) . '&product_id=' . $product['product_id'])."?utm_source=market&utm_medium=cpc&utm_term=".$product['product_id'];
 				
-				$data['price'] = $this->currency->convert($this->tax->calculate($price, $product['tax_class_id']), $shop_currency, $offers_currency);
-				$data['currencyId'] = $offers_currency;
-				$data['categoryId'] = $product['category_id'];
-				$data['delivery'] = 'true';
+				//$data['price'] = $this->currency->convert($this->tax->calculate($price, $product['tax_class_id']), $shop_currency, $offers_currency);
+				$data['price'] = $price;
+				//$data['currencyId'] = $offers_currency;
+				//$data['categoryId'] = $product['category_id'];
+				//$data['delivery'] = 'true';
 
 				
 				if($product['quantity'] > 0){
@@ -433,7 +438,13 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 		//print_r($data);
 		
 		$offer = array();
-		
+		$offer['id']=$data['id'];
+		$offer['data'] = array(
+			'price'=>111,
+			'oldprice'=>222,
+			'premium_price'=>222
+		);
+		/*
 		$attributes = array('id', 'type', 'available', 'bid', 'cbid', 'param');
 		$attributes = array_intersect_key($data, array_flip($attributes));
 		
@@ -530,7 +541,17 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 				$offer['data'][$key] = $this->prepareField($data[$key]);
 			}
 		}
-
+		*/
+		
+		/*
+		<price>9760</price>
+                <oldprice>10736</oldprice>
+                <premium_price>10000</premium_price>
+                <outlets>
+                    <outlet instock="10" warehouse_name="склад 1"></outlet>
+                    <outlet instock="13" warehouse_name="склад 2"></outlet>
+                </outlets>
+		*/
 		$this->offers[] = $offer;
 	}
 
@@ -545,11 +566,12 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 		$yml .= '<yml_catalog date="' . date('Y-m-d H:i') . '">' . $this->eol;
 		$yml .= '<shop>' . $this->eol;
 
+
 		// информация о магазине
 		$yml .= $this->array2Tag($this->shop);
 
 		// опции доставки
-		
+		/*
 		$yml .= '<delivery-options>' . $this->eol;
 		//print_r($this->deliveries);
 		
@@ -560,7 +582,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 		$yml .= '</delivery-options>' . $this->eol;
 		/**/
 
-		// валюты
+		/* валюты
 		$yml .= '<currencies>' . $this->eol;
 		foreach ($this->currencies as $currency) {
 			$yml .= $this->getElement($currency, 'currency');
@@ -575,7 +597,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 			$yml .= $this->getElement($category, 'category', $category_name);
 		}
 		$yml .= '</categories>' . $this->eol;
-
+		*/
 		// товарные предложения
 		$yml .= '<offers>' . $this->eol;
 		

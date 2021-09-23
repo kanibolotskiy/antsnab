@@ -106,7 +106,7 @@
             
                 <div class="price cat_item_price">
                     <div class="wrapper_price_line">
-                        <?php if($p['price']){ ?>
+                        <?php if($p['price'] and !$p['notavail']){ ?>
                             <div class="cat_item_price_caption">от</div> 
                         
                             <div class="cat_price_val <?php if($p["priceold"]){echo "_oldprice";}?>" content="<?=$p['price_val']?>">

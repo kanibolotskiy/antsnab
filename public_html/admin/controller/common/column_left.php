@@ -238,6 +238,15 @@ class ControllerCommonColumnLeft extends Controller {
 				);					
 			}
 
+			//Feed Ozon"
+			if ($this->user->hasPermission('access', 'catalog/ozon')) {
+				$dopinfo_arr[] = array(
+					'name'	   => $this->language->get('text_ozon'),
+					'href'     => $this->url->link('catalog/ozon', 'token=' . $this->session->data['token'], true),
+					'children' => array()
+				);					
+			}
+
 			if ($dopinfo_arr) {
 				$catalog[] = array(
 					'name'	   => $this->language->get('text_dopinfo'),
