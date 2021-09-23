@@ -1037,12 +1037,13 @@
                     <h2>На сегодняшний день материал не поставляется</h2>
                     <div class="info-block info-block2">
                         <p>Мы подготовили для вас список доступных для заказа аналогов:</p>
-                        <div class="tab-block tab-block2 notavail_analogs">
-                            <ul id="lazy-load_container" itemscope itemtype="https://schema.org/ItemList">
-                                <?php echo $products_analog;?>
-                            </ul>
-                        </div>
                     </div>
+                    <div class="tab-block tab-block2 notavail_analogs">
+                        <ul id="lazy-load_container" itemscope itemtype="https://schema.org/ItemList">
+                            <?php echo $products_analog;?>
+                        </ul>
+                    </div>
+                    
                 <?php } ?>        
             <?php } ?>
 
