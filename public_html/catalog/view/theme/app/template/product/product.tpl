@@ -496,8 +496,7 @@
                     <?php }?>
                     </div>
                 <?php }?>
-
-                <?php if($benefits) {?>
+                <?php if($benefits and !$notavail) {?>
                     <div class="benefits">
                         <?php foreach($benefits as $benefit){ ?>
                             <div class="bene_item with_goal" data-goal="<?php echo $benefit['goal'];?>">
@@ -510,6 +509,7 @@
                         <?php }?>
                     </div>
                 <?php }?>
+                
                 <div class="info-block info-block2" itemprop="description">
                     <?=$description?>
                 </div>
