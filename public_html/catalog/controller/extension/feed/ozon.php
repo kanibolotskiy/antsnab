@@ -25,293 +25,103 @@ class ControllerExtensionFeedOzon extends Controller {
 	private $eol = "\n";
 
 	public function index() {
-		if ($this->config->get('yandex_market_status')) {
-
-			if (!($allowed_categories = $this->config->get('yandex_market_categories'))) exit();
-
-			$this->load->model('extension/feed/yandex_market');
-			$this->load->model('localisation/currency');
-			$this->load->model('tool/image');
-
-			// Магазин
-			$this->setShop('name', $this->config->get('yandex_market_shopname'));
-			$this->setShop('company', $this->config->get('yandex_market_company'));
-			$this->setShop('url', HTTP_SERVER);
-			$this->setShop('phone', $this->config->get('config_telephone'));
-			$this->setShop('platform', 'ocStore');
-			$this->setShop('version', VERSION);
-
-			/*
-			// Валюты
-			// TODO: Добавить возможность настраивать проценты в админке.
-			$offers_currency = $this->config->get('yandex_market_currency');
-			if (!$this->currency->has($offers_currency)) exit();
-
-			$decimal_place = $this->currency->getDecimalPlace($offers_currency);
-
-			$shop_currency = $this->config->get('config_currency');
-
-			
-			$this->setCurrency($offers_currency, 1);
-
-			$currencies = $this->model_localisation_currency->getCurrencies();
-
-			//$supported_currencies = array('RUR', 'RUB', 'USD', 'BYR', 'KZT', 'EUR', 'UAH');
-			$supported_currencies = array('RUB');
-
-			$currencies = array_intersect_key($currencies, array_flip($supported_currencies));
-
-			foreach ($currencies as $currency) {
-				if ($currency['code'] != $offers_currency && $currency['status'] == 1) {
-					$this->setCurrency($currency['code'], number_format(1/$this->currency->convert($currency['value'], $offers_currency, $shop_currency), 4, '.', ''));
-				}
-			}
-
-			//Опции доставки
-			$this->setDeliveryOptions();
-			
-			// Категории
-			$categories = $this->model_extension_feed_yandex_market->getCategory($allowed_categories);
-			
-			
-			foreach ($categories as $category) {
-				$this->setCategory($category['name'], $category['category_id'], $category['parent_id']);
-
-			}
-			*/
-			
-			// Товарные предложения
-			$in_stock_id = $this->config->get('yandex_market_in_stock'); // id статуса товара "В наличии"
-			$out_of_stock_id = $this->config->get('yandex_market_out_of_stock'); // id статуса товара "Нет на складе"
-			$vendor_required = false; // true - только товары у которых задан производитель, необходимо для 'vendor.model'
-			$products = $this->model_extension_feed_yandex_market->getProduct($allowed_categories, $out_of_stock_id, $vendor_required,true);
-
-			//$products = $this->model_extension_feed_yandex_market->getProduct($allow_cat_str, $out_of_stock_id, $vendor_required);
-
-			$produnitsGateway = new ProdUnits($this->registry);
-			$produnitsCalcGateway = new ProdUnitsCalc($this->registry);
-			$this->load->model('catalog/product');
-
-			//$weight=$this->request->post['weight'];
-			//$product_id=$this->request->post['product_id'];
-			//$delivery_info = $this->model_catalog_product->getDelivery($product_id,$weight);
-			$delivery_weights=$this->model_catalog_product->getDeliveryDocs();
-			$delivery_weights_rev=array_reverse($delivery_weights,true);
-
-			$z=0;
-			
-			foreach ($products as $product) {
-				
-				$prodUnits = $produnitsGateway->getUnitsByProduct($product['product_id']);
-				$price=0;
-				$weight=0;
-				$unit_array=[];
-				
-				$mincount=1;
-				unset($pUnits);
-				foreach ($prodUnits as $unit_id => $unit) {
-					/*
-					if($product['product_id']==956){
-						print_r($unit);
-					}
-					*/
-				//foreach($prodUnits as $prodUnit){
-					if($unit['switchSortOrder']==1){
-						$unit_array=[$unit["name"],$unit["name_package_dimension"],$unit["name_plural"]];
-					}
-					if($unit['isPackageBase']){
-						
-						if($unit['isPriceBase']==1){
-							$price=$unit['price'];
-						}else{
-							$price=$unit['price']*$unit['calcKoef'];
-						}
-						$weight=$unit['weight'];						
-					}
-					if (0 != $unit['switchSortOrder']) {
-						$key = (int)$unit['switchSortOrder'];
-						//print_r($unit);
-						
-						$saleToUIKoef = $produnitsCalcGateway->getBaseToUnitKoef($product['product_id'], 'isSaleBase', $unit_id);
-						$array_koef = (array) $saleToUIKoef;
-						$z=0;
-						$koef_numerator=1;
-						$koef_denomirator=1;
-						foreach($array_koef as $koef_item){
-							if($z){
-								$koef_denomirator=$koef_item;
-							}else{
-								$koef_numerator=$koef_item;
-							}
-							$z++;
-						}
-						$pUnits[$key]['nom']=$koef_numerator;
-						$pUnits[$key]['denom']=$koef_denomirator;
 	
-						$koef_d=$koef_numerator/$koef_denomirator;
-						if($product['quantity']>0){
-							$pUnits[$key]['mincount']=ceil(1*$koef_d);
-						}else{
-							$pUnits[$key]['mincount']=ceil($product['mincount']*$koef_d);
-						}
-	
-					}
-					
-				}
-				$step=1;
-				if (isset($pUnits[2])){
 
-					if (( $product['quantity']<=0) and ($pUnits[2]['denom']>$pUnits[2]['nom']) ){
-						$step = $pUnits[2]['denom'];
-						if($pUnits[1]['mincount']<$pUnits[2]['denom']){
-							$mincount = $pUnits[2]['denom'];
-						}else{
-							$mincount = $pUnits[1]['mincount'];
-						}
-					}else{
-						$mincount = $pUnits[1]['mincount'];
-					}
+		$this->load->model('extension/feed/ozon');
+		$this->load->model('localisation/currency');
+		$this->load->model('tool/image');
 
-				}else{
-					$mincount = $pUnits[1]['mincount'];
-				}
-				
-				$uiUnit = null;
-				//print_r($prodUnits);
-				//$uiUnitAr = QueryHelper::arrayWhere($prodUnits, 'switchSortOrder', 1);
+		// Магазин
+		$this->setShop('name', $this->config->get('yandex_market_shopname'));
+		$this->setShop('company', $this->config->get('yandex_market_company'));
+		$this->setShop('url', HTTP_SERVER);
+		$this->setShop('phone', $this->config->get('config_telephone'));
+		$this->setShop('platform', 'ocStore');
+		$this->setShop('version', VERSION);
 
-				if(!$price){
-					$price=$product['price'];
-				}
-				
-				$del_price=0;
-				//and $product["mincount"]>1
-				if($product['quantity']<=0 and $mincount>1 ){
-					$cnt=$this->model_extension_feed_yandex_market->declOfNum($mincount,$unit_array);
-					$product_name=$product['meta_h1']." (".$mincount." ".$cnt.")";
-					if($mincount>0){
-						$weight=$weight*$mincount;
-						$price=$product['price']*$mincount;
-					}
-				}else{
-					$product_name=$product['meta_h1'];
-				}
-				
-				
-				foreach($delivery_weights_rev as $del_weight=>$key){
-					if($weight<=$del_weight){
-						$del_price=$key[0];
-					}
-				}
-				
-				$del_price_val = preg_replace('~[^0-9]+~','',$del_price);
-				//echo $del_price_val."<br/>";
-				$data = array();
+		/*
+		// Валюты
+		// TODO: Добавить возможность настраивать проценты в админке.
+		$offers_currency = $this->config->get('yandex_market_currency');
+		if (!$this->currency->has($offers_currency)) exit();
 
-				
-				
-				//$delivery_price=$this->model_catalog_product->getDelivery($product['product_id'],$weight);
-				//$data['sales_notes']=$delivery_price;
+		$decimal_place = $this->currency->getDecimalPlace($offers_currency);
 
-				// Атрибуты товарного предложения
-				$data['id'] = $product['product_id'];
-//				$data['type'] = 'vendor.model';
-				//$data['available'] = ($product['quantity'] > 0 || $product['stock_status_id'] == $in_stock_id);
-				$data['available'] =($product['quantity'] > 0);
-//				$data['bid'] = 10;
-//				$data['cbid'] = 15;
+		$shop_currency = $this->config->get('config_currency');
 
-				// Параметры товарного предложения
-				//."&utm_source=market&utm_medium=cpc"
-				$data['url'] = $this->url->link('product/product', 'path=' . $this->getPath($product['category_id']) . '&product_id=' . $product['product_id'])."?utm_source=market&utm_medium=cpc&utm_term=".$product['product_id'];
-				
-				//$data['price'] = $this->currency->convert($this->tax->calculate($price, $product['tax_class_id']), $shop_currency, $offers_currency);
-				$data['price'] = $price;
-				//$data['currencyId'] = $offers_currency;
-				//$data['categoryId'] = $product['category_id'];
-				//$data['delivery'] = 'true';
+		
+		$this->setCurrency($offers_currency, 1);
 
-				
-				if($product['quantity'] > 0){
-					$data['pickup'] = 'true';
-					/*$data['delivery-options'] = Array(
-						
-						'option'=>Array(
-							"cost"=>$del_price_val,
-							"days"=>"1",
-							"order-before"=>"14"
-						)
-					);
-					*/	
-					$data['delivery-options'] = Array(
-						'option'=>Array(
-							"cost"=>$del_price_val,
-							"days"=>"1-3"
-						)
-					);
-				
-				}else{
-					$data['pickup'] = 'false';
-					$data['delivery-options'] = Array(
-						'option'=>Array(
-							"cost"=>$del_price_val,
-							"days"=>"1-3"
-						)
-					);
-				}
-				
-				//<option cost="300" days="1" order-before="18"/>
-				
+		$currencies = $this->model_localisation_currency->getCurrencies();
 
-//				$data['local_delivery_cost'] = 100;
+		//$supported_currencies = array('RUR', 'RUB', 'USD', 'BYR', 'KZT', 'EUR', 'UAH');
+		$supported_currencies = array('RUB');
 
-				//$data['name'] = $product['meta_h1'];
-				$data['name'] = $product_name;
-				$data['vendor'] = $product['manufacturer'];
-				$data['vendorCode'] = $product['model'];
-				$data['model'] = $product['name'];
-				$data['description'] = $product['description'];
-				$data['sales_notes']='Цена доставки зависит от адреса и веса товара';
+		$currencies = array_intersect_key($currencies, array_flip($supported_currencies));
 
-//				$data['manufacturer_warranty'] = 'true';
-//				$data['barcode'] = $product['sku'];
-				if ($product['image']) {
-					//$data['picture'] = $this->model_tool_image->resize($product['image'], 100, 100);
-					$data['picture'] = HTTP_SERVER.'image/'.$product['image'];
-				}
-/*
-				// пример структуры массива для вывода параметров
-				$data['param'] = array(
-					array(
-						'name'=>'Wi-Fi',
-						'value'=>'есть'
-					), array(
-						'name'=>'Размер экрана',
-						'unit'=>'дюйм',
-						'value'=>'20'
-					), array(
-						'name'=>'Вес',
-						'unit'=>'кг',
-						'value'=>'4.6'
-					)
-				);
-*/
-				//print_r($data);
-				$this->setOffer($data);
-				
-				
+		foreach ($currencies as $currency) {
+			if ($currency['code'] != $offers_currency && $currency['status'] == 1) {
+				$this->setCurrency($currency['code'], number_format(1/$this->currency->convert($currency['value'], $offers_currency, $shop_currency), 4, '.', ''));
 			}
-
-			//$this->categories = array_filter($this->categories, array($this, "filterCategory"));
-
-			$this->response->addHeader('Content-Type: application/xml');
-			$this->response->setOutput($this->getYml());
 		}
+
+		//Опции доставки
+		$this->setDeliveryOptions();
+		
+		// Категории
+		$categories = $this->model_extension_feed_yandex_market->getCategory($allowed_categories);
+		
+		
+		foreach ($categories as $category) {
+			$this->setCategory($category['name'], $category['category_id'], $category['parent_id']);
+
+		}
+		*/
+		
+		//$products = $this->model_extension_feed_yandex_market->getProduct($allowed_categories, $out_of_stock_id, $vendor_required,true);
+		//$products = $this->model_extension_feed_ozon->getProduct();
+		$products = $this->model_extension_feed_ozon->getProduct();
+		//$products = $this->model_extension_feed_yandex_market->getProduct($allow_cat_str, $out_of_stock_id, $vendor_required);
+		/*
+		$produnitsGateway = new ProdUnits($this->registry);
+		$produnitsCalcGateway = new ProdUnitsCalc($this->registry);
+		$this->load->model('catalog/product');
+
+		//$weight=$this->request->post['weight'];
+		//$product_id=$this->request->post['product_id'];
+		//$delivery_info = $this->model_catalog_product->getDelivery($product_id,$weight);
+		$z=0;
+		*/
+		foreach ($products as $product) {
+			
+			$data['ozon_code']=$product['ozon_code'];
+			$data['quantity']=floor($product['quantity']/$product['ozon_count']);
+
+			$price=$product['price'];
+			//$data['price']=$price*$product['ozon_count'];
+
+			if($product['discount_percent']){
+				$priceold=$price+$price*$product['discount_percent']/100;
+			}else{
+				$priceold=0;
+			}
+			//$data['priceold']=$priceold*$product['ozon_count'];
+			//print_r($data);
+			$this->setOffer($data);
+			
+			
+		}
+
+		//$this->categories = array_filter($this->categories, array($this, "filterCategory"));
+
+		$this->response->addHeader('Content-Type: application/xml');
+		$this->response->setOutput($this->getYml());
 	}
 
 	/**
 	 *  Опции доставки
 	 */
+	/*
 	private function setDeliveryOptions(){
 		if($this->config->get('yandex_market_deliverycost')){
 			$del_array['cost']=$this->config->get('yandex_market_deliverycost');
@@ -328,11 +138,11 @@ class ControllerExtensionFeedOzon extends Controller {
 		<delivery-options>
 			<option cost="600" days="1-3" order-before="16"/>
 		</delivery-options>
-	 */
+	 
 		//return true;
 		return $del_array;
 	}
-
+	*/
 
 	/**
 	 * Методы формирования YML
@@ -366,6 +176,7 @@ class ControllerExtensionFeedOzon extends Controller {
 	 *		и означает на сколько увеличить курс в процентах от курса выбранного банка
 	 * @return bool
 	 */
+	/*
 	private function setCurrency($id, $rate = 'CBRF', $plus = 0) {
 		$allow_id = array('RUR', 'RUB', 'USD', 'BYR', 'KZT', 'EUR', 'UAH');
 		if (!in_array($id, $allow_id)) {
@@ -399,7 +210,7 @@ class ControllerExtensionFeedOzon extends Controller {
 
 		return true;
 	}
-
+	*/
 	/**
 	 * Категории товаров
 	 *
@@ -408,6 +219,7 @@ class ControllerExtensionFeedOzon extends Controller {
 	 * @param int $parent_id - id родительской рубрики
 	 * @return bool
 	 */
+	/*
 	private function setCategory($name, $id, $parent_id = 0) {
 		$id = (int)$id;
 		if ($id < 1 || trim($name) == '') {
@@ -428,7 +240,7 @@ class ControllerExtensionFeedOzon extends Controller {
 
 		return true;
 	}
-
+	*/
 	/**
 	 * Товарные предложения
 	 *
@@ -436,14 +248,32 @@ class ControllerExtensionFeedOzon extends Controller {
 	 */
 	private function setOffer($data) {
 		//print_r($data);
-		
 		$offer = array();
-		$offer['id']=$data['id'];
+		$offer['id']=$data['ozon_code'];
+		$outlet_name= iconv('UTF-8//IGNORE','windows-1251//IGNORE',  "Алтуфьево 37с8");
+
+		$outlets=['instock'=>$data['quantity'],'warehouse_name'=>$outlet_name];
 		$offer['data'] = array(
-			'price'=>111,
-			'oldprice'=>222,
-			'premium_price'=>222
+			//'price'=>$data['price'],
+			//'oldprice'=>$data['priceold'],
+			'outlets'=>$this->getElement($outlets, 'outlet'),
+			
+			//'premium_price'=>
 		);
+		/*
+		$offer['data'] = array();
+		foreach ($allowed_tags as $key => $value) {
+			if(is_array($data[$key])){
+				$offer['data'][$key] = $data[$key];
+			}else{
+				$offer['data'][$key] = $this->prepareField($data[$key]);
+			}
+		}
+		/*
+		<outlets>
+			<outlet instock="10" warehouse_name="Алтуфьево"></outlet>
+		</outlets>
+		
 		/*
 		$attributes = array('id', 'type', 'available', 'bid', 'cbid', 'param');
 		$attributes = array_intersect_key($data, array_flip($attributes));
@@ -569,36 +399,6 @@ class ControllerExtensionFeedOzon extends Controller {
 
 		// информация о магазине
 		$yml .= $this->array2Tag($this->shop);
-
-		// опции доставки
-		/*
-		$yml .= '<delivery-options>' . $this->eol;
-		//print_r($this->deliveries);
-		
-		foreach ($this->deliveries as $delivery) {
-			$yml .= $this->getElement($delivery, 'option ');
-		}
-		
-		$yml .= '</delivery-options>' . $this->eol;
-		/**/
-
-		/* валюты
-		$yml .= '<currencies>' . $this->eol;
-		foreach ($this->currencies as $currency) {
-			$yml .= $this->getElement($currency, 'currency');
-		}
-		$yml .= '</currencies>' . $this->eol;
-
-		// категории
-		$yml .= '<categories>' . $this->eol;
-		foreach ($this->categories as $category) {
-			$category_name = $category['name'];
-			unset($category['name'], $category['export']);
-			$yml .= $this->getElement($category, 'category', $category_name);
-		}
-		$yml .= '</categories>' . $this->eol;
-		*/
-		// товарные предложения
 		$yml .= '<offers>' . $this->eol;
 		
 		foreach ($this->offers as $offer) {

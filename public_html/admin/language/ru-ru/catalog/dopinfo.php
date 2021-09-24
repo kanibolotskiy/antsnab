@@ -11,6 +11,7 @@ $_['heading_title_acciasale']   = 'Акция (скидки)';
 $_['heading_title_about']       = 'О компании';
 $_['heading_title_diler']       = 'Дилерам';
 $_['heading_title_accompany']   = 'Сопутствующие';
+$_['heading_title_ozon']        = 'Товары Ozon';
 
 
 // Text
@@ -48,6 +49,7 @@ $_['text_edit_main']            = 'Редактирование главная';
 $_['text_edit_about']           = 'Редактирование "О компании"';
 $_['text_edit_accompany']       = 'Редактирование "Сопутствующие"';
 $_['text_edit_diler']           = 'Редактирование "Дилерам"';
+$_['text_edit_ozon']            = 'Редактирование "Ozon"';
 
 
 $_['text_add_calcs']            = 'Добавление калькулятора';

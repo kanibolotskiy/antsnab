@@ -51,29 +51,27 @@ class ControllerCatalogOzon extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title_accompany'),
-			'href' => $this->url->link('catalog/accompany', 'token=' . $this->session->data['token'] . $url, true)
+			'text' => $this->language->get('heading_title_ozon'),
+			'href' => $this->url->link('catalog/ozon', 'token=' . $this->session->data['token'] . $url, true)
 		);
-
+		/*
 		if (!isset($this->request->get['accompany_id'])) {
 			$data['action'] = $this->url->link('catalog/accompany/add', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
 			$data['action'] = $this->url->link('catalog/accompany/edit', 'token=' . $this->session->data['token'] . '&accompany_id=' . $this->request->get['accompany_id'] . $url, true);
 		}
+		*/
 
-		$data['cancel'] = $this->url->link('catalog/accompany', 'token=' . $this->session->data['token'] . $url, true);
-			
-			
-		//$about_info = $this->model_catalog_about->getAboutInfo();
-		$data['tab_general'] = $this->language->get('tab_general');
-		$data['tab_products'] = $this->language->get('tab_products');
+		$data['action'] = $this->url->link('catalog/ozon/edit', 'token=' . $this->session->data['token'] . $url, true);
 
+		$data['cancel'] = $this->url->link('catalog/ozon', 'token=' . $this->session->data['token'] . $url, true);
+			
 		$data['entry_name'] = $this->language->get('entry_title');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 
-		$data['heading_title'] = $this->language->get('heading_title_accompany');
-		$data['text_form'] = $this->language->get('text_edit_accompany'); 
+		$data['heading_title'] = $this->language->get('heading_title_ozon');
+		$data['text_form'] = $this->language->get('text_edit_ozon'); 
 		$data['productUsed']=[];
 		if (isset($this->request->get['accompany_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$accompany_info = $this->model_catalog_accompany->getAccompany($this->request->get['accompany_id']);
@@ -97,7 +95,7 @@ class ControllerCatalogOzon extends Controller {
 		$categories_tree=[];
 		
 		$category_list=$this->model_catalog_category->listCatalog();
-		$products_list=$this->model_catalog_category->listProducts(); 
+		$products_list=$this->model_catalog_category->listProductsOzon(); 
 		
 		foreach($category_list as $category){
 			$categories[$category["parent_id"]][]=$category;
@@ -132,6 +130,28 @@ class ControllerCatalogOzon extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$this->response->setOutput($this->load->view('catalog/ozon_form', $data));
 	}
-	
+	public function edit() {
+		
+        $this->load->language('catalog/dopinfo');
+        
+		$this->document->setTitle($this->language->get('heading_title_ozon'));
+
+		$this->load->model('catalog/ozon');
+		
+		if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
+			
+			$this->model_catalog_ozon->editOzon($this->request->post);
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+
+			$this->response->redirect($this->url->link('catalog/ozon', 'token=' . $this->session->data['token'] . $url, true));
+			/**/
+		}
+		
+		$this->getForm();
+		
+	}
 	
 }

@@ -1010,3 +1010,31 @@ height:34px;
 
 #image-video_preview{max-width:300px;}
 .margtop_form-control{margin-top:10px;}
+.ozon_table{border-collapse:collapse}
+.ozon_table label{
+	font-weight:normal;
+}
+.ozon_table td,.ozon_table th{
+	border:1px solid #ccc;padding:5px 10px;
+}
+.ozon_catname1 td{
+	font-weight:bold;
+	font-size:13px;
+}
+.ozon_catname2 td{
+	font-weight:bold;padding-left:20px;
+}
+.ozon_table td.ozon_product{
+	/*padding-left:40px;*/
+	padding:0;	
+}
+.ozon_table td.ozon_product2{
+	/*padding-left:50px;*/
+	padding:0;
+}
+.ozon_table td.ozon_product label{	
+	padding:5px 10px 5px 40px;display:block;
+}
+.ozon_table td.ozon_product2 label{	
+	padding:5px 10px 5px 50px;display:block;
+}

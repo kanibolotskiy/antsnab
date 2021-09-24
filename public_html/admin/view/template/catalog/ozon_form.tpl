@@ -25,75 +25,76 @@
             </div>
             <div class="panel-body">
                 <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-video" class="form-horizontal">
-                   <ul class="nav nav-tabs">
+                    <!--
+                    <ul class="nav nav-tabs">
                         <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
                         <li class=""><a href="#tab-products" data-toggle="tab"><?php echo $tab_products; ?></a></li>
                     </ul>
+                    -->
                     
                     <div class="tab-content">
-                        <div class="tab-pane active" id="tab-general">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="name" value="<?php echo isset($name) ? $name : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-sort_order"><?php echo $entry_sort_order; ?></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="sort_order" value="<?php echo isset($sort_order) ? $sort_order : ''; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort_order" class="form-control" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="tab-products">
+                        
+                        
                             
 
 <div class="wrap_accia_products">
     <input name="products_change" id="products_change" type="hidden"/>
     <input name="products" id="products" type="hidden"/>
 
-    <?php foreach($categories_tree as $category){?>
-        <div class="accia_catalog_row acc_cat_caption" rel="<?php echo $category['category_id'];?>">
-            <div class="accia_catalog_left">
-                <div class="accia_column_category_caption"><?php echo $category["name"];?></div>
-            </div>
-            <div class="accia_catalog_right"></div>
-        </div>
-        <?php if(isset($category["list"])){ ?>
-            <div class="subcat_wrapper" rel="<?php echo $category['category_id'];?>">
-            <?php foreach($category["list"] as $category_item){?>
-                
-                <div class="accia_catalog_row acc_cat_caption" rel="<?php echo $category_item['category_id'];?>">
-                    <div class="accia_catalog_left">
-                        <div class="accia_column_subcategory_caption"><?php echo $category_item["name"];?></div>
-                    </div>
-                    <div class="accia_catalog_right">
-                        <?php if(isset($products[$category_item["category_id"]])){ foreach($products[$category_item["category_id"]] as $product){?>
-                            <div class="product_used_item <?php echo isset($productUsed[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
-                        <?php }}?>
-                    </div>
-                </div>
-                <?php if(isset($category_item["list"])){ ?>
-                    <div class="subcat_wrapper" rel="<?php echo $category_item['category_id'];?>">
-                        <?php foreach($category_item["list"] as $category_item_child){?>
-                        <div class="accia_catalog_row">
-                            <div class="accia_catalog_left">
-                                <div class="accia_column_subcategory_caption _sub"><?php echo $category_item_child["name"];?></div>
-                            </div>
-                            <div class="accia_catalog_right">
-                                <?php if(isset($products[$category_item_child["category_id"]])){ foreach($products[$category_item_child["category_id"]] as $product){?>
-                                    <div class="product_used_item <?php echo isset($productUsed[$product['product_id']])?"_active":""; ?>" rel="<?php echo $product['product_id'];?>"><?php echo $product["name"];?></div>
-                                <?php }}?>
-                            </div>
-                        </div>
+    <table class="ozon_table">
+        <thead>
+            <tr>
+                <th>Наименование</th>
+                <th>Код Ozon</th>
+                <th>Упаковка</th>
+                <th>Активно</th>
+            </tr>
+        </thead>
+        <?php foreach($categories_tree as $category){?>
+            <tr class="ozon_catname1"><td colspan="4"><?=$category["name"]?></td></tr>
+
+            <?php if(isset($category["list"])){ ?>
+                <?php foreach($category["list"] as $category_item){?>
+                    <tr class="ozon_catname2"><td colspan="4"><?=$category_item['name']?></td></tr>
+                    <?php if(isset($products[$category_item["category_id"]])){ foreach($products[$category_item["category_id"]] as $product){?>
+                        <tr>
+                            <td class="ozon_product2">
+                                <label for="ozon_flag_<?=$product['product_id']?>"><?php echo $product["name"];?></label>
+                            </td>
+                            <td><input class="ischange_ozon" type="text" name="ozon_code[<?=$product['product_id']?>]" value="<?=$product['ozon_code']?>" /></td>
+                            <td><input class="ischange_ozon" type="text" name="ozon_count[<?=$product['product_id']?>]" value="<?=$product['ozon_count']?>"/></td>
+                            <td>
+                                <input class="ozon_change" type="hidden" name="ozon_change[<?=$product['product_id']?>]"/>
+                                <input <?=$product['ozon_flag']?'checked':''?> value="1" class="ischange_ozon" id="ozon_flag_<?=$product['product_id']?>" type="checkbox" name="ozon_flag[<?=$product['product_id']?>]"/>
+                            </td>
+                        </tr>
+                    <?php }}?>
+                    <?php if(isset($category_item["list"])){ ?>
+                        <?php foreach($category_item["list"] as $category_item2){?>
+                            <tr class="ozon_catname2"><td colspan="3"><?=$category_item2['name']?></td></tr>
+                            <?php if(isset($products[$category_item2["category_id"]])){ foreach($products[$category_item2["category_id"]] as $product){?>
+                                <tr>
+                                    <td class="ozon_product2">
+                                        <label for="ozon_flag_<?=$product['product_id']?>"><?php echo $product["name"];?></label>
+                                    </td>
+                                    <td><input class="ischange_ozon" type="text" name="ozon_code[<?=$product['product_id']?>]" value="<?=$product['ozon_code']?>"/></td>
+                                    <td><input class="ischange_ozon" type="text" name="ozon_count[<?=$product['product_id']?>]" value="<?=$product['ozon_count']?>"/></td>
+                                    <td>
+                                        <input class="ozon_change" type="hidden" name="ozon_change[<?=$product['product_id']?>]"/>
+                                        <input <?=$product['ozon_flag']?'checked':''?> value="1" class="ischange_ozon" id="ozon_flag_<?=$product['product_id']?>" type="checkbox" name="ozon_flag[<?=$product['product_id']?>]"/>
+                                    </td>
+                                </tr>
+                            <?php }}?>
+                            
                         <?php }?>
-                    </div>
+                    <?php }?>
                 <?php }?>
             <?php }?>
-            </div>
         <?php }?>
-    <?php }?>
-</div>
+    </table>
+
+
+
 
                         </div>
                     </div>
@@ -109,6 +110,7 @@
 
   
 <script type="text/javascript"><!--
+    /*
     function products_selected(){
         var products_used=[];
         $(".product_used_item._active").each(function(){
@@ -146,6 +148,13 @@
             $(this).toggleClass("active");
         });
     });
+    */
+    $(document).ready(function(){
+        $(".ischange_ozon").change(function(){
+            $(this).closest("tr").find(".ozon_change").val(1);
+        });
+    })
+    
 //--></script>  
 <script type="text/javascript"><!--
 <?php if ($ckeditor) { ?>

@@ -598,9 +598,21 @@ class ModelCatalogCategory extends Model
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
+    public function listProductsOzon(){
+        $results=[];
+		$sql="select op.product_id, op.sort_order, od.name, od.search, oc.category_id, op.status, op.ozon_code, op.ozon_flag, op.ozon_count
+        from oc_product op LEFT JOIN oc_product_description od ON op.product_id=od.product_id
+        LEFT JOIN oc_product_to_category oc ON op.product_id=oc.product_id
+        where oc.main_category=1 and notavail=0 order by op.sort_order ASC";
+        $query = $this->db->query($sql);
+        foreach($query->rows as $row){
+            $results[$row['category_id']][]=$row;
+        }
+        return $results;
+	}
     public function listProducts(){
         $results=[];
-		$sql="select op.product_id, op.sort_order, od.name, od.search, oc.category_id, op.status 
+		$sql="select op.product_id, op.sort_order, od.name, od.search, oc.category_id, op.status
         from oc_product op LEFT JOIN oc_product_description od ON op.product_id=od.product_id
         LEFT JOIN oc_product_to_category oc ON op.product_id=oc.product_id
         where oc.main_category=1 order by op.sort_order ASC";
