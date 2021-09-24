@@ -343,23 +343,23 @@
                                             class="buy add-to-card add-to-card-product">В корзину</a>
                                         </div>
                                     <?php } ?>
-                                    <div class="wrap_oneclick">
-                                        <div class="oneclick_product_thanks">Спасибо за обращение. Мы Вам перезвоним.</div>
-                                        <form action="#" class="oneclickform">
-                                            <input type="hidden" name="product" value="<?=$heading_title?>"/>
-                                            <input type="text" class="workemail" name="workemail"/>
-                                            <input type="tel" class="onclickInputMain" placeholder="Введите телефон" name="phone"/>
-                                            
-                                            <button type="submit" class="onclickButton <?=$notavail?'fk_item':''?>">
-                                                <?php echo (!$notavail?'Купить в 1 клик':'Оставить заявку'); ?>
-                                            </button>
-                                            
-                                        </form>
-                                    </div>
+                                    
                                     
 
                                 <?php endif;?>
-                                
+                                <div class="wrap_oneclick">
+                                    <div class="oneclick_product_thanks">Спасибо за обращение. Мы Вам перезвоним.</div>
+                                    <form action="#" class="oneclickform">
+                                        <input type="hidden" name="product" value="<?=$heading_title?>"/>
+                                        <input type="text" class="workemail" name="workemail"/>
+                                        <input type="tel" class="onclickInputMain" placeholder="Введите телефон" name="phone"/>
+                                        
+                                        <button type="submit" class="onclickButton <?=$notavail?'fk_item':''?>">
+                                            <?php echo (!$notavail?'Купить в 1 клик':'Оставить заявку'); ?>
+                                        </button>
+                                        
+                                    </form>
+                                </div>
                             <!--</div>--> 
                             
                                 <div class="wrap_state_stock">
