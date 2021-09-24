@@ -8,19 +8,19 @@ class ModelCatalogProduct extends Model {
 	}
 	public function getNews(){
 		$sql="SELECT op.product_id, op.discount_percent, op.image, op.date_added, op.discount_percent, op.price, od.name, od.meta_h1 FROM oc_product op INNER JOIN oc_product_description od ON op.product_id=od.product_id
-		WHERE op.status=1 order by date_added desc limit 30";
+		WHERE op.status=1 and op.notavail=0 order by date_added desc limit 30";
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
 	public function getAccias(){
 		$sql="SELECT op.product_id, op.discount_percent, op.image, op.date_added, op.discount_percent, op.price, od.name, od.meta_h1 FROM oc_product op INNER JOIN oc_product_description od ON op.product_id=od.product_id
-		WHERE op.status=1 and discount_percent>0 order by RAND() limit 10";
+		WHERE op.status=1 and op.notavail=0 and discount_percent>0 order by RAND() limit 10";
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
 	public function getHits(){
 		$sql="SELECT op.product_id, op.image, op.date_added, op.discount_percent, op.price, od.name, od.meta_h1 FROM oc_product op INNER JOIN oc_product_description od ON op.product_id=od.product_id
-		WHERE op.status=1 order by op.viewed DESC limit 10";
+		WHERE op.status=1 and op.notavail=0 order by op.viewed DESC limit 10";
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
