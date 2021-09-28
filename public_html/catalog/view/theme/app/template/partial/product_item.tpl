@@ -53,12 +53,11 @@
                         <span class="fast_preview_span with_goal" data-goal="quick-view">Быстрый просмотр</span>
                     </div>
                 </div>
-                <?php }?>
-                
+                <?php }?>             
 <picture >
     <source type="image/webp" srcset="<?= $p['thumb_webp'] ?>">
     <source type="image/jpeg" srcset="<?= $p['thumb'] ?>">
-    <img class="wrp_fly_image" itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['name'] ?>" title="<?= $p['name'] ?>" />
+    <img class="wrp_fly_image" itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['meta_h1'] ?>" title="<?= $p['meta_h1'] ?>" />
 </picture>                
                 <div class="wrp_favorite">
                     <?php if(!$p["notavail"]){ ?>

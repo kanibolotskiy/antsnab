@@ -249,7 +249,7 @@ class ControllerExtensionFeedOzon extends Controller {
 	private function setOffer($data) {
 		//print_r($data);
 		$offer = array();
-		$offer['id']=$data['ozon_code'];
+		$offer['id']=iconv('UTF-8//IGNORE','windows-1251//IGNORE',  $data['ozon_code']);
 		$outlet_name= iconv('UTF-8//IGNORE','windows-1251//IGNORE',  "Алтуфьево 37с8");
 
 		$outlets=['instock'=>$data['quantity'],'warehouse_name'=>$outlet_name];
