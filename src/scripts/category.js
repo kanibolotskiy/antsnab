@@ -549,11 +549,14 @@ $(document).ready(function(){
     });
 
     $("#seldef1").change(function(){
+        /*
         var flag=true;
         if($(window).width()<min_width_filter){
             flag=false;
         }
-        change_params_form(flag);
+        console.log(flag)
+        */
+        change_params_form(true);
     });
     /*
     $(".filter_reset").click(function(){
