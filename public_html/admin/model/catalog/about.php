@@ -26,6 +26,7 @@ class ModelCatalogAbout extends Model {
 	}
 	public function getAboutOff(){
 		$query = $this->db->query("SELECT DISTINCT * from dopinfo_about_off");
+		//print_r($query->rows);
 		return $query->rows;
 	}
 	public function getAboutMan(){
@@ -81,13 +82,15 @@ class ModelCatalogAbout extends Model {
 						$this->db->query("DELETE from dopinfo_about_customers where id='".$key."'");
 					}
 				}else{
+					
 					$this->db->query("UPDATE dopinfo_about_customers SET 
 						image = '" . $this->db->escape($customer['image']) . "', 
 						fio = '" . $this->db->escape($customer['fio']) . "', 
 						position = '" . $this->db->escape($customer['position']) . "', 
 						phone = '" . $this->db->escape($customer['phone']) . "', 
 						code = '" . $this->db->escape($customer['code']) . "', 
-						email = '" . $this->db->escape($customer['email']) . "'
+						email = '" . $this->db->escape($customer['email']) . "',
+						sort_order = '" . $this->db->escape($customer['sort_order']) . "'
 						where id='".$key."' 
 					");
 				}
@@ -95,14 +98,15 @@ class ModelCatalogAbout extends Model {
 				foreach($customer['image'] as $key_row=>$customer_row){
 					if(!$this->db->escape($customer['delete'][$key_row])){
 						$sql_insert="INSERT into dopinfo_about_customers 
-							(image, fio, position, phone, code,email)
+							(image, fio, position, phone, code, email, sort_order)
 							values 
 							('" . $this->db->escape($customer['image'][$key_row]) . "', 
 							'" . $this->db->escape($customer['fio'][$key_row]) . "', 
 							'" . $this->db->escape($customer['position'][$key_row]) . "', 
 							'" . $this->db->escape($customer['phone'][$key_row]) . "', 
 							'" . $this->db->escape($customer['code'][$key_row]) . "', 
-							'" . $this->db->escape($customer['email'][$key_row]) . "'
+							'" . $this->db->escape($customer['email'][$key_row]) . "',
+							'" . $this->db->escape($customer['sort_order'][$key_row]) . "'
 							)";
 						$this->db->query($sql_insert);
 					}
@@ -121,7 +125,8 @@ class ModelCatalogAbout extends Model {
 						$this->db->query("UPDATE dopinfo_about_off SET 
 							image = '" . $this->db->escape($off['image']) . "', 
 							caption = '" . $this->db->escape($off['caption']) . "', 
-							video = '" . $this->db->escape($off['video']) . "'
+							video = '" . $this->db->escape($off['video']) . "',
+							sort_order = '" . $this->db->escape($off['sort_order']) . "'
 							where id='".$key."' 
 						");
 					}
@@ -129,11 +134,12 @@ class ModelCatalogAbout extends Model {
 					foreach($off['image'] as $key_row=>$off_row){
 						if(!$this->db->escape($off['delete'][$key_row])){
 							$sql_insert="INSERT into dopinfo_about_off 
-								(image, caption, video)
+								(image, caption, video, sort_order)
 								values 
 								('" . $this->db->escape($off['image'][$key_row]) . "', 
 								'" . $this->db->escape($off['caption'][$key_row]) . "', 
-								'" . $this->db->escape($off['video'][$key_row]) . "'
+								'" . $this->db->escape($off['video'][$key_row]) . "',
+								'" . $this->db->escape($off['sort_order'][$key_row]) . "'
 								)";
 							$this->db->query($sql_insert);
 						}
@@ -215,7 +221,8 @@ class ModelCatalogAbout extends Model {
 					}else{
 						$this->db->query("UPDATE dopinfo_about_sert SET 
 							image = '" . $this->db->escape($sert['image']) . "', 
-							caption = '" . $this->db->escape($sert['caption']) . "'
+							caption = '" . $this->db->escape($sert['caption']) . "',
+							sort_order = '" . $this->db->escape($sert['sort_order']) . "'
 							where id='".$key."' 
 						");
 					}
@@ -223,10 +230,11 @@ class ModelCatalogAbout extends Model {
 					foreach($sert['image'] as $key_row=>$sert_row){
 						if(!$this->db->escape($sert['delete'][$key_row])){
 							$sql_insert="INSERT into dopinfo_about_sert 
-								(image, caption)
+								(image, caption, sort_order)
 								values 
 								('" . $this->db->escape($sert['image'][$key_row]) . "', 
-								'" . $this->db->escape($sert['caption'][$key_row]) . "'
+								'" . $this->db->escape($sert['caption'][$key_row]) . "',
+								'" . $this->db->escape($sert['sort_order'][$key_row]) . "'
 								)";
 							$this->db->query($sql_insert);
 						}

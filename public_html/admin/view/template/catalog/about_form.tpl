@@ -459,6 +459,7 @@
             '                <input name="sert[new][caption][]" value="" placeholder="Заголовок" type="text" class="cust_change form-control" />'+
             '                <button type="button" class="r_remove btn btn-danger"><i class="fa fa-minus-circle"></i></button>'+
             '            </div>'+
+            '            <input placeholder="Порядок сортировки" type="text" class="margtop_form-control form-control" name="sert[new][sort_order][]" value="0">'+
             '        </div>'+
             '    </div>'+
             '</div>';
@@ -488,6 +489,7 @@
             '                <button type="button" class="r_remove btn btn-danger"><i class="fa fa-minus-circle"></i></button>'+
             '            </div>'+
             '            <input name="'+nm+'[new][video][]" value="" placeholder="Видео" class="video_input form-control" />'+
+            '            <input placeholder="Порядок сортировки" type="text" class="margtop_form-control form-control" name="'+nm+'[new][sort_order][]" value="0">'+
             '        </div>'+
             '    </div>'+
             '</div>';
@@ -522,6 +524,8 @@
             '        <input type="text" class="cust_change form-control" name="customer[new][code][]" value="">'+
             '        <div class="about_row_title">Email</div>'+
             '        <input type="text" class="cust_change form-control" name="customer[new][email][]" value="">'+
+            '        <div class="about_row_title">Порядок сортировки:</div>'+
+            '        <input type="text" class="cust_change form-control" name="customer[new][sort_order][]" value="">'+
             '    </div>'+
             '</div>';
             $(".cust_rows").append(new_itm);
