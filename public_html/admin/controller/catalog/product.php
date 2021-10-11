@@ -1755,10 +1755,12 @@ class ControllerCatalogProduct extends Controller {
 
 		$data['product_benefits'] = array();
 		foreach ($products_bene as $product_bene) {
-			$data['product_benefits'][] = array(
-				'benefit_id'=>$product_bene['benefit_id'],
-				'name_admin'=>$product_bene['name_admin']
-			);
+			if(isset($product_bene['benefit_id'])){
+				$data['product_benefits'][] = array(
+					'benefit_id'=>$product_bene['benefit_id'],
+					'name_admin'=>$product_bene['name_admin']
+				);
+			}
 		}
 		
 

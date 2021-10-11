@@ -118,10 +118,11 @@ class ModelFileFile extends Model {
 				$delete_array_name = $this->db->query("SELECT file FROM " . DB_PREFIX . "file WHERE file_id = '" . $delete_file_id['file_id'] . "'");
 				$this->db->query("DELETE FROM " . DB_PREFIX . "file WHERE file_id = '" . $delete_file_id['file_id'] . "'");
 				$this->db->query("DELETE FROM " . DB_PREFIX . "file_description WHERE file_id = '" . $delete_file_id['file_id'] . "'");
-				
-				if(file_exists(str_replace("system/download", "files", DIR_DOWNLOAD) . $delete_array_name->row['file'])){
-					unlink(str_replace("system/download", "files", DIR_DOWNLOAD) . $delete_array_name->row['file']);
-				}				
+				if(isset($delete_array_name->row['file'])){
+					if(file_exists(str_replace("system/download", "files", DIR_DOWNLOAD) . $delete_array_name->row['file'])){
+						unlink(str_replace("system/download", "files", DIR_DOWNLOAD) . $delete_array_name->row['file']);
+					}
+				}
 			}
 		}
 	}	

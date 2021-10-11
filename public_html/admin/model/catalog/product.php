@@ -644,12 +644,52 @@ class ModelCatalogProduct extends Model
 
         //Файлы
         if (isset($data['product_files'])) {
-            foreach ($data['product_files'] as $product_file) {                
+            foreach ($data['product_files'] as $product_file) {    
+                /*
+                echo "INSERT INTO `" . DB_PREFIX . "file_page` SET 
+                page_id = '" . (int) $product_id . "', 
+                file_id = '" . (int) $product_file['file_id'] . "',
+                page_type='" . $product_file['page_type'] . "'
+                ";
+                */
+                if($product_file['file_id']){
+                    $query = $this->db->query("select * from `oc_file` where file_id='".$product_file['file_id']."'");
+                    $query_desc = $this->db->query("select * from `oc_file_description` where language_id='1' and file_id='".$product_file['file_id']."'" );
+                    if($row = $query->row){
+                        $this->db->query("INSERT INTO `oc_file` (file,image,sort_order,status,date_added) values (
+                            '".$row['file']."','".$row['image']."','".$row['sort_order']."','".$row['status']."','NOW()'
+                        )");
+
+                        $new_file_id = $this->db->getLastId();
+                        $row_desc = $query_desc->row;
+
+                        $this->db->query("INSERT INTO `oc_file_description` (file_id,language_id,name) values (
+                            '".$new_file_id."','1','".$row_desc['name']."'
+                        )");
+
+                        $this->db->query("INSERT INTO `" . DB_PREFIX . "file_page` SET 
+                            page_id = '" . (int) $product_id . "', 
+                            file_id = '" . (int) $new_file_id . "',
+                            page_type='" . $product_file['page_type'] . "'
+                        ");     
+                    }
+                    
+                    /*
+                    $sql="select * from oc_file where file_id='".$product_file['file_id']."'";
+                    $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_description WHERE product_id = '" . (int) $product_id . "'");                    
+                    foreach ($query->rows as $result) {
+                        if(isset($result['description_mini'])){
+                    */        
+                }
+                
+                
+                /*/*
                 $this->db->query("INSERT INTO `" . DB_PREFIX . "file_page` SET 
                     page_id = '" . (int) $product_id . "', 
                     file_id = '" . (int) $product_file['file_id'] . "',
                     page_type='" . $product_file['page_type'] . "'
                     ");
+                */
             }
         }
         
