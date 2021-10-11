@@ -108,7 +108,7 @@ class ControllerCommonCompare extends Controller {
             $delivery_info = $this->model_catalog_product->getDelivery($product['product_id'],$weight);
             //print_r($delivery_info);
             if(is_numeric($delivery_info["price_delivery"])){
-                $del_price="от ".number_format($delivery_info["price_delivery"],0,"."," ").' <div class="rur">i</div>';
+                $del_price="от ".number_format($delivery_info["price_delivery"],0,"."," ").' <span>₽</span>';
             }else{
                 $del_price=$delivery_info["price_delivery"];
             }
