@@ -1,4 +1,5 @@
 <?php
+
 namespace WS\Override\Controller\Site\Product;
 
 use WS\Patch\Helper\ProductListHelper;
@@ -8,6 +9,7 @@ class SearchController extends \Controller
 {	
 	
 	public function bestSearch(){
+		
 		$this->load->model('catalog/search');
 		$query=$_GET["query"];
 		
@@ -26,8 +28,13 @@ class SearchController extends \Controller
 		
 		foreach($search_results as $search_result){
 			//echo $search_result;
+			//echo "!".$search_result["meta_h1"]."!=".html_entity_decode($search_result["meta_h1"]);
+
 			$json["suggestions"][]=Array(
-				"value"=>$search_result["meta_h1"],
+				
+				//"value"=>$search_result["meta_h1"],
+				"value"=>html_entity_decode($search_result["meta_h1"]),
+				//"value"=>html_entity_decode($search_result["meta_h1"]),
 				"data"=>$this->url->link('product/product', '&product_id=' . $search_result["product_id"])
 			);
 		}
