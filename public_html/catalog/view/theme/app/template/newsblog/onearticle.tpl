@@ -14,10 +14,11 @@
     <source type="image/webp" srcset="<?=$thumb_webp?>">
     <source type="image/jpeg" srcset="<?=$thumb?>">
     <img src="<?=$thumb?>" title="<?=$heading_title ?>" alt="<?=$heading_title ?>" />
-</picture>                     
+</picture>                    
+
                     <?php if ($show_cat_name): ?>
                         <span><?= $cat_name ?></span>
-                        <div class="time _hidden"><?= $date ?></div>
+                        <!--<div class="time _hidden"><?= $date ?></div>-->
                     <?php else: ?>
                         <div class="time"><?= $date ?></div>
                     <?php endif; ?>
