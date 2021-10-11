@@ -52,7 +52,7 @@
                                         <ul>
                                             <?php foreach ($categories as $c): ?>
                                                 <li>
-                                                    <div class="catalog-block">
+                                                    <div class="catalog-block ctn_block">
                                                         <div class="ct_title"><a href="<?= $c['href'] ?>"><?= $c['name'] ?></a></div>
                                                         <div class="cat_info">
                                                             <div class="cat_img">
@@ -64,7 +64,7 @@
                                                                     </picture>
                                                                 </a>
                                                             </div>
-                                                            <a href="<?= $c['href'] ?>" class="more">Смотреть все</a> 
+                                                            <a href="<?= $c['href'] ?>" class="more ctn_more">Смотреть все</a> 
                                                         </div>
 <!--
                                                         <div class="catalog-img">
