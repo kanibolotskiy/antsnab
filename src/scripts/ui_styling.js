@@ -148,6 +148,18 @@ $(window).resize(function() {
     check_scroll();
 });
 $(document).ready(function(){
+    $(".ancor_title").click(function(e){
+        e.preventDefault();
+        var href_str=$(this).attr("href");
+        var href_arr=href_str.split("#");
+        var href_id=href_arr[1];
+        if($("#"+href_id).length){
+            $("html,body").animate({"scrollTop":$("#"+href_id).offset().top});
+        }
+        
+    });
+
+
     var scrollWidth = window.innerWidth - document.documentElement.clientWidth;
     if (scrollWidth > 1) {
     $('<style type="text/css">')

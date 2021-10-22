@@ -159,6 +159,7 @@ textarea{
 }
 h1,h2,h3 {
     clear: both;
+    position:relative;
 }
 h2 {
     font-size: 18px;
@@ -5876,7 +5877,7 @@ filter: grayscale(1); /* W3C */
     position: relative;
     font-size: 14px;
     color: #000;
-    line-height: 18px;
+    line-height: 22px;
     margin-bottom: 10px;
     p{
         padding-top:0;
@@ -10734,7 +10735,7 @@ body.is-compensate-for-scrollbar{overflow:hidden;}
     line-height: 20px;
     cursor: pointer;
 }
-.ancor{position:absolute;top:-115px;}
+.ancor{position:absolute;top:-115px;text-indent:-9999px;}
 .gallery-holder .gmask .slide img{display:none;}
 .wrapper_product_hint{position:relative;margin-right:9px;min-width:150px;}
 .tab-block.tab-block2 .wrapper_product_hint{margin-right:0;}

@@ -176,17 +176,19 @@ class ModelNewsBlogArticle extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'newsblog_article_id=" . (int)$article_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
 		}
 		
-		foreach($data['faq_status'] as $key=>$status){
-			if($status==1){
-				$this->db->query("delete from articles_faq where faq_id='".$key."'");
-			}else{
-				$this->db->query("UPDATE articles_faq set 
-					question='".$data['faq_question'][$key]."', 
-					answer='".$data['faq_answer'][$key]."',
-					sort_order='".$data['sort_order'][$key]."'
-					
-					where faq_id='".$key."'
-				");
+		if(isset($data['faq_status'])){
+			foreach($data['faq_status'] as $key=>$status){
+				if($status==1){
+					$this->db->query("delete from articles_faq where faq_id='".$key."'");
+				}else{
+					$this->db->query("UPDATE articles_faq set 
+						question='".$data['faq_question'][$key]."', 
+						answer='".$data['faq_answer'][$key]."',
+						sort_order='".$data['sort_order'][$key]."'
+						
+						where faq_id='".$key."'
+					");
+				}
 			}
 		}
 		if(isset($data['faq_status_new'])){
