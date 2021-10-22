@@ -84,6 +84,7 @@ class ModelNewsBlogArticle extends Model {
 	}
 
 	public function editArticle($article_id, $data) {
+		
 
 		$this->db->query("UPDATE " . DB_PREFIX . "newsblog_article SET date_available = '" . $this->db->escape($data['date_available']) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW() WHERE article_id = '" . (int)$article_id . "'");
 
@@ -175,6 +176,27 @@ class ModelNewsBlogArticle extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'newsblog_article_id=" . (int)$article_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
 		}
 		
+		foreach($data['faq_status'] as $key=>$status){
+			if($status==1){
+				$this->db->query("delete from articles_faq where faq_id='".$key."'");
+			}else{
+				$this->db->query("UPDATE articles_faq set 
+					question='".$data['faq_question'][$key]."', 
+					answer='".$data['faq_answer'][$key]."',
+					sort_order='".$data['sort_order'][$key]."'
+					
+					where faq_id='".$key."'
+				");
+			}
+		}
+		if(isset($data['faq_status_new'])){
+			foreach($data['faq_status_new'] as $key=>$status){
+				if($status!=1){
+					$this->db->query("INSERT INTO  articles_faq (article_id, question,answer,sort_order)
+						values ('".$article_id."','".$data['faq_question'][$key]."','".$data['faq_answer'][$key]."','".$data['sort_order'][$key]."')");
+				}
+			}
+		}
 		$this->cache->delete('article');
 
 	}
@@ -223,6 +245,10 @@ class ModelNewsBlogArticle extends Model {
 
 		$this->cache->delete('article');
 
+	}
+	public function getArticleFaq($article_id){
+		$query = $this->db->query("SELECT * from articles_faq where article_id='".$article_id."' order by sort_order, faq_id");
+		return $query->rows;
 	}
 
 	public function getArticle($article_id) {

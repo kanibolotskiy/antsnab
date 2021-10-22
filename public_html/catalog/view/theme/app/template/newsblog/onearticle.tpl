@@ -5,15 +5,29 @@
         <?php include __DIR__ . '/../partial/breadcrumbs.tpl' ?>
         <?php echo $content_top; ?>
         
-        <div class="article">
-            <h1 class="title"><?php echo $heading_title; ?></h1>
+        <div class="article" itemscope itemtype="http://schema.org/Article">
+            <h1 class="title" itemprop="name"><?php echo $heading_title; ?></h1>
+            <meta itemprop="datePublished" content="<?php echo date("Y-m-d",strtotime($date));?>"/> 
+            <meta itemprop="dateModified" content="<?php echo date("Y-m-d",strtotime($date));?>"/>
+
+            <meta itemprop="author" content='ООО "ТК Ант-Снаб"'/>
+            <div style="display:none;" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                    <img itemprop="url image" src="https://ant-snab.ru/image/catalog/logo.jpg" alt="Ант-Снаб"/>
+                    <meta itemprop="width" content="102">
+                    <meta itemprop="height" content="94">
+                </div>
+                <meta itemprop="name" content='ООО "ТК Ант-Снаб"'>
+                <meta itemprop="telephone" content="+7 (495) 255-01-37">
+                <meta itemprop="address" content="127566, г. Москва, Высоковольтный проезд, дом 1, стр. 43">
+            </div>
             <?php if ($thumb) { ?>
                 <div class="img-article">
                     
 <picture>
     <source type="image/webp" srcset="<?=$thumb_webp?>">
     <source type="image/jpeg" srcset="<?=$thumb?>">
-    <img src="<?=$thumb?>" title="<?=$heading_title ?>" alt="<?=$heading_title ?>" />
+    <img itemprop="image" src="<?=$thumb?>" title="<?=$heading_title ?>" alt="<?=$heading_title ?>" />
 </picture>                    
 
                     <?php if ($show_cat_name): ?>
@@ -24,10 +38,25 @@
                     <?php endif; ?>
                 </div>
             <?php } ?>
-            <div class="article-content content-text">
+            <div class="article-content content-text" itemprop="articleBody">
                 <?php echo $description; ?>
+                <?php if($faq) {?>
+                    <div class="clr"></div>
+                    <div class="faqs" itemscope itemtype="https://schema.org/FAQPage">
+                        <?php foreach($faq as $faq_item) {?>
+                            <div class="faq_row" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                                <div class="faq_question"><p>Вопрос: <span itemprop="name"><?=$faq_item['question']?></span></p></div>
+                                <div class="faq_answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                                    <span class="faq_answer_caption">Ответ: </span><span itemprop="text"><?=html_entity_decode($faq_item['answer'])?></span>
+                                </div>
+                            </div>
+                        <?php }?>
+                    </div>
+
+                <?php }?>
             </div>
             
+
             <?php if($images) {?>
                 <div class="gallery">
                     <?php foreach($images as $image_item) {?>

@@ -29,7 +29,7 @@
         <?php } ?>
         <div class="news-description">
             <a href="<?php echo $article['href']; ?>" class="title-news" itemprop="headline">
-                <?php echo $article['name']; ?>
+                <span itemprop="name"><?php echo $article['name']; ?></span>
             </a>
             <div itemprop="description"><p><?php echo strip_tags($article['preview']); ?></p></div>
             <a href="<?php echo $article['href']; ?>" class="more">Читать далее</a>

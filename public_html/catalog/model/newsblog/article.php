@@ -3,7 +3,10 @@ class ModelNewsBlogArticle extends Model {
 	public function updateViewed($article_id) {
 		$this->db->query("UPDATE " . DB_PREFIX . "newsblog_article SET viewed = (viewed + 1) WHERE article_id = '" . (int)$article_id . "'");
 	}
-
+	public function getArticleFaq($article_id) {
+		$query = $this->db->query("SELECT * from articles_faq where article_id='".$article_id."' order by sort_order, faq_id");
+		return $query->rows;
+	}
 	public function getArticleCategory($article_id) {
 		$query = $this->db->query("SELECT ptc.category_id, ptc.article_id, c.image as image, d.name as category_name,
 		(select price from " . DB_PREFIX . "newsblog_article where article_id='" . (int)$article_id . "') as price,

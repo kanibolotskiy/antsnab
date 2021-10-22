@@ -495,6 +495,9 @@ class ControllerNewsBlogArticle extends Controller {
 		$data['tab_attribute'] = $this->language->get('tab_attribute');
 		$data['tab_image'] = $this->language->get('tab_image');
 		$data['tab_design'] = $this->language->get('tab_design');
+		$data['tab_faq'] = $this->language->get('tab_faq');
+		
+
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -759,6 +762,8 @@ class ControllerNewsBlogArticle extends Controller {
 			$article_images = array();
 		}
 
+		$article_faqs = $this->model_newsblog_article->getArticleFaq($this->request->get['article_id']);
+		$data['article_faqs'] = $article_faqs;
 		$data['article_images'] = array();
 
 		foreach ($article_images as $article_image) {

@@ -1038,3 +1038,7 @@ height:34px;
 .ozon_table td.ozon_product2 label{	
 	padding:5px 10px 5px 50px;display:block;
 }
+.faq_row{margin-left:15px;margin-right:15px;padding-bottom: 30px;border-bottom: 1px solid #ccc;}
+.wrap_faq_row_caption{display:flex;column-gap:10px;}
+.faq_row_caption{font-weight:bold;margin-top:10px;margin-bottom:5px;}
+.wrpapper_append_button_faq{margin-left:0px;margin-right:0px;}

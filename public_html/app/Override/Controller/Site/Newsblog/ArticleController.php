@@ -367,6 +367,9 @@ class ArticleController extends \Controller
                 if ($settings && $settings['show_comments_dq_id'] && $settings['show_comments_dq_article'])
                     $data['comments_dq'] = $settings['show_comments_dq_id'];
             }
+            
+            $data['faq']=$this->model_newsblog_article->getArticleFaq($newsblog_article_id);
+
 
             $this->model_newsblog_article->updateViewed($this->request->get['newsblog_article_id']);
 

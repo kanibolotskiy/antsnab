@@ -32,6 +32,7 @@
             <li><a href="#tab-attribute" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
             <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
             <li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
+            <li><a href="#tab-faq" data-toggle="tab"><?php echo $tab_faq; ?></a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
@@ -362,11 +363,38 @@
                 </table>
               </div>
             </div>
+            <div class="tab-pane active" id="tab-faq">
+              <div class="form-group">
+                <div class="faq_rows">
+                  <?php foreach($article_faqs as $faq){?>
+                    <div class="faq_row">
+                      <div class="faq_row_caption">Вопрос</div>
+                      <div class="wrap_faq_row_caption">
+                        <input type="hidden" class="faq_status" name="faq_status[<?=$faq['faq_id']?>]" value="0"/>
+                        <input class="faq_change form-control" type="text" name="faq_question[<?=$faq['faq_id']?>]" value="<?=$faq['question'] ?>"/>
+                        <button type="button" class="faq_remove btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+                      </div>
+                      <div class="faq_row_caption">Ответ</div>
+                      <textarea class="form-control tinymce" name="faq_answer[<?=$faq['faq_id']?>]" placeholder="Ответ"><?=$faq['answer'] ?></textarea>
+                      <div class="faq_row_caption">Порядок сортировки</div>
+                      <input class="faq_change form-control" type="text" name="sort_order[<?=$faq['faq_id']?>]" value="<?=$faq['sort_order'] ?>"/>
+
+                    </div>
+                  <?php }?>
+                </div>
+              </div>
+
+            </div>
+            
+          </div>
+          <div class="wrpapper_append_button wrpapper_append_button_faq">
+              <button type="button" class="btn btn-primary append_row_faq"><i class="fa fa-plus-circle"></i></button>
           </div>
         </form>
       </div>
     </div>
   </div>
+
   <script type="text/javascript"><!--
     <?php if ($ckeditor) { ?>
       <?php foreach ($languages as $language) { ?>
@@ -375,6 +403,14 @@
     <?php } ?>
    //--></script>
 <script type="text/javascript"><!--
+  $(document).on("click",".faq_remove",function(){
+    $(this).closest(".faq_row").find(".faq_status").val(1);
+    $(this).closest(".faq_row").find(".faq_status_new").val(1);
+
+    $(this).closest(".faq_row").hide();
+  });
+  
+
 // Related
 $('input[name=\'related\']').autocomplete({
 	'source': function(request, response) {
@@ -405,6 +441,45 @@ $('#article-related').delegate('.fa-minus-circle', 'click', function() {
 });
 //--></script>
 <script type="text/javascript"><!--
+
+$(".append_row_faq").click(function(){
+  var rand_id=Math.random();
+  var new_item='<div class="faq_row">'+
+                '      <div class="faq_row_caption">Вопрос</div>'+
+                '      <div class="wrap_faq_row_caption">'+
+                '        <input class="faq_status_new" type="hidden" name="faq_status_new['+rand_id+']" value="0"/>'+
+                '        <input class="form-control" type="text" name="faq_question['+rand_id+']" value=""/>'+
+                '        <button type="button" class="faq_remove btn btn-danger"><i class="fa fa-minus-circle"></i></button>'+
+                '      </div>'+
+                '      <div class="faq_row_caption">Ответ</div>'+
+                '      <textarea class="form-control tinymce_new" name="faq_answer['+rand_id+']" placeholder="Ответ"></textarea>'+
+                '      <div class="faq_row_caption">Порядок сортировки</div>'+
+                '      <input class="form-control" type="text" name="sort_order['+rand_id+']" value="0"/>'+
+                '    </div>';
+  //console.log("ok")
+  $(".faq_rows").append(new_item);
+  
+  //$('.summernote').removeClass('summernote');
+  tinymce.init({
+        selector: '.tinymce_new',
+        skin: 'bootstrap',
+        language: 'ru',
+        height:300,
+        file_picker_callback : elFinderBrowser,
+        plugins: [
+          'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+          'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+          'save table contextmenu directionality emoticons template paste textcolor colorpicker'
+        ],
+        toolbar: 'formatselect bold italic sizeselect fontselect fontsizeselect | hr alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | insertfile undo redo | forecolor backcolor emoticons superscript | code ',
+        fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+      });
+});
+$(".faq_change").change(function(){
+  $(this).closest(".faq_row").find("input[name='status']").val(1);
+});
+
+
 // Related products
 $('input[name=\'related_products\']').autocomplete({
 	'source': function(request, response) {
