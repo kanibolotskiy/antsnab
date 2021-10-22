@@ -154,6 +154,7 @@ $(document).ready(function(){
         var href_arr=href_str.split("#");
         var href_id=href_arr[1];
         if($("#"+href_id).length){
+            history.pushState(null,null, href_str);
             $("html,body").animate({"scrollTop":$("#"+href_id).offset().top});
         }
         
