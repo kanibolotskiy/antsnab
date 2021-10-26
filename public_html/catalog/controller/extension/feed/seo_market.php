@@ -84,52 +84,54 @@ class ControllerExtensionFeedSeoMarket extends Controller {
 			foreach ($products as $product) {
 				$data = array();
 
-				// Атрибуты товарного предложения
-				$data['id'] = $product['product_id'];
-//				$data['type'] = 'vendor.model';
-				$data['available'] = ($product['quantity'] > 0 || $product['stock_status_id'] == $in_stock_id);
-//				$data['bid'] = 10;
-//				$data['cbid'] = 15;
+				if($product['quantity'] > 0){
+					// Атрибуты товарного предложения
+					$data['id'] = $product['product_id'];
+	//				$data['type'] = 'vendor.model';
+					$data['available'] = ($product['quantity'] > 0 || $product['stock_status_id'] == $in_stock_id);
+	//				$data['bid'] = 10;
+	//				$data['cbid'] = 15;
 
-				// Параметры товарного предложения
-				$data['url'] = $this->url->link('product/product', 'path=' . $this->getPath($product['category_id']) . '&product_id=' . $product['product_id']);
-				
-				$data['price'] = $this->currency->convert($this->tax->calculate($product['price_wholesale'], $product['tax_class_id']), $shop_currency, $offers_currency);
+					// Параметры товарного предложения
+					$data['url'] = $this->url->link('product/product', 'path=' . $this->getPath($product['category_id']) . '&product_id=' . $product['product_id']);
+					
+					$data['price'] = $this->currency->convert($this->tax->calculate($product['price_wholesale'], $product['tax_class_id']), $shop_currency, $offers_currency);
 
-				$data['currencyId'] = $offers_currency;
-				$data['categoryId'] = $product['category_id'];
-				$data['delivery'] = 'true';
-//				$data['local_delivery_cost'] = 100;
-				$data['name'] = $product['meta_h1'];
-				$data['vendor'] = $product['manufacturer'];
-				$data['vendorCode'] = $product['model'];
-				$data['model'] = $product['name'];
-				$data['description'] = $product['description'];
-//				$data['manufacturer_warranty'] = 'true';
-//				$data['barcode'] = $product['sku'];
-				if ($product['image']) {
-					//$data['picture'] = $this->model_tool_image->resize($product['image'], 100, 100);
-					$data['picture'] = HTTP_SERVER.'image/'.$product['image'];
+					$data['currencyId'] = $offers_currency;
+					$data['categoryId'] = $product['category_id'];
+					$data['delivery'] = 'true';
+	//				$data['local_delivery_cost'] = 100;
+					$data['name'] = $product['meta_h1'];
+					$data['vendor'] = $product['manufacturer'];
+					$data['vendorCode'] = $product['model'];
+					$data['model'] = $product['name'];
+					$data['description'] = $product['description'];
+	//				$data['manufacturer_warranty'] = 'true';
+	//				$data['barcode'] = $product['sku'];
+					if ($product['image']) {
+						//$data['picture'] = $this->model_tool_image->resize($product['image'], 100, 100);
+						$data['picture'] = HTTP_SERVER.'image/'.$product['image'];
+					}
+					
+	/*
+					// пример структуры массива для вывода параметров
+					$data['param'] = array(
+						array(
+							'name'=>'Wi-Fi',
+							'value'=>'есть'
+						), array(
+							'name'=>'Размер экрана',
+							'unit'=>'дюйм',
+							'value'=>'20'
+						), array(
+							'name'=>'Вес',
+							'unit'=>'кг',
+							'value'=>'4.6'
+						)
+					);
+	*/
+					$this->setOffer($data);
 				}
-				
-/*
-				// пример структуры массива для вывода параметров
-				$data['param'] = array(
-					array(
-						'name'=>'Wi-Fi',
-						'value'=>'есть'
-					), array(
-						'name'=>'Размер экрана',
-						'unit'=>'дюйм',
-						'value'=>'20'
-					), array(
-						'name'=>'Вес',
-						'unit'=>'кг',
-						'value'=>'4.6'
-					)
-				);
-*/
-				$this->setOffer($data);
 			}
 
 			//$this->categories = array_filter($this->categories, array($this, "filterCategory"));
