@@ -258,6 +258,9 @@
                                             </div>
                                             <?php }?>
                                         </div>
+                                    <?php }else{?>
+                                        <meta itemprop="priceCurrency" content="RUB"/>
+                                        <meta itemprop="price" content="299.99">
                                     <?php }?>
                                 </div>
                                
