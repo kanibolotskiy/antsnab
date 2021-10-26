@@ -71,7 +71,10 @@ class SitemapController extends \Controller {
 				);
 			}
 		}
-		
+		$data['informations'][] = array(
+			'title' => "О компании",
+			'href'  => 'about/'
+		);
         
 
 		$data['column_left'] = $this->load->controller('common/column_left');
