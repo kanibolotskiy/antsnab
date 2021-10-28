@@ -24,7 +24,7 @@
 				<turbo:content>
 					<![CDATA[
 					<header>
-						<h1>'.$article['meta_h1'].'</h1>
+						<h1>'.($article['meta_h1']?$article['meta_h1']:$article['name']).'</h1>
 						<figure>
 						<img src="https://ant-snab.ru/'.$article['image'].'">
 						</figure>
