@@ -13,8 +13,8 @@
 				//$text = iconv('windows-1251//IGNORE', 'UTF-8//IGNORE', $article['description']);
 				//$text=$article['description'];
 
-				$text = mb_convert_encoding($article['description'], 'utf-8', 'windows-1251');
-				
+				//$text = mb_convert_encoding($article['description'], 'utf-8', 'windows-1251');
+				$text=htmlspecialchars_decode($article['description']);
 				$items.='<item turbo="true">
 				<title>'.$article['name'].'</title>
 				<link>'.$url.'</link>
@@ -26,7 +26,7 @@
 						<img src="https://ant-snab.ru/'.$article['image'].'">
 						</figure>
 					</header>
-					'.htmlspecialchars_decode($text).'
+					'.$text.'
 						
 						]]>
 					</turbo:content>
@@ -47,7 +47,7 @@
 			</rss>';
 
 
-			$this->response->addHeader('Content-Type: application/rss+xml');
+			$this->response->addHeader('Content-Type: application/rss+xml;charset=utf-8');
 			$this->response->setOutput($output);
 		
 	}
