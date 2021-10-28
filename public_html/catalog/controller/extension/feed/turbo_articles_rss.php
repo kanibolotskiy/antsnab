@@ -11,8 +11,10 @@
 				$url=$this->url->link('newsblog/article', 'newsblog_path=&newsblog_article_id=' . $article['article_id']);
 				
 				//$text = iconv('windows-1251//IGNORE', 'UTF-8//IGNORE', $article['description']);
-				$text=$article['description'];
+				//$text=$article['description'];
 
+				$text = mb_convert_encoding($article['description'], 'utf-8', 'windows-1251');
+				
 				$items.='<item turbo="true">
 				<title>'.$article['name'].'</title>
 				<link>'.$url.'</link>
@@ -32,7 +34,7 @@
 			}
 			
 			
-			$output = '<?xml version="1.0" encoding="UTF-8"?>
+			$output = '<?xml version="1.0" encoding="windows-1251"?>
 			<rss xmlns:yandex="http://news.yandex.ru" xmlns:media="http://search.yahoo.com/mrss/" 
 			xmlns:turbo="http://turbo.yandex.ru" version="2.0">
 				<channel>
