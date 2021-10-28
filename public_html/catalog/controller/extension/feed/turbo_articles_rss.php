@@ -24,7 +24,7 @@
 						<img src="https://ant-snab.ru/'.$article['image'].'">
 						</figure>
 					</header>
-					'.htmlspecialchars_decode($text, ENT_QUOTES, 'UTF-8').'
+					'.htmlspecialchars_decode($text).'
 						
 						]]>
 					</turbo:content>
