@@ -188,7 +188,7 @@
                                             <meta itemprop="maxPrice" content="<?php echo $price;?>">
                                             
                                         </span>    
-                                        <meta itemprop="price" content="<?php echo $price;?>">
+                                        <meta itemprop="price" content="<?php echo round($price,2);?>">
                                         <div class="wrap_price-for">
 
                                             <div class="price-for">
