@@ -184,8 +184,8 @@
                                         <meta itemprop="priceCurrency" content="RUB"/>
                                         <span itemprop="priceSpecification" itemscope  itemtype="http://schema.org/PriceSpecification">
                                             <meta itemprop="priceCurrency" content="RUB"/>
-                                            <meta itemprop="minPrice" content="<?php echo $price_wholesale;?>">                                        
-                                            <meta itemprop="maxPrice" content="<?php echo $price;?>">
+                                            <meta itemprop="minPrice" content="<?php echo echo round($price_wholesale,2);?>">                                        
+                                            <meta itemprop="maxPrice" content="<?php echo echo round($price,2);?>">
                                             
                                         </span>    
                                         <meta itemprop="price" content="<?php echo round($price,2);?>">
