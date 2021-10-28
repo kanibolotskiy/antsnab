@@ -16,7 +16,7 @@
 				//$text = mb_convert_encoding($article['description'], 'utf-8', 'windows-1251');
 
 				$text=htmlspecialchars_decode($article['description']);
-				$text = str_replace("../", "/", $text);
+				
 
 				$items.='<item turbo="true">
 				<title>'.$article['name'].'</title>
@@ -36,7 +36,7 @@
 				</item>';
 			}
 			
-			
+			$text = str_replace("../", "/", $items);
 			$output = '<?xml version="1.0" encoding="utf-8"?>
 			<rss xmlns:yandex="http://news.yandex.ru" xmlns:media="http://search.yahoo.com/mrss/" 
 			xmlns:turbo="http://turbo.yandex.ru" version="2.0">
