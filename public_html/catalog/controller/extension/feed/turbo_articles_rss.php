@@ -28,7 +28,7 @@
 					<header>
 						<h1>'.($article['meta_h1']?$article['meta_h1']:$article['name']).'</h1>
 						<figure>
-						<img src="https://ant-snab.ru/'.$thumb.'">
+						<img src="'.$thumb.'">
 						</figure>
 					</header>
 					'.$text.'
