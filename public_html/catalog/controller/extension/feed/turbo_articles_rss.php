@@ -9,6 +9,8 @@
 						$items='';
 			foreach($articles as $article){
 				$url=$this->url->link('newsblog/article', 'newsblog_path=&newsblog_article_id=' . $article['article_id']);
+				
+				$text = iconv('UTF-8//IGNORE', 'windows-1251//IGNORE', $article['description']);
 
 				$items.='<item turbo="true">
 				<title>'.$article['name'].'</title>
@@ -21,7 +23,7 @@
 						<img src="https://ant-snab.ru/'.$article['image'].'">
 						</figure>
 					</header>
-					'.$article['description'].'
+					'.htmlspecialchars_decode($text).'
 						
 						]]>
 					</turbo:content>
