@@ -277,7 +277,7 @@
                                             
                                                 <div class="help_cont <?php if($price_wholesaleold){echo "_oldprice";}?>"> 
                                                     <div class="wrp_price_i">
-                                                        <div class="wholesale-price_value price_i" id="wholesale_price" data-value="<?=$price_wholesale?>"><?=$price_wholesale_val?>
+                                                        <div class="wholesale-price_value price_i" id="wholesale_price" data-value="<?php echo round($price_wholesale,2);?>"><?=$price_wholesale_val?>
                                                         </div>
                                                         <?php if($price_wholesaleold){?>
                                                             <div class="product_old_price product_old_price1">
