@@ -5,7 +5,7 @@
 			$this->load->model('extension/feed/turbo_articles_rss');
 			
 			$articles=$this->model_extension_feed_turbo_articles_rss->getArticles();
-			
+			$this->load->model('tool/image');
 						$items='';
 			foreach($articles as $article){
 				$url=$this->url->link('newsblog/article', 'newsblog_path=&newsblog_article_id=' . $article['article_id']);
@@ -17,6 +17,8 @@
 
 				$text=htmlspecialchars_decode($article['description']);
 				
+				$thumb = $this->model_tool_image->resize($article['image'], 660,440);
+
 
 				$items.='<item turbo="true">
 				<title>'.$article['name'].'</title>
@@ -26,7 +28,7 @@
 					<header>
 						<h1>'.($article['meta_h1']?$article['meta_h1']:$article['name']).'</h1>
 						<figure>
-						<img src="https://ant-snab.ru/'.$article['image'].'">
+						<img src="https://ant-snab.ru/'.$thumb.'">
 						</figure>
 					</header>
 					'.$text.'
