@@ -14,7 +14,10 @@
 				//$text=$article['description'];
 
 				//$text = mb_convert_encoding($article['description'], 'utf-8', 'windows-1251');
+
 				$text=htmlspecialchars_decode($article['description']);
+				$text = str_replace("../", "./", $text);
+
 				$items.='<item turbo="true">
 				<title>'.$article['name'].'</title>
 				<link>'.$url.'</link>
