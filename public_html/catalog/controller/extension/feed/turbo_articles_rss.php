@@ -45,7 +45,7 @@
 					<link>https://ant-snab.ru</link>
 					<description/>
 					<language>ru</language>
-					'.$items.'
+					'.$text.'
 				</channel>
 			</rss>';
 
