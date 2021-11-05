@@ -4,7 +4,7 @@ class ControllerInformationDiler extends Controller {
 
 	public function index() {
 		$this->load->model('tool/lastmod');
-		$this->model_tool_lastmod->setLastModHeader('diler');
+		$this->model_tool_lastmod->setLastModHeader('information/diler');
 
 		$this->load->language('information/diler');
 		$this->load->model('catalog/diler');

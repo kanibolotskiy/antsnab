@@ -210,7 +210,7 @@ class ControllerCatalogAbout extends Controller {
 	}
 	public function edit() {
 		$this->load->model('tool/lastmod');
-		$this->model_tool_lastmod->setLastTime(['about'],time());
+		$this->model_tool_lastmod->setLastTime(['information/about'],time());
 
 
         $this->load->language('catalog/dopinfo');

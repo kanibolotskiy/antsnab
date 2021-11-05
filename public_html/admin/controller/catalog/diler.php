@@ -111,7 +111,7 @@ class ControllerCatalogDiler extends Controller {
 	}
 	public function edit() {
 		$this->load->model('tool/lastmod');
-		$this->model_tool_lastmod->setLastTime(['diler'],time());
+		$this->model_tool_lastmod->setLastTime(['information/diler'],time());
 
         $this->load->language('catalog/dopinfo');
         

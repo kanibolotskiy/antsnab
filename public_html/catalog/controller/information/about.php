@@ -4,7 +4,7 @@ class ControllerInformationAbout extends Controller {
 
 	public function index() {
 		$this->load->model('tool/lastmod');
-		$this->model_tool_lastmod->setLastModHeader('about');
+		$this->model_tool_lastmod->setLastModHeader('information/about');
 
 //echo $this->url->link('information/about');
 //echo "<br/>".time();
