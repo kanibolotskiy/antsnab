@@ -3,6 +3,9 @@ class ControllerInformationDiler extends Controller {
 	private $error = array();
 
 	public function index() {
+		$this->load->model('tool/lastmod');
+		$this->model_tool_lastmod->setLastModHeader('diler');
+
 		$this->load->language('information/diler');
 		$this->load->model('catalog/diler');
 

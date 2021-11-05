@@ -3,7 +3,11 @@ class ControllerInformationAbout extends Controller {
 	private $error = array();
 
 	public function index() {
+		$this->load->model('tool/lastmod');
+		$this->model_tool_lastmod->setLastModHeader('about');
 
+//echo $this->url->link('information/about');
+//echo "<br/>".time();
 		//http://antsnab.cp06038.tmweb.ru/image/cache/catalog/svg/cust1-400x4601.jpg
 		//$file='hnbrnocz.jpg';
 /*

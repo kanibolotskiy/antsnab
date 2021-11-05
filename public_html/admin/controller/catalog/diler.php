@@ -110,7 +110,9 @@ class ControllerCatalogDiler extends Controller {
 		$this->response->setOutput($this->load->view('catalog/diler_form', $data));
 	}
 	public function edit() {
-		
+		$this->load->model('tool/lastmod');
+		$this->model_tool_lastmod->setLastTime(['diler'],time());
+
         $this->load->language('catalog/dopinfo');
         
 		$this->document->setTitle($this->language->get('heading_title_diler'));

@@ -209,7 +209,10 @@ class ControllerCatalogAbout extends Controller {
 		$this->response->setOutput($this->load->view('catalog/about_form', $data));
 	}
 	public function edit() {
-		
+		$this->load->model('tool/lastmod');
+		$this->model_tool_lastmod->setLastTime(['about'],time());
+
+
         $this->load->language('catalog/dopinfo');
         
 		$this->document->setTitle($this->language->get('heading_title_about'));
