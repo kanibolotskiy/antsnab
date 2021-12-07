@@ -321,7 +321,7 @@ $pdf->SetFont('OpenSansBold','B',9);
                                         $packageStr=str_replace("<sup>","",$packageStr);
                                         $packageStr=str_replace("</sup>","",$packageStr);
                                         
-                                        $packageStr=str_replace("&amp;","&",$packageStr);
+                                        
 
                                         $package .= ', ' . $packageStr;
                                         /*
@@ -338,7 +338,10 @@ $pdf->SetFont('OpenSansBold','B',9);
                                 $pdf->SetTextColor(0);
                                 $pdf->SetFillColor(240,240,240);
                                 $pdf->SetFont('OpenSans','B',8); 
-                                $pdf->Cell($w[0],6,iconv('utf-8', 'windows-1251', $product['name']),'LRB',0,'L',$fill);
+                                
+                                $nam_str=str_replace("&amp;","&",$product['name']);
+                                $pdf->Cell($w[0],6,iconv('utf-8', 'windows-1251', $nam_str),'LRB',0,'L',$fill);
+
                                 $pdf->Cell($w[1],6,$package,'LRB',0,'C',$fill);
                                 $pdf->Cell($w[2],6,number_format($product['price'], 2, '.', ' ').$rub,'LRB',0,'R',$fill);
                                 $pdf->Cell($w[3],6,number_format($product['price_wholesale'], 2, '.', ' ').$rub,'LRB',0,'R',$fill);
@@ -391,7 +394,7 @@ $pdf->SetFont('OpenSansBold','B',9);
                                     $packageStr=iconv('utf-8', 'windows-1251', $packageStr);
                                     $packageStr=str_replace("<sup>","",$packageStr);
                                     $packageStr=str_replace("</sup>","",$packageStr);
-                                    $packageStr=str_replace("&amp;","&",$packageStr);
+                                    
 
                                     $package .= ', ' . $packageStr;
                                     //$package=iconv('utf-8', 'windows-1251', $package);
@@ -406,7 +409,9 @@ $pdf->SetFont('OpenSansBold','B',9);
                             $pdf->SetTextColor(0);
                             $pdf->SetFillColor(240,240,240);
                             $pdf->SetFont('OpenSans','B',8); 
-                            $pdf->Cell($w[0],6,iconv('utf-8', 'windows-1251', $product['name']),'LRB',0,'L',$fill);
+                            $nam_str=str_replace("&amp;","&",$product['name']);
+                            $pdf->Cell($w[0],6,iconv('utf-8', 'windows-1251', $nam_str),'LRB',0,'L',$fill);
+
                             $pdf->Cell($w[1],6,$package,'LRB',0,'C',$fill);
                             $pdf->Cell($w[2],6,number_format($product['price'], 2, '.', ' ').$rub,'LRB',0,'R',$fill);
                             $pdf->Cell($w[3],6,number_format($product['price_wholesale'], 2, '.', ' ').$rub,'LRB',0,'R',$fill);
