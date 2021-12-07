@@ -13,10 +13,11 @@
                 <li>
                     <a target="_blank" href="<?=$pdf?>" title="Прайс pdf"></a>
                 </li>
-                -->
+                
                 <li>
                     <a target="_blank" href="<?=$xls?>" title="Прайс xlsx"></a>
                 </li>
+                -->
             </ul>
         </div>
     </div>

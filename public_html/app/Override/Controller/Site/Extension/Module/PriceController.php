@@ -200,7 +200,7 @@ $pdf->SetFont('OpenSansBold','B',9);
         //● Цены указаны с учетом самовывоза со складов поставщика. Стоимость доставки уточняйте у менеджеров;
         //● Оптовые цены действительны только при 100% предоплате.
 
-
+        $rub=iconv('utf-8', 'windows-1251', ' р.');
         $parent_cat_id=71;
 		$categories=[];
 		$categories_tree=[];
@@ -320,6 +320,9 @@ $pdf->SetFont('OpenSansBold','B',9);
                                         $packageStr=iconv('utf-8', 'windows-1251', $packageStr);
                                         $packageStr=str_replace("<sup>","",$packageStr);
                                         $packageStr=str_replace("</sup>","",$packageStr);
+                                        
+                                        $packageStr=str_replace("&amp;","&",$packageStr);
+
                                         $package .= ', ' . $packageStr;
                                         /*
                                         $package=iconv('utf-8', 'windows-1251', $package);
@@ -337,8 +340,8 @@ $pdf->SetFont('OpenSansBold','B',9);
                                 $pdf->SetFont('OpenSans','B',8); 
                                 $pdf->Cell($w[0],6,iconv('utf-8', 'windows-1251', $product['name']),'LRB',0,'L',$fill);
                                 $pdf->Cell($w[1],6,$package,'LRB',0,'C',$fill);
-                                $pdf->Cell($w[2],6,number_format($product['price'], 2, '.', ' '),'LRB',0,'R',$fill);
-                                $pdf->Cell($w[3],6,number_format($product['price_wholesale'], 2, '.', ' '),'LRB',0,'R',$fill);
+                                $pdf->Cell($w[2],6,number_format($product['price'], 2, '.', ' ').$rub,'LRB',0,'R',$fill);
+                                $pdf->Cell($w[3],6,number_format($product['price_wholesale'], 2, '.', ' ').$rub,'LRB',0,'R',$fill);
                                 $pdf->Ln();
                                 $fill = !$fill;
                             }
@@ -388,6 +391,8 @@ $pdf->SetFont('OpenSansBold','B',9);
                                     $packageStr=iconv('utf-8', 'windows-1251', $packageStr);
                                     $packageStr=str_replace("<sup>","",$packageStr);
                                     $packageStr=str_replace("</sup>","",$packageStr);
+                                    $packageStr=str_replace("&amp;","&",$packageStr);
+
                                     $package .= ', ' . $packageStr;
                                     //$package=iconv('utf-8', 'windows-1251', $package);
                                     //$package .= ', ' . $packageStr;
@@ -403,8 +408,8 @@ $pdf->SetFont('OpenSansBold','B',9);
                             $pdf->SetFont('OpenSans','B',8); 
                             $pdf->Cell($w[0],6,iconv('utf-8', 'windows-1251', $product['name']),'LRB',0,'L',$fill);
                             $pdf->Cell($w[1],6,$package,'LRB',0,'C',$fill);
-                            $pdf->Cell($w[2],6,number_format($product['price'], 2, '.', ' '),'LRB',0,'R',$fill);
-                            $pdf->Cell($w[3],6,number_format($product['price_wholesale'], 2, '.', ' '),'LRB',0,'R',$fill);
+                            $pdf->Cell($w[2],6,number_format($product['price'], 2, '.', ' ').$rub,'LRB',0,'R',$fill);
+                            $pdf->Cell($w[3],6,number_format($product['price_wholesale'], 2, '.', ' ').$rub,'LRB',0,'R',$fill);
                             
                             $pdf->Ln();
                             $fill = !$fill;
