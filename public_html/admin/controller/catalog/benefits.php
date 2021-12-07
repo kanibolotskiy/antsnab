@@ -239,8 +239,13 @@ class ControllerCatalogBenefits extends Controller {
 		$this->load->model('catalog/benefits');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_benefits->editBenefit($this->request->get['benefit_id'], $this->request->post);
+			$this->load->model('tool/lastmod');
+			$products_used=$this->model_tool_lastmod->productsBenefit($this->request->get['benefit_id']);
+			$this->model_tool_lastmod->setLastTime($products_used,time());
 
+
+			
+			$this->model_catalog_benefits->editBenefit($this->request->get['benefit_id'], $this->request->post);
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';

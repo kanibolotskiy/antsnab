@@ -16,6 +16,7 @@ class ControllerNewsBlogArticle extends Controller {
 	}
 
 	public function add() {
+
 		$this->language->load('newsblog/article');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -23,7 +24,11 @@ class ControllerNewsBlogArticle extends Controller {
 		$this->load->model('newsblog/article');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_newsblog_article->addArticle($this->request->post);
+			
+			$article_id=$this->model_newsblog_article->addArticle($this->request->post);
+
+			$this->load->model('tool/lastmod');
+			$this->model_tool_lastmod->setLastTime(['article/'.$article_id.'id'],time());
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -68,6 +73,9 @@ class ControllerNewsBlogArticle extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_newsblog_article->editArticle($this->request->get['article_id'], $this->request->post);
+
+			$this->load->model('tool/lastmod');
+			$this->model_tool_lastmod->setLastTime(['article/'.$this->request->get['article_id'].'id'],time());
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

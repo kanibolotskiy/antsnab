@@ -3,6 +3,7 @@ use WS\Patch\Helper\ProductListHelper;
 class ControllerSalesDiscount extends Controller {
 	public function index() {
 		
+		
 		$this->load->language('sales/sales');
 
 		$this->load->model('catalog/sale');

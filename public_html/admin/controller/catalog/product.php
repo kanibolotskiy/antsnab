@@ -80,7 +80,46 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('catalog/product');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+
+			//Обновить товар
+			$this->load->model('tool/lastmod');
+			$this->model_tool_lastmod->setLastTime(['product/'.$this->request->get['product_id'].'id'],time());
+
+			//Обновить каталоги,акции... если в товаре обновились: Заголовок, Краткое описание, изображение, цена...
+			$itemsData=$this->model_tool_lastmod->productParents($this->request->get['product_id'],$this->request->post);
+
+			//print_r($itemsData['categories']);
 			
+			$tm=time();
+			//Категории
+			foreach($itemsData['categories'] as $itm){		
+				$this->model_tool_lastmod->setLastTime(['category/'.$itm."id"],$tm);
+			}
+
+			//Товары
+			foreach($itemsData['products'] as $itm){		
+				$this->model_tool_lastmod->setLastTime(['product/'.$itm."id"],$tm);
+			}
+			
+			//Статьи
+			foreach($itemsData['articles'] as $itm){	
+				$this->model_tool_lastmod->setLastTime(['article/'.$itm.'id'],$tm);
+			}
+
+			//Прайс-лист
+			if($itemsData['price']){
+				$this->model_tool_lastmod->setLastTime(['pricepage'],$tm);
+			}
+
+			//Текущие скидки
+			if($itemsData['discount']){
+				$this->model_tool_lastmod->setLastTime(['discountpage'],$tm);
+			}
+
+			
+			//$this->model_tool_lastmod->setLastTime($productParents,time());
+
+
 			$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -135,9 +174,15 @@ class ControllerCatalogProduct extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('catalog/product');
+		$this->load->model('tool/lastmod');
+		
+		
 
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
 			foreach ($this->request->post['selected'] as $product_id) {
+				$productParents=$this->model_tool_lastmod->productParents($product_id);
+				$this->model_tool_lastmod->setLastTime($productParents,time());
+				
 				$this->model_catalog_product->deleteProduct($product_id);
 			}
 

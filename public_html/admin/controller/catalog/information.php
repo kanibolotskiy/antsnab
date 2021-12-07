@@ -46,10 +46,12 @@ class ControllerCatalogInformation extends Controller {
 
 	public function edit() {
 		$this->load->language('catalog/information');
-
 		$this->document->setTitle($this->language->get('heading_title'));
-
 		$this->load->model('catalog/information');
+
+		$this->load->model('tool/lastmod');
+		$this->model_tool_lastmod->setLastTime(['info/'.$this->request->get['information_id'].'id'],time());
+		
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_catalog_information->editInformation($this->request->get['information_id'], $this->request->post);

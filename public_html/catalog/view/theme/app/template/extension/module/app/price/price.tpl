@@ -5,9 +5,15 @@
         <div class="download download3">
                 <span><?=$price_download?></span>
             <ul>
+                
+                <li>
+                    <a target="_blank" href="/index.php?route=extension/module/price/makepdf" title="Прайс pdf"></a>
+                </li>
+                <!--
                 <li>
                     <a target="_blank" href="<?=$pdf?>" title="Прайс pdf"></a>
                 </li>
+                -->
                 <li>
                     <a target="_blank" href="<?=$xls?>" title="Прайс xlsx"></a>
                 </li>

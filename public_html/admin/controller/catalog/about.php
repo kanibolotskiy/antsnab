@@ -209,8 +209,7 @@ class ControllerCatalogAbout extends Controller {
 		$this->response->setOutput($this->load->view('catalog/about_form', $data));
 	}
 	public function edit() {
-		$this->load->model('tool/lastmod');
-		$this->model_tool_lastmod->setLastTime(['information/about'],time());
+		
 
 
         $this->load->language('catalog/dopinfo');
@@ -220,7 +219,9 @@ class ControllerCatalogAbout extends Controller {
 		$this->load->model('catalog/about');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
-			
+			$this->load->model('tool/lastmod');
+			$this->model_tool_lastmod->setLastTime(['information/about'],time());
+				
 			$this->model_catalog_about->editAbout($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');

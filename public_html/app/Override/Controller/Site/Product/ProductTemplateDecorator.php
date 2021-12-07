@@ -25,6 +25,8 @@ class ProductTemplateDecorator implements IDecorator
     public function process($data, $registry)
     {
         
+
+
         $request = $registry->get('request');
 
         if (isset($request->get['product_id'])) {
@@ -32,6 +34,15 @@ class ProductTemplateDecorator implements IDecorator
         } else {
             $product_id = 0;
         }
+        
+        //$this->load->model('tool/lastmod');
+		//$this->model_tool_lastmod->setLastModHeader('product/'.$product_id.'id');
+        $registry->get('load')->model('tool/lastmod');
+        $registry->get('model_tool_lastmod')->setLastModHeader('product/'.$product_id.'id');
+
+        
+
+
         $data["product_id"]=$product_id;
 
         $product_info = $registry->get('model_catalog_product')->getProduct($product_id);

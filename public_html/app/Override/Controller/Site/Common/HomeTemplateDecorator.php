@@ -27,6 +27,9 @@ class HomeTemplateDecorator implements IDecorator
 
     public function process($data, $registry)
     {
+        $registry->get('load')->model('tool/lastmod');
+        $registry->get('model_tool_lastmod')->setLastModHeader('home');
+        
         $registry->get('load')->model('tool/image');
         $imageTool = $registry->get('model_tool_image');
         $config = $registry->get('config');

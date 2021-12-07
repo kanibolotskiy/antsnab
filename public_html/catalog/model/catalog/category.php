@@ -1,5 +1,27 @@
 <?php
 class ModelCatalogCategory extends Model {
+	public function listCatalog(){
+		$sql="SELECT oc.category_id, oc.parent_id, oc.top, od.name
+		FROM oc_category oc
+		LEFT JOIN oc_category_description od ON oc.category_id=od.category_id
+		where oc.isseo=0 order by oc.sort_order";
+		$query = $this->db->query($sql);
+		return $query->rows;
+	}
+ 
+    public function listProducts(){
+        $results=[];
+		$sql="select op.product_id,op.price,op.price_wholesale, op.sort_order, od.name, od.search, oc.category_id, op.status
+        from oc_product op LEFT JOIN oc_product_description od ON op.product_id=od.product_id
+        LEFT JOIN oc_product_to_category oc ON op.product_id=oc.product_id
+        where oc.main_category=1 and op.status=1 and op.notavail=0 order by op.sort_order ASC";
+        $query = $this->db->query($sql);
+        foreach($query->rows as $row){
+            $results[$row['category_id']][]=$row;
+        }
+        return $results;
+	}
+
 	public function getCategory($category_id) {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "category c LEFT JOIN " . DB_PREFIX . "category_description cd ON (c.category_id = cd.category_id) LEFT JOIN " . DB_PREFIX . "category_to_store c2s ON (c.category_id = c2s.category_id) WHERE c.category_id = '" . (int)$category_id . "' AND cd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND c2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND c.status = '1'");
 

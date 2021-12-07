@@ -2,6 +2,8 @@
 use WS\Patch\Helper\ProductListHelper;
 class ControllerSalesSales extends Controller {
 	public function index() {
+		$this->load->model('tool/lastmod');
+		$this->model_tool_lastmod->setLastModHeader('discountpage');
 		
 		$this->load->language('sales/sales');
 

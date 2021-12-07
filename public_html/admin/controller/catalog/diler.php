@@ -110,8 +110,7 @@ class ControllerCatalogDiler extends Controller {
 		$this->response->setOutput($this->load->view('catalog/diler_form', $data));
 	}
 	public function edit() {
-		$this->load->model('tool/lastmod');
-		$this->model_tool_lastmod->setLastTime(['information/diler'],time());
+		
 
         $this->load->language('catalog/dopinfo');
         
@@ -120,7 +119,9 @@ class ControllerCatalogDiler extends Controller {
 		$this->load->model('catalog/diler');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
-			
+			$this->load->model('tool/lastmod');
+			$this->model_tool_lastmod->setLastTime(['information/diler'],time());
+				
 			$this->model_catalog_diler->editDiler($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');

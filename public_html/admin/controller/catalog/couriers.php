@@ -173,6 +173,9 @@ class ControllerCatalogCouriers extends Controller {
 	}
 	
     public function delete() {
+		$this->load->model('tool/lastmod');
+		$this->model_tool_lastmod->setLastTime(['info/6id'],time());
+
 		$this->load->language('catalog/dopinfo');
 
 		$this->document->setTitle($this->language->get('heading_title_couriers'));
@@ -208,8 +211,11 @@ class ControllerCatalogCouriers extends Controller {
     }
     
     public function add() {
-		$this->load->language('catalog/dopinfo');
+		$this->load->model('tool/lastmod');
+		$this->model_tool_lastmod->setLastTime(['info/6id'],time());
 
+		$this->load->language('catalog/dopinfo');
+		
 		$this->document->setTitle($this->language->get('heading_title_couriers'));
 
 		$this->load->model('catalog/couriers');
@@ -240,6 +246,9 @@ class ControllerCatalogCouriers extends Controller {
 		$this->getForm();
 	}
 	public function edit() {
+		
+		
+
         $this->load->language('catalog/dopinfo');
         
 		$this->document->setTitle($this->language->get('heading_title_couriers'));
@@ -247,6 +256,9 @@ class ControllerCatalogCouriers extends Controller {
 		$this->load->model('catalog/couriers');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+			$this->load->model('tool/lastmod');
+			$this->model_tool_lastmod->setLastTime(['info/6id','product/'],time());
+			
 			$this->model_catalog_couriers->editCourier($this->request->get['courier_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
