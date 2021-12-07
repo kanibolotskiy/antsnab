@@ -340,6 +340,8 @@ $pdf->SetFont('OpenSansBold','B',9);
                                 $pdf->SetFont('OpenSans','B',8); 
                                 
                                 $nam_str=str_replace("&amp;","&",$product['name']);
+                                $nam_str=str_replace("&shy;","",$nam_str);
+
                                 $pdf->Cell($w[0],6,iconv('utf-8', 'windows-1251', $nam_str),'LRB',0,'L',$fill);
 
                                 $pdf->Cell($w[1],6,$package,'LRB',0,'C',$fill);
@@ -410,6 +412,8 @@ $pdf->SetFont('OpenSansBold','B',9);
                             $pdf->SetFillColor(240,240,240);
                             $pdf->SetFont('OpenSans','B',8); 
                             $nam_str=str_replace("&amp;","&",$product['name']);
+                            $nam_str=str_replace("&shy;","",$nam_str);
+                            
                             $pdf->Cell($w[0],6,iconv('utf-8', 'windows-1251', $nam_str),'LRB',0,'L',$fill);
 
                             $pdf->Cell($w[1],6,$package,'LRB',0,'C',$fill);
