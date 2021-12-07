@@ -5,26 +5,14 @@ use WS\Override\Gateway\ProdUnits\ProdUnits;
 use WS\Override\Gateway\FinalCategory;
 use WS\Override\Controller\Admin\Extension\Module\PriceController as AdminModule;
 use Fpdf\Fpdf;
-
-/**
- * Вывод модуля прайса 
- * 
- * @version    1.0, Apr 6, 2018  2:49:27 AM 
- * @copyright  Copyright (c) 2018 AntSnab. (https://www.ant-snab.ru)
- * @author     Sergey Lapshin (http://vk.com/wslapshin) 
- */
-class PDF extends FPDF{
-    function Header(){
-        // Select Arial bold 15
-        $this->AddFont('OpenSans','B','OpenSans-Regular.php');
-        $this->AddFont('OpenSansBold','B','OpenSans-Bold.php');
-        $this->SetLineWidth(.3);
-        // Move to the right
-        //$this->Cell(80);
-        // Framed title
-        //$this->Cell(30,10,'Title',1,0,'C');
-        // Insert a logo in the top-left corner at 300 dpi
-        $this->Image('image/logo_price.png',10,5,-540,0,'','https://ant-snab.ru');
+class PDF extends FPDF
+{
+function Header()
+{
+    $this->AddFont('OpenSans','B','OpenSans-Regular.php');
+    $this->AddFont('OpenSansBold','B','OpenSans-Bold.php');
+    $this->SetLineWidth(.3);
+    $this->Image('image/logo_price.png',10,5,-540,0,'','https://ant-snab.ru');
         
         $this->Image('image/mail.png',65,11,-250);
         $this->Image('image/phone_price.png',117,10,-360);
@@ -63,8 +51,6 @@ class PDF extends FPDF{
         /*
         $this->Cell(48,0,iconv('utf-8', 'windows-1251', 'Позвоните нам'),'',0,'');
         $this->Cell(62,0,iconv('utf-8', 'windows-1251', 'Бесплатный звонок по РФ'),'',0,'');
-
-
         $this->SetTextColor(65,115,125);
         $this->SetFont('Arial','BU',9); 
         $this->Cell(26,0,'info@ant-snab.ru','',0,'R','','mailto:info@ant-snab.ru');
@@ -78,19 +64,14 @@ class PDF extends FPDF{
         $this->SetTextColor(65,115,125);
         
         $this->SetFont('Arial','BU',10); 
-
-
         
-
         
         // Insert a dynamic image from a URL
         //$this->Image('http://chart.googleapis.com/chart?cht=p3&chd=t:60,40&chs=250x100&chl=Hello|World',60,30,90,0,'PNG');
-
         //$this->Cell(10,10,'Title','',0,'C');
         //$this->Cell(50,10,'Title1','',0,'C');
         //$this->Cell(100,10,'Title2','',0,'C');
         //$this->Cell(200,10,'Title3','',0,'C');
-
         //$pdf->Cell($w[2],6,'123.66','LR',0,'R',$fill);
         */
 
@@ -98,19 +79,70 @@ class PDF extends FPDF{
         $this->Cell(0,20,'','T',0,'');
         // Line break
         $this->Ln(10);
-    }
-    function WriteHtmlCell($cellWidth, $html){        
-        $rm = $this->rMargin;
-        $this->SetRightMargin($this->w - $this->GetX() - $cellWidth);
-        $this->WriteHtml($html);
-        $this->SetRightMargin($rm);
-    }
+}
 }
 class PriceController extends \Controller
 {
     /** Значение для опции в селекте, "Отобразить все" */
+    /** Значение для опции в селекте, "Отобразить все" */
     const SHOW_ALL_OPTION_VALUE = "-1";
-
+    /*
+    class PDF extends FPDF{
+        function Header(){
+            // Select Arial bold 15
+            $this->AddFont('OpenSans','B','OpenSans-Regular.php');
+            $this->AddFont('OpenSansBold','B','OpenSans-Bold.php');
+            $this->SetLineWidth(.3);
+            // Move to the right
+            //$this->Cell(80);
+            // Framed title
+            //$this->Cell(30,10,'Title',1,0,'C');
+            // Insert a logo in the top-left corner at 300 dpi
+            $this->Image('image/logo_price.png',10,5,-540,0,'','https://ant-snab.ru');
+            
+            $this->Image('image/mail.png',65,11,-250);
+            $this->Image('image/phone_price.png',117,10,-360);
+            $this->Image('image/earth_price_n.png',163,9,-650);
+    
+    
+            $this->SetFont('OpenSans','B',9); 
+            $this->Cell(60,0,'');
+            $this->SetTextColor(0);
+    
+            $this->SetTextColor(0);
+            $this->SetFont('Arial','BU',10); 
+            //$this->Cell(46,6,'info@ant-snab.ru','',0,'L','','mailto:info@ant-snab.ru');
+            $this->Cell(52,6,'info@ant-snab.ru','',0,'L','','mailto:info@ant-snab.ru');
+    
+            
+            $this->SetFont('OpenSansBold','B',10); 
+            $this->Cell(48,0,'8 495 255-01-37','',0,'');
+            
+            $this->SetFont('Arial','BU',10); 
+            $this->Cell(31,5,'www.ant-snab.ru','',0,'R','','https://ant-snab.ru');
+    
+            $this->Ln(5);
+    
+            $this->Cell(112,0,'');
+            $this->SetFont('OpenSansBold','B',10); 
+            $this->Cell(62,0,'8 800 775-28-31','',0,'');
+    
+    
+            
+            $this->SetFont('OpenSans','B',9); 
+            $this->SetTextColor(0);
+            $this->Ln(4);
+            $this->Cell(191,0,date("d.m.Y"),'',0,'R');
+        
+            $this->Ln(4);
+            $this->Cell(0,20,'','T',0,'');
+            // Line break
+            $this->Ln(10);
+        }
+        
+    }
+    */
+    
     public function makepdf(){
         //
         //header("content-type:text/html; charset=cp1251");
@@ -424,7 +456,6 @@ $pdf->SetFont('OpenSansBold','B',9);
         $pdf->Write(5,"To find out what's new in this tutorial, click ");
         $link = $pdf->AddLink();
         $pdf->Write(5,'here',$link);
-
         $pdf->AddPage();
         
         $pdf->Write(5,'Ghbsrn');
@@ -437,23 +468,15 @@ $pdf->SetFont('OpenSansBold','B',9);
         $pdf->Ln();
         $pdf->setLink($link,10);
         $pdf->Ln();
-
         $pdf->Cell(10,6,'teet','LR',0,'R',$fill,$link);
 */        
        
         $pdf->Output();
     }
-
+    
     public function index()
     {
-
         $this->load->language('extension/module/price');
-
-        
-        $this->load->model('tool/lastmod');
-        $this->model_tool_lastmod->setLastModHeader('pricepage');
-
-        //$registry->get('model_tool_lastmod')->setLastModHeader('product/'.$product_id.'id');
 
         $data['price_text'] = $this->language->get('price_text');
         $data['price_wholesale_text']  = $this->language->get('price_wholesale_text');
@@ -588,7 +611,6 @@ $pdf->SetFont('OpenSansBold','B',9);
         foreach( $data['categories'] as  $category ) {
             $productIds = array_merge($productIds, array_keys($category['products']) );
         }
-        
         
         $unitsGateway = new ProdUnits($this->registry);
         $data['priceUnits'] = $unitsGateway->getProductsWithUnit($productIds, 'isPriceBase');
