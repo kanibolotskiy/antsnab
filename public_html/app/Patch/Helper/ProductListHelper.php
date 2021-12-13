@@ -28,7 +28,9 @@ class ProductListHelper extends \Model
 
         $products = [];
         
-
+        //print_r($filter_data);
+        $product_for_rating=$this->model_catalog_product->getMaxRatingProduct($filter_data["filter_category_id"]);
+        
         $favorite_arr=[];
         if(isset($_COOKIE["favorite"])){
             $favorite_arr=json_decode($_COOKIE["favorite"]);
@@ -38,7 +40,7 @@ class ProductListHelper extends \Model
         if(isset($_COOKIE["compare"])){
             $compare_arr=json_decode($_COOKIE["compare"]);
         }
-
+        
         foreach ($results as $result) {
             
             
@@ -67,8 +69,13 @@ class ProductListHelper extends \Model
             if ($this->config->get('config_review_status')) {
                 //$rating = (int) $result['rating'];
                 $rating = round($result['rating'],2);
+                $rating_min = round($result['rating_min'],2);
+                $rating_max = round($result['rating_max'],2);
+
             } else {
                 $rating = 0;
+                $rating_min=0;
+                $rating_max=0;
             }
             
             
@@ -286,11 +293,12 @@ class ProductListHelper extends \Model
             if(isset($color_result['code'])){
                 $colorcode=$color_result['code'];
             }
+            echo $product_for_rating;
             $products[] = array(
                 'product_id' => $result['product_id'],
                 'quantity'=>$result['quantity'],
                 'unit_errors' => empty($unitErrors)?null:$unitErrors,
-                
+                'israting'=>($result['product_id']==$product_for_rating?true:false),
                 // этот для расчета количества, передаваемого в корзину
                 'sale_to_price_koef' =>  $saleToPriceKoef,
                 
@@ -319,6 +327,8 @@ class ProductListHelper extends \Model
                 'tax' => $tax,
                 'minimum' => ($result['minimum'] > 0) ? $result['minimum'] : 1,
                 'rating' => $rating,
+                'rating_min' => $rating_min,
+                'rating_max' => $rating_max,
                 'reviews' => $result['reviews'],
                 'properties' => $previewProperties,
                 'href' => $this->url->link('product/product', 'path=' . '&product_id=' . $result['product_id']),

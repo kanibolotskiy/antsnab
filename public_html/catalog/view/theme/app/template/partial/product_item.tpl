@@ -15,7 +15,16 @@
         </div>
     <?php }?>
     
-    <div class="catalog-block" >
+    <div class="catalog-block" itemscope itemtype="http://schema.org/Product" >       
+        <?php if($p['israting']){?>
+            <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+                <span itemprop="ratingValue"><?php echo $p["rating"];?></span>
+                <meta itemprop="bestRating" content="<?php echo $p['rating_max'];?>"/>
+                <meta itemprop="worstRating" content="<?php echo $p['rating_min'];?>"/>
+                <span itemprop="ratingCount"><?php echo $p['reviews'];?></span>
+                <span itemprop="reviewCount"><?php echo $p['reviews'];?></span>
+            </div>
+        <?php } ?>
         
         <link itemprop="url" href="<?=$p['href']?>" />
         
@@ -103,13 +112,20 @@
                     
                 </div>
             
-                <div class="price cat_item_price">
+                <div class="price cat_item_price" itemscope itemtype="http://schema.org/Offer" itemprop="offers">
+                    <meta itemprop="priceCurrency" content="RUB">
+                    <?php if($p["notavail"]){ ?>
+                        <link itemprop="availability" href="http://schema.org/OutOfStock"/>
+                    <?php }else{?>
+                        <link itemprop="availability" href="http://schema.org/InStock"/>
+                    <?php }?>
+
                     <div class="wrapper_price_line">
                         <?php if($p['price'] and !$p['notavail']){ ?>
                             <div class="cat_item_price_caption">от</div> 
                         
                             <div class="cat_price_val <?php if($p["priceold"]){echo "_oldprice";}?>" content="<?=$p['price_val']?>">
-                                <div class="cat_price_value">
+                                <div class="cat_price_value" itemprop="price">
                                     <?=$p['price']?>
                                 </div><span class="cat_item_price_curr"> ₽</span>
                             </div>
