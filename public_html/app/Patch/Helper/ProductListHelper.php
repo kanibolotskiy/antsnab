@@ -293,7 +293,6 @@ class ProductListHelper extends \Model
             if(isset($color_result['code'])){
                 $colorcode=$color_result['code'];
             }
-            echo $product_for_rating;
             $products[] = array(
                 'product_id' => $result['product_id'],
                 'quantity'=>$result['quantity'],

@@ -123,9 +123,9 @@
                     <div class="wrapper_price_line">
                         <?php if($p['price'] and !$p['notavail']){ ?>
                             <div class="cat_item_price_caption">от</div> 
-                        
-                            <div class="cat_price_val <?php if($p["priceold"]){echo "_oldprice";}?>" content="<?=$p['price_val']?>">
-                                <div class="cat_price_value" itemprop="price">
+                            
+                            <div class="cat_price_val <?php if($p["priceold"]){echo "_oldprice";}?>" content="<?=$p['price_val']?>" itemprop="price">
+                                <div class="cat_price_value" >
                                     <?=$p['price']?>
                                 </div><span class="cat_item_price_curr"> ₽</span>
                             </div>
