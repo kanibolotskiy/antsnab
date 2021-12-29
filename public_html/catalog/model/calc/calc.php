@@ -24,7 +24,7 @@ class ModelCalcCalc extends Model {
       LEFT JOIN oc_product o_p ON o_r.related_id=o_p.product_id
       LEFT JOIN oc_product_to_category o_c ON o_c.product_id=o_p.product_id and o_c.main_category=1
       LEFT JOIN oc_category_path o_pa ON o_pa.category_id=o_c.category_id and o_pa.level=1
-      WHERE op.notavail=0 and o_r.product_id IN (".$products_str.") and o_p.quantity>0 group by o_p.product_id order by IF(o_pa.path_id=270,1,0) ASC, o_p.quantity DESC");
+      WHERE o_p.notavail=0 and o_r.product_id IN (".$products_str.") and o_p.quantity>0 group by o_p.product_id order by IF(o_pa.path_id=270,1,0) ASC, o_p.quantity DESC");
       $products=[];
       foreach ($query->rows as $result) {
         $products[]=$result['product_id'];
