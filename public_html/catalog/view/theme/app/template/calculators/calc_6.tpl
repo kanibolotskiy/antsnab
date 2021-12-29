@@ -42,14 +42,14 @@
                     </tr>
                     
                     <tr>
-                        <td class="_left">Для подготовки поверхности необходим <a href="https://ant-snab.ru/products/mastics/praimers/praimer-proof/">Битумный праймер</a> в количестве:</td>
+                        <td class="_left">Для подготовки поверхности необходим <a target="_blank" href="https://ant-snab.ru/products/mastics/praimers/praimer-proof/">Битумный праймер</a> в количестве:</td>
                         <td class="nowrap">
                             <div id="calc_out5" data-count="0">-</div>
                             <div class="calc_hint"><span id="calc_hint_caption">мин. для заказа</span> <span id="calc_out6"></span></div>
                         </td>
                     </tr>                    
                     <tr>
-                        <td class="_left">Еще необходима <a href="https://ant-snab.ru/products/mastics/cold/krovelnaya-mastika-proof/">Битумная мастика</a> в количестве:</td>
+                        <td class="_left">Еще необходима <a target="_blank" href="https://ant-snab.ru/products/mastics/cold/krovelnaya-mastika-proof/">Битумная мастика</a> в количестве:</td>
                         <td class="nowrap">
                             <div id="calc_out7" data-count="0">-</div>
                             <div class="calc_hint"><span id="calc_hint_caption">мин. для заказа</span> <span id="calc_out8"></span></div>
