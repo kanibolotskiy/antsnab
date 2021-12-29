@@ -186,6 +186,10 @@ class ControllerCommonKalkulyator extends Controller {
         $this->load->model('extension/module/category');
         $data=[];
 
+        
+        $this->document->setTitle("Калькулятор расхода монтажной пены и герметика для швов – «Ант-Снаб»");
+        $this->document->setDescription("Онлайн расчет расхода битумной мастики, рулонной кровли, герметика и монтажной пены для швов в калькуляторе от компании «Ант-Снаб»");
+
         /**Хлебные крошки */
         $data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
@@ -201,6 +205,7 @@ class ControllerCommonKalkulyator extends Controller {
         $data['header'] = $this->load->controller('common/header');
 
         
+
         echo $this->load->view('common/calc', $data);
         //return $this->load->view('common/favorite', $data);
         
