@@ -62,6 +62,10 @@
             <meta name="robots" content="noyaca" />
         <?php } ?>
 
+        <?php if($noindexfollow) { ?>
+            <meta name="robots" content="noindex,follow" />
+        <?php }?>
+
         <meta property="og:title" content="<?php echo $title; ?>" />
         <meta property="og:type" content="article" />
         <meta property="og:locale" content="ru_RU" />

@@ -490,6 +490,11 @@ $pdf->SetFont('OpenSansBold','B',9);
     
     public function index()
     {
+        
+        $this->load->model('tool/lastmod');
+		$this->model_tool_lastmod->setLastModHeader('pricepage');
+
+
         $this->load->language('extension/module/price');
 
         $data['price_text'] = $this->language->get('price_text');

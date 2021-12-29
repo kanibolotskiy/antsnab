@@ -660,6 +660,7 @@
                                     <input type="text" name="calc_data1" value="<?php echo $calc_data1; ?>" placeholder="<?php echo $entry_calc_data1; ?>" id="input-calc_data1" class="form-control" />
                                 </div>
                             </div>
+
                             <div class="form-group show_calc show_calc_4">
                                 <label class="col-sm-2 control-label" for="input-calc_data2"><?php echo $entry_calc_data2; ?></label>
                                 <div class="col-sm-10">
@@ -672,10 +673,30 @@
                                     <input type="text" name="calc_data3" value="<?php echo $calc_data3; ?>" placeholder="<?php echo $entry_calc_data3; ?>" id="input-calc_data3" class="form-control" />
                                 </div>
                             </div>
+
                             <div class="form-group show_calc show_calc_5">
                                 <label class="col-sm-2 control-label" for="input-calc_data4"><?php echo $entry_calc_data4; ?></label>
                                 <div class="col-sm-10">
                                     <input type="text" name="calc_data4" value="<?php echo $calc_data4; ?>" placeholder="<?php echo $entry_calc_data4; ?>" id="input-calc_data4" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="form-group show_calc show_calc_6">
+                                <label class="col-sm-2 control-label" for="input-calc_data30"><?php echo $entry_calc_data3; ?></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="calc_data3" value="<?php echo $calc_data3; ?>" placeholder="<?php echo $entry_calc_data3; ?>" id="input-calc_data30" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group show_calc show_calc_6">
+                                <label class="col-sm-2 control-label" for="input-calc_data31"><?php echo $entry_calc_data5; ?></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="calc_data1" value="<?php echo $calc_data1; ?>" placeholder="<?php echo $entry_calc_data5; ?>" id="input-calc_data31" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group show_calc show_calc_6">
+                                <label class="col-sm-2 control-label" for="input-calc_data32"><?php echo $entry_calc_data6; ?></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="calc_data2" value="<?php echo $calc_data2; ?>" placeholder="<?php echo $entry_calc_data6; ?>" id="input-calc_data32" class="form-control" />
                                 </div>
                             </div>
 

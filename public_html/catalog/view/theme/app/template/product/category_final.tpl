@@ -2,12 +2,14 @@
 <div class="container main withparams">
     
     <div class="wrapper_content">
-        <div class="filter_reset <?php echo ($show_filter?'active':'');  ?>" >
+        <!--<div class="filter_reset <?php echo ($show_filter?'active':'');  ?>" >-->
+        <div class="filter_reset active" >
             <div class="wrp_filter_reset">
                 <span id="apply_filter">Применить</span>
                 <div class="wrp_buttons_reset_filter">
                     <div id="hide_filter" class="button_reset_filter_slide">Свернуть</div>
-                    <div id="reset_filter" class="button_reset_filter_reset <?php echo ($show_filter?'active':'');?>"><span>Очистить</span></div>
+                    <!--<div id="reset_filter" class="button_reset_filter_reset <?php echo ($show_filter?'active':'');?>"><span>Очистить</span></div>-->
+                    <div id="reset_filter" class="button_reset_filter_reset active"><span>Очистить</span></div>
                 </div>
             </div>
         </div>
@@ -45,13 +47,15 @@
                     <?php }?>
                 <?php }?>
                 
-                <div class="wrapper_parameters scroll-pane" <?php echo ($show_filter?'style="opacity:1;margin-left:0;"':'');  ?> >
+                <!--<div class="wrapper_parameters scroll-pane" <?php echo ($show_filter?'style="opacity:1;margin-left:0;"':'');  ?> >-->
+                <div class="wrapper_parameters scroll-pane" style="opacity:1;margin-left:0;">
                     
                     <div class="wrapper_param_list">
                         <div class="wrp_filter_title">
                             <div class="filter_title">Подбор по параметрам</div>
                         </div>
-                        <div class="param_item" <?php echo ($show_filter?'style="display:block;"':'');  ?>>
+                        <!--<div class="param_item" <?php echo ($show_filter?'style="display:block;"':'');  ?>>-->
+                        <div class="param_item" style="display:block;">
                             <div class="param_item_rows">
                                     
                                     <form data-id="form_params" action="<?=$catalog_info['category_url']?>" data-catalog_id="<?=$catalog_info['category_id']?>">

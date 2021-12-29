@@ -4,12 +4,6 @@ var _breadcrumbs = [],
         _rendered = [],
         _isRendered = false,
         _isInited = false;
-<?php foreach ($breadcrumbs as $b): ?>
-_breadcrumbs.push({
-        href: "<?=$b['href']?>",
-        text: "<?=$b['text']?>"
-});
-<?php endforeach;?>
 /*_breadcrumbs.push({
         href: "somehref",
         text: "very veryverylong text pushedhere huuuuuurrrrraa"

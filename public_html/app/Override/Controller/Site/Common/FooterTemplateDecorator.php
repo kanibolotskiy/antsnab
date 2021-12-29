@@ -56,6 +56,10 @@ class FooterTemplateDecorator implements IDecorator
         $data['link_tw']=$config->get('config_soc_tw');
         $data['link_in']=$config->get('config_soc_in');
 
+        $data['m_telegram']=$config->get('config_m_telegram');
+        $data['m_whatsapp']=$config->get('config_m_whatsapp');
+        $data['m_viber']=$config->get('config_m_viber');
+
         
         $data['confidence'] = $registry->get('url')->link('information/information', 'information_id=3');
         $data['sitemap'] = $registry->get('url')->link('information/sitemap');

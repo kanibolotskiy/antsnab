@@ -104,7 +104,6 @@ if( $('#priceTableContent').length == 1 ) {
 }
 $(document).ready(function(){
     $("#test_price").click(function(){
-        console.log("test_price")
         $.ajax({
             url:  '/index.php?route=extension/module/price/makepdf',
             type: 'post',

@@ -325,6 +325,8 @@ class ControllerProductProduct extends Controller {
         
         $data['optLimit']=$product_info['wholesale_threshold'];
         $data['mincount']=$product_info['mincount'];
+		
+
 		$this->response->setOutput($this->load->view('partial/product_info', $data));
 
 	}

@@ -393,6 +393,63 @@ class ProductTemplateDecorator implements IDecorator
         $ruleId = $registry->get('config')->get(ReviewAdminModule::CONFIG_KEY_RULE_ID);
         $data['rules'] = $registry->get('url')->link('information/information', 'information_id=' . $ruleId);
         
+
+
+        
+		$main_category_id=$registry->get('model_catalog_product')->getMainCategory($product_id);
+        $filter_params_data=$registry->get('model_catalog_product')->getMainCategoryFilter($main_category_id);
+        
+        //$data['params_datalist']=$filter_params_data;
+        //print_r($filter_params_data);
+        foreach($filter_params_data as $f_data){
+			$list=[];
+			$list_param_value=$registry->get('model_catalog_product')->getFilterParamValues($f_data["id"],$f_data["type_param"],$product_id);
+			if($f_data["type_param"]==1){
+				$list["value1"]=isset($list_param_value["value1"])?$list_param_value["value1"]:"";
+				$list["value2"]=isset($list_param_value["value2"])?$list_param_value["value2"]:"";
+			}else{
+				$list_data=$registry->get('model_catalog_product')->getFilterParamList($f_data["id"]);
+
+				foreach($list_data as $list_item){
+					$list[]=[
+						"id"=>$list_item["id"],
+						"param_id"=>$list_item["param_id"],
+						"param_value"=>$list_item["param_value"],
+						"selected"=>in_array ($list_item["id"], $list_param_value)
+					];
+				}
+				
+
+			}
+			
+			$filter_params[]=Array(
+				"id"=>$f_data["id"],
+                "translit"=>$f_data["translit"],
+				"name"=>$f_data["name"],
+				"unit"=>html_entity_decode($f_data["unit"]),
+				"type_param"=>$f_data["type_param"],
+				"list"=>$list
+			);
+		}
+
+        //print_r($filter_params_data);
+        //print_r($filter_params);
+        $data['filter_params']=$filter_params;
+        
+        //$data['params_category']=$this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $main_category_id),
+        
+        $data['params_category']=$registry->get('url')->link('product/category', 'category_id=' . $main_category_id);
+        //echo "!".$data['params_category']."!";
+        /*
+        foreach($filter_params_data as $itm){
+            $data['params'].='<div class="char_row">
+                <div class="char_row_cap">Заглоловок1:</div>
+                <div class="char_row_values">
+                    <a href="">test1</a>, <a href="">test2</a>
+                </div>
+            </div>';
+        }
+        */
         return $data;
 
     }

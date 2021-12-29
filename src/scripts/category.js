@@ -9,6 +9,7 @@ function initQuantityContainers($collection) {
     $collection.each(function(index){
         var $el = $(this);
             Quantity.init($el, {
+                    'start_value':$el.attr('data-cnt')?$el.attr('data-cnt'):1,
                     'sale_to_ui_koef':$el.attr('data-sale_to_ui_koef'),
                     'ui_step':$el.attr('data-ui_step'),
                     'ui_minimum':$el.attr('data-ui_minimum'),
@@ -473,6 +474,26 @@ function change_favorite_sum(){
         $(this).find(".recal_tll").html(number_format(row_sum, 0,"."," "));
     });
 }
+
+function getCalcProducts(data){
+    $.ajax({
+        url:  '/index.php?route=common/calc/calcData',
+        data: data,
+        type: 'post',
+        dataType: 'json',
+        success: function(json) {
+            
+            $("#calc_product_list").html(json['products']);
+            $("#calc_product_dop_list").html(json['products_analog']);
+
+            if( $('.qnt-container').length > 0 ) {
+                $(".calc_products").show();
+                initQuantityContainers($('.qnt-container'))
+            }
+        }
+    });
+}
+
 $(document).ready(function(){
     /*
     $('.buy').on('touchstart touchend', function(e) {
@@ -761,7 +782,6 @@ $(document).ready(function(){
         add_to_cart($("#product_id").data("product_id"), $("#calc_out1").attr("data-count"), 1);
 
         /**Праймер */
-        console.log("770+"+$("#calc_out3").attr("data-count"))
         add_to_cart(770, $("#calc_out3").attr("data-count"), 1);
 
         /**Цель*/
@@ -770,6 +790,18 @@ $(document).ready(function(){
         }
 
     });
+
+    /**Добавление товара из калькулятора #6 */
+    $("#add_calcdata_tocart6").click(function(){
+        //console.log("tut"+$("#calc_out1").attr("data-count"))
+        /**Рассчитываемый товар */
+
+        add_to_cart($("#product_id").data("product_id"), $("#calc_out1").data("count"), 1);      
+        add_to_cart(770, $("#calc_out5").data("count")*1, 1);
+        add_to_cart(1015, $("#calc_out7").data("count")*1, 1);
+        
+    });
+
     $("#add_calcdata_tocart2").click(function(){        
         add_to_cart($("#product_id").data("product_id"), $("#calc_out1").attr("data-count"), 1);
         if (typeof ym != 'undefined') {
@@ -855,4 +887,181 @@ $(document).ready(function(){
             add_to_cart(product_id, count_add,0,itm_fly);
         }
     });
+
+    $(document).on("click",".calc_show_more",function(){
+        if($(this).hasClass("active")){          
+            $(this).removeClass("active")
+            $(this).text($(this).data("text"));
+            $(this).closest(".calc_product_list").find("._hidden").fadeOut(200);
+        }else{
+            $(this).addClass("active")
+            $(this).data("text",$(this).text());
+            $(this).text("Скрыть дополнительные варианты")
+            $(this).closest(".calc_product_list").find("._hidden").fadeIn(200);
+        }
+    });
+
+    $(".inputCalc").change(function(){
+        $(this).closest(".wrap_calculator-block").find(".calculator-block_error").hide();
+    });
+    $("#calc_select1").change(function(){
+        var calcs=$(this).val();
+        if(calcs){
+            var calcs_arr=calcs.split(",");
+            
+            if(calcs_arr.length==1){               
+                $("#calc_select2").val(calcs_arr[0]);
+                //var calc=$(this).val()
+                $(".calc_item").hide();
+                $(".calc_item[data-calc='"+calcs_arr[0]+"']").fadeIn(200);
+                $(".calc_products").hide();
+                
+            }else{
+                $("#calc_select2").val(0);
+            }
+            $("#calc_select2").niceSelect('update');
+
+            $(".wrap_calc_select2 .option").hide();           
+            for(var i in calcs_arr){
+                $(".wrap_calc_select2 .option[data-value='"+calcs_arr[i]+"']").show();
+            }
+        }
+    });
+    $("#calc_select2").change(function(){
+        var calc=$(this).val()
+        $(".calc_item").hide();
+        $(".calc_item[data-calc='"+calc+"']").fadeIn(200);
+        $(".calc_products").hide();
+    })
+    
+    
+    /**Калькулятор1 */
+    function calc_calc1(itm){
+        if($("#inp_calc_1").val()==""){
+            itm.closest(".wrap_calculator-block").find(".calculator-block_error").show();
+        }else{
+            var data="&calculator_id=1&area="+$("#inp_calc_1").val();
+            itm.closest(".calc_item").find(".result_calc").show();
+            $("#rez_calc1").html($("#inp_calc_1").val())
+            getCalcProducts(data);
+        }
+    }
+    $("#cl_button_calc_1").click(function(){
+        calc_calc1($(this))
+    });
+    $("#inp_calc_1").keypress(function(e){
+        if(e.which == 13) {
+            calc_calc1($(this))
+        }
+    });
+
+    /**Калькулятор2 */
+    function calc_calc2(itm){
+        if($("#inp_calc_2").val()==""){
+            itm.closest(".wrap_calculator-block").find(".calculator-block_error").show();
+        }else{
+            var data="&calculator_id=2&area="+$("#inp_calc_2").val();
+            itm.closest(".calc_item").find(".result_calc").show();
+            $("#rez_calc2").html($("#inp_calc_2").val())
+            getCalcProducts(data);
+        }
+    }
+    $("#cl_button_calc_2").click(function(){
+        calc_calc2($(this))
+    });
+    $("#inp_calc_2").keypress(function(e){
+        if(e.which == 13) {
+            calc_calc2($(this))
+        }
+    });
+
+    /**Калькулятор3 */
+    function calc_calc3(itm){
+        if(($("#inp_calc_31").val()=="")||($("#inp_calc_32").val()=="")||($("#inp_calc_33").val()=="")){
+            itm.closest(".wrap_calculator-block").find(".calculator-block_error").show();
+        }else{
+            var data="&calculator_id=3&area1="+$("#inp_calc_31").val()+"&area2="+$("#inp_calc_32").val()+"&area3="+$("#inp_calc_33").val();
+            itm.closest(".calc_item").find(".result_calc").show();
+            $("#rez_calc3_1").html($("#inp_calc_31").val())
+            $("#rez_calc3_2").html($("#inp_calc_32").val())
+            $("#rez_calc3_3").html($("#inp_calc_33").val())
+            getCalcProducts(data);
+        }
+    }
+    $("#cl_button_calc_3").click(function(){
+        calc_calc3($(this));
+    });
+    $("#inp_calc_31,#inp_calc_32,#inp_calc_33").keypress(function(e){
+        if(e.which == 13) {
+            calc_calc3($(this));
+        }
+    });
+
+
+    /**Калькулятор4 */
+    function calc_calc4(itm){
+        if(($("#inp_calc_41").val()=="")||($("#inp_calc_42").val()=="")||($("#inp_calc_43").val()=="")){
+            itm.closest(".wrap_calculator-block").find(".calculator-block_error").show();
+        }else{
+            var data="&calculator_id=4&area1="+$("#inp_calc_41").val()+"&area2="+$("#inp_calc_42").val()+"&area3="+$("#inp_calc_43").val();
+            itm.closest(".calc_item").find(".result_calc").show();
+            $("#rez_calc4_1").html($("#inp_calc_41").val())
+            $("#rez_calc4_2").html($("#inp_calc_42").val())
+            $("#rez_calc4_3").html($("#inp_calc_43").val())
+            getCalcProducts(data);
+        }
+    }
+    $("#cl_button_calc_4").click(function(){
+        calc_calc4($(this));
+    });
+    $("#inp_calc_41,#inp_calc_42,#inp_calc_43").keypress(function(e){
+        if(e.which == 13) {
+            calc_calc4($(this));
+        }
+    });
+
+    /**Калькулятор5 */
+    function calc_calc5(itm){
+        if(($("#inp_calc_51").val()=="")||($("#inp_calc_52").val()=="")||($("#inp_calc_53").val()=="")){
+            itm.closest(".wrap_calculator-block").find(".calculator-block_error").show();
+        }else{
+            var data="&calculator_id=5&area1="+$("#inp_calc_51").val()+"&area2="+$("#inp_calc_52").val()+"&area3="+$("#inp_calc_53").val();
+            itm.closest(".calc_item").find(".result_calc").show();
+            $("#rez_calc5_1").html($("#inp_calc_51").val())
+            $("#rez_calc5_2").html($("#inp_calc_52").val())
+            $("#rez_calc5_3").html($("#inp_calc_53").val())
+            getCalcProducts(data);
+        }
+    }
+    $("#cl_button_calc_5").click(function(){
+        calc_calc5($(this));
+    });
+    $("#inp_calc_51,#inp_calc_52,#inp_calc_53").keypress(function(e){
+        if(e.which == 13) {
+            calc_calc5($(this));
+        }
+    });
+
+    /**Калькулятор6 */
+    function calc_calc6(itm){
+        if($("#inp_calc_6").val()==""){
+            itm.closest(".wrap_calculator-block").find(".calculator-block_error").show();
+        }else{
+            var data="&calculator_id=6&area="+$("#inp_calc_6").val();
+            itm.closest(".calc_item").find(".result_calc").show();
+            $("#rez_calc6").html($("#inp_calc_6").val())
+
+            getCalcProducts(data);
+        }
+    }
+    $("#cl_button_calc_6").click(function(){
+        calc_calc6($(this));
+    });
+    $("#inp_calc_6").keypress(function(e){
+        if(e.which == 13) {
+            calc_calc6($(this));
+        }
+    });
+
+
 });

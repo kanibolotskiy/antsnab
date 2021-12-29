@@ -1,12 +1,12 @@
 
-<div class="catalog-product">
+<div class="catalog-product ">
     <div class="catalog_opens"></div>
     <a href="<?=$root?>" class="catalog-btn">    
         Каталог
     </a>
     
     <div class="wrapper_left_data">
-    
+            
         <div class="accordion scroll-pane">
             <ul class="simple-accordion"  itemscope itemtype="http://www.schema.org/SiteNavigationElement">        
             <?php foreach ($categories as $parent) { ?>

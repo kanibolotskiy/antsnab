@@ -3,10 +3,9 @@
 	public function index() {
 		
 			$this->load->model('extension/feed/turbo_articles_rss');
-			
 			$articles=$this->model_extension_feed_turbo_articles_rss->getArticles();
 			$this->load->model('tool/image');
-						$items='';
+			$items='';
 			foreach($articles as $article){
 				$url=$this->url->link('newsblog/article', 'newsblog_path=&newsblog_article_id=' . $article['article_id']);
 				

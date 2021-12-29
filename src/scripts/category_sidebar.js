@@ -22,7 +22,20 @@ $(document).ready(function(){
     });
 
     $(".catalog_opens").click(function(){
-        $(".catalog-product .accordion").slideToggle(200);
+        
+        if($(this).hasClass("act")){
+            $(".catalog-product .accordion").slideUp(200);
+            $(this).removeClass("act");
+        }else{
+            $(".sidebar_filter_caption").removeClass("active");
+            $(".filter_reset").removeClass("active");
+            $(".catalog-product").removeClass("_filter");
+            $(".wrapper_parameters").animate({"margin-left":320,"opacity":0},200);
+
+            $(".catalog-product .accordion").slideDown(200);
+            $(this).addClass("act");
+        }
+        
     });
 
     $(".table_catalog").click(function(){

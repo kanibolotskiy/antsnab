@@ -29,7 +29,10 @@ class ProductListHelper extends \Model
         $products = [];
         
         //print_r($filter_data);
-        $product_for_rating=$this->model_catalog_product->getMaxRatingProduct($filter_data["filter_category_id"]);
+        $product_for_rating=0;
+        if(isset($filter_data["filter_category_id"])){
+            $product_for_rating=$this->model_catalog_product->getMaxRatingProduct($filter_data["filter_category_id"]);
+        }
         
         $favorite_arr=[];
         if(isset($_COOKIE["favorite"])){
@@ -339,6 +342,11 @@ class ProductListHelper extends \Model
                 'position'=>$result['position'],
                 'sku' => $result['sku'],
                 'notavail' => $result['notavail'],
+                'consumption' => $result['consumption'],
+                'calc_data1' => $result['calc_data1'],
+                'calc_data2' => $result['calc_data2'],
+                'calc_data3' => $result['calc_data3'],
+                'calc_data4' => $result['calc_data4'],
             );
         }
         return $products;

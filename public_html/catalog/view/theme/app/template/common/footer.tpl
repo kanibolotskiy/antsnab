@@ -45,6 +45,33 @@
                         </li>
                     <?php }?>
                 </ul>
+
+                
+                <span class="messengers_footer">Наши мессенджеры:</span>
+                <ul>
+                    <?php if($m_telegram){?>
+                        <li>
+                            <a target="_blank" itemprop="sameAs" href="<?php echo $m_telegram;?>" rel="nofollow noopener">
+                                <div class="soc_ico soc_ico_telegram"></div>
+                            </a>
+                        </li>
+                    <?php }?>
+                    <?php if($m_whatsapp){?>
+                        <li>
+                            <a target="_blank" itemprop="sameAs" href="<?php echo $m_whatsapp;?>" rel="nofollow noopener">
+                                <div class="soc_ico soc_ico_whatsapp"></div>
+                            </a>
+                        </li>
+                    <?php }?>
+                    <?php if($m_viber){?>
+                        <li>
+                            <a target="_blank" itemprop="sameAs" href="<?php echo $m_viber;?>" rel="nofollow noopener">
+                                <div class="soc_ico soc_ico_viber"></div>
+                            </a>
+                        </li>
+                    <?php }?>
+                </ul>
+                
             </div>
             <div class="footer-left-docs">
                 <a href="<?=$sitemap?>">Карта сайта</a> 
@@ -231,5 +258,6 @@
         </div>
     </div>
 </div>
+<script>!function(){var t=document.createElement("script");t.async=!0;var e=(new Date).getDate();t.src=("https:"==document.location.protocol?"https:":"http:")+"//blocksovetnik.ru/bs.min.js?r="+e;var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)}();</script>
 </body>
 </html>

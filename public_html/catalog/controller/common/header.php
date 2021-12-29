@@ -33,7 +33,11 @@ class ControllerCommonHeader extends Controller {
 			$catalog_page=$_GET["page"];
 		}
 
-		
+		$data['noindexfollow']=false;
+		if($catalog_page>1){
+			$data['noindexfollow'] = true;
+		}
+				
 		if($catalog_page==1){
 			$data['description'] = $this->document->getDescription();
 			$data['keywords'] = $this->document->getKeywords();

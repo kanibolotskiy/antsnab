@@ -760,6 +760,10 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_calc_data3'] = $this->language->get('entry_calc_data3');
 		$data['entry_calc_data4'] = $this->language->get('entry_calc_data4');
 
+		$data['entry_calc_data5'] = $this->language->get('entry_calc_data5');
+		$data['entry_calc_data6'] = $this->language->get('entry_calc_data6');
+
+
 		$data['entry_calc_category'] = $this->language->get('entry_calc_category');
 		$data['entry_calc_product'] = $this->language->get('entry_calc_product');
 
@@ -1345,7 +1349,6 @@ class ControllerCatalogProduct extends Controller {
 		}
 		
 		//Скидки
-		
 		$this->load->model('catalog/discounts');
 		$data['discounts']=[];
 		$data['discounts'][]=Array("discount_id"=>-1,"name"=>"Не показывать");
@@ -1638,6 +1641,7 @@ class ControllerCatalogProduct extends Controller {
 		}else{
 			$main_category_id=0;
 		}
+		
 		//$main_category_id=$this->model_catalog_product->getMainCategory($this->request->get['product_id']);
 		$filter_params_data=$this->model_catalog_product->getMainCategoryFilter($main_category_id);
 

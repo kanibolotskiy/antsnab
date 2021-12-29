@@ -253,16 +253,6 @@ function calc1(){
             $("#calc_out1").attr("data-count",count_itm1);
         }
 
-        /*
-        var unitpack1=$(".unitpack1");
-        var count_itm1=Math.ceil(total_consumption/data_calc3);
-        var unitpack1_str=declOfNum(count_itm1, [unitpack1.attr("data-ui_name"),unitpack1.attr("data-ui_name_genitive"),unitpack1.attr("data-ui_name_plural")]);
-        var min_count=unitpack1.attr("data-ui_minimum");
-
-        $("#calc_out1").html(number_format(count_itm1,0,"."," ")+" "+unitpack1_str);
-        $("#calc_out1").attr("data-count",count_itm1);
-*/
-
         //Расчет праймера
         var count_itm2=Math.ceil(data_calc2*0.5/16);
         var unitpack2_str=declOfNum(count_itm2, ["ведро","ведра","вёдер"]);
@@ -435,6 +425,8 @@ function calc4(){
     var data_calc3=$("#input_calc_43").val();
 
     var total_value=data_product2*data_product3*data_calc1*data_calc2*data_calc3/10;
+    //console.log(data_product2+"*"+data_product3+"*"+data_calc1+"*"+data_calc2+"*"+data_calc3)
+
     total_value=Math.ceil(total_value*100)/100;
     
 
@@ -556,6 +548,124 @@ function calc5(){
         $("#input_area3").html("-");
         $(".wrap_table_calc").fadeOut(200);
     }
+
+}
+function calc6(){
+    if (typeof ym != 'undefined') {
+        ym(14496178, 'reachGoal', 'calc-use');
+    }
+    var flag_error=false;
+    $(".inputCalc").each(function(){
+        if($(this).val()==""){
+            flag_error=true;
+        }
+    });
+    if(flag_error){
+        $(".calculator-block_error").fadeIn(100);
+    }else{
+        $(".calculator-block_error").fadeOut(100);
+    }
+    
+    var data_product1=getFloat($("#calculator").attr("calc_data1"));
+    var data_product2=getFloat($("#calculator").attr("calc_data2"));
+    var data_product3=getFloat($("#calculator").attr("calc_data3"));
+
+    var data_calc1=$("#input_calc_6").val();
+    
+    var total_value=Math.ceil(data_calc1*data_product3);
+        
+    var data_calc_count=getFloat($("#priceSwitcher").attr("data-base_vol"));
+    if(!data_calc_count){
+        data_calc_count=1;
+    }
+    $("#input_area6").html(data_calc1);
+
+    if(total_value>0){
+        
+        $("#calc_out1").html(total_value+" м<sup>2</sup>");
+        var rulons=Math.ceil(total_value/data_calc_count);
+        $(".wrap_table_calc").fadeIn(200);
+
+        var app1=Math.ceil(total_value*data_product1/16)
+        var app2=Math.ceil(total_value*data_product2/16)
+        //console.log(total_value+"*"+data_product2+"="+(total_value*data_product2))
+
+        $("#calc_out3").html(rulons+" "+declOfNum(rulons,['рулон','рулона','рулонов']));      
+        $("#calc_out1").data("count",total_value)
+        
+        $("#calc_out5").html(app1+" "+declOfNum(app1,['ведро','ведра','ведер']));      
+        $("#calc_out5").data("count",app1)
+
+        $("#calc_out7").html(app2+" "+declOfNum(app2,['ведро','ведра','ведер']));      
+        $("#calc_out7").data("count",app2)
+        
+
+    }else{
+        $("#input_area1").html("-");
+        $("#input_area2").html("-");
+        $("#input_area3").html("-");
+        $(".wrap_table_calc").fadeOut(200);
+    }
+
+    /*
+    var data_calc_count=getFloat($("#priceSwitcher").attr("data-base_weight"));
+    if(!data_calc_count){
+        data_calc_count=1;
+    }
+
+    var total_value=data_calc1*data_calc2*data_calc3/10/data_product4;
+    total_value=Math.ceil(total_value*100)/100;
+    
+
+    if(total_value>0){
+        $("#input_area1").html(data_calc1);
+        $("#input_area2").html(data_calc2);
+        $("#input_area3").html(data_calc3);
+
+        var unitpack1=$(".unitpack1");
+
+        var calc_rez=Math.ceil(total_value/data_calc_count);
+        //console.log(total_value+"/"+data_calc_count);
+
+        var unitpack1_str=declOfNum(calc_rez, [unitpack1.attr("data-ui_name"),unitpack1.attr("data-ui_name_genitive"),unitpack1.attr("data-ui_name_plural")]);
+        $("#calc_out1").html(number_format(calc_rez,0,"."," ")+" "+unitpack1_str);
+        
+        
+        $(".wrap_table_calc").fadeIn(200);
+    
+        var min_count=$("#priceSwitcher").attr("data-rosn_limit");
+        
+        var step=1;
+        if($("#priceSwitcher").children(".unitpack1").attr("data-ui_step")!=undefined){
+                step=$("#priceSwitcher").children(".unitpack1").attr("data-ui_step")*1;
+        }
+        min_count=min_count*step;
+        
+        if(calc_rez<min_count){
+            $(".calc_hint").fadeIn();
+            $("#calc_out2").html(min_count);
+            $("#calc_out1").attr("data-count",min_count);
+            $("#calc_hint_caption").html("мин. для заказа");            
+        }else{
+            if(min_count>1){
+                $("#calc_hint_caption").html("кратно упаковкам");
+                var step_count=Math.ceil(calc_rez/min_count);
+                $("#calc_out2").html(step_count*min_count);
+
+                $(".calc_hint").fadeIn(200);
+                $("#calc_out1").attr("data-count",step_count*min_count);
+            }else{
+                    $(".calc_hint").fadeOut(200);
+                    $("#calc_out1").attr("data-count",calc_rez);
+            }
+        }
+    }else{
+        $("#input_area1").html("-");
+        $("#input_area2").html("-");
+        $("#input_area3").html("-");
+        $(".wrap_table_calc").fadeOut(200);
+    }
+    */
 
 }
 $( document ).ready(function() {
@@ -1116,6 +1226,12 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
             calc5();
         }
     });
+    
+    $("#input_calc_6").on('keypress',function(e) {
+        if(e.which == 13) {
+            calc6();
+        }
+    });
 
     $("#button_calc_1").click(function(){
         calc1();
@@ -1132,6 +1248,9 @@ if( $('#priceSwitcher').length > 0 && $('.qnt-container-spec').length > 0){
     });
     $("#button_calc_5").click(function(){
         calc5();
+    });
+    $("#button_calc_6").click(function(){
+        calc6();
     });
 
     $(document).on("click",".fast_preview_span",function(e){

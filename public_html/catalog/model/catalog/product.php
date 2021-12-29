@@ -101,8 +101,53 @@ class ModelCatalogProduct extends Model {
         }
 		return $data;
 	}	
+	public function getMainCategoryFilter($category_id){
+        $sql="SELECT * from category_params where category_id=".(int)$category_id." order by sort_order";
+        $query=$this->db->query($sql);
+        return $query->rows;
+    }
+	public function getMainCategory($product_id){
+        $temp_cat_id=0;
+        $fin_cat_id=0;
+        $step=1;
+        $sql="SELECT category_id from oc_product_to_category where main_category=1 and product_id=".(int)$product_id;
+        $query=$this->db->query($sql);
+        $temp_cat_id=$query->row["category_id"];
+        
+        while($temp_cat_id!=71 and $step<5){
+            $fin_cat_id=$temp_cat_id;
+            $sql_cat="SELECT parent_id from oc_category where category_id=".(int)$temp_cat_id;
+            $query_cat=$this->db->query($sql_cat);
+            $temp_cat_id=$query_cat->row["parent_id"];
+            $step++;
+        }
+        return $fin_cat_id;
+    }
 
+	public function getFilterParamValues($param_id, $tp, $product_id){
+        $data=[];
+        if($tp==1){
+            $sql="SELECT value1, value2 from product_param_values where product_id=".(int)$product_id." and param_id=".$param_id;
+            $query=$this->db->query($sql);
+            $data=$query->row;            
+        }else{
+            $sql="SELECT value1 from product_param_values where product_id=".(int)$product_id." and param_id=".(int)$param_id;
+            $query=$this->db->query($sql);
+            
+            foreach ($query->rows as $result) {
+                $data[]=$result["value1"];
+            }
 
+        }
+        return $data;
+    }
+    public function getFilterParamList($param_id){
+        $sql="SELECT * from category_param_values where param_id=".(int)$param_id." order by CAST(param_value AS SIGNED) , param_value";
+        $query=$this->db->query($sql);
+        return $query->rows;
+    }
+	
+	/*
 	public function getMainCategory($temp_cat_id){
         $fin_cat_id=0;
 		$step=1;
@@ -115,6 +160,7 @@ class ModelCatalogProduct extends Model {
         }
         return $fin_cat_id;
 	}
+	*/
 
 	public function updateViewed($product_id) {
 		$this->db->query("UPDATE " . DB_PREFIX . "product SET viewed = (viewed + 1) WHERE product_id = '" . (int)$product_id . "'");
@@ -362,6 +408,8 @@ class ModelCatalogProduct extends Model {
 				'discount_percent' => $query->row['discount_percent'],
 				'sale1'			   => $query->row['sale1'],
 				'notavail'		   => $query->row['notavail'],
+				'consumption'	   => $query->row['consumption'],
+
 				/*'priceold'     			=> $query->row['priceold'],
 				'price_wholesaleold'	=> $query->row['price_wholesaleold'],
 				*/
@@ -397,6 +445,11 @@ class ModelCatalogProduct extends Model {
 		}
 
 		$sql .= " LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'";
+
+		if (!empty($data['calculator_id'])) {
+			$sql .= "  AND (p.calc='".$data['calculator_id']."' OR p2c.calc='".$data['calculator_id']."')";
+		}
+
 
 		if (!empty($data['filter_category_id'])) {
 			if (!empty($data['filter_sub_category'])) {
@@ -484,7 +537,7 @@ class ModelCatalogProduct extends Model {
 		}
 
 		$sql .= " GROUP BY p.product_id";
-
+		
 		$sort_data = array(
 			'pd.name',
 			'p.model',
@@ -522,6 +575,11 @@ class ModelCatalogProduct extends Model {
 			if($data['order']=="ids"){
 				$sort_dir = "";
 			}
+
+			if($data['sort']=="quantity"){
+				$sort_by=" quantity DESC";
+			}
+			
 		}
 		$sql .= " ORDER BY ".$sort_by.$sort_dir;
 		

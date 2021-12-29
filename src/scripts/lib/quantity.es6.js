@@ -26,6 +26,7 @@ class Quantity {
     
     constructor(view, opts) {
         //var rosn_limit=$("#data-rosn_limit").attr("data-rosn_limit");
+
         this._options = {
             /** SaleQuantity options */
             'sale_step': opts.sale_step? parseFloat(opts.sale_step) : 1,
@@ -36,13 +37,13 @@ class Quantity {
             'ui_minimum': opts.ui_minimum ? parseFloat(opts.ui_minimum) : null, 
             //'ui_val': opts.ui_minimum ? parseFloat(opts.ui_minimum) : null, 
             'ui_step': opts.ui_step ? parseFloat(opts.ui_step) : null,
-            'ui_names': opts.ui_names || {}
-
+            'ui_names': opts.ui_names || {},
+            'start_value':opts.start_value?opts.start_value:1
             //'sale_to_price_koef': new Fraction(opts.sale_to_price_koef) || new Fraction(1),
         };
         
         this.view = view;
-        this.model = new SaleQuantityModel(this._options.sale_minimum, this._options.sale_step) ;
+        this.model = new SaleQuantityModel(this._options.sale_minimum, this._options.sale_step, this._options.start_value) ;
         //console.log(this._options.ui_minimum);
         this.model.setUiModel(this._options.sale_to_ui_koef, this._options.ui_minimum, this._options.ui_step);
 
@@ -188,9 +189,10 @@ class SaleQuantityModel {
     /**
      * @param {int} minimum - начальное значение (от..)
      */
-    constructor(minimum, step) {
+    constructor(minimum, step, start_value) {
         this._saleMinimum = minimum;
-        this._quantity = Fraction(minimum);
+        this._quantity=start_value
+        //this._quantity = Fraction(minimum);
         this._saleStep = Fraction(step);
         this._uiKoef = Fraction(1);
 

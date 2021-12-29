@@ -524,7 +524,7 @@
                 <ul class="resp-tabs-list vert">
 
                     <?php if(!empty($properties)): ?>
-                        <li data-goal="card-description">Описание</li>
+                        <li data-goal="card-description">Характеристики</li>
                     <?php endif;?>
                     <?php if($video_link) {?>
                         <li data-goal="card-video">Видео</li>
@@ -546,12 +546,81 @@
                     <li data-goal="card-review">Отзывы </li>
                     <?php endif; ?>
                 </ul>
-
+ 
                 <div class="resp-tabs-container vert">
 
                     <!--TAB Описание-->
                     <?php if(!empty($properties)): ?>
                     <div>
+                        <div class="char_caption">Параметры:</div>
+                        
+                        <table class="char_list">
+                            <?php
+                                foreach($filter_params as $itm) {
+                                    $selected_str="";
+                                    $selected_params_str="";
+                                    switch ($itm['type_param']){
+                                        case 0:
+                                            $selected_params=[];
+                                            foreach($itm["list"] as $itm_param){
+                                                if($itm_param['selected']){
+                                                    $selected_params[]='<a href="'.$params_category.'?param['.$itm['translit'].'][]='.$itm_param['id'].'">'.htmlspecialchars_decode($itm_param['param_value'],ENT_QUOTES).'</a>';
+                                                }                                            
+                                                $selected_params_str=implode(", ", $selected_params);
+                                            }
+
+                                        break;
+
+                                        case 2:
+                                            $selected_params=[];
+                                            foreach($itm["list"] as $itm_param){
+                                                if($itm_param['selected']){
+                                                    $selected_params[]='<a href="'.$params_category.'?param['.$itm['translit'].'][]='.$itm_param['id'].'">'.htmlspecialchars_decode($itm_param['param_value'],ENT_QUOTES).'</a>';
+                                                }                                            
+                                                $selected_params_str=implode(", ", $selected_params);
+                                            }
+
+                                        break;
+
+                                        case 1:
+                                            $param_link="";
+
+                                            if($itm['list']['value1']){
+                                                //$param_link='param[temp-prim_start][min]=-14&param[temp-prim_start][max]=3';
+                                                $param_link='param['.$itm['translit'].'][min]='.$itm['list']['value1'];
+                                                $selected_str='от '.$itm['list']['value1']." ";
+                                            }
+                                            if($itm['list']['value2']){
+                                                $selected_str.='до '.$itm['list']['value2'];
+                                                $param_link.=($param_link?'&':'').'param['.$itm['translit'].'][max]='.$itm['list']['value2'];
+                                            }
+                                            if($selected_str){
+                                                $selected_params_str='<a href="'.$params_category.'?'.$param_link.'">'.$selected_str.'</a>';
+                                            }
+                                        break;
+                                    }
+
+                                    if($selected_params_str) {
+                                        echo '<tr>
+                                            <td class="char_row_cap">'.htmlspecialchars_decode($itm['name'],ENT_QUOTES).'</td>
+                                            <td class="char_row_values">'.$selected_params_str.'</td>
+                                        </tr>';
+                                        /*
+                                        echo '<div class="char_row">
+                                            <div class="char_row_cap">'.htmlspecialchars_decode($itm['name'],ENT_QUOTES).':</div>
+                                            <div class="char_row_values">
+                                                '.$selected_params_str.'
+                                            </div>
+                                        </div>';
+                                        */
+                                    }
+                                }
+                            ?>
+                            
+                        </table>
+
+                        <div class="char_caption">Технические характеристики:</div>
+                        
                         <div class="table table_desc">
                             <table>
                                 <thead>
