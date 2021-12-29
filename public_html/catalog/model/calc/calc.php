@@ -5,7 +5,7 @@ class ModelCalcCalc extends Model {
     $query = $this->db->query("SELECT DISTINCT * from oc_product op 
     LEFT JOIN oc_product_to_category oc ON oc.product_id=op.product_id and oc.main_category=1
     LEFT JOIN oc_category o_cat ON o_cat.category_id=oc.category_id
-    where (op.calc='".$calculator_id."' or o_cat.calc='".$calculator_id."') and op.quantity>0
+    where (op.calc='".$calculator_id."' or o_cat.calc='".$calculator_id."') 
     order by op.quantity DESC");
 
     
