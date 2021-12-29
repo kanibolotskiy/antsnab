@@ -10,7 +10,7 @@ use WS\Override\Gateway\ProdUnits\ProdUnits;
 use WS\Override\Gateway\ProdUnits\ProdUnitsCalc;
 use WS\Patch\Helper\ProductListHelper;
 
-class ControllerCommonCalc extends Controller {
+class ControllerCommonKalkulyator extends Controller {
     private function declination($number, $titles) {
         $cases = array(2, 0, 1, 1, 1, 2);
         return $number." ".$titles[($number%100>4 && $number%100<20) ? 2 : $cases[min($number%10, 5)]];   
