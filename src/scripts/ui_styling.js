@@ -71,10 +71,7 @@ function check_scroll(){
             var lmt=pnt1-pnt2-append_height;
             //console.log(st);
             if(st>limit_leftmenu){
-                console.log("tut")
-                //console.log("ok1");
-                var ht=wh-165-50-60;
-                
+                var ht=wh-165-50-60;                
                 $(".catalog-product").addClass("_fixed");
                 if(lmt<0){
                     
