@@ -477,7 +477,7 @@ function change_favorite_sum(){
 
 function getCalcProducts(data){
     $.ajax({
-        url:  '/index.php?route=common/calc/calcData',
+        url:  '/index.php?route=common/kalkulyator/calcData',
         data: data,
         type: 'post',
         dataType: 'json',
