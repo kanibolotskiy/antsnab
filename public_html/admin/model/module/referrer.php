@@ -2,7 +2,6 @@
 class ModelModuleReferrer extends Model {
 
     public function decode($url){
-        echo "!".$url."!";
         $decoded_url = urldecode($url );
         $pure_url = htmlspecialchars_decode($decoded_url);
         $pure_url = str_replace("&amp;","&",$pure_url);

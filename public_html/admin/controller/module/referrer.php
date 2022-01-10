@@ -106,12 +106,13 @@ class ControllerModuleReferrer extends Controller {
         if (isset($this->request->get['page'])) {
             $url .= '&page=' . $this->request->get['page'];
         }
-
+        //echo "!".$this->config->get('config_admin_limit')."!";
+        $lmt=20;
         $data = array(
             'sort' => $sort,
             'order' => $order,
-            'start' => ($page - 1) * $this->config->get('config_admin_limit'),
-            'limit' => $this->config->get('config_admin_limit')
+            'start' => ($page - 1) * $lmt,
+            'limit' => $lmt
         );
 		
 		$data['patterns'] = array();
@@ -249,7 +250,7 @@ class ControllerModuleReferrer extends Controller {
         $pagination = new Pagination();
         $pagination->total = $patterns_total;
         $pagination->page = $page;
-        $pagination->limit = $this->config->get('config_admin_limit');
+        $pagination->limit = $lmt;//$this->config->get('config_admin_limit');
         $pagination->text = $this->language->get('text_pagination');
         $pagination->url = $this->url->link('module/referrer', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
