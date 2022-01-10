@@ -1,9 +1,7 @@
 <?= $header ?>
 <div class="container main withparams">
     <div class="wrapper_content">
-        <div class="filter_reset <?php echo ($show_filter?'active active_mob':''); ?>" >
-        <!--<div class="filter_reset active" >-->
-        <div class="filter_reset">
+        <div class="filter_reset <?php echo ($show_filter?'active active_mob':'');  ?>" >
             <div class="wrp_filter_reset">
                 <span id="apply_filter">Применить</span>
                 <div class="wrp_buttons_reset_filter">
