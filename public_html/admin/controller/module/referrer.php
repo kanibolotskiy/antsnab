@@ -107,7 +107,7 @@ class ControllerModuleReferrer extends Controller {
             $url .= '&page=' . $this->request->get['page'];
         }
         //echo "!".$this->config->get('config_admin_limit')."!";
-        $lmt=20;
+        $lmt=50;
         $data = array(
             'sort' => $sort,
             'order' => $order,
