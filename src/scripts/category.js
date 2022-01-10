@@ -67,11 +67,12 @@ function getParamsForm(){
         }
     });
 
-    
     if(str){
-        $("#reset_filter").addClass("active");
+        //$("#reset_filter").addClass("active");
+        $(".filter_reset").addClass("active");
     }else{
-        $("#reset_filter").removeClass("active");
+        //$("#reset_filter").removeClass("active");
+        $(".filter_reset").removeClass("active");
     }
     
     //Сортировка
@@ -184,6 +185,8 @@ function set_state_checks(avail_data){
         }
         
     }
+    //filter_reset 
+    
     if(flag_empty){
         //resetSliders();
     }
@@ -539,15 +542,19 @@ $(document).ready(function(){
         $(".up").addClass("_filter");
     }
     $(".wrp_filter_title").click(function(){
-        if($(".filter_reset").hasClass("active")){
+
+        //var flag=$(".filter_reset").hasClass("active");
+        var flag=$(".wrp_filter_title").hasClass("active");
+        
+        if(flag){
             $(".wrp_filter_title").removeClass("active");
             $(".param_item").slideUp(300);
-            $(".filter_reset").removeClass("active");
+            $(".filter_reset").toggleClass("active");
             $(".up").removeClass("_filter");
         }else{
             $(".wrp_filter_title").addClass("active");
             $(".param_item").slideDown(300);
-            $(".filter_reset").addClass("active");
+            $(".filter_reset").toggleClass("active");
             $(".up").addClass("_filter");
         }
 
@@ -586,25 +593,30 @@ $(document).ready(function(){
     */
     $("#apply_filter").click(function(){
         change_params_form(true);
+        if($(".filter_reset").hasClass("active_mob")){
+            $(".filter_reset").removeClass("active");
+        }
     });
 
     $("#hide_filter").click(function(){
         $(".param_item").hide()
         var tp=$(".catalog-list").offset().top-$(".header").height();
         $("html,body").animate({"scrollTop":tp},300)
-        $(".filter_reset").removeClass("active");
+        $(".wrp_filter_title").toggleClass("active");
+        $(".filter_reset").toggleClass("active");
         $(".up").removeClass("_filter");
         
     });
     $("#reset_filter").click(function(){
-        if($(this).hasClass("active")){
-            $(".param_item").hide();//,function(){
+        //if($(this).hasClass("active")){
+        //if($(".button_reset_filter_reset").hasClass("active")){
+            //$(".param_item").hide();//,function(){
             var tp=$(".catalog-list").offset().top-$(".header").height();
             $("html,body").animate({"scrollTop":tp},300)
             //$(".filter_reset").removeClass("active");
             resetFilterForm();
             $(".up").removeClass("_filter");
-        }
+        //}
     });
 
     $(".showby_item").click(function(){

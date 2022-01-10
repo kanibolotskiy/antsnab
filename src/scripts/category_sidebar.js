@@ -21,6 +21,7 @@ $(document).ready(function(){
         }
     });
 
+    
     $(".catalog_opens").click(function(){
         
         if($(this).hasClass("act")){

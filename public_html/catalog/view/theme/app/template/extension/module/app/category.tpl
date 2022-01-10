@@ -2,7 +2,6 @@
 
 <div class="catalog-product  _filter">
     
-    
     <div class="wrapper_catalog-btn">
         <div class="catalog_opens <?php echo $show_params?'':'act' ?>"></div>
         <a href="<?=$root?>" class="catalog-btn">

@@ -15,7 +15,7 @@ class CategoryController extends \Controller
     private static $openedItems;
 
     
-    public function index()
+    public function index($isproduct=0)
     {
         $this->load->language('extension/module/category');
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -28,7 +28,7 @@ class CategoryController extends \Controller
 			$parts = explode('_', (string)$this->request->get['path']);
 			$data['category_id'] = array_pop($parts); 
 		}
-        
+        //print_r($this->request->get['path']);
         $data['openeditems'] = self::$openedItems = $parts;
         $data['openeditems'][] = $data['category_id'];
        
@@ -43,10 +43,17 @@ class CategoryController extends \Controller
             }
         }
         //echo $data['category_id'];
+       
+
         if($data['category_id']==ROOT_CATEGORY_ID){
             $data["show_params"]=false;
         }else{
-            $data["show_params"]=true;
+            if($isproduct){
+                $data["show_params"]=false;
+            }else{
+                $data["show_params"]=true;
+            }
+            
         }
 
         $show_filter=false;
