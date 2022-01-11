@@ -80,9 +80,11 @@ class ControllerCommonCompare extends Controller {
                 $image = $this->model_tool_image->resize('placeholder.png', 400, 400);
             }
 
-            $main_category_id=$this->model_catalog_product->getMainCategory($product["category_id"]);
+            //$main_category_id=$this->model_catalog_product->getMainCategory($product["category_id"]);
+            $main_category_id=$this->model_catalog_product->getMainCategory($product["product_id"]);
             //$category_info = $this->model_catalog_category->getCategory($product["category_id"]);
             
+
             //$data['quantity_stock']=$product['quantity'];
             if ($product['quantity'] > 0) {
                 $data_stock = "В наличии";
@@ -306,7 +308,7 @@ class ControllerCommonCompare extends Controller {
                 
                 $favorite_products[]=Array(
                     "name"=>$category_info["name"],
-                    "catalog_id"=>$key_catalog,//$main_category_id,
+                    "catalog_id"=>$main_category_id,
                     "category_params"=>$avail_params_by_cat,
                     "pack_list"=>$pack_list,
                     "properties"=>$list_properties,

@@ -111,6 +111,7 @@ class ModelCatalogProduct extends Model {
         $fin_cat_id=0;
         $step=1;
         $sql="SELECT category_id from oc_product_to_category where main_category=1 and product_id=".(int)$product_id;
+		//echo "!".$sql."!";
         $query=$this->db->query($sql);
         $temp_cat_id=$query->row["category_id"];
         
