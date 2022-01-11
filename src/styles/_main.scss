@@ -6066,7 +6066,7 @@ filter: grayscale(1); /* W3C */
 .tab-block ul li .catalog-img a img{margin:auto;}
 .tab-block.tab-block2 .catalog-img{position:relative;top:initial;margin-top:0;}
 .tab-block .catalog-img{position:absolute;top:50%;margin-top:-100px;}
-.tab-block2.tab-block3 ul li .catalog-block{padding-bottom:20px;}
+.tab-block2.tab-block3 ul li .catalog-block{padding-bottom:10px;}
 @media screen and (max-width: 480px){
     .tab-block2.tab-block3 ul li .catalog-block{padding-bottom:0px;}
 }
@@ -11732,6 +11732,12 @@ margin-bottom:30px;
     .wrap_calculators .catalog-block_caption{text-align:center;}
     .calculator-block{
         padding:10px;
+    }
+    .tab-block-cat.tab-block ul li .catalog-block{
+        display:block;
+    }
+    .tab-block2.tab-block3 ul li .catalog-block{
+        padding-bottom:0px;
     }
     
 }
