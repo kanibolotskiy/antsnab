@@ -67,13 +67,13 @@
     <source type="image/webp" srcset="<?= $p['thumb_webp'] ?>">
     <source type="image/jpeg" srcset="<?= $p['thumb'] ?>">
     <img class="wrp_fly_image" itemprop="image" src="<?= $p['thumb'] ?>" alt="<?= $p['meta_h1'] ?>" title="<?= $p['meta_h1'] ?>" />
-</picture>                
-                <div class="wrp_favorite">
-                    <?php if(!$p["notavail"]){ ?>
+</picture>          
+                <?php if(!$p["notavail"]){ ?>      
+                    <div class="wrp_favorite">
                         <div data-rel="<?= $p['product_id']?>" title="Добавить товар в избранное" class="favorite <?= $p['favorite'] ?>"></div>        
-                    <?php }?>
-                    <div data-rel="<?= $p['product_id']?>" title="Добавить товар в сравнение" class="compare <?= $p['compare'] ?>"></div>
-                </div>
+                        <div data-rel="<?= $p['product_id']?>" title="Добавить товар в сравнение" class="compare <?= $p['compare'] ?>"></div>
+                    </div>
+                <?php }?>
 
                 <?php if($p["color_name"]){?>
                     <?php if($p['color_code']){?>

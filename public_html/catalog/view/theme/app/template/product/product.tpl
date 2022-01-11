@@ -143,13 +143,12 @@
 
                                     </a>
                                 <?php } ?>
-                                <div class="wrp_favorite">
-                                    <?php if(!$notavail){ ?>
+                                <?php if(!$notavail){ ?>
+                                    <div class="wrp_favorite">                                       
                                         <div title="Добавить товар в избранное" class="favorite <?php echo $favorite;?>" data-rel="<?php echo $product_id;?>"></div>
-                                    <?php }?>
-                                    <div title="Добавить товар в сравнение" class="compare <?php echo $compare;?>" data-rel="<?php echo $product_id;?>"></div>
-                                </div>
-                                
+                                        <div title="Добавить товар в сравнение" class="compare <?php echo $compare;?>" data-rel="<?php echo $product_id;?>"></div>
+                                    </div>
+                                <?php }?>
                             </div>
                             
                             <div class="thumb__nav">
