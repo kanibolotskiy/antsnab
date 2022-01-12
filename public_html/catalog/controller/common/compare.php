@@ -157,6 +157,7 @@ class ControllerCommonCompare extends Controller {
             //$price = number_format($price_val,0,".", " ");
         }
         
+
         $favorite_products=[];
         $pack_list=[];
         $produnitsGateway = new ProdUnits($this->registry);
@@ -167,6 +168,8 @@ class ControllerCommonCompare extends Controller {
             foreach($fav_product as $key_catalog=>$fav_product_catalog){
                 //Все параметры для категории
                 $category_params=$this->model_extension_module_category->getListParamsByCategory($key_catalog);
+                
+
 
                 $avail_params_by_cat=[];
                 foreach($category_params as $category_param){
@@ -308,7 +311,7 @@ class ControllerCommonCompare extends Controller {
                 
                 $favorite_products[]=Array(
                     "name"=>$category_info["name"],
-                    "catalog_id"=>$main_category_id,
+                    "catalog_id"=>$key_catalog,//$main_category_id,
                     "category_params"=>$avail_params_by_cat,
                     "pack_list"=>$pack_list,
                     "properties"=>$list_properties,
@@ -318,7 +321,7 @@ class ControllerCommonCompare extends Controller {
             }
         }
         
-
+        //print_r($favorite_products);
         $data['favorite_products']=$favorite_products;
         
 
