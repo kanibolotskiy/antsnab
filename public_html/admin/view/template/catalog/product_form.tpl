@@ -51,6 +51,8 @@
                         <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
                         <li><a href="#tab-filter" data-toggle="tab"><?php echo $tab_filter; ?></a></li>
                         <li style="display:none"><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
+                        <li><a href="#tab-lp" data-toggle="tab">LP</a></li>
+
                         <!--<li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>-->
                         
                         <!--
@@ -61,6 +63,206 @@
 
                     </ul>
                     <div class="tab-content">
+                        <div class="tab-pane" id="tab-lp">
+                            <div class="tab-content">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-product_lp_name">Название:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="lp[product_lp_name]" value="<?=$product_lp_name ?>" placeholder="Название для лендинга" id="input-product_lp_name" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-product_lp_title">Meta Title:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="lp[product_lp_title]" value="<?=$product_lp_title ?>" placeholder="Meta Title" id="input-product_lp_title" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-product_lp_desc">Meta Description</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="lp[product_lp_desc]" value="<?=$product_lp_desc ?>" placeholder="Meta Description" id="input-product_lp_desc" class="form-control" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-product_lp_lsi">Краткое описание</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="lp[product_lp_lsi]" rows="5" placeholder="Краткое описание" id="input-product_lp_lsi" class="form-control"><?=$product_lp_lsi?></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-product_lp_text">Полное описание</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="lp[product_lp_text]" rows="5" placeholder="Полное описание" id="input-product_lp_text" class="form-control summernote"><?=$product_lp_text?></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-product_lp_noiden">
+                                        Не показывать идентичные
+                                    </label>
+                                    <div class="col-sm-1">
+                                        <div class="checkbox">
+                                            <label>
+                                            <input <?=$product_lp_notavail==1?'checked':''?> type="checkbox" name="lp[product_lp_notavail]" value="1" id="input-product_lp_noiden">
+                                            &nbsp; </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-product_lp_price">
+                                        Вид цены
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <select name="lp[product_lp_price]" id="input-tax-class" class="form-control">
+                                            <option <?=$product_lp_price==0?'selected':''?> value="0">Не показывать</option>
+                                            <option <?=$product_lp_price==1?'selected':''?> value="1">Розничная</option>
+                                            <option <?=$product_lp_price==2?'selected':''?> value="2">Оптовая</option>
+                                            <option <?=$product_lp_price==3?'selected':''?> value="3">C1</option>
+                                            <option <?=$product_lp_price==4?'selected':''?> value="4">C2</option>
+                                            <option <?=$product_lp_price==5?'selected':''?> value="5">C3</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <label class="col-sm-2 control-label" for="input-product_lp_docs">
+                                        Документы
+                                    </label>
+                                    
+                                    
+                                    <div class="col-sm-10">
+                                        <table id="lp_docs" class="table table-striped table-bordered table-hover" data-row="<?=count($product_lp_doc)?>">
+                                            <thead>
+                                                <tr>
+                                                    <td class="text-left">Файл</td>
+                                                    <td class="text-left">Подпись</td>
+                                                    <td class="text-right"><?php echo $entry_sort_order; ?></td>
+                                                    <td></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($product_lp_doc as $key=>$lp_doc) { ?>
+                                                    <tr id="lp-doc<?=$key ?>">
+                                                        <td class="text-left">
+                                                            <div class="input-group">
+                                                                <input type="text" name="lp[product_lp_doc][<?=$key?>][file]" value="<?=$lp_doc['file']; ?>" placeholder="Имя файла" id="input-lp_doc<?=$key?>" class="form-control">
+                                                                <span class="input-group-btn">
+                                                                <button class="upload_butts btn btn-primary" data-rel="input-lp_doc<?=$key?>" type="button" id="button-lp_doc<?=$key?>" data-loading-text="Загрузка..."><i class="fa fa-upload"></i> Загрузить</button>
+                                                                </span> 
+                                                            </div>
+                                                        </td>
+
+                                                        <td class="text-left">
+                                                            <input type="text" name="lp[product_lp_doc][<?=$key ?>][text]" value="<?=$lp_doc['text']; ?>" placeholder="Заголовок" class="form-control" />
+                                                        </td>
+                                                        <td class="text-left">
+                                                            <input type="text" name="lp[product_lp_doc][<?=$key ?>][sort_order]" value="<?=$lp_doc['sort_order']; ?>" placeholder="Порядок сортировки" class="form-control" />
+                                                        </td>
+                                                        <td class="text-left">
+                                                            <button type="button" onclick="$('#lp-doc<?=$key ?>').remove();" data-toggle="tooltip" title="Удалить" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                                
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="3"></td>
+                                                    <td class="text-left">
+                                                        <button type="button" onclick="addProductsDoc();" data-toggle="tooltip" title="Добавить" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label class="col-sm-2 control-label" for="input-product_lp_video">
+                                        Видео
+                                    </label>
+                                    
+                                    <div class="col-sm-10">
+                                        <table id="lp_video" class="table table-striped table-bordered table-hover" data-row="<?=count($product_lp_video)?>">
+                                            <thead>
+                                                <tr>
+                                                    <td class="text-left">Превью</td>
+                                                    <td class="text-left">Ссылка</td>
+                                                    <td class="text-left">Подпись</td>
+                                                    <td class="text-right"><?php echo $entry_sort_order; ?></td>
+                                                    <td></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($product_lp_video as $key=>$lp_video) { ?>
+                                                
+                                                    <tr id="lp-video<?=$key ?>">
+                                                        <td class="text-left">
+                                                            <a href="" id="video_image<?=$key?>" data-toggle="image" class="img-thumbnail" >
+                                                                <img class="video_prevw" src="../image/<?=$lp_video['image']; ?>" alt="" title="" data-placeholder="<?=$placeholder; ?>" />
+                                                                
+                                                            </a>
+                                                            <input class="video_prevw_input" 
+                                                                    type="hidden" 
+                                                                    name="lp[product_lp_video][<?=$key ?>][image]" 
+                                                                    value="<?=$lp_video['image']; ?>" 
+                                                                    id="input-video_image<?=$key?>" 
+                                                            />
+                                                        </td>
+
+                                                        <td class="text-left">
+                                                            <input type="text" name="lp[product_lp_video][<?=$key ?>][url]" value="<?=$lp_video['url']; ?>" placeholder="Ссылка" class="form-control videolist_url" />
+                                                        </td>
+
+                                                        <td class="text-left">
+                                                            <input type="text" name="lp[product_lp_video][<?=$key ?>][text]" value="<?=$lp_video['text']; ?>" placeholder="Заголовок" class="form-control" />
+                                                        </td>
+                                                        <td class="text-left">
+                                                            <input type="text" name="lp[product_lp_video][<?=$key ?>][sort_order]" value="<?=$lp_video['sort_order']; ?>" placeholder="Порядок сортировки" class="form-control" />
+                                                        </td>
+                                                        <td class="text-left">
+                                                            <button type="button" onclick="$('#lp-video<?=$key ?>').remove();" data-toggle="tooltip" title="Удалить" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                                
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="4"></td>
+                                                    <td class="text-left">
+                                                        <button type="button" onclick="addProductsVideo();" data-toggle="tooltip" title="Добавить" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-product_lp_sel">
+                                        "Получить скидку" ведет на:
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <select id="input-lp_sel" name="landing_id" class="form-control">
+                                            <option value="0" selected="selected"><?php echo $text_none; ?></option>
+                                            <?php foreach ($landings as $landing) { ?>
+                                                <?php if ($landing['landing_id'] == $landing_id) { ?>
+                                                    <option value="<?=$landing['landing_id'] ?>" selected="selected"><?=$landing['title']; ?></option>
+                                                <?php } else { ?>
+                                                    <option value="<?=$landing['landing_id'] ?>"><?=$landing['title']; ?></option>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                
+                                </div>
+                                
+                            </div>
+                        </div>
                         <div class="tab-pane active" id="tab-general">
                             <ul class="nav nav-tabs" id="language">
                                 <?php foreach ($languages as $language) { ?>
@@ -139,6 +341,12 @@
                                             <label class="col-sm-2 control-label" for="input-video<?php echo $language['language_id']; ?>"><span><?php echo $entry_video; ?></span></label>
                                             <div class="col-sm-10">
                                                 <input type="text" name="product_description[<?php echo $language['language_id']; ?>][video]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['video'] : ''; ?>" placeholder="<?php echo $entry_video; ?>" id="input-video" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="input-video_caption<?php echo $language['language_id']; ?>"><span><?php echo $entry_video_caption; ?></span></label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="product_description[<?php echo $language['language_id']; ?>][video_caption]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['video_caption'] : ''; ?>" placeholder="<?php echo $entry_video_caption; ?>" id="input-video_caption" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -1637,12 +1845,62 @@
                 var product_id=$(this).attr("rel");
                 products_used.push(product_id);
             });
-            console.log(products_used);
             $("#products_change_analog").val(1);
             $("#products_analog").val(products_used.join(","));
         }
+        function addProductsVideo(){
+            var i=$("#lp_video").data("row")*1;
+            var new_item='<tr id="lp-video'+i+'">'+
+                         '   <td class="text-left">'+
+                         '       <a href="" id="input-video_image'+i+'" data-toggle="image" class="img-thumbnail">'+
+                         '           <img class="video_prevw" src="<?=$placeholder; ?>" alt="" title="" data-placeholder="<?=$placeholder; ?>" />'+
+                         '       </a>'+
+                         '       <input class="video_prevw_input" type="hidden" name="lp[product_lp_video]['+i+'][image]" value="" id="input-video_image'+i+'" />'+
+                         '    </td>'+
+                         '   <td class="text-left">'+
+                         '       <input type="text" name="lp[product_lp_video]['+i+'][url]" value="" placeholder="Ссылка" class="form-control videolist_url" />'+
+                         '   </td>'+
+                         '   <td class="text-left">'+
+                         '       <input type="text" name="lp[product_lp_video]['+i+'][text]" value="" placeholder="Заголовок" class="form-control" />'+
+                         '   </td>'+
+                         '   <td class="text-left">'+
+                         '       <input type="text" name="lp[product_lp_video]['+i+'][sort_order]" value="" placeholder="Порядок сортировки" class="form-control" />'+
+                         '   </td>'+
+                         '   <td class="text-left">'+
+                         '       <button type="button" onclick="$(\'#lp-video'+i+'\').remove();" data-toggle="tooltip" title="Удалить" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>'+
+                         '   </td>'+
+                        '</tr>';
+            //console.log(new_item);
+            $("#lp_video tbody").append(new_item);
+            $("#lp_video").data("row",i+1)
+        }
+        function addProductsDoc(){
 
-
+            var i=$("#lp_docs").data("row")*1;
+            var new_item='<tr id="lp-doc'+i+'">'+
+                         '   <td class="text-left">'+
+                         '       <div class="input-group">'+
+                         '           <input type="text" name="lp[product_lp_doc]['+i+'][file]" value="" placeholder="Имя файла" id="input-lp_doc'+i+'" class="form-control">'+
+                         '           <span class="input-group-btn">'+
+                         '           <button class="upload_butts btn btn-primary" data-rel="input-lp_doc'+i+'" type="button" id="button-lp_doc'+i+'" data-loading-text="Загрузка..."><i class="fa fa-upload"></i> Загрузить</button>'+
+                         '           </span> '+
+                         '       </div>'+
+                         '   </td>'+
+                         '   <td class="text-left">'+
+                         '       <input type="text" name="lp[product_lp_doc]['+i+'][text]" value="" placeholder="Заголовок" class="form-control" />'+
+                         '   </td>'+
+                         '   <td class="text-left">'+
+                         '       <input type="text" name="lp[product_lp_doc]['+i+'][sort_order]" value="" placeholder="Порядок сортировки" class="form-control" />'+
+                         '   </td>'+
+                         '   <td class="text-left">'+
+                         '       <button type="button" onclick="$(\'#lp-doc'+i+'\').remove();" data-toggle="tooltip" title="Удалить" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>'+
+                         '   </td>'+
+                        '</tr>';
+            //console.log(new_item);
+            $("#lp_docs tbody").append(new_item);
+            $("#lp_docs").data("row",i+1)
+        }
+        
         $(document).ready(function(){
             
             $(".accia_column_subcategory_caption").click(function(){
@@ -1667,13 +1925,32 @@
             /**/
             $("#input-video").change(function(){
                 $.ajax({
-                        url: 'index.php?route=catalog/product/videoPreview&token=<?php echo $token; ?>&video='+$(this).val(),
-                        dataType: 'json',
-                        success: function (json) {
-                            var src="../image/"+json.preview;
-                            $("#input-video_preview").val(json['preview']);
-                            $("#image-video_preview").attr("src",src.toString());
-                        }   
+                    url: 'index.php?route=catalog/product/videoPreview&token=<?php echo $token; ?>&video='+$(this).val(),
+                    dataType: 'json',
+                    success: function (json) {
+                        var src="../image/"+json.preview;
+                        $("#input-video_preview").val(json['preview']);
+                        $("#image-video_preview").attr("src",src.toString());
+                    }   
+                })     
+            });
+            $(document).on("change",".videolist_url",function(){
+                
+                var itm=$(this).closest("tr");
+
+                $.ajax({
+                    url: 'index.php?route=catalog/product/videoPreview&token=<?php echo $token; ?>&video='+$(this).val(),
+                    dataType: 'json',
+                    success: function (json) {
+                        var src="../image/"+json.preview;
+                        itm.find(".video_prevw_input").val(json['preview']);
+                        itm.find(".video_prevw").attr("src",src.toString());
+                        
+                        
+
+                        //$("#input-video_preview").val(json['preview']);
+                        //$("#image-video_preview").attr("src",src.toString());
+                    }   
                 })     
             });
 
@@ -2394,4 +2671,56 @@
       $('#language a:first').tab('show');
       $('#option a:first').tab('show');
 //--></script></div>
-                                                        <?php echo $footer; ?>
+
+
+<script type="text/javascript"><!--
+$(document).on('click','.upload_butts', function() {
+    var rel=$(this).data("rel");
+    $('#form-upload').remove();
+    $('body').prepend('<form enctype="multipart\form-data" id="form-upload" style="display: none;"><input type="file" name="file"/><form>');
+    
+    $('#form-upload input[name=\'file\']').trigger('click');
+
+    if (typeof timer != 'undefined') {
+    	clearInterval(timer);
+    }
+
+    timer = setInterval(function() {
+        if ($('#form-upload input[name=\'file\']').val() != '') {
+            clearInterval(timer);
+
+            $.ajax({
+                url: 'index.php?route=catalog/landing/upload&token=<?=$token ?>',
+                type: 'post',
+                dataType: 'json',
+                data: new FormData($('#form-upload')[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $('#button-upload').button('loading');
+                },
+                complete: function() {
+                    $('#button-upload').button('reset');
+                },
+                success: function(json) {
+                    if (json['error']) {
+                        alert(json['error']);
+                    }
+                    if (json['success']) {
+                        alert(json['success']);
+                        //$('input[name=\'filename\']').val(json['filename']);
+                        $("#"+rel).val(json['filename']);
+
+                        //$('input[name=\'mask\']').val(json['mask']);
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+        }
+    }, 500);
+});
+//--></script>
+<?php echo $footer; ?>

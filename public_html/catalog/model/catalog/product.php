@@ -1,5 +1,15 @@
 <?php
 class ModelCatalogProduct extends Model {
+	public function aliasLanding($landing_id){
+		$sql="select seo_url from landing where landing_id='".$landing_id."'";
+		$query = $this->db->query($sql);
+		if(isset($query->row['seo_url'])){
+			return $query->row['seo_url'];
+		}else{
+			return '';
+		}
+		
+	}
 	public function getColorProduct($product_id){
 		
 		$sql="SELECT name,code FROM `analog_products` WHERE link_product_id='".$product_id."' and type=1";
@@ -359,6 +369,7 @@ class ModelCatalogProduct extends Model {
 				'meta_keyword'     => $query->row['meta_keyword'],
 				'tag'              => $query->row['tag'],
 				'video'            => $query->row['video'],
+				'video_caption'            => $query->row['video_caption'],
 				'video_preview'            => $query->row['video_preview'],
 				/*'altvideo'         => $query->row['altvideo'],*/
 
@@ -410,6 +421,7 @@ class ModelCatalogProduct extends Model {
 				'sale1'			   => $query->row['sale1'],
 				'notavail'		   => $query->row['notavail'],
 				'consumption'	   => $query->row['consumption'],
+				'landing_id'	   => $query->row['landing_id'],
 
 				/*'priceold'     			=> $query->row['priceold'],
 				'price_wholesaleold'	=> $query->row['price_wholesaleold'],

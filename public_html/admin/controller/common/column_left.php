@@ -255,6 +255,7 @@ class ControllerCommonColumnLeft extends Controller {
 				);
 			}
 
+			//Акции
 			if ($this->user->hasPermission('access', 'catalog/accia')) {
 				$catalog[] = array(
 					'name'	   => $this->language->get('text_accia'),
@@ -262,6 +263,16 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()		
 				);
 			}
+
+			//Лендинги
+			if ($this->user->hasPermission('access', 'catalog/landing')) {
+				$catalog[] = array(
+					'name'	   => $this->language->get('text_landing'),
+					'href'     => $this->url->link('catalog/landing', 'token=' . $this->session->data['token'], true),
+					'children' => array()		
+				);
+			}
+			
 			if ($catalog) {
 				$data['menus'][] = array(
 					'id'       => 'menu-catalog',

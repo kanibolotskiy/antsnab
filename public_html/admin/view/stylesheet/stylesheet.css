@@ -1042,3 +1042,51 @@ height:34px;
 .wrap_faq_row_caption{display:flex;column-gap:10px;}
 .faq_row_caption{font-weight:bold;margin-top:10px;margin-bottom:5px;}
 .wrpapper_append_button_faq{margin-left:0px;margin-right:0px;}
+.form-groups_caption{font-weight:bold;margin-right:5px;margin-top: 6px;display:block;}
+.wrap_form-groups_caption{position:relative;overflow:hidden;border-bottom:1px solid #ddd;
+    margin-left: -15px;
+    padding-left: 15px;
+    background: #eee;
+}
+.checkbox label.form-groups_caption{
+	display:block;font-weight:bold;
+	margin: 0;
+    padding-top: 10px;
+    padding-bottom: 8px;
+}
+.wrap_form-groups_caption .checkbox{
+	padding-top:0;
+}
+.form-group img{
+	max-width:100%;height:auto;
+}
+/*.wrap_form-groups_caption .checkbox{float:left;}*/
+
+.lang_products_header{
+	margin-top: 20px;
+	display:flex;justify-content:space-between;
+}
+.lang_products_header ul{display:flex;flex-wrap:wrap;padding:0;margin-bottom:0;}
+.lang_products_header ul li{
+	cursor:pointer;
+	list-style:none;
+	/*border:1px solid #ccc;*/
+    padding: 8px 15px;
+}
+.lang_products_header ul li:hover{
+	background:#eee;
+}
+.lang_products_header ul li.active{
+	border-left:1px solid #ddd;border-right:1px solid #ddd;border-top:1px solid #ddd;
+	font-weight:bold;
+}
+.lang_products_blocks{
+	border:1px solid #ddd;
+	padding:10px;
+}
+.lang_products_block{
+	display:none;
+}
+.form-group img.video_prevw{
+	max-width:250px;
+}

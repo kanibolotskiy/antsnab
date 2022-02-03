@@ -253,7 +253,11 @@
                                             </div>
                                             <?php if($discount_form){?>
                                             <div class="price_disc">
-                                                <div class="js_modal with_goal" data-goal="<?php echo $discount_goal;?>" data-modal="modal_discount">Получить скидку</div>
+                                                <?php if($landing_id){?> 
+                                                    <a class="landing_link" target="_blank" href="<?=$landing_link?>/" rel="noopener noreferrer nofollow" title="Получить скидку">Получить скидку</a>
+                                                <?php }else{?>                                                
+                                                    <div class="js_modal with_goal" data-goal="<?php echo $discount_goal;?>" data-modal="modal_discount">Получить скидку</div>
+                                                <?php }?>
                                             </div>
                                             <?php }?>
                                         </div>
@@ -604,14 +608,6 @@
                                             <td class="char_row_cap">'.htmlspecialchars_decode($itm['name'],ENT_QUOTES).'</td>
                                             <td class="char_row_values">'.$selected_params_str.'</td>
                                         </tr>';
-                                        /*
-                                        echo '<div class="char_row">
-                                            <div class="char_row_cap">'.htmlspecialchars_decode($itm['name'],ENT_QUOTES).':</div>
-                                            <div class="char_row_values">
-                                                '.$selected_params_str.'
-                                            </div>
-                                        </div>';
-                                        */
                                     }
                                 }
                             ?>

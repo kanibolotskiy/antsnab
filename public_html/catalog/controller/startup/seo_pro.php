@@ -20,9 +20,12 @@ class ControllerStartupSeoPro extends Controller {
 			$this->cache->set('seo_pro', $this->cache_data);
 		}
 	}
-
+	private function landingProductID($alias){
+		$query = $this->db->query("select query FROM " . DB_PREFIX . "url_alias where keyword='".$alias."'");
+		return $query->row['query'];
+	}
 	public function index() {
-		
+		$landing=false;
 		// Add rewrite to url class
 		if ($this->config->get('config_seo_url')) {
 			$this->url->addRewrite($this);
@@ -49,27 +52,56 @@ class ControllerStartupSeoPro extends Controller {
 					$rows[] = array('keyword' => $keyword, 'query' => $this->cache_data['keywords'][$keyword]);
 				}
 			}
-			
 
 			if (isset($this->cache_data['keywords'][$route])){
 				$keyword = $route;
 				$parts = array($keyword);
 				$rows = array(array('keyword' => $keyword, 'query' => $this->cache_data['keywords'][$keyword]));
 			}
-			/*
-			print_r($rows);
-			echo "<br/><br/>";
-			print_r($parts);
-			*/
+			//echo "route=".$route_."<br/>";
+			//print_r($rows);
+			//echo "<br/><br/>";
+			//print_r($parts);
+			/**/
+			
+			foreach($rows as $row){
+				//int strpos ( string haystack, string needle [, int offset] )
+				//echo "query=".$row['query']."<br/>";
+				//echo "strpos=".strpos($row['query'],"landing_id=")."<br/>";
+				//echo "count=".count($rows);
+
+				//echo "strpos=".strpos($row['query'],"landing_id=")."<br/>";
+				//echo strpos($row['query'],"landing_id=")>=0;
+				
+				//if(strpos($row['query'],"landing_id=")>=0){
+				if(strpos($row['query'],"landing_id=")!==false){
+					//$mk_alias=str_replace("lp-","",$parts[1],1);
+					//$mk_alias=str_replace("lp-","","lp-krovelnaya-mastika-proof");
+					if (isset($parts[1])){
+						$mk_alias=ltrim($parts[1],"lp-");
+						$product_landing_id=$this->landingProductID($mk_alias);
+						//echo "product_landing_id=".$product_landing_id;
+						$product_landing_id_str=str_replace("product_id","product_landing_id",$product_landing_id);
+						
+						$landing=true;
+						$rows[]=array('keyword' => $parts[1], 'query' => $product_landing_id_str);
+					}
+				}
+			}
 
 			if (count($rows) == sizeof($parts)) {
+				
 				$queries = array();
+
 				foreach ($rows as $row) {
 					$queries[utf8_strtolower($row['keyword'])] = $row['query'];
 				}
 
 				reset($parts);
 				foreach ($parts as $part) {
+
+//echo "isset".$queries[$part]."?=".isset($queries[$part])."<br/>";
+					//echo "part=".$part."=".isset($queries[$part]);
 					if(!isset($queries[$part])) return false;
 					$url = explode('=', $queries[$part], 2);
 
@@ -86,7 +118,7 @@ class ControllerStartupSeoPro extends Controller {
 			} else {
 				$this->request->get['route'] = 'error/not_found';
 			}
-			 
+
 			if (isset($this->request->get['product_id'])) {
 				$this->request->get['route'] = 'product/product';
 				if (!isset($this->request->get['path'])) {
@@ -99,13 +131,13 @@ class ControllerStartupSeoPro extends Controller {
 				$this->request->get['route'] = 'product/manufacturer/info';
 			} elseif (isset($this->request->get['information_id'])) {
 				$this->request->get['route'] = 'information/information';
+			} elseif (isset($this->request->get['landing_product_id'])) {
+				$this->request->get['route'] = 'landing/product';
+			} elseif (isset($this->request->get['landing_id'])) {
+				$this->request->get['route'] = 'landing/landing';
 			
 			} elseif (isset($this->request->get['sale_id'])) {
 				$this->request->get['route'] = 'sales/sales';
-			/*
-			} elseif (isset($this->request->get['sales'])) {
-				$this->request->get['route'] = 'sales/category';
-			/**/
 			} elseif(isset($this->cache_data['queries'][$route_]) && isset($this->request->server['SERVER_PROTOCOL'])) {
 					header($this->request->server['SERVER_PROTOCOL'] . ' 301 Moved Permanently');
 					$this->response->redirect($this->cache_data['queries'][$route_], 301);
@@ -113,8 +145,14 @@ class ControllerStartupSeoPro extends Controller {
 				if (isset($queries[$parts[0]])) {
 					$this->request->get['route'] = $queries[$parts[0]];
 				}
-			}			
-			$this->validate();
+			}
+
+			//echo "route=".$this->request->get['route'];
+			if(!$landing){
+				$this->validate();
+			}else{
+				$this->request->get['route'] = 'landing/product';
+			}
 			if (isset($this->request->get['route'])) {
 				return new Action($this->request->get['route']);
 			}
@@ -122,6 +160,7 @@ class ControllerStartupSeoPro extends Controller {
 	}
 
 	public function rewrite($link) {
+		
 		if (!$this->config->get('config_seo_url')) return $link;
 
 		$seo_url = '';
@@ -164,7 +203,6 @@ class ControllerStartupSeoPro extends Controller {
 					if (!$data['path']) return $link;
 				}
 				break;
-			
 			case 'product/product/review':
 			case 'information/information/agree':
 				return $link;
@@ -194,6 +232,8 @@ class ControllerStartupSeoPro extends Controller {
 					case 'manufacturer_id':
 					case 'category_id':
 					case 'information_id':
+					case 'landing_id':
+					case 'landing_product_id':
 					case 'order_id':
 						$queries[] = $key . '=' . $value;
 						unset($data[$key]);
@@ -224,11 +264,7 @@ class ControllerStartupSeoPro extends Controller {
 				}
 			}
 		}
-		//print_r($queries);
-		/*
-		echo "*<br/><br/>";
-		print_r($route);
-*/
+		
 		if(empty($queries)) {
 			$queries[] = $route;
 		}
@@ -241,15 +277,7 @@ class ControllerStartupSeoPro extends Controller {
 				$rows[] = array('query' => $query, 'keyword' => $this->cache_data['queries'][$query]);
 			}
 		}
-		/*
-		echo "*<br/><br/>";
-		print_r($rows);
-		echo "*<br/><br/>";
-		print_r($queries);
-		echo "*<br/><br/>";
-		/*
-		echo count($rows)."==".count($queries)."<br/>";
-		*/
+		
 		if(count($rows) == count($queries)) {
 			$aliases = array();
 			foreach($rows as $row) {
@@ -284,7 +312,6 @@ class ControllerStartupSeoPro extends Controller {
 		if (count($data)) {
 			$seo_url .= '?' . urldecode(http_build_query($data, '', '&amp;'));
 		}
-//echo "!".$seo_url."!";
 		return $seo_url;
 	}
 

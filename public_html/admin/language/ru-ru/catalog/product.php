@@ -202,6 +202,7 @@ $_['entry_notavail'] = 'Нет в наличии';
 $_['entry_altvideo'] = 'Альтернативное превью для видео';
 
 $_['entry_video'] = 'Видео';
+$_['entry_video_caption'] = 'Видео (подпись)';
 $_['entry_video_preview'] = 'Видео превью';
 $_['entry_showdiscount'] = 'Показывать скидку?';
 

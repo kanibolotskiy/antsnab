@@ -47,6 +47,17 @@ class ProductTemplateDecorator implements IDecorator
 
         $product_info = $registry->get('model_catalog_product')->getProduct($product_id);
 
+        $landing_id=$product_info['landing_id'];
+        $data['landing_id']=$landing_id;
+        $data['landing_link']=$registry->get('model_catalog_product')->aliasLanding($landing_id);
+        /*
+        if($landing_id){
+            $data['landing_link']=$registry->get('model_catalog_product')->aliasLanding($landing_id);
+        }else{
+            $data['landing_link']='';
+        }
+        */
+
         $discount=0;
         $discount_val1=0;
         $discount_val2=0;
@@ -399,8 +410,6 @@ class ProductTemplateDecorator implements IDecorator
 		$main_category_id=$registry->get('model_catalog_product')->getMainCategory($product_id);
         $filter_params_data=$registry->get('model_catalog_product')->getMainCategoryFilter($main_category_id);
         
-        //$data['params_datalist']=$filter_params_data;
-        //print_r($filter_params_data);
         foreach($filter_params_data as $f_data){
 			$list=[];
 			$list_param_value=$registry->get('model_catalog_product')->getFilterParamValues($f_data["id"],$f_data["type_param"],$product_id);

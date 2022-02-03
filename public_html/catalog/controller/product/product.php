@@ -872,6 +872,7 @@ class ControllerProductProduct extends Controller {
 			}
 			*/
 			$data['video_link'] = $product_info['video'];
+			$data['video_caption'] = $product_info['video_caption'];
 			if($product_info['video_preview']){
 				$data['video_img']="../image/".$product_info['video_preview'];
 			}else{
