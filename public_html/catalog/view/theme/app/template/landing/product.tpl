@@ -5,9 +5,7 @@
 <div class="empty_block"></div>
 <section>
     <div class="wrapper">
-        <div class="back_link">
-            <a href="<?=$landing_alias?>">Вернуться назад</a>
-        </div>
+
 
 <ul id="priceSwitcher" style="display:none;"
     data-base_vol="<?=$baseVol?>" 
@@ -49,6 +47,9 @@
         <div class="_flex wrapper_product">
             <div class="product_image">
                 <div class="wrapper_product_image">
+                    <div class="back_link">
+                        <a href="<?=$landing_alias?>">Вернуться назад</a>
+                    </div>
                     <div class="main_product_image">
                         <a data-fancybox="gallery" class="fancybox" data-caption="<?=$name?>" href="<?=$images[0]['image']?>"><img src="<?=$images[0]['big']?>" alt="<?=$name?>"/></a>
                     </div>
