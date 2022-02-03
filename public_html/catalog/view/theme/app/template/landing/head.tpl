@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?=$meta_title?></title>
-    <base href="http://antsnab.cp06038.tmweb.ru/" />
+    <base href="https://<?=$_SERVER['HTTP_HOST']?>" />
 
     <link rel="shortcut icon" href="/favicon.ico" >
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
