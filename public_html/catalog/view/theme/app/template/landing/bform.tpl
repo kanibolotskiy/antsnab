@@ -19,7 +19,7 @@
                     <input placeholder="Имя *" name="name" type="text" class="inputRow " />
                 </div>
                 <div class="form_row">
-                    <input placeholder="test" id="phone2" name="phone" type="phone" class="inputRow inputForm inputPhone required" />
+                    <input placeholder="test" name="phone" type="phone" class="inputRow inputForm inputPhone required" />
                 </div>
                 <div class="form_row _hidden">
                     <input placeholder="E-mail *" name="email" type="text" class="inputRow" />

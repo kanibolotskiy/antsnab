@@ -311,7 +311,7 @@ $(document).ready(function(){
     $("input[name='phone']").each(function(){
         $(this).intlTelInput({
             preferredCountries: ["ru", "by", "kz", "am", "kg"], //,"ua"
-            //autoPlaceholder: true,
+            autoPlaceholder: false,
             utilsScript:'catalog/view/theme/landing/js/utils.js',
             initialCountry: "auto",
             //separateDialCode:true,

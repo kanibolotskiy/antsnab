@@ -27,7 +27,7 @@
                                             <input class="inpF" type="hidden" name="landing_id" value="<?=$landing_id?>"/>
                                             <input class="inpF" type="text" name="workemail" value=""/>
                                             <input type="hidden" id="bform_type" name="bform_type" value="1" />
-                                            <input id="phone1" type="phone" name="phone" class="inputForm inputPhone required" />                                            
+                                            <input type="phone" name="phone" class="inputForm inputPhone required" />                                            
                                             <button class="sendForm btn _orange phoneButton" type="submit">Получить предложение</button>
                                         </div>
                                     </form>
