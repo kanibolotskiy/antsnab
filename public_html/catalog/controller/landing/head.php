@@ -9,7 +9,7 @@ class ControllerLandingHead extends Controller {
         
         );
         $data['base']=$scheme.$_SERVER['HTTP_HOST'];
-        $data['meta_title']=$contact_data_referrer['meta_description'];
+        $data['meta_title']=$contact_data_referrer['meta_title'];
         $data['meta_description']=$contact_data_referrer['meta_description'];
         return $this->load->view('landing/head', $data);
     }

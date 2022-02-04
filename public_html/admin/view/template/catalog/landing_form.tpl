@@ -466,7 +466,32 @@
                         </div>
                         
                         <div class="tab-pane" id="tab-forms">
-                           Формы
+                           <div class="form-groups">
+                                
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-mail1">Email (верхняя форма):</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="mail1" value="<?=$mail1 ?>" placeholder="Email" id="input-mail1" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-mail1">Email (нижняя форма):</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="mail2" value="<?=$mail2 ?>" placeholder="Emai2" id="input-mail2" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-block_mailthanks">Текст спасибо:</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="mailthanks"
+                                                    placeholder="Текст"
+                                                    id="input-mailthanks"
+                                                    class="form-control summernote">
+                                                    <?=$mailthanks?>
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="tab-pane" id="tab-products">
@@ -479,7 +504,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="lang_products_header" data-tab="<?=count($tabs)?>">
+                                <div class="lang_products_header" rel="<?=count($tabs)?>">
                                     <ul>
                                         <?php foreach($tabs as $tab_key=>$tab){?>
                                             <li class="<?=($tab_key==0)?'active':''?>" data-rel="<?=$tab_key?>"><?=$tab['name']?></li>
@@ -639,6 +664,7 @@
         var rel=$(this).data("rel");
         products_selected_analog(rel);
     });
+    
     $(document).on("click",".accia_column_subcategory_caption",function(){           
         if($(this).hasClass("active")){
             $(this).removeClass("active");
@@ -656,10 +682,15 @@
     $(".product_used_analog._active").each(function(){
         $(this).parents(".subcat_wrapper").show();
     });
-    $(document).on("click",".product_used_analog",function(){
-        $(this).toggleClass("_active");
-        var rel=$(this).closest(".lang_products_block").data("rel")
-        products_selected_analog(rel);
+    $(document).on("click",".product_used_analog",function(e){
+        if(e.ctrlKey){
+            var rel=$(this).attr("rel");
+           window.open("http://antsnab.cp06038.tmweb.ru/admin/index.php?route=catalog/product/edit&token=<?=$token?>&product_id="+rel);
+        }else{
+            $(this).toggleClass("_active");
+            var rel=$(this).closest(".lang_products_block").data("rel")
+            products_selected_analog(rel);
+        }
     });
     function products_selected_analog(rel){
         var products_used=[];
@@ -678,16 +709,17 @@
         //<input name="change[<?=$tab_key?>]" class="land_product_change"
 
     }
-
+    var landing_block_products=$("#hidden_products").html();
     function addTabProducts(){
-        var cnt=$(".lang_products_header").data("tab")*1;
+        //var cnt=$(".lang_products_header").data("tab")*1;
+        var cnt=$(".lang_products_header").attr("rel")*1;
         $(".lang_products_header li").removeClass("active")
         $(".lang_products_block").hide();
 
         var new_tab='<li class="active" data-rel="'+cnt+'">Новая вкладка</li>';
         $(".lang_products_header ul").append(new_tab);
 
-        var landing_block_products=$("#hidden_products").html();
+        
 
         var new_block='<div class="lang_products_block" data-rel="'+cnt+'" style="display: block;">'+
             '<input name="change['+cnt+']" id="land_product_change'+cnt+'" type="hidden"/>'+
@@ -724,9 +756,10 @@
             '<div class="landing_block_products">'+landing_block_products+'</div>'+
         '</div>';
         
-
+        
         $(".lang_products_blocks").append(new_block);
-        $(".lang_products_header").attr("data-tab",cnt)
+        $(".lang_products_header").attr("rel",(cnt*1+1))
+        //$(".lang_products_header").data("tab",17)
         
     }
 

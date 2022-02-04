@@ -73,7 +73,7 @@
                     <?php }?>
                 </div>
                 <div class="footer_email">
-                    <a href="mailto:info@ant-snab.ru">info@ant-snab.ru</a>  
+                    <a href="mailto:<?=$email_site?>"><?=$email_site?></a>  
                 </div>
                 <div class="footer_address">
                     127566, г. Москва,<br/>Высоковольтный<br/>проезд, дом 1, стр. 43

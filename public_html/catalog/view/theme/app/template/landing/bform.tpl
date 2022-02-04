@@ -7,15 +7,19 @@
             <span><?=$block_bform_perc?></span>
         </div>
     </div>
-    <div class="bform_form">
+    <div class="bform_form wrap_form">
         <form action="#" method="POST">
             <input type="hidden" id="bform_type" name="bform_type" value="1" />
+            <input class="inpF" type="hidden" name="landing" value="<?=$title?>"/>
+            <input class="inpF" type="hidden" name="landing_id" value="<?=$landing_id?>"/>
+            <input class="inpF" type="text" name="workemail" value=""/>
+
             <div class="form_rows ">
                 <div class="form_row _hidden">
-                    <input placeholder="Имя *" name="name" type="text" class="inputRow" />
+                    <input placeholder="Имя *" name="name" type="text" class="inputRow " />
                 </div>
                 <div class="form_row">
-                    <input placeholder="test" id="phone2" name="phone" type="phone" class="inputRow inputPhone" />
+                    <input placeholder="test" id="phone2" name="phone" type="phone" class="inputRow inputForm inputPhone required" />
                 </div>
                 <div class="form_row _hidden">
                     <input placeholder="E-mail *" name="email" type="text" class="inputRow" />
@@ -24,15 +28,18 @@
                     <input placeholder="ИНН или название компании *" name="inn" type="text" class="inputRow" />
                 </div>
                 <div class="form_row _hidden">
-                    <input placeholder="Сайт компании *" name="site" type="text" class="inputRow" />
+                    <input placeholder="Сайт компании (необязательно)" name="site" type="text" class="inputRow" />
                 </div>
                 <div class="form_row">
-                    <button class="buttonSend" type="submit">Получить предложение</button>
+                    <button class="sendForm buttonSend" type="submit">Получить предложение</button>
                 </div>
             </div>
             <div class="form_row_hint">
                 <span id="form_more">Хочу скидку больше</span>
             </div>
         </form>
+        <div class="form_thanks">
+            <?=html_entity_decode($mailthanks)?>
+        </div>
     </div>
 </div>

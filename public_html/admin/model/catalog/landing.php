@@ -1,6 +1,7 @@
 <?php
 class ModelCatalogLanding extends Model {
 	
+
 	private function aliasProduct($product_id){
 		$sql="select keyword from oc_url_alias where query='product_id=".$product_id."'";
 		$query = $this->db->query($sql);

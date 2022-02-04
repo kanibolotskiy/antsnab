@@ -2,7 +2,7 @@
     <div class="wrapper">
         <div class="header_container _flex _vcenter _between">
             <div class="header_logo">
-                <a href="#" class="_flex _vcenter">
+                <div class="_flex _vcenter">
                     <div class="logo">
                         <img src="../catalog/view/theme/app/img/logo.svg" alt=""/>                                
                     </div>
@@ -10,23 +10,23 @@
                         <div class="logo_caption"></div>
                         <div class="logo_description"><?=$logotext?></div>
                     </div>
-                </a>
+                </div>
             </div>
             <div class="header_info _flex _vcenter _between">
                 <div class="header_email">
-                    <a href="mailto:info@ant-snab.ru">info@ant-snab.ru</a>
+                    <a class="_noscroll" href="mailto:<?=$email_site?>"><?=$email_site?></a>
                 </div>
                 <div class="header_phones">
                     <div class="header_phone">
-                        <a href="tel:<?=$telephone_link?>"><?=$telephone?></a>
+                        <a class="_noscroll" href="tel:<?=$telephone_link?>"><?=$telephone?></a>
                     </div>
                     <?php if($telephone2){?>
                         <div class="header_phone">
-                            <a href="tel:<?=$telephone2_link?>"><?=$telephone2?></a>
+                            <a class="_noscroll" href="tel:<?=$telephone2_link?>"><?=$telephone2?></a>
                         </div>
                     <?php }?>
                 </div>
-                <div class="btn header_call js_sbottom">
+                <div class="btn header_call _noscroll">
                     Заказать звонок
                 </div>
                 <div class="mob_menu">
@@ -45,7 +45,7 @@
         <div class="mob_menu_info">
             <div class="btn mob_menu_ordercall js_sbottom">Заказать звонок</div>
             <div class="menu_email">
-                <a href="mailto:info@ant-snab.ru">info@ant-snab.ru</a>
+                <a href="mailto:<?=$email_site?>"><?=$email_site?></a>
             </div>
             <div class="menu_address">
                 г. Москва, Высоковольтный проезд, дом 1, стр. 43

@@ -71,6 +71,13 @@ $(window).scroll(function(){
 $(document).ready(function(){
     scrollbarWidth();
     check_scroll();
+    $("header").click(function(e){
+        if ($(".header_info").has(e.target).length !== 0 ) return
+        if ($(".wrp_mob_menu").has(e.target).length !== 0 ) return
+        $("html,body").animate({"scrollTop":0},600);
+    });
+
+    
     $(".properties_more").click(function(){
         if($(this).hasClass("active")){
             $(this).html("Посмотреть технические характеристики");
@@ -142,10 +149,17 @@ $(document).ready(function(){
     $("#form_more").click(function(){
         $(".form_row._hidden").fadeIn(200);
     });
-    $(".js_sbottom").click(function(){
+    $(".header_call").click(function(){
         var st=$("#bottom_form").offset().top
         $("html,body").animate({"scrollTop":st},700);
     });
+    $(".mob_menu_ordercall").click(function(){
+        var st=$("#bottom_form").offset().top
+        $(".wrp_mob_menu").removeClass("active");
+        $("html,body").animate({"scrollTop":st},700);
+    });
+    
+
     $(".mob_menu").click(function(){
         $(".wrp_mob_menu").addClass("active");
     });
@@ -193,29 +207,56 @@ $(document).ready(function(){
     });
     $("select").niceSelect();
     
-
+    $(".inputForm").keyup(function(){
+        $(this).removeClass("error")
+    });
     $(".sendForm").click(function(){
-        //var formData = new FormData();
-        //var form = $('#my-form')[0];
-        var form = $(this).closest('form')[0];
-        var data = new FormData(form);
-        $.ajax({
-            type: "POST",
-            enctype: 'multipart/form-data',
-            url: '/index.php?route=landing/landing/sendForm/',
-            data: data,
-            processData: false,
-            contentType: false,
-            cache: false,
-            timeout: 800000,
-            success: function (data) {
-                console.log("SUCCESS : ", data);
-                $("#btnSubmit").prop("disabled", false);
-            },
-            error: function (e) {                
-                console.log("ERROR : ", e);
+        var form_item = $(this).closest("form");
+        var form_thanks = form_item.closest(".wrap_form").find(".form_thanks");
+
+        var flag=true
+        form_item.find(".required").each(function(){
+            if($.trim($(this).val())==""){
+                $(this).addClass("error");
+                flag=false;
             }
         });
+
+        if(flag){
+            var form = form_item.closest('form')[0];
+            var data = new FormData(form);
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: '/index.php?route=landing/landing/sendForm/',
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                dataType: "json",
+                timeout: 800000,
+                success: function (data) {
+                    form_item.hide();
+                    form_thanks.fadeIn(200);
+                    
+                    form_item.find(".inputForm").val("");
+
+                    setTimeout(function(){
+                        form_thanks.hide();
+                        form_item.fadeIn(200);
+                    }, 3000);
+
+
+                    /*
+                    console.log("SUCCESS : ", data);
+                    $("#btnSubmit").prop("disabled", false);
+                    */
+                },
+                error: function (e) {                
+                    console.log("ERROR : ", e);
+                }
+            });
+        }
     });
     $(".fancybox").fancybox({
         beforeShow: function(){
@@ -254,7 +295,10 @@ $(document).ready(function(){
         }
         $("input[name='phone']").each(function(){
             $(this).attr("placeholder",mask);
-            $(this).inputmask({"mask": mask});
+            $(this).inputmask({
+                "mask": mask,
+                "clearIncomplete": true
+            });
         })
     }
 
@@ -281,5 +325,7 @@ $(document).ready(function(){
     });
     $(".sendForm").click(function(e){
         e.preventDefault();
+
     });
+    
 });

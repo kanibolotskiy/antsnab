@@ -20,13 +20,20 @@
                                 <div class="main_discount">
                                     <?=$block1_form_caption?> <div><span><?=$block1_form_text?></span></div>
                                 </div>
-                                <div class="main_block1_form">
+                                <div class="main_block1_form wrap_form" >
                                     <form >
                                         <div class="wrap_form_phone _flex _between">
-                                            <input id="phone1" type="phone" name="phone" class="inputPhone" />
+                                            <input class="inpF" type="hidden" name="landing" value="<?=$title?>"/>
+                                            <input class="inpF" type="hidden" name="landing_id" value="<?=$landing_id?>"/>
+                                            <input class="inpF" type="text" name="workemail" value=""/>
+                                            <input type="hidden" id="bform_type" name="bform_type" value="1" />
+                                            <input id="phone1" type="phone" name="phone" class="inputForm inputPhone required" />                                            
                                             <button class="sendForm btn _orange phoneButton" type="submit">Получить предложение</button>
                                         </div>
                                     </form>
+                                    <div class="form_thanks">
+                                        <?=html_entity_decode($mailthanks)?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -129,8 +136,6 @@
                                                         <?php }?>
                                                     <?php }?>
                                                 <?php }?>
-
-                                                
                                             </div>
                                             <?php if($product['price_str']){?>
                                                 <div class="product_price"><?=$product['price_str']?></div>

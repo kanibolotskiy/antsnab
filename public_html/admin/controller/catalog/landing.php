@@ -506,6 +506,12 @@ class ControllerCatalogLanding extends Controller {
 			$data['block_bform_perc']=isset($landing_info['block_bform_perc'])?$landing_info['block_bform_perc']:'';
 
 		//}
+
+
+		$data['mail1']=isset($landing_info['mail1'])?$landing_info['mail1']:'';
+		$data['mail2']=isset($landing_info['mail2'])?$landing_info['mail2']:'';
+		$data['mailthanks']=isset($landing_info['mailthanks'])?$landing_info['mailthanks']:'';
+		
 		$parent_cat_id=71;
 		$categories=[];
 		$categories_tree=[];

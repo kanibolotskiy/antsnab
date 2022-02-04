@@ -374,28 +374,33 @@ class ControllerLandingProduct extends Controller {
         $products_links=$this->model_catalog_product->getProductLinks($product_id);
         $product_data['products_links']=[];
 
+        //echo "product_lp_notavail=".$data_lp['product_lp_notavail'];
+        
         $flags=[];
         $color_product=[];
         $data['products_links']=[];
-        foreach($products_links as $key1=>$products_link){
-            unset($data_temp);
-            foreach($products_links[$key1] as $itm1){
-                if($itm1['product_id']==$product_id){
-                    $flags[$key1]=true;
-                    if($key1==1){
-                        $color_product=Array("name"=>$itm1['name'],"code"=>$itm1['code']);
+        $data_lp['product_lp_notavail']=isset($data_lp['product_lp_notavail'])?$data_lp['product_lp_notavail']:0;
+        if(!$data_lp['product_lp_notavail']){
+            foreach($products_links as $key1=>$products_link){
+                unset($data_temp);
+                foreach($products_links[$key1] as $itm1){
+                    if($itm1['product_id']==$product_id){
+                        $flags[$key1]=true;
+                        if($key1==1){
+                            $color_product=Array("name"=>$itm1['name'],"code"=>$itm1['code']);
+                        }
                     }
+                    $data_temp[$key1][]=Array(
+                        "name"=>$itm1['name'],
+                        "code"=>$itm1['code'],
+                        "product_id"=>$itm1['product_id'],
+                        "link"=>$landing_alias."/lp-".$this->model_landing_landing->getProductAlias($itm1['product_id'])."/"
+                    );
                 }
-                $data_temp[$key1][]=Array(
-                    "name"=>$itm1['name'],
-                    "code"=>$itm1['code'],
-                    "product_id"=>$itm1['product_id'],
-                    "link"=>$landing_alias."/lp-".$this->model_landing_landing->getProductAlias($itm1['product_id'])."/"
-                );
             }
-        }
-        foreach($flags as $key1=>$flag){
-            $data['products_links'][$key1]=$data_temp[$key1];
+            foreach($flags as $key1=>$flag){
+                $data['products_links'][$key1]=$data_temp[$key1];
+            }
         }
 
         $data['filter_params']=$filter_params;

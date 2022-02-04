@@ -1,5 +1,11 @@
 <?php
 class ModelLandingLanding extends Model {
+    public function addLandingHistory($data){
+		$sql="INSERT INTO landing_history (data,date)
+		VALUES('".json_encode($data,JSON_UNESCAPED_UNICODE)."',NOW())";
+		$this->db->query($sql);
+	}
+
     public function landingProductID($alias){
 		$query = $this->db->query("select query FROM oc_url_alias where keyword='".$alias."'");
 		return $query->row['query'];
@@ -14,8 +20,6 @@ class ModelLandingLanding extends Model {
         
     }
     public function getProductAlias($product_id){
-        //$sql='SELECT * FROM `oc_url_alias` WHERE query="landing_product_id='.$product_id.'"';
-        //echo $sql;
         $sql='SELECT * FROM `oc_url_alias` WHERE query="product_id='.$product_id.'"';
         $query = $this->db->query($sql);
         return $query->row['keyword'];

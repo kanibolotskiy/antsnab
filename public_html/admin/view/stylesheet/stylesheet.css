@@ -1072,12 +1072,13 @@ height:34px;
 	list-style:none;
 	/*border:1px solid #ccc;*/
     padding: 8px 15px;
+	border-left:1px solid #ddd;border-right:1px solid #ddd;border-top:1px solid #ddd;
 }
 .lang_products_header ul li:hover{
 	background:#eee;
 }
 .lang_products_header ul li.active{
-	border-left:1px solid #ddd;border-right:1px solid #ddd;border-top:1px solid #ddd;
+	background:#eee;
 	font-weight:bold;
 }
 .lang_products_blocks{
