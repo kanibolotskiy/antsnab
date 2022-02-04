@@ -28,16 +28,28 @@
                     Телефон
                 </td>
                 <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    <?php echo $phone; ?>
+                    <span name="order_phone"><?php echo $phone; ?></span>
                 </td>
             </tr>
+            
+            <?php if(isset($name)){ ?>
+            <tr>
+                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+                    Имя
+                </td>
+                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+                    <span name="order_name"><?php echo $name; ?></span>
+                </td>
+            </tr>
+            <?php }?>
+
             <?php if(isset($email)){ ?>
             <tr>
                 <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
                     Email
                 </td>
                 <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    <?php echo $email; ?>
+                    <span name="order_email"><?php echo $email; ?></span>
                 </td>
             </tr>
             <?php }?>
@@ -48,7 +60,7 @@
                     Товар
                 </td>
                 <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    <?php echo $product; ?>
+                    <span name="order_product"><?php echo $product; ?></span>
                 </td>
             </tr>
             <?php }?>
@@ -59,7 +71,7 @@
                     ИНН
                 </td>
                 <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    <?php echo $inn; ?>
+                    <span name="order_inn"><?php echo $inn; ?></span>
                 </td>
             </tr>
             <?php }?>
@@ -70,7 +82,7 @@
                     Название компании
                 </td>
                 <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    <?php echo $firma; ?>
+                    <span name="order_client"><?php echo $firma; ?></span>
                 </td>
             </tr>
             <?php }?>
@@ -81,7 +93,7 @@
                     Сайт
                 </td>
                 <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    <?php echo $site; ?>
+                    <span name="order_site"><?php echo $site; ?></span>
                 </td>
             </tr>
             <?php }?>
