@@ -685,7 +685,7 @@
     $(document).on("click",".product_used_analog",function(e){
         if(e.ctrlKey){
             var rel=$(this).attr("rel");
-           window.open("admin/index.php?route=catalog/product/edit&token=<?=$token?>&product_id="+rel);
+           window.open("../admin/index.php?route=catalog/product/edit&token=<?=$token?>&product_id="+rel);
         }else{
             $(this).toggleClass("_active");
             var rel=$(this).closest(".lang_products_block").data("rel")
