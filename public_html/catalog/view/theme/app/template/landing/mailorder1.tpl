@@ -10,7 +10,7 @@
     <p style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight:bold; color: #000000;">
         <?=$subject?>
     </p>
-    <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;">
+    <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;" name="info">
         <tbody>
             <tr>
                 <td style="font-size:12px;border-right:1px solid #dddddd;border-bottom:1px solid #dddddd;background-color:#efefef;font-weight:bold;text-align:left;padding:7px;color:#222222" colspan="2">Информация</td>
@@ -110,53 +110,31 @@
 
         </tbody>
     </table>
-    <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;">
-        <tbody>
-            <tr>
-                <td style="font-size:12px;border-right:1px solid #dddddd;border-bottom:1px solid #dddddd;background-color:#efefef;font-weight:bold;text-align:left;padding:7px;color:#222222" colspan="2">Метки</td>
-            </tr>
-            <tr>
-                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    UTM Source
-                </td>
-                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    <?php echo $utm_source; ?>
-                </td>
-            </tr>
-            <tr>
-                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    UTM Medium
-                </td>
-                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    <?php echo $utm_medium; ?>
-                </td>
-            </tr>
-            <tr>
-                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    UTM Campaign
-                </td>
-                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    <?php echo $utm_campaign; ?>
-                </td>
-            </tr>
-            <tr>
-                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    UTM Content
-                </td>
-                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    <?php echo $utm_content; ?>
-                </td>
-            </tr>
-            <tr>
-                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    UTM Term
-                </td>
-                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    <?php echo $utm_term; ?>
-                </td>
-            </tr>
-        </tbody>
-    </table>  
+    <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;" name="tag">
+        <tr>
+            <td colspan="2" style="background-color: #EFEFEF;font-size: 12px;border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; padding: 7px;font-weight:bold;">Метки</td>
+        </tr>
+        <tr>
+            <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; padding: 7px;" name="UTM_name">UTM Source</td>
+            <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; padding: 7px;" name="UTM_value"><?=$utm_source?></td>
+        </tr>
+        <tr>
+            <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; padding: 7px;" name="UTM_name">UTM Medium</td>
+            <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; padding: 7px;" name="UTM_value"><?=$utm_medium?></td>
+        </tr>
+        <tr>
+            <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; padding: 7px;" name="UTM_name">UTM Campaign</td>
+            <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; padding: 7px;" name="UTM_value"><?=$utm_campaign?></td>
+        </tr>
+        <tr>
+            <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; padding: 7px;" name="UTM_name">UTM Term</td>
+            <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; padding: 7px;" name="UTM_value"><?=$utm_content?></td>
+        </tr>
+        <tr>
+            <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; padding: 7px;" name="UTM_name">UTM Content</td>
+            <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; padding: 7px;" name="UTM_value"><?=$utm_term?></td>
+        </tr>                                
+    </table> 
 </div>
 </body>
 </html>
