@@ -1496,3 +1496,57 @@ sup {
 }
 .form_thanks p{margin-top:6px;margin-bottom:6px;}
 .inpF{display:none;}
+.bform_hint{
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 150%;
+    margin-top:24px;
+}
+.bform_bt{
+    font-size: 22px;
+    line-height: 26px;
+    color: #CD9A67;
+    font-weight:600;
+    display:inline-block;
+    border-bottom:1px dashed #CD9A67;
+    margin-top:24px;cursor:pointer;
+}
+.or_label{
+    margin-top: 19px;
+    font-size: 14px;
+    font-weight: 600;padding-left:20px;
+}
+.popups{
+    position:fixed;
+    left:0;top:0;right:0;bottom:0;
+    z-index:100;
+    display:none;
+}
+.popup{
+    position:absolute;left:0;top:0;width:100%;height:100%;
+    z-index:1;
+    display:flex;align-items:center;justify-content:center;
+}
+.popup_overlay{
+    opacity:.3;background:#000;
+    position:absolute;left:0;top:0;width:100%;height:100%;
+}
+.wrap_popup{
+    padding:30px 40px;background:#fff;
+    position:relative;z-index:3;
+}
+.popup .inputForm{
+    background:#F7F7F7;
+}
+.popup_form{
+    width: 430px;
+}
+.form_row .iti{
+    width:100%;
+}
+
+.modal_form_caption{
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}

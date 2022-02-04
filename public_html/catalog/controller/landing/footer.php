@@ -1,6 +1,7 @@
 <?php
 class ControllerLandingFooter extends Controller {
 	public function index($contact_data_referrer) {
+		$data=$contact_data_referrer;
         if(isset($contact_data_referrer['phone'])){
 			$data['telephone'] = $contact_data_referrer['phone'];
 			$data['telephone_link'] = preg_replace('/[^0-9]/', '', $contact_data_referrer['phone']);

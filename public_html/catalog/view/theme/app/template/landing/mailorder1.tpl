@@ -7,6 +7,9 @@
 <body style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000;">
 
 <div style="width: 680px;">
+    <p style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight:bold; color: #000000;">
+        <?=$subject?>
+    </p>
     <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;">
         <tbody>
             <tr>
@@ -28,6 +31,61 @@
                     <?php echo $phone; ?>
                 </td>
             </tr>
+            <?php if(isset($email)){ ?>
+            <tr>
+                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+                    Email
+                </td>
+                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+                    <?php echo $email; ?>
+                </td>
+            </tr>
+            <?php }?>
+
+            <?php if(isset($product)){ ?>
+            <tr>
+                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+                    Товар
+                </td>
+                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+                    <?php echo $product; ?>
+                </td>
+            </tr>
+            <?php }?>
+
+            <?php if(isset($inn)){ ?>
+            <tr>
+                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+                    ИНН
+                </td>
+                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+                    <?php echo $inn; ?>
+                </td>
+            </tr>
+            <?php }?>
+
+            <?php if(isset($firma)){ ?>
+            <tr>
+                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+                    Название компании
+                </td>
+                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+                    <?php echo $firma; ?>
+                </td>
+            </tr>
+            <?php }?>
+            
+            <?php if(isset($site)){ ?>
+            <tr>
+                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+                    Сайт
+                </td>
+                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+                    <?php echo $site; ?>
+                </td>
+            </tr>
+            <?php }?>
+
             <tr>
                 <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
                     Дата
@@ -36,6 +94,8 @@
                     <?php echo date("d.m.Y"); ?>
                 </td>
             </tr>
+            
+
         </tbody>
     </table>
     <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;">

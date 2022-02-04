@@ -13,7 +13,8 @@ class ControllerLandingLanding extends Controller {
             
             $mailto=$landingData['mail1'];
             if(!$mailto){
-                $mailto="info@ant-snab.ru";
+                $mailto="info@ant-snab.ru1";
+                //$mailto="kanibolotskiy@gmail.com";
             }
             /**UTM метки */
             $this->load->model('module/referrer');
@@ -44,7 +45,7 @@ class ControllerLandingLanding extends Controller {
             }else{
                 $data['utm_term']="";
             }
-            
+            $subject=$data['subject'];
             $mail = new Mail();
             $mail->protocol = $this->config->get('config_mail_protocol');
             $mail->parameter = $this->config->get('config_mail_parameter');
@@ -54,8 +55,8 @@ class ControllerLandingLanding extends Controller {
             $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
             $mail->smtp_port = $this->config->get('config_mail_smtp_port');
             $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
-            $mail->setSubject("Заказ звонка (Лендинг)");
+            
+            $mail->setSubject($subject." (Лендинг)");
             $mail->setHtml($this->load->view('landing/mailorder1', $data));
             $mail->setTo($mailto);
             $mail->setFrom($this->config->get('config_email'));
@@ -123,6 +124,7 @@ class ControllerLandingLanding extends Controller {
 
         $data=$this->model_landing_landing->getLandingInfo($landing_id);
         
+        
         //$landing_enabled=true;
         if($data['status']){
             $contact_data_referrer=$this->model_module_referrer->getContactsReferrer();
@@ -130,10 +132,16 @@ class ControllerLandingLanding extends Controller {
 
             $contact_data_referrer['meta_title']=$data['meta_title'];
             $contact_data_referrer['meta_description']=$data['meta_description'];
+            $contact_data_referrer['landing_id']=$landing_id;
+            $contact_data_referrer['title']=$data['title'];
+            $contact_data_referrer['mailthanks']=$data['mailthanks'];
+            $contact_data_referrer['type']='land';
+
     
             $data['head']=$this->load->controller('landing/head',$contact_data_referrer);
             $data['header']=$this->load->controller('landing/header',$contact_data_referrer);
             $data['footer']=$this->load->controller('landing/footer',$contact_data_referrer);
+            $data['bform']=$this->load->controller('landing/bform',["title"=>$data['title'],"landing_id"=>$landing_id,"block_bform_caption"=>$data["block_bform_caption"],"block_bform_perc"=>$data["block_bform_perc"],"mailthanks"=>$data["mailthanks"]]);
             
             $products=[];
             $video_arr=[];
@@ -179,7 +187,7 @@ class ControllerLandingLanding extends Controller {
                             if(isset($data_lp['product_lp_video'])){
                                 if($data_lp['product_lp_video']){
                                     foreach($data_lp['product_lp_video'] as $video_item){
-                                        $video_arr[]=Array(
+                                        $video_arr[$video_item['url']]=Array(
                                             'video'=>$video_item['url'],
                                             'image'=>$this->model_tool_image->resize('../image/'.$video_item['image'], 580, 325),
                                             'video_caption'=>$video_item['text']

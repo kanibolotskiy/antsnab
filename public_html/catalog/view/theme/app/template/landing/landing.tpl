@@ -21,12 +21,12 @@
                                     <?=$block1_form_caption?> <div><span><?=$block1_form_text?></span></div>
                                 </div>
                                 <div class="main_block1_form wrap_form" >
-                                    <form >
+                                    <form action="#" method="POST" data-goal="lp-send-form-up">
                                         <div class="wrap_form_phone _flex _between">
                                             <input class="inpF" type="hidden" name="landing" value="<?=$title?>"/>
                                             <input class="inpF" type="hidden" name="landing_id" value="<?=$landing_id?>"/>
                                             <input class="inpF" type="text" name="workemail" value=""/>
-                                            <input type="hidden" id="bform_type" name="bform_type" value="1" />
+                                            <input type="hidden" name="subject" value="Заказ звонка"/>
                                             <input type="phone" name="phone" class="inputForm inputPhone required" />                                            
                                             <button class="sendForm btn _orange phoneButton" type="submit">Получить предложение</button>
                                         </div>
@@ -100,7 +100,7 @@
                                 <div class="block_caption"><?=$tab_item['caption']?></div>
                                 <?php if($tab_item['file']) {?>
                                     <div class="block_down_button">
-                                        <a href="files/landing/<?=$tab_item['file']?>" download><?=$tab_item['button']?></a>
+                                        <a class="js_goal" data-goal="lp-catalog-download" href="files/landing/<?=$tab_item['file']?>" download><?=$tab_item['button']?></a>
                                     </div>
                                 <?php }?>
                             </div>
@@ -141,7 +141,7 @@
                                                 <div class="product_price"><?=$product['price_str']?></div>
                                             <?php }?>
                                             <div class="wrap_blue_btn">
-                                                <div class="blue_btn js_modal">Оставить заявку</div>
+                                                <div class="blue_btn open_popup_product js_goal" data-goal="lp-zayavka-catalog">Оставить заявку</div>
                                             </div>
                                         </div>
                                     </div>
@@ -191,7 +191,7 @@
                                 <div class="cert_row _flex _vcenter">
                                     <div class="cert_row_info _flex _vcenter">
                                         <div class="cert_row_image">
-                                            <a href="image/<?=$block_cert1_image?>" data-fancybox="" data-caption="<?=$block_cert1_caption?>">
+                                            <a class="js_goal" data-goal="lp-sertifikat" href="image/<?=$block_cert1_image?>" data-fancybox="" data-caption="<?=$block_cert1_caption?>">
                                                 <img src="image/<?=$block_cert1_image?>" />
                                             </a>
                                         </div>
@@ -200,7 +200,7 @@
                                     <div class="wrp_row_caption _flex _between _vcenter">
                                         <div class="cert_row_caption"><?=$block_cert1_caption?></div>
                                         <div class="cert_row_open btn">
-                                            <a href="image/<?=$block_cert1_image?>" data-fancybox="certificates" data-caption="<?=$block_cert1_caption?>">Открыть</a>
+                                            <a class="js_goal" data-goal="lp-sertifikat" href="image/<?=$block_cert1_image?>" data-fancybox="certificates" data-caption="<?=$block_cert1_caption?>">Открыть</a>
                                         </div>
                                     </div>
                                 </div>
@@ -208,8 +208,8 @@
                             <?php if($block_cert2_image){?>
                                 <div class="cert_row _flex _vcenter">
                                     <div class="cert_row_info _flex _vcenter">
-                                        <div class="cert_row_image">
-                                            <a href="image/<?=$block_cert2_image?>" data-fancybox="certificates" data-caption="<?=$block_cert2_caption?>">
+                                        <div class="cert_row_image" >
+                                            <a class="js_goal" data-goal="lp-sertifikat" href="image/<?=$block_cert2_image?>" data-fancybox="certificates" data-caption="<?=$block_cert2_caption?>">
                                                 <img src="image/<?=$block_cert2_image?>" />
                                             </a>
                                         </div>                                        
@@ -217,7 +217,9 @@
                                     </div>
                                     <div class="wrp_row_caption _flex _between _vcenter">
                                         <div class="cert_row_caption"><?=$block_cert2_caption?></div>
-                                        <div class="cert_row_open btn"><a href="image/<?=$block_cert2_image?>" data-fancybox="" data-caption="<?=$block_cert2_caption?>">Открыть</a></div>
+                                        <div class="cert_row_open btn ">
+                                            <a class="js_goal" data-goal="lp-sertifikat" href="image/<?=$block_cert2_image?>" data-fancybox="" data-caption="<?=$block_cert2_caption?>">Открыть</a>
+                                        </div>
                                     </div>
                                 </div>
                             <?php }?>
@@ -273,7 +275,7 @@
     <?php if(isset($block_bform_status) and $block_bform_status) {?>
         <section class="container" id="bottom_form">
             <div class="wrapper">
-                <?php include __DIR__ . '/../landing/bform.tpl' ?>
+                <?=$bform?>
             </div>
         </section>
     <?php }?>

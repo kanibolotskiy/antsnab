@@ -467,17 +467,10 @@
                         
                         <div class="tab-pane" id="tab-forms">
                            <div class="form-groups">
-                                
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-mail1">Email (верхняя форма):</label>
+                                    <label class="col-sm-2 control-label" for="input-mail1">Email:</label>
                                     <div class="col-sm-10">
                                         <input type="text" name="mail1" value="<?=$mail1 ?>" placeholder="Email" id="input-mail1" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-mail1">Email (нижняя форма):</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" name="mail2" value="<?=$mail2 ?>" placeholder="Emai2" id="input-mail2" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="form-group">

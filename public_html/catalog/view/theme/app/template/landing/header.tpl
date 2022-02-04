@@ -26,7 +26,7 @@
                         </div>
                     <?php }?>
                 </div>
-                <div class="btn header_call _noscroll">
+                <div class="btn header_call _noscroll js_goal" data-goal="lp-zakaz-zvonka">
                     Заказать звонок
                 </div>
                 <div class="mob_menu">
@@ -43,7 +43,7 @@
             <div class="mob_menu_close_line mob_menu_close_line2"></div>
         </div>
         <div class="mob_menu_info">
-            <div class="btn mob_menu_ordercall js_sbottom">Заказать звонок</div>
+            <div class="btn mob_menu_ordercall js_sbottom js_goal" data-goal="lp-zakaz-zvonka">Заказать звонок</div>
             <div class="menu_email">
                 <a href="mailto:<?=$email_site?>"><?=$email_site?></a>
             </div>

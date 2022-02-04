@@ -70,7 +70,7 @@
                                 <div class="product_form_caption">
                                     <?=$block1_form_caption?> <?=$block1_form_text?>
                                 </div>
-                                <div class="product_form_button js_sbottom">
+                                <div class="product_form_button js_sbottom js_goal" data-goal="lp-zayavka-product">
                                     Получить предложение
                                 </div>
                             </div>
@@ -309,7 +309,7 @@
             </div>
         <?php }?>
         <section class="container bottom_form_product" id="bottom_form">
-            <?php include __DIR__ . '/../landing/bform.tpl' ?>
+            <?=$bform?>
         </div>
     </div>
 </section>
