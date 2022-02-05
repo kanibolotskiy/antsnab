@@ -510,6 +510,8 @@ class ControllerCatalogLanding extends Controller {
 
 		$data['mail1']=isset($landing_info['mail1'])?$landing_info['mail1']:'';
 		$data['mailthanks']=isset($landing_info['mailthanks'])?$landing_info['mailthanks']:'';
+		$data['mailthanks_modal']=isset($landing_info['mailthanks_modal'])?$landing_info['mailthanks_modal']:'';
+		$data['mailthanks_full']=isset($landing_info['mailthanks_full'])?$landing_info['mailthanks_full']:'';
 		
 		$parent_cat_id=71;
 		$categories=[];

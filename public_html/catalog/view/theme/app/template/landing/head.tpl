@@ -46,11 +46,11 @@
     
     <meta name="robots" content="noindex" />
     
-    <meta property="og:title" content="Битумная гидроизоляционная мастика Пруф – купить в Москве по цене от 760 р. за ведро, 16 кг | Ант-Снаб" />
+    <meta property="og:title" content="<?=$meta_title?>" />
     <meta property="og:type" content="article" />
     <meta property="og:locale" content="ru_RU" />
-    <meta property="og:url" content="http://antsnab.cp06038.tmweb.ru/products/mastics/cold/mastika-proof/" />
-    <meta property="og:image" content="http://antsnab.cp06038.tmweb.ru/image/cache/catalog/gidroizoljacionnajamastikapruf_15062020-750x560.jpg" />
+    <meta property="og:url" content="<?=$url?>" />
+    <meta property="og:image" content="<?=$image?>" />
     <meta property="og:site_name" content="ООО «ТК Ант-Снаб»" />
             
 </head>

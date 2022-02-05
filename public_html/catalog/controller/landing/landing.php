@@ -110,6 +110,7 @@ class ControllerLandingLanding extends Controller {
         }
         return $this->response->setOutput(json_encode($data));
     }
+
 	public function index() {
         $this->load->model('landing/landing');
         $this->load->model('module/referrer');
@@ -136,8 +137,11 @@ class ControllerLandingLanding extends Controller {
             $contact_data_referrer['title']=$data['title'];
             $contact_data_referrer['mailthanks']=$data['mailthanks'];
             $contact_data_referrer['type']='land';
+            
+            $landingAlias=$this->model_landing_landing->getLandingAlias($landing_id);
+            $contact_data_referrer['url']=$landingAlias;
+            $contact_data_referrer['image']=$data['block1_image'];
 
-    
             $data['head']=$this->load->controller('landing/head',$contact_data_referrer);
             $data['header']=$this->load->controller('landing/header',$contact_data_referrer);
             $data['footer']=$this->load->controller('landing/footer',$contact_data_referrer);
@@ -227,7 +231,7 @@ class ControllerLandingLanding extends Controller {
                             }
                 
                             $alias="lp-".$this->model_landing_landing->getProductAlias($product_id);
-                            $landingAlias=$this->model_landing_landing->getLandingAlias($landing_id);
+                            
 
                             $product_data['color_product']=$color_product;
                             $product_data['alias'] = $landingAlias."/".$alias."/";

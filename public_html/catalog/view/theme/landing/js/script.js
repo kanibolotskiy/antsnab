@@ -215,59 +215,65 @@ $(document).ready(function(){
 
     $(".sendForm").click(function(e){
         e.preventDefault();
-        var form_item = $(this).closest("form");
-        var form_thanks = form_item.closest(".wrap_form").find(".form_thanks");
-        var goal=form_item.data("goal");
-        
-        var flag=true
-        form_item.find(".required").each(function(){
-            if($.trim($(this).val())==""){
-                $(this).addClass("error");
-                flag=false;
-            }
-        });
-        if(form_item.find(".half_required").length){
-            var hl=""
-            form_item.find(".half_required").each(function(){
-                hl+=$.trim($(this).val())
-            });
-            if(hl==""){
-                flag=false
-                $(".half_required").addClass("error");
-            }
-        }
+        var btn_item=$(this)
+        if(!btn_item.hasClass("sended")){
+            var form_item = $(this).closest("form");
+            var form_thanks = form_item.closest(".wrap_form").find(".form_thanks");
+            var goal=form_item.data("goal");
 
-        if(flag){
-            var form = form_item.closest('form')[0];
-            var data = new FormData(form);
-            $.ajax({
-                type: "POST",
-                enctype: 'multipart/form-data',
-                url: '/index.php?route=landing/landing/sendForm/',
-                data: data,
-                processData: false,
-                contentType: false,
-                cache: false,
-                dataType: "json",
-                timeout: 800000,
-                success: function (data) {
-                    form_item.hide();
-                    form_thanks.fadeIn(200);
-                    form_item.find(".inputForm").val("");
-
-                    
-                    if (typeof ym != 'undefined') {
-                        ym(14496178, 'reachGoal', goal);
-                    }
-                    setTimeout(function(){
-                        form_thanks.hide();
-                        form_item.fadeIn(200);
-                    }, 3000);
-                },
-                error: function (e) {                
-                    console.log("ERROR : ", e);
+            var flag=true
+            form_item.find(".required").each(function(){
+                if($.trim($(this).val())==""){
+                    $(this).addClass("error");
+                    flag=false;
                 }
             });
+            if(form_item.find(".half_required").length){
+                var hl=""
+                form_item.find(".half_required").each(function(){
+                    hl+=$.trim($(this).val())
+                });
+                if(hl==""){
+                    flag=false
+                    $(".half_required").addClass("error");
+                }
+            }
+
+            //btn_item.attr("disabled",true);
+            btn_item.addClass("sended");
+            if(flag){
+                var form = form_item.closest('form')[0];
+                var data = new FormData(form);
+                $.ajax({
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url: '/index.php?route=landing/landing/sendForm/',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    dataType: "json",
+                    timeout: 800000,
+                    success: function (data) {
+                        form_item.hide();
+                        form_thanks.fadeIn(200);
+                        form_item.find(".inputForm").val("");
+                        btn_item.attr("disabled",false);
+                        btn_item.removeClass("sended");
+
+                        if (typeof ym != 'undefined') {
+                            ym(14496178, 'reachGoal', goal);
+                        }
+                        setTimeout(function(){
+                            form_thanks.hide();
+                            form_item.fadeIn(200);
+                        }, 3000);
+                    },
+                    error: function (e) {                
+                        console.log("ERROR : ", e);
+                    }
+                });
+            }
         }
     });
     $(".fancybox").fancybox({

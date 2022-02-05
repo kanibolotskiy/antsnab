@@ -825,6 +825,10 @@ if ($this->config->get('config_editor_default')) {
 
 	$data['entry_accompany_select'] = $this->language->get('entry_accompany_select');
 	
+	
+	$data['tab_active']=isset($this->request->get['tab'])?$this->request->get['tab']:'';
+
+	
 	if (isset($this->error['warning'])) {
 		$data['error_warning'] = $this->error['warning'];
 	} else {

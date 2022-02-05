@@ -8,9 +8,12 @@ class ControllerLandingHead extends Controller {
             ) ? 'https://' : 'http://'
         
         );
-        $data['base']=$scheme.$_SERVER['HTTP_HOST'];
+        $base_url=$scheme.$_SERVER['HTTP_HOST']."/";
+        $data['base']=$base_url;
+        $data['url']=$base_url.$contact_data_referrer['url']."/";
         $data['meta_title']=$contact_data_referrer['meta_title'];
         $data['meta_description']=$contact_data_referrer['meta_description'];
+        $data['image']=$base_url."image/".$contact_data_referrer['image'];
         return $this->load->view('landing/head', $data);
     }
 }

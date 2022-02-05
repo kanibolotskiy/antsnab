@@ -643,7 +643,13 @@ footer{
 .wrap_certificates{
     margin-top:40px;
 }
-.cert_row_open a{display:block;color:#000;text-decoration:none;}
+.cert_row_open a{
+    display:block;color:#000;text-decoration:none;
+    transition:.2s;
+}
+.cert_row_open:hover a{
+    color:#fff;
+}
 .pack_items{
     margin-top:15px;
 }

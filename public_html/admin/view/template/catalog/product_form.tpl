@@ -30,28 +30,28 @@
             <div class="panel-body">
                 <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-product" class="form-horizontal">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-                        <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
+                        <li class="<?=($tab_active=='tab-general' or $tab_active=='')?'active':''?>"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
+                        <li class="<?=($tab_active=='tab-data')?'active':''?>"><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
 
-                        <li><a href="#tab-prodproperties" data-toggle="tab"><?php echo $tab_prodproperties; ?></a></li>
-                        <li><a href="#tab-tabs" data-toggle="tab"><?php echo $tab_tabs; ?></a></li>
-                        <li><a href="#tab-prices" data-toggle="tab"><?php echo $tab_prices; ?></a></li>
-                        <li><a href="#tab-calcs" data-toggle="tab"><?php echo $tab_calcs; ?></a></li>
+                        <li class="<?=($tab_active=='tab-prodproperties')?'active':''?>"><a href="#tab-prodproperties" data-toggle="tab"><?php echo $tab_prodproperties; ?></a></li>
+                        <li class="<?=($tab_active=='tab-tabs')?'active':''?>"><a href="#tab-tabs" data-toggle="tab"><?php echo $tab_tabs; ?></a></li>
+                        <li class="<?=($tab_active=='tab-prices')?'active':''?>"><a href="#tab-prices" data-toggle="tab"><?php echo $tab_prices; ?></a></li>
+                        <li class="<?=($tab_active=='tab-calcs')?'active':''?>"><a href="#tab-calcs" data-toggle="tab"><?php echo $tab_calcs; ?></a></li>
 
-                        <li><a href="#tab_iden" data-toggle="tab"><?php echo $tab_iden; ?></a></li>
-                        <li><a href="#tab_analog" data-toggle="tab"><?php echo $tab_analog; ?></a></li>
-                        <li><a href="#tab_accompany" data-toggle="tab"><?php echo $tab_accompany; ?></a></li>
+                        <li class="<?=($tab_active=='tab_iden')?'active':''?>"><a href="#tab_iden" data-toggle="tab"><?php echo $tab_iden; ?></a></li>
+                        <li class="<?=($tab_active=='tab_analog')?'active':''?>"><a href="#tab_analog" data-toggle="tab"><?php echo $tab_analog; ?></a></li>
+                        <li class="<?=($tab_active=='tab_accompany')?'active':''?>"><a href="#tab_accompany" data-toggle="tab"><?php echo $tab_accompany; ?></a></li>
 
-                        <li style="display:none"><a href="#tab-attribute" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
-                        <li style="display:none"><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
-                        <li style="display:none"><a href="#tab-recurring" data-toggle="tab"><?php echo $tab_recurring; ?></a></li>
+                        <li class="<?=($tab_active=='tab-attribute')?'active':''?>" style="display:none"><a href="#tab-attribute" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
+                        <li class="<?=($tab_active=='tab-option')?'active':''?>" style="display:none"><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
+                        <li class="<?=($tab_active=='tab-recurring')?'active':''?>" style="display:none"><a href="#tab-recurring" data-toggle="tab"><?php echo $tab_recurring; ?></a></li>
 
-                        <li style="display:none"><a href="#tab-discount" data-toggle="tab"><?php echo $tab_discount; ?></a></li>
-                        <li style="display:none"><a href="#tab-special" data-toggle="tab"><?php echo $tab_special; ?></a></li>
-                        <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
-                        <li><a href="#tab-filter" data-toggle="tab"><?php echo $tab_filter; ?></a></li>
-                        <li style="display:none"><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
-                        <li><a href="#tab-lp" data-toggle="tab">LP</a></li>
+                        <li class="<?=($tab_active=='tab-discount')?'active':''?>" style="display:none"><a href="#tab-discount" data-toggle="tab"><?php echo $tab_discount; ?></a></li>
+                        <li class="<?=($tab_active=='tab-special')?'active':''?>" style="display:none"><a href="#tab-special" data-toggle="tab"><?php echo $tab_special; ?></a></li>
+                        <li class="<?=($tab_active=='tab-image')?'active':''?>"><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
+                        <li class="<?=($tab_active=='tab-filter')?'active':''?>"><a href="#tab-filter" data-toggle="tab"><?php echo $tab_filter; ?></a></li>
+                        <li class="<?=($tab_active=='tab-reward')?'active':''?>" style="display:none"><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
+                        <li class="<?=($tab_active=='tab-lp')?'active':''?>"><a href="#tab-lp" data-toggle="tab">LP</a></li>
 
                         <!--<li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>-->
                         
@@ -63,7 +63,7 @@
 
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane" id="tab-lp">
+                        <div class="tab-pane <?=($tab_active=='tab-lp')?'active':''?>" id="tab-lp">
                             <div class="tab-content">
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" for="input-product_lp_name">Название:</label>
@@ -263,7 +263,7 @@
                                 
                             </div>
                         </div>
-                        <div class="tab-pane active" id="tab-general">
+                        <div class="tab-pane <?=($tab_active=='tab-general' or $tab_active=='')?'active':''?>" id="tab-general">
                             <ul class="nav nav-tabs" id="language">
                                 <?php foreach ($languages as $language) { ?>
                                     <li><a href="#language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
@@ -382,7 +382,7 @@
                                 <?php } ?>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab-data">
+                        <div class="tab-pane <?=($tab_active=='tab-data')?'active':''?>" id="tab-data">
                             <div class="form-group required">
                                 <label class="col-sm-2 control-label" for="input-model"><?php echo $entry_model; ?></label>
                                 <div class="col-sm-10">
@@ -678,7 +678,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab-prices">
+                        <div class="tab-pane <?=($tab_active=='tab-prices')?'active':''?>" id="tab-prices">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-notavail">
                                     <?php echo $entry_notavail; ?>
@@ -819,7 +819,7 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane" id="tab-calcs">
+                        <div class="tab-pane <?=($tab_active=='tab-calcs')?'active':''?>" id="tab-calcs">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-calc_category"><?php echo $entry_calc_category; ?></label>
                                 <div class="col-sm-10">
@@ -925,7 +925,7 @@
                                 });
                             });
                         </script>
-                        <div class="tab-pane" id="tab-prodproperties">
+                        <div class="tab-pane <?=($tab_active=='tab-prodproperties')?'active':''?>" id="tab-prodproperties">
                             <div class="form-group row">
                                 <div class="col-sm-12">
                                     <p><?= $property_helptext ?></p>
@@ -1008,7 +1008,7 @@
                             </table>
                         </div>
 
-                        <div class="tab-pane" id="tab-tabs">
+                        <div class="tab-pane <?=($tab_active=='tab-tabs')?'active':''?>" id="tab-tabs">
                             <div class="form-group row">
                                 <div class="col-sm-12">
                                     <p><?= $tab_helptext ?></p>
@@ -1060,7 +1060,7 @@
                             </table>
                         </div>
 
-                        <div class="tab-pane" id="tab-attribute">
+                        <div class="tab-pane <?=($tab_active=='tab-attribute')?'active':''?>" id="tab-attribute">
                             <div class="table-responsive">
                                 <table id="attribute" class="table table-striped table-bordered table-hover">
                                     <thead>
@@ -1095,7 +1095,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab-option">
+                        <div class="tab-pane <?=($tab_active=='tab-option')?'active':''?>" id="tab-option">
                             <div class="row">
                                 <div class="col-sm-2">
                                     <ul class="nav nav-pills nav-stacked" id="option">
@@ -1299,7 +1299,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab-recurring">
+                        <div class="tab-pane <?=($tab_active=='tab-recurring')?'active':''?>" id="tab-recurring">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
@@ -1346,7 +1346,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab-discount">
+                        <div class="tab-pane <?=($tab_active=='tab-discount')?'active':''?>" id="tab-discount">
                             <div class="table-responsive">
                                 <table id="discount" class="table table-striped table-bordered table-hover">
                                     <thead>
@@ -1400,7 +1400,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab-special">
+                        <div class="tab-pane <?=($tab_active=='tab-special')?'active':''?>" id="tab-special">
                             <div class="table-responsive">
                                 <table id="special" class="table table-striped table-bordered table-hover">
                                     <thead>
@@ -1452,7 +1452,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab-filter">
+                        <div class="tab-pane <?=($tab_active=='tab-filter')?'active':''?>" id="tab-filter">
                             <input type="text" name="change_params" value="0" id="change_params">
                             <div class="table-responsive">
                                 <table id="filter" class="table table-solid table-bordered table-hover">
@@ -1499,7 +1499,7 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane" id="tab-image">
+                        <div class="tab-pane <?=($tab_active=='tab-image')?'active':''?>" id="tab-image">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
@@ -1544,7 +1544,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab-reward">
+                        <div class="tab-pane <?=($tab_active=='tab-reward')?'active':''?>" id="tab-reward">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-points"><span data-toggle="tooltip" title="<?php echo $help_points; ?>"><?php echo $entry_points; ?></span></label>
                                 <div class="col-sm-10">
@@ -1614,7 +1614,7 @@
                             </div>
                         </div>
                         -->
-                        <div class="tab-pane" id="tab_iden">
+                        <div class="tab-pane <?=($tab_active=='tab_iden')?'active':''?>" id="tab_iden">
                             <div class="wrap_iden">
                                 <input type="hidden" name="iden_change1" id="iden_change1" value="0"/>
                                 <input type="hidden" name="iden_change2" id="iden_change2" value="0"/>
@@ -1676,7 +1676,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab_accompany">
+                        <div class="tab-pane <?=($tab_active=='tab_accompany')?'active':''?>" id="tab_accompany">
                         
                             <div class="form-group">
                                 <label style="text-align:left;" class="col-sm-2 control-label" for="input-accompany_select"><?php echo $entry_accompany_select; ?></label>
@@ -1737,7 +1737,7 @@
     <?php }?>
 </div>
                         </div>
-                        <div class="tab-pane" id="tab_analog">
+                        <div class="tab-pane <?=($tab_active=='tab_analog')?'active':''?>" id="tab_analog">
                         <div class="form-group">
                             <div class="btns_analog">
                                 <div class="btn iden_apply" id="iden_apply">Заполнить из идентичных</div>
@@ -1796,7 +1796,7 @@
                         </div>
 
 
-                        <div class="tab-pane" id="tab_files">
+                        <div class="tab-pane  <?=($tab_active=='tab_files')?'active':''?>" id="tab_files">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-download"><span data-toggle="tooltip" title="<?php echo $help_download; ?>"><?php echo $entry_download; ?></span></label>
                                 <div class="col-sm-10">
