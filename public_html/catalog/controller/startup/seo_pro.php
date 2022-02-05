@@ -78,7 +78,11 @@ class ControllerStartupSeoPro extends Controller {
 					//$mk_alias=str_replace("lp-","",$parts[1],1);
 					//$mk_alias=str_replace("lp-","","lp-krovelnaya-mastika-proof");
 					if (isset($parts[1])){
-						$mk_alias=ltrim($parts[1],"lp-");
+						//print_r($parts);
+						//$mk_alias=ltrim($parts[1],"lp-");
+						//$mk_alias=ltrim("lp-","");
+						$mk_alias=str_replace("lp-","",$parts[1]);
+						//echo "!".$mk_alias."!";
 						$product_landing_id=$this->landingProductID($mk_alias);
 						//echo "product_landing_id=".$product_landing_id;
 						$product_landing_id_str=str_replace("product_id","product_landing_id",$product_landing_id);

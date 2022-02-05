@@ -32,7 +32,8 @@ class ControllerLandingProduct extends Controller {
         $url = rtrim($url[0],"/");
         $path_arr=explode("/",$url);
         $alias=$path_arr[count($path_arr)-1];
-        $product_id_str=$this->model_landing_landing->landingProductID(ltrim($alias,"lp-"));
+        $m_alias=str_replace("lp-","",$alias);
+        $product_id_str=$this->model_landing_landing->landingProductID($m_alias);
         $product_id=0;
         if($product_id_str){
             $product_id=str_replace("product_id=","",$product_id_str);

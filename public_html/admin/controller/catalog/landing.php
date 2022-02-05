@@ -258,7 +258,29 @@ class ControllerCatalogLanding extends Controller {
 
 		$this->getList();
 	}
-
+	private function translit($value)
+	{
+		$converter = array(
+			'а' => 'a',    'б' => 'b',    'в' => 'v',    'г' => 'g',    'д' => 'd',
+			'е' => 'e',    'ё' => 'e',    'ж' => 'zh',   'з' => 'z',    'и' => 'i',
+			'й' => 'y',    'к' => 'k',    'л' => 'l',    'м' => 'm',    'н' => 'n',
+			'о' => 'o',    'п' => 'p',    'р' => 'r',    'с' => 's',    'т' => 't',
+			'у' => 'u',    'ф' => 'f',    'х' => 'h',    'ц' => 'c',    'ч' => 'ch',
+			'ш' => 'sh',   'щ' => 'sch',  'ь' => '',     'ы' => 'y',    'ъ' => '',
+			'э' => 'e',    'ю' => 'yu',   'я' => 'ya',
+	 
+			'А' => 'A',    'Б' => 'B',    'В' => 'V',    'Г' => 'G',    'Д' => 'D',
+			'Е' => 'E',    'Ё' => 'E',    'Ж' => 'Zh',   'З' => 'Z',    'И' => 'I',
+			'Й' => 'Y',    'К' => 'K',    'Л' => 'L',    'М' => 'M',    'Н' => 'N',
+			'О' => 'O',    'П' => 'P',    'Р' => 'R',    'С' => 'S',    'Т' => 'T',
+			'У' => 'U',    'Ф' => 'F',    'Х' => 'H',    'Ц' => 'C',    'Ч' => 'Ch',
+			'Ш' => 'Sh',   'Щ' => 'Sch',  'Ь' => '',     'Ы' => 'Y',    'Ъ' => '',
+			'Э' => 'E',    'Ю' => 'Yu',   'Я' => 'Ya',
+		);
+	 
+		$value = strtr($value, $converter);
+		return $value;
+	}
 	public function upload() {
 		$this->load->language('catalog/download');
 
@@ -272,7 +294,30 @@ class ControllerCatalogLanding extends Controller {
 		if (!$json) {
 			if (!empty($this->request->files['file']['name']) && is_file($this->request->files['file']['tmp_name'])) {
 				// Sanitize the filename
-				$filename = basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8'));
+				$file=$this->request->files['file']['name'];
+				$file=$this->translit(trim(str_replace(" ","_",$file)));
+				//echo "!file=".$file;
+				//echo "!basename=".basename($file);
+				//echo "!".html_entity_decode(str_replace(" ","_",trim($this->request->files['file']['name'])), ENT_QUOTES, 'UTF-8')."!";
+				//$filename = basename(html_entity_decode(str_replace(" ","_",trim($this->request->files['file']['name'])), ENT_QUOTES, 'UTF-8'));
+				$filename = basename($file);
+				//$filename = basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8'));
+				//$file1=$this->request->files['file']['name'];
+				//$file = iconv('windows-1251', null, $this->request->files['file']['name']);
+				//$name = str_replace(' ', '_', $name);
+				/*
+				$file2=html_entity_decode($file1, ENT_QUOTES, 'UTF-8');
+				$file2=str_replace(" ","_",$file2);
+				$filename=basename($file2);
+*/
+				//$filename_temp=str_replace(" ","_",basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8')));
+				//$filename = $this->translit($filename_temp);
+
+				//echo "!".$file1."!";
+				//echo "!".$file2."!";
+				//echo "!".$filename."!";
+
+				//$filename=basename(html_entity_decode($file, ENT_QUOTES, 'UTF-8'));
 
 				// Validate the filename length
 				if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 128)) {

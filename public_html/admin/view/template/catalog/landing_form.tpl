@@ -28,10 +28,11 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#tab-general" data-toggle="tab">Основное</a></li>
                         <li class=""><a href="#tab-blocks" data-toggle="tab">Блоки</a></li>
+                        <li class=""><a href="#tab-products" data-toggle="tab">Продукты</a></li>
                         <li class=""><a href="#tab-certs" data-toggle="tab">Сертификаты</a></li>
                         <li class=""><a href="#tab-forms" data-toggle="tab">Формы</a></li>
 
-                        <li class=""><a href="#tab-products" data-toggle="tab">Продукты</a></li>
+                        
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab-general">
@@ -46,13 +47,6 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-meta_title"><?php echo $entry_meta_title; ?></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="meta_title" value="<?php echo $meta_title; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta_title" class="form-control" />
-                                </div>
-                            </div>
-
                             <div class="form-group required">
                                 <label class="col-sm-2 control-label" for="input-seo_url">SEO URL</label>
                                 <div class="col-sm-10">
@@ -62,6 +56,15 @@
                                     <?php } ?>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-meta_title"><?php echo $entry_meta_title; ?></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="meta_title" value="<?php echo $meta_title; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta_title" class="form-control" />
+                                </div>
+                            </div>
+
+                            
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-meta_description"><?php echo $entry_meta_description; ?></label>
@@ -524,7 +527,10 @@
                                 <div class="lang_products_header" rel="<?=count($tabs)?>">
                                     <ul>
                                         <?php foreach($tabs as $tab_key=>$tab){?>
-                                            <li class="<?=($tab_key==0)?'active':''?>" data-rel="<?=$tab_key?>"><?=$tab['name']?></li>
+                                            <li class="<?=($tab_key==0)?'active':''?>" data-rel="<?=$tab_key?>">
+                                                <div class="product_tab_name"><?=$tab['name']?></div>
+                                                <div class="remove_product_tab">&ndash;</div>
+                                            </li>
                                         <?php }?>
                                     </ul>
                                     <button type="button" onclick="addTabProducts();" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="Добавить"><i class="fa fa-plus-circle"></i></button>
@@ -793,12 +799,18 @@
         $(this).toggleClass("active");
     });
     
-    $(document).on("click",".lang_products_header li",function(){
+    $(document).on("click",".product_tab_name",function(){
         $(".lang_products_header li").removeClass("active");
-        $(this).addClass("active");
-        var rel=$(this).data("rel");
+        $(this).parent().addClass("active");
+        var rel=$(this).parent().data("rel");
         $(".lang_products_block").hide();
         $(".lang_products_block[data-rel='"+rel+"']").show();
+    });
+    $(document).on("click",".remove_product_tab",function(){
+        var rel=$(this).parent().data("rel");
+        $(".lang_products_header li[data-rel='"+rel+"']").remove();
+        $(".lang_products_block[data-rel='"+rel+"']").remove();
+
     });
 
 function addProductsBenefit(){
