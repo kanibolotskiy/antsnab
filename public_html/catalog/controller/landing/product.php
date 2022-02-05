@@ -183,6 +183,7 @@ class ControllerLandingProduct extends Controller {
         foreach ($tabs as $t) {
             if (!$t['prod_hide']) {
                 $tab_name='';
+                /*
                 switch ($t['cat_name']){
                     case 'Применение';
                         $tab_name="tab-use";
@@ -197,12 +198,15 @@ class ControllerLandingProduct extends Controller {
                         $tab_name="tab-more";
                         break;
                 }
-                $data['tabs'][] = [
-                    'id'   => $t['category_prodtab_id'],
-                    'name' => $t['cat_name'],
-                    'text' => html_entity_decode($t['val']),
-                    'tab_name'=>$tab_name
-                ];
+                */
+                if($t['cat_name']=="Применение"){
+                    $data['tabs'][] = [
+                        'id'   => $t['category_prodtab_id'],
+                        'name' => $t['cat_name'],
+                        'text' => html_entity_decode($t['val']),
+                        'tab_name'=>$tab_name
+                    ];
+                }
             }
         }
         $stringsGateway = new ProdUnitStrings($this->registry);
@@ -420,6 +424,7 @@ class ControllerLandingProduct extends Controller {
         
         $properties = $prodPropertiesGateway->getPropertiesWithProductValues($product_id, 'order by sortOrder ASC');
         $data['properties'] = [];
+
         foreach ($properties as $p) {
             if (!$p['prod_hide']) {
                 $data['properties'][] = [
