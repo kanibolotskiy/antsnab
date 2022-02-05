@@ -42,7 +42,7 @@
                 </div>
                 <div class="block1_img">
                     <div class="wrapper_block1_img">
-                        <img src="image/<?=$block1_image?>" />
+                        <img class="lazyload" data-src="image/<?=$block1_image?>" />
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                 <div class="_flex wrapper_block2">
                     <div class="block2_img">
                         <div class="wrapper_block2_img">
-                            <img src="image/<?=$block2_image?>" />
+                            <img class="lazyload" data-src="image/<?=$block2_image?>" />
                         </div>
                     </div>
                     <div class="block2_text">
@@ -227,7 +227,7 @@
                     </div>
                     <div class="cert_column_bg">
                         <div class="wrapper_cert_img">
-                            <img src="image/<?=$block_cert_image?>" />
+                            <img class="lazyload" data-src="image/<?=$block_cert_image?>" />
                         </div>
                     </div>
                 </div>

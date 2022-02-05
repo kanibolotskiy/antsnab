@@ -383,4 +383,12 @@ $(document).ready(function(){
         $(".b_form2").hide();
         $(".b_form1").fadeIn(200);
     });
+    //lazyload();
+    [].forEach.call(document.querySelectorAll('img[data-src]'), function(img) {
+        img.setAttribute('src', img.getAttribute('data-src'));
+        img.onload = function() {
+            img.removeAttribute('data-src');
+        };
+    });
+
 });

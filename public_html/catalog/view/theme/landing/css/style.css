@@ -242,7 +242,8 @@ header{
     margin-top:26px;
 }
 .wrapper_block1_img{
-    background-image:url(../img/land1_bg.png);
+    /*background-image:url(../img/land1_bg.png);*/
+    background-image:url(../img/ln_bg.jpg);
     background-size:cover;
     border-radius:3px;
 }
@@ -1555,4 +1556,13 @@ sup {
     font-size: 22px;
     font-weight: bold;
     margin-bottom: 10px;
+}
+
+img {
+	opacity: 1;
+	transition: opacity 0.2s;
+}
+
+img[data-src] {
+	opacity: 0;
 }
