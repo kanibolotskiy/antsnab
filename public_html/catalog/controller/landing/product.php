@@ -38,6 +38,8 @@ class ControllerLandingProduct extends Controller {
             $product_id=str_replace("product_id=","",$product_id_str);
         }
 
+        
+
         //landingProductID($alias)
 /*
         echo "!landing_id=".$landing_id."!<br/>";
@@ -56,6 +58,8 @@ class ControllerLandingProduct extends Controller {
         $product_data=$this->model_landing_landing->getProductFullInfo($product_id);
         $landing_data=$this->model_landing_landing->getLandingInfo($landing_id);
         
+        $contact_data_referrer['url']=$landing_alias."/".$alias;
+        $contact_data_referrer['image']=$product_data['image'];
         $contact_data_referrer['logotext']=$landing_data['logotext'];
         
         $data['product_id']=$product_id;
@@ -80,6 +84,8 @@ class ControllerLandingProduct extends Controller {
         $contact_data_referrer['landing_id']=$landing_id;
         $contact_data_referrer['title']=$landing_data['title'];
         $contact_data_referrer['mailthanks']=$landing_data['mailthanks'];
+        $contact_data_referrer['mailthanks_modal']=$landing_data['mailthanks_modal'];
+        $contact_data_referrer['mailthanks_full']=$landing_data['mailthanks_full'];
 
         $contact_data_referrer['type']='prod';
         $data['head']=$this->load->controller('landing/head',$contact_data_referrer);
@@ -422,7 +428,7 @@ class ControllerLandingProduct extends Controller {
                ];
             }
         }
-        $data['bform']=$this->load->controller('landing/bform',["title"=>$landing_data['title'],"landing_id"=>$landing_id,"block_bform_caption"=>$landing_data["block_bform_caption"],"block_bform_perc"=>$landing_data["block_bform_perc"],"mailthanks"=>$landing_data["mailthanks"]]);
+        $data['bform']=$this->load->controller('landing/bform',["title"=>$landing_data['title'],"landing_id"=>$landing_id,"block_bform_caption"=>$landing_data["block_bform_caption"],"block_bform_perc"=>$landing_data["block_bform_perc"],"mailthanks"=>$landing_data["mailthanks"],"mailthanks_full"=>$landing_data["mailthanks_full"]]);
         $this->response->setOutput($this->load->view('landing/product.tpl', $data));
     }
 }

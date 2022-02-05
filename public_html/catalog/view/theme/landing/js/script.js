@@ -319,7 +319,9 @@ $(document).ready(function(){
             });
         })
     }
-
+    $('input[name="inn"]').inputmask("9999999999[99]",{
+        "clearIncomplete": true,
+    });
     $("input[name='phone']").on("countrychange", function(e) {
         //console.log($(this).intlTelInput("getSelectedCountryData").iso2)
         changeMask($(this).intlTelInput("getSelectedCountryData").iso2);

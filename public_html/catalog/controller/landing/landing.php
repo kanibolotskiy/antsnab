@@ -136,16 +136,28 @@ class ControllerLandingLanding extends Controller {
             $contact_data_referrer['landing_id']=$landing_id;
             $contact_data_referrer['title']=$data['title'];
             $contact_data_referrer['mailthanks']=$data['mailthanks'];
+            $contact_data_referrer['mailthanks_full']=$data['mailthanks_full'];
+            $contact_data_referrer['mailthanks_modal']=$data['mailthanks_modal'];
             $contact_data_referrer['type']='land';
             
             $landingAlias=$this->model_landing_landing->getLandingAlias($landing_id);
             $contact_data_referrer['url']=$landingAlias;
             $contact_data_referrer['image']=$data['block1_image'];
 
+            
             $data['head']=$this->load->controller('landing/head',$contact_data_referrer);
             $data['header']=$this->load->controller('landing/header',$contact_data_referrer);
             $data['footer']=$this->load->controller('landing/footer',$contact_data_referrer);
-            $data['bform']=$this->load->controller('landing/bform',["title"=>$data['title'],"landing_id"=>$landing_id,"block_bform_caption"=>$data["block_bform_caption"],"block_bform_perc"=>$data["block_bform_perc"],"mailthanks"=>$data["mailthanks"]]);
+            $data['bform']=$this->load->controller('landing/bform',
+                ["title"=>$data['title'],
+                "landing_id"=>$landing_id,
+                "block_bform_caption"=>$data["block_bform_caption"],
+                "block_bform_perc"=>$data["block_bform_perc"],
+                "mailthanks"=>$data["mailthanks"],
+                "mailthanks_full"=>$data["mailthanks_full"],
+                "mailthanks_modal"=>$data["mailthanks_modal"]
+            ]);
+            
             
             $products=[];
             $video_arr=[];

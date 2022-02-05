@@ -75,7 +75,7 @@
                     </div>
                 </form>
                 <div class="form_thanks">
-                    <?=html_entity_decode($mailthanks)?>
+                    <?=html_entity_decode($mailthanks_full)?>
                 </div>
             </div>
         </div>

@@ -474,13 +474,37 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-block_mailthanks">Текст спасибо:</label>
+                                    <label class="col-sm-2 control-label" for="input-block_mailthanks">Текст спасибо (Верхняя форма):</label>
                                     <div class="col-sm-10">
                                         <textarea name="mailthanks"
                                                     placeholder="Текст"
                                                     id="input-mailthanks"
                                                     class="form-control summernote">
                                                     <?=$mailthanks?>
+                                        </textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-block_mailthanks_full">Текст спасибо (Нижняя форма):</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="mailthanks_full"
+                                                    placeholder="Текст"
+                                                    id="input-mailthanks_full"
+                                                    class="form-control summernote">
+                                                    <?=$mailthanks_full?>
+                                        </textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-block_mailthanks_modal">Текст спасибо (Всплывающая форма):</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="mailthanks_modal"
+                                                    placeholder="Текст"
+                                                    id="input-mailthanks_modal"
+                                                    class="form-control summernote">
+                                                    <?=$mailthanks_modal?>
                                         </textarea>
                                     </div>
                                 </div>
