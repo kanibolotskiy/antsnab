@@ -6,6 +6,7 @@ class ControllerLandingLanding extends Controller {
         $this->load->model('module/referrer');
         
         $data=$this->request->post;
+        $out=[];
         if(!$data['workemail']){
             $this->model_landing_landing->addLandingHistory($data);
             $landing_id=$data['landing_id'];
@@ -64,8 +65,13 @@ class ControllerLandingLanding extends Controller {
             $mail->setFrom($this->config->get('config_email'));
             $mail->setSender("ООО «ТК Ант-Снаб»");
             $mail->send();
+            if(isset($data['gf'])){
+                if($data['gf'] and $landingData['form_file']){
+                    $out['file']=$landingData['form_file'];
+                }
+            }
         }
-        $this->response->setOutput(json_encode($data,TRUE));
+        $this->response->setOutput(json_encode($out,TRUE));
     }
 
 	public function changeProduct(){

@@ -7,7 +7,7 @@
 
     <!--Блок1-->
     <?php if(isset($block1_status) and $block1_status) {?>
-    <section class="_grad block1">
+    <section class="_grad block1 ">
         <div class="wrapper">
         
             <div class="_flex _vcenter wrapper_block1">
@@ -25,6 +25,7 @@
                                         <div class="wrap_form_phone _flex _between">
                                             <input class="inpF" type="hidden" name="landing" value="<?=$title?>"/>
                                             <input class="inpF" type="hidden" name="landing_id" value="<?=$landing_id?>"/>
+                                            <input class="inpF" type="hidden" name="gf" value="1"/>
                                             <input class="inpF" type="text" name="workemail" value=""/>
                                             <input type="hidden" name="subject" value="Заказ звонка"/>
                                             <input type="phone" name="phone" class="inputForm inputPhone required" />                                            
@@ -50,7 +51,7 @@
     </section>
     <?php }?>
     <?php if(isset($block2_status) and $block2_status) {?>
-        <section class="container">
+        <section class="container container_block2">
             <div class="wrapper">
                 <div class="_flex wrapper_block2">
                     <div class="block2_img">

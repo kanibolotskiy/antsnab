@@ -519,6 +519,17 @@
                                         </textarea>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-form_file">Файл:</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group">
+                                            <input type="text" name="form_file" value="<?=$form_file ?>" placeholder="Имя файла" id="input-form_file" class="form-control">
+                                            <span class="input-group-btn">
+                                            <button  class="upload_butts btn btn-primary" data-rel="input-form_file" type="button" id="button-button-form_file" data-loading-text="Загрузка..."><i class="fa fa-upload"></i> Загрузить</button>
+                                            </span> 
+                                        </div>
+                                    </div>    
+                                </div>
                             </div>
                         </div>
 

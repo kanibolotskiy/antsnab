@@ -538,6 +538,7 @@ class ControllerCatalogLanding extends Controller {
 		$data['mailthanks']=isset($landing_info['mailthanks'])?$landing_info['mailthanks']:'';
 		$data['mailthanks_modal']=isset($landing_info['mailthanks_modal'])?$landing_info['mailthanks_modal']:'';
 		$data['mailthanks_full']=isset($landing_info['mailthanks_full'])?$landing_info['mailthanks_full']:'';
+		$data['form_file']=isset($landing_info['form_file'])?$landing_info['form_file']:'';
 		
 		$parent_cat_id=71;
 		$categories=[];

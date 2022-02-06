@@ -198,9 +198,20 @@
     .bform_form .form_row{
         width:100%;
     }
-
+    .product_itm_image img{
+        max-width:115px;height:auto;
+    }
+    .product_images{
+        margin-bottom:-75px;
+    }
 }
 @media all and (max-width: 750px) {
+    .product_itm_image img{
+        max-width:75px;height:auto;
+    }
+    .product_images{
+        margin-bottom:-33px;
+    }
     .form_row_hint{
         font-size:16px;
     }

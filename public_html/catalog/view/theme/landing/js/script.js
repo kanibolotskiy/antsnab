@@ -256,6 +256,14 @@ $(document).ready(function(){
                     dataType: "json",
                     timeout: 800000,
                     success: function (data) {
+                        console.log(data);
+                        
+                        var link = document.createElement('a');
+                        link.setAttribute('href', 'files/landing/'+data['file']);
+                        link.setAttribute('download', data['file']);
+                        link.click();
+                        
+                        
                         form_item.hide();
                         form_thanks.fadeIn(200);
                         form_item.find(".inputForm").val("");
