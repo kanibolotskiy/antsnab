@@ -72,6 +72,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-product_lp_about">
+                                        Выводить в блоке "О&nbsp;компании"
+                                    </label>
+                                    <div class="col-sm-1">
+                                        <div class="checkbox">
+                                            <label>
+                                            <input <?=$product_lp_about==1?'checked':''?> type="checkbox" name="lp[product_lp_about]" value="1" id="input-product_lp_about">
+                                            &nbsp; </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-sm-2 control-label" for="input-product_lp_title">Meta Title:</label>
                                     <div class="col-sm-10">
                                         <input type="text" name="lp[product_lp_title]" value="<?=$product_lp_title ?>" placeholder="Meta Title" id="input-product_lp_title" class="form-control" />
@@ -103,7 +115,7 @@
                                     <div class="col-sm-1">
                                         <div class="checkbox">
                                             <label>
-                                            <input <?=$product_lp_notavail==1?'checked':''?> type="checkbox" name="lp[product_lp_notavail]" value="1" id="input-product_lp_noiden">
+                                            <input <?=$product_lp_noiden==1?'checked':''?> type="checkbox" name="lp[product_lp_noiden]" value="1" id="input-product_lp_noiden">
                                             &nbsp; </label>
                                         </div>
                                     </div>

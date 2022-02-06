@@ -476,6 +476,14 @@
                                         <input type="text" name="mail1" value="<?=$mail1 ?>" placeholder="Email" id="input-mail1" class="form-control" />
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-prod_butt">Текст кнопки под товаром:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="prod_butt" value="<?=$prod_butt ?>" placeholder="Текст кнопки" id="input-prod_butt" class="form-control" />
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" for="input-block_mailthanks">Текст спасибо (Верхняя форма):</label>
                                     <div class="col-sm-10">

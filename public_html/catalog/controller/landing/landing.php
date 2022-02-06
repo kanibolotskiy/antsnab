@@ -12,6 +12,8 @@ class ControllerLandingLanding extends Controller {
             $landingData=$this->model_landing_landing->getLandingInfo($landing_id);
             
             $mailto=$landingData['mail1'];
+            
+
             if(!$mailto){
                 $mailto="info@ant-snab.ru1";
                 //$mailto="kanibolotskiy@gmail.com";
@@ -143,6 +145,8 @@ class ControllerLandingLanding extends Controller {
             $landingAlias=$this->model_landing_landing->getLandingAlias($landing_id);
             $contact_data_referrer['url']=$landingAlias;
             $contact_data_referrer['image']=$data['block1_image'];
+            
+            //$data['prod_butt']=$landingData['prod_butt'];
 
             
             $data['head']=$this->load->controller('landing/head',$contact_data_referrer);
@@ -161,12 +165,14 @@ class ControllerLandingLanding extends Controller {
             
             $products=[];
             $video_arr=[];
+            $about=[];
             foreach($data['product_list'] as $key=>$itm){
                 if($itm){
                     $products_arr[$key]=explode(",",$itm);
                     foreach($products_arr[$key] as $product_id){
                         if($product_id){
                             $product_data=$this->model_landing_landing->getProductInfo($product_id);
+                            
                             $data_lp=json_decode(str_replace(array("\r\n", "\n", "\r"),'',$product_data['data_lp']),JSON_UNESCAPED_UNICODE);
                             //$data_lp['product_lp_notavail']=isset($data_lp['product_lp_notavail'])?$data_lp['product_lp_notavail']:0;
                             
@@ -217,9 +223,9 @@ class ControllerLandingLanding extends Controller {
 
                             $flags=[];
                             $color_product=[];
-                            $data_lp['product_lp_notavail']=isset($data_lp['product_lp_notavail'])?$data_lp['product_lp_notavail']:0;
+                            $data_lp['product_lp_noiden']=isset($data_lp['product_lp_noiden'])?$data_lp['product_lp_noiden']:0;
 
-                            if(!$data_lp['product_lp_notavail']){
+                            if(!$data_lp['product_lp_noiden']){
                                 foreach($products_links as $key1=>$products_link){
                                     unset($data_temp);
                                     foreach($products_links[$key1] as $itm1){
@@ -251,6 +257,16 @@ class ControllerLandingLanding extends Controller {
 
                             $product_data['thumb'] = $this->model_tool_image->resize($product_data['image'], 560, 560);
                             $product_data['image'] = $product_data['image'];
+                            //
+                            $data_lp['product_lp_about']=isset($data_lp['product_lp_about'])?$data_lp['product_lp_about']:0;
+                            ///echo "!".$product_data['product_lp_about']."!";
+                            if($data_lp['product_lp_about']){
+                                $about[$product_id]=[
+                                    "image"=>$this->model_tool_image->resize($product_data['image'], 190, 190),
+                                    "name"=>$product_data['name']
+                                ];
+                            }
+
                             $products[$key][]=$product_data;
                         }
                         
@@ -261,6 +277,7 @@ class ControllerLandingLanding extends Controller {
             $data['landing_id']=$landing_id;
             $data['video']=$video_arr;
             $data['products']=$products;
+            $data['about']=$about;
             
             $this->response->setOutput($this->load->view('landing/landing.tpl', $data));
         }else{

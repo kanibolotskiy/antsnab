@@ -296,29 +296,9 @@ class ControllerCatalogLanding extends Controller {
 				// Sanitize the filename
 				$file=$this->request->files['file']['name'];
 				$file=$this->translit(trim(str_replace(" ","_",$file)));
-				//echo "!file=".$file;
-				//echo "!basename=".basename($file);
-				//echo "!".html_entity_decode(str_replace(" ","_",trim($this->request->files['file']['name'])), ENT_QUOTES, 'UTF-8')."!";
-				//$filename = basename(html_entity_decode(str_replace(" ","_",trim($this->request->files['file']['name'])), ENT_QUOTES, 'UTF-8'));
+				
 				$filename = basename($file);
-				//$filename = basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8'));
-				//$file1=$this->request->files['file']['name'];
-				//$file = iconv('windows-1251', null, $this->request->files['file']['name']);
-				//$name = str_replace(' ', '_', $name);
-				/*
-				$file2=html_entity_decode($file1, ENT_QUOTES, 'UTF-8');
-				$file2=str_replace(" ","_",$file2);
-				$filename=basename($file2);
-*/
-				//$filename_temp=str_replace(" ","_",basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8')));
-				//$filename = $this->translit($filename_temp);
-
-				//echo "!".$file1."!";
-				//echo "!".$file2."!";
-				//echo "!".$filename."!";
-
-				//$filename=basename(html_entity_decode($file, ENT_QUOTES, 'UTF-8'));
-
+				
 				// Validate the filename length
 				if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 128)) {
 					$json['error'] = $this->language->get('error_filename');
@@ -552,8 +532,9 @@ class ControllerCatalogLanding extends Controller {
 
 		//}
 
-
+		
 		$data['mail1']=isset($landing_info['mail1'])?$landing_info['mail1']:'';
+		$data['prod_butt']=isset($landing_info['prod_butt'])?$landing_info['prod_butt']:'';
 		$data['mailthanks']=isset($landing_info['mailthanks'])?$landing_info['mailthanks']:'';
 		$data['mailthanks_modal']=isset($landing_info['mailthanks_modal'])?$landing_info['mailthanks_modal']:'';
 		$data['mailthanks_full']=isset($landing_info['mailthanks_full'])?$landing_info['mailthanks_full']:'';

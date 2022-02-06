@@ -123,16 +123,23 @@
                                             <div class="product_desc">
                                                  <?=html_entity_decode($product['description_mini'])?>
                                             </div>
+                                            
                                             <div class="_flex _center pack_items _wrap">
                                                 <?php foreach($product['products_links'] as $key=>$products_link){ ?>
                                                     <?php foreach($products_link as $product_link){?>
                                                         <?php if($key==1){?>
                                                             <div class="_flex _vcenter change_itm pack_itm color_itm <?=$product_link['product_id']==$product['product_id']?'active':''?>" data-id="<?=$product_link['product_id']?>">
-                                                                <div class="color_block" style="background-color:#<?=$product_link['code']?>"></div>
-                                                                <?=$product_link['name']?>
+                                                                <?php if($product_link['code']){?>
+                                                                    <div class="color_block" style="background-color:#<?=$product_link['code']?>"></div>
+                                                                <?php }else{?>
+                                                                    <div class="color_block _transparent"></div>
+                                                                <?php }?>
+                                                                <div class="link_block_name"><?=$product_link['name']?></div>
                                                             </div>
                                                         <?php }else{?>
-                                                            <div class="change_itm pack_itm <?=$product_link['product_id']==$product['product_id']?'active':''?>" data-id="<?=$product_link['product_id']?>"><?=$product_link['name']?></div>
+                                                            <div class="change_itm pack_itm <?=$product_link['product_id']==$product['product_id']?'active':''?>" data-id="<?=$product_link['product_id']?>">
+                                                                <?=$product_link['name']?>
+                                                            </div>
                                                         <?php }?>
                                                     <?php }?>
                                                 <?php }?>
@@ -140,9 +147,12 @@
                                             <?php if($product['price_str']){?>
                                                 <div class="product_price"><?=$product['price_str']?></div>
                                             <?php }?>
-                                            <div class="wrap_blue_btn">
-                                                <div class="blue_btn open_popup_product js_goal" data-goal="lp-zayavka-catalog">Оставить заявку</div>
-                                            </div>
+
+                                            <?php if($prod_butt){ ?>
+                                                <div class="wrap_blue_btn">
+                                                    <div class="blue_btn open_popup_product js_goal" data-goal="lp-zayavka-catalog"><?=$prod_butt?></div>
+                                                </div>
+                                            <?php }?>
                                         </div>
                                     </div>
                                 <?php }?>
@@ -180,7 +190,7 @@
     <?php }?>
 
     <?php if(isset($block_cert_status) and $block_cert_status) {?>
-        <section class="_grey container">
+        <section class="_grey container certificates_container">
             <div class="wrapper">
                 
                 <div class="_flex wrap_certificates">
@@ -268,8 +278,15 @@
                     <div class="coop_caption_mob"><?=$block_sot_subcaption?></div>
                 </div>
             </div>
-            <div class="product_images">
-            </div>
+            <?php if($about){?>
+                <div class="product_images _flex _center">
+                    <?php foreach($about as $itm){ ?>
+                        <div class="product_itm_image">
+                            <img src="<?=$itm['image']?>" alt="<?=$itm['name']?>"/>
+                        </div>
+                    <?php }?>
+                </div>
+            <?php }?>
         </section>
     <?php }?>
     <?php if(isset($block_bform_status) and $block_bform_status) {?>

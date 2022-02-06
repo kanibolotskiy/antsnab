@@ -192,6 +192,12 @@
     .inputRow{
         font-size:16px;
     }
+    .bottom_form_info{
+        flex-direction:column;
+    }
+    .bform_form .form_row{
+        width:100%;
+    }
 
 }
 @media all and (max-width: 750px) {

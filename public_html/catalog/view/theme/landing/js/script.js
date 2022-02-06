@@ -240,8 +240,9 @@ $(document).ready(function(){
             }
 
             //btn_item.attr("disabled",true);
-            btn_item.addClass("sended");
+            
             if(flag){
+                btn_item.addClass("sended");
                 var form = form_item.closest('form')[0];
                 var data = new FormData(form);
                 $.ajax({

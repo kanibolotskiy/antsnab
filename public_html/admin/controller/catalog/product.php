@@ -1910,6 +1910,8 @@ if ($this->config->get('config_editor_default')) {
         $data['product_lp_price']=isset($data_lp['product_lp_price'])?$data_lp['product_lp_price']:0;
         $data['product_lp_doc']=isset($data_lp['product_lp_doc'])?$data_lp['product_lp_doc']:[];
         $data['product_lp_video']=isset($data_lp['product_lp_video'])?$data_lp['product_lp_video']:[];
+		$data['product_lp_noiden']=isset($data_lp['product_lp_noiden'])?$data_lp['product_lp_noiden']:0;
+		$data['product_lp_about']=isset($data_lp['product_lp_about'])?$data_lp['product_lp_about']:0;
 
         //$data['product_lp_landing']=isset($data_lp['product_lp_landing'])?$data_lp['product_lp_landing']:"";
 		$data['landing_id']=isset($product_info['landing_id'])?$product_info['landing_id']:"";

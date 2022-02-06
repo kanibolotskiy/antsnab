@@ -246,6 +246,7 @@ header{
     background-image:url(../img/ln_bg.jpg);
     background-size:cover;
     border-radius:3px;
+    mix-blend-mode: multiply;
 }
 
 .wrapper_block2_img{  
@@ -642,7 +643,7 @@ footer{
     max-width:100%;height:auto;
 }
 .wrap_certificates{
-    margin-top:40px;
+    /*margin-top:40px;*/
 }
 .cert_row_open a{
     display:block;color:#000;text-decoration:none;
@@ -1418,9 +1419,14 @@ a.pack_itm{
 
 }
 .color_block{
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     margin-right: 10px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+.color_block._transparent{
+    background-image: url(../img/bg_transparent.png);
 }
 .pack_items_product{
     justify-content:flex-start
@@ -1565,4 +1571,17 @@ img {
 
 img[data-src] {
 	opacity: 0;
+}
+.product_itm_image img{
+    mix-blend-mode: multiply;
+}
+.product_images{
+    margin-top:20px;
+    margin-bottom:-85px;
+}
+.product_itm_image img{
+    max-width:180px;height:auto;
+}
+.certificates_container{
+    padding-top:0;   
 }
