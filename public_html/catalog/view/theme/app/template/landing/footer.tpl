@@ -131,12 +131,15 @@
 <link rel="stylesheet" href="catalog/view/theme/landing/css/jquery.fancybox.min.css"/>
 <link rel="stylesheet" href="catalog/view/theme/landing/css/nice-select.css"/>
 <link rel="stylesheet" href="catalog/view/theme/landing/css/intlTelInput.min.css"/>
+<link rel="stylesheet" href="catalog/view/theme/landing/css/slick.css"/>
+
 
 <script src="catalog/view/theme/landing/js/jquery-3.2.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
 <script src="catalog/view/theme/landing/js/jquery.inputmask.min.js"></script>
 <script src="catalog/view/theme/landing/js/jquery.fancybox.min.js"></script>
 <script src="catalog/view/theme/landing/js/jquery.nice-select.min.js"></script>
+<script src="catalog/view/theme/landing/js/slick.min.js"></script>
 <script src="catalog/view/theme/landing/js/intlTelInput-jquery.min.js"></script>
 
 

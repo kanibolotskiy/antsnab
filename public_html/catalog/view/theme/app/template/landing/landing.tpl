@@ -270,39 +270,45 @@
         </section>
     <?php }?>
     <?php if(isset($block_sot_status) and $block_sot_status) {?>
+        
         <section class="_grey container sot_container">
-            <div class="wrapper">
-                <div class="_flex _between coop">
-                    <div class="coop_left">
-                        <div class="block_caption"><?=$block_sot_caption?></div>
-                        <div class="coop_caption"><?=$block_sot_subcaption?></div>
-                    </div>
-                    <div class="coop_right">
-                        <div class="coop_text">
-                            <?=html_entity_decode($block_sot_text)?>
+            <div class="wrapper_sot_container">
+                <div class="wrapper">
+                    <div class="_flex _between coop">
+                        <div class="coop_left">
+                            <div class="block_caption"><?=$block_sot_caption?></div>
+                            <div class="coop_caption"><?=$block_sot_subcaption?></div>
                         </div>
+                        <div class="coop_right">
+                            <div class="coop_text">
+                                <?=html_entity_decode($block_sot_text)?>
+                            </div>
+                        </div>
+                        <div class="coop_caption_mob"><?=$block_sot_subcaption?></div>
                     </div>
-                    <div class="coop_caption_mob"><?=$block_sot_subcaption?></div>
                 </div>
+                <?php if($about){?>
+                    <div class="product_images _flex _center">
+                        <?php foreach($about as $itm){ ?>
+                            <div class="product_itm_image">
+                                <img src="<?=$itm['image']?>" alt="<?=$itm['name']?>"/>
+                            </div>
+                        <?php }?>
+                    </div>
+                <?php }?>
             </div>
-            <?php if($about){?>
-                <div class="product_images _flex _center">
-                    <?php foreach($about as $itm){ ?>
-                        <div class="product_itm_image">
-                            <img src="<?=$itm['image']?>" alt="<?=$itm['name']?>"/>
-                        </div>
-                    <?php }?>
-                </div>
-            <?php }?>
+            
         </section>
     <?php }?>
-    <?php if(isset($block_bform_status) and $block_bform_status) {?>
+    
         <section class="container container_bottom_form" id="bottom_form">
             <div class="wrapper">
+            <?php if(isset($block_bform_status) and $block_bform_status) {?>
                 <?=$bform?>
+            <?php }?>
             </div>
         </section>
-    <?php }?>
+    
 <div style="display:none;" id="landing_id" data-id="<?=$landing_id?>"></div>
 <?=$footer?>
 

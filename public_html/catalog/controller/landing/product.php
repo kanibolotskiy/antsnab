@@ -172,6 +172,7 @@ class ControllerLandingProduct extends Controller {
         foreach($images as $image){
             $data['images'][]=Array(
                 'mini'=>$this->model_tool_image->resize($image['image'], 160, 160),
+                'big'=>$this->model_tool_image->resize($image['image'], 600, 600),
                 'image'=>'image/'.$image['image']
             );
         }

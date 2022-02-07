@@ -482,5 +482,6 @@
 
     .props_table_cell_name{width:100%;padding-bottom:0px;padding-left:0;}
     .props_table_row_head{display:none;}
-
+    .wrapper_cert_img{margin-left:0;}
+    .wrapper_cert_img img{width:100%;height: auto;}
 }

@@ -1,6 +1,28 @@
 <?php
 class ControllerLandingLanding extends Controller {
-    
+    private function setnTelegram(){
+        $tg_user = '1234567890'; // id пользователя, которому отправиться сообщения
+        $bot_token = '1234567890:XXXXXX'; // токен бота
+        
+        $text = "Первая строка сообщения <a href='https://vk-book.ru/'>со ссылкой</a> \n Вторая строка с <b>жирным</b> текстом";
+        
+        // параметры, которые отправятся в api телеграмм
+        $params = array(
+            'chat_id' => $tg_user, // id получателя сообщения
+            'text' => $text, // текст сообщения
+            'parse_mode' => 'HTML', // режим отображения сообщения, не обязательный параметр
+        );
+        
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, 'https://api.telegram.org/bot' . $bot_token . '/sendMessage'); // адрес api телеграмм
+        curl_setopt($curl, CURLOPT_POST, true); // отправка данных методом POST
+        curl_setopt($curl, CURLOPT_TIMEOUT, 10); // максимальное время выполнения запроса
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $params); // параметры запроса
+        $result = curl_exec($curl); // запрос к api
+        curl_close($curl);
+        
+        var_dump(json_decode($result));
+    }
     public function sendForm(){
         $this->load->model('landing/landing');
         $this->load->model('module/referrer');
@@ -16,9 +38,10 @@ class ControllerLandingLanding extends Controller {
             $out['file']='';
             switch ($data['tp']){
                 case 1: //Простая форма
-                    $subject="Landing page / простая форма";
+                    
                     $out['test']=$landingData['form_file'];
                     if($landingData['form_file']){
+                        $subject="Landing page / простая форма с КП";
                         $price_str="";
                         $data['caption']="Заполнена простая форма с КП";
                         $data['text']="Клиент заполнил простую форму на нашем сайте и получил Коммерческое предложение с ценами ".$price_str.".<br/>
@@ -30,6 +53,8 @@ class ControllerLandingLanding extends Controller {
                         }
                     }else{
                         $data['caption']="Заполнена простая форма";
+                        $subject="Landing page / простая форма";
+                        
                         $data['text']="Клиент заполнил простую форму на нашем сайте и ждет вашего звонка.<br/>
                         Живенько-быренько принимаем обращение, создаем интерес и набираем его номер.";
                     }

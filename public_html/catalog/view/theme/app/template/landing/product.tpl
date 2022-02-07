@@ -50,6 +50,29 @@
                     <div class="back_link">
                         <a href="<?=$landing_alias?>">Вернуться назад</a>
                     </div>
+
+                    <div class='slider'>
+                        <?php foreach($images as $key=>$image){?>
+                            
+                            <div class="product_gallery_item">
+                                <a data-fancybox="gallery" data-caption="<?=$name?>. Фото #<?=($key+1)?>" class="fancybox" href="<?=$image['image']?>" >
+                                    <img src="<?=$image['big']?>" />
+                                </a>
+                            </div>
+                        
+                        <?php }?>
+                    </div>
+
+                    <div class='slider-nav'>
+                        <?php foreach($images as $key=>$image){?>
+                        
+                            <div class="product_gallery_item">
+                                <img src="<?=$image['mini']?>" />
+                            </div>
+                    
+                        <?php }?>
+                    </div>
+                    <!--
                     <div class="main_product_image">
                         <a data-fancybox="gallery" class="fancybox" data-caption="<?=$name?>" href="<?=$images[0]['image']?>"><img src="<?=$images[0]['big']?>" alt="<?=$name?>"/></a>
                     </div>
@@ -64,6 +87,7 @@
                             <?php }?>
                         <?php }?>
                     </div>
+                    -->
                     <?php if(isset($block1_form_status) and $block1_form_status) {?>
                         <div class="product_form">
                             <div class="product_form_info _flex _vcenter _between">

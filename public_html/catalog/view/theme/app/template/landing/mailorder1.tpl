@@ -104,17 +104,6 @@
                 </td>
             </tr>
             <?php }?>
-
-            <tr>
-                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    Дата
-                </td>
-                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    <span name="order_date"><?php echo date("d.m.Y"); ?></span>
-                </td>
-            </tr>
-            
-
         </tbody>
     </table>
     <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;" name="tag">
