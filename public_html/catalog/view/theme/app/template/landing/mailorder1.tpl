@@ -62,14 +62,16 @@
             <?php }?>
 
             <?php if(isset($product)){ ?>
-            <tr>
-                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    Товар
-                </td>
-                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    <span name="order_product"><?php echo $product; ?></span>
-                </td>
-            </tr>
+                <?php if ($product){ ?>
+                <tr>
+                    <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+                        Товар
+                    </td>
+                    <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+                        <span name="order_product"><?php echo $product; ?></span>
+                    </td>
+                </tr>
+                <?php }?>
             <?php }?>
             <?php if(isset($sku)){ ?>
             <tr>
