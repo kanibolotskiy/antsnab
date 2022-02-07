@@ -113,7 +113,7 @@ class ControllerLandingProduct extends Controller {
         if($files){
             foreach($files as $file){
                 $data['product_lp_docs'][]=Array(
-                    "text"=>$file['name'],
+                    "text"=>$file['text'],
                     "file"=>'files/landing/'.$file['file']
                 );
             }
