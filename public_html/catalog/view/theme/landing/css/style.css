@@ -1621,3 +1621,6 @@ img[data-src] {
     transform:rotate(90deg);
 }
 .slider-nav{display:flex;flex-wrap: wrap;justify-content: center;}
+.popup_form .form_row{
+    width:100%!important;
+}
