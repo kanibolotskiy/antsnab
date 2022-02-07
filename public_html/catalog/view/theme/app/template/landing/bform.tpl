@@ -13,7 +13,9 @@
                     <input class="inpF" type="hidden" name="landing" value="<?=$title?>"/>
                     <input class="inpF" type="hidden" name="landing_id" value="<?=$landing_id?>"/>
                     <input class="inpF" type="text" name="workemail" value=""/>
+                    <input class="inpF" type="hidden" name="gf" value="1"/>
                     <input type="hidden" name="subject" value="Заказ звонка"/>
+                    <input type="hidden" name="tp" value="1"/>
 
                     <div class="form_rows ">
                         <div class="form_row">

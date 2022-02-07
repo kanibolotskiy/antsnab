@@ -54,7 +54,6 @@ class ControllerLandingLanding extends Controller {
 
                 $type_price=$data_lp['product_lp_price'];
             }
-            echo "type_price=".$type_price;
             switch ($type_price){
                 case 0: //Не показывать цену
                     $price_str="";
