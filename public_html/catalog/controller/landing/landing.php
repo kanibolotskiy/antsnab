@@ -36,15 +36,54 @@ class ControllerLandingLanding extends Controller {
             
             $mailto=$landingData['mail1'];
             $out['file']='';
+
+
+            if($landingData['landprice']){
+                $type_price=$landingData['landprice'];
+            }else{
+                //print_r($landingData['product_list']);
+                $pr_temp=explode(",",$landingData['product_list'][0]);
+                
+
+                //echo "pro_id=".;
+                $product_data=$this->model_landing_landing->getProductInfo($pr_temp[0]);
+                //$data_lp=json_encode($productData,TRUE);
+                $data_lp=json_decode(str_replace(array("\r\n", "\n", "\r"),'',$product_data['data_lp']),JSON_UNESCAPED_UNICODE);
+               //print_r($data_lp);
+                //$dataProduct=$landingData['']
+
+                $type_price=$data_lp['product_lp_price'];
+            }
+            echo "type_price=".$type_price;
+            switch ($type_price){
+                case 0: //Не показывать цену
+                    $price_str="";
+                    break;
+                case 1: //Розничная
+                    $price_str="Розничная";
+                    break;
+                case 2: //Оптовая
+                    $price_str="Оптовая";                    
+                    break;
+                case 3: //С1
+                    $price_str="Цена C1";
+                    break;
+                case 4: //С2
+                    $price_str="Цена C2";
+                    break;
+                case 5: //С3
+                    $price_str="Цена C3";
+                    break;                    
+            }
+            
             switch ($data['tp']){
                 case 1: //Простая форма
                     
-                    $out['test']=$landingData['form_file'];
+                    //$out['test']=$landingData['form_file'];
                     if($landingData['form_file']){
                         $subject="Landing page / простая форма с КП";
-                        $price_str="";
                         $data['caption']="Заполнена простая форма с КП";
-                        $data['text']="Клиент заполнил простую форму на нашем сайте и получил Коммерческое предложение с ценами ".$price_str.".<br/>
+                        $data['text']="Клиент заполнил простую форму на нашем сайте и получил Коммерческое предложение с ценами '".$price_str."'.<br/>
                         Живенько-быренько принимаем обращение, создаем интерес и набираем его номер.";
                         if(isset($data['gf'])){
                             if($data['gf']){
@@ -174,6 +213,9 @@ class ControllerLandingLanding extends Controller {
                 break;
             case 4: //С2
                 $product_data['price_str']="от ".number_format($product_data['price_c2'], 0, ',', ' ').' ₽';
+                break;
+            case 4: //С3
+                $product_data['price_str']="от ".number_format($product_data['price_c3'], 0, ',', ' ').' ₽';
                 break;
         }
         $data['alias']=$landingAlias."/".$alias."/";
