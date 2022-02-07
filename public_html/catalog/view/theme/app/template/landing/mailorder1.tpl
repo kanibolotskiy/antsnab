@@ -71,6 +71,16 @@
                 </td>
             </tr>
             <?php }?>
+            <?php if(isset($sku)){ ?>
+            <tr>
+                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+                    Артикул
+                </td>
+                <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+                    <span name="order_art"><?php echo $sku; ?></span>
+                </td>
+            </tr>
+            <?php }?>
 
             <?php if(isset($inn)){ ?>
             <tr>

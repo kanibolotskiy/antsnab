@@ -192,9 +192,11 @@ $(document).ready(function(){
                 itm.find(".product_price").html(json['price']);
 
                 var itm_name=itm.find(".product_title a");
+                itm.find(".product_sku").html(json['sku']);
                 itm_name.attr("href",json['alias']);
                 itm_name.css({"opacity":0});
                 itm_name.html(json['name']);
+                
                 itm_name.animate({"opacity":1},150);
 
                 var itm_img=itm.find(".product_img");
@@ -369,17 +371,22 @@ $(document).ready(function(){
 
     $(".product_form_button").click(function(){
         var product=$(this).closest(".wrapper_product").find(".block_caption").text();
-        $("#modal_product").val(product)
+        $("#modal_product").val(product);
+        $("#modal_product_sku").val($(this).closest(".wrapper_product").find(".product_sku").text())
+
         $(".popup").hide();
         $("#popup_landing").show();
-        $("body").css({"overflow":"hidden","margin-right":scrollWidth})
-        $("header").css({"right":scrollWidth})
+        $("body").css({"overflow":"hidden","margin-right":scrollWidth});
+        $("header").css({"right":scrollWidth});
         $(".popups").fadeIn(200);
     });
 
     $(".open_popup_product").click(function(){
         var product=$(this).closest(".product_itm").find(".product_title a").text();
         $("#modal_product").val(product)
+
+        $("#modal_product_sku").val($(this).closest(".product_itm").find(".product_sku").text())
+
         $(".popup").hide();
         $("#popup_landing").show();
         $("body").css({"overflow":"hidden","margin-right":scrollWidth})

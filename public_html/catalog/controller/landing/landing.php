@@ -148,11 +148,18 @@ class ControllerLandingLanding extends Controller {
         $product_data=$this->model_landing_landing->getProductInfo($product_id);
         $data_lp=json_decode(str_replace(array("\r\n", "\n", "\r"),'',$product_data['data_lp']),JSON_UNESCAPED_UNICODE);
         
+        $data_landing=$this->model_landing_landing->getLandingInfo($landing_id);
+
         if($data_lp['product_lp_name']){
             $product_data['name'] =$data_lp['product_lp_name'];
         }
-        //print_r($product_data);
-        switch ($data_lp['product_lp_price']){
+        if($data_landing['landprice']){
+            $type_price=$data_landing['landprice'];
+        }else{
+            $type_price=$data_lp['product_lp_price'];
+        }
+
+        switch ($type_price){
             case 0: //Не показывать цену
                 $product_data['price_str']="";
                 break;
@@ -173,6 +180,8 @@ class ControllerLandingLanding extends Controller {
         $data['thumb'] = $this->model_tool_image->resize($product_data['image'], 560, 560);
         $data['image']=$product_data['image'];
         $data['name']=$product_data['name'];
+        $data['sku']=$product_data['sku'];
+
         if(isset($product_data['price_str'])){
             $data['price']=$product_data['price_str'];
         }else{
@@ -251,8 +260,14 @@ class ControllerLandingLanding extends Controller {
                                 $product_data['description_mini'] = $data_lp['product_lp_lsi'];
                             }
 
+                            if($data['landprice']){
+                                $type_price=$data['landprice'];
+                            }else{
+                                $type_price=$data_lp['product_lp_price'];
+                            }
                             //print_r($product_data);
-                            switch ($data_lp['product_lp_price']){
+                            //switch ($data_lp['product_lp_price']){
+                            switch ($type_price){
                                 case 0: //Не показывать цену
                                     $product_data['price_str']="";
                                     break;

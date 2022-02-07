@@ -204,6 +204,12 @@
     .product_images{
         margin-bottom:-75px;
     }
+    .wrap_certificates{
+        flex-direction: column;
+    }
+    .cert_column_files{width:100%;}
+    .cert_column_bg{width:100%;}
+
 }
 @media all and (max-width: 750px) {
     .product_itm_image img{

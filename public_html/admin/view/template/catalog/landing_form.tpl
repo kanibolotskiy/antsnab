@@ -79,7 +79,19 @@
                                     <input type="text" name="logotext" value="<?php echo $logotext; ?>" placeholder="<?php echo $entry_logotext; ?>" id="input-logotext" class="form-control" />                                    
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-landprice">Цены в лендинге</label>
+                                <div class="col-sm-10">
+                                    <select name="landprice" id="input-landprice" class="form-control">
+                                        <option value="0" <?=$landprice==0?'selected':''?>>Не переопределять</option>
+                                        <option value="1" <?=$landprice==1?'selected':''?>>Розница</option>
+                                        <option value="2" <?=$landprice==2?'selected':''?>>Опт</option>
+                                        <option value="3" <?=$landprice==3?'selected':''?>>Цена С1</option>
+                                        <option value="4" <?=$landprice==4?'selected':''?>>Цена С2</option>
+                                        <option value="5" <?=$landprice==5?'selected':''?>>Цена С3</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
                                 <div class="col-sm-10">

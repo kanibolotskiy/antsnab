@@ -45,6 +45,7 @@
 
 
         <div class="_flex wrapper_product">
+            <div style="display:none" class="product_sku"><?=$sku?></div>
             <div class="product_image">
                 <div class="wrapper_product_image">
                     <div class="back_link">

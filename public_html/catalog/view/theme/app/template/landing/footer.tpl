@@ -14,6 +14,8 @@
                     <input class="inpF" type="hidden" name="tp" value="3"/>
 
 <input type="hidden" name="product" value="" id="modal_product"/>
+<input type="hidden" name="sku" value="" id="modal_product_sku"/>
+
                     <div class="form_rows ">
                         <div class="form_row">
                             <input placeholder="Имя *" name="name" type="text" class="inputRow inputForm required" />

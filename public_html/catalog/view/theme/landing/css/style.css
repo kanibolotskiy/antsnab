@@ -1624,3 +1624,4 @@ img[data-src] {
 .popup_form .form_row{
     width:100%!important;
 }
+.product_gallery_item img{margin:0 auto;}

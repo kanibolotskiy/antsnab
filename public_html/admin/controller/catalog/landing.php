@@ -397,6 +397,7 @@ class ControllerCatalogLanding extends Controller {
 			$data['meta_title']=isset($landing_info['meta_title'])?$landing_info['meta_title']:'';
 			$data['meta_description']=isset($landing_info['meta_description'])?$landing_info['meta_description']:'';
 			$data['logotext']=isset($landing_info['logotext'])?$landing_info['logotext']:'';
+			$data['landprice']=isset($landing_info['landprice'])?$landing_info['landprice']:0;
 
 			$data['sort_order']=isset($landing_info['sort_order'])?$landing_info['sort_order']:'';
 			$data['status']=isset($landing_info['status'])?$landing_info['status']:1;

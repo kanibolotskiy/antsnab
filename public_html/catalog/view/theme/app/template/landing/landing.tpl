@@ -117,6 +117,7 @@
                                 
                                     <div class="product_itm">
                                         <div class="product_itm_info">
+                                            <div style="display:none" class="product_sku"><?=$product['sku']?></div>
                                             <div class="product_img">
                                                 <a href="<?=$product['alias']?>" title="<?=$product['name']?>">
                                                     <img src="<?=$product['thumb']?>" alt="<?=$product['name']?>"/>

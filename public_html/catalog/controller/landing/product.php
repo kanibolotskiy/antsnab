@@ -45,6 +45,8 @@ class ControllerLandingProduct extends Controller {
         $contact_data_referrer['logotext']=$landing_data['logotext'];
         
         $data['product_id']=$product_id;
+        $data['sku']=$product_data['sku'];
+
         $data['landing_alias']=$landing_alias;
 
         if(isset($product_data['data_lp'])){
@@ -140,7 +142,15 @@ class ControllerLandingProduct extends Controller {
         $data['block1_form_caption']=$data_lp['block1_form_caption'];
         */
 
-        switch ($data_lp['product_lp_price']){
+        if($landing_data['landprice']){
+            $type_price=$landing_data['landprice'];
+        }else{
+            $type_price=$data_lp['product_lp_price'];
+        }
+
+        //switch ($data_lp['product_lp_price']){
+        switch ($type_price){
+
             case 0: //Не показывать цену
                 $data['price_str']="";
                 break;
