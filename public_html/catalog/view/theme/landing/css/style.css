@@ -1381,7 +1381,7 @@ a.pack_itm{
     color:#CD9A67;
 }
 .bform_info .bform_caption{
-    margin-right:20px;
+    margin-right:20px;display:inline;
 }
 .bform_form{
     position:relative;

@@ -370,6 +370,11 @@ $(document).ready(function(){
     });
 
     $(".product_form_button").click(function(){
+        var st=$("#bottom_form").offset().top
+        $(".wrp_mob_menu").removeClass("active");
+        $("html,body").animate({"scrollTop":st},700);
+
+        /*
         var product=$(this).closest(".wrapper_product").find(".block_caption").text();
         $("#modal_product").val(product);
         $("#modal_product_sku").val($(this).closest(".wrapper_product").find(".product_sku").text())
@@ -379,6 +384,8 @@ $(document).ready(function(){
         $("body").css({"overflow":"hidden","margin-right":scrollWidth});
         $("header").css({"right":scrollWidth});
         $(".popups").fadeIn(200);
+        */
+
     });
 
     $(".open_popup_product").click(function(){
