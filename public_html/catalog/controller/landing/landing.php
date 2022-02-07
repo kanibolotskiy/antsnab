@@ -277,7 +277,9 @@ class ControllerLandingLanding extends Controller {
                 "block_bform_perc"=>$data["block_bform_perc"],
                 "mailthanks"=>$data["mailthanks"],
                 "mailthanks_full"=>$data["mailthanks_full"],
-                "mailthanks_modal"=>$data["mailthanks_modal"]
+                "mailthanks_modal"=>$data["mailthanks_modal"],
+                "product_name"=>""
+
             ]);
             
             

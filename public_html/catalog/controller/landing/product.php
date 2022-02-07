@@ -445,7 +445,16 @@ class ControllerLandingProduct extends Controller {
                ];
             }
         }
-        $data['bform']=$this->load->controller('landing/bform',["title"=>$landing_data['title'],"landing_id"=>$landing_id,"block_bform_caption"=>$landing_data["block_bform_caption"],"block_bform_perc"=>$landing_data["block_bform_perc"],"mailthanks"=>$landing_data["mailthanks"],"mailthanks_full"=>$landing_data["mailthanks_full"]]);
+        $data['bform']=$this->load->controller('landing/bform',[
+            "title"=>$landing_data['title'],
+            "landing_id"=>$landing_id,
+            "block_bform_caption"=>$landing_data["block_bform_caption"],
+            "block_bform_perc"=>$landing_data["block_bform_perc"],
+            "mailthanks"=>$landing_data["mailthanks"],
+            "mailthanks_full"=>$landing_data["mailthanks_full"],
+            "product_name"=>$data['name']
+        ]);
+        
         $this->response->setOutput($this->load->view('landing/product.tpl', $data));
     }
 }
