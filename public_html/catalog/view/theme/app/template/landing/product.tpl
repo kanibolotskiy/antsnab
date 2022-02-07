@@ -277,7 +277,9 @@
                             <div class="prop_block">
                                 <div class="product_docs _flex _wrap">
                                     <?php foreach($product_lp_docs as $doc){?>
-                                    <div class="product_doc"><a href="files/landing/<?=$doc['file']?>" download><?=$doc['text']?></a></div>
+                                    <div class="product_doc">
+                                        <a href="<?=$doc['file']?>" download><?=$doc['text']?></a>
+                                    </div>
                                     <?php }?>
                                 </div>
                             </div>

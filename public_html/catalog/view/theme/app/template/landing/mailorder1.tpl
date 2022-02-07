@@ -6,9 +6,16 @@
 </head>
 <body style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000;">
 
+<table style="border-collapse:collapse;">
+    <tr>
+        <td style="width:100px;"><img width="95" height="95" src="https://ant-snab.ru/image/catalog/logo.jpg"></td>
+        <td style="padding:4px 10px;font-weight: bold;font-size: 16px;color: red;"><?php echo $caption;?></td>
+    </tr>
+</table>
+
 <div style="width: 680px;">
     <p style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight:bold; color: #000000;">
-        <?=$subject?>
+        <?=$text?>
     </p>
     <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;" name="info">
         <tbody>
@@ -103,7 +110,7 @@
                     Дата
                 </td>
                 <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    <?php echo date("d.m.Y"); ?>
+                    <span name="order_date"><?php echo date("d.m.Y"); ?></span>
                 </td>
             </tr>
             

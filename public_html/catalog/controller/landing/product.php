@@ -20,13 +20,7 @@ class ControllerLandingProduct extends Controller {
 		} else {
 			$landing_id = 0;
 		}
-        /*
-        if (isset($this->request->get['landing_product_id'])) {
-			$product_id = (int)$this->request->get['landing_product_id'];
-		} else {
-			$product_id = 0;
-		}
-        */
+        
         $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         $url = explode('?', $url);
         $url = rtrim($url[0],"/");
@@ -40,20 +34,7 @@ class ControllerLandingProduct extends Controller {
         }
 
         
-
-        //landingProductID($alias)
-/*
-        echo "!landing_id=".$landing_id."!<br/>";
-        echo "!product_id=".$product_id."!";
         
-        */
-        /*
-        echo "!landing_id=".$landing_id."!<br/>";
-        echo "!product_id=".$product_id."!<br/>";
-        $product_id=746;
-        $landing_id=1;
-        */
-
         $landing_alias=$this->model_landing_landing->getLandingAlias($landing_id);
         
         $product_data=$this->model_landing_landing->getProductFullInfo($product_id);
@@ -127,7 +108,26 @@ class ControllerLandingProduct extends Controller {
         $data['block_benefit_pr_status']=isset($landing_data['block_benefit_pr_status'])?$landing_data['block_benefit_pr_status']:0;
         $data['block_benefit_pr']=isset($landing_data['block_benefit_pr'])?$landing_data['block_benefit_pr']:[];
         
-        $data['product_lp_docs']=isset($data_lp['product_lp_doc'])?$data_lp['product_lp_doc']:[];
+        $files=isset($data_lp['product_lp_doc'])?$data_lp['product_lp_doc']:[];
+        
+        if($files){
+            foreach($files as $file){
+                $data['product_lp_docs'][]=Array(
+                    "text"=>$file['name'],
+                    "file"=>'files/landing/'.$file['file']
+                );
+            }
+            //$data['product_lp_docs']=$files;
+        }else{
+            $files=$this->model_landing_landing->productFiles($product_id);
+            foreach($files as $file){
+                $data['product_lp_docs'][]=Array(
+                    "text"=>$file['name'],
+                    "file"=>'files/'.$file['file']
+                );
+            }
+            //$data['product_lp_docs']=$files;
+        }
         
          
         $data['block_bform_caption']=$landing_data['block_bform_caption'];

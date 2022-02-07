@@ -13,32 +13,37 @@
             <div class="_flex _vcenter wrapper_block1">
                 <div class="block1_text">
                     
-                    <?php if(isset($block1_form_status) and $block1_form_status) {?>
-                        <div class="block1_text_info ">
-                            <div class="main_caption"><?=$block1_caption?></div>
-                            <div class="block1_form">
+                    
+                    <div class="block1_text_info ">
+                        <div class="main_caption"><?=$block1_caption?></div>
+                        <div class="block1_form">
+                            <?php if(isset($block1_form_status) and $block1_form_status) {?>
                                 <div class="main_discount">
-                                    <?=$block1_form_caption?> <div><span><?=$block1_form_text?></span></div>
+                                    <?=$block1_form_caption?> 
+                                    <div><span><?=$block1_form_text?></span></div>
                                 </div>
-                                <div class="main_block1_form wrap_form" >
-                                    <form action="#" method="POST" data-goal="lp-send-form-up">
-                                        <div class="wrap_form_phone _flex _between">
-                                            <input class="inpF" type="hidden" name="landing" value="<?=$title?>"/>
-                                            <input class="inpF" type="hidden" name="landing_id" value="<?=$landing_id?>"/>
-                                            <input class="inpF" type="hidden" name="gf" value="1"/>
-                                            <input class="inpF" type="text" name="workemail" value=""/>
-                                            <input type="hidden" name="subject" value="Заказ звонка"/>
-                                            <input type="phone" name="phone" class="inputForm inputPhone required" />                                            
-                                            <button class="sendForm btn _orange phoneButton" type="submit">Получить предложение</button>
-                                        </div>
-                                    </form>
-                                    <div class="form_thanks">
-                                        <?=html_entity_decode($mailthanks)?>
+                            <?php }?>
+                            <?php if(isset($block1_form_status) and $block1_form_status) {?>
+                            <div class="main_block1_form wrap_form" >
+                                <form action="#" method="POST" data-goal="lp-send-form-up">
+                                    <div class="wrap_form_phone _flex _between">
+                                        <input class="inpF" type="hidden" name="landing" value="<?=$title?>"/>
+                                        <input class="inpF" type="hidden" name="landing_id" value="<?=$landing_id?>"/>
+                                        <input class="inpF" type="hidden" name="gf" value="1"/>
+                                        <input class="inpF" type="text" name="workemail" value=""/>
+                                        <input type="hidden" name="tp" value="1"/>
+                                        <input type="phone" name="phone" class="inputForm inputPhone required" />                                            
+                                        <button class="sendForm btn _orange phoneButton" type="submit">Получить предложение</button>
                                     </div>
+                                </form>
+                                <div class="form_thanks">
+                                    <?=html_entity_decode($mailthanks)?>
                                 </div>
                             </div>
+                            <?php }?>
                         </div>
-                    <?php }?>
+                    </div>
+                    
                     
                 </div>
                 <div class="block1_img">
@@ -81,7 +86,8 @@
                         <div class="benefit_itm">
                             <div class="benefit_itm_info">
                                 <div class="benefit_ico"><img src="image/<?=$block3_benefit['image']?>" /></div>
-                                <div class="benefit_text"><?=$block3_benefit['text']?></div>
+                                <div class="benefit_text">
+                                <?=html_entity_decode($block3_benefit['text'])?></div>
                             </div>
                         </div>
                     <?php }?>
@@ -264,7 +270,7 @@
         </section>
     <?php }?>
     <?php if(isset($block_sot_status) and $block_sot_status) {?>
-        <section class="_grey container">
+        <section class="_grey container sot_container">
             <div class="wrapper">
                 <div class="_flex _between coop">
                     <div class="coop_left">
@@ -291,7 +297,7 @@
         </section>
     <?php }?>
     <?php if(isset($block_bform_status) and $block_bform_status) {?>
-        <section class="container" id="bottom_form">
+        <section class="container container_bottom_form" id="bottom_form">
             <div class="wrapper">
                 <?=$bform?>
             </div>

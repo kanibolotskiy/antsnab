@@ -400,7 +400,7 @@ class ControllerCatalogLanding extends Controller {
 
 			$data['sort_order']=isset($landing_info['sort_order'])?$landing_info['sort_order']:'';
 			$data['status']=isset($landing_info['status'])?$landing_info['status']:1;
-			$data['tp']=isset($landing_info['tp'])?$landing_info['tp']:1;
+			/*$data['tp']=isset($landing_info['tp'])?$landing_info['tp']:1;*/
 			$data['seo_url']= isset($landing_info['seo_url'])?$landing_info['seo_url']:'';
 
 			//Блок1

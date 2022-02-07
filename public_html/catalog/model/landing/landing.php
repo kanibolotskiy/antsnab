@@ -1,5 +1,9 @@
 <?php
 class ModelLandingLanding extends Model {
+    public function productFiles($product_id){
+        $query = $this->db->query("SELECT * FROM oc_file_page op LEFT JOIN oc_file of ON op.file_id=of.file_id left join oc_file_description od ON od.file_id=op.file_id WHERE page_id='".$product_id."' order by sort_order");
+		return $query->rows;
+    }
     public function addLandingHistory($data){
 		$sql="INSERT INTO landing_history (data,date)
 		VALUES('".json_encode($data,JSON_UNESCAPED_UNICODE)."',NOW())";

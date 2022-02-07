@@ -79,15 +79,7 @@
                                     <input type="text" name="logotext" value="<?php echo $logotext; ?>" placeholder="<?php echo $entry_logotext; ?>" id="input-logotext" class="form-control" />                                    
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_tp; ?></label>
-                                <div class="col-sm-10">
-                                    <select name="tp" id="input-status" class="form-control">
-                                        <option value="0" <?=$tp==0?'selected':''?>>Дилеры</option>
-                                        <option value="1" <?=$tp==1?'selected':''?>>Реклама</option>
-                                    </select>
-                                </div>
-                            </div>
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
                                 <div class="col-sm-10">

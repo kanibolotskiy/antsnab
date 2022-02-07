@@ -13,8 +13,49 @@ class ControllerLandingLanding extends Controller {
             $landingData=$this->model_landing_landing->getLandingInfo($landing_id);
             
             $mailto=$landingData['mail1'];
-            
+            $out['file']='';
+            switch ($data['tp']){
+                case 1: //Простая форма
+                    $subject="Landing page / простая форма";
+                    $out['test']=$landingData['form_file'];
+                    if($landingData['form_file']){
+                        $price_str="";
+                        $data['caption']="Заполнена простая форма с КП";
+                        $data['text']="Клиент заполнил простую форму на нашем сайте и получил Коммерческое предложение с ценами ".$price_str.".<br/>
+                        Живенько-быренько принимаем обращение, создаем интерес и набираем его номер.";
+                        if(isset($data['gf'])){
+                            if($data['gf']){
+                                $out['file']=$landingData['form_file'];
+                            }
+                        }
+                    }else{
+                        $data['caption']="Заполнена простая форма";
+                        $data['text']="Клиент заполнил простую форму на нашем сайте и ждет вашего звонка.<br/>
+                        Живенько-быренько принимаем обращение, создаем интерес и набираем его номер.";
+                    }
 
+                break;
+
+                case 2: //Полная форма
+                    $subject="Landing page / сложная форма";
+                    $data['caption']="Заполнена сложная форма";
+                    $data['text']="Клиент заполнил сложную форму на нашем сайте.<br/>
+                    Живенько-быренько принимаем обращение, создаем интерес, тщательно изучаем клиента (по сайту или названию компании) и только потом набираем его номер.";
+                break;
+
+                case 3: //Форма во всплывабщем окне
+                    $subject="Landing page / заявка";
+                    $data['caption']="Получена заявка";
+                    $data['text']="Клиент заинтересовался товаром.<br/>
+                    Живенько-быренько принимаем обращение, создаем интерес и набираем его номер.";
+                break;
+                default:
+                    $subject="";
+                    $data['caption']="";
+                    $data['text']="";
+                break;
+            }
+            
             if(!$mailto){
                 $mailto="info@ant-snab.ru1";
                 //$mailto="kanibolotskiy@gmail.com";
@@ -48,7 +89,7 @@ class ControllerLandingLanding extends Controller {
             }else{
                 $data['utm_term']="";
             }
-            $subject=$data['subject'];
+            //$subject=$data['subject'];
             $mail = new Mail();
             $mail->protocol = $this->config->get('config_mail_protocol');
             $mail->parameter = $this->config->get('config_mail_parameter');
@@ -59,17 +100,13 @@ class ControllerLandingLanding extends Controller {
             $mail->smtp_port = $this->config->get('config_mail_smtp_port');
             $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
             
-            $mail->setSubject($subject." (Лендинг)");
+            $mail->setSubject($subject);
             $mail->setHtml($this->load->view('landing/mailorder1', $data));
             $mail->setTo($mailto);
             $mail->setFrom($this->config->get('config_email'));
             $mail->setSender("ООО «ТК Ант-Снаб»");
             $mail->send();
-            if(isset($data['gf'])){
-                if($data['gf'] and $landingData['form_file']){
-                    $out['file']=$landingData['form_file'];
-                }
-            }
+            
         }
         $this->response->setOutput(json_encode($out,TRUE));
     }

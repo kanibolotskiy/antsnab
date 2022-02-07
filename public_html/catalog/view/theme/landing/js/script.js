@@ -65,6 +65,11 @@ function courier_select(max_weight){
         }
     }    
 }
+function close_popup(){
+    $(".popups").fadeOut(200);
+    $("body").css({"overflow":"auto","margin-right":0})
+    $("header").css({"right":0})
+}
 $(window).scroll(function(){
     check_scroll();
 });
@@ -216,6 +221,8 @@ $(document).ready(function(){
     $(".sendForm").click(function(e){
         e.preventDefault();
         var btn_item=$(this)
+        var modal_form=btn_item.closest(".popup").length;
+        
         if(!btn_item.hasClass("sended")){
             var form_item = $(this).closest("form");
             var form_thanks = form_item.closest(".wrap_form").find(".form_thanks");
@@ -245,6 +252,7 @@ $(document).ready(function(){
                 btn_item.addClass("sended");
                 var form = form_item.closest('form')[0];
                 var data = new FormData(form);
+                
                 $.ajax({
                     type: "POST",
                     enctype: 'multipart/form-data',
@@ -256,12 +264,13 @@ $(document).ready(function(){
                     dataType: "json",
                     timeout: 800000,
                     success: function (data) {
-                        console.log(data);
                         
-                        var link = document.createElement('a');
-                        link.setAttribute('href', 'files/landing/'+data['file']);
-                        link.setAttribute('download', data['file']);
-                        link.click();
+                        if(data['file']){
+                            var link = document.createElement('a');
+                            link.setAttribute('href', 'files/landing/'+data['file']);
+                            link.setAttribute('download', data['file']);
+                            link.click();
+                        }
                         
                         
                         form_item.hide();
@@ -276,6 +285,7 @@ $(document).ready(function(){
                         setTimeout(function(){
                             form_thanks.hide();
                             form_item.fadeIn(200);
+                            close_popup()
                         }, 3000);
                     },
                     error: function (e) {                
@@ -353,11 +363,8 @@ $(document).ready(function(){
         })
     });
     
-    $(".popup_overlay").click(function(){
-        $(".popups").fadeOut(200);
-        
-        $("body").css({"overflow":"auto","margin-right":0})
-        $("header").css({"right":0})
+    $(".popup_overlay,.close_popup_info").click(function(){
+        close_popup()
     });
 
     $(".product_form_button").click(function(){

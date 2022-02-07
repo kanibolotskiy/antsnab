@@ -3,15 +3,17 @@
     <div class="popup" id="popup_landing">
         <div class="popup_overlay"></div>
         <div class="wrap_popup">
+            <div class="close_popup"><div class="close_popup_info"></div></div>
             <div class="popup_form wrap_form">
+                
                 <form action="#" method="POST" data-goal="<?=($type=='prod')?'lp-zakaz-product':'lp-zakaz-catalog'?>" data-goal_alt="lp-zakaz-product">
                     <div class="modal_form_caption">Оставить заявку</div>
                     <input class="inpF" type="hidden" name="landing" value="<?=$title?>"/>
                     <input class="inpF" type="hidden" name="landing_id" value="<?=$landing_id?>"/>
                     <input class="inpF" type="text" name="workemail" value=""/>
+                    <input class="inpF" type="hidden" name="tp" value="3"/>
 
 <input type="hidden" name="product" value="" id="modal_product"/>
-<input type="hidden" name="subject" value="Заявка на товар"/>
                     <div class="form_rows ">
                         <div class="form_row">
                             <input placeholder="Имя *" name="name" type="text" class="inputRow inputForm required" />
@@ -20,7 +22,7 @@
                             <input name="phone" type="phone" class="inputRow inputForm required inputPhone" />
                         </div>
                         <div class="form_row">
-                            <input placeholder="E-mail *" name="email" type="text" class="inputRow inputForm" />
+                            <input placeholder="E-mail" name="email" type="text" class="inputRow inputForm" />
                         </div>
                         
                         <div class="form_row">

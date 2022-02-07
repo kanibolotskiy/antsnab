@@ -365,8 +365,10 @@
         overflow:hidden;
     }
     .map_img{
+        /*
         margin-left:-15px;
         margin-right: -160%;
+        */
     
     }
     .wrap_certificates{

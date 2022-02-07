@@ -47,7 +47,7 @@
                     <input class="inpF" type="hidden" name="landing" value="<?=$title?>"/>
                     <input class="inpF" type="hidden" name="landing_id" value="<?=$landing_id?>"/>
                     <input class="inpF" type="text" name="workemail" value=""/>
-                    <input type="hidden" name="subject" value="Запрос на скидку"/>
+                    <input class="inpF" type="hidden" name="tp" value="2"/>
 
                     <div class="form_rows ">
                         <div class="form_row">
@@ -60,7 +60,7 @@
                             <input placeholder="E-mail *" name="email" type="text" class="inputRow inputForm required" />
                         </div>
                         <div class="form_row">
-                            <input placeholder="ИНН" name="inn" type="text" class="inputForm inputRow half_required" />
+                            <input placeholder="ИНН *" name="inn" type="text" class="inputForm inputRow half_required" />
                             <div class="or_label">или</div>
                         </div>
                         <div class="form_row">
