@@ -1430,7 +1430,7 @@ a.pack_itm{
 }
 .pack_itm{
     padding: 5px 13px;
-    font-size:12px;
+    font-size:12px;line-height: 14px;
 }
 
 .color_itm{
