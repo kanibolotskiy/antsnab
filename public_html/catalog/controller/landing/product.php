@@ -134,7 +134,7 @@ class ControllerLandingProduct extends Controller {
          
         $data['block_bform_caption']=$landing_data['block_bform_caption'];
         $data['block_bform_perc']=$landing_data['block_bform_perc'];        
-
+        $data['block_bform_status']=$landing_data['block_bform_status'];        
         
         
         /*
@@ -142,7 +142,7 @@ class ControllerLandingProduct extends Controller {
         $data['block1_form_caption']=$data_lp['block1_form_caption'];
         */
 
-        if($landing_data['landprice']){
+        if($landing_data['landprice']>=0){
             $type_price=$landing_data['landprice'];
         }else{
             $type_price=$data_lp['product_lp_price'];

@@ -73,22 +73,7 @@
                     
                         <?php }?>
                     </div>
-                    <!--
-                    <div class="main_product_image">
-                        <a data-fancybox="gallery" class="fancybox" data-caption="<?=$name?>" href="<?=$images[0]['image']?>"><img src="<?=$images[0]['big']?>" alt="<?=$name?>"/></a>
-                    </div>
-                    <div class="main_product_gallery _flex _wrap _center">
-                        <?php foreach($images as $key=>$image){?>
-                            <?php if($key){?>
-                                <div class="product_gallery_item">
-                                    <a data-fancybox="gallery" data-caption="<?=$name?>. Фото #<?=($key+1)?>" class="fancybox" href="<?=$image['image']?>" >
-                                        <img src="<?=$image['mini']?>" />
-                                    </a>
-                                </div>
-                            <?php }?>
-                        <?php }?>
-                    </div>
-                    -->
+                    
                     <?php if(isset($block1_form_status) and $block1_form_status) {?>
                         <div class="product_form">
                             <div class="product_form_info _flex _vcenter _between">
@@ -111,8 +96,7 @@
                             <?php if($key==1){?>
                                 
                                 <a href="<?=$product_link['link']?>" class="_flex _vcenter pack_itm color_itm <?=$product_link['product_id']==$product_id?'active':''?>" data-id="<?=$product_link['product_id']?>">
-                                    <div class="color_block" style="background-color:#<?=$product_link['code']?>"></div>
-                                    <?=$product_link['name']?>
+                                    <div class="color_block" style="background-color:#<?=$product_link['code']?>" title="<?=$product_link['name']?>"></div>
                                 </a>
                             <?php }else{?>
                                 <a href="<?=$product_link['link']?>" class="pack_itm <?=$product_link['product_id']==$product_id?'active':''?>" data-id="<?=$product_link['product_id']?>">
@@ -122,13 +106,7 @@
                         <?php }?>
                     <?php }?>
                 </div>
-                <!--
-                <div class="_flex pack_items pack_items_product _wrap">
-                    <div class="change_itm pack_itm active" data-id="746">ведро, 16 кг</div>
-                    <div class="change_itm pack_itm " data-id="1015">ведро, 10кг</div>
-                    <div class="change_itm pack_itm " data-id="1016">ведро, 5 кг</div>
-                </div>
-                -->
+                
                 <div class="product_price product_product_price"><?=$price_str?></div>
                 <div class="product_text"><?=html_entity_decode($text)?></div>
 
@@ -335,9 +313,13 @@
                 </div>
             </div>
         <?php }?>
-        <section class="container bottom_form_product" id="bottom_form">
-            <?=$bform?>
-        </div>
+        <?php if(isset($block_bform_status) and $block_bform_status) {?>
+            <section class="container container_bottom_form" id="bottom_form">
+                <div class="wrapper">
+                    <?=$bform?>
+                </div>
+            </section>
+        <?php }?>
     </div>
 </section>
 <?=$footer?>

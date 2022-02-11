@@ -38,7 +38,7 @@ class ControllerLandingLanding extends Controller {
             $out['file']='';
 
 
-            if($landingData['landprice']){
+            if($landingData['landprice']>=0){
                 $type_price=$landingData['landprice'];
             }else{
                 //print_r($landingData['product_list']);
@@ -215,7 +215,7 @@ class ControllerLandingLanding extends Controller {
         if($data_lp['product_lp_name']){
             $product_data['name'] =$data_lp['product_lp_name'];
         }
-        if($data_landing['landprice']){
+        if($data_landing['landprice']>=0){
             $type_price=$data_landing['landprice'];
         }else{
             $type_price=$data_lp['product_lp_price'];
@@ -327,7 +327,7 @@ class ControllerLandingLanding extends Controller {
                                 $product_data['description_mini'] = $data_lp['product_lp_lsi'];
                             }
 
-                            if($data['landprice']){
+                            if($data['landprice']>=0){
                                 $type_price=$data['landprice'];
                             }else{
                                 $type_price=$data_lp['product_lp_price'];

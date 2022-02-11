@@ -302,13 +302,13 @@
         </section>
     <?php }?>
     
-        <section class="container container_bottom_form" id="bottom_form">
-            <div class="wrapper">
-            <?php if(isset($block_bform_status) and $block_bform_status) {?>
-                <?=$bform?>
-            <?php }?>
-            </div>
-        </section>
+    <section class="container container_bottom_form" id="bottom_form">
+        <div class="wrapper">
+        <?php if(isset($block_bform_status) and $block_bform_status) {?>
+            <?=$bform?>
+        <?php }?>
+        </div>
+    </section>
     
 <div style="display:none;" id="landing_id" data-id="<?=$landing_id?>"></div>
 <?=$footer?>
