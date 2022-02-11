@@ -1,0 +1,1 @@
+antsnab.cp06038.tmweb.ru [Fri Feb 11 23:10:34 2022] [error] [pid 14555] sapi_apache2.c(362): [client 93.126.92.50:42370] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home/c/cp06038/antsnab/public_html/catalog/controller/landing/product.php on line 108
