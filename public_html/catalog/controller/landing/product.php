@@ -407,8 +407,9 @@ class ControllerLandingProduct extends Controller {
         $data['products_links']=[];
         $data_lp['product_lp_notavail']=isset($data_lp['product_lp_notavail'])?$data_lp['product_lp_notavail']:0;
         if(!$data_lp['product_lp_notavail']){
+            unset($data_temp);
             foreach($products_links as $key1=>$products_link){
-                unset($data_temp);
+                
                 foreach($products_links[$key1] as $itm1){
                     if($itm1['product_id']==$product_id){
                         $flags[$key1]=true;

@@ -136,13 +136,13 @@
                                                 <?php foreach($product['products_links'] as $key=>$products_link){ ?>
                                                     <?php foreach($products_link as $product_link){?>
                                                         <?php if($key==1){?>
-                                                            <div class="_flex _vcenter change_itm pack_itm color_itm <?=$product_link['product_id']==$product['product_id']?'active':''?>" data-id="<?=$product_link['product_id']?>">
+                                                            <div class="_flex _vcenter change_itm pack_itm color_itm <?=$product_link['product_id']==$product['product_id']?'active':''?>" data-id="<?=$product_link['product_id']?>" title="<?=$product_link['name']?>">
                                                                 <?php if($product_link['code']){?>
                                                                     <div class="color_block" style="background-color:#<?=$product_link['code']?>"></div>
                                                                 <?php }else{?>
                                                                     <div class="color_block _transparent"></div>
                                                                 <?php }?>
-                                                                <div class="link_block_name"><?=$product_link['name']?></div>
+                                                                <!--<div class="link_block_name"><?=$product_link['name']?></div>-->
                                                             </div>
                                                         <?php }else{?>
                                                             <div class="change_itm pack_itm <?=$product_link['product_id']==$product['product_id']?'active':''?>" data-id="<?=$product_link['product_id']?>">
