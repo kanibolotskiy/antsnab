@@ -394,7 +394,7 @@ class ControllerLandingLanding extends Controller {
                                         );
                                     }
                                 }
-                                print_r($data_temp);
+                                
                                 foreach($flags as $key1=>$flag){
                                     $product_data['products_links'][$key1]=$data_temp[$key1];
                                 }
