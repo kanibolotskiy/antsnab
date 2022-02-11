@@ -376,8 +376,9 @@ class ControllerLandingLanding extends Controller {
                             $data_lp['product_lp_noiden']=isset($data_lp['product_lp_noiden'])?$data_lp['product_lp_noiden']:0;
 
                             if(!$data_lp['product_lp_noiden']){
+                                unset($data_temp);
                                 foreach($products_links as $key1=>$products_link){
-                                    unset($data_temp);
+                                    
                                     foreach($products_links[$key1] as $itm1){
                                         if($itm1['product_id']==$product_id){
                                             $flags[$key1]=true;
@@ -393,6 +394,7 @@ class ControllerLandingLanding extends Controller {
                                         );
                                     }
                                 }
+                                print_r($data_temp);
                                 foreach($flags as $key1=>$flag){
                                     $product_data['products_links'][$key1]=$data_temp[$key1];
                                 }
