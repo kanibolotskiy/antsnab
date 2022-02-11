@@ -1434,7 +1434,7 @@ a.pack_itm{
 }
 
 .color_itm{
-       
+    padding:5px 6px;
 }
 .color_block._transparent{
     background-image: url(../img/bg_transparent.png);
