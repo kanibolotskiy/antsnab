@@ -1,10 +1,9 @@
 <?php
 class ControllerLandingLanding extends Controller {
-    private function setnTelegram(){
-        $tg_user = '1234567890'; // id пользователя, которому отправиться сообщения
-        $bot_token = '1234567890:XXXXXX'; // токен бота
+    private function sendTelegram($text){
+        $tg_user = '-639024206'; // id пользователя, которому отправиться сообщения
+        $bot_token = '5289462172:AAGuPiPhyHnrkuiZa3JDaqEGinuqbQMxoNc'; // токен бота
         
-        $text = "Первая строка сообщения <a href='https://vk-book.ru/'>со ссылкой</a> \n Вторая строка с <b>жирным</b> текстом";
         
         // параметры, которые отправятся в api телеграмм
         $params = array(
@@ -18,10 +17,11 @@ class ControllerLandingLanding extends Controller {
         curl_setopt($curl, CURLOPT_POST, true); // отправка данных методом POST
         curl_setopt($curl, CURLOPT_TIMEOUT, 10); // максимальное время выполнения запроса
         curl_setopt($curl, CURLOPT_POSTFIELDS, $params); // параметры запроса
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+
         $result = curl_exec($curl); // запрос к api
         curl_close($curl);
-        
-        var_dump(json_decode($result));
     }
     public function sendForm(){
         $this->load->model('landing/landing');
@@ -54,6 +54,7 @@ class ControllerLandingLanding extends Controller {
 
                 $type_price=$data_lp['product_lp_price'];
             }
+            
             switch ($type_price){
                 case 0: //Не показывать цену
                     $price_str="";
@@ -80,6 +81,7 @@ class ControllerLandingLanding extends Controller {
                     
                     //$out['test']=$landingData['form_file'];
                     if($landingData['form_file']){
+                        $caption_telega = "Заполнена простая форма со скачиванием КП \n";
                         $subject="Landing page / простая форма с КП";
                         $data['caption']="Заполнена простая форма с КП";
                         $data['text']="Клиент заполнил простую форму на нашем сайте и получил Коммерческое предложение с ценами '".$price_str."'.<br/>
@@ -87,6 +89,7 @@ class ControllerLandingLanding extends Controller {
                         if(isset($data['gf'])){
                             if($data['gf']){
                                 $out['file']=$landingData['form_file'];
+                                $data['file_kp']=$landingData['form_file'];
                             }
                         }
                     }else{
@@ -95,30 +98,47 @@ class ControllerLandingLanding extends Controller {
                         
                         $data['text']="Клиент заполнил простую форму на нашем сайте и ждет вашего звонка.<br/>
                         Живенько-быренько принимаем обращение, создаем интерес и набираем его номер.";
+
+                        $caption_telega = "Заполнена простая форма без КП \n";
+                        /*
+                        Лендинг: <b>*название лендинга*</b>\n
+                        Телефон: <b>*номер телефона*</b>\n
+                        \n";
+                        /*
+                        utm source: *метка*
+                        utm medium: *метка*
+                        utm campaign: *метка*
+                        utm term: *метка*
+                        utm content: *метка*";
+                        */
                     }
 
                 break;
 
                 case 2: //Полная форма
                     $subject="Landing page / сложная форма";
+                    $caption_telega="Заполнена сложная форма \n";
                     $data['caption']="Заполнена сложная форма";
                     $data['text']="Клиент заполнил сложную форму на нашем сайте.<br/>
                     Живенько-быренько принимаем обращение, создаем интерес, тщательно изучаем клиента (по сайту или названию компании) и только потом набираем его номер.";
                 break;
 
-                case 3: //Форма во всплывабщем окне
+                case 3: //Форма во всплывающем окне
                     $subject="Landing page / заявка";
+                    $caption_telega="Получена заявка \n";
+
                     $data['caption']="Получена заявка";
                     $data['text']="Клиент заинтересовался товаром.<br/>
                     Живенько-быренько принимаем обращение, создаем интерес и набираем его номер.";
                 break;
                 default:
                     $subject="";
+                    $caption_telega="";
                     $data['caption']="";
                     $data['text']="";
                 break;
             }
-            
+            $data['caption_telega']=$caption_telega;
             if(!$mailto){
                 $mailto="info@ant-snab.ru1";
                 //$mailto="kanibolotskiy@gmail.com";
@@ -152,6 +172,10 @@ class ControllerLandingLanding extends Controller {
             }else{
                 $data['utm_term']="";
             }
+            
+            $text=$this->load->view('landing/mailtelegram', $data);
+            $this->sendTelegram($text);
+
             //$subject=$data['subject'];
             $mail = new Mail();
             $mail->protocol = $this->config->get('config_mail_protocol');

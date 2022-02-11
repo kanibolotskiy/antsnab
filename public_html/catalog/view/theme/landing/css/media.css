@@ -17,6 +17,15 @@
         width:50%;
     }
 }
+
+@media all and (max-width: 1200px) {
+    .wrap_form_phone {
+        flex-wrap:wrap;
+    }
+    .wrap_form_phone .sendForm {
+        margin-top:10px;margin-left:0;width:100%;
+    }
+}
 @media all and (max-width: 1100px) {
     .benefit_items{
         margin-left:-10px;margin-right:-10px;
