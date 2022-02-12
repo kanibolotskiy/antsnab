@@ -588,6 +588,7 @@ class ControllerExtensionModuleExchange1c extends Controller {
 			'name'    		=> 'price_wholesale',
 			'desc'			=> $this->language->get('text_table_price_wholesale')
 		);
+
 		$list_table_prices[] = array(
 			'name'    		=> 'discount',
 			'desc'			=> $this->language->get('text_table_discount')
@@ -596,6 +597,21 @@ class ControllerExtensionModuleExchange1c extends Controller {
 			'name'    		=> 'special',
 			'desc'			=> $this->language->get('text_table_special')
 		);
+		
+
+		$list_table_prices[] = array(
+			'name'    		=> 'price_c1',
+			'desc'			=> $this->language->get('text_table_price_c1')
+		);
+		$list_table_prices[] = array(
+			'name'    		=> 'price_c2',
+			'desc'			=> $this->language->get('text_table_price_c2')
+		);
+		$list_table_prices[] = array(
+			'name'    		=> 'price_c3',
+			'desc'			=> $this->language->get('text_table_price_c3')
+		);
+
 		$data['table_prices'] = $list_table_prices;
 
 		// Очистка остатков
