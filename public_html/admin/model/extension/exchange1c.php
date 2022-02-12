@@ -1462,7 +1462,9 @@ class ModelExtensionExchange1c extends Model {
 	 * Подготавливает запрос для товара
 	 */
 	private function prepareQueryProduct($data, $mode = 'set') {
-		
+		$this->log('den~'.print_r($data,1).'~den',2);
+		$this->log('den1~'.$data['price_c2'].'~1den',2);
+
 		$sql = array();
 		if (isset($data['model']))
 	 		$sql[] = $mode == 'set'		? "`model` = '" .				$this->db->escape($data['model']) . "'"				: "`model`";
@@ -1504,12 +1506,15 @@ class ModelExtensionExchange1c extends Model {
 	 		$sql[] = $mode == 'set'		? "`price` = '" .				(float)$data['price'] . "'"							: "`price`";
         if (isset($data['price_wholesale']))
             $sql[] = $mode == 'set'		? "`price_wholesale` = '" .		(float)$data['price_wholesale'] . "'"				: "`price_wholesale`";
-		if (isset($data['price_c1']))
-			$sql[] = $mode == 'set'? "`price_c1` = '".($data['price_c1']*1)."'": "`price_с1`";
-		if (isset($data['price_c2']))
-			$sql[] = $mode == 'set'? "`price_с2` = '".($data['price_c2']*1)."'"	: "`price_c2`";
-		if (isset($data['price_c3']))
-			$sql[] = $mode == 'set'? "`price_с3` = '".($data['price_c3']*1)."'"	: "`price_c3`";
+		if (isset($data['price_c1'])){
+			$sql[] = $mode == 'set'? "`price_c1` = '" .($data['price_c1']*1). "'": "`price_с1`";
+		}
+		if (isset($data['price_c2'])){
+			$sql[] = $mode == 'set'? "`price_c2` = '" .($data['price_c2']*1). "'": "`price_с2`";
+		}
+		if (isset($data['price_c3'])){
+			$sql[] = $mode == 'set'? "`price_c3` = '" .($data['price_c3']*1). "'": "`price_с3`";
+		}
         if (isset($data['points']))
 	 		$sql[] = $mode == 'set'		? "`points` = '" .				(int)$data['points'] . "'"							: "`points`";
 		if (isset($data['length']))
@@ -1533,6 +1538,7 @@ class ModelExtensionExchange1c extends Model {
 		if (isset($data['weight_class_id']))
 	 		$sql[] = $mode == 'set'		? "`weight_class_id` = '" .		(int)$data['weight_class_id'] . "'"					: "`weight_class_id`";
 
+		$this->log('den~'.print_r($sql,1).'~den', 2);
 		return implode(($mode = 'set' ? ', ' : ' AND '),$sql);
 
 	} // prepareQueryProduct()
