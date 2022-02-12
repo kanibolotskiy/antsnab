@@ -117,6 +117,7 @@
                                 
                                     <div class="product_itm">
                                         <div class="product_itm_info">
+                                            <div class="wrap_product_itm_info">
                                             <div style="display:none" class="product_sku"><?=$product['sku']?></div>
                                             <div class="product_img">
                                                 <a href="<?=$product['alias']?>" title="<?=$product['name']?>">
@@ -156,7 +157,7 @@
                                             <?php if($product['price_str']){?>
                                                 <div class="product_price"><?=$product['price_str']?></div>
                                             <?php }?>
-
+                                            </div>
                                             <?php if($prod_butt){ ?>
                                                 <div class="wrap_blue_btn">
                                                     <div class="blue_btn open_popup_product js_goal" data-goal="lp-zayavka-catalog"><?=$prod_butt?></div>

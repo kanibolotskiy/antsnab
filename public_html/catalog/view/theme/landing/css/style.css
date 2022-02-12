@@ -1688,3 +1688,9 @@ img[data-src] {
 .b_form1{
     width:100%;
 }
+.product_itm_info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
