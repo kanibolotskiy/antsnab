@@ -77,14 +77,14 @@
                    
                         <div class="product_form">
                             <div class="product_form_info _flex _vcenter _between">
-                                <?php if($prod_butt){ ?>
+                                
                                     <div class="product_form_caption">
                                         <?=$block1_form_caption?> <?=$block1_form_text?>
                                     </div>   
                                     <div class="product_form_button js_sbottom js_goal" data-goal="lp-zayavka-product">
                                         Получить предложение
                                     </div>
-                                <?php }?>
+                                
                             </div>
                         </div>
                    
