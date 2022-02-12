@@ -92,20 +92,22 @@
             </div>
             <div class="product_info">
                 <div class="block_caption"><?=$name?></div>
-                <div class="_flex _center pack_items _wrap pack_items_product">
+                <div class="pack_items">
                     <?php foreach($products_links as $key=>$products_link){ ?>
-                        <?php foreach($products_link as $product_link){?>
-                            <?php if($key==1){?>
-                                
-                                <a href="<?=$product_link['link']?>" class="_flex _vcenter pack_itm color_itm <?=$product_link['product_id']==$product_id?'active':''?>" data-id="<?=$product_link['product_id']?>">
-                                    <div class="color_block" style="background-color:#<?=$product_link['code']?>" title="<?=$product_link['name']?>"></div>
-                                </a>
-                            <?php }else{?>
-                                <a href="<?=$product_link['link']?>" class="pack_itm <?=$product_link['product_id']==$product_id?'active':''?>" data-id="<?=$product_link['product_id']?>">
-                                    <?=$product_link['name']?>
-                                </a>
+                        <div class="_flex _center pack_items_product">
+                            <?php foreach($products_link as $product_link){?>
+                                <?php if($key==1){?>
+                                    
+                                    <a href="<?=$product_link['link']?>" class="_flex _vcenter pack_itm color_itm <?=$product_link['product_id']==$product_id?'active':''?>" data-id="<?=$product_link['product_id']?>">
+                                        <div class="color_block" style="background-color:#<?=$product_link['code']?>" title="<?=$product_link['name']?>"></div>
+                                    </a>
+                                <?php }else{?>
+                                    <a href="<?=$product_link['link']?>" class="pack_itm <?=$product_link['product_id']==$product_id?'active':''?>" data-id="<?=$product_link['product_id']?>">
+                                        <?=$product_link['name']?>
+                                    </a>
+                                <?php }?>
                             <?php }?>
-                        <?php }?>
+                        </div>
                     <?php }?>
                 </div>
                 
