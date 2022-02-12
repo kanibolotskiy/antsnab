@@ -74,7 +74,7 @@
                         <?php }?>
                     </div>
                     
-                    <?php if(isset($block1_form_status) and $block1_form_status) {?>
+                   
                         <div class="product_form">
                             <div class="product_form_info _flex _vcenter _between">
                                 <?php if($prod_butt){ ?>
@@ -87,7 +87,7 @@
                                 <?php }?>
                             </div>
                         </div>
-                    <?php }?>
+                   
                 </div>
             </div>
             <div class="product_info">
