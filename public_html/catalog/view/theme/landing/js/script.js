@@ -424,7 +424,7 @@ $(document).ready(function(){
     });
     //Slick slider initialize
     $('.slider').slick({
-        arrows:false, dots: false, infinite:true, speed:500,
+        arrows:true, dots: false, infinite:true, speed:500,
         autoplay:true, autoplaySpeed: 3000, slidesToShow:1, slidesToScroll:1
     });
     //On click of slider-nav childern,
