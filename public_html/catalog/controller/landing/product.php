@@ -135,7 +135,7 @@ class ControllerLandingProduct extends Controller {
         $data['block_bform_caption']=$landing_data['block_bform_caption'];
         $data['block_bform_perc']=$landing_data['block_bform_perc'];        
         $data['block_bform_status']=isset($landing_data['block_bform_status'])?$landing_data['block_bform_status']:0;
-        
+        $data['prod_butt']=$landing_data['prod_butt'];
         
         /*
         $data['block1_form_status']=$data_lp['block1_form_status'];

@@ -370,9 +370,11 @@ $(document).ready(function(){
     });
 
     $(".product_form_button").click(function(){
-        var st=$("#bottom_form").offset().top
-        $(".wrp_mob_menu").removeClass("active");
-        $("html,body").animate({"scrollTop":st},700);
+        if($("#bottom_form").length){
+            var st=$("#bottom_form").offset().top
+            $(".wrp_mob_menu").removeClass("active");
+            $("html,body").animate({"scrollTop":st},700);
+        }
 
         /*
         var product=$(this).closest(".wrapper_product").find(".block_caption").text();

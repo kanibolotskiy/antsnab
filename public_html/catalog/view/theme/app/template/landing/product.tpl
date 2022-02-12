@@ -77,12 +77,14 @@
                     <?php if(isset($block1_form_status) and $block1_form_status) {?>
                         <div class="product_form">
                             <div class="product_form_info _flex _vcenter _between">
-                                <div class="product_form_caption">
-                                    <?=$block1_form_caption?> <?=$block1_form_text?>
-                                </div>
-                                <div class="product_form_button js_sbottom js_goal" data-goal="lp-zayavka-product">
-                                    Получить предложение
-                                </div>
+                                <?php if($prod_butt){ ?>
+                                    <div class="product_form_caption">
+                                        <?=$block1_form_caption?> <?=$block1_form_text?>
+                                    </div>   
+                                    <div class="product_form_button js_sbottom js_goal" data-goal="lp-zayavka-product">
+                                        <?=$prod_butt?>
+                                    </div>
+                                <?php }?>
                             </div>
                         </div>
                     <?php }?>
