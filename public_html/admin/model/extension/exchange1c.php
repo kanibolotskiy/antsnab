@@ -1462,7 +1462,7 @@ class ModelExtensionExchange1c extends Model {
 	 * Подготавливает запрос для товара
 	 */
 	private function prepareQueryProduct($data, $mode = 'set') {
-
+		$this->log('den~'.print_r($data,1).'~den', 2);
 		$sql = array();
 		if (isset($data['model']))
 	 		$sql[] = $mode == 'set'		? "`model` = '" .				$this->db->escape($data['model']) . "'"				: "`model`";
@@ -1535,7 +1535,7 @@ class ModelExtensionExchange1c extends Model {
 		if (isset($data['weight_class_id']))
 	 		$sql[] = $mode == 'set'		? "`weight_class_id` = '" .		(int)$data['weight_class_id'] . "'"					: "`weight_class_id`";
 
-		$this->log('den~'.print_r($sql,1).'~den', 2);
+		
 		return implode(($mode = 'set' ? ', ' : ' AND '),$sql);
 
 	} // prepareQueryProduct()
