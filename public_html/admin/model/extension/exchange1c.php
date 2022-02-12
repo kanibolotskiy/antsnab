@@ -1506,10 +1506,10 @@ class ModelExtensionExchange1c extends Model {
             $sql[] = $mode == 'set'		? "`price_wholesale` = '" .		(float)$data['price_wholesale'] . "'"				: "`price_wholesale`";
 		if (isset($data['price_c1']))
 			$sql[] = $mode == 'set'? "`price_c1` = '".($data['price_c1']*1)."'": "`price_с1`";
-		if (isset($data['price_с2']))
-			$sql[] = $mode == 'set'? "`price_с2` = '".($data['price_с2']*1)."'"				: "`price_с2`";
-		if (isset($data['price_с3']))
-			$sql[] = $mode == 'set'? "`price_с3` = '".($data['price_с3']*1)."'"				: "`price_с3`";
+		if (isset($data['price_c2']))
+			$sql[] = $mode == 'set'? "`price_с2` = '".($data['price_c2']*1)."'"	: "`price_c2`";
+		if (isset($data['price_c3']))
+			$sql[] = $mode == 'set'? "`price_с3` = '".($data['price_c3']*1)."'"	: "`price_c3`";
         if (isset($data['points']))
 	 		$sql[] = $mode == 'set'		? "`points` = '" .				(int)$data['points'] . "'"							: "`points`";
 		if (isset($data['length']))
