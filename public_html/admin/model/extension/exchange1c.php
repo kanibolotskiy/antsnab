@@ -1504,6 +1504,14 @@ class ModelExtensionExchange1c extends Model {
 	 		$sql[] = $mode == 'set'		? "`price` = '" .				(float)$data['price'] . "'"							: "`price`";
         if (isset($data['price_wholesale']))
             $sql[] = $mode == 'set'		? "`price_wholesale` = '" .		(float)$data['price_wholesale'] . "'"				: "`price_wholesale`";
+
+		if (isset($data['price_с1']))
+			$sql[] = $mode == 'set'		? "`price_с1` = '" .		(float)$data['price_с1'] . "'"				: "`price_с1`";
+		if (isset($data['price_с2']))
+			$sql[] = $mode == 'set'		? "`price_с2` = '" .		(float)$data['price_с2'] . "'"				: "`price_с2`";
+		if (isset($data['price_с3']))
+			$sql[] = $mode == 'set'		? "`price_с3` = '" .		(float)$data['price_с3'] . "'"				: "`price_с3`";
+		
         if (isset($data['points']))
 	 		$sql[] = $mode == 'set'		? "`points` = '" .				(int)$data['points'] . "'"							: "`points`";
 		if (isset($data['length']))
@@ -2739,6 +2747,15 @@ class ModelExtensionExchange1c extends Model {
                     } elseif( $data_price['table_price'] == 'price_wholesale' ) {
 						$data['price_wholesale'] = $data_price['price'];
 						$this->log("Оптовая Цена товара '" . $data_price['keyword'] . "' = " . $data['price_wholesale']);
+					} elseif( $data_price['table_price'] == 'price_c1' ) {
+						$data['price_c1'] = $data_price['price'];
+						$this->log("Цена товара c1'" . $data_price['keyword'] . "' = " . $data['price_c1']);
+					} elseif( $data_price['table_price'] == 'price_с2' ) {
+						$data['price_c2'] = $data_price['price'];
+						$this->log("Цена товара c2'" . $data_price['keyword'] . "' = " . $data['price_c2']);
+					} elseif( $data_price['table_price'] == 'price_с3' ) {
+						$data['price_c3'] = $data_price['price'];
+						$this->log("Цена товара c3'" . $data_price['keyword'] . "' = " . $data['price_c3']);
 					} else {
 						// Скидки и Акции
 						$this->setProductPrice($data_price, $product_id, $prices_old, $delete_prices);
