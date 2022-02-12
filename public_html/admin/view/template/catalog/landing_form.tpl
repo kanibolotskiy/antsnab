@@ -488,6 +488,12 @@
                                         <input type="text" name="prod_butt" value="<?=$prod_butt ?>" placeholder="Текст кнопки" id="input-prod_butt" class="form-control" />
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-prod_butt_form">Текст кнопки под изображением(Товар):</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="prod_butt_form" value="<?=$prod_butt_form ?>" placeholder="Текст кнопки" id="input-prod_butt_form" class="form-control" />
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" for="input-block_mailthanks">Текст спасибо (Верхняя форма):</label>

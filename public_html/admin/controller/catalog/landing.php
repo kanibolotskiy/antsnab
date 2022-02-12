@@ -536,6 +536,8 @@ class ControllerCatalogLanding extends Controller {
 		
 		$data['mail1']=isset($landing_info['mail1'])?$landing_info['mail1']:'';
 		$data['prod_butt']=isset($landing_info['prod_butt'])?$landing_info['prod_butt']:'';
+		$data['prod_butt_form']=isset($landing_info['prod_butt_form'])?$landing_info['prod_butt_form']:'';
+
 		$data['mailthanks']=isset($landing_info['mailthanks'])?$landing_info['mailthanks']:'';
 		$data['mailthanks_modal']=isset($landing_info['mailthanks_modal'])?$landing_info['mailthanks_modal']:'';
 		$data['mailthanks_full']=isset($landing_info['mailthanks_full'])?$landing_info['mailthanks_full']:'';

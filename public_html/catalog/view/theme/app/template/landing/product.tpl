@@ -82,7 +82,7 @@
                                         <?=$block1_form_caption?> <?=$block1_form_text?>
                                     </div>   
                                     <div class="product_form_button js_sbottom js_goal" data-goal="lp-zayavka-product">
-                                        Получить предложение
+                                        <?=$prod_butt_form?>
                                     </div>
                                 
                             </div>

@@ -1,1 +1,2 @@
 antsnab.cp06038.tmweb.ru [Sat Feb 12 07:33:11 2022] [emerg] [pid 1948] sapi_apache2.c(362): [client 93.126.92.50:55770] PHP Parse error:  syntax error, unexpected end of file in /home/c/cp06038/antsnab/public_html/catalog/view/theme/app/template/landing/product.tpl on line 327
+antsnab.cp06038.tmweb.ru [Sat Feb 12 17:25:02 2022] [emerg] [pid 30924] sapi_apache2.c(362): [client 93.126.92.50:52218] PHP Parse error:  syntax error, unexpected '?>\r' in /home/c/cp06038/antsnab/public_html/catalog/view/theme/app/template/landing/product.tpl on line 85
