@@ -1508,7 +1508,9 @@ class ModelExtensionExchange1c extends Model {
             $sql[] = $mode == 'set'		? "`price_wholesale` = '" .		(float)$data['price_wholesale'] . "'"				: "`price_wholesale`";
 		if (isset($data['price_c1'])){
 			$sql[] = $mode == 'set'		? "`price_c1` = '" .		(float)$data['price_с1'] . "'"				: "`price_с1`";
-			$this->log('den3~'.$data['price_c1'].'~den3', 2);
+			$this->log('dn1~'.$data['price_c1'].'~dn1', 2);
+			$this->log('dn2~'.(float)$data['price_c1'].'~dn2', 2);
+			$this->log('dn3~'.($data['price_c1']*1).'~dn3', 2);
 		}
 		if (isset($data['price_с2']))
 			$sql[] = $mode == 'set'		? "`price_с2` = '" .		(float)$data['price_с2'] . "'"				: "`price_с2`";
