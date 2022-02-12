@@ -1462,8 +1462,8 @@ class ModelExtensionExchange1c extends Model {
 	 * Подготавливает запрос для товара
 	 */
 	private function prepareQueryProduct($data, $mode = 'set') {
-		$this->log('den~'.print_r($data,1).'~den',2);
-		$this->log('den1~'.$data['price_c2'].'~1den',2);
+		//$this->log('den~'.print_r($data,1).'~den',2);
+		//$this->log('den1~'.$data['price_c2'].'~1den',2);
 
 		$sql = array();
 		if (isset($data['model']))
@@ -1538,7 +1538,7 @@ class ModelExtensionExchange1c extends Model {
 		if (isset($data['weight_class_id']))
 	 		$sql[] = $mode == 'set'		? "`weight_class_id` = '" .		(int)$data['weight_class_id'] . "'"					: "`weight_class_id`";
 
-		$this->log('den~'.print_r($sql,1).'~den', 2);
+		//$this->log('den~'.print_r($sql,1).'~den', 2);
 		return implode(($mode = 'set' ? ', ' : ' AND '),$sql);
 
 	} // prepareQueryProduct()
@@ -2754,10 +2754,10 @@ class ModelExtensionExchange1c extends Model {
 					} elseif( $data_price['table_price'] == 'price_c1' ) {
 						$data['price_c1'] = $data_price['price'];
 						$this->log("Цена товара c1'" . $data_price['keyword'] . "' = " . $data['price_c1']);
-					} elseif( $data_price['table_price'] == 'price_с2' ) {
+					} elseif( $data_price['table_price'] == 'price_c2' ) {
 						$data['price_c2'] = $data_price['price'];
 						$this->log("Цена товара c2'" . $data_price['keyword'] . "' = " . $data['price_c2']);
-					} elseif( $data_price['table_price'] == 'price_с3' ) {
+					} elseif( $data_price['table_price'] == 'price_c3' ) {
 						$data['price_c3'] = $data_price['price'];
 						$this->log("Цена товара c3'" . $data_price['keyword'] . "' = " . $data['price_c3']);
 					} else {
