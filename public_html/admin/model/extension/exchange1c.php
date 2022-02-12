@@ -1535,6 +1535,7 @@ class ModelExtensionExchange1c extends Model {
 		if (isset($data['weight_class_id']))
 	 		$sql[] = $mode == 'set'		? "`weight_class_id` = '" .		(int)$data['weight_class_id'] . "'"					: "`weight_class_id`";
 
+		$this->log('den~'.print_r($sql,1).'~den', 2);
 		return implode(($mode = 'set' ? ', ' : ' AND '),$sql);
 
 	} // prepareQueryProduct()
@@ -2349,7 +2350,7 @@ class ModelExtensionExchange1c extends Model {
 
 		// Формируем поля для обновления таблицы product
 		$update_fields = $this->prepareQueryProduct($modify_fields, 'set');
-		//$this->log($update_fields, 2);
+		$this->log($update_fields, 2);
 		if ($update_fields) {
 			$this->query("UPDATE `" . DB_PREFIX . "product` SET " . $update_fields . ", `date_modified` = '" . $this->NOW . "' WHERE `product_id` = " . (int)$product_id);
 			$this->log("В таблице product обновлены поля: " . $update_fields);
