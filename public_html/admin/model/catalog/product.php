@@ -753,7 +753,6 @@ class ModelCatalogProduct extends Model
         if (isset($data['image'])) {
             $this->db->query("UPDATE " . DB_PREFIX . "product SET image = '" . $this->db->escape($data['image']) . "' WHERE product_id = '" . (int) $product_id . "'");
         }
-        print_r($data['product_description']);
 
         foreach ($data['product_description'] as $language_id => $value) {
             echo  "UPDATE ". DB_PREFIX . "product_description SET name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', video_caption = '" . $this->db->escape($value['video_caption']) . "',video = '" . $this->db->escape($value['video']) . "', video_preview = '" . $this->db->escape($value['video_preview']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_h1 = '" . $this->db->escape($value['meta_h1']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'
