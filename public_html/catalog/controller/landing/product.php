@@ -94,7 +94,7 @@ class ControllerLandingProduct extends Controller {
             foreach($data_lp['product_lp_video'] as $video_item){
                 $video[]=Array(
                     'video'=>$video_item['url'],
-                    'image'=>$this->model_tool_image->resize('../image/'.$video_item['image'], 580, 325),
+                    'image'=>$this->model_tool_image->resize('image/'.$video_item['image'], 580, 325),
                     'video_caption'=>$video_item['text']
                 );
             }
