@@ -304,6 +304,7 @@
                         <?php foreach($video as $video_item){?>
                             <div class="video_itm">
                                 <div class="video_itm_info">
+                                    <?=$video_item['f_image']?>
                                     <a rel="nofollow" href="<?=$video_item['video']?>" data-fancybox="video" data-caption="<?=$video_item['video_caption']?>. #Видео">
                                         <div class="youtube_image">
                                             <img src="<?=$video_item['image']?>" />
